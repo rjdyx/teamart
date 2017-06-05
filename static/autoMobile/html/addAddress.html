@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>新增地址</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,minimal-ui">
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" type="text/css" href="../css/reset.css">
+	<link rel="stylesheet" type="text/css" href="../css/header.css">
+	<link rel="stylesheet" type="text/css" href="../css/addAddress.css">
+	<script type="text/javascript" src="../js/zepto.min.js"></script>
+	<script type="text/javascript" src="http://cdn.webfont.youziku.com/wwwroot/js/wf/youziku.api.min.js"></script>
+</head>
+<body>
+	<!-- 头部 -->
+	<div class="header">
+		<div class='condition'></div>
+		<div class='header_turnBack' onclick="javascript:history.go(-1);">返回</div>
+			<div class='msg'>
+				<div class='msg_container'>
+					<img src='../img/msg_tips.png' class='msg_tips'>
+						<div class='tips_count'>4</div>
+						<div class='msg_content'>消息</div>
+					</div>
+				</div>
+		<div class='header_title'>新增地址</div>
+	</div>
+
+	<div class="addAddress_container">
+		<ul>
+			<li class="item_list">
+				<span class="item_list_title">收货人</span>
+				<div class="item_input_container"><input class="item_input" type="text" name="" placeholder="隔壁老王"></div>
+			</li>
+			<li class="item_list">
+				<span class="item_list_title">联系电话</span>
+				<div class="item_input_container"><input class="item_input" type="text" name="" placeholder="13560449011"></div>
+			</li>
+			<li class="item_list">
+				<span class="item_list_title">所在地区</span>
+				<div class="item_input_container">请选择<img class="right_arrow" src="../img/right_arrow.png"></div>
+			</li>
+			<li class="item_list">
+				<span class="item_list_title">街道</span>
+				<div class="item_input_container">请选择<img class="right_arrow" src="../img/right_arrow.png"></div>
+			</li>
+		</ul>
+		<textarea class="addressDetail" placeholder="请填写详细地址，不少于5个字"></textarea>
+		<div class="defaultAddress">
+			<span>默认地址</span>
+			<div class="img_container"><img class="defaultAddress_img" src="../img/setDefault.png"></div>
+		</div>
+	</div>
+
+	<!-- 底部 -->
+	<div class="bottom2">保存新地址</div>
+</body>
+</html>

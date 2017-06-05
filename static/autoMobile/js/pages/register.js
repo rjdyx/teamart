@@ -1,0 +1,12 @@
+$('.radio_left_box').click(function(){
+    $(this).addClass("radio_selected");
+    $('.radio_right_box').removeClass('radio_selected');
+    $('.radio_left').attr('checked',true);
+    $('.radio_right').attr('checked',false);
+});
+$('.radio_right_box').click(function(){
+    $(this).addClass("radio_selected");
+    $('.radio_left_box').removeClass('radio_selected');
+    $('.radio_right').attr('checked',true);
+    $('.radio_left').attr('checked',false);
+});
