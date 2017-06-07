@@ -1,0 +1,408 @@
+.header{
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 10;
+	height: 64px;
+	width: 100%;
+	background: url(../img/header_background.png) no-repeat;
+	background-size: 100%;
+	color: #fff;
+	font-size: 20px;
+}
+.condition{
+	height: 20px;
+	width: 100%;
+	content: "";
+}
+.header_turnBack{
+	left: 12px;
+	margin-top: 10px;
+	position: absolute;
+	font-size: 20px;
+	/*font-weight: 300;*/
+}
+.header_title{
+	margin-top: 10px;
+	text-align: center;
+}
+.msg{
+	height: 35px;
+	width: 32px;
+	margin-top: 3px;
+	font-size: 12px;
+	position: absolute;
+	right: 10px;
+}
+.msg_container{
+	position: relative;
+	height: 100%;
+	width: 100%;
+}
+.msg_tips{
+	height: 20px;
+	width: 27px;
+}
+.tips_count{
+	position: absolute;
+	top: 0;
+	right: 0;
+	height: 11px;
+	width: 11px;
+	border-radius: 5.5px;
+	font-size: 8px;
+	text-align: center;
+	line-height: 12px;
+	background: url(../img/msg_tips_red.png) no-repeat;
+	background-size: 100%;
+}
+.msg_content{
+	height: 14px;
+	position: absolute;
+	bottom: 3px;
+}
+.shoppingCart{
+	margin-top: 7px;
+	height: 23px;
+	width: 32px;
+}
+.products{
+
+}
+.products_actived{
+	margin-top: 7px;
+	height: 25px;
+	width: 26px;
+}
+.home{
+	margin-top: 7px;
+	height: 23px;
+	width: 31px;
+}
+.bottom_content{
+	color: #fff;
+}
+.container{
+	min-height: 100%;
+	width: 100%;
+	box-sizing: border-box;
+	padding: 64px 0 50px 0;
+	background-color: #eeeff1;
+}
+.products_list{
+	min-height: 150px;
+	width: 100%;
+	background-color: #fff;
+	overflow: hidden;
+	margin-bottom: 10px;
+}
+/*.products_list:last-child{
+margin-bottom: 0;
+}*/
+.products_nav_left{
+	float: left;
+}
+.products_nav_right{
+	float: right;
+}
+.products_nav_img{
+	width: 21px;
+	height: 21px;
+	vertical-align: middle;
+}
+.goods_nav_img{
+	width: 18px;
+	height: 16px;
+	margin-left: 12px;
+	margin-right: 12px;
+	vertical-align: middle;
+}
+.products_nav{
+	height: 21px;
+	padding: 14px;
+	border-bottom: solid 1px #dadada;
+	overflow: hidden;
+}
+.products_details_left{
+	height: 110px;
+}
+.products_details_img{
+	width: 92px;
+	height: 92px;
+	padding: 10px 12px;
+}
+.products_details_img img{
+	width: 100%;
+	height: 100%;
+}
+.products_details_right{
+	height: 110px;
+	-webkit-box-flex: 1;
+	position: relative;
+}
+.products_details_name{
+	margin-top: 10px;
+	font-size: 12px;
+	color: #000;
+	letter-spacing: 2px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.products_details_description{
+	display: -webkit-box;
+	line-height: 20px;
+	font-size: 8px;
+	width: 64%;
+	letter-spacing: 1px;
+	-webkit-line-clamp: 2;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	-webkit-box-orient: vertical;
+}
+.products_details{
+	display: -webkit-box;
+}
+.p{
+	position: absolute;
+	bottom: 5px;
+	width: 100%;
+	display: -webkit-box;
+}
+.prices{	
+	height: 32px;
+	line-height: 38px;
+	color: #fc5e5d;
+	font-size: 12px;
+	-webkit-box-flex: 4;
+}
+.cut_img{
+	width: 18px;
+	height: 18px;
+	vertical-align: middle;
+}
+
+.x{
+	height: 32px;
+	line-height: 32px;
+	font-size: 12px;
+	color: #b5b5b5;
+}
+.num{
+	height: 32px;
+	line-height: 32px;
+	font-size: 12px;
+	color: #b5b5b5;
+	margin-right: 14px;
+}
+.bottom{
+	background: url(../img/bottom.png) no-repeat;
+	background-size: 100% 100%;
+	height: 50px;
+	width: 100%;
+	bottom: 0;
+	position: fixed;
+}
+.bottom_left{
+	width: 60%;
+	float: left;
+	line-height: 50px;
+}
+.bottom_img{
+	background: url(../img/choose_all.png) no-repeat;
+	width: 21px;
+	height: 21px;
+	background-size: contain;
+	float: left;
+	margin-left: 14px;
+	margin-top: 14px;
+}
+.bottom_right{
+	height: 50px;
+	width: 40%;
+	float: left;
+	background-color: #978f7a;
+	z-index: 1;
+	opacity: 0.66;
+}
+.submitOrder{
+	text-align: center;
+	color: #fff;
+	font-size: 16px;
+	height: 50px;
+	line-height: 50px;
+}
+.location{
+	overflow: hidden;
+	min-height: 88px;
+	background-color: #fff;
+	margin-bottom: 10px;
+}
+.location_nav{
+	overflow: hidden;
+}
+.location_nav_name{
+	position: relative;
+	float: left;
+	margin: 10px 40px 6px 40px;
+	font-size: 18px;
+}
+.location_nav_tel{
+	position: relative;
+	float: right;
+	margin: 10px 28px 6px 28px;
+	font-size: 16px;
+	color: #848484;
+}
+.location_details{
+	overflow: hidden;
+}
+.location_img_nav{
+	width: 10%;
+}
+.location_img_nav img{
+	float: left;
+	width: 15px;
+	height: 19px;
+	margin-left: 14px;
+}
+.location_font{
+	margin-left: 14px;
+	width: 78%;
+	float: left;
+}
+.arrow{
+	width: 10px;
+	height: 16px;
+	float: right;
+	margin-right: 14px;
+}
+.descript{
+	height: 230px;
+	width: 100%;
+	background-color: #fff;
+}
+.d{
+	width: 100%;
+	height: 50px;
+	border-bottom: 2px solid #e3e3e3;
+}
+.d_font{
+	line-height: 50px;
+	margin-left: 14px;
+}
+.way{
+	float: right;
+	line-height: 50px;
+}
+.way_arrow{
+	width: 10px;
+	height: 16px;
+	margin-right: 14px;
+	top: 3px;
+	position: relative;
+}
+.tip{
+	float: right;
+	line-height: 50px;
+}
+.t_money{
+	width: 10px;
+	height: 16px;
+	margin-right: 14px;
+	color: #ff6723;
+}
+.t{
+	color: #ff6723;
+}
+.sum{
+	float: right;
+	line-height: 50px;
+}
+.statement{
+	border: none;
+	margin-left: 20px;
+	letter-spacing: 2px;
+	padding-left: 10px;
+	width: 60%;
+	text-overflow: ellipsis;
+}
+.bottom_left_sum{
+	float: left;
+	margin-left: 14px;
+	color: #fff;
+	font-size: 16px;
+}
+.t_all{
+	margin-left: 4px;
+	color: #ff6723;
+	font-size: 16px;
+}
+.all_money{
+	color: #ff6723;
+	font-size: 16px;
+}
+.bg{
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	background-color: rgba(0,0,0,0.3);
+	width: 100%;
+	z-index: 11;
+	display: none;
+}
+.quit{
+	display: none;
+	background: url(../img/bottom.png) no-repeat;
+	background-size: 100% 100%;
+	height: 50px;
+	width: 100%;
+	bottom: -410px;
+	position: fixed;
+}
+.quit_font{
+	text-align: center;
+	color: #fff;
+	font-size: 16px;
+	height: 50px;
+	line-height: 50px;
+	font-size: 20px;
+}
+.sendWay{
+	display: none;
+	width: 100%;
+	height: 360px;
+	position: fixed;
+	bottom: -360px;
+	background-color: #fff;
+}
+.sendWay_head{
+	height: 70px;
+	border-bottom: 1px solid #dadada;
+}
+.sendWay_headFont{
+	text-align: center;
+	font-size: 16px;
+	height: 70px;
+	line-height: 70px;
+	font-size: 20px;
+}
+.sendWayDetails{
+	height: 21px; 
+	line-height: 21px;
+	border-bottom: 1px solid #dadada;
+	font-size: 18px;
+	padding: 14px;
+}
+.sendWayDetails p{
+	float: left;
+}
+.sendWay_pic{
+	float: right;
+	width: 20px;
+	height: 20px;
+}
+.sendWay_pic img{
+	width: 20px;
+	height: 20px;
+}

@@ -1,0 +1,24 @@
+<?php
+
+namespace App\Http\Controllers\Home;
+
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Product;
+
+class ProductController extends Controller
+{
+	//商品列表页
+	public function list (Request $request) {
+		$lists = Product::paginate(config('app.paginate10'));
+		$title = '商品搜索';
+		return view(config('app.theme').'.home.productList')->with(['lists'=>$lists, 'title'=>$title]);
+	}
+
+	//商品详情页
+	public function detail (Request $request, $id) {
+		$content = Product::find($id);
+		$title = '商品详情';
+		return view(config('app.theme').'.home.productDetail')->with(['content'=>$content, 'title'=>$title]);
+	}
+}

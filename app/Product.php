@@ -7,15 +7,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
-    //
     use SoftDeletes;
+    protected $dates = ['deleted_at']; //开启deleted_at
 
     const STATUS = [
         0 => '下架',
         1 => '上架',
     ];
     
-    protected $table = 'products';
+    protected $table = 'product';
 
     public function category()
     {

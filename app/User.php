@@ -10,6 +10,9 @@ class User extends Authenticatable
 {
     use Notifiable;
     use SoftDeletes;
+    protected $dates = ['deleted_at']; //开启deleted_at
+    protected $table = 'user';
+
     const AVATAR = '/../upload/avatar/';
     const TYPE_USER = 0;
     const TYPE_DISTRIBUTOR = 1;

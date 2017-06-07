@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Product;
 
 class HomeController extends Controller
 {
@@ -23,12 +24,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        return view('index'); 
     }
 
     public function shopping()
     {
-        $products = \App\Product::paginate(16);
+        $products = Product::paginate(16);
         return view(config('app.theme').'.home.shopping')->with('products',$products);
     }
 }

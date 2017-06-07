@@ -11,9 +11,10 @@ return [
     | framework needs to place the application's name in a notification or
     | any other location as required by the application or its packages.
     */
-
     'name' => 'Laravel',
-    'theme' => 'test',
+    'theme' => 'fx',
+    'paginate10' => 10,
+    'paginate15' => 15,
     /*
     |--------------------------------------------------------------------------
     | Application Environment

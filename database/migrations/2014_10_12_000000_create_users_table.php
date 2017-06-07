@@ -13,16 +13,25 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('user', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('password');
+            $table->integer('pid')->comment('分销商id')->nullable();
+            $table->string('name',30)->comment('用户名');
+            $table->string('email',50)->comment('邮箱')->nullable();
+            $table->string('password',50)->comment('密码');
+            $table->string('realname',50)->comment('姓名')->nullable();
+            $table->string('phone',50)->nullable()->comment('手机号码');
+            $table->string('birth_date',50)->nullable()->comment('出生日期');
+            $table->string('img',255)->nullable()->comment('头像');
+            $table->string('thumb',255)->nullable()->comment('头像缩略图');
+            $table->tinyInteger('type')->default(2)->comment('用户类型');
+            $table->tinyInteger('gender')->default(0)->comment('性别(0男、1女)');
+            $table->integer('grade')->default(0)->comment('积分');
             $table->rememberToken();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      *
@@ -30,6 +39,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('user');
     }
 }

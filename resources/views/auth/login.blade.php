@@ -1,68 +1,62 @@
 @extends('layouts.app')
 
+@section('title')
+登陆
+@endsection
+
+@section('css')
+<link rel="stylesheet" type="text/css" href="{{ asset('fx/css/login.css') }}">
+@endsection
+
+@section('script')
+    @parent
+    <script src="{{ url('fx/js/login.js') }}"></script>
+@endsection
+
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Login</div>
-                <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ route('login') }}">
-                        {{ csrf_field() }}
-
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
-
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Password</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password" required>
-
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-8 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Login
-                                </button>
-
-                                <a class="btn btn-link" href="{{ route('password.request') }}">
-                                    Forgot Your Password?
-                                </a>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
+    <div class="content">
+        <div class="head">
+          <img src="fx/img/pic41.png" style="width: 300px;height: 300px">
         </div>
+        <div class="contain">
+            <form role="form" method="POST" action="{{ route('login') }}">
+            <div class="number">
+                <img src="fx/img/pic34.png" style="width: 20px;height:20px;vertical-align: middle;position: relative;left: 35px">
+                <img src="fx/img/pic23.png" style="width: 250px;height:45px;vertical-align: middle;line-height: 60px">
+
+                <input type="text" class="myName" placeholder="供货的羊在哪里">
+            </div>
+             {{ csrf_field() }}
+
+            <div class="add-name">请输入用户名</div>
+            <div class="number">
+                <img src="fx/img/pic35.png" style="width: 20px;height:20px;vertical-align: middle;position: relative;left: 35px">
+                <img src="fx/img/pic23.png" style="width: 250px;height:45px;vertical-align: middle;line-height: 60px">
+                <input type="password" class="password" name="name" placeholder="请输入密码">
+            </div>
+            @if ($errors->has('name'))
+                <span class="help-block">
+                    <strong>{{ $errors->first('name') }}</strong>
+                </span>
+            @endif
+            <div class="add-password">请输入密码</div>
+            <div class="choose">
+                    <input type="radio" name="sex" value="male" checked='true' class="radio_left">
+                    <div class="radio_text"><div class="radio_left_box radio_selected"></div>忘记密码</div>
+                    <input type="radio" name="sex" value="female" style="margin-left: 20px" class="radio_right">
+                    <div class="radio_text"><div class="radio_right_box"></div>注册账号</div>
+            </div>
+            @if ($errors->has('password'))
+                <span class="help-block">
+                    <strong>{{ $errors->first('password') }}</strong>
+                </span>
+            @endif
+            <div class="button">
+            </div>
+            </form>
+        </div>
+        <!--<div class="bottom">-->
+            <!--<img src="../img/pic39.png" style="width: 100%;height: 300px">-->
+        <!--</div>-->
     </div>
-</div>
 @endsection

@@ -1,0 +1,265 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.myOrder_search {
+    display: inline-block;
+    height: 50px;
+    width: 100%;
+    background-color: #d5d5d6;
+    /*margin-top: 64px;*/
+    margin-bottom: 0px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    margin-top: 64px;
+    z-index: 9999;
+}
+.myOrder_navigation_bar{
+    position: fixed;
+    top: 0;
+    left: 0;
+    margin-top: 114px;
+    height:50px;
+    width: 100%;
+    z-index: 9999;
+    background-color: white;
+}
+.search_ground {
+    line-height: 40px;
+    display: inline-block;
+    width: 95%;
+    height: 36px;
+    margin-left: 2.5%;
+    margin-top: 7px;
+    background-color: white;
+    border-radius: 50px;
+}
+
+.search_input {
+    display: inline-block;
+    height: 100%;
+    line-height: 30px;
+    width: 200px;
+
+}
+
+.myOrder_search .search_ground .search_input .input_area {
+    width: 200px;
+    height: 30px;
+    display: inline-block;
+    position: absolute;
+    /*top: -38px;*/
+    border: 0px;
+    margin-left: 3%;
+    margin-top: 5px;
+}
+
+.search_sign {
+    width: 20px;
+    height: 20px;
+    padding-top: 10px;
+    padding-left: 10px;
+}
+
+/*.myOrder_navigation_bar {*/
+    /*display: block;*/
+    /*width: 100%;*/
+    /*height: 10%;*/
+/*}*/
+
+.myOrder_navigation_bar_li {
+    /*margin-top: 2px;*/
+    width: 100%;
+    height: 43px;
+    float: left;
+    display: inline-block;
+    /*padding-bottom: 8px;*/
+    /*margin-left: 4%;*/
+
+}
+
+.myOrder_navigation_bar_sign {
+    width: 20px;
+    height: 16px;
+
+}
+
+.all_sign {
+    /*padding-left: 35%;*/
+}
+
+.sign_left {
+    /*padding-left: 35%;*/
+}
+
+.myOrder_navigation_bar_word {
+    display: block;
+    width: 100%;
+    /*height: 30px;*/
+    /*line-height: 30px;*/
+    text-align: center;
+
+}
+
+.myOrder_navigation_bar li:hover, .myOrder_navigation_bar li:active {
+    /*border-bottom: 2px solid #f67357;*/
+    box-sizing:border-box;
+    /*border-bottom-width: 15px;*/
+}
+
+.myOrder_navigation_bar_ul li {
+    display: inline-block;
+    width: 15%;
+    /*height: 52px;*/
+}
+
+.shop_sign {
+    float: left;
+    margin-left: 8px;
+    margin-top: 8px;
+    width: 22px;
+    height: 20px;
+}
+
+.shop_name {
+    float: left;
+    margin-left: 10px;
+    height: 24px;
+    /*width: 120px;*/
+    margin-top: 8px;
+    font-size: 15px;
+    line-height: 24px;
+}
+
+.right_sign {
+    float: left;
+    margin-left: 5px;
+    height: 16px;
+    width: 16px;
+    margin-top: 12px;
+
+}
+
+.order_state {
+    float: right;
+    margin-right: 10px;
+    height: 24px;
+    margin-top: 8px;
+    font-size: 12px;
+    line-height: 24px;
+    color: #727171;
+}
+
+.order_detail {
+    width: 100%;
+    height: 90px;
+    background-color: #F6F6F6;
+    position: relative;
+}
+
+.shop_photo {
+    width: 80px;
+    height: 80px;
+    margin-left: 5px;
+    margin-top: 4px;
+    float: left;
+}
+
+.good_detail {
+    font-size: 2px;
+    width: 120px;
+    height: 60px;
+    margin-top: 2x;
+    word-wrap: break-word;
+    /*overflow: hidden;*/
+    /*white-space:nowrap;*/
+    /*text-overflow:ellipsis;*/
+    /*-o-text-overflow:ellipsis;*/
+}
+
+.good_price {
+    position: relative;
+    float: right;
+    margin-right: 2%;
+    margin-top: 8px;
+    width: 60px;
+}
+
+.new_price {
+    float: right;
+    position: relative;
+    color: #FD5E5E;
+    font-size: 15px;
+}
+
+.old_price {
+    display: block;
+    float: right;
+    position: relative;
+    color: #B5B5B6;
+    font-size: 15px;
+    letter-spacing: 2px;
+    padding-top: 8px;
+}
+
+.good_num {
+    float: right;
+    position: relative;
+    color: #B5B5B6;
+    font-size: 20px;
+    padding-top: 5px;
+}
+
+.total {
+    /*margin-top: 95px;*/
+    font-size: 14px;
+    color: #727171;
+    width: 100%;
+    height: 30px;
+    display: block;
+    position: relative;
+    letter-spacing: 2px;
+    float: right;
+    /*margin-right: 10px;*/
+}
+
+.bottom_div {
+    width: 100%;
+    height: 40px;
+    float: right;
+    border-bottom: 10px solid #EEEFF1;
+    /*margin-top: 120px;*/
+    /*position: absolute;*/
+    display: block;
+}
+
+.bottom_sign {
+    width: 80px;
+    height: 40px;
+    border: none;
+    background: url(../img/bottomstyle.png) no-repeat scroll center transparent;
+    background-size: 100%;
+    text-align: center;
+    color: #898989;
+    float: right;
+    margin-right: 10px;
+}
+
+.bottom_word {
+    margin-top: 15px;
+    font-size: 12px;
+    position: relative;
+    margin-left: 12px;
+}
+
+
+/*新新改的*/
+.total_word{
+    position: relative;
+    float: right;
+    line-height: 30px;
+    height: 30px;
+    width:270px;
+}

@@ -11,29 +11,47 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Auth::routes();
+Route::get('/','HomeController@index');//首页
+
+// Home - 无须登录模块
+Route::group(['namespace'=>'Home','prefix'=>'home'],function(){
+	// Route::get('/productTest','Home\TestController@index');
+	// 商品列表、详情
+	Route::group(['prefix'=>'product'],function(){
+		Route::get('/list','ProductController@list');
+		Route::get('/detail/{id}','ProductController@detail');
+	});
+	// 帮助中心列表、详情
+	Route::group(['prefix'=>'help'],function(){
+		Route::get('/list','HelpController@list');
+		Route::get('/detail/{id}','HelpController@detail');
+	});
 });
 
-Auth::routes();
-
-Route::get('/productTest','Home\TestController@index');
-Route::get('/shopping','HomeController@shopping');
-
-Route::group(['namespace'=>'Home','middleware'=>['auth']],function(){
+// Home - 须登录模块 (普通会员)
+Route::group(['namespace'=>'Home','prefix'=>'home'
+	// ,'middleware'=>['auth']
+	],function(){
+	Route::resource('/address', 'AddressController');
+	// 订单列表、详情
+	Route::group(['prefix'=>'order'],function(){
+		Route::get('/list','OrderController@list');
+		Route::get('/detail/{id}','OrderController@detail');
+	});
 	Route::get('/feedback','FeedbackController@index');
 	Route::post('/feedback','FeedbackController@store');
 });
 
-Route::group(['prefix'=>'admin','middleware'=>['auth']],function(){
-	Route::get('/', 'HomeController@index');
-	Route::get('/user', 'Admin\UserController@index');
-	Route::get('/user/modifypassword','Admin\UserController@modifypassword');
-	Route::post('/user/{id}', 'Admin\UserController@update');
-	Route::post('/user/modifypassword/{id}','Admin\UserController@updatepassword');
+// Home - 分销商 模块
+Route::group(['namespace'=>'Home','prefix'=>'home','middleware'=>['auth','can:fx']],function(){
+
 });
 
+// Admin - 管理员 模块
 Route::group(['namespace'=>'Admin','prefix'=>'admin','middleware'=>['auth','can:admin']],function(){
+	Route::get('/user/modifypassword','Admin\UserController@modifypassword');
+	Route::post('/user/modifypassword/{id}','Admin\UserController@updatepassword');
 	Route::resource('/users', 'UsersController');
 	Route::resource('/productCategory','ProductCategoryController');
 	Route::resource('/product','ProductController');
@@ -43,7 +61,6 @@ Route::group(['namespace'=>'Admin','prefix'=>'admin','middleware'=>['auth','can:
 	Route::post('/distributor/sortByName','DistributorController@sortByName');
 	Route::resource('/distributor','DistributorController');
 	Route::post('/distributor/add','DistributorController@add');
-
 });
 
 

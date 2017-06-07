@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ProductCategory extends Model
 {
-    //
+
     use SoftDeletes;
-    protected $table = 'product_categories';
+    protected $dates = ['deleted_at']; //开启deleted_at
+    protected $table = 'product_category';
 
     public function children()
     {
