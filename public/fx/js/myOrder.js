@@ -70,20 +70,22 @@ function fetchEvaluate() {
     this.data = array;
 
 }
+
 function render()
-{   console.log('hello');
+{       
+        var pre = 'http://'+window.location.host;
         $('#content').empty();
         this.data.map(function(item, index){
             $('#content').append(
             '<div style="position: relative;width: 100%;height: 200px;margin-bottom: 10px;background-color: white;">\
                 <div class="myOrder_headline" style="width: 100%;height: 40px;">\
-                <img src="../img/shop_sign.png" class="shop_sign">\
+                <img src="'+pre+'/fx/img/shop_sign.png" class="shop_sign">\
                 <div class="shop_name">'+item.shop_name+'</div>\
-                <img src="../img/right_arrow.png" class="right_sign">\
+                <img src="'+pre+'/fx/img/right_arrow.png" class="right_sign">\
                 <span class="order_state">等待买家付款</span>\
                 </div>\
                 <div class="order_detail">\
-                <img src="../img/shop_photo1.png" class="shop_photo">\
+                <img src="'+pre+'/fx/img/shop_photo1.png" class="shop_photo">\
                 <div style="float: left;margin-left:10px;margin-top:7px;">\
                 <p style="font-size: 12px;color:black;" class="good_name">菲律宾进口香蕉</p>\
                 <p class="good_detail">新鲜梨酥雪梨发货供货的供货皇冠分隔符梨</p>\
@@ -111,11 +113,11 @@ function render()
 function handleClick(number)
 {
     switch (number) {
-        case 0: console.log("click");fetchALL();render();break;
-        case 1: console.log("click");fetchPay();render();break;
-        case 2: console.log("click");fetchShipment();render();break;
-        case 3: console.log("click");fetchDeliver();render();break;
-        case 4: console.log("click");fetchReceive();render();break;
-        case 5: console.log("click");fetchEvaluate();render();break;
+        case 0: fetchALL();render();break;
+        case 1: fetchPay();render();break;
+        case 2: fetchShipment();render();break;
+        case 3: fetchDeliver();render();break;
+        case 4: fetchReceive();render();break;
+        case 5: fetchEvaluate();render();break;
     }
 }

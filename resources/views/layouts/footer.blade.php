@@ -2,27 +2,43 @@
     <div class="bottom">
         <ul class='bottom_container'>
             <li>
-                <a href=''>
-                    <img src="{{ url('fx/img/home_active.png') }}" class='home'>
-                    <p class='bottom_content' style="color: #474644">首页</p>
+                <a href="{{url('/')}}">
+                    @if ($footer == 'home')
+                    <img src="{{ url('fx/img/home-b.png') }}" class='home'>
+                    @else 
+                    <img src="{{ url('fx/img/home-w.png') }}" class='home'>
+                    @endif
+                    <p class='bottom_content' @if($footer == 'home') style="color: #474644;" @endif>首页</p>
                 </a>
             </li>
             <li>
-                <a href=''>
-                    <img src="{{ url('fx/img/products.png') }}" class='products_actived'>
-                    <p class='bottom_content'>商品</p>
+                <a href="{{url('/home/product/list')}}">
+                    @if ($footer == 'product')
+                    <img src="{{ url('fx/img/product-b.png') }}" class='products_actived'>
+                    @else 
+                    <img src="{{ url('fx/img/product-w.png') }}" class='products_actived''>
+                    @endif
+                    <p class='bottom_content' @if($footer == 'product') style="color: #474644;" @endif>商品</p>
                 </a>
             </li>
             <li>
-                <a href=''>
-                    <img src="{{ url('fx/img/shoppingCart.png') }}" class='shoppingCart'>
-                    <p class='bottom_content'>购物车</p>
+                <a href="{{url('/home/cart')}}">
+                    @if ($footer == 'cart')
+                    <img src="{{ url('fx/img/cart-b.png') }}" class='shoppingCart'>
+                    @else 
+                    <img src="{{ url('fx/img/cart-w.png') }}" class='shoppingCart''>
+                    @endif
+                    <p class='bottom_content' @if($footer == 'cart') style="color: #474644;" @endif>购物车</p>
                 </a>
             </li>
             <li>
-                <a href=''>
-                    <img src="{{ url('fx/img/person.png') }}" class='bottom_img'>
-                    <p class='bottom_content'>我的</p>
+                <a href="{{url('/home/userinfo')}}">
+                    @if ($footer == 'user')
+                    <img src="{{ url('fx/img/user-b.png') }}" class='bottom_img'>
+                    @else 
+                    <img src="{{ url('fx/img/user-w.png') }}" class='bottom_img''>
+                    @endif
+                    <p class='bottom_content' @if($footer == 'user') style="color: #474644;" @endif>我的</p>
                 </a>
             </li>
         </ul>

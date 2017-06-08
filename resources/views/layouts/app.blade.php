@@ -56,12 +56,12 @@
     </div>
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
-    <script src="{{ url('fx/common/zepto.min.js')}}"></script>
-    <script src="http://cdn.webfont.youziku.com/wwwroot/js/wf/youziku.api.min.js"></script>
+    {{-- <script src="{{ url('fx/common/zepto.min.js')}}"></script> --}}
+    {{-- <script src="http://cdn.webfont.youziku.com/wwwroot/js/wf/youziku.api.min.js"></script> --}}
     @yield('script')
     <script type="text/javascript">
-        $youziku.load(".content", "f61ea8f5934348a2916e178809a3cbae", "yuweij");
-        $youziku.draw();
+        // $youziku.load(".content", "f61ea8f5934348a2916e178809a3cbae", "yuweij");
+        // $youziku.draw();
     </script>
 </body>
 </html>

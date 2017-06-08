@@ -8,7 +8,7 @@
 
 @section('script')
     @parent
-    <script type="text/javascript" src="{{ url('fxfx/js/pages/myOrder.js') }}"></script>
+    <script type="text/javascript" src="{{ url('fx/js/myOrder.js') }}"></script>
 @endsection
 
 @section('content')

@@ -11,9 +11,7 @@ class FeedbackController extends Controller
     //
     public function index()
     {
-    	$feedbacks = Feedback::paginate(5);
-
-
+    	$feedbacks = Feedback::paginate(config('app.paginate10'));
     	return view(config('app.theme').'.admin.feedback.index')->with('feedbacks',$feedbacks);
     }
 

@@ -6,6 +6,8 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
+use Session;
 
 class RegisterController extends Controller
 {
@@ -27,7 +29,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/admin';
+    protected $redirectTo = '/home/userinfo';
 
     /**
      * Create a new controller instance.
@@ -49,11 +51,56 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
+            'email' => 'required|email|max:255|unique:user',
             'password' => 'required|min:6|confirmed',
         ]);
     }
 
+    /**
+     * Process the user registration.
+     *
+     * @return void
+     */
+    protected function register(Request $request)
+    {
+        $this->validator($request->all());
+        $user = $this->createUser($request->all());
+        if (!$user) {
+            return $this->sendFailed($request);
+        }
+        auth()->login($user);
+        return redirect($this->redirectTo);
+    }
+
+    //注册失败提示
+    public function sendFailed(Request $request)
+    {
+        return redirect()->back()
+            // ->withInput($request->only($this->loginUsername(), 'remember'))
+            ->withErrors([
+                $this->loginUsername() => '用户名或密码错误！',
+            ]);
+    }
+    /**
+     * Create a new user.
+     *
+     * @param array $data
+     *
+     * @return User
+     */
+    protected function createUser(array $data)
+    {
+        // $user = new User;
+        // $user->email = $data->email;
+        return User::create([
+            'email'       => $data['email'],
+            'name'    => $data['name'],
+            'password'    => bcrypt($data['password']),
+            'phone'        => $data['phone'],
+            'sex'        => $data['sex']
+        ]);
+    }
+    
     /**
      * Create a new user instance after a valid registration.
      *
@@ -62,6 +109,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        return 22;
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],

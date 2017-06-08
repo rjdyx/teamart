@@ -1,40 +1,21 @@
-<!DOCTYPE html >
-<html>
-<head>
-	<title>个人中心</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,minimal-ui">
-	<meta name="format-detection" content="telephone=no">
-	<link rel="stylesheet" type="text/css" href="../css/reset.css">
-	<link rel="stylesheet" type="text/css" href="../css/header.css">
-	<link rel="stylesheet" type="text/css" href="../css/personalCenter.css">
-	<script type="text/javascript" src="../js/zepto.min.js"></script>
-	<script type="text/javascript" src="http://cdn.webfont.youziku.com/wwwroot/js/wf/youziku.api.min.js"></script>
-	<script type="text/javascript">
-	   $youziku.load(".list_box,.header_title,.personal_center_name,.tea,.personal_center_list_input,#personal_center_list_button2,#webfont", "f61ea8f5934348a2916e178809a3cbae", "yuweij");
-	   $youziku.draw();
-	</script>
+@extends('layouts.app')
 
-</head>
-<body>
-	<!-- 头部 -->
-	<!-- 头部 -->
-	<div class="header">
-		<div class='condition'></div>
-		<div class='header_turnBack' onclick="javascript:history.go(-1);">返回</div>
-			<div class='msg'>
-				<div class='msg_container'>
-					<img src='../img/msg_tips.png' class='msg_tips'>
-						<div class='tips_count'>4</div>
-						<div class='msg_content'>消息</div>
-					</div>
-				</div>
-		<div class='header_title'>个人中心</div>
-	</div>
+@section('title') 个人中心 @endsection
 
+@section('css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('fx/css/personalCenter.css') }}">
+@endsection
+
+@section('script')
+    @parent
+
+@endsection
+
+@section('content')
+
+    @include("layouts.header-info")
 	<!-- 内容 -->
 	<div class="personal_center_content">
-
 		<div class="personal_center_img_Bamboo">
 			<div class="personal_center_head_photo"></div>
 			<div class="personal_center_name">周星驰</div>
@@ -59,12 +40,8 @@
 						</div>
 					</li>
 				</ul>
-			</div>
-		 		
+			</div>	
 		</div>
-			
-		
-
 
 		<div class="personal_center_div_list">
 			<ul class="list_box">
@@ -117,41 +94,5 @@
 			</ul>
 		</div>
 	</div>
-	
-	<!-- 底部 -->
-	<div class="bottom">
-		<ul class='bottom_container'>
-			<li>
-				<a href=''>
-					<img src='../img/home_active.png' class='home'>
-					<p class='bottom_content' style="color: #474642;">首页</p>
-				</a>
-			</li>
-			<li>
-				<a href=''>
-					<img src='../img/products.png' class='products_actived'>
-					<p class='bottom_content'>商品</p>
-				</a>
-			</li>
-			<li>
-				<a href=''>
-					<img src='../img/shoppingCart.png' class='shoppingCart'>
-					<p class='bottom_content'>购物车</p>
-				</a>
-			</li>
-			<li>
-				<a href="">
-					<img src='../img/collection.png' class='collection'>
-					<p class='bottom_content'>收藏</p>
-				</a>
-			</li>
-			<li>
-				<a href=''>
-					<img src='../img/person.png' class='bottom_img'>
-					<p class='bottom_content'>我的</p>
-				</a>
-			</li>
-		</ul>
-	</div>
-</body>
-</html>
+    @include("layouts.footer")
+@endsection

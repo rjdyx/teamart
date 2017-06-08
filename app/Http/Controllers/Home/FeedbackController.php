@@ -7,6 +7,7 @@ use App\FeedbackImage;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use PhpParser\Node\Expr\Cast\Array_;
+use Illuminate\Support\Facades\Auth;
 
 class FeedbackController extends Controller
 {

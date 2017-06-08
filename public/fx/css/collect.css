@@ -115,7 +115,7 @@ margin-bottom: 0;
 	vertical-align: middle;
 }
 .products_nav{
-	height: 21px;
+	/*height: 21px;*/
 	padding: 14px;
 	border-bottom: solid 1px #dadada;
 	overflow: hidden;

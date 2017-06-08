@@ -13,6 +13,7 @@ return [
     */
     'name' => 'Laravel',
     'theme' => 'fx',
+    'paginate5' => 5,
     'paginate10' => 10,
     'paginate15' => 15,
     /*
@@ -179,6 +180,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         //Ueditor
         Stevenyangecho\UEditor\UEditorServiceProvider::class,
+        App\Providers\IQueryServiceProvider::class, //注册iquery
     ],
 
     /*
@@ -227,7 +229,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-
+        'IQuery' => App\Facades\IQueryClass::class, //分页生成器的门面的别名
     ],
 
 ];

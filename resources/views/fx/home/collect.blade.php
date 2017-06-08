@@ -1,29 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<title>我的收藏</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,minimal-ui">
-	<meta name="format-detection" content="telephone=no">
-	<link rel="stylesheet" type="text/css" href="../css/reset.css">
-	<link rel="stylesheet" type="text/css" href="../css/collect.css">
-	<script type="text/javascript" src="../js/zepto.min.js"></script>
-	<script type="text/javascript" src="http://cdn.webfont.youziku.com/wwwroot/js/wf/youziku.api.min.js"></script>
-</head>
-<body>
-	<!-- 头部 -->
-	<div class="header">
-		<div class='condition'></div>
-		<div class='header_turnBack' onclick="javascript:history.go(-1);">返回</div>
-			<div class='msg'>
-				<div class='msg_container'>
-					<img src='../img/msg_tips.png' class='msg_tips'>
-						<div class='tips_count'>4</div>
-						<div class='msg_content'>消息</div>
-					</div>
-				</div>
-		<div class='header_title'>我的收藏</div>
-	</div>
+@extends('layouts.app')
+
+@section('title') 我的收藏 @endsection
+
+@section('css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('fx/css/collect.css') }}">
+@endsection
+
+@section('script')
+    @parent
+	<script type="text/javascript" src="{{ url('fx/js/collect.js') }}"></script>
+@endsection
+
+@section('content')
+
+    @include("layouts.header-info")
 	<!-- 我的收藏列表 -->
 	<div class="container">
 		<div class="products">
@@ -31,8 +21,8 @@
 				<li class="products_list">
 					<div class="products_nav">
 						<div class="products_nav_left">
-							<img class="products_nav_img" src="../img/choose.png">
-							<img class="goods_nav_img" src="../img/home_active.png">
+							<img class="products_nav_img" src="{{ url('fx/img/choose.png') }}">
+							<img class="goods_nav_img" src="{{ url('fx/img/home_active.png') }}">
 							<span class="products_nav_font">绿茶宝塔镇河妖</span>
 						</div>
 						<div class="products_nav_right">
@@ -42,7 +32,7 @@
 					<div class="products_details">
 						<div class="products_details_left">
 							<div class="products_details_img">
-								<img src="../img/shop11.png">
+								<img src="{{ url('fx/img/shop11.png') }}">
 							</div>
 						</div>
 						<div class="products_details_right">
@@ -59,8 +49,8 @@
 				<li class="products_list">
 					<div class="products_nav">
 						<div class="products_nav_left">
-							<img class="products_nav_img" src="../img/choose.png">
-							<img class="goods_nav_img" src="../img/home_active.png">
+							<img class="products_nav_img" src="{{ url('fx/img/choose.png') }}">
+							<img class="goods_nav_img" src="{{ url('fx/img/home_active.png') }}">
 							<span class="products_nav_font">绿茶宝塔镇河妖</span>
 						</div>
 						<div class="products_nav_right">
@@ -70,7 +60,7 @@
 					<div class="products_details">
 						<div class="products_details_left">
 							<div class="products_details_img">
-								<img src="../img/shop11.png">
+								<img src="{{ url('fx/img/shop11.png') }}">
 							</div>
 						</div>
 						<div class="products_details_right">
@@ -87,8 +77,8 @@
 				<li class="products_list">
 					<div class="products_nav">
 						<div class="products_nav_left">
-							<img class="products_nav_img" src="../img/choose.png">
-							<img class="goods_nav_img" src="../img/home_active.png">
+							<img class="products_nav_img" src="{{ url('fx/img/choose.png') }}">
+							<img class="goods_nav_img" src="{{ url('fx/img/home_active.png') }}">
 							<span class="products_nav_font">绿茶宝塔镇河妖</span>
 						</div>
 						<div class="products_nav_right">
@@ -98,7 +88,7 @@
 					<div class="products_details">
 						<div class="products_details_left">
 							<div class="products_details_img">
-								<img src="../img/shop11.png">
+								<img src="{{ url('fx/img/shop11.png') }}">
 							</div>
 						</div>
 						<div class="products_details_right">
@@ -115,8 +105,8 @@
 				<li class="products_list">
 					<div class="products_nav">
 						<div class="products_nav_left">
-							<img class="products_nav_img" src="../img/choose.png">
-							<img class="goods_nav_img" src="../img/home_active.png">
+							<img class="products_nav_img" src="{{ url('fx/img/choose.png') }}">
+							<img class="goods_nav_img" src="{{ url('fx/img/home_active.png') }}">
 							<span class="products_nav_font">绿茶宝塔镇河妖</span>
 						</div>
 						<div class="products_nav_right">
@@ -126,7 +116,7 @@
 					<div class="products_details">
 						<div class="products_details_left">
 							<div class="products_details_img">
-								<img src="../img/shop11.png">
+								<img src="{{ url('fx/img/shop11.png') }}">
 							</div>
 						</div>
 						<div class="products_details_right">
@@ -153,6 +143,4 @@
 			<p class="delete">删除</p>
 		</div>
 	</div>
-	<script type="text/javascript" src="../js/pages/collect.js"></script>
-</body>
-</html>
+@endsection

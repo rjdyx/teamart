@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\ArticleCategory;
 use App\Article;
+use Illuminate\Support\Facades\Auth;
 
 class HelpController extends Controller
 {

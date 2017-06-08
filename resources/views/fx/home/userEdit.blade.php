@@ -1,36 +1,19 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
-<html>
-<head>
-	<title>个人资料</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,minimal-ui">
-	<meta name="format-detection" content="telephone=no">
-	<link rel="stylesheet" type="text/css" href="../css/reset.css">
-	<link rel="stylesheet" type="text/css" href="../css/personalInformation.css">
-	<link rel="stylesheet" type="text/css" href="../css/header.css">
-	<script type="text/javascript" src="../js/zepto.min.js"></script>
-	<script type="text/javascript" src="http://cdn.webfont.youziku.com/wwwroot/js/wf/youziku.api.min.js"></script>
-	<script type="text/javascript">
-	   $youziku.load(".bottom2,.personal_assets_two_name,ul,p,.personal_info_two_name,.tea,.personal_info_list_input,.personal_info_list_select,#webfont", "f61ea8f5934348a2916e178809a3cbae", "yuweij");
-	   $youziku.draw();
-	</script>
+@extends('layouts.app')
 
-</head>
-<body>
-	<!-- 头部 -->
-	<div class="header">
-		<div class='condition'></div>
-		<div class='header_turnBack' onclick="javascript:history.go(-1);">返回</div>
-			<div class='msg'>
-				<div class='msg_container'>
-					<img src='../img/msg_tips.png' class='msg_tips'>
-						<div class='tips_count'>4</div>
-						<div class='msg_content'>消息</div>
-					</div>
-				</div>
-		<div class='header_title'>我的资产</div>
-	</div>
+@section('title') 个人资料 @endsection
 
+@section('css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('fx/css/personalInformation.css') }}">
+@endsection
+
+@section('script')
+    @parent
+
+@endsection
+
+@section('content')
+
+    @include("layouts.header-info")
 	<!-- 内容 -->
 	<div class="personal_info_content">
 		<div class="personal_assets_img_Bamboo">
@@ -99,6 +82,5 @@
 	
 	<!-- 底部 -->
 	<div class="bottom2">确定保存</div>
-	
-</body>
-</html>
+@endsection
+

@@ -11,6 +11,8 @@
 |
 */
 
+Route::get('/layout','Auth\LoginController@layout');//退出
+
 Auth::routes();
 Route::get('/','HomeController@index');//首页
 
@@ -33,12 +35,28 @@ Route::group(['namespace'=>'Home','prefix'=>'home'],function(){
 Route::group(['namespace'=>'Home','prefix'=>'home'
 	// ,'middleware'=>['auth']
 	],function(){
+
+	//地址管理
 	Route::resource('/address', 'AddressController');
-	// 订单列表、详情
+
+	// 订单部分
 	Route::group(['prefix'=>'order'],function(){
 		Route::get('/list','OrderController@list');
 		Route::get('/detail/{id}','OrderController@detail');
 	});
+
+	//收藏
+	Route::get('/collect','OrderController@collect');
+
+	//购物车
+	Route::get('/cart','CartController@index');
+
+	//用户部分
+	Route::get('/userinfo','UserController@userInfo');
+	Route::get('/userasset','UserController@userAsset');
+	Route::resource('/user', 'UserController');
+
+	//意见反馈
 	Route::get('/feedback','FeedbackController@index');
 	Route::post('/feedback','FeedbackController@store');
 });
@@ -50,17 +68,41 @@ Route::group(['namespace'=>'Home','prefix'=>'home','middleware'=>['auth','can:fx
 
 // Admin - 管理员 模块
 Route::group(['namespace'=>'Admin','prefix'=>'admin','middleware'=>['auth','can:admin']],function(){
-	Route::get('/user/modifypassword','Admin\UserController@modifypassword');
-	Route::post('/user/modifypassword/{id}','Admin\UserController@updatepassword');
-	Route::resource('/users', 'UsersController');
-	Route::resource('/productCategory','ProductCategoryController');
-	Route::resource('/product','ProductController');
-	Route::resource('/product/{pid}/type','ProductTypeController');
-	Route::resource('/product/{pid}/image','ProductImageController');
-	Route::get('/feedback','FeedbackController@index');
-	Route::post('/distributor/sortByName','DistributorController@sortByName');
-	Route::resource('/distributor','DistributorController');
-	Route::post('/distributor/add','DistributorController@add');
+	//用户管理
+	Route::resource('/user', 'UserController');
+
+	//订单管理
+	Route::resource('/order', 'OrderController');
+
+	//活动管理
+	Route::resource('/activity', 'ActivityController');
+
+	//文章分类管理
+	Route::resource('/article_category', 'ArticleCategoryController');
+
+	//文章管理
+	Route::resource('/article', 'ArticleController');
+
+	//评论管理
+	Route::resource('/comment', 'CommentController');
+
+	//意见反馈管理
+	Route::resource('/feedback', 'FeedbackController');
+
+	//商品分类管理
+	Route::resource('/product_category', 'ProductCategoryController');
+
+	//商品管理
+	Route::resource('/product', 'ProductController');
+
+	//商品规格管理
+	Route::resource('/specification', 'SpecificationController');
+
+	//商品品牌管理
+	Route::resource('/brand', 'BrandController');
+
+	//系统管理
+	Route::resource('/system', 'SystemController');
 });
 
 

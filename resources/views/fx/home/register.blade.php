@@ -4,15 +4,7 @@
     <title>注册</title>
     <meta name="viewport" charset="UTF-8" content="width=device-width,initial-scale=1,user-scalable=no,minimal-ui">
     <meta name="format-detection" content="telephone=no">
-    <link rel="stylesheet" type="text/css" href="../css/reset.css">
-    <!--<link rel="stylesheet" type="text/css" href="../css/header.css">-->
     <link rel="stylesheet" type="text/css" href="../css/register.css">
-    <script type="text/javascript" src="../js/zepto.min.js"></script>
-    <script type="text/javascript" src="http://cdn.webfont.youziku.com/wwwroot/js/wf/youziku.api.min.js"></script>
-    <script type="text/javascript">
-        $youziku.load(".content", "f61ea8f5934348a2916e178809a3cbae", "yuweij");
-        $youziku.draw();
-    </script>
 </head>
 <body>
 <div class="content">
