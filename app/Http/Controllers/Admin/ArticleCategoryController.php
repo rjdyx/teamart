@@ -38,7 +38,7 @@ class ArticleCategoryController extends Controller
     //保存新建数据
     public function store(Request $request)
     {
-        $this->StoreOrUpdate($request);
+        return $this->StoreOrUpdate($request);
     }
 
     //编辑数据
@@ -51,7 +51,7 @@ class ArticleCategoryController extends Controller
     //编辑保存
     public function update(Request $request, $id)
     {
-        $this->StoreOrUpdate($request, $id);
+        return $this->StoreOrUpdate($request, $id);
     }
 
     //单条删除
