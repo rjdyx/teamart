@@ -54,6 +54,25 @@ class LoginController extends Controller
         return $this->sendFailedLoginResponse($request);
     }
 
+    //管理登录方法
+    public function adminLoginCreate()
+    {
+        return view(config('app.theme').'.admin.login');
+    }
+
+    //管理登录方法
+    public function adminLogin(Request $request)
+    {
+        $this->validateLogin($request);//验证
+        $newRequest = $this->credentials($request);//返回字段
+
+        if ($this->guard()->attempt($newRequest)) {
+            return $this->sendLoginResponse($request);//成功
+        }
+        $this->incrementLoginAttempts($request); //失败
+        return $this->sendFailedLoginResponse($request);
+    }
+
     //获取登录字段
     public function credentials(Request $request)
     {

@@ -179,10 +179,10 @@ body {
 .active-contentRight {
     display: inline-block;
     height: 200px;
-    width: 60%;
+    width: calc(60% - 2px);
     float: right;
     position: relative;
-    left: 2px;
+    // left: 2px;
 }
 
 .contentRight-top {

@@ -21,7 +21,7 @@ class UserController extends Controller
     public function index()
     {
         //
-        return view(config('app.theme').'.admin.user.index')->with('user',Auth::User());
+        return view(config('app.theme').'.admin.user.list')->with('user',Auth::User());
     }
 
 

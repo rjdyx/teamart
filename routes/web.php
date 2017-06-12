@@ -11,6 +11,8 @@
 |
 */
 
+Route::get('admin/login', 'Auth\LoginController@adminLoginCreate');
+Route::post('admin/login', 'Auth\LoginController@adminLogin');
 Route::get('/layout','Auth\LoginController@layout');//退出
 
 Auth::routes();
@@ -21,12 +23,12 @@ Route::group(['namespace'=>'Home','prefix'=>'home'],function(){
 	// Route::get('/productTest','Home\TestController@index');
 	// 商品列表、详情
 	Route::group(['prefix'=>'product'],function(){
-		Route::get('/list','ProductController@list');
+		Route::get('/list','ProductController@index');
 		Route::get('/detail/{id}','ProductController@detail');
 	});
 	// 帮助中心列表、详情
 	Route::group(['prefix'=>'help'],function(){
-		Route::get('/list','HelpController@list');
+		Route::get('/list','HelpController@index');
 		Route::get('/detail/{id}','HelpController@detail');
 	});
 });
@@ -41,7 +43,7 @@ Route::group(['namespace'=>'Home','prefix'=>'home'
 
 	// 订单部分
 	Route::group(['prefix'=>'order'],function(){
-		Route::get('/list','OrderController@list');
+		Route::get('/list','OrderController@index');
 		Route::get('/detail/{id}','OrderController@detail');
 	});
 
@@ -67,11 +69,27 @@ Route::group(['namespace'=>'Home','prefix'=>'home','middleware'=>['auth','can:fx
 });
 
 // Admin - 管理员 模块
-Route::group(['namespace'=>'Admin','prefix'=>'admin','middleware'=>['auth','can:admin']],function(){
-	//用户管理
-	Route::resource('/user', 'UserController');
+Route::group(['namespace'=>'Admin','prefix'=>'admin'
+	// ,'middleware'=>['auth','can:admin']
+	],function(){
 
-	//订单管理
+	// 用户管理
+	Route::group(['prefix'=>'user'],function(){
+		Route::resource('/agent', 'AgentController');
+		Route::resource('/agentrole', 'AgentRoleController');
+		Route::resource('/list', 'UserController');
+	});
+
+	// 商品管理
+	Route::group(['prefix'=>'goods'],function(){
+		Route::resource('/category', 'CategoryController');
+		Route::resource('/spec', 'SpecController');
+		Route::resource('/brand', 'BrandController');
+		Route::resource('/list', 'GoodsController');
+		Route::resource('/comment', 'GoodsCommentController');
+	});
+
+	//订单管理s
 	Route::resource('/order', 'OrderController');
 
 	//活动管理
