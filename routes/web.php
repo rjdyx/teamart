@@ -23,12 +23,12 @@ Route::group(['namespace'=>'Home','prefix'=>'home'],function(){
 	// Route::get('/productTest','Home\TestController@index');
 	// 商品列表、详情
 	Route::group(['prefix'=>'product'],function(){
-		Route::get('/list','ProductController@list');
+		Route::get('/list','ProductController@index');
 		Route::get('/detail/{id}','ProductController@detail');
 	});
 	// 帮助中心列表、详情
 	Route::group(['prefix'=>'help'],function(){
-		Route::get('/list','HelpController@list');
+		Route::get('/list','HelpController@index');
 		Route::get('/detail/{id}','HelpController@detail');
 	});
 });
@@ -43,7 +43,7 @@ Route::group(['namespace'=>'Home','prefix'=>'home'
 
 	// 订单部分
 	Route::group(['prefix'=>'order'],function(){
-		Route::get('/list','OrderController@list');
+		Route::get('/list','OrderController@index');
 		Route::get('/detail/{id}','OrderController@detail');
 	});
 

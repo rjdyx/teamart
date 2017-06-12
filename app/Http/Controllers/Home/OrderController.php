@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 class OrderController extends Controller
 {
 	//订单列表页
-	public function list (Request $request) {
+	public function index (Request $request) {
 		$lists = Order::where('type','order')
 		->where('user_id',Auth::user()->id)
 		->paginate(config('app.paginate10'));

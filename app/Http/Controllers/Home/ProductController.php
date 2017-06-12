@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 class ProductController extends Controller
 {
 	//商品列表页
-	public function list (Request $request) {
+	public function index (Request $request) {
 		$lists = Product::where('user_id',Auth::user()->id)
 		->paginate(config('app.paginate10'));
 		$title = '商品搜索';

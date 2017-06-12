@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 class HelpController extends Controller
 {
 	//帮助中心列表页
-	public function list (Request $request) {
+	public function index (Request $request) {
 		$lists = ArticleCategory::get();
 		$title = '帮助中心';
 		return view(config('app.theme').'.home.helpList')->with(['lists'=>$lists, 'title'=>$title]);
