@@ -56,6 +56,7 @@ Route::group(['namespace'=>'Home','prefix'=>'home'
 	//用户部分
 	Route::get('/userinfo','UserController@userInfo');
 	Route::get('/userasset','UserController@userAsset');
+	Route::get('/useredit','UserController@edit');
 	Route::resource('/user', 'UserController');
 
 	//意见反馈

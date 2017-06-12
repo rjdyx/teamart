@@ -185,5 +185,7 @@
     </div>
     <!-- /agentRole -->
   </div>
+  
    @include("fx.admin.layouts.slide")
+
 @endsection

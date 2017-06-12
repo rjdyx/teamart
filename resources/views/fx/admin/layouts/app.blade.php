@@ -55,8 +55,6 @@
         @yield('content')
     </div>
 
-    <script src="{{url('admin/common/plugins/jQuery/jquery-2.2.3.min.js')}}"></script>
-    <script src="{{url('admin/common/bootstrap/js/bootstrap.min.js')}}"></script>
     <script src="{{url('admin/common/dist/js/app.min.js')}}"></script>
     <script>
         (function($){

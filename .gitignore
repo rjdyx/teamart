@@ -1,4 +1,5 @@
 /node_modules
+!node_modules/node-sass
 /public/upload
 /public/uploads
 
@@ -14,3 +15,5 @@ Homestead.yaml
 .env
 
 /storage/logs/laravel.log
+
+npm-debug.log
