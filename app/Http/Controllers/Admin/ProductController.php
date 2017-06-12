@@ -1,127 +1,127 @@
 <?php
-
+/*
+ * @version: 0.1 商品控制器
+ * @author: gsl
+ * @date: 2017/06/08
+ * @description:数据增删查改
+ *
+ */
 namespace App\Http\Controllers\Admin;
 
 use App\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Redirect;
+use IQuery;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    //首页 (列表页)
+    public function index(Request $request)
     {
-        $products = Product::paginate(15);
-        return view(config('app.theme').'.admin.product.index')->with('products',$products);
+        $lists = Product::paginate(config('app.paginate10'));
+        return view(config('app.theme').'.admin.product.index')->with('lists',$lists);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    //查看单条信息
+    public function show($id)
+    {
+        return Product::find($id);
+    }
+
+    //数据创建
     public function create()
     {
-        //
         return view(config('app.theme').'.admin.product.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    //保存新建数据
     public function store(Request $request)
     {
-        //
-        $this->validate($request, [
-            'title' => 'required',  
-            'category' => 'integer|required',
-            'content' => 'required',
-            ]);
-        $product = new Product;
-        $product->title = $request->title;
-        $product->category_id = $request->category;
-        $product->description = $request->content;
-        if($product->save()){
-            return Redirect::to('admin/product')->with('status', '保存成功');
-        }else{
-            return Redirect::back()->withErrors('保存失败');
-        }
+        return $this->StoreOrUpdate($request);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Product $product)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
+    //编辑数据
     public function edit($id)
     {
-        //
-        $product = Product::find($id);
-        return view(config('app.theme').'.admin.product.edit')->with('product',$product);
+        $data = Product::find($id);
+        return view(config('app.theme').'.admin.product.edit')->with('data',$data);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
+    //编辑保存
     public function update(Request $request, $id)
     {
-        //
+        return $this->StoreOrUpdate($request, $id);
+    }
+
+    //单条删除
+    public function destroy($id)
+    {
+        $data = Product::find($id);
+        if($data->delete()){
+            IQuery::destroyPic(new Product, $id);//公共工具删除图片
+            return Redirect::back()->withErrors('删除成功');
+        }
+        return Redirect::back()->withErrors('删除失败');
+    }
+
+    //保存方法
+    public function StoreOrUpdate(Request $request, $id = -1)
+    {
         $this->validate($request, [
-            'title' => 'required',  
-            'category' => 'integer|required',
-            'status' => 'in:0,1',
-            'content' => 'required',
-            ]);
-        $product = Product::find($id);
-        $product->title = $request->title;
-        $product->category_id = $request->category;
-        $product->description = $request->content;
-        $product->status = $request->status;
-        if($product->save()){
+            'name' => [
+                'required',
+                'max:50', 
+                //name+category_id+软删除 唯一验证               
+                Rule::unique('product_')->ignore($id)->where(function($query) use ($id) {
+                    $query->where('category_id',$request->category_id)->whereNull('deleted_at');
+                })
+            ], 
+            'price_raw'=>'nullable|numeric',
+            'price'=>'required|numeric',
+            'origin'=>'required|max:255',
+            'category_id'=>'required',
+            'brand_id'=>'required',
+            'date'=>'required|date',
+            'desc' => 'nullable|max:255'
+        ]);
+
+        //判断 新增/编辑
+        if ($id == -1) {
+            $model = new Product;
+        } else {
+            $model = Product::find($id);
+        }
+
+        //接收数据 加入model
+        $model->setRawAttributes($request->only(['category_id','brand_id','name','price_raw','price','origin','date','desc']));
+
+        //上传图片
+        $pics = 'false';
+        if ($request->hasFile('img')) $pics = IQuery::upload($request);
+        if ($pics != 'false') {
+            $model->img = $pics['pic'];
+            $model->thumb = $pics['pic_thumb'];
+        }
+
+        if ($id == -1) {
+            $model->user_id = Auth::user()->id;
+        } else {
+            $model->id = $id;
+        }
+
+        //保存数据
+        if($model->save()){
+            if ($request->hasFile('imgs')) {
+                $pics = IQuery::uploads($request,'imgs',true);
+
+            }
+            if ($id != -1) {
+                IQuery::destroyPic(new ProductImg, $id);//公共工具删除图片
+            }
             return Redirect::to('admin/product')->with('status', '保存成功');
         }else{
             return Redirect::back()->withErrors('保存失败');
-        }
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-        $product = Product::find($id);
-        if($product->delete()){
-            return Redirect::back();
-        }else{
-            return Redirect::back()->withErrors('删除失败');
         }
     }
 }

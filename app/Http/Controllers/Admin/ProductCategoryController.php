@@ -1,125 +1,108 @@
 <?php
-
+/*
+ * @version: 0.1 商品分类控制器
+ * @author: gsl
+ * @date: 2017/06/08
+ * @description:数据增删查改
+ *
+ */
 namespace App\Http\Controllers\Admin;
 
 use App\ProductCategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Redirect;
+use IQuery;
 
 class ProductCategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    //首页 (列表页)
+    public function index(Request $request)
     {
-        //
-        $categories = ProductCategory::whereNull('parent_id')->paginate(15);
-        return view(config('app.theme').'.admin.productCategory.index')->with('categories',$categories);
+        $lists = ProductCategory::paginate(config('app.paginate10'));
+        return view(config('app.theme').'.admin.productCategory.index')->with('lists',$lists);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    //查看单条信息
+    public function show($id)
+    {
+        return ProductCategory::find($id);
+    }
+
+    //数据创建
     public function create()
     {
-        //
         return view(config('app.theme').'.admin.productCategory.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    //保存新建数据
     public function store(Request $request)
     {
-        //
-        $this->validate($request, [
-            'name' => 'required',  
-            'parent_id' => 'integer|null'
-            ]);
-        $category = new ProductCategory;
-
-        $category ->name = $request->name;
-        $category ->parent_id = $request->parent;
-        if($category ->save()){
-            return Redirect::to('admin/productCategory')->with('status', '保存成功');
-        }else{
-            return Redirect::back()->withErrors('保存失败');
-        }
+        return $this->StoreOrUpdate($request);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\ProductCategory  $productCategory
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\ProductCategory  $productCategory
-     * @return \Illuminate\Http\Response
-     */
+    //编辑数据
     public function edit($id)
     {
-        //
-        $category = ProductCategory::find($id);
-        return view(config('app.theme').'.admin.productCategory.edit')->with('category',$category);
+        $data = ProductCategory::find($id);
+        return view(config('app.theme').'.admin.productCategory.edit')->with('data',$data);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\ProductCategory  $productCategory
-     * @return \Illuminate\Http\Response
-     */
+    //编辑保存
     public function update(Request $request, $id)
     {
-        //
-        $this->validate($request, [
-            'name' => 'required',   
-            'parent_id' => 'integer|null'
-            ]);
-        $category = ProductCategory::find($id);
+        return $this->StoreOrUpdate($request, $id);
+    }
 
-        $category ->name = $request->name;
-        $category ->parent_id = $request->parent;
-        if($category ->save()){
+    //单条删除
+    public function destroy($id)
+    {
+        $data = ProductCategory::find($id);
+        if($data->delete()){
+            IQuery::destroyPic(new ProductCategory, $id);//公共工具删除图片
+            return Redirect::back()->withErrors('删除成功');
+        }
+        return Redirect::back()->withErrors('删除失败');
+    }
+
+    //保存方法
+    public function StoreOrUpdate(Request $request, $id = -1)
+    {
+        $this->validate($request, [
+            'name' => [
+                'required',
+                'max:50', 
+                //name+软删除 唯一验证               
+                Rule::unique('product_category')->ignore($id)->where(function($query) use ($id) {
+                    $query->whereNull('deleted_at');
+                })
+            ], 
+            'desc' => 'null|max:255'
+        ]);
+
+        //判断 新增/编辑
+        if ($id == -1) {
+            $model = new ProductCategory;
+        } else {
+            $model = ProductCategory::find($id);
+        }
+
+        //接收数据 加入model
+        $model->setRawAttributes($request->only(['name','desc']));
+
+        //上传图片
+        $pics = 'false';
+        if ($request->hasFile('img')) $pics = IQuery::upload($request);
+        if ($pics != 'false') {
+            $model->img = $pics['pic'];
+            $model->thumb = $pics['pic_thumb'];
+        }
+
+        //保存数据
+        if($model->save()){
             return Redirect::to('admin/productCategory')->with('status', '保存成功');
         }else{
             return Redirect::back()->withErrors('保存失败');
-        }
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\ProductCategory  $productCategory
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-        $category = ProductCategory::find($id);
-        $category->children()->delete();//级联删除
-        if($category->delete()){
-            return Redirect::back();
-        }else{
-            return Redirect::back()->withErrors('删除失败');
         }
     }
 }

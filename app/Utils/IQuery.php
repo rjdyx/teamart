@@ -95,29 +95,50 @@ class IQuery{
     }
     
     //图片异步上传
-    public function upload($request, $file_pic='img')
+    public function upload($request, $file_pic='img', $minState=true)
     {
         $file = $request->file($file_pic);
         if ($request->hasFile($file_pic)) {
             $path = config('app.image_path').'/upload/';
             $Extension = $file->getClientOriginalExtension();
-            $filename = 'SZGC_'.time().'.'. $Extension;
+            $filename = 'FX_'.time().rand(1,9999).'.'. $Extension;
             $check = $file->move($path, $filename);
             $filePath = $path.$filename; //原图路径加名称
-            if($file_pic=='img'||$file_pic=='img1') {
-                $newfilePath = $path.'SZGC_S_'.time().'.'. $Extension;//缩略图路径名称
+            $pics = array();
+            $pics['pic']= $filePath;//原图
+
+            if($minState) {
+                $newfilePath = $path.'FX_S_'.time().rand(1,9999).'.'. $Extension;//缩略图路径名称
                 $this->img_create_small($filePath,config('app.thumb_width'),config('app.thumb_height'),$newfilePath);  //生成缩略图
-                $pic=array();
-                $pic['pic']= $filePath;//原图
-                $pic['pic_thumb']= $newfilePath;//缩略图
-            } else {
-                $pic=array();
-                $pic['pic']= $filePath;//原图
+                $pics['pic_thumb']= $newfilePath;//缩略图
             }
-            return $pic;//返回原图 缩略图 的路径 数组
+            return $pics;//返回原图 缩略图 的路径 数组
         }else{
             return 'false';
         }
+    }
+
+    //组图片异步上传
+    public function uploads($request, $pics='imgs', $minState=true)
+    {            
+        $pics = array();
+        $path = config('app.image_path').'/upload/';
+        $files = $request->file($pics);
+        if (!empty($files)) {
+            foreach ($files as $k => $file) {
+                $Extension = $file->getClientOriginalExtension();
+                $filename = 'FX_'.time().rand(1,9999).'.'. $Extension;
+                $check = $file->move($path, $filename);
+                $filePath = $path.$filename; //原图路径加名称
+                $pics[$k]['pic']= $filePath;//原图
+                if($minState) {
+                    $newfilePath = $path.'FX_S_'.time().rand(1,9999).'.'. $Extension;//缩略图路径名称
+                    $this->img_create_small($filePath,config('app.thumb_width'),config('app.thumb_height'),$newfilePath);  //生成缩略图
+                    $pics[$k]['pic_thumb']= $newfilePath;//缩略图
+                }
+            }
+        }
+        return 'false';
     }
     //生成缩略图
     function img_create_small($big_img, $width, $height, $small_img) {  //原始大图地址，缩略图宽度，高度，缩略图地址
