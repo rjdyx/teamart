@@ -13,14 +13,15 @@
 
 Route::get('admin/login', 'Auth\LoginController@adminLoginCreate');
 Route::post('admin/login', 'Auth\LoginController@adminLogin');
-Route::get('/layout','Auth\LoginController@layout');//退出
+Route::get('/layout','Auth\LoginController@layout');//前台退出
+Route::get('/admin/layout','Auth\LoginController@adminLayout');//后台退出
 
 Auth::routes();
 Route::get('/','HomeController@index');//首页
 
 // Home - 无须登录模块
 Route::group(['namespace'=>'Home','prefix'=>'home'],function(){
-	// Route::get('/productTest','Home\TestController@index');
+
 	// 商品列表、详情
 	Route::group(['prefix'=>'product'],function(){
 		Route::get('/list','ProductController@index');
@@ -34,9 +35,7 @@ Route::group(['namespace'=>'Home','prefix'=>'home'],function(){
 });
 
 // Home - 须登录模块 (普通会员)
-Route::group(['namespace'=>'Home','prefix'=>'home'
-	// ,'middleware'=>['auth']
-	],function(){
+Route::group(['namespace'=>'Home','prefix'=>'home','middleware'=>['auth']],function(){
 
 	//地址管理
 	Route::resource('/address', 'AddressController');
@@ -65,14 +64,15 @@ Route::group(['namespace'=>'Home','prefix'=>'home'
 });
 
 // Home - 分销商 模块
-Route::group(['namespace'=>'Home','prefix'=>'home','middleware'=>['auth','can:fx']],function(){
+Route::group(['namespace'=>'Home','prefix'=>'home','middleware'=>['auth','userRole:fx']],function(){
 
 });
 
 // Admin - 管理员 模块
-Route::group(['namespace'=>'Admin','prefix'=>'admin'
-	// ,'middleware'=>['auth','can:admin']
+Route::group(['namespace'=>'Admin','prefix'=>'admin','middleware'=>['auth','userRole:admin']
 	],function(){
+
+	Route::get('/index', 'IndexController@index');
 
 	// 用户管理
 	Route::group(['prefix'=>'user'],function(){
@@ -90,38 +90,43 @@ Route::group(['namespace'=>'Admin','prefix'=>'admin'
 		Route::resource('/comment', 'GoodsCommentController');
 	});
 
-	//订单管理s
-	Route::resource('/order', 'OrderController');
+	// 订单管理
+	Route::group(['prefix'=>'order'],function(){
+		Route::resource('/list', 'OrderController');
+		Route::resource('/deliver', 'DeliverController');
+		Route::resource('/fade', 'FadeController');
+	});
 
-	//活动管理
-	Route::resource('/activity', 'ActivityController');
+	// 报表统计管理
+	Route::group(['prefix'=>'count'],function(){
+		Route::get('/client', 'SellCountController@client');
+		Route::get('/product', 'SellCountController@product');
+		Route::get('/agency', 'SellCountController@agency');
+	});
 
-	//文章分类管理
-	Route::resource('/article_category', 'ArticleCategoryController');
+	// 文章管理
+	Route::group(['prefix'=>'article'],function(){
+		Route::resource('/category', 'ArticleCategoryController');
+		Route::resource('/list', 'ArticleController');
+	});
 
-	//文章管理
-	Route::resource('/article', 'ArticleController');
+	// 活动管理
+	Route::group(['prefix'=>'activity'],function(){
+		Route::resource('/group', 'GroupController');
+		Route::resource('/mark', 'MarkController');
+		Route::resource('/roll', 'RollController');
+	});
 
-	//评论管理
-	Route::resource('/comment', 'CommentController');
+	// 系统管理
+	Route::group(['prefix'=>'system'],function(){
+		Route::resource('/shop', 'ShopController');
+		Route::resource('/pay', 'PayController');
+		Route::resource('/send', 'SendController');
+		Route::resource('/ad', 'AdController');
+		Route::resource('/site', 'SiteController');
+		Route::resource('/personal', 'PersonalController');
+	});
 
-	//意见反馈管理
-	Route::resource('/feedback', 'FeedbackController');
-
-	//商品分类管理
-	Route::resource('/product_category', 'ProductCategoryController');
-
-	//商品管理
-	Route::resource('/product', 'ProductController');
-
-	//商品规格管理
-	Route::resource('/specification', 'SpecificationController');
-
-	//商品品牌管理
-	Route::resource('/brand', 'BrandController');
-
-	//系统管理
-	Route::resource('/system', 'SystemController');
 });
 
 

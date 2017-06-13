@@ -54,9 +54,11 @@
     <div class="wrapper">
         @yield('content')
     </div>
-
+    <script src="{{url('admin/common/plugins/jQuery/jquery-2.2.3.min.js')}}"></script>
+    <script src="{{url('admin/common/bootstrap/bootstrap.min.js')}}"></script>
     <script src="{{url('admin/common/dist/js/app.min.js')}}"></script>
     <script>
+        'use strict';
         (function($){
             let curhref = window.location.href
             $('.sidebar-menu')

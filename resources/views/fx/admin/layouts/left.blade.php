@@ -8,8 +8,8 @@
         <img src="{{url('admin/common/dist/img/user2-160x160.jpg')}}" class="img-circle" alt="User Image">
       </div>
       <div class="pull-left info">
-        <p>Alexander Pierce</p>
-        <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+        <p>{{empty(Auth::user())?'未登录':Auth::user()->name}}</p>
+        <a href="#"><i class="fa fa-circle text-success"></i>管理员</a>
       </div>
     </div>
     <!-- sidebar menu: : style can be found in sidebar.less -->
@@ -44,16 +44,16 @@
         </ul>
       </li>
       <li>
-        <a href="pages/widgets.html">
+        <a href="#">
           <i class="fa fa-th"></i> <span>订单管理</span>
           <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
           </span>
         </a>
         <ul class="treeview-menu">
-          <li><a href="pages/layout/top-nav.html"><i class="fa fa-circle-o"></i>订单列表</a></li>
-          <li><a href="pages/layout/boxed.html"><i class="fa fa-circle-o"></i>发货订单列表</a></li>
-          <li><a href="pages/layout/fixed.html"><i class="fa fa-circle-o"></i>退货订单列表</a></li>
+          <li><a href="{{url('admin/order/list')}}"><i class="fa fa-circle-o"></i>订单列表</a></li>
+          <li><a href="{{url('admin/order/deliver')}}"><i class="fa fa-circle-o"></i>发货订单列表</a></li>
+          <li><a href="{{url('admin/order/fade')}}"><i class="fa fa-circle-o"></i>退货订单列表</a></li>
         </ul>
       </li>
       <li class="treeview">
@@ -64,9 +64,9 @@
           </span>
         </a>
         <ul class="treeview-menu">
-          <li><a href="pages/charts/chartjs.html"><i class="fa fa-circle-o"></i>客户分析</a></li>
-          <li><a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i>商品订单</a></li>
-          <li><a href="pages/charts/flot.html"><i class="fa fa-circle-o"></i>代理商销售</a></li>
+          <li><a href="{{url('admin/count/client')}}"><i class="fa fa-circle-o"></i>客户分析</a></li>
+          <li><a href="{{url('admin/count/product')}}"><i class="fa fa-circle-o"></i>商品订单</a></li>
+          <li><a href="{{url('admin/count/agency')}}"><i class="fa fa-circle-o"></i>代理商销售</a></li>
         </ul>
       </li>
       <li class="treeview">
@@ -77,8 +77,8 @@
           </span>
         </a>
         <ul class="treeview-menu">
-          <li><a href="pages/UI/general.html"><i class="fa fa-circle-o"></i>文章分类</a></li>
-          <li><a href="pages/UI/icons.html"><i class="fa fa-circle-o"></i>文章列表</a></li>
+          <li><a href="{{url('admin/article/category')}}"><i class="fa fa-circle-o"></i>文章分类</a></li>
+          <li><a href="{{url('admin/article/list')}}"><i class="fa fa-circle-o"></i>文章列表</a></li>
         </ul>
       </li>
       <li class="treeview">
@@ -89,9 +89,9 @@
           </span>
         </a>
         <ul class="treeview-menu">
-          <li><a href="pages/forms/general.html"><i class="fa fa-circle-o"></i>团购活动</a></li>
-          <li><a href="pages/forms/advanced.html"><i class="fa fa-circle-o"></i>积分商品</a></li>
-          <li><a href="pages/forms/editors.html"><i class="fa fa-circle-o"></i>优惠券</a></li>
+          <li><a href="{{url('admin/activity/group')}}"><i class="fa fa-circle-o"></i>团购活动</a></li>
+          <li><a href="{{url('admin/activity/mark')}}"><i class="fa fa-circle-o"></i>积分商品</a></li>
+          <li><a href="{{url('admin/activity/roll')}}"><i class="fa fa-circle-o"></i>优惠券</a></li>
         </ul>
       </li>
       <li class="treeview">
@@ -102,15 +102,15 @@
           </span>
         </a>
         <ul class="treeview-menu">
-          <li><a href="pages/tables/simple.html"><i class="fa fa-circle-o"></i>店铺设置</a></li>
-          <li><a href="pages/tables/data.html"><i class="fa fa-circle-o"></i>支付设置</a></li>
-          <li><a href="pages/tables/simple.html"><i class="fa fa-circle-o"></i>配送设置</a></li>
-          <li><a href="pages/tables/data.html"><i class="fa fa-circle-o"></i>广告管理</a></li>
-          <li><a href="pages/tables/simple.html"><i class="fa fa-circle-o"></i>站点设置</a></li>
-          <li><a href="pages/tables/data.html"><i class="fa fa-circle-o"></i>个人中心</a></li>
+          <li><a href="{{url('admin/system/pay')}}"><i class="fa fa-circle-o"></i>支付设置</a></li>
+          <li><a href="{{url('admin/system/send')}}"><i class="fa fa-circle-o"></i>配送设置</a></li>
+          <li><a href="{{url('admin/system/ad')}}"><i class="fa fa-circle-o"></i>广告管理</a></li>
+          <li><a href="{{url('admin/system/site')}}"><i class="fa fa-circle-o"></i>站点设置</a></li>
+          <li><a href="{{url('admin/system/feedback')}}"><i class="fa fa-circle-o"></i>意见反馈</a></li>
+          <li><a href="{{url('admin/system/log')}}"><i class="fa fa-circle-o"></i>操作日志</a></li>
         </ul>
       </li>
     </ul>
   </section>
-  <!-- /.sidebar -->
+
 </aside>

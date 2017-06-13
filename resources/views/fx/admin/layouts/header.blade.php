@@ -16,6 +16,13 @@
     <!-- Navbar Right Menu -->
     <div class="navbar-custom-menu">
       <ul class="nav navbar-nav">
+
+        <li class="dropdown messages-menu">
+          <a href="{{url('admin/index')}}" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="fa  fa-heart-o"></i>
+            <span>首页</span>
+          </a>
+        </li>
         <!-- Messages: style can be found in dropdown.less-->
         <li class="dropdown messages-menu">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -25,14 +32,20 @@
         </li>
         <!-- Notifications: style can be found in dropdown.less -->
         <li class="dropdown notifications-menu">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          <a href="{{url('admin/system/shop')}}" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="fa fa-gear"></i>
+            <span>店铺设置</span>
+          </a>
+        </li>
+        <li class="dropdown notifications-menu">
+          <a href="{{url('admin/system/personal')}}" class="dropdown-toggle" data-toggle="dropdown">
             <i class="fa fa-gear"></i>
             <span>个人设置</span>
           </a>
         </li>
         <!-- Tasks: style can be found in dropdown.less -->
         <li class="dropdown tasks-menu">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          <a href="{{url('/admin/layout')}}" class="dropdown-toggle" data-toggle="dropdown">
             <i class="fa fa-power-off"></i>
             <span>退出系统</span>
           </a>

@@ -71,25 +71,26 @@
 	  <div class="login-box-body">
 	    <p class="login-box-msg">用户登录</p>
 
-	    <form action="admin/login" method="post">
+	    <form action="{{ url('admin/login') }}" method="POST">
+	    {{ csrf_field() }}
 	      <div class="form-group has-feedback">
-	        <input type="email" class="form-control" placeholder="账号">
+	        <input type="text" class="form-control" name="name" placeholder="账号">
 	        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 	      </div>
 	      <div class="form-group has-feedback">
-	        <input type="password" class="form-control" placeholder="密码">
+	        <input type="password" class="form-control" name="password" placeholder="密码">
 	        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
 	      </div>
 	      <div class="row">
-	        <div class="col-xs-8">
+<!-- 	        <div class="col-xs-8">
 	          <div class="checkbox icheck">
 	            <label>
 	              <input type="checkbox">记住我
 	            </label>
 	          </div>
-	        </div>
+	        </div> -->
 	        <!-- /.col -->
-	        <div class="col-xs-4">
+	        <div class="col-xs-12">
 	          <button type="submit" class="btn btn-primary btn-block btn-flat">登录</button>
 	        </div>
 	        <!-- /.col -->
@@ -97,8 +98,8 @@
 	    </form>
 
 	    <div class="login_box">
-	      <a href="#" class="login_foget_pwd text-center" >忘记密码</a><br>
-	      <a href="register.html" class="login_register text-center">注册新账号</a>
+	      <!-- <a href="#" class="login_foget_pwd text-center" >忘记密码</a><br> -->
+	      <!-- <a href="register.html" class="login_register text-center">注册新账号</a> -->
 	    </div>
 
 	  </div>

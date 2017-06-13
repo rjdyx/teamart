@@ -37,7 +37,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest', ['except' => 'layout']);
+        $this->middleware('guest', ['except' => ['layout','adminLayout']]);
     }
 
 
@@ -60,14 +60,14 @@ class LoginController extends Controller
         return view(config('app.theme').'.admin.login');
     }
 
-    //管理登录方法
+    //后台登录方法
     public function adminLogin(Request $request)
     {
         $this->validateLogin($request);//验证
         $newRequest = $this->credentials($request);//返回字段
 
         if ($this->guard()->attempt($newRequest)) {
-            return $this->sendLoginResponse($request);//成功
+            return $this->sendLoginResponse($request, true);//成功
         }
         $this->incrementLoginAttempts($request); //失败
         return $this->sendFailedLoginResponse($request);
@@ -109,13 +109,15 @@ class LoginController extends Controller
     } 
     
     //登录成功
-    protected function sendLoginResponse(Request $request)
+    protected function sendLoginResponse(Request $request, $t = false)
     {
         $request->session()->regenerate();
         $this->clearLoginAttempts($request);
         $time = date("y-m-d h:i:s",time());
         Session::put('time',$time);
-        return redirect('/home/userinfo');
+        $url='/home/userinfo';
+        if ($t) $url = '/admin/index';
+        return redirect($url);
     }
 
     //获取登录字段
@@ -129,6 +131,13 @@ class LoginController extends Controller
     {
         $this->guard()->logout();
         return redirect('/login');
+    }
+
+    //后台登出
+    public function adminLayout()
+    {
+        $this->guard()->logout();
+        return redirect('/admin/login');
     }
 
     //验证手机
