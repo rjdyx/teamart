@@ -1,7 +1,8 @@
 {
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development webpack-dev-server",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --inline",
+    "build": "webpack webpack.config.js",
     "dev1": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
     "watch": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
     "watch-poll": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --watch-poll --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
@@ -9,11 +10,18 @@
     "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
   },
   "dependencies": {
+    "admin-lte": "^2.3.11",
     "axios": "^0.16.2",
+    "babel-polyfill": "^6.23.0",
     "bootstrap": "^3.3.7",
+    "font-awesome": "^4.7.0",
+    "icheck": "^1.0.2",
+    "ionicons": "^3.0.0",
     "jquery": "^3.2.1"
   },
   "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
     "bootstrap-sass": "^3.3.7",
     "cross-env": "^3.2.3",
     "eslint": "^3.19.0",

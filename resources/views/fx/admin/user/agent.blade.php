@@ -57,23 +57,6 @@
 
 @section('script')
     @parent
-    <script>
-      $(function(){
-      $(".checkbox-toggle").click(function () {
-      var clicks = $(this).data('clicks');
-      if (clicks) {
-      //Uncheck all checkboxes
-      $(".table td input[type='checkbox']").prop('checked',false);
-      $(".fa", this).removeClass("fa-check-square-o").addClass('fa-square-o');
-      } else {
-      //Check all checkboxes
-      $(".table td input[type='checkbox']").prop('checked',true);
-      $(".fa", this).removeClass("fa-square-o").addClass('fa-check-square-o');
-      }
-      $(this).data("clicks", !clicks);
-      });
-      });
-    </script>
 @endsection
 
 @section('content')

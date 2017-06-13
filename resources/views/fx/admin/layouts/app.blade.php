@@ -34,11 +34,14 @@
     <title>@yield('title')</title>
 
     <!-- Bootstrap 3.3.6 -->
-    <link rel="stylesheet" href="{{url('admin/common/bootstrap/css/bootstrap.min.css')}}">
-    <link rel="stylesheet" href="{{url('admin/common/dist/css/AdminLTE.min.css')}}">
-    <link rel="stylesheet" href="{{url('admin/common/dist/css/font-awesome.css')}}">
-    <link rel="stylesheet" href="{{url('admin/common/dist/css/ionicons.css')}}">
-    <link rel="stylesheet" href="{{url('admin/common/dist/css/skins/skin-green-light.css')}}">
+    {{-- <link rel="stylesheet" href="{{url('admin/common/bootstrap/css/bootstrap.min.css')}}"> --}}
+    {{-- <link rel="stylesheet" href="{{url('admin/common/dist/css/font-awesome.css')}}"> --}}
+    {{-- <link rel="stylesheet" href="{{url('admin/common/dist/css/ionicons.css')}}"> --}}
+    {{-- <link rel="stylesheet" href="{{url('admin/common/dist/css/AdminLTE.min.css')}}"> --}}
+    {{-- <link rel="stylesheet" href="{{url('admin/common/dist/css/skins/skin-green-light.css')}}"> --}}
+    {{-- <link href="http://localhost:8080/build/css/index.css" rel="stylesheet"> --}}
+    {{-- <link rel="stylesheet" href="{{ elixir('build/css/index.css') }}"> --}}
+    <link rel="stylesheet" href="http://www.fx.com/admin/build/css/index.css">
     <!-- Styles -->
     @yield('css')
 
@@ -54,11 +57,12 @@
     <div class="wrapper">
         @yield('content')
     </div>
-    <script src="{{url('admin/common/plugins/jQuery/jquery-2.2.3.min.js')}}"></script>
+    {{-- <script src="{{url('admin/common/plugins/jQuery/jquery-2.2.3.min.js')}}"></script>
     <script src="{{url('admin/common/bootstrap/bootstrap.min.js')}}"></script>
     <script src="{{url('admin/common/dist/js/app.min.js')}}"></script>
     <script>
         'use strict';
+
         (function($){
             let curhref = window.location.href
             $('.sidebar-menu')
@@ -72,7 +76,14 @@
                 }
             })
         })($)
-    </script>
+    </script> --}}
+
+    {{-- <script src="http://localhost:8080/build/js/vendor-bundle.js"></script> --}}
+    {{-- <script src="http://localhost:8080/build/js/index.js"></script> --}}
+    {{-- <script src="{{ elixir('build/js/vendor-bundle.js') }}"></script> --}}
+    {{-- <script src="{{ elixir('build/js/index.js') }}"></script> --}}
+    <script src="http://www.fx.com/admin/build/vendor-bundle.js"></script>
+    <script src="http://www.fx.com/admin/build/index.js"></script>
     @yield('script')
 </body>
 </html>
