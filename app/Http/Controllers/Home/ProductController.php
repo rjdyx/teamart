@@ -21,6 +21,6 @@ class ProductController extends Controller
 	public function detail (Request $request, $id) {
 		$content = Product::find($id);
 		$title = '商品详情';
-		return view(config('app.theme').'.home.productDetail')->with(['content'=>$content, 'title'=>$title]);
+		return view(config('app.theme').'.home.productDetail')->with(['content'=>$content, 'title'=>$title,'footer'=>'product']);
 	}
 }

@@ -8,7 +8,6 @@
 
 @section('script')
     @parent
-
 @endsection
 
 @section('content')
