@@ -393,6 +393,4 @@ $(function(){
     </div>
     <!-- /addagent -->
   </div>
-
-   @include("fx.admin.layouts.slide")
 @endsection
