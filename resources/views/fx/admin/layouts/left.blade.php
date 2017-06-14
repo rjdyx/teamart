@@ -39,6 +39,7 @@
           <li><a href="{{url('admin/goods/category')}}"><i class="fa fa-circle-o"></i>商品分类</a></li>
           <li><a href="{{url('admin/goods/spec')}}"><i class="fa fa-circle-o"></i>商品规格</a></li>
           <li><a href="{{url('admin/goods/brand')}}"><i class="fa fa-circle-o"></i>商品品牌</a></li>
+          <li><a href="{{url('admin/goods/group')}}"><i class="fa fa-circle-o"></i>商品组</a></li>
           <li><a href="{{url('admin/goods/list')}}"><i class="fa fa-circle-o"></i>商品列表</a></li>
           <li><a href="{{url('admin/goods/comment')}}"><i class="fa fa-circle-o"></i>用户评论</a></li>
         </ul>

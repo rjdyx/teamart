@@ -86,6 +86,7 @@ Route::group(['namespace'=>'Admin','prefix'=>'admin','middleware'=>['auth','user
 		Route::resource('/category', 'CategoryController');
 		Route::resource('/spec', 'SpecController');
 		Route::resource('/brand', 'BrandController');
+		Route::resource('/group', 'GoodsGroupController');
 		Route::resource('/list', 'GoodsController');
 		Route::resource('/comment', 'GoodsCommentController');
 	});

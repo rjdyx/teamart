@@ -17,6 +17,7 @@ class CreateOrderTable extends Migration
             $table->increments('id');
             $table->integer('pid')->nullable()->comment('分销商id');
             $table->integer('address_id')->comment('地址id');
+            $table->string('method',50)->default('delivery')->comment('配送方式(delivery物流、self自提)');
             $table->integer('user_id')->comment('用户id');
             $table->string('serial',100)->comment('订单号');
             $table->double('price', 10, 2)->default(0.00)->comment('价格');

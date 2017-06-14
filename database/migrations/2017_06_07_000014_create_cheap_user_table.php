@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSpecificationTable extends Migration
+class CreateCheapUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreateSpecificationTable extends Migration
      */
     public function up()
     {
-        Schema::create('specification', function (Blueprint $table) {
+        Schema::create('cheap_user', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name',50)->comment('名称');
-            $table->string('desc',255)->nullable()->comment('描述');
+            $table->integer('cheap_id')->comment('优惠券id');
+            $table->integer('user_id')->comment('用户id');
             $table->softDeletes();
             $table->timestamps();
         });
-    }
+    } 
 
     /**
      * Reverse the migrations.
@@ -29,6 +29,6 @@ class CreateSpecificationTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('specification');
+        Schema::dropIfExists('cheap_user');
     }
 }
