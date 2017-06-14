@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->integer('pid')->comment('分销商id')->nullable();
             $table->string('name',30)->comment('用户名');
             $table->string('email',50)->comment('邮箱')->nullable();
-            $table->string('password',50)->comment('密码');
+            $table->string('password',255)->comment('密码');
             $table->string('realname',50)->comment('姓名')->nullable();
             $table->string('phone',50)->nullable()->comment('手机号码');
             $table->string('birth_date',50)->nullable()->comment('出生日期');

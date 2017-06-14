@@ -1,7 +1,7 @@
 @extends('fx.admin.layouts.app')
 
 @section('title')
-商品品牌
+商品组
 @endsection
 
 @section('css')
@@ -92,7 +92,7 @@ $(function(){
       <section class="content-header">
         <h1 style="cursor: pointer;">
           <i class="fa fa-home" style="color: #00a65a;margin-right:4px"></i>商品管理
-          <small style="color: #00a65a"><i class="fa fa-angle-right" style="margin-right: 4px"></i>商品品牌</small>
+          <small style="color: #00a65a"><i class="fa fa-angle-right" style="margin-right: 4px"></i>商品组</small>
         </h1>
       </section>
 

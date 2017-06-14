@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProductImgTable extends Migration
+class CreateProductGroupTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,15 @@ class CreateProductImgTable extends Migration
      */
     public function up()
     {
-        Schema::create('product_img', function (Blueprint $table) {
+        Schema::create('product_group', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('group_id')->comment('商品组id');
-            $table->string('img',255)->comment('图片');
-            $table->string('thumb',255)->comment('图片小图');
+            $table->integer('category_id')->comment('商品分类id');
+            $table->string('name',50)->comment('名称');
+            $table->string('desc',255)->nullable()->comment('描述');
             $table->softDeletes();
             $table->timestamps();
         });
-    } 
+    }
 
     /**
      * Reverse the migrations.
@@ -30,6 +30,6 @@ class CreateProductImgTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('product_img');
+        Schema::dropIfExists('product_group');
     }
 }
