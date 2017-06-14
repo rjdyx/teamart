@@ -7,7 +7,5 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Log extends Model
 {
-	use SoftDeletes;
-    protected $dates = ['deleted_at']; //开启deleted_at
     protected $table = 'log';
 }

@@ -125,6 +125,7 @@ Route::group(['namespace'=>'Admin','prefix'=>'admin','middleware'=>['auth','user
 		Route::resource('/send', 'SendController');
 		Route::resource('/ad', 'AdController');
 		Route::resource('/site', 'SiteController');
+		Route::resource('/log', 'LogController');
 		Route::resource('/personal', 'PersonalController');
 	});
 
