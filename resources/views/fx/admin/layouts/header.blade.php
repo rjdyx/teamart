@@ -4,7 +4,7 @@
     <!-- mini logo for sidebar mini 50x50 pixels -->
     <span class="logo-mini"><b>L</b>GI</span>
     <!-- logo for regular state and mobile devices -->
-    <span class="logo-lg"><img src="{{url('admin/common/dist/img/logo.png')}}" style="height: 45px;width: 100%"></span>
+    <span class="logo-lg"><img src="{{url('admin/build/images/logo.png')}}" style="height: 45px;width: 100%"></span>
   </a>
 
   <!-- Header Navbar: style can be found in header.less -->
@@ -45,14 +45,10 @@
         </li>
         <!-- Tasks: style can be found in dropdown.less -->
         <li class="dropdown tasks-menu">
-          <a href="{{url('/admin/layout')}}" class="dropdown-toggle" data-toggle="dropdown">
+          <a href="{{url('/admin/layout')}}">
             <i class="fa fa-power-off"></i>
             <span>退出系统</span>
           </a>
-        </li>
-        <!-- Control Sidebar Toggle Button -->
-        <li>
-          <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
         </li>
       </ul>
     </div>

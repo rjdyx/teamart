@@ -41,7 +41,12 @@
     {{-- <link rel="stylesheet" href="{{url('admin/common/dist/css/skins/skin-green-light.css')}}"> --}}
     {{-- <link href="http://localhost:8080/build/css/index.css" rel="stylesheet"> --}}
     {{-- <link rel="stylesheet" href="{{ elixir('build/css/index.css') }}"> --}}
-    <link rel="stylesheet" href="http://www.fx.com/admin/build/css/index.css">
+    <link rel="stylesheet" href="http://www.fx.com/admin/build/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://www.fx.com/admin/build/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://www.fx.com/admin/build/css/ionicons.min.css">
+    <link rel="stylesheet" href="http://www.fx.com/admin/build/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="http://www.fx.com/admin/build/css/skin-green-light.min.css">
+    <link rel="stylesheet" href="http://www.fx.com/admin/css/index.css">
     <!-- Styles -->
     @yield('css')
 

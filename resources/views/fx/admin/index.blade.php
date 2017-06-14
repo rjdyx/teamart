@@ -20,5 +20,4 @@
    
    <div class="content-wrapper">后台管理首页 - 这是内容部分</div>
 
-   @include("fx.admin.layouts.slide")
 @endsection

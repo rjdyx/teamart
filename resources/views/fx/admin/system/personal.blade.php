@@ -20,5 +20,4 @@
    
    <div class="content-wrapper">个人中心 - 这是内容部分</div>
 
-   @include("fx.admin.layouts.slide")
 @endsection

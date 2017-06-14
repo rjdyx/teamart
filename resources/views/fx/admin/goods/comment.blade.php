@@ -5,80 +5,10 @@
 @endsection
 
 @section('css')
-<style type="text/css">
-    .content-header>h1{
-      font-size: 18px;
-      margin: 0;
-    }
-    .box-header>.box-tools{
-      top: 10px;
-    }
-    .main-sidebar .user-panel{
-      border-bottom: 1px solid #c0c0c0;
-      line-height: 40px;
-      padding-left: 15px;
-    }
-    td,th{
-      text-align: center;
-      vertical-align: middle !important;
-    }
-    .content-header{
-      box-sizing: border-box;
-      border-bottom: 1px solid #c5c5c5;
-      padding-bottom: 10px;
-      padding-left: 0px;
-      padding-right: 0px;
-      margin: 0 15px 0 15px;
-    }
-    .pull-right-container i{
-      color: #008d4c;
-    }
-    .box-footer-left{
-      /*padding: 8px;*/
-      float: left;
-      display: inline-block;
-      
-      text-align: center;
-    }
-    .btn-100{
-      width: 100px;
-      margin-right: 20px;
-    }
-    .gender_label{
-      text-align: left !important;
-    }
-    #agentRole{
-      display: block;
-    }
-    #addAgent{
-      display: none;
-    }
-    .usersComments_pic{
-      height: 60px;
-      width: 60px;
-    }
-  </style>
 @endsection
 
 @section('script')
     @parent
-    <script>
-    $(function(){
-      $(".checkbox-toggle").click(function () {
-        var clicks = $(this).data('clicks');
-        if (clicks) {
-          //Uncheck all checkboxes
-          $(".table td input[type='checkbox']").prop('checked',false);
-          $(".fa", this).removeClass("fa-check-square-o").addClass('fa-square-o');
-        } else {
-          //Check all checkboxes
-          $(".table td input[type='checkbox']").prop('checked',true);
-          $(".fa", this).removeClass("fa-square-o").addClass('fa-check-square-o');
-        }
-        $(this).data("clicks", !clicks);
-      });
-    });
-</script>
 @endsection
 
 @section('content')
@@ -198,5 +128,4 @@
 
   </div>
 
-   @include("fx.admin.layouts.slide")
 @endsection

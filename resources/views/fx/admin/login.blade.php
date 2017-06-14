@@ -36,11 +36,11 @@
     <title>后台登录</title>
 
     <!-- Bootstrap 3.3.6 -->
-    <link rel="stylesheet" href="{{url('admin/common/bootstrap/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{url('admin/build/css/bootstrap.min.css')}}">
     <!-- Theme style -->
-    <link rel="stylesheet" href="{{url('admin/common/dist/css/AdminLTE.min.css')}}">
+    <link rel="stylesheet" href="{{url('admin/build/css/AdminLTE.min.css')}}">
     <!-- iCheck -->
-    <link rel="stylesheet" href="{{url('admin/common/plugins/iCheck/square/blue.css')}}">
+    <link rel="stylesheet" href="{{url('admin/build/css/blue.css')}}">
 
 	<style type="text/css">
 		.login_box{
@@ -106,11 +106,9 @@
 	  <!-- /.login-box-body -->
 	</div>
 	
-    <script src="{{url('admin/common/plugins/jQuery/jquery-2.2.3.min.js')}}"></script>
-    <!-- Bootstrap 3.3.6 -->
-    <script src="{{url('admin/common/bootstrap/js/bootstrap.min.js')}}"></script>
-    <!-- iCheck -->
-    <script src="{{url('admin/common/plugins/iCheck/icheck.min.js')}}"></script>
+    <script src="{{url('admin/build/js/jquery-2.2.3.min.js')}}"></script>
+    <script src="{{url('admin/build/js/bootstrap.min.js')}}"></script>
+    <script src="{{url('admin/build/js/icheck.min.js')}}"></script>
 
 	<script>
 		$(function () {

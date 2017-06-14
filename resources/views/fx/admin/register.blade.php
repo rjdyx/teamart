@@ -6,15 +6,12 @@
   <title>AdminLTE 2 | Registration Page</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <!-- Bootstrap 3.3.6 -->
-  <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+
+  <link rel="stylesheet" href="{{url('admin/build/css/bootstrap.min.css')}}">
   <!-- Theme style -->
-  <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="{{url('admin/build/css/AdminLTE.min.css')}}">
   <!-- iCheck -->
-  <link rel="stylesheet" href="plugins/iCheck/square/blue.css">
-  <style type="text/css">
-    
-  </style>
+  <link rel="stylesheet" href="{{url('admin/build/css/blue.css')}}">
 </head>
 <body class="hold-transition register-page">
 <div class="register-box">

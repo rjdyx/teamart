@@ -20,5 +20,4 @@
    
    <div class="content-wrapper">店铺设置 - 这是内容部分</div>
 
-   @include("fx.admin.layouts.slide")
 @endsection
