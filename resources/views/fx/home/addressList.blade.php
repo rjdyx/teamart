@@ -126,5 +126,5 @@
 	</div>
 
 	<!-- 底部 -->
-	<div class="bottom2"><a href="">添加新地址</a></div>
+	<div class="bottom2"><a href="{{ url('/home/address/create') }}">添加新地址</a></div>
 @endsection

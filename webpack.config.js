@@ -67,7 +67,10 @@ let configs = {
 			},
 			{
 				test: /\.css$/,
-				use: ExtractTextPlugin.extract(['css-loader', 'style-loader'])
+				use: ExtractTextPlugin.extract({
+					fallback: 'style-loader',
+					use: ['css-loader']
+				})
 			},
 			{
 				test: /\.json$/,
@@ -83,16 +86,10 @@ let configs = {
 			},
 			{
 				test: /\.scss$/,
-				use: ExtractTextPlugin.extract([{
-					loader: 'style-loader'
-				}, {
-					loader: 'css-loader'
-				}, {
-					loader: 'sass-loader',
-					options: {
-						sourceMap: true
-					}
-				}])
+				use: ExtractTextPlugin.extract({
+					fallback: 'style-loader',
+					use: ['css-loader', 'sass-loader']
+				})
 			}
 		]
 	},
