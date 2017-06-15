@@ -48,7 +48,7 @@ let configs = {
 		extensions: ['.js', '.json'],
 		alias: {
 			'rootPath': rootPath,
-			'sass': resolve(__dirname, 'public', 'css')
+			'mod': resolve(__dirname, 'node_modules')
 		}
 	},
 	module: {

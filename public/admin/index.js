@@ -1,15 +1,16 @@
-require('babel-polyfill')
+// require('babel-polyfill')
 
-// require('bootstrap/dist/css/bootstrap.min.css')
-// require('font-awesome/css/font-awesome.min.css')
-// require('ionicons/dist/css/ionicons.min.css')
-// require('admin-lte/dist/css/AdminLTE.min.css')
-// require('admin-lte/dist/css/skins/skin-green-light.min.css')
+// require('bootstrap/dist/css/bootstrap.css')
+// require('font-awesome/css/font-awesome.css')
+// require('ionicons/dist/css/ionicons.css')
+// require('admin-lte/dist/css/AdminLTE.css')
+// require('admin-lte/dist/css/skins/skin-green-light.css')
 // require('icheck/skins/square/blue.css')
+// require('bootstrap')
+// require('admin-lte')
+// require('icheck')
 require('./css/index.css')
-import 'bootstrap'
-import 'admin-lte'
-import 'icheck'
+require('./css/index.scss')
 
 let init = require('./js/index.js')
 $(function () {
