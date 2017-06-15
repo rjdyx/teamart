@@ -73,7 +73,7 @@ class ProductController extends Controller
                 'required',
                 'max:50', 
                 //name+category_id+软删除 唯一验证               
-                Rule::unique('product_')->ignore($id)->where(function($query) use ($id) {
+                Rule::unique('product')->ignore($id)->where(function($query) use ($id) {
                     $query->where('category_id',$request->category_id)->whereNull('deleted_at');
                 })
             ], 

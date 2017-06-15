@@ -77,6 +77,7 @@ Route::group(['namespace'=>'Admin','prefix'=>'admin','middleware'=>['auth','user
 	// 用户管理
 	Route::group(['prefix'=>'user'],function(){
 		Route::resource('/agent', 'AgentController');
+		Route::post('/agentrole/dels', 'AgentRoleController@dels');
 		Route::resource('/agentrole', 'AgentRoleController');
 		Route::resource('/list', 'UserController');
 	});

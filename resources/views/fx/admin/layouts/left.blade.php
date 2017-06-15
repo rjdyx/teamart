@@ -24,8 +24,8 @@
         </a>
         <ul class="treeview-menu">
           <li><a href="{{url('admin/user/agentrole')}}"><i class="fa fa-circle-o"></i> 代理商角色</a></li>
-          <li><a href="{{url('admin/user/list')}}"><i class="fa fa-circle-o"></i>用户列表</a></li>
           <li><a href="{{url('admin/user/agent')}}"><i class="fa fa-circle-o"></i>代理商</a></li>
+          <li><a href="{{url('admin/user/list')}}"><i class="fa fa-circle-o"></i>用户列表</a></li>
         </ul>
       </li>
       <li class="treeview">

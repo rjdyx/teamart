@@ -49,7 +49,8 @@
     <link rel="stylesheet" href="http://www.fx.com/admin/css/index.css">
     <!-- Styles -->
     @yield('css')
-
+    
+    @include("fx.admin.layouts.alert")
     <!-- Scripts -->
     <script>
         window.Laravel = {!! json_encode([
@@ -62,9 +63,12 @@
     <div class="wrapper">
         @yield('content')
     </div>
+    <script src="{{url('fx/common/jquery-3.1.0.min.js')}}"></script>
+
     {{-- <script src="{{url('admin/common/plugins/jQuery/jquery-2.2.3.min.js')}}"></script>
     <script src="{{url('admin/common/bootstrap/bootstrap.min.js')}}"></script>
     <script src="{{url('admin/common/dist/js/app.min.js')}}"></script>
+    
     <script>
         'use strict';
 

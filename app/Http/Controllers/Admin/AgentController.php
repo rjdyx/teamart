@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+/*
+* user: 郭森林
+* title: 代理商
+* date: 2017/06/15
+ */
 use Illuminate\Http\Request;
 //use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
@@ -9,147 +14,109 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use App\User;
-//use Auth;
+use Redirect;
 
 class AgentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    //列表页
+    public function index(Request $request)
     {
-        return view(config('app.theme').'.admin.user.agent');
+        $lists = $this->indexData();
+
+        if ($request->name) {
+            $lists = $lists->where('name','like','%'.$request->name.'%')
+                    ->Orwhere('realname','like','%'.$request->name.'%');
+        }
+        $lists = $lists->select('user.*','parter.name as parter_name')
+                ->orderBy('user.id','asc')
+                ->paginate(10);
+
+        //查询所有关联的分销角色
+        $selects = $this->indexData()->distinct('parter.id')->select('parter.name','parter.id')->get();
+
+        return view(config('app.theme').'.admin.user.agent')->with(['lists'=>$lists,'selects'=>$selects]);
     }
 
-
-    public function modifypassword()
-    {
-        //
-        return view(config('app.theme').'.admin.user.modifypassword')->with('user',Auth::User());
+    //数据查询
+    public function indexData () {
+        $lists = User::join('parter','user.parter_id','=','parter.id')
+                ->where('user.type',1)
+                ->whereNull('user.deleted_at')
+                ->whereNull('parter.deleted_at');
+        return $lists;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    //创建
     public function create()
     {
-        //
+        return view(config('app.theme').'.admin.user.agent_create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    //修改
     public function edit($id)
     {
-        //
+        $data = Parter::find($id);
+        return view(config('app.theme').'.admin.user.agent_edit')->with('date',$data);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {   
-        if($this->modifyuserinfo($request, $id)){
-            return redirect('admin');
-        }else{
-          // return redirect()->back()->withInput()->withErrors('信息修改失败！');
-            return back()->withInput()->withErrors("用户信息修改失败！");
-        }
+    //查看
+    public function show($id)
+    {
+        return Parter::find($id);
     }
 
-    public function updatepassword(Request $request, $id){
-        $this->validate($request, [
-            'newpassword' => 'required|min:6',   //新设置密码必须大于6位
-            ]);
-        if($request->input('newpassword') != $request->input('newpassword1')){ //新设密码重复确认是否有误检测
-            return back()->withInput()->withErrors("新密码确认有误！");
-        }    
-        $password = $request->password;
-        if(Auth::attempt(['id' => $id, 'password' => $password])){ //验证用户身份
-           $user = User::find($id);
-           $user->password = bcrypt($request->input('newpassword'));
-           if($user->save()){
-                return redirect('admin');
-           }else{
-                return back()->withInput()->withErrors("密码修改失败！");
-           }
-        }else{                                   //用户身份验证失败
-            return back()->withInput()->withErrors("用户原密码有误！");
-        }
-        //echo Hash::make($request->password);
-        //echo $request->input('file');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    //单条删除
     public function destroy($id)
     {
-        //
+        $data = Parter::find($id);
+        if ($data->destroy()) {
+            return Redirect::back()->with('status','删除成功');
+        }
+        return Redirect::back()->withErrors('删除失败');
     }
 
+    //新建保存
+    public function store(Request $request)
+    {
+        return $this->StoreOrUpdate($request);
+    }
 
-    private function modifyuserinfo(Request $request, $id){
-        $file = $request->file('avatar');
-        $user = User::find($id);
-        $flag = 0;
-        if($file){
-            $extension = $file->getClientOriginalExtension();//获取图片扩展名
-            $distinationpath = 'upload/avatar/';
-            $avatar = str_random(10).".".$extension;
-            $file->move($distinationpath, $avatar);
-            if($user->avatar != null){
-                $oldfile = '/public/upload/avatar/'.$user->avatar; //原头像文件路径，用于成功更新后删除旧头像
-                $flag = 1;
-            }          
-        }else{
-            $avatar = $user->avatar;
+    //编辑保存
+    public function update(Request $request, $id)
+    {   
+        return $this->StoreOrUpdate($request, $id);
+    }
+
+    //保存方法
+    public function StoreOrUpdate(Request $request, $id = -1)
+    {
+        $this->validate($request, [
+            'name' => [
+                'required',
+                'max:50', 
+                //name+软删除 唯一验证               
+                Rule::unique('parter')->ignore($id)->where(function($query) use ($id) {
+                    $query->whereNull('deleted_at');
+                })
+            ], 
+            'scale'=>'required|numeric',
+            'desc' => 'nullable|max:50'
+        ]);
+
+        if ($id == -1) {
+            $model = new Parter;
+        } else {
+            $model = Parter::find($id);
         }
-        $user->name = $request->name;
-        $user->avatar = $avatar;
-        if($user->save()){
-            if($flag == 1){
-                $re = Storage::delete($oldfile);
-            }
-            return true;
-        }else{
-            return false;
+
+        //接收数据 加入model
+        $model->setRawAttributes($request->only(['name','scale','desc']));
+
+        if ($model->save()) {
+            return Redirect::to('admin/agent')->with('status', '保存成功');
+        } else {
+            return Redirect::back()->withErrors('保存失败');
         }
     }
+
 }
