@@ -19,28 +19,28 @@
 			$(form).on('submit', function () {
 				return submitForm()
 			})
-			$('#name').on('blur change', function () {
+			$('#name').on('blur input', function () {
 				vaildName('name', $('#name').val())
 			})
-			$('#email').on('blur change', function () {
+			$('#email').on('blur input', function () {
 				vaildEmail('email', $('#email').val())
 			})
-			$('#gender').on('blur change', function () {
+			$('#gender').on('blur', function () {
 				required('gender', '性别', $('#gender').val())
 			})
-			$('#password').on('blur change', function () {
+			$('#password').on('blur input', function () {
 				vaildPassword('password', $('#password').val())
 			})
-			$('#repassword').on('blur change', function () {
+			$('#repassword').on('blur input', function () {
 				vaildRePassword('repassword', $('#repassword').val())
 			})
-			$('#phone').on('blur change', function () {
+			$('#phone').on('blur input', function () {
 				vaildPhone('phone', $('#phone').val())
 			})
-			$('#realname').on('blur change', function () {
+			$('#realname').on('blur input', function () {
 				vaildRealname('realname', $('#realname').val())
 			})
-			$('#birth_date').on('blur change', function () {
+			$('#birth_date').on('blur', function () {
 				vaildBirth_date('birth_date', $('#birth_date').val())
 			})
 			function submitForm() {
@@ -100,12 +100,17 @@
 						// field
 						// value
 						// table
-						
-						axios.get('/check?field=name&table=user&value=' + value)
+						var params = {
+							field: 'name',
+							table: 'user',
+							value: value
+						}
+						axios.post('/check', params)
 							.then(function (res) {
-								if (res) {
+								if (res.data == 'false') {
 									vaild = true
 								} else {
+									$('#' + field + '_txt').text('该名字已经存在')
 									vaild = false
 								}
 							})
@@ -290,7 +295,7 @@
 									<div class="input-group date">
 										<input type="text" name="birth_date" class="form-control pull-right" id="datepicker">
 										<div class="input-group-addon">
-											<span class="glyphicon glyphicon-th"></span>
+											<i class="fa fa-calendar"></i>
 										</div>
 									</div>
 								</div>

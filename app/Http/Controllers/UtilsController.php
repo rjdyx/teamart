@@ -32,8 +32,8 @@ class UtilsController extends Controller
             ->where($table.'.'.$field,'=',$value)
             ->first();
     if(empty($result))
-        return false; 
+        return response()->json('false');
     else
-        return true;
+        return response()->json('true');
    }
 }
