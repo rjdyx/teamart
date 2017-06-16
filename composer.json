@@ -9,6 +9,7 @@
         "illuminate/html": "^5.0",
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0",
+        "doctrine/dbal": "v2.4.2",
 		"stevenyangecho/laravel-u-editor": "~1.4"
     },
     "require-dev": {

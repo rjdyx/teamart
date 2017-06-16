@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 /*
 * user: 郭森林
-* title: 商品组
+* title: 团购活动
 * date: 2017/06/16
  */
 use Illuminate\Http\Request;
@@ -18,7 +18,7 @@ use App\Group;
 use Redirect;
 use IQuery;
 
-class GoodsGroupController extends Controller
+class GroupController extends Controller
 {
     //列表页
     public function index(Request $request)
