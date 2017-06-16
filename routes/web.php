@@ -76,9 +76,11 @@ Route::group(['namespace'=>'Admin','prefix'=>'admin','middleware'=>['auth','user
 
 	// 用户管理
 	Route::group(['prefix'=>'user'],function(){
+		Route::post('/agent/dels', 'AgentController@dels');
 		Route::resource('/agent', 'AgentController');
 		Route::post('/agentrole/dels', 'AgentRoleController@dels');
 		Route::resource('/agentrole', 'AgentRoleController');
+		Route::post('/list/dels', 'UserController@dels');
 		Route::resource('/list', 'UserController');
 	});
 

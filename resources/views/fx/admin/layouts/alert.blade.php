@@ -46,8 +46,9 @@
         border-radius: 5px;
         font-size:18px;
         opacity: 0;
+        z-index: 999;
         -webkit-animation-name: fadeDown; /*动画名称*/
-        -webkit-animation-duration: 2s; /*动画持续时间*/
+        -webkit-animation-duration: 2.5s; /*动画持续时间*/
         -webkit-animation-iteration-count: 1; /*动画次数*/
         -webkit-animation-delay: 0s; /*延迟时间*/
       }
