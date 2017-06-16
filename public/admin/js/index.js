@@ -1,6 +1,5 @@
 exports.nav = () => {
 	let curhref = window.location.href
-	console.log(curhref)
 	$('.sidebar-menu')
 	.find('.active').removeClass('active').end()
 	.find('a').each(function (idx, elem) {

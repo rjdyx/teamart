@@ -2,6 +2,7 @@ const path = require('path')
 const webpack = require('webpack')
 const merge = require('webpack-merge')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const env = require('./env.js')
 
 function resolve (...dir) {
@@ -33,6 +34,14 @@ const globalValue = env.isAdmin ? {
 	'window.$': 'zetop'
 }
 
+let outputPath
+
+if (env.isServer) {
+	publicPath = env.isAdmin ? path.join('public', 'admin', 'build/') : path.join('public', 'fx', 'build/')
+} else {
+	publicPath = env.isAdmin ? '/admin/build/' : 'fx/build/'
+}
+
 let configs = {
 	entry: {
 		index: env.isAdmin ? resolve(rootPath, 'admin') : resolve(rootPath, 'fx'),
@@ -42,7 +51,7 @@ let configs = {
 		filename: '[name].js',
 		path: env.isAdmin ? path.join(rootPath, 'admin', 'build') : path.join(rootPath, 'fx', 'build'),
 		chunkFilename: '[id].[name].js',
-		publicPath: env.isAdmin ? path.join(rootPath, 'admin', 'build') : path.join(rootPath, 'fx', 'build')
+		publicPath: publicPath
 	},
 	resolve: {
 		extensions: ['.js', '.json'],
@@ -108,10 +117,16 @@ let configs = {
 }
 
 if (process.env.NODE_ENV === 'development') {
+	let devTemplate = env.isAdmin
+		? resolve(__dirname, 'resources', 'views', 'fx', 'admin', 'layouts', 'app.blade.php')
+		: resolve(__dirname, 'resources', 'views', 'layouts', 'app.blade.php')
 	configs = merge(configs, {
 		plugins: [
 			new webpack.DefinePlugin({
 				'process.env.NODE.ENV': 'development'
+			}),
+			new HtmlWebpackPlugin({
+				filename: resolve(__dirname, 'resources', 'views', 'fx', 'admin', 'layouts', 'app.blade.php')
 			}),
 			new webpack.HotModuleReplacementPlugin()
 		],
