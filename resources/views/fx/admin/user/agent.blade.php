@@ -82,7 +82,7 @@
                   <td><button type="button" onclick="dels();" class="btn btn-block btn-default btn-sm">删除</button></td>
                   <th colspan="7">
                     <ul class="pagination pagination-sm no-margin pull-right">
-                        {{ $lists->appends(['name' => ''])->links() }}
+                        {{ $lists->appends(['name' => '','role'=> ''])->links() }}
                         共{{ $lists->lastPage() }}页
                     </ul>
                   </th>

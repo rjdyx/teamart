@@ -16,6 +16,11 @@ Route::post('admin/login', 'Auth\LoginController@adminLogin');
 Route::get('/layout','Auth\LoginController@layout');//前台退出
 Route::get('/admin/layout','Auth\LoginController@adminLayout');//后台退出
 
+// 公共接口组
+Route::group(['middleware'=>['auth']],function(){
+	Route::post('/check','UtilsController@check');//字段验证
+});
+
 Auth::routes();
 Route::get('/','HomeController@index');//首页
 
@@ -86,11 +91,17 @@ Route::group(['namespace'=>'Admin','prefix'=>'admin','middleware'=>['auth','user
 
 	// 商品管理
 	Route::group(['prefix'=>'goods'],function(){
+		Route::post('/category/dels', 'CategoryController@dels');
 		Route::resource('/category', 'CategoryController');
+		Route::post('/spec/dels', 'SpecController@dels');
 		Route::resource('/spec', 'SpecController');
+		Route::post('/brand/dels', 'BrandController@dels');
 		Route::resource('/brand', 'BrandController');
+		Route::post('/group/dels', 'GoodsGroupController@dels');
 		Route::resource('/group', 'GoodsGroupController');
+		Route::post('/list/dels', 'GoodsController@dels');
 		Route::resource('/list', 'GoodsController');
+		Route::post('/comment/dels', 'GoodsCommentController@dels');
 		Route::resource('/comment', 'GoodsCommentController');
 	});
 

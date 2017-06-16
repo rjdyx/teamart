@@ -12,7 +12,7 @@
       //单条删除
       function del(id) {
         if (confirm('确定要删除这条记录吗？')==true){ 
-          $("#del").attr('action', window.location.href + '/' + id);
+          $("#del").attr('action', window.location.href.split('?')[0] + '/' + id);
           $("#del").submit();
         }
       }
@@ -21,7 +21,7 @@
         if ($(".check:checked").length > 0) {
           if (confirm('确定要删除选中记录吗？')==true){ 
             var ids = Array();
-            $("#dels").attr('action', window.location.href + '/dels');
+            $("#dels").attr('action', window.location.href.split('?')[0] + '/dels');
             $(".check:checked").each(function(){
                 ids.push($(this).val());
             });
@@ -35,16 +35,15 @@
 
     <style>
       .alert{
-        width:180px;
-        height:40px;
+        width:200px;
+        height:120px;
         position:absolute;
-        left: 60%;
-        top:55px;
-        color:white;
+        left: 45%;
+        top:45%;
         text-align: center;
-        line-height: 10px;
+        line-height: 80px;
         border-radius: 5px;
-        font-size:18px;
+        font-size:22px;
         opacity: 0;
         z-index: 999;
         -webkit-animation-name: fadeDown; /*动画名称*/
@@ -63,8 +62,8 @@
         opacity: 0; /*结尾状态 透明度为1*/
         }
       }
-      .success{background: #00a65a;}
-      .danger{background: #dd4b39;}
+      .success{background:white; border:1px solid #00a65a; color:#00a65a;}
+      .danger{background:white; border:1px solid #dd4b39; color:#dd4b39;}
     </style>
 
     <!-- 单条数据删除 -->

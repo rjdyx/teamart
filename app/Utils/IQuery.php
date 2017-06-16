@@ -110,7 +110,7 @@ class IQuery{
             if($minState) {
                 $newfilePath = $path.'FX_S_'.time().rand(1,9999).'.'. $Extension;//缩略图路径名称
                 $this->img_create_small($filePath,config('app.thumb_width'),config('app.thumb_height'),$newfilePath);  //生成缩略图
-                $pics['pic_thumb']= $newfilePath;//缩略图
+                $pics['thumb']= $newfilePath;//缩略图
             }
             return $pics;//返回原图 缩略图 的路径 数组
         }else{
