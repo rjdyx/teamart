@@ -11,12 +11,14 @@ class AddressController extends Controller
 {
 	//地址管理列表页
 	public function index (Request $request) {
+		$title = '地址管理';
 		$lists = Address::where('user_id',Auth::user()->id)->get();
-		return view(config('app.theme').'.home.addressList')->with(['lists'=>$lists]);
+		return view(config('app.theme').'.home.addressList')->with(['title'=>$title, 'lists'=>$lists]);
 	}
 
 	//地址管理新建
 	public function create () {
-		return view(config('app.theme').'.home.addressAdd');
+		$title = '新增地址';
+		return view(config('app.theme').'.home.addressAdd')->with(['title'=>$title]);
 	}
 }

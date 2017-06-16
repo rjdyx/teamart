@@ -5,7 +5,7 @@
     <!-- Sidebar user panel -->
     <div class="user-panel">
       <div class="pull-left image">
-        <img src="{{url('admin/build/images/user2-160x160.jpg')}}" class="img-circle" alt="User Image">
+        <img src="{{url('admin/images/user2-160x160.jpg')}}" class="img-circle" alt="User Image">
       </div>
       <div class="pull-left info">
         <p>{{empty(Auth::user())?'未登录':Auth::user()->name}}</p>
