@@ -61,7 +61,22 @@
 <body class="hold-transition skin-green-light sidebar-mini">
     
     <div class="wrapper">
-        @yield('content')
+        @include("fx.admin.layouts.header")
+
+        @include("fx.admin.layouts.left")
+        <div class="content-wrapper">
+            <div id="agentRole">
+                <section class="content-header">
+                    <h1 style="cursor: pointer;">
+                    <i class="fa fa-home" style="color: #00a65a;margin-right:4px"></i>@yield('t1')
+                    <small style="color: #00a65a">
+                    <i class="fa fa-angle-right" style="margin-right: 4px"></i>
+                    @yield('title')</small>
+                    </h1>
+                </section>
+                @yield('content')
+            </div>
+        </div>
     </div>
     <script src="{{url('fx/common/jquery-3.1.0.min.js')}}"></script>
 
