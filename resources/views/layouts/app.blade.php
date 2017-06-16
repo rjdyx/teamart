@@ -36,7 +36,7 @@
 
     
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('fx/css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ asset('fx/css/reset.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('fx/css/header.css') }}">
     @yield('css')
@@ -55,7 +55,7 @@
         @yield('content')
     </div>
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('fx/js/app.js') }}"></script>
     {{-- <script src="{{ url('fx/common/zepto.min.js')}}"></script> --}}
     {{-- <script src="http://cdn.webfont.youziku.com/wwwroot/js/wf/youziku.api.min.js"></script> --}}
     @yield('script')

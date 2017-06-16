@@ -1,9 +1,10 @@
-// @import url('../../../node_modules/bootstrap/dist/css/bootstrap.min.css');
-// @import url('../../../node_modules/font-awesome/css/font-awesome.min.css');
-// @import url('../../../node_modules/ionicons/dist/css/ionicons.min.css');
-// @import url('../../../node_modules/admin-lte/dist/css/AdminLTE.min.css');
-// @import url('../../../node_modules/admin-lte/dist/css/skins/skin-green-light.min.css');
-// @import url('../../../node_modules/icheck/skins/square/blue.css');
+.logo-szy {
+    background: url(../images/logo.png) center center no-repeat;
+    text-indent: -9999px;
+    background-size: 100% 50px;
+    margin: 0 auto;
+    height: 50px;
+}
 .content-header>h1 {
     font-size: 18px;
     margin: 0;
@@ -66,3 +67,4 @@ th {
     height: 60px;
     width: 60px;
 }
+

@@ -4,7 +4,7 @@
     <!-- mini logo for sidebar mini 50x50 pixels -->
     <span class="logo-mini"><b>L</b>GI</span>
     <!-- logo for regular state and mobile devices -->
-    <span class="logo-lg"><img src="{{url('admin/build/images/logo.png')}}" style="height: 45px;width: 100%"></span>
+    <span class="logo-lg"><h1 class="logo-szy">生之园</h1></span>
   </a>
 
   <!-- Header Navbar: style can be found in header.less -->
@@ -32,13 +32,13 @@
         </li>
         <!-- Notifications: style can be found in dropdown.less -->
         <li class="dropdown notifications-menu">
-          <a href="{{url('admin/system/shop')}}" class="dropdown-toggle" data-toggle="dropdown">
+          <a href="{{url('admin/system/shop')}}">
             <i class="fa fa-gear"></i>
             <span>店铺设置</span>
           </a>
         </li>
         <li class="dropdown notifications-menu">
-          <a href="{{url('admin/system/personal')}}" class="dropdown-toggle" data-toggle="dropdown">
+          <a href="{{url('admin/system/personal')}}">
             <i class="fa fa-gear"></i>
             <span>个人设置</span>
           </a>

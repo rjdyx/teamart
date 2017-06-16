@@ -34,18 +34,7 @@
     <title>@yield('title')</title>
 
     <!-- Bootstrap 3.3.6 -->
-    {{-- <link rel="stylesheet" href="{{url('admin/common/bootstrap/css/bootstrap.min.css')}}"> --}}
-    {{-- <link rel="stylesheet" href="{{url('admin/common/dist/css/font-awesome.css')}}"> --}}
-    {{-- <link rel="stylesheet" href="{{url('admin/common/dist/css/ionicons.css')}}"> --}}
-    {{-- <link rel="stylesheet" href="{{url('admin/common/dist/css/AdminLTE.min.css')}}"> --}}
-    {{-- <link rel="stylesheet" href="{{url('admin/common/dist/css/skins/skin-green-light.css')}}"> --}}
-    {{-- <link href="http://localhost:8080/build/css/index.css" rel="stylesheet"> --}}
-    {{-- <link rel="stylesheet" href="{{ elixir('build/css/index.css') }}"> --}}
-    <link rel="stylesheet" href="http://www.fx.com/admin/build/css/bootstrap.min.css">
-    <link rel="stylesheet" href="http://www.fx.com/admin/build/css/font-awesome.min.css">
-    <link rel="stylesheet" href="http://www.fx.com/admin/build/css/ionicons.min.css">
-    <link rel="stylesheet" href="http://www.fx.com/admin/build/css/AdminLTE.min.css">
-    <link rel="stylesheet" href="http://www.fx.com/admin/build/css/skin-green-light.min.css">
+    <link rel="stylesheet" href="http://www.fx.com/admin/build/css/index.css">
     <link rel="stylesheet" href="http://www.fx.com/admin/css/index.css">
     <!-- Styles -->
     @yield('css')
@@ -78,36 +67,10 @@
             </div>
         </div>
     </div>
-    <script src="{{url('fx/common/jquery-3.1.0.min.js')}}"></script>
-
-    {{-- <script src="{{url('admin/common/plugins/jQuery/jquery-2.2.3.min.js')}}"></script>
-    <script src="{{url('admin/common/bootstrap/bootstrap.min.js')}}"></script>
-    <script src="{{url('admin/common/dist/js/app.min.js')}}"></script>
-    
-    <script>
-        'use strict';
-
-        (function($){
-            let curhref = window.location.href
-            $('.sidebar-menu')
-            .find('.active').removeClass('active').end()
-            .find('a').each(function (idx, elem) {
-                let href = $(this).attr('href')
-                if (curhref === href) {
-                    $(this)
-                        .parent().addClass('active').end()
-                        .parents('.treeview').addClass('active')
-                }
-            })
-        })($)
-    </script> --}}
-
-    {{-- <script src="http://localhost:8080/build/js/vendor-bundle.js"></script> --}}
-    {{-- <script src="http://localhost:8080/build/js/index.js"></script> --}}
-    {{-- <script src="{{ elixir('build/js/vendor-bundle.js') }}"></script> --}}
-    {{-- <script src="{{ elixir('build/js/index.js') }}"></script> --}}
     <script src="http://www.fx.com/admin/build/vendor-bundle.js"></script>
     <script src="http://www.fx.com/admin/build/index.js"></script>
+    <script src="{{url('admin/js/jquery-1.1.0.js')}}"></script>
+    <script src="{{url('admin/js/bootstrap.min.js')}}"></script>
     @yield('script')
 </body>
 </html>

@@ -80,16 +80,20 @@
 			</ul>
 			<ul class="list_box">
 				<li class="personal_center_block">
-					<div id="personal_center_blackPoint4"></div>
-					<div class="personal_center_block_p">帮助中心</div>
+					<a href="">
+						<div id="personal_center_blackPoint4"></div>
+						<div class="personal_center_block_p">帮助中心</div>
+					</a>
 				</li>
 				<li class="personal_center_block">
 					<div id="personal_center_blackPoint5"></div>
 					<div class="personal_center_block_p">我的二维码</div>
 				</li>
 				<li class="personal_center_block">
-					<div id="personal_center_blackPoint6"></div>
-					<div class="personal_center_block_p">收货地址</div>
+					<a href="{{url('/home/address')}}">
+						<div id="personal_center_blackPoint6"></div>
+						<div class="personal_center_block_p">收货地址</div>
+					</a>
 				</li>
 			</ul>
 		</div>
