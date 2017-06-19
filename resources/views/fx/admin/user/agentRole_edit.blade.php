@@ -13,7 +13,6 @@
 
 @section('script')
     @parent
-    <script src="{{url('admin/js/axios.js')}}"></script>
     <script>
       $(function () {
         var form = document.forms['parterForm']
@@ -21,103 +20,28 @@
           return submitForm()
         })
         $('#name').on('blur input', function () {
-          vaildName('name', $('#name').val())
+          validname('name', '用户名', $(this).val(), 'parter')
         })
         $('#scale').on('blur input', function () {
-          vaildScale('scale', $('#scale').val())
+          validscale('scale', $(this).val())
         })
         $('#desc').on('blur input', function () {
-          vaildDesc('desc', $('#desc').val())
+          validdesc('desc', '角色描述', $(this).val())
         })
         function submitForm() {
           var name = form['name']
           var scale = form['scale']
           var desc = form['desc']
-          if (!vaildName('name', name.value)) {
+          if (!validname('name', '用户名', $(this).val(), 'parter')) {
             return false
           }
-          if (!vaildScale('scale', scale.value)) {
+          if (!validscale('scale', scale.value)) {
             return false
           }
-          if (!vaildDesc('desc', desc.value)) {
+          if (!validdesc('desc', '角色描述', desc.value)) {
             return false
           }
           return true
-        }
-        function required (field, fieldtxt, value) {
-          if (value) {
-            $('#' + field + '_txt').text('')
-            return true
-          } else {
-            $('#' + field + '_txt').text(fieldtxt + '不能为空')
-            return false
-          }
-        }
-        function vaildName (field, value) {
-          var vaild = false
-          var temp = required(field, '分销角色名称', value)
-          if (temp) {
-            if (value.length < 4) {
-              $('#' + field + '_txt').text('分销角色名称不能少于4个字符')
-              vaild = false
-            } else {
-              // id
-              // field
-              // value
-              // table
-              var params = {
-                id: $('input[name="id"]').val(),
-                field: 'name',
-                table: 'parter',
-                value: value
-              }
-              axios.post('/check', params)
-                .then(function (res) {
-                  if (res.data == 'false') {
-                    vaild = true
-                  } else {
-                    $('#' + field + '_txt').text('该名字已经存在')
-                    vaild = false
-                  }
-                })
-                .catch(function (err) {
-                  console.log(err)
-                })
-              $('#' + field + '_txt').text('')
-              vaild = true
-            }
-          }
-          return vaild
-        }
-        function vaildScale (field, value) {
-          var vaild = false
-          var temp = required(field, '分销比例', value)
-          if (temp) {
-            if (isNaN(parseFloat(value))) {
-              $('#' + field + '_txt').text('请输入数字')
-              vaild = false
-            } else if (value <= 0 || value > 1) {
-              $('#' + field + '_txt').text('分销比例区间在0~1之间')
-              vaild = false
-            } else {
-              $('#' + field + '_txt').text('')
-              vaild = true
-            }
-          }
-          return vaild
-        }
-        function vaildDesc (field, value) {
-          var vaild = false
-          if (value) {
-            if (value.length > 50) {
-              $('#' + field + '_txt').text('角色描述在50个字内')
-              vaild = false
-            } else {
-              $('#' + field + '_txt').text('')
-              vaild = true
-            }
-          }
-          return vaild
         }
       })
     </script>
@@ -134,10 +58,10 @@
           </div>
           <!-- /.box-header -->
           <!-- form start -->
-          <form class="form-horizontal" action="{{url('admin/user/agentrole')}}/{{$data->id}}" method="POST">
+          <form class="form-horizontal" action="{{url('admin/user/agentrole')}}/{{$data->id}}" method="POST" name="parterForm">
           {{ csrf_field() }}
           <input type="hidden" value="PUT" name="_method">
-          <input type="hidden" value="{{$data->id}}" name="id">
+          <input type="hidden" value="{{$data->id}}" name="id" id="id">
             <div class="box-body">
               <div class="form-group">
                 <label for="name" class="col-sm-3 control-label"><i style="color:red;">*</i> 分销角色名称</label>

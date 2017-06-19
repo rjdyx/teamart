@@ -38,7 +38,7 @@
               <tr>
                 <td><input type="checkbox" class="check" value="{{$list->id}}"></td>
                 <td>{{$k + 1}}</td>
-                <td><img src="{{url('')}}/ {{ $list->thumb }}" alt="图标" width="30px" height="30px"></td>
+                <td><img src="{{url('')}}/{{ $list->thumb }}" alt="图标" width="30px" height="30px"></td>
                 <td>{{$list->name}}</td>
                 <td>{{$list->desc}}</td>
                 <td>

@@ -99,14 +99,13 @@ class IQuery{
     {
         $file = $request->file($file_pic);
         if ($request->hasFile($file_pic)) {
-            $path = config('app.image_path').'/upload/';
+            $path = config('app.image_path');
             $Extension = $file->getClientOriginalExtension();
             $filename = 'FX_'.time().rand(1,9999).'.'. $Extension;
             $check = $file->move($path, $filename);
             $filePath = $path.$filename; //原图路径加名称
             $pics = array();
             $pics['pic']= $filePath;//原图
-
             if($minState) {
                 $newfilePath = $path.'FX_S_'.time().rand(1,9999).'.'. $Extension;//缩略图路径名称
                 $this->img_create_small($filePath,config('app.thumb_width'),config('app.thumb_height'),$newfilePath);  //生成缩略图
@@ -122,7 +121,7 @@ class IQuery{
     public function uploads($request, $pics='imgs', $minState=true)
     {            
         $pics = array();
-        $path = config('app.image_path').'/upload/';
+        $path = config('app.image_path');
         $files = $request->file($pics);
         if (!empty($files)) {
             foreach ($files as $k => $file) {

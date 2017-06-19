@@ -35,13 +35,8 @@
 
     <title>后台登录</title>
 
-    <!-- Bootstrap 3.3.6 -->
-    <link rel="stylesheet" href="{{url('admin/build/css/bootstrap.min.css')}}">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="{{url('admin/build/css/AdminLTE.min.css')}}">
-    <!-- iCheck -->
-    <link rel="stylesheet" href="{{url('admin/build/css/blue.css')}}">
-
+	<link rel="stylesheet" href="{{url('/admin/build/css/index.css')}}">
+	{{-- <link rel="stylesheet" href="http://localhost:8080/admin/build/css/index.css"> --}}
 	<style type="text/css">
 		.login_box{
 			display: flex;
@@ -71,7 +66,7 @@
 	  <div class="login-box-body">
 	    <p class="login-box-msg">用户登录</p>
 
-	    <form action="{{ url('admin/login') }}" method="POST">
+	    <form action="/admin/login" method="POST" name="loginForm">
 	    {{ csrf_field() }}
 	      <div class="form-group has-feedback">
 	        <input type="text" class="form-control" name="name" placeholder="账号">
@@ -106,18 +101,22 @@
 	  <!-- /.login-box-body -->
 	</div>
 	
-    <script src="{{url('admin/build/js/jquery-2.2.3.min.js')}}"></script>
-    <script src="{{url('admin/build/js/bootstrap.min.js')}}"></script>
-    <script src="{{url('admin/build/js/icheck.min.js')}}"></script>
+	<script src="{{url('/admin/build/vendor-bundle.js')}}"></script>
+	<script src="{{url('/admin/build/index.js')}}"></script>
+    {{-- <script src="http://localhost:8080/admin/build/vendor-bundle.js"></script>
+    <script src="http://localhost:8080/admin/build/index.js"></script> --}}
 
 	<script>
+		// $(function () {
+		// 	$('input').iCheck({
+		// 		checkboxClass: 'icheckbox_square-blue',
+		// 		radioClass: 'iradio_square-blue',
+		// 		increaseArea: '20%' // optional
+		// 	});
+		// });
 		$(function () {
-			$('input').iCheck({
-				checkboxClass: 'icheckbox_square-blue',
-				radioClass: 'iradio_square-blue',
-				increaseArea: '20%' // optional
-			});
-		});
+			
+		})
 	</script>
 
 </body>
