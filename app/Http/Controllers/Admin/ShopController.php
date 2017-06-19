@@ -19,8 +19,8 @@ class ShopController extends Controller
     //首页 (列表页)
     public function index(Request $request)
     {
-        $lists = System::paginate(config('app.paginate10'));
-        return view(config('app.theme').'.admin.system.shop')->with('lists',$lists);
+        $shop = System::first();
+        return view(config('app.theme').'.admin.system.shop')->with('shop',$shop);
     }
 
     //查看单条信息

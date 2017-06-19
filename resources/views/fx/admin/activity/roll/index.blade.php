@@ -99,7 +99,5 @@
         </div>
       </section>
       <!-- /.content -->
-    </div>
-    <!-- /agentRole -->
 
 @endsection

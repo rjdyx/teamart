@@ -21,25 +21,25 @@
                 <div class="form-group">
                   <label for="inputEmail3" class="col-sm-3 control-label"><i style="color:red;">*</i>优惠券名称</label>
                   <div class="col-sm-4">
-                    <input type="text" name="name" class="form-control" id="inputEmail3" placeholder="请输入品牌名称" value="{{$cheap->name}}">
+                    <input type="text" name="name" class="form-control" id="inputEmail3" placeholder="请输入优惠券名称" value="{{$cheap->name}}">
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="inputEmail3" class="col-sm-3 control-label">满金额</label>
                   <div class="col-sm-4">
-                    <input type="number" name="full" class="form-control" id="inputEmail3" placeholder="请输入品牌描述" value="{{$cheap->full}}">
+                    <input type="number" name="full" class="form-control" id="inputEmail3" placeholder="请输入满金额" value="{{$cheap->full}}">
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="inputEmail3" class="col-sm-3 control-label">减金额</label>
                   <div class="col-sm-4">
-                    <input type="number" name="cut" class="form-control" id="inputEmail3" placeholder="请输入品牌描述" value="{{$cheap->cut}}">
+                    <input type="number" name="cut" class="form-control" id="inputEmail3" placeholder="请输入减金额" value="{{$cheap->cut}}">
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="inputEmail3" class="col-sm-3 control-label">数量</label>
                   <div class="col-sm-4">
-                    <input type="number" name="amount" class="form-control" id="inputEmail3" placeholder="请输入品牌描述" value="{{$cheap->amount}}">
+                    <input type="number" name="amount" class="form-control" id="inputEmail3" placeholder="请输入优惠券数量" value="{{$cheap->amount}}">
                   </div>
                 </div>
                 <div class="form-group">
@@ -71,7 +71,7 @@
                 <div class="form-group">
                   <label for="inputEmail3" class="col-sm-3 control-label">描述</label>
                   <div class="col-sm-4">
-                    <input type="text" name="desc" class="form-control" id="inputEmail3" placeholder="请输入品牌描述" value="{{$cheap->desc}}">
+                    <input type="text" name="desc" class="form-control" id="inputEmail3" placeholder="请输入优惠券描述" value="{{$cheap->desc}}">
                   </div>
                 </div>
                 <div class="form-group">
