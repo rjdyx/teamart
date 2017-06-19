@@ -34,12 +34,12 @@
     <title>@yield('title')</title>
 
     <!-- Bootstrap 3.3.6 -->
-    <link rel="stylesheet" href="http://www.fx.com/admin/build/css/index.css">
-    <link rel="stylesheet" href="http://www.fx.com/admin/css/index.css">
+    <link rel="stylesheet" href="{{url('/admin/build/css/index.css')}}">
+    <link rel="stylesheet" href="{{url('/admin/css/index.css')}}">
+    {{-- <link rel="stylesheet" href="http://localhost:8080/admin/build/css/index.css"> --}}
     <!-- Styles -->
     @yield('css')
     
-    @include("fx.admin.layouts.alert")
     <!-- Scripts -->
     <script>
         window.Laravel = {!! json_encode([
@@ -67,10 +67,13 @@
             </div>
         </div>
     </div>
-    <script src="http://www.fx.com/admin/build/vendor-bundle.js"></script>
-    <script src="http://www.fx.com/admin/build/index.js"></script>
-    <script src="{{url('admin/js/jquery-1.1.0.js')}}"></script>
-    <script src="{{url('admin/js/bootstrap.min.js')}}"></script>
+    <script src="{{url('/admin/build/vendor-bundle.js')}}"></script>
+    <script src="{{url('/admin/build/index.js')}}"></script>
+    {{-- <script src="http://localhost:8080/admin/build/vendor-bundle.js"></script>
+    <script src="http://localhost:8080/admin/build/index.js"></script> --}}
+    <script src="{{url('admin/js/validate1.js')}}" charset="UTF-8"></script>
     @yield('script')
+
+    @include("fx.admin.layouts.alert")
 </body>
 </html>

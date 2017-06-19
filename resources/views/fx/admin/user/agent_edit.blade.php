@@ -8,46 +8,44 @@
     @parent
     <script src="{{url('admin/js/datepicker/bootstrap-datepicker.js')}}"></script>
     <script src="{{url('admin/js/datepicker/locales/bootstrap-datepicker.zh-CN.js')}}" charset="UTF-8"></script>
-    <script src="{{url('admin/js/axios.js')}}"></script>
     <script>
       $(function () {
         $('#datepicker').datepicker({
           language: 'zh-CN',
           format: 'yyyy-mm-dd'
-        });
+        })
         var form = document.forms['userForm']
         $(form).on('submit', function () {
           return submitForm()
         })
         $('#name').on('blur input', function () {
-          vaildName('name', $('#name').val())
+          validname('name', '用户名', $(this).val(), 'user')
         })
         $('#email').on('blur input', function () {
-          vaildEmail('email', $('#email').val())
+          validemail('email', $(this).val())
         })
         $('#parter_id').on('change', function () {
           required('parter_id', '代理商角色', $('#parter_id').val())
         })
-        $('#gender').on('blur', function () {
-          required('gender', '性别', $('#gender').val())
+        $('input[name="gender"]').on('change', function () {
+          required('gender', '性别', $(this).val())
         })
-        $('#password').on('blur input', function () {
-          vaildPassword('password', $('#password').val())
+        $('#password').on('input', function () {
+          validpassword('password', $(this).val(), false)
         })
-        $('#repassword').on('blur input', function () {
-          vaildRePassword('repassword', $('#repassword').val())
+        $('#repassword').on('input', function () {
+          validrepassword('repassword', $(this).val(), false)
         })
         $('#phone').on('blur input', function () {
-          vaildPhone('phone', $('#phone').val())
+          validphone('phone', $(this).val())
         })
         $('#realname').on('blur input', function () {
-          vaildRealname('realname', $('#realname').val())
+          validrealname('realname', $(this).val())
         })
         $('#birth_date').on('blur', function () {
-          vaildBirth_date('birth_date', $('#birth_date').val())
+          validbirth_date('birth_date', $(this).val())
         })
         function submitForm() {
-          console.dir(form)
           var name = form['name']
           var email = form['email']
           var parter_id = form['parter_id']
@@ -57,10 +55,10 @@
           var phone = form['phone']
           var realname = form['realname']
           var birth_date = form['birth_date']
-          if (!vaildName('name', name.value)) {
+          if (!validname('name', '用户名', name.value, 'user')) {
             return false
           }
-          if (!vaildEmail('email', email.value)) {
+          if (!validemail('email', email.value)) {
             return false
           }
           if (!required('parter_id', '代理商角色', parter_id.value)) {
@@ -69,152 +67,22 @@
           if (!required('gender', '性别', gender.value)) {
             return false
           }
-          if (!vaildPassword('password', password.value)) {
+          if (!validpassword('password', password.value, false)) {
             return false
           }
-          if (!vaildRePassword('repassword', repassword.value)) {
+          if (!validrepassword('repassword', repassword.value, false)) {
             return false
           }
-          if (!vaildPhone('phone', phone.value)) {
+          if (!validphone('phone', phone.value)) {
             return false
           }
-          if (!vaildRealname('realname', realname.value)) {
+          if (!validrealname('realname', realname.value)) {
             return false
           }
-          if (!vaildBirth_date('birth_date', birth_date.value)) {
+          if (!validbirth_date('birth_date', birth_date.value)) {
             return false
           }
           return true
-        }
-        function required (field, fieldtxt, value) {
-          if (value) {
-            $('#' + field + '_txt').text('')
-            return true
-          } else {
-            $('#' + field + '_txt').text(fieldtxt + '不能为空')
-            return false
-          }
-        }
-        function vaildName (field, value) {
-          var vaild = false
-          var temp = required(field, '用户名', value)
-          if (temp) {
-            if (value.length < 4) {
-              $('#' + field + '_txt').text('用户名不能少于4个字符')
-              vaild = false
-            } else {
-              // id
-              // field
-              // value
-              // table
-              var params = {
-                id: $('input[name="id"]').val(),
-                field: 'name',
-                table: 'user',
-                value: value
-              }
-              axios.post('/check', params)
-                .then(function (res) {
-                  if (res.data == 'false') {
-                    vaild = true
-                  } else {
-                    $('#' + field + '_txt').text('该名字已经存在')
-                    vaild = false
-                  }
-                })
-                .catch(function (err) {
-                  console.log(err)
-                })
-              $('#' + field + '_txt').text('')
-              vaild = true
-            }
-          }
-          return vaild
-        }
-        function vaildEmail (field, value) {
-          var vaild = false
-          var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/; 
-          var temp = required(field, '邮箱', value)
-          if (temp) {
-            if (!reg.test(value)) {
-              $('#' + field + '_txt').text('邮箱格式不对')
-              vaild = false
-            } else {
-              $('#' + field + '_txt').text('')
-              vaild = true
-            }
-          }
-          return vaild
-        }
-        function vaildPassword (field, value) {
-          var vaild = true
-          if (value) {
-            if (value.length < 6) {
-              $('#' + field + '_txt').text('密码至少要6位')
-              vaild = false
-            } else {
-              $('#' + field + '_txt').text('')
-              vaild = true
-            }
-          }
-          return vaild
-        }
-        function vaildRePassword (field, value) {
-          var vaild = true
-          if (value) {
-            if (value.length < 6) {
-              $('#' + field + '_txt').text('确认密码至少要6位')
-              vaild = false
-            } else {
-              if ($('#password').val() !== value) {
-                $('#' + field + '_txt').text('两次密码不一致')
-                vaild = false
-              } else {
-                $('#' + field + '_txt').text('')
-                vaild = true
-              }
-            }
-          }
-          return vaild
-        }
-        function vaildPhone (field, value) {
-          var vaild = true
-          if (value) {
-            if (!/^1[34578]\d{9}$/.test(value)) {
-              $('#' + field + '_txt').text('手机格式不对')
-              vaild = false
-            } else {
-              $('#' + field + '_txt').text('')
-              vaild = true
-            }
-          }
-          return vaild
-        }
-        function vaildRealname (field, value) {
-          var vaild = true
-          if (value) {
-            if (value.length > 6) {
-              $('#' + field + '_txt').text('姓名不能大于6位')
-              vaild = false
-            } else {
-              $('#' + field + '_txt').text('')
-              vaild = true
-            }
-          }
-          return vaild
-        }
-        function vaildBirth_date (field, value) {
-          var vaild = true
-          if (value) {
-            if (!/^([0-9]{4})+-([0-1][1-9])+-([0-3][0-9])$/.test(value)) {
-              $('#' + field + '_txt').text('出生日期格式为yyyy-mm-dd')
-              vaild = false
-            } else {
-              $('#' + field + '_txt').text('')
-              vaild = true
-            }
-          }
-          return vaild
         }
       })
     </script>
@@ -230,10 +98,10 @@
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            <form class="form-horizontal" action="{{url('admin/user/agent')}}/{{$data->id}}" method="POST">
+            <form class="form-horizontal" action="{{url('admin/user/agent')}}/{{$data->id}}" method="POST" name="userForm">
               {{ csrf_field() }}
               <input type="hidden" value="PUT" name="_method">
-              <input type="hidden" value="{{$data->id}}" name="id">
+              <input type="hidden" value="{{$data->id}}" name="id" id="id">
               <div class="box-body">
                 <div class="form-group">
                   <label for="name" class="col-sm-3 control-label"><i style="color:red;">*</i>用户名</label>
@@ -266,7 +134,7 @@
                 <div class="form-group">
                   <label class="col-sm-3 control-label"><i style="color:red;">*</i>代理商角色</label>
                   <div class="col-sm-4">
-                    <select class="form-control" name="parter_id">
+                    <select class="form-control" name="parter_id" id="parter_id">
                       <option value="">请选择代理商角色</option>
                       @foreach($selects as $select)
                       <option value="{{$select->id}}" 
@@ -276,7 +144,7 @@
                       @endforeach
                     </select>
                   </div>
-                  <span class="col-sm-4 text-danger form_error" id="phone_txt"></span>
+                  <span class="col-sm-4 text-danger form_error" id="parter_id_txt"></span>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-3 control-label"><i style="color:red;">*</i>性别</label>

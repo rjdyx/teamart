@@ -1,3 +1,7 @@
+require('expose-loader?$!jquery')
+require('expose-loader?axios!axios')
+require('expose-loader?_!lodash')
+
 require('babel-polyfill')
 
 require('bootstrap/dist/css/bootstrap.css')

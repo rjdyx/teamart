@@ -30,8 +30,8 @@ const globalValue = env.isAdmin ? {
 	_: 'lodash',
 	'window._': 'lodash',
 
-	$: 'zetop',
-	'window.$': 'zetop'
+	$: 'zepto',
+	'window.$': 'zepto'
 }
 
 let outputPath
@@ -39,13 +39,13 @@ let outputPath
 if (env.isServer) {
 	publicPath = env.isAdmin ? path.join('public', 'admin', 'build/') : path.join('public', 'fx', 'build/')
 } else {
-	publicPath = env.isAdmin ? '/admin/build/' : 'fx/build/'
+	publicPath = env.isAdmin ? 'http://www.fx.com/admin/build/' : 'http://localhost:8080/fx/build/'
 }
 
 let configs = {
 	entry: {
 		index: env.isAdmin ? resolve(rootPath, 'admin') : resolve(rootPath, 'fx'),
-		vendors: env.isAdmin ? ['axios', 'lodash', 'jquery'] : ['axios', 'lodash', 'zetop']
+		vendors: env.isAdmin ? ['axios', 'lodash', 'jquery'] : ['axios', 'lodash', 'zepto']
 	},
 	output: {
 		filename: '[name].js',
@@ -99,6 +99,24 @@ let configs = {
 					fallback: 'style-loader',
 					use: ['css-loader', 'sass-loader']
 				})
+			},
+			{
+				test: require.resolve('axios'),
+				use: [
+					{
+						loader: 'expose-loader',
+						options: 'axios'
+					}
+				]
+			},
+			{
+				test: require.resolve('lodash'),
+				use: [
+					{
+						loader: 'expose-loader',
+						options: '_'
+					}
+				]
 			}
 		]
 	},
@@ -115,19 +133,56 @@ let configs = {
 		module: 'empty'
 	}
 }
+if (env.isAdmin) {
+	configs = merge(configs, {
+		module: {
+			rules: [
+				{
+					test: require.resolve('jquery'),
+					use: [
+						{
+							loader: 'expose-loader',
+							options: 'jQuery'
+						},
+						{
+							loader: 'expose-loader',
+							options: '$'
+						}
+					]
+				}
+			]
+		}
+	})
+} else {
+	configs = merge(configs, {
+		module: {
+			rules: [
+				{
+					test: require.resolve('zepto'),
+					use: [
+						{
+							loader: 'expose-loader',
+							options: '$'
+						}
+					]
+				}
+			]
+		}
+	})
+}
 
 if (process.env.NODE_ENV === 'development') {
-	let devTemplate = env.isAdmin
-		? resolve(__dirname, 'resources', 'views', 'fx', 'admin', 'layouts', 'app.blade.php')
-		: resolve(__dirname, 'resources', 'views', 'layouts', 'app.blade.php')
+	// let devTemplate = env.isAdmin
+	// 	? resolve(__dirname, 'resources', 'views', 'fx', 'admin', 'layouts', 'app.blade.php')
+	// 	: resolve(__dirname, 'resources', 'views', 'layouts', 'app.blade.php')
 	configs = merge(configs, {
 		plugins: [
 			new webpack.DefinePlugin({
 				'process.env.NODE.ENV': 'development'
 			}),
-			new HtmlWebpackPlugin({
-				filename: resolve(__dirname, 'resources', 'views', 'fx', 'admin', 'layouts', 'app.blade.php')
-			}),
+			// new HtmlWebpackPlugin({
+			// 	filename: resolve(__dirname, 'resources', 'views', 'fx', 'admin', 'layouts', 'app.blade.php')
+			// }),
 			new webpack.HotModuleReplacementPlugin()
 		],
 		devServer: {

@@ -4,6 +4,31 @@
 @section('css')@endsection
 @section('script')
     @parent
+    <script>
+      $(function () {
+        var form = document.forms['specForm']
+        $(form).on('submit', function () {
+          return submitForm()
+        })
+        $('#name').on('blur input', function () {
+          validname('name', '规格名称', $(this).val(), 'spec')
+        })
+        $('#desc').on('blur input', function () {
+          validdesc('desc', '规格描述', $(this).val())
+        })
+        function submitForm() {
+          var name = form['name']
+          var desc = form['desc']
+          if (!validname('name', '规格名称', name.value, 'spec')) {
+            return false
+          }
+          if (!validdesc('desc', '规格描述', desc.value)) {
+            return false
+          }
+          return true
+        }
+      })
+    </script>
 @endsection
 @section('content')
     <section class="content">
@@ -16,20 +41,22 @@
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            <form class="form-horizontal" action="{{url('admin/goods/spec')}}" method="POST">
+            <form class="form-horizontal" action="{{url('admin/goods/spec')}}" method="POST" name="specForm">
               {{ csrf_field() }}
               <div class="box-body">
                 <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-3 control-label"><i style="color:red;">*</i>规格名称</label>
+                  <label for="name" class="col-sm-3 control-label"><i style="color:red;">*</i>规格名称</label>
                   <div class="col-sm-4">
-                    <input type="text" name="name" class="form-control" id="inputEmail3" placeholder="请输入规格名称">
+                    <input type="text" name="name" class="form-control" id="name" placeholder="请输入规格名称">
                   </div>
+                  <span class="col-sm-4 text-danger form_error" id="name_txt"></span>
                 </div>
                 <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-3 control-label">规格描述</label>
+                  <label for="desc" class="col-sm-3 control-label">规格描述</label>
                   <div class="col-sm-4">
-                    <input type="text" name="desc" class="form-control" id="inputEmail3" placeholder="请输入规格描述">
+                    <input type="text" name="desc" class="form-control" id="desc" placeholder="请输入规格描述">
                   </div>
+                  <span class="col-sm-4 text-danger form_error" id="desc_txt"></span>
                 </div>
                 <div class="form-group">
                   <div class="col-sm-offset-3 col-sm-10">
