@@ -30,3 +30,14 @@ $factory->define(App\Product::class, function (Faker\Generator $faker) {
         'category_id' => 10,
     ];
 });
+
+$factory->define(App\Cheap::class,function(Faker\Generator $facker){
+    return[
+        'name' => $facker->name,
+        'desc' => $facker->name,
+        'full' => 200,
+        'cut' => 20,
+        'amount' => 1000,
+        'indate' => $facker->datetime,
+    ];
+});
