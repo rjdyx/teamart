@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Session;
 use Redirect;
+use App\User;
+use App\System;
 
 class LoginController extends Controller
 {
@@ -45,13 +47,35 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $this->validateLogin($request);//验证
-        $newRequest = $this->credentials($request);//返回字段
+        if (!$this->role($request)) return $this->failedLoginCome($request);
 
-        if ($this->guard()->attempt($newRequest)) {
-            return $this->sendLoginResponse($request);//成功
+        //验证码验证
+        if ($this->milkcaptchaLogin($request->captcha)) 
+        {
+            $newRequest = $this->credentials($request);//返回字段
+            if ($this->guard()->attempt($newRequest)) {
+                return $this->sendLoginResponse($request);//成功
+            }
         }
         $this->incrementLoginAttempts($request); //失败
         return $this->sendFailedLoginResponse($request);
+    }
+
+    public function milkcaptchaLogin($captcha) 
+    {
+        $system = System::find(1);
+        $state =1;
+        if($system) $state = $system->verify_state;
+        if ($state) {
+            if (Session::get('milkcaptcha') != $captcha) return false;
+        }
+        return true;
+    }
+
+    public function role($request)
+    {
+        $user = User::where('name',$request->name)->first();
+        if ($user) return $user->type;
     }
 
     //管理登录方法
@@ -64,10 +88,15 @@ class LoginController extends Controller
     public function adminLogin(Request $request)
     {
         $this->validateLogin($request);//验证
-        $newRequest = $this->credentials($request);//返回字段
+        if ($this->role($request)) return $this->failedLoginCome($request);
 
-        if ($this->guard()->attempt($newRequest)) {
-            return $this->sendLoginResponse($request, true);//成功
+        //验证码验证
+        if ($this->milkcaptchaLogin($request->captcha)) 
+        {
+            $newRequest = $this->credentials($request);//返回字段
+            if ($this->guard()->attempt($newRequest)) {
+                return $this->sendLoginResponse($request, true);//成功
+            }
         }
         $this->incrementLoginAttempts($request); //失败
         return $this->sendFailedLoginResponse($request);
@@ -100,6 +129,15 @@ class LoginController extends Controller
             ]);
     }
 
+    //登录入口错误提示
+    public function failedLoginCome(Request $request)
+    {
+        return redirect()->back()
+            ->withInput($request->only($this->loginUsername(), 'remember'))
+            ->withErrors([
+                $this->loginUsername() => '登录入口错误！',
+            ]);
+    }
     //验证
     protected function validateLogin(Request $request)
     {

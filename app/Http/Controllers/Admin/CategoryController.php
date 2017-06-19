@@ -121,7 +121,7 @@ class CategoryController extends Controller
         if ($imgs != 'false') {
             $model->img = $imgs['pic'];
             $model->thumb = $imgs['thumb'];
-            if ($id == -1 ) destroyPic(new Category, $id, 'img');
+            if ($id == -1 ) IQuery::destroyPic(new Category, $id, 'img');
         }
 
         if ($model->save()) {

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class TableProductEdit extends Migration
+class TableCommentEdit extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class TableProductEdit extends Migration
      */
     public function up()
     {
-        Schema::table('product', function (Blueprint $table) {
-            $table->dropColumn('spce_id');
-            $table->dropColumn('dlivery_peice');
-            $table->integer('spec_id')->comment('规格id');
-            $table->double('delivery_price', 15, 2)->default(0)->comment('邮费');
+        Schema::table('comment', function (Blueprint $table) {
+            $table->dropColumn('after_id');
+            $table->dropColumn('before_id');
+            $table->dropColumn('type');
+            $table->integer('user_id')->comment('用户id');
         });
     }
 

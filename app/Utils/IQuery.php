@@ -162,8 +162,25 @@ class IQuery{
     }
     
     //删除图片方法
-    public function destroyPic($class,$id,$image='img') {
-        $p = $class::where('id','=',$id)->first();
+    public function destroyPic($class, $id, $image='img', $filed='') {
+        //多张删除
+        if ($filed != '') {
+            $imgs = $class::where($filed,$id)->get();
+            foreach ($imgs as $img) {
+                $result = $this->delImg($img,$image);
+                if ($result == 'false') return 'true';
+            }
+        } else {
+            $img = $class::find($id); 
+            $result = $this->delImg($img,$image);
+            if ($result == 'false') return 'true';
+        }
+        
+        return 'true';
+    }
+    
+    //删除图片方法
+    public function delImg($p, $image){
         if($image=='img') {
             if (empty($p->img) || empty($p->thumb)) return 'false';
             $img = str_replace("\\","/",public_path().'/'.$p->img);
@@ -175,10 +192,9 @@ class IQuery{
             if (empty($p->$image)) return 'false';
             $img = str_replace("\\","/",public_path().'/'.$p->$image);
             if (is_file($img)) unlink($img); 
-        }
-        return 'true';
+        } 
+        return true; 
     }
-    
     //获取批次号
     public function getSerial($table,$pre) {
         $pre_serial = DB::table($table)

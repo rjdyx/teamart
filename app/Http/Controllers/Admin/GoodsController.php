@@ -15,8 +15,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Storage;
 use App\Group;
+use App\Brand;
+use App\Spec;
 use App\ProductCategory as Category;
 use App\Product;
+use App\ProductImg;
 use Redirect;
 use IQuery;
 
@@ -45,7 +48,7 @@ class GoodsController extends Controller
                     'brand.name as brand_name',
                     'spec.name as spec_name'
                 )
-                ->orderBy('product_group.id','asc')
+                ->orderBy('product.id','asc')
                 ->paginate(10);
 
         //查询所有关联的商品分类
@@ -82,23 +85,52 @@ class GoodsController extends Controller
     //创建
     public function create()
     {
-        //查询所有商品分类
-        $selects = Category::get();
-        return view(config('app.theme').'.admin.goods.group_create')->with('selects',$selects);
+        $categorys = Category::select('id','name')->get();
+        $groups = Group::select('id','name')->get();
+        $brands = Brand::select('id','name')->get();
+        $specs = Spec::select('id','name')->get();
+        return view(config('app.theme').'.admin.goods.list_create')
+        ->with([
+            'categorys'=>$categorys,
+            'groups'=>$groups,
+            'brands'=>$brands,
+            'specs'=>$specs
+        ]);
     }
 
     //修改
     public function edit($id)
     {
-        $data = Group::find($id);
-        return view(config('app.theme').'.admin.goods.group_edit')
-        ->with(['data'=>$data]);
+        $categorys = Category::select('id','name')->get();
+        $groups = Group::select('id','name')->get();
+        $brands = Brand::select('id','name')->get();
+        $specs = Spec::select('id','name')->get();
+        $data = Product::find($id);
+        $imgdesc = Group::select('desc')->find($data->group_id);
+        $imgs = ProductImg::find($data->group_id);
+        return view(config('app.theme').'.admin.goods.list_edit')
+        ->with([
+            'data' => $data,
+            'categorys'=>$categorys,
+            'groups'=>$groups,
+            'brands'=>$brands,
+            'specs'=>$specs,
+            'imgdesc'=>$imgdesc,
+            'imgs'=>$imgs
+        ]);
     }
 
     //查看
     public function show($id)
     {
-        return Group::find($id);
+        return $this->indexData()
+        ->select(
+            'product.*',
+            'product_category.name as category_name',
+            'product_group.name as group_name',
+            'brand.name as brand_name',
+            'spec.name as spec_name'
+        );
     }
 
     //单条删除
@@ -112,7 +144,7 @@ class GoodsController extends Controller
 
     public function del($id) 
     {
-        if (Group::destroy($id)) return true;
+        if (Product::destroy($id) && (IQuery::destroyPic(new ProductImg, $id, 'img', 'group_id') != 'false')) return true;
         return false;
     }
 
@@ -120,8 +152,10 @@ class GoodsController extends Controller
     public function dels(Request $request)
     {
         $ids = explode(',', $request->ids);
-        if (Group::destroy($ids)) {
-            return Redirect::back()->withErrors('批量删除失败');
+        foreach ($ids as $id) {
+            if (!$this->del($id)) {
+                return Redirect::back()->withErrors('批量删除失败');
+            }
         }
         return Redirect::back()->with('status','批量删除成功');
     }
@@ -141,31 +175,69 @@ class GoodsController extends Controller
     //保存方法
     public function StoreOrUpdate(Request $request, $id = -1)
     {
+
         $this->validate($request, [
             'name' => [
                 'required',
                 'max:50', 
                 //name+软删除 唯一验证               
-                Rule::unique('product_group')->ignore($id)->where(function($query) use ($id) {
+                Rule::unique('product')->ignore($id)->where(function($query) use ($id) {
                     $query->whereNull('deleted_at');
                 })
             ], 
-            'desc'=>'nullable|max:255'
+            'desc'=>'nullable|max:255',
+            'brand_id'=>'required',
+            'category_id'=>'required',
+            'spec_id'=>'required',
+            'group_id'=>'required',
+            'price'=>'required|max:10',
+            'delivery_price'=>'required|max:10',
+            'price_raw'=>'required|max:10',
+            'stock'=>'required|max:15',
+            'low_stock'=>'required|max:15',
+            'effect'=>'required|max:255',
+            'origin'=>'required|max:255',
+            'date'=>'required',
+            'state'=>'required',
+            'grade'=>'required'
         ]);
 
         if ($id == -1) {
-            $model = new Group;
+            $model = new Product;
         } else {
-            $model = Group::find($id);
+            $model = Product::find($id);
         }
 
         //接收数据 加入model
-        $model->setRawAttributes($request->only(['name','desc','category_id']));
+        $model->setRawAttributes($request->only(['name','brand_id','group_id','desc','category_id','price_raw','price','stock','low_stock','effect','origin','date','grade','state','spec_id','delivery_price']));
+
+        if ($id == -1) $model->user_id = Auth::user()->id;
 
         if ($model->save()) {
-            return Redirect::to('admin/goods/group')->with('status', '保存成功');
+            //保存关联参数
+            $group = Group::find($request->group_id);
+            $group->desc = $request->img_desc;
+            $img = new ProductImg;
+            $pics = IQuery::uploads($request, 'imgs', true);
+            if ($pics != 'false')
+            {
+                foreach ($pics as $pic) {
+                    $img->img = $pic['pic'];
+                    $img->thumb = $pic['thumb'];
+                    $img->group_id = $request->group_id;
+                    if (!$img->save()) return Redirect::back()->withErrors('保存失败');
+                }
+            }
+            //编辑时删除关联图片
+            if ($id != -1 && isset($request->img_ids)) 
+            {
+                $img_ids = explode(',', $request->img_ids);
+                foreach ($img_ids as $img_id) {
+                    IQuery::destroyPic(new ProductImg, $img_id, 'img');
+                }
+            }
         }
-        return Redirect::back()->withErrors('保存失败');
+        return Redirect::to('admin/goods/list')->with('status', '保存成功');
     }
 
 }

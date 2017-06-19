@@ -29,7 +29,7 @@ class CreateProductTable extends Migration
             $table->string('effect',255)->nullable()->comment('作用');
             $table->string('origin',255)->nullable()->comment('生产地址');
             $table->text('desc',255)->nullable()->comment('描述');
-            $table->dateTime('date')->nullable()->comment('生产日期');
+            $table->date('date')->nullable()->comment('生产日期');
             $table->string('img',255)->nullable()->comment('二维码图片');
             $table->tinyInteger('grade')->default(0)->comment('积分使用 默认为0（1可以使用）');
             $table->tinyInteger('state')->default(1)->comment('商品状态 默认为1（0为缺货）');

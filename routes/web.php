@@ -15,6 +15,7 @@ Route::get('admin/login', 'Auth\LoginController@adminLoginCreate');
 Route::post('admin/login', 'Auth\LoginController@adminLogin');
 Route::get('/layout','Auth\LoginController@layout');//前台退出
 Route::get('/admin/layout','Auth\LoginController@adminLayout');//后台退出
+Route::get('captcha', 'KitController@captcha'); //生成验证码
 
 // 公共接口组
 Route::group(['middleware'=>['auth']],function(){
