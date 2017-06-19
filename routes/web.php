@@ -131,6 +131,7 @@ Route::group(['namespace'=>'Admin','prefix'=>'admin','middleware'=>['auth','user
 		Route::resource('/group', 'GroupController');
 		Route::resource('/mark', 'MarkController');
 		Route::resource('/roll', 'RollController');
+		Route::post('/roll/dels','RollController@dels');
 	});
 
 	// 系统管理

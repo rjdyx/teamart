@@ -14,10 +14,9 @@
 @endsection
 
 @section('content')
-   @include("fx.admin.layouts.header")
-
-   @include("fx.admin.layouts.left")
    
-   <div class="content-wrapper">个人中心 - 这是内容部分</div>
+   <section class="content">
+   aaa
+   </section>
 
 @endsection

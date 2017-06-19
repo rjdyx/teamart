@@ -1,5 +1,8 @@
 @extends('fx.admin.layouts.app')
 
+@section('t1')
+系统管理
+@endsection
 @section('title')
 店铺设置
 @endsection
@@ -14,20 +17,7 @@
 @endsection
 
 @section('content')
-   @include("fx.admin.layouts.header")
-
-   @include("fx.admin.layouts.left")
    
-   <div class="content-wrapper">
-    <!-- addagent -->
-    <div id="addAgent">
-      <!-- Content Header (Page header) -->
-      <section class="content-header">
-        <h1 style="cursor: pointer;">
-          <a href="#" style="color: #000"><i class="fa fa-home fa_skin" style="margin-right:4px"></i>系统管理</a>
-          <a href="#"><small class="fa_skin"><i class="fa fa-angle-right" style="margin-right: 4px"></i>商店设置</small></a>
-        </h1>
-      </section>
       <!-- Main content of addGgent-->
       <section class="content">
         <div class="row">
@@ -41,7 +31,7 @@
                   <div class="form-group">
                     <label for="storeName" class="col-sm-2 control-label">商店名称</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" id="storeName" placeholder="请输入商店名称">
+                      <input type="text" class="form-control" id="storeName" placeholder="请输入商店名称" value="{{$shop->name}}">
                     </div>
                   </div>
                   <div class="form-group">
@@ -189,8 +179,5 @@
         </div>
       </section>
       <!-- /.content -->
-    </div>
-    <!-- /addagent -->
-  </div>
 
 @endsection
