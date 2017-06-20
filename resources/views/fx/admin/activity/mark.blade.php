@@ -1,8 +1,7 @@
 @extends('fx.admin.layouts.app')
 
-@section('title')
-积分
-@endsection
+@section('title')积分商品@endsection
+@section('t1')活动@endsection
 
 @section('css')
 
@@ -14,20 +13,11 @@
 @endsection
 
 @section('content')
-   @include("fx.admin.layouts.header")
 
-   @include("fx.admin.layouts.left")
+
    
-   <div class="content-wrapper">
-    <!-- agentRole -->
-    <div id="agentRole">
-      <!-- Content Header (Page header) -->
-      <section class="content-header">
-        <h1 style="cursor: pointer;">
-          <a href="#" style="color: #000"><i class="fa fa-home fa_skin" style="margin-right:4px"></i>促销管理</a>
-          <a href="#"><small class="fa_skin"><i class="fa fa-angle-right" style="margin-right: 4px"></i>积分商品</small></a>
-        </h1>
-      </section>
+
+
 
       <!-- Main content of agentRole-->
       <section class="content">
@@ -37,12 +27,28 @@
             <div class="box box-success">
               <div class="box-header">
                 <div class="input-group input-group-sm" style="width: 470px;">
+                  <form action="{{url("admin/activity/mark")}}" method="get">
                     <div class="row">
                       <div class="col-sm-4">
-                        <select class="form-control input-sm">
-                          <option>状态</option>
-                          <option>1</option>
-                          <option>2</option>
+                        <select class="form-control input-sm" name="sort">
+                          @if(empty($_GET['sort']))
+                            <option value="10"  >状态</option>
+                            <option value="11"  >有货</option>
+                            <option value="12"  >无货</option>
+                          @else
+                            <option value="10">状态</option>
+
+                            <option value="11"
+                                    @if($_GET['sort'] == 11)
+                                    selected
+                                    @endif
+                            >有货</option>
+                            <option value="12"
+                                    @if($_GET['sort'] == 12)
+                                    selected
+                                    @endif
+                            >无货</option>
+                          @endif
                         </select>
                       </div>
                       <div class="col-sm-8"><input type="text" name="table_search" class="form-control pull-right input-sm" placeholder="请输入搜索内容"></div>
@@ -50,78 +56,65 @@
                     <div class="input-group-btn">
                       <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
                     </div>
+                    </form>
                 </div>
                 <div class="box-tools">
-                  <button type="button" class="btn btn-block btn-success btn-sm" id="addUser">新建积分</button>
+                 <a href="{{url("admin/activity/mark/create")}}"> <button type="button" class="btn btn-block btn-success btn-sm" id="addUser">新建积分</button></a>
                 </div>
               </div>
               <!-- /.box-header -->
               <div class="box-body table-responsive no-padding">
+
                 <table class="table table-hover">
                   <tbody><tr>
                     <th><!-- <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i></button> --></th>
                     <th>编号</th>
                     <th>商品名称</th>
                     <th>状态</th>
-                    <th>积分</th>
-                    <th>保证金</th>
-                    <th>限购</th>
-                    <th>订购商品</th>
-                    <th>订单</th>
+                    <th>积分使用</th>
+                    <th>库存</th>
+                    <th>描述</th>
                     <th>当前价格</th>
                     <th>操作</th>
                   </tr>
+                  @foreach($lists as $k=>$list)
                   <tr>
-                    <td><input type="checkbox"></td>
-                    <td>183</td>
-                    <td>John Doe</td>
-                    <td><i class="fa fa-times"></i></td>
-                    <td><i class="fa fa-check fa_skin"></i></td>
-                    <td>John Doe</td>
-                    <td>John Doe</td>
-                    <td>John Doe</td>
-                    <td>John Doe</td>
-                    <td>John Doe</td>
-                    <td><div style="color: #dd4b39"><i class="fa fa-edit" style="margin-right: 5px;cursor: pointer;"></i><i class="fa fa-trash-o" style="margin-right: 5px;cursor: pointer;"></div></i>
+                    <td><input type="checkbox" class="check" value="{{$list->id}}"></td>
+                    <td>{{$k+1}}</td>
+                    <td>{{$list->name}}</td>
+                    @if($list->state==1)
+                    <td> 有货 </td>
+                    @else
+                      <td> 缺货 </td>
+                    @endif
+                    @if($list->grade==1)
+                      <td> 可使用 </td>
+                    @else
+                      <td> 不可用 </td>
+                    @endif
+                    <td>{{$list->stock}}</td>
+                    <td>{{$list->desc}}</td>
+                    <td>{{$list->price}}</td>
+
+                    <td><div style="color: #dd4b39"><a href="{{url("admin/activity/mark/$list->id/edit")}}"><i class="fa fa-trash-o"  style="margin-right: 5px;cursor: pointer;"></i></a></div>
                    </td>
                   </tr>
+                  @endforeach
+
                   <tr>
-                    <td><input type="checkbox"></td>
-                    <td>183</td>
-                    <td>John Doe</td>
-                    <td><i class="fa fa-times" style="color: #ca0002"></i></td>
-                    <td>183</td>
-                    <td>John Doe</td>
-                    <td>John Doe</td>
-                    <td>John Doe</td>
-                    <td>183</td>
-                    <td>John Doe</td>
-                    <td>11-7-2014</td>
-                  </tr>
-                  <tr>
-                    <td><input type="checkbox"></td>
-                    <td>183</td>
-                    <td>John Doe</td>
-                    <td>John Doe</td>
-                    <td>John Doe</td>
-                    <td>John Doe</td>
-                    <td>11-7-2014</td>
-                    <td>John Doe</td>
-                    <td><i class="fa fa-times" style="color: #ca0002"></i></td>
-                    <td>183</td>
-                    <td>183</td>
-                  </tr>
-                  <tr>
-                    <td><button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i></td>
-                    <td><button type="button" class="btn btn-block btn-default btn-sm">删除</button></td>
+                    <td><button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o">全选</i></td>
+
+                      <td><button type="button" onclick="dels();" class="btn btn-block btn-default btn-sm">删除</button></td>
+
+
                     <th colspan="9">
-                      <ul class="pagination pagination-sm no-margin pull-right">
-                        <li><a href="#">«</a></li>
-                        <li><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">»</a></li>
-                      </ul>
+                      @if(isset($_GET['sort'])&&isset($_GET['table_search']))
+                        {{$lists->appends(['sort'=>$_GET['sort'],'table_search'=>$_GET['table_search']])->links()}}
+                      @else
+                        {{$lists->links()}}
+                      @endif
+                      共{{ $lists->lastPage() }}页
+
                     </th>
                   </tr>
                 </tbody></table>
@@ -243,8 +236,6 @@
         </div>
       </section>
       <!-- /.content -->
-    </div>
-    <!-- /addagent -->
-  </div>
+
 
 @endsection

@@ -19,16 +19,35 @@ class FeedbackController extends Controller
     //首页 (列表页)
     public function index(Request $request)
     {
-        $lists = Feedback::paginate(config('app.paginate10'));
-        return view(config('app.theme').'.admin.feedback.index')->with('lists',$lists);
+       if($request){
+           return $this->sort($request);
+       }
+        $lists = Feedback::orderBy('id','asc')->paginate(config('app.paginate5'));
+        return view(config('app.theme').'.admin.system.feedback')->with('lists',$lists);
     }
 
     //查看单条信息
-    public function show($id)
+    public function show(Request $request)
     {
-        return Feedback::find($id);
-    }
+//        return Feedback::find($id);
 
+    }
+    //查询搜索的信息
+
+    public function sort($request){
+        $sort=$request->input("sort");
+        if($sort==1){
+        $lists =Feedback::orderBy('date','desc')->paginate(config('app.paginate5'));
+        }
+        if($sort==2){
+            $lists =Feedback::orderBy('date','asc')->paginate(config('app.paginate5'));
+        }
+        if($sort==0){
+            $lists =Feedback::paginate(config('app.paginate5'));
+        }
+        return view(config('app.theme').'.admin.system.feedback')->with('lists',$lists);
+
+    }
     //数据创建
     public function create()
     {
@@ -63,6 +82,26 @@ class FeedbackController extends Controller
             return Redirect::back()->withErrors('删除成功');
         }
         return Redirect::back()->withErrors('删除失败');
+    }
+
+
+    public function del($id)
+    {
+        IQuery::destroyPic(new Feedback, $id, 'img'); //删除图片
+        if (Feedback::destroy($id)) return true;
+        return false;
+    }
+    //批量删除
+    public function dels(Request $request)
+    {
+
+        $ids = explode(',', $request->ids);
+        foreach ($ids as $id) {
+            if (!$this->del($id)) {
+                return Redirect::back()->withErrors('批量删除失败');
+            }
+        }
+        return Redirect::back()->with('status','批量删除成功');
     }
 
     //保存方法

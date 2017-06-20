@@ -130,6 +130,8 @@ Route::group(['namespace'=>'Admin','prefix'=>'admin','middleware'=>['auth','user
 	Route::group(['prefix'=>'activity'],function(){
 		Route::resource('/group', 'GroupController');
 		Route::resource('/mark', 'MarkController');
+		Route::post('/mark/dels',"MarkController@dels");
+		Route::post('/mark/create/dels',"MarkController@dels");
 		Route::resource('/roll', 'RollController');
 	});
 
@@ -142,6 +144,8 @@ Route::group(['namespace'=>'Admin','prefix'=>'admin','middleware'=>['auth','user
 		Route::resource('/site', 'SiteController');
 		Route::resource('/log', 'LogController');
 		Route::resource('/personal', 'PersonalController');
+		Route::resource('/feedback','FeedbackController');
+		Route::post('/feedback/dels', 'FeedbackController@dels');
 	});
 
 });
