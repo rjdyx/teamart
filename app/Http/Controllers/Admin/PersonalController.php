@@ -9,18 +9,20 @@
 namespace App\Http\Controllers\Admin;
 
 use App\System;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Redirect;
 use IQuery;
+use Auth;
 
 class PersonalController extends Controller
 {
     //首页 (列表页)
     public function index(Request $request)
     {
-        $lists = System::paginate(config('app.paginate10'));
-        return view(config('app.theme').'.admin.system.personal')->with('lists',$lists);
+        $user = Auth::User();
+        return view(config('app.theme').'.admin.system.personal')->with('user',$user);
     }
 
     //查看单条信息
@@ -63,8 +65,36 @@ class PersonalController extends Controller
     public function StoreOrUpdate(Request $request, $id = -1)
     {
         $this->validate($request, [
-  
+            'name' => 'required|string',
+            'email' => 'email|nullable',
+            'phone' => 'numeric',
+            'gender' => 'in:0,1',
+            'password' => 'nullable|string|min:6|max:30',
+            'password2' => 'same:password',
         ]);
+        $user = User::find($id);
+        $name = $request->name;
+        $email = $request->email;
+        $phone = $request->phone;
+        $gender = $request->gender;
+        $password = $request->password;
 
+        $user->name = $name;
+        $user->email = $email;
+        $user->phone = $phone;
+        $user->gender = $gender;
+        if($password != null && $password != '') $user->password = bcrypt($password);
+
+        $imgs = IQuery::upload($request,'img',true);
+        if ($imgs !== 'false') {
+            IQuery::destroyPic(new User,$id,'img');
+            $user->img = $imgs['pic'];
+            $user->thumb = $imgs['thumb'];
+        }
+        if($user->save()){
+            return Redirect::to('admin/index')->with('status', '保存成功');
+        }else{
+            return Redirect::back()->withErrors('保存失败');
+        }
     }
 }

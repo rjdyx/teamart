@@ -20,6 +20,10 @@ class ShopController extends Controller
     public function index(Request $request)
     {
         $shop = System::first();
+        if($shop==null){
+            $shop = new System;
+            $shop->save();
+        }
         return view(config('app.theme').'.admin.system.shop')->with('shop',$shop);
     }
 
