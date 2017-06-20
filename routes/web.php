@@ -10,7 +10,9 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+ 
+ 
+Route::get('/auth/geetest', 'Auth\AuthController@getGeetest');//极验
 Route::get('admin/login', 'Auth\LoginController@adminLoginCreate');
 Route::post('admin/login', 'Auth\LoginController@adminLogin');
 Route::get('/layout','Auth\LoginController@layout');//前台退出

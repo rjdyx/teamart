@@ -46,6 +46,15 @@ class LoginController extends Controller
     //登录方法
     public function login(Request $request)
     {
+        // $result = $this->validate($request, [
+        //   'geetest_challenge' => 'geetest',
+        // ], [
+        //   'geetest' => config('geetest.server_fail_alert')
+        // ]);
+        // if (!$request) {
+        //     $this->incrementLoginAttempts($request); //失败
+        //     return $this->sendFailedLoginResponse($request);
+        // }
         $this->validateLogin($request);//验证
         if (!$this->role($request)) return $this->failedLoginCome($request);
 
