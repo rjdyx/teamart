@@ -99,13 +99,14 @@ class IQuery{
     {
         $file = $request->file($file_pic);
         if ($request->hasFile($file_pic)) {
-            $path = config('app.image_path');
+            $path = config('app.image_path').'/upload/';
             $Extension = $file->getClientOriginalExtension();
             $filename = 'FX_'.time().rand(1,9999).'.'. $Extension;
             $check = $file->move($path, $filename);
             $filePath = $path.$filename; //原图路径加名称
             $pics = array();
             $pics['pic']= $filePath;//原图
+
             if($minState) {
                 $newfilePath = $path.'FX_S_'.time().rand(1,9999).'.'. $Extension;//缩略图路径名称
                 $this->img_create_small($filePath,config('app.thumb_width'),config('app.thumb_height'),$newfilePath);  //生成缩略图
@@ -121,7 +122,7 @@ class IQuery{
     public function uploads($request, $pics='imgs', $minState=true)
     {            
         $pics = array();
-        $path = config('app.image_path');
+        $path = config('app.image_path').'/upload/';
         $files = $request->file($pics);
         if (!empty($files)) {
             foreach ($files as $k => $file) {
@@ -161,25 +162,8 @@ class IQuery{
     }
     
     //删除图片方法
-    public function destroyPic($class, $id, $image='img', $filed='') {
-        //多张删除
-        if ($filed != '') {
-            $imgs = $class::where($filed,$id)->get();
-            foreach ($imgs as $img) {
-                $result = $this->delImg($img,$image);
-                if ($result == 'false') return 'true';
-            }
-        } else {
-            $img = $class::find($id); 
-            $result = $this->delImg($img,$image);
-            if ($result == 'false') return 'true';
-        }
-        
-        return 'true';
-    }
-    
-    //删除图片方法
-    public function delImg($p, $image){
+    public function destroyPic($class,$id,$image='img') {
+        $p = $class::where('id','=',$id)->first();
         if($image=='img') {
             if (empty($p->img) || empty($p->thumb)) return 'false';
             $img = str_replace("\\","/",public_path().'/'.$p->img);
@@ -191,9 +175,10 @@ class IQuery{
             if (empty($p->$image)) return 'false';
             $img = str_replace("\\","/",public_path().'/'.$p->$image);
             if (is_file($img)) unlink($img); 
-        } 
-        return true; 
+        }
+        return 'true';
     }
+    
     //获取批次号
     public function getSerial($table,$pre) {
         $pre_serial = DB::table($table)

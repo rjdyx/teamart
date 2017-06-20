@@ -1,5 +1,6 @@
 <?php
 /*
+ * user: 严能发
  * @version: 0.1 文章控制器
  * @author: gsl
  * @date: 2017/06/08
@@ -9,8 +10,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Article;
-use Illuminate\Http\Request;
+use App\ArticleCategory;
+use Illuminate\Http\Request; 
 use App\Http\Controllers\Controller;
+use Illuminate\Validation\Rule;
 use Redirect;
 use IQuery;
 
@@ -21,20 +24,24 @@ class ArticleController extends Controller
     {
         $lists = Article::join('article_category','article.category_id','=','article_category.id')
         ->select('article_category.name as category_name','article.*')
-        ->paginate(config('app.paginate10'));
+        ->paginate(3);
+        if ($request->name) {
+            $lists = $lists->where('name','like','%'.$request->name.'%');
+        }
         return view(config('app.theme').'.admin.article.list')->with('lists',$lists);
     }
 
     //查看单条信息
     public function show($id)
-    {
+    { 
         return Article::find($id);
     }
 
     //数据创建
     public function create()
     {
-        return view(config('app.theme').'.admin.article.list_create');
+        $lists = ArticleCategory::select('id','name')->get();
+        return view(config('app.theme').'.admin.article.list_create')->with(['lists' => $lists]);
     }
 
     //保存新建数据
@@ -59,14 +66,65 @@ class ArticleController extends Controller
     //单条删除
     public function destroy($id)
     {
+         if ($this->del($id)) {
+            return Redirect::back()->with('status','删除成功');
+        }
         return Redirect::back()->withErrors('删除失败');
+    }
+
+    public function del($id) 
+    {
+        IQuery::destroyPic(new Article, $id, 'img'); //删除图片
+        if (Article::destroy($id)) return true;
+        return false;
+    }
+
+    //批量删除
+    public function dels(Request $request)
+    {
+        $ids = explode(',', $request->ids);
+        foreach ($ids as $id) {
+            if (!$this->del($id)) {
+                return Redirect::back()->withErrors('批量删除失败');
+            }
+        }
+        return Redirect::back()->with('status','批量删除成功');
     }
 
     //保存方法
     public function StoreOrUpdate(Request $request, $id = -1)
     {
         $this->validate($request, [
-
+            'name' => [
+                'required',
+                'max:50', 
+                //name+软删除 唯一验证               
+                Rule::unique('article')->ignore($id)->where(function($query) use ($id) {
+                    $query->whereNull('deleted_at');
+                })
+            ], 
         ]);
+
+        if ($id == -1) {
+            $model = new Article;
+        } else {
+            $model = Article::find($id);
+        }
+
+        //接收数据 加入model
+        $model->setRawAttributes($request->only(['name','category_id','content']));
+
+        //资源、上传图片名称、是否生成缩略图
+        $imgs = IQuery::upload($request,'img',true);
+        if ($imgs != 'false') {
+            $model->img = $imgs['pic'];
+            $model->thumb = $imgs['thumb'];
+            if ($id == -1 ) IQuery::destroyPic(new Article, $id, 'img');
+        }
+
+        if ($model->save()) {
+            return Redirect::to('admin/article/list')->with('status', '保存成功');
+        }
+        return Redirect::back()->withErrors('保存失败');
     }
 }

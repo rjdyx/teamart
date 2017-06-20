@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('admin/login', 'Auth\LoginController@adminLoginCreate');
+Route::get('admin/login', 'Auth\LoginController@adminLoginCreate'); 
 Route::post('admin/login', 'Auth\LoginController@adminLogin');
 Route::get('/layout','Auth\LoginController@layout');//前台退出
 Route::get('/admin/layout','Auth\LoginController@adminLayout');//后台退出
@@ -122,7 +122,9 @@ Route::group(['namespace'=>'Admin','prefix'=>'admin','middleware'=>['auth','user
 
 	// 文章管理
 	Route::group(['prefix'=>'article'],function(){
+		Route::post('/category/dels', 'ArticleCategoryController@dels');
 		Route::resource('/category', 'ArticleCategoryController');
+		Route::post('/list/dels', 'ArticleController@dels');
 		Route::resource('/list', 'ArticleController');
 	});
 
@@ -142,6 +144,7 @@ Route::group(['namespace'=>'Admin','prefix'=>'admin','middleware'=>['auth','user
 		Route::resource('/site', 'SiteController');
 		Route::resource('/log', 'LogController');
 		Route::resource('/personal', 'PersonalController');
+		Route::resource('/feedback', 'FeedbackController');
 	});
 
 });
