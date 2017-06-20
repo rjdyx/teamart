@@ -79,14 +79,14 @@
                         <a href="{{ url('/login') }}">注册说明</a>
                     </div>
                 </div>
+                <div class="button" id="bid"></div>
                 <div class="number">
                     {!! Geetest::render('bind') !!}
                 </div>
-                <div class="button" id="bid"></div>
             </form>
         </div>
-        <div class="bottom">
+        <!-- <div class="bottom">
         <img src="{{ url('fx/img/pic50.png') }}" style="width: 100%;height: 150px">
-        </div>
+        </div> -->
     </div>
 @endsection

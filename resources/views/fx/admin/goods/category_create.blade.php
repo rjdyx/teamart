@@ -2,34 +2,10 @@
 @section('title')新增商品分类@endsection
 @section('t1')商品管理@endsection
 @section('css')
-  <style type="text/css">
-    .upload_box {
-      height: 100px;
-    }
-    .upload {
-      width: 100px;
-      height: 100px;
-      border: 1px dashed #777;
-      text-align: center;
-      color: #777;
-      line-height: 132px;
-      cursor: pointer;
-    }
-    .upload:hover {
-      border: 1px dashed #337ab7;
-      color: #337ab7;
-    }
-    .upload i {
-      font-size: 50px;
-    }
-    .upload_img {
-      width: 100px;
-      height: 100px;
-    }
-  </style>
 @endsection
 @section('script')
     @parent
+    <script src="{{url('admin/js/upload.js')}}"></script>
     <script>
       $(function () {
         var form = document.forms['categoryForm']
@@ -41,25 +17,6 @@
         })
         $('#desc').on('blur input', function () {
           validdesc('desc', '分类描述', $(this).val())
-        })
-        $('#img').on('change', function () {
-          var $this = $(this)
-          var file = $this[0].files[0]
-          if (!validimg('img', file)) {
-            return
-          }
-          $this.siblings('img').remove()
-          var fr = new FileReader()
-          fr.onload = function (e) {
-            var img = new Image()
-            img.src = e.target.result
-            img.classList.add('pull-left')
-            img.classList.add('upload_img')
-            $this.parent().prepend(img).end()
-            .siblings('.invisible').removeClass('invisible')
-            .siblings('.upload').hide()
-          }
-          fr.readAsDataURL(file)
         })
         function submitForm() {
           var name = form['name']
@@ -112,13 +69,14 @@
                 <div class="form-group">
                   <label class="col-sm-3 control-label">图片</label>
                   <div class="col-sm-4">
-                    <div class="upload_box relative">
+                    <div class="upload_single">
                       <label for="img" class="upload pull-left">
                         <i class="glyphicon glyphicon-plus"></i>
                       </label>
                       <!-- <img class="pull-left upload_img" src="{{url('/admin/images/photo1.png')}}"> -->
                       <label class="btn btn-primary pull-left ml-10 invisible" for="img">修改</label>
-                      <input type="file" name="img" id="img" class="form-control invisible" accept="image/jpeg,image/jpg,image/png">
+                      <div class="btn btn-danger pull-left ml-10 invisible J_remove">删除</div>
+                      <input type="file" name="img" id="img" class="form-control invisible J_img" accept="image/jpeg,image/jpg,image/png">
                     </div>
                   </div>
                   <span class="col-sm-4 text-danger form_error" id="img_txt"></span>

@@ -59,9 +59,10 @@ class GoodsGroupController extends Controller
     //修改
     public function edit($id)
     {
+        $selects = Category::get();
         $data = Group::find($id);
         return view(config('app.theme').'.admin.goods.group_edit')
-        ->with(['data'=>$data]);
+        ->with(['data'=>$data, 'selects'=>$selects]);
     }
 
     //查看

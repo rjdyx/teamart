@@ -46,8 +46,10 @@
             <div class="box-header with-border">
               <h3 class="box-title">新增商品组</h3>
             </div>
-            <form class="form-horizontal" action="{{url('admin/goods/group')}}" method="POST" name="groupForm">
+            <form class="form-horizontal" action="{{url('admin/goods/group')}}/{{$data->id}}" method="POST" name="groupForm">
               {{ csrf_field() }}
+              <input type="hidden" value="PUT" name="_method">
+              <input type="hidden" value="{{$data->id}}" name="id" id="id">
               <div class="box-body">
                 <div class="form-group">
                   <label for="category_id" class="col-sm-3 control-label"><i style="color:red;">*</i>商品分类</label>
@@ -55,7 +57,7 @@
                     <select name="category_id" class="form-control" id="category_id">
                       <option value="">-请选择商品分类-</option>
                       @foreach($selects as $select)
-                        <option value="{{$select->id}}">{{$select->name}}</option>
+                        <option value="{{$select->id}}" @if ($select->id == $data->id) selected @endif>{{$select->name}}</option>
                       @endforeach
                     </select>
                   </div>

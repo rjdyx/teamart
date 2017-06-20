@@ -6,7 +6,7 @@
  * @param value {string} 字段值
  * @returns {boolean}
  */
-function required (field, fieldtxt, value) {
+function ness (field, fieldtxt, value) {
 	if (value) {
 		$('#' + field + '_txt').text('')
 		return true
@@ -19,7 +19,7 @@ function required (field, fieldtxt, value) {
 function validname (field, fieldtxt, value, table, isRequired = true) {
 	var valid = false, temp
 	if (isRequired) {
-		temp = required(field, fieldtxt, value)
+		temp = ness(field, fieldtxt, value)
 	}
 	if (temp) {
 		if (value.length < 4) {
@@ -65,7 +65,7 @@ function validemail (field, value, isRequired = true) {
 	var valid = false, temp
 	var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/
 	if (isRequired) {
-		temp = required(field, '邮箱', value)
+		temp = ness(field, '邮箱', value)
 	}
 	if (temp) {
 		if (!reg.test(value)) {
@@ -82,7 +82,7 @@ function validemail (field, value, isRequired = true) {
 function validpassword (field, value, isRequired = true) {
 	var valid = false, temp = true
 	if (isRequired) {
-		temp = required(field, '密码', value)
+		temp = ness(field, '密码', value)
 	}
 	if (temp) {
 		if (value.length < 6) {
@@ -99,7 +99,7 @@ function validpassword (field, value, isRequired = true) {
 function validrepassword (field, value, isRequired = true) {
 	var valid = false, temp = true
 	if (isRequired) {
-		temp = required(field, '确认密码', value)
+		temp = ness(field, '确认密码', value)
 	}
 	if (temp) {
 		if (value.length < 6) {
@@ -146,16 +146,21 @@ function validrealname (field, value) {
 	return valid
 }
 
-function validbirth_date (field, value) {
-	var valid = true
-	if (value) {
+function validbirth_date (field, fieldtxt, value, isRequired = false) {
+	var valid = true, temp = true
+	if (isRequired) {
+		temp = ness(field, fieldtxt, value)
+	}
+	if (temp) {
 		if (!/^([0-9]{4})+-([0-1][1-9])+-([0-3][0-9])$/.test(value)) {
-			$('#' + field + '_txt').text('出生日期格式为yyyy-mm-dd')
+			$('#' + field + '_txt').text(fieldtxt + '格式为yyyy-mm-dd')
 			valid = false
 		} else {
 			$('#' + field + '_txt').text('')
 			valid = true
 		}
+	} else {
+		valid = false
 	}
 	return valid
 }
@@ -163,7 +168,7 @@ function validbirth_date (field, value) {
 function validscale (field, value, isRequired = true) {
 	var valid = false, temp 
 	if (isRequired) {
-		temp = required(field, '分销比例', value)
+		temp = ness(field, '分销比例', value)
 	}
 	if (temp) {
 		if (isNaN(parseFloat(value))) {
@@ -180,16 +185,21 @@ function validscale (field, value, isRequired = true) {
 	return valid
 }
 
-function validdesc (field, fieldtxt, value) {
-	var valid = true
-	if (value) {
-		if (value.length > 50) {
-			$('#' + field + '_txt').text(fieldtxt + '在50个字内')
+function validdesc (field, fieldtxt, value, lng = 50, isRequired = false) {
+	var valid = true, temp = true
+	if (isRequired) {
+		temp = ness(field, fieldtxt, value)
+	}
+	if (temp) {
+		if (value.length > lng) {
+			$('#' + field + '_txt').text(fieldtxt + '在' + lng + '个字内')
 			valid = false
 		} else {
 			$('#' + field + '_txt').text('')
 			valid = true
 		}
+	} else {
+		valid = false
 	}
 	return valid
 }
@@ -205,4 +215,27 @@ function validimg (field, file) {
 	}
 	$('#' + field + '_txt').text('')
 	return true
+}
+
+/**
+ * 价格、库存数量验证
+ *
+ * @param field {string} 字段名称
+ * @param fieldtxt {string} 字段汉字名称
+ * @param value {string} 字段值
+ * @returns {boolean}
+ */
+function validnumber (field, fieldtxt, value) {
+	var valid = false, temp 
+	temp = ness(field, fieldtxt, value)
+	if (temp) {
+		if (value < 0) {
+			$('#' + field + '_txt').text(fieldtxt + '不能小于0')
+			valid = false
+		} else {
+			$('#' + field + '_txt').text('')
+			valid = true
+		}
+	}
+	return valid
 }

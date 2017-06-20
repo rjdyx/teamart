@@ -35,7 +35,6 @@
 
     <!-- Bootstrap 3.3.6 -->
     <link rel="stylesheet" href="{{url('/admin/build/css/index.css')}}">
-    <link rel="stylesheet" href="{{url('/admin/css/index.css')}}">
     {{-- <link rel="stylesheet" href="http://localhost:8080/admin/build/css/index.css"> --}}
     <!-- Styles -->
     @yield('css')

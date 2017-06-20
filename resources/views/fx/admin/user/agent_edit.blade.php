@@ -18,33 +18,6 @@
         $(form).on('submit', function () {
           return submitForm()
         })
-        $('#name').on('blur input', function () {
-          validname('name', '用户名', $(this).val(), 'user')
-        })
-        $('#email').on('blur input', function () {
-          validemail('email', $(this).val())
-        })
-        $('#parter_id').on('change', function () {
-          required('parter_id', '代理商角色', $('#parter_id').val())
-        })
-        $('input[name="gender"]').on('change', function () {
-          required('gender', '性别', $(this).val())
-        })
-        $('#password').on('input', function () {
-          validpassword('password', $(this).val(), false)
-        })
-        $('#repassword').on('input', function () {
-          validrepassword('repassword', $(this).val(), false)
-        })
-        $('#phone').on('blur input', function () {
-          validphone('phone', $(this).val())
-        })
-        $('#realname').on('blur input', function () {
-          validrealname('realname', $(this).val())
-        })
-        $('#birth_date').on('blur', function () {
-          validbirth_date('birth_date', $(this).val())
-        })
         function submitForm() {
           var name = form['name']
           var email = form['email']
@@ -61,10 +34,10 @@
           if (!validemail('email', email.value)) {
             return false
           }
-          if (!required('parter_id', '代理商角色', parter_id.value)) {
+          if (!ness('parter_id', '代理商角色', parter_id.value)) {
             return false
           }
-          if (!required('gender', '性别', gender.value)) {
+          if (!ness('gender', '性别', gender.value)) {
             return false
           }
           if (!validpassword('password', password.value, false)) {
@@ -79,7 +52,7 @@
           if (!validrealname('realname', realname.value)) {
             return false
           }
-          if (!validbirth_date('birth_date', birth_date.value)) {
+          if (!validbirth_date('birth_date', '出生日期', birth_date.value)) {
             return false
           }
           return true
@@ -106,35 +79,35 @@
                 <div class="form-group">
                   <label for="name" class="col-sm-3 control-label"><i style="color:red;">*</i>用户名</label>
                   <div class="col-sm-4">
-                    <input type="text" name="name" class="form-control" id="name" placeholder="请输入用户名" value="{{$data->name}}">
+                    <input type="text" name="name" class="form-control" id="name" placeholder="请输入用户名" value="{{$data->name}}" onblur="validname('name', '用户名', this.value, 'user')" oninput="validname('name', '用户名', this.value, 'user')">
                   </div>
                   <span class="col-sm-4 text-danger form_error" id="name_txt"></span>
                 </div>
                 <div class="form-group">
                   <label for="realname" class="col-sm-3 control-label">姓名</label>
                   <div class="col-sm-4">
-                    <input type="text" name="realname" class="form-control" id="realname" placeholder="请输入姓名" value="{{$data->realname}}">
+                    <input type="text" name="realname" class="form-control" id="realname" placeholder="请输入姓名" value="{{$data->realname}}" oninput="validrealname('realname', this.value)" onblur="validrealname('realname', this.value)">
                   </div>
                   <span class="col-sm-4 text-danger form_error" id="realname_txt"></span>
                 </div>
                 <div class="form-group">
                   <label for="email" class="col-sm-3 control-label"><i style="color:red;">*</i>邮箱</label>
                   <div class="col-sm-4">
-                    <input type="email" name="email" class="form-control" id="email" placeholder="请输入邮箱" value="{{$data->email}}">
+                    <input type="email" name="email" class="form-control" id="email" placeholder="请输入邮箱" value="{{$data->email}}" onblur="validemail('email', this.value)" oninput="validemail('email', this.value)">
                   </div>
                   <span class="col-sm-4 text-danger form_error" id="email_txt"></span>
                 </div>
                 <div class="form-group">
                   <label for="phone" class="col-sm-3 control-label">手机</label>
                   <div class="col-sm-4">
-                    <input type="text" name="phone" class="form-control" id="phone" placeholder="请输入手机号" value="{{$data->phone}}">
+                    <input type="text" name="phone" class="form-control" id="phone" placeholder="请输入手机号" value="{{$data->phone}}" oninput="validphone('phone', this.value)" onblur="validphone('phone', this.value)">
                   </div>
                   <span class="col-sm-4 text-danger form_error" id="phone_txt"></span>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-3 control-label"><i style="color:red;">*</i>代理商角色</label>
                   <div class="col-sm-4">
-                    <select class="form-control" name="parter_id" id="parter_id">
+                    <select class="form-control" name="parter_id" id="parter_id" onchange="ness('parter_id', '代理商角色', this.value)">
                       <option value="">请选择代理商角色</option>
                       @foreach($selects as $select)
                       <option value="{{$select->id}}" 
@@ -165,7 +138,7 @@
                       <div class="input-group-addon">
                         <i class="fa fa-calendar"></i>
                       </div>
-                      <input type="text" value="{{$data->birth_date}}" class="form-control pull-right" id="datepicker" name="birth_date">
+                      <input type="text" value="{{$data->birth_date}}" class="form-control pull-right" id="datepicker" name="birth_date" oninput="validbirth_date('birth_date', '出生日期', this.value)" onblur="validbirth_date('birth_date', '出生日期', this.value)">
                     </div>
                     <!-- /.input group -->
                   </div>
@@ -174,14 +147,14 @@
                 <div class="form-group">
                   <label for="password" class="col-sm-3 control-label">登录密码</label>
                   <div class="col-sm-4">
-                    <input type="password" name="password" class="form-control" id="password" placeholder="不输入密码则不修改">
+                    <input type="password" name="password" class="form-control" id="password" placeholder="不输入密码则不修改" onblur="validpassword('password', this.value, false)" oninput="validpassword('password', this.value, false)">
                   </div>
                   <span class="col-sm-4 text-danger form_error" id="password_txt"></span>
                 </div>
                 <div class="form-group">
                   <label for="repassword" class="col-sm-3 control-label">确认密码</label>
                   <div class="col-sm-4">
-                    <input type="password" class="form-control" id="repassword" placeholder="若登录密码未输入，则确认密码无效">
+                    <input type="password" class="form-control" id="repassword" placeholder="若登录密码未输入，则确认密码无效" onblur="validrepassword('repassword', this.value, false)" oninput="validrepassword('repassword', this.value, false)">
                   </div>
                   <span class="col-sm-4 text-danger form_error" id="repassword_txt"></span>
                 </div>
