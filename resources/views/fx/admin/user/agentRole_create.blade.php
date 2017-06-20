@@ -62,7 +62,7 @@
               <div class="form-group">
                 <label for="scale" class="col-sm-3 control-label"><i style="color:red;">*</i>分销比例</label>
                 <div class="col-sm-4">
-                  <input type="text" class="form-control" id="scale" placeholder="请输入范围在0 ~ 1的数，保留两位小数" name='scale'>
+                  <input type="number" class="form-control" id="scale" placeholder="请输入范围在0 ~ 1的数，保留两位小数" name='scale'>
                 </div>
                 <span class="col-sm-4 text-danger form_error" id="scale_txt"></span>
               </div>
