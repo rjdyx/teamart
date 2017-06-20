@@ -10,8 +10,6 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
- 
- 
 Route::get('/auth/geetest', 'Auth\AuthController@getGeetest');//极验
 Route::get('admin/login', 'Auth\LoginController@adminLoginCreate');
 Route::post('admin/login', 'Auth\LoginController@adminLogin');
@@ -124,7 +122,9 @@ Route::group(['namespace'=>'Admin','prefix'=>'admin','middleware'=>['auth','user
 
 	// 文章管理
 	Route::group(['prefix'=>'article'],function(){
+		Route::post('/category/dels', 'ArticleCategoryController@dels');
 		Route::resource('/category', 'ArticleCategoryController');
+		Route::post('/list/dels', 'ArticleController@dels');
 		Route::resource('/list', 'ArticleController');
 	});
 
@@ -145,6 +145,7 @@ Route::group(['namespace'=>'Admin','prefix'=>'admin','middleware'=>['auth','user
 		Route::resource('/site', 'SiteController');
 		Route::resource('/log', 'LogController');
 		Route::resource('/personal', 'PersonalController');
+		Route::resource('/feedback', 'FeedbackController');
 	});
 
 });
