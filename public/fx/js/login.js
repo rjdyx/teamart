@@ -5,18 +5,27 @@ $('.add-name,.add-password').hide();
 $('.myName,.password').on('click',function () {
     $('.add-name,.add-password').hide();
 })
-$('.button').on('click',function() {
+function loginVali(){
     var name = $(".myName").val();
     var password = $(".password").val();
+    var result = true;
     if(name==''){
         $('.add-name').css({'display':'inline-block'})
         $('.add-name').css({'color':'red'});
+        result = false;
     }
-    else if(password==''){
+    if(password==''){
         $('.add-password').css({'display':'inline-block'})
         $('.add-password').css({'color':'red'});
+        result = false;
     }
-})
+    return result;
+};
+
+$('.submit').on('click',function() {
+    loginVali();
+});
+
 $('.radio_left_box').click(function(){
     $(this).addClass("radio_selected");
     $('.radio_right_box').removeClass('radio_selected');

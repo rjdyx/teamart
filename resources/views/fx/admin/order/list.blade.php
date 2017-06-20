@@ -14,10 +14,6 @@
 @endsection
 
 @section('content')
-   @include("fx.admin.layouts.header")
-
-   @include("fx.admin.layouts.left")
-   
    <div class="content-wrapper">
     <!-- agentRole -->
     <div id="agentRole">

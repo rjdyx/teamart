@@ -167,7 +167,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        // Mews\Captcha\CaptchaServiceProvider::class,//验证码
+        Germey\Geetest\GeetestServiceProvider::class,//验证码
         /*
          * Package Service Providers...
          */
@@ -233,7 +233,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'IQuery' => App\Facades\IQueryClass::class, //分页生成器的门面的别名
-        // 'Captcha' => Mews\Captcha\Facades\Captcha::class,//验证码
+        'Geetest' => Germey\Geetest\Geetest::class,//验证码
     ],
 
 ];

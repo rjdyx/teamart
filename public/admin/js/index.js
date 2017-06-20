@@ -1,10 +1,15 @@
 exports.nav = () => {
 	let curpath = window.location.pathname
+	let origin = window.location.origin
 	$('.sidebar-menu')
 	.find('.active').removeClass('active').end()
 	.find('a').each(function (idx, elem) {
 		let href = $(this).attr('href')
-		if (curpath === href) {
+		let sublength = href.indexOf('admin')
+		if (sublength > 0) {
+			href = '/' + href.substr(sublength)
+		}
+		if (curpath.indexOf(href) > -1) {
 			$(this)
 				.parent().addClass('active').end()
 				.parents('.treeview').addClass('active')

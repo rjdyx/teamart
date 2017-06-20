@@ -25,7 +25,7 @@
 				validemail('email', $(this).val())
 			})
 			$('input[name="gender"]').on('change', function () {
-				required('gender', '性别', $(this).val())
+				ness('gender', '性别', $(this).val())
 			})
 			$('#password').on('input', function () {
 				validpassword('password', $(this).val(), false)
@@ -40,7 +40,7 @@
 				validrealname('realname', $(this).val())
 			})
 			$('#birth_date').on('blur', function () {
-				validbirth_date('birth_date', $(this).val())
+				validbirth_date('birth_date', '出生日期', $(this).val())
 			})
 			function submitForm() {
 				var name = form['name']
@@ -57,7 +57,7 @@
 				if (!validemail('email', email.value)) {
 					return false
 				}
-				if (!required('gender', '性别', gender.value)) {
+				if (!ness('gender', '性别', gender.value)) {
 					return false
 				}
 				if (!validpassword('password', password.value, false)) {
@@ -72,7 +72,7 @@
 				if (!validrealname('realname', realname.value)) {
 					return false
 				}
-				if (!validbirth_date('birth_date', birth_date.value)) {
+				if (!validbirth_date('birth_date', '出生日期', birth_date.value)) {
 					return false
 				}
 				return true

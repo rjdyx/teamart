@@ -95,13 +95,13 @@ class MarkController extends Controller
             if($list->grade==1){
                 $lists=Product::where('id',$id)->update(['grade'=>0]);
                 if($lists){
-                    return Redirect::back()->withErrors('删除成功');
+                    return Redirect::back()->with('status','删除成功');
                 }
                 return Redirect::back()->withErrors('删除失败');
             }else{
                 $lists=Product::where('id',$id)->update(['grade'=>1]);
                 if($lists){
-                    return Redirect::back()->withErrors('添加积分商品成功');
+                    return Redirect::back()->with('status','添加积分商品成功');
                 }
                 return Redirect::back()->withErrors('添加积分商品失败');
             }

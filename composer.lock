@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "c14534eafea0a8bf7eca6783a9cc668e",
+    "content-hash": "cf1209e6751aac01805f4387be0a174d",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -147,6 +147,57 @@
                 "parser"
             ],
             "time": "2017-03-29T16:04:15+00:00"
+        },
+        {
+            "name": "germey/geetest",
+            "version": "v2.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Germey/LaravelGeetest.git",
+                "reference": "9306d626081aac8004c235f33fabf95283125062"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://files.phpcomposer.com/files/Germey/LaravelGeetest/9306d626081aac8004c235f33fabf95283125062.zip",
+                "reference": "9306d626081aac8004c235f33fabf95283125062",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "5.0.*|5.1.*|5.2.*|5.3.*|5.4.*",
+                "php": ">=5.6.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "dev-master",
+                "phpunit/phpunit": "~4.1"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Germey\\Geetest\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Germey",
+                    "email": "cqc@cuiqingcai.com"
+                }
+            ],
+            "description": "Geetest Package for Laravel5",
+            "keywords": [
+                "Germey",
+                "geetest",
+                "laravel"
+            ],
+            "time": "2017-02-19T09:28:32+00:00"
         },
         {
             "name": "gregwar/captcha",
