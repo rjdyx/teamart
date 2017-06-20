@@ -182,7 +182,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         //Ueditor
-        Stevenyangecho\UEditor\UEditorServiceProvider::class,
+        // Stevenyangecho\UEditor\UEditorServiceProvider::class,
         App\Providers\IQueryServiceProvider::class, //注册iquery
     ],
 

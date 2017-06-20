@@ -25,11 +25,10 @@
                     console.log(err)
                 })
         }
-        function re_captcha1() {
-            $url = "{{ URL('captcha') }}";
-            $url = $url + "/" + Math.random();
-            document.getElementById('captcha').src = $url;
-        }
+        // function re_captcha() {
+        //     $url = "{{ URL('captcha') }}";
+        //     document.getElementById('captcha').src = $url;
+        // }
         re_captcha();
     </script>
 @endsection
@@ -55,14 +54,14 @@
                 <img src="fx/img/pic23.png" style="width: 250px;height:45px;vertical-align: middle;line-height: 60px">
                 <input type="password" class="password" name="password" placeholder="请输入密码">
             </div>
-<!--             <div class="add-name">请输入验证码</div>
+            <div class="add-name">请输入验证码</div>
             <div class="number">
                 <input type="text" name="captcha" class="right-main-input rmain-input-code" placeholder="请输入验证码">
                 <a onclick="javascript:re_captcha();">
                     <img src="{{ URL('captcha') }}" id="captcha" class="verifi-code" alt="验证码" title="刷新图片" width="100" height="40"
                          id="verifi_code_image" border="0">
                 </a>
-            </div> -->
+            </div>
             @if ($errors->has('name'))
                 <span class="help-block">
                     <strong>{{ $errors->first('name') }}</strong>

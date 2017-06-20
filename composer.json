@@ -9,8 +9,7 @@
         "illuminate/html": "^5.0",
         "laravel/framework": "5.4.*",
         "gregwar/captcha": "1.*",
-        "laravel/tinker": "~1.0",
-		"stevenyangecho/laravel-u-editor": "~1.4"
+        "laravel/tinker": "~1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

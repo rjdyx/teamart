@@ -76,6 +76,12 @@
 	        <input type="password" class="form-control" name="password" placeholder="密码">
 	        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
 	      </div>
+	      <div class="form-group has-feedback">
+            <input type="text" name="captcha" class="form-control" placeholder="请输入验证码">
+            <a onclick="javascript:re_captcha();">
+                <img src="" id="captcha" class="verifi-code" alt="验证码" title="刷新图片" width="100" height="40" id="verifi_code_image" border="0">
+            </a>
+          </div>
 	      <div class="row">
 <!-- 	        <div class="col-xs-8">
 	          <div class="checkbox icheck">
@@ -115,7 +121,16 @@
 		// 	});
 		// });
 		$(function () {
-			
+			function re_captcha(){
+	            axios.get('/captcha')
+	                .then(function (res) {
+	                    $("#captcha").attr('src',res.data) 
+	                })
+	                .catch(function (err) {
+	                    console.log(err)
+	                })
+	        }
+	        re_captcha();
 		})
 	</script>
 

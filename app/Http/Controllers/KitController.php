@@ -34,6 +34,7 @@ class KitController extends Controller {
         //把内容存入session
         $url = $builder->inline();  //获取图形验证码的url
         $request->session()->put('milkcaptcha', $builder->getPhrase());  //将图形验证码的值写入到session中
+        
         return response()->json($url);
     }
 }
