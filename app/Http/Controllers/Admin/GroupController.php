@@ -87,9 +87,9 @@ class GroupController extends Controller
     {
         $ids = explode(',', $request->ids);
         if (Group::destroy($ids)) {
-            return Redirect::back()->withErrors('批量删除失败');
+            return Redirect::back()->with('status','批量删除成功');
         }
-        return Redirect::back()->with('status','批量删除成功');
+        return Redirect::back()->withErrors('批量删除失败');
     }
 
     //新建保存
