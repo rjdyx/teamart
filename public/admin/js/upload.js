@@ -2,7 +2,7 @@ $(function () {
 	function addFile() {
 		var $this = $(this)
 		var file = $this[0].files[0]
-		if (!validimg('img', file)) {
+		if (!_valid.img('img', file)) {
 			return
 		}
 		$this.siblings('img').remove()
@@ -15,6 +15,7 @@ $(function () {
 			$this.parent().prepend(img).end()
 				.siblings('.invisible').removeClass('invisible')
 				.siblings('.upload').addClass('hidden')
+			$('#del').val('0')
 		}
 		fr.readAsDataURL(file)
 	}
@@ -28,6 +29,7 @@ $(function () {
 			.siblings('input').remove().end()
 			.parent().append('<input type="file" name="img" id="img" class="invisible form-control J_img" accept="image/jpeg,image/jpg,image/png">')
 			.find('.J_img').on('change', addFile)
+			$('#del').val('1')
 			// if (file.outerHTML) {
 			// 	file.outerHTML = file.outerHTML;
 			// } else { // FF(包括3.5)

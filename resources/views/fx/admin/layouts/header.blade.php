@@ -18,7 +18,7 @@
       <ul class="nav navbar-nav">
 
         <li class="dropdown messages-menu">
-          <a href="{{url('admin/index')}}" class="dropdown-toggle" data-toggle="dropdown">
+          <a href="{{url('admin/index')}}">
             <i class="fa  fa-heart-o"></i>
             <span>首页</span>
           </a>

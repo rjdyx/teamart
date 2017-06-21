@@ -13,163 +13,163 @@
     <script src="{{url('admin/js/datepicker/locales/bootstrap-datepicker.zh-CN.js')}}"></script>
     <script src="{{url('admin/js/uploads.js')}}"></script>
     <script>
-        //实例化编辑器
-        //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
-        $(function () {
-          var ue = UE.getEditor('editor');
-          imagePathFormat='/upload/descs/'; 
-          $('#date').datepicker({
-            language: 'zh-CN',
-            format: 'yyyy-mm-dd'
-          });
-          var form = document.forms['listForm']
-          $(form).on('submit', function () {
-            return submitForm()
-          })
-          $('.J_FloatNum').on('blur', function () {
-            $(this).val(parseFloat($(this).val()).toFixed(2))
-          })
-          $('.J_IntNum').on('blur', function () {
-            $(this).val(parseFloat($(this).val()).toFixed(0))
-          })
-          $('#category_id').on('change', function () {
-            ness('category_id', '商品分类', $(this).val())
-          })
-          $('#group_id').on('change', function () {
-            ness('group_id', '商品组', $(this).val())
-          })
-          $('#brand_id').on('change', function () {
-            ness('brand_id', '商品品牌', $(this).val())
-          })
-          $('#spec_id').on('change', function () {
-            ness('spec_id', '商品规格', $(this).val())
-          })
-          $('#name').on('blur input', function () {
-            validname('name', '商品名称', $(this).val(), 'product')
-          })
-          $('#desc').on('blur input', function () {
-            validdesc('desc', '商品描述', $(this).val(), 50, true)
-          })
-          $('#price_raw').on('blur input', function () {
-            validnumber('price_raw', '原价', $(this).val())
-          })
-          $('#price').on('blur input', function () {
-            validnumber('price', '现价', $(this).val())
-          })
-          $('#delivery_price').on('blur input', function () {
-            validnumber('delivery_price', '邮费', $(this).val())
-          })
-          $('#stock').on('blur input', function () {
-            validnumber('stock', '库存', $(this).val())
-          })
-          $('#low_stock').on('blur input', function () {
-            validnumber('low_stock', '低库存', $(this).val())
-          })
-          $('#origin').on('blur input', function () {
-            validdesc('origin', '商品产地', $(this).val(), 50, true)
-          })
-          $('#effect').on('blur input', function () {
-            validdesc('effect', '商品作用', $(this).val(), 50, true)
-          })
-          $('#date').on('blur input', function () {
-            validbirth_date('date', '生产日期', $(this).val(), true)
-          })
-          $('#state').on('change', function () {
-            ness('state', '商品状态', $(this).val())
-          })
-          $('#grade').on('change', function () {
-            ness('grade', '商品积分兑换', $(this).val())
-          })
-          function submitForm() {
-            var category_id = form['category_id']
-            var group_id = form['group_id']
-            var brand_id = form['brand_id']
-            var spec_id = form['spec_id']
-            var name = form['name']
-            var desc = form['desc']
-            var price_raw = form['price_raw']
-            var price = form['price']
-            var delivery_price = form['delivery_price']
-            var stock = form['stock']
-            var low_stock = form['low_stock']
-            var origin = form['origin']
-            var effect = form['effect']
-            var date = form['date']
-            var state = form['state']
-            var grade = form['grade']
-            var imgs = form['imgs']
-            if (!ness('category_id', '商品分类', category_id.value)) {
-              return false
-            }
-            if (!ness('group_id', '商品组', group_id.value)) {
-              return false
-            }
-            if (!ness('brand_id', '商品品牌', brand_id.value)) {
-              return false
-            }
-            if (!ness('spec_id', '商品规格', spec_id.value)) {
-              return false
-            }
-            if (!validname('name', '商品名称', name.value, 'product')) {
-              return false
-            }
-            if (!validdesc('desc', '商品描述', desc.value, 50, true)) {
-              return false
-            }
-            if (!validnumber('price_raw', '原价', price_raw.value)) {
-              return false
-            }
-            if (!validnumber('price', '现价', price.value)) {
-              return false
-            }
-            if (!validnumber('delivery_price', '邮费', delivery_price.value)) {
-              return false
-            }
-            if (!validnumber('stock', '库存', stock.value)) {
-              return false
-            }
-            if (!validnumber('low_stock', '低库存', low_stock.value)) {
-              return false
-            }
-            if (!validdesc('origin', '商品产地', origin.value, 50, true)) {
-              return false
-            }
-            if (!validdesc('effect', '商品作用', effect.value, 50, true)) {
-              return false
-            }
-            if (!validbirth_date('date', '生产日期', date.value, true)) {
-              return false
-            }
-            if (!ness('state', '商品状态', state.value)) {
-              return false
-            }
-            if (!ness('grade', '商品积分兑换', grade.value)) {
-              return false
-            }
-            if (imgs.length) {
-              var arr = []
-              for (let i = 0; i < imgs.length; i++) {
-                if (imgs[i].files[0]) {
-                  if (!validimg('img', imgs[i].files[0])) {
-                    return false
-                  }
-                  arr.push(imgs[i].files[0])
-                }
-              }
-              if (arr.length == 0) {
-                $('#img_txt').text('至少要上传一张商品图片')
-                return false
-              }
-            } else {
-              if (imgs.files.length == 0) {
-                $('#img_txt').text('至少要上传一张商品图片')
-                return false
-              }
-            }
-            return true
-          } 
+      //实例化编辑器
+      //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
+      $(function () {
+        var ue = UE.getEditor('editor');
+        imagePathFormat='/upload/descs/'; 
+        $('#date').datepicker({
+          language: 'zh-CN',
+          format: 'yyyy-mm-dd'
+        });
+        var form = document.forms['listForm']
+        $(form).on('submit', function () {
+          return submitForm()
         })
-      </script>
+        $('.J_FloatNum').on('blur', function () {
+          $(this).val(parseFloat($(this).val()).toFixed(2))
+        })
+        $('.J_IntNum').on('blur', function () {
+          $(this).val(parseFloat($(this).val()).toFixed(0))
+        })
+        $('#category_id').on('change', function () {
+          __valid.ness('category_id', '商品分类', $(this).val())
+        })
+        $('#group_id').on('change', function () {
+          __valid.ness('group_id', '商品组', $(this).val())
+        })
+        $('#brand_id').on('change', function () {
+          __valid.ness('brand_id', '商品品牌', $(this).val())
+        })
+        $('#spec_id').on('change', function () {
+          __valid.ness('spec_id', '商品规格', $(this).val())
+        })
+        $('#name').on('blur input', function () {
+          _valid.name('name', '商品名称', $(this).val(), 'product')
+        })
+        $('#desc').on('blur input', function () {
+          _valid.desc('desc', '商品描述', $(this).val(), 50, true)
+        })
+        $('#price_raw').on('blur input', function () {
+          _valid.number('price_raw', '原价', $(this).val())
+        })
+        $('#price').on('blur input', function () {
+          _valid.number('price', '现价', $(this).val())
+        })
+        $('#delivery_price').on('blur input', function () {
+          _valid.number('delivery_price', '邮费', $(this).val())
+        })
+        $('#stock').on('blur input', function () {
+          _valid.number('stock', '库存', $(this).val())
+        })
+        $('#low_stock').on('blur input', function () {
+          _valid.number('low_stock', '低库存', $(this).val())
+        })
+        $('#origin').on('blur input', function () {
+          _valid.desc('origin', '商品产地', $(this).val(), 50, true)
+        })
+        $('#effect').on('blur input', function () {
+          _valid.desc('effect', '商品作用', $(this).val(), 50, true)
+        })
+        $('#date').on('blur input', function () {
+          _valid.birth_date('date', '生产日期', $(this).val(), true)
+        })
+        $('#state').on('change', function () {
+          __valid.ness('state', '商品状态', $(this).val())
+        })
+        $('#grade').on('change', function () {
+          __valid.ness('grade', '商品积分兑换', $(this).val())
+        })
+        function submitForm() {
+          var category_id = form['category_id']
+          var group_id = form['group_id']
+          var brand_id = form['brand_id']
+          var spec_id = form['spec_id']
+          var name = form['name']
+          var desc = form['desc']
+          var price_raw = form['price_raw']
+          var price = form['price']
+          var delivery_price = form['delivery_price']
+          var stock = form['stock']
+          var low_stock = form['low_stock']
+          var origin = form['origin']
+          var effect = form['effect']
+          var date = form['date']
+          var state = form['state']
+          var grade = form['grade']
+          var imgs = form['imgs']
+          if (!__valid.ness('category_id', '商品分类', category_id.value)) {
+            return false
+          }
+          if (!__valid.ness('group_id', '商品组', group_id.value)) {
+            return false
+          }
+          if (!__valid.ness('brand_id', '商品品牌', brand_id.value)) {
+            return false
+          }
+          if (!__valid.ness('spec_id', '商品规格', spec_id.value)) {
+            return false
+          }
+          if (!_valid.name('name', '商品名称', name.value, 'product')) {
+            return false
+          }
+          if (!_valid.desc('desc', '商品描述', desc.value, 50, true)) {
+            return false
+          }
+          if (!_valid.number('price_raw', '原价', price_raw.value)) {
+            return false
+          }
+          if (!_valid.number('price', '现价', price.value)) {
+            return false
+          }
+          if (!_valid.number('delivery_price', '邮费', delivery_price.value)) {
+            return false
+          }
+          if (!_valid.number('stock', '库存', stock.value)) {
+            return false
+          }
+          if (!_valid.number('low_stock', '低库存', low_stock.value)) {
+            return false
+          }
+          if (!_valid.desc('origin', '商品产地', origin.value, 50, true)) {
+            return false
+          }
+          if (!_valid.desc('effect', '商品作用', effect.value, 50, true)) {
+            return false
+          }
+          if (!_valid.birth_date('date', '生产日期', date.value, true)) {
+            return false
+          }
+          if (!__valid.ness('state', '商品状态', state.value)) {
+            return false
+          }
+          if (!__valid.ness('grade', '商品积分兑换', grade.value)) {
+            return false
+          }
+          if (imgs.length) {
+            var arr = []
+            for (let i = 0; i < imgs.length; i++) {
+              if (imgs[i].files[0]) {
+                if (!_valid.img('img', imgs[i].files[0])) {
+                  return false
+                }
+                arr.push(imgs[i].files[0])
+              }
+            }
+            if (arr.length == 0) {
+              $('#img_txt').text('至少要上传一张商品图片')
+              return false
+            }
+          } else {
+            if (imgs.files.length == 0) {
+              $('#img_txt').text('至少要上传一张商品图片')
+              return false
+            }
+          }
+          return true
+        } 
+      })
+    </script>
 @endsection
 @section('content')
     <section class="content">
@@ -184,6 +184,7 @@
               {{ csrf_field() }}
               <input type="hidden" value="PUT" name="_method">
               <input type="hidden" value="{{$data->id}}" name="id" id="id">
+              <input type="hidden" value="" name="dels" id="dels">
               <div class="box-body">
                 <div class="form-group">
                   <label class="col-sm-3 control-label"><i style="color:red;">*</i>商品分类</label>
@@ -334,15 +335,25 @@
                     @if ($imgs)
                       @foreach($imgs as $k => $img)
                       <div class="upload_box pull-left ml-10 mt-10">
-                        <img class="pull-left upload_img" src="{{url('')}}/{{$img}}">
-                        <label for="img{{$k}}" class="upload pull-left hidden">
+                        <img class="pull-left upload_img" src="{{url('')}}/{{$img->img}}">
+                        <label for="img{{$k + 1}}" class="upload pull-left hidden">
                           <i class="glyphicon glyphicon-plus"></i>
                         </label>
-                        <label class="btn btn-primary pull-left ml-10" for="img{{$k}}">修改</label>
+                        <label class="btn btn-primary pull-left ml-10" for="img{{$k + 1}}">修改</label>
                         <div class="btn btn-danger pull-left ml-10 mt-10 J_remove">删除</div>
-                        <input type="file" name="imgs" id="img{{$k}}" class="form-control invisible J_img" accept="image/jpeg,image/jpg,image/png">
+                        <input type="file" name="imgs[]" id="img{{$k + 1}}" data-id="{{$img->id}}" class="form-control invisible J_img" accept="image/jpeg,image/jpg,image/png">
                       </div>
                       @endforeach
+                      @if (count($imgs) + 1 < 5)
+                      <div class="upload_box pull-left ml-10 mt-10">
+                        <label for="img{{count($imgs) + 1}}" class="upload pull-left">
+                          <i class="glyphicon glyphicon-plus"></i>
+                        </label>
+                        <label class="btn btn-primary pull-left ml-10 invisible" for="img{{count($imgs) + 1}}">修改</label>
+                        <div class="btn btn-danger pull-left ml-10 mt-10 invisible J_remove">删除</div>
+                        <input type="file" name="imgs[]" id="img{{count($imgs) + 1}}" class="form-control invisible J_img" accept="image/jpeg,image/jpg,image/png">
+                      </div>
+                      @endif
                     @else
                       <div class="upload_box pull-left ml-10 mt-10">
                         <label for="img1" class="upload pull-left">
@@ -350,7 +361,7 @@
                         </label>
                         <label class="btn btn-primary pull-left invisible ml-10" for="img1">修改</label>
                         <div class="btn btn-danger pull-left invisible ml-10 mt-10 J_remove">删除</div>
-                        <input type="file" name="imgs" id="img1" class="form-control invisible J_img" accept="image/jpeg,image/jpg,image/png">
+                        <input type="file" name="imgs[]" id="img1" class="form-control invisible J_img" accept="image/jpeg,image/jpg,image/png">
                       </div>
                     @endif
                   </div>

@@ -13,23 +13,23 @@
           return submitForm()
         })
         $('#name').on('blur input', function () {
-          validname('name', '品牌名称', $(this).val(), 'brand')
+          _valid.name('name', '品牌名称', $(this).val(), 'brand')
         })
         $('#desc').on('blur input', function () {
-          validdesc('desc', '品牌描述', $(this).val())
+          _valid.desc('desc', '品牌描述', $(this).val())
         })
         function submitForm() {
           var name = form['name']
           var desc = form['desc']
           var img = form['img']
-          if (!validname('name', '品牌名称', name.value, 'brand')) {
+          if (!_valid.name('name', '品牌名称', name.value, 'brand')) {
             return false
           }
-          if (!validdesc('desc', '品牌描述', desc.value)) {
+          if (!_valid.desc('desc', '品牌描述', desc.value)) {
             return false
           }
           if (img.files.length > 0) {
-            if (!validimg('img', img.files[0])) {
+            if (!_valid.img('img', img.files[0])) {
               return false
             }
           }
@@ -51,6 +51,7 @@
               {{ csrf_field() }}
               <input type="hidden" value="PUT" name="_method">
               <input type="hidden" value="{{$data->id}}" name="id" id="id">
+              <input type="hidden" value="0" name="del" id="del">
               <div class="box-body">
                 <div class="form-group">
                   <label for="name" class="col-sm-3 control-label"><i style="color:red;">*</i>品牌名称</label>
@@ -74,7 +75,7 @@
                           <i class="glyphicon glyphicon-plus"></i>
                         </label>
                         <label class="btn btn-primary pull-left ml-10" for="img">修改</label>
-                        <div class="btn btn-danger pull-left ml-10 invisible J_remove">删除</div>
+                        <div class="btn btn-danger pull-left ml-10 J_remove">删除</div>
                         <input type="file" name="img" id="img" class="invisible form-control J_img" accept="image/jpeg,image/jpg,image/png">
                       @else
                         <label for="img" class="upload pull-left">

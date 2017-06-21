@@ -116,14 +116,19 @@ class CategoryController extends Controller
         //接收数据 加入model
         $model->setRawAttributes($request->only(['name','desc']));
 
+        if ($id != -1 && $request->del) {
+            $model->img = null;
+            $model->thumb = null;
+            IQuery::destroyPic(new Category, $id, 'img');
+        }
+
         //资源、上传图片名称、是否生成缩略图
         $imgs = IQuery::upload($request,'img',true);
         if ($imgs != 'false') {
             $model->img = $imgs['pic'];
             $model->thumb = $imgs['thumb'];
-            if ($id == -1 ) IQuery::destroyPic(new Category, $id, 'img');
         }
-
+        
         if ($model->save()) {
             return Redirect::to('admin/goods/category')->with('status', '保存成功');
         }

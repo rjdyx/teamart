@@ -71,14 +71,10 @@
     <script src="{{url('/admin/build/index.js')}}"></script>
     {{-- <script src="http://localhost:8080/admin/build/vendor-bundle.js"></script>
     <script src="http://localhost:8080/admin/build/index.js"></script> --}}
-    <script src="{{url('admin/js/validate1.js')}}" charset="UTF-8"></script>
-
-    <script src="{{url('admin/build/vendor-bundle.js')}}"></script>
-    <script src="{{url('admin/build/index.js')}}"></script>
-    <script src="{{url('admin/js/jquery-1.1.0.js')}}"></script>
-    <script src="{{url('admin/js/bootstrap.min.js')}}"></script>
     @yield('script')
-
+    <script>
+        console.log(_valid)
+    </script>
     @include("fx.admin.layouts.alert")
 </body>
 </html>

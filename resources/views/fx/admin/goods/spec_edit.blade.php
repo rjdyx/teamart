@@ -11,18 +11,18 @@
           return submitForm()
         })
         $('#name').on('blur input', function () {
-          validname('name', '规格名称', $(this).val(), 'spec')
+          _valid.name('name', '规格名称', $(this).val(), 'spec')
         })
         $('#desc').on('blur input', function () {
-          validdesc('desc', '规格描述', $(this).val())
+          _valid.desc('desc', '规格描述', $(this).val())
         })
         function submitForm() {
           var name = form['name']
           var desc = form['desc']
-          if (!validname('name', '规格名称', name.value, 'spec')) {
+          if (!_valid.name('name', '规格名称', name.value, 'spec')) {
             return false
           }
-          if (!validdesc('desc', '规格描述', desc.value)) {
+          if (!_valid.desc('desc', '规格描述', desc.value)) {
             return false
           }
           return true

@@ -19,52 +19,37 @@ class LogController extends Controller
     //首页 (列表页)
     public function index(Request $request)
     {
-        $lists = Log::paginate(config('app.paginate10'));
+        $lists = Log::Join('user','log.user_id','=','user.id')
+                ->orderBy('id','desc');
+        if (isset($request->date))
+        {
+            $lists = $lists->where('log.created_at','>',$request->date);
+        }
+        $lists = $lists->select('log.*','user.name')
+        ->paginate(config('app.paginate10'));
         return view(config('app.theme').'.admin.system.log')->with('lists',$lists);
-    }
-
-    //查看单条信息
-    public function show($id)
-    {
-        return Log::find($id);
-    }
-
-    //数据创建
-    public function create()
-    {
-        return view(config('app.theme').'.admin.');
-    }
-
-    //保存新建数据
-    public function store(Request $request)
-    {
-        return $this->StoreOrUpdate($request);
-    }
-
-    //编辑数据
-    public function edit($id)
-    {
-
-    }
-
-    //编辑保存
-    public function update(Request $request, $id)
-    {
-        return $this->StoreOrUpdate($request, $id);
     }
 
     //单条删除
     public function destroy($id)
     {
+        if (Log::find($id)->forceDelete())
+        {
+            return Redirect::back()->with('删除成功');
+        }
         return Redirect::back()->withErrors('删除失败');
     }
 
-    //保存方法
-    public function StoreOrUpdate(Request $request, $id = -1)
-    {
-        $this->validate($request, [
-  
-        ]);
 
+    //批量删除
+    public function dels(Request $request)
+    {
+        $ids = explode(',', $request->ids);
+        if (Log::whereIn('id',$ids)->forceDelete())
+        {
+            return Redirect::back()->with('批量删除成功');
+        }
+        return Redirect::back()->withErrors('批量删除失败');
     }
+
 }

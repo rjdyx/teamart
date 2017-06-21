@@ -2,34 +2,10 @@
 @section('title')编辑商品分类@endsection
 @section('t1')商品管理@endsection
 @section('css')
-  <style type="text/css">
-    .upload_box {
-      height: 100px;
-    }
-    .upload {
-      width: 100px;
-      height: 100px;
-      border: 1px dashed #777;
-      text-align: center;
-      color: #777;
-      line-height: 132px;
-      cursor: pointer;
-    }
-    .upload:hover {
-      border: 1px dashed #337ab7;
-      color: #337ab7;
-    }
-    .upload i {
-      font-size: 50px;
-    }
-    .upload_img {
-      width: 100px;
-      height: 100px;
-    }
-  </style>
 @endsection
 @section('script')
     @parent
+    <script src="{{url('admin/js/upload.js')}}"></script>
     <script>
       $(function () {
         var form = document.forms['categoryForm']
@@ -37,42 +13,23 @@
           return submitForm()
         })
         $('#name').on('blur input', function () {
-          validname('name', '分类名称', $(this).val(), 'product_category')
+          _valid.name('name', '分类名称', $(this).val(), 'product_category')
         })
         $('#desc').on('blur input', function () {
-          validdesc('desc', '分类描述', $(this).val())
-        })
-        $('#img').on('change', function () {
-          var $this = $(this)
-          var file = $this[0].files[0]
-          if (!validimg('img', file)) {
-            return
-          }
-          $this.siblings('img').remove()
-          var fr = new FileReader()
-          fr.onload = function (e) {
-            var img = new Image()
-            img.src = e.target.result
-            img.classList.add('pull-left')
-            img.classList.add('upload_img')
-            $this.parent().prepend(img).end()
-            .siblings('.invisible').removeClass('invisible')
-            .siblings('.upload').hide()
-          }
-          fr.readAsDataURL(file)
+          _valid.desc('desc', '分类描述', $(this).val())
         })
         function submitForm() {
           var name = form['name']
           var desc = form['desc']
           var img = form['img']
-          if (!validname('name', '分类名称', name.value, 'product_category')) {
+          if (!_valid.name('name', '分类名称', name.value, 'product_category')) {
             return false
           }
-          if (!validdesc('desc', '分类描述', desc.value)) {
+          if (!_valid.desc('desc', '分类描述', desc.value)) {
             return false
           }
           if (img.files.length > 0) {
-            if (!validimg('img', img.files[0])) {
+            if (!_valid.img('img', img.files[0])) {
               return false
             }
           }
@@ -94,6 +51,7 @@
               {{ csrf_field() }}
               <input type="hidden" value="PUT" name="_method">
               <input type="hidden" value="{{$data->id}}" name="id" id="id">
+              <input type="hidden" value="0" name="del" id="del">
               <div class="box-body">
                 <div class="form-group">
                   <label for="name" class="col-sm-3 control-label"><i style="color:red;">*</i>分类名称</label>
@@ -112,20 +70,22 @@
                 <div class="form-group">
                   <label class="col-sm-3 control-label">图片</label>
                   <div class="col-sm-4">
-                    <div class="upload_box relative">
+                    <div class="upload_single">
                       @if ($data->img) 
-                        <img class="pull-left upload_img" src="{{ url('')}}/{{$data->img}}">
+                        <img class="pull-left upload_img" src="{{url('')}}/{{$data->img}}">
                         <label for="img" class="upload pull-left hidden">
                           <i class="glyphicon glyphicon-plus"></i>
                         </label>
                         <label class="btn btn-primary pull-left ml-10" for="img">修改</label>
-                        <input type="file" name="img" id="img" class="invisible form-control" accept="image/jpeg,image/jpg,image/png">
+                        <div class="btn btn-danger pull-left ml-10 J_remove">删除</div>
+                        <input type="file" name="img" id="img" class="invisible form-control J_img" accept="image/jpeg,image/jpg,image/png">
                       @else
                         <label for="img" class="upload pull-left">
                           <i class="glyphicon glyphicon-plus"></i>
                         </label>
                         <label class="btn btn-primary pull-left ml-10 invisible" for="img">修改</label>
-                        <input type="file" name="img" id="img" class="invisible form-control" accept="image/jpeg,image/jpg,image/png">
+                        <div class="btn btn-danger pull-left ml-10 invisible J_remove">删除</div>
+                        <input type="file" name="img" id="img" class="invisible form-control J_img" accept="image/jpeg,image/jpg,image/png">
                       @endif
                     </div>
                   </div>

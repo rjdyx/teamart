@@ -2,31 +2,6 @@
  @section('title')文章新增@endsection
  @section('t1')文章管理@endsection
  @section('css')
- <style type="text/css">
-    .upload_box {
-      height: 100px;
-    }
-    .upload {
-      width: 100px;
-      height: 100px;
-      border: 1px dashed #777;
-      text-align: center;
-      color: #777;
-      line-height: 132px;
-      cursor: pointer;
-    }
-    .upload:hover {
-      border: 1px dashed #337ab7;
-      color: #337ab7;
-    }
-    .upload i {
-      font-size: 50px;
-    }
-    .upload_img {
-      width: 100px;
-      height: 100px;
-    }
-  </style>
  @endsection
  @section('script')
  @parent
@@ -35,59 +10,39 @@
     <script src="{{url('ueditor/lang/zh-cn/zh-cn.js')}}"></script>
     <script src="{{url('admin/js/datepicker/bootstrap-datepicker.js')}}"></script>
     <script src="{{url('admin/js/datepicker/locales/bootstrap-datepicker.zh-CN.js')}}"></script>
+    <script src="{{url('admin/js/upload.js')}}"></script>
     <script>
+        //实例化编辑器
+        //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
+      $(function () {
         $('#datepicker').datepicker({
           language: 'zh-CN',
           format: 'yyyy-mm-dd'
         });
-        //实例化编辑器
-        //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
         var ue = UE.getEditor('editor');
-        imagePathFormat='/upload/descs/'; 
-    </script>
-    <script>
-      $(function () {
+        imagePathFormat='/upload/descs/';
         var form = document.forms['categoryForm']
         $(form).on('submit', function () {
           return submitForm()
         })
         $('#name').on('blur input', function () {
-          validname('name', '分类名称', $(this).val(), 'product_category')
+          _valid.title('name', '文章标题', $(this).val())
         })
-        $('#desc').on('blur input', function () {
-          validdesc('desc', '分类描述', $(this).val())
-        })
-        $('#img').on('change', function () {
-          var $this = $(this)
-          var file = $this[0].files[0]
-          if (!validimg('img', file)) {
-            return
-          }
-          $this.siblings('img').remove()
-          var fr = new FileReader()
-          fr.onload = function (e) {
-            var img = new Image()
-            img.src = e.target.result
-            img.classList.add('pull-left')
-            img.classList.add('upload_img')
-            $this.parent().prepend(img).end()
-            .siblings('.invisible').removeClass('invisible')
-            .siblings('.upload').hide()
-          }
-          fr.readAsDataURL(file)
+        $('#category_id').on('change', function () {
+          _valid.ness('category_id', '文章分类', $(this).val())
         })
         function submitForm() {
           var name = form['name']
-          var desc = form['desc']
+          var category_id = form['category_id']
           var img = form['img']
-          if (!validname('name', '分类名称', name.value, 'product_category')) {
+          if (!_valid.title('name', '文章标题', name.value)) {
             return false
           }
-          if (!validdesc('desc', '分类描述', desc.value)) {
+          if (!_valid.ness('category_id', '文章分类', category_id.value)) {
             return false
           }
           if (img.files.length > 0) {
-            if (!validimg('img', img.files[0])) {
+            if (!_valid.img('img', img.files[0])) {
               return false
             }
           }
@@ -111,51 +66,47 @@
         <form class="form-horizontal" action="{{url('admin/article/list')}}/{{$data->id}}" method="POST" name="categoryForm" enctype="multipart/form-data">
            {{ csrf_field() }}
            <input type="hidden" value="PUT" name="_method">
+          <input type="hidden" value="0" name="del" id="del">
           <div class="box-body">
             <div class="form-group">
-              <label for="inputName3" class="col-sm-2 control-label">文章标题</label>
-
-              <div class="col-sm-10">
-                <input type="text" class="form-control" name='name' id="inputName3" placeholder="请输入文章标题" value="{{$data->name}}">
+              <label for="name" class="col-sm-2 control-label"><i style="color:red;">*</i>文章标题</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" name='name' id="name" placeholder="请输入文章标题" value="{{$data->name}}">
               </div>
+              <span class="col-sm-4 text-danger form_error" id="name_txt"></span>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label">文章分类</label>
-              <div class="col-sm-10">
-                <div class="row">
-                  <div class="col-sm-8">
-                    <select class="form-control" name="category_id">
-                      <option value="1">option 1</option>
-                      <option value="1">option 2</option>
-                      <option value="1">option 3</option>
-                      <option value="1">option 4</option>
-                      <option value="1">option 5</option>
-                    </select>
-                  </div>
-                  <div class="col-sm-4">
-                    <a href="{{ url('admin/article/category/create') }}"><button type="button" class="btn btn-success btn-100">添加分类</button></a></div>
-                  </div>
+              <label class="col-sm-2 control-label"><i style="color:red;">*</i>文章分类</label>
+                <div class="col-sm-6">
+                  <select class="form-control pull-left" style="width: 50%" name="category_id" id="category_id">
+                    <option value="">-请选择文章分类-</option>
+                    @foreach ($lists as $list)
+                    <option value="{{$list->id}}" @if ($list->id == $data->category_id) selected @endif>{{$list->name}}</option>
+                    @endforeach               
+                  </select>
+                  <a class="pull-left ml-10" href="{{ url('admin/article/category/create') }}"><button type="button" class="btn btn-success btn-100">添加分类</button></a>
                 </div>
+                <span class="col-sm-4 text-danger form_error" id="category_id_txt"></span>
               </div>         
                <div class="form-group">
                   <label class="col-sm-2 control-label">图片</label>
-                  <div class="col-sm-10">
-                    <div class="upload_box relative">
-                      @if ($data->img) 
-                        <img class="pull-left upload_img" src="{{ url('')}}/{{$data->img}}">
-                        <label for="img" class="upload pull-left hidden">
-                          <i class="glyphicon glyphicon-plus"></i>
-                        </label>
-                        <label class="btn btn-primary pull-left ml-10" for="img">修改</label>
-                        <input type="file" name="img" id="img" class="invisible form-control" accept="image/jpeg,image/jpg,image/png">
-                      @else
-                        <label for="img" class="upload pull-left">
-                          <i class="glyphicon glyphicon-plus"></i>
-                        </label>
-                        <label class="btn btn-primary pull-left ml-10 invisible" for="img">修改</label>
-                        <input type="file" name="img" id="img" class="invisible form-control" accept="image/jpeg,image/jpg,image/png">
-                      @endif
-                    </div>
+                  <div class="col-sm-4 upload_single">
+                    @if ($data->img) 
+                      <img class="pull-left upload_img" src="{{url('')}}/{{$data->img}}">
+                      <label for="img" class="upload pull-left hidden">
+                        <i class="glyphicon glyphicon-plus"></i>
+                      </label>
+                      <label class="btn btn-primary pull-left ml-10" for="img">修改</label>
+                      <div class="btn btn-danger pull-left ml-10 J_remove">删除</div>
+                      <input type="file" name="img" id="img" class="invisible form-control J_img" accept="image/jpeg,image/jpg,image/png">
+                    @else
+                      <label for="img" class="upload pull-left">
+                        <i class="glyphicon glyphicon-plus"></i>
+                      </label>
+                      <label class="btn btn-primary pull-left ml-10 invisible" for="img">修改</label>
+                      <div class="btn btn-danger pull-left ml-10 invisible J_remove">删除</div>
+                      <input type="file" name="img" id="img" class="invisible form-control J_img" accept="image/jpeg,image/jpg,image/png">
+                    @endif
                   </div>
                   <span class="col-sm-4 text-danger form_error" id="img_txt"></span>
                 </div>

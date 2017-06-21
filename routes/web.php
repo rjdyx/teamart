@@ -145,6 +145,7 @@ Route::group(['namespace'=>'Admin','prefix'=>'admin','middleware'=>['auth','user
 		Route::resource('/send', 'SendController');
 		Route::resource('/ad', 'AdController');
 		Route::resource('/site', 'SiteController');
+		Route::post('/log/dels', 'LogController@dels');
 		Route::resource('/log', 'LogController');
 		Route::resource('/personal', 'PersonalController');
 		Route::resource('/feedback','FeedbackController');

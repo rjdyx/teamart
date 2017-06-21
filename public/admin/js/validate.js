@@ -1,4 +1,12 @@
-const required = (field, fieldtxt, value) => {
+/**
+ * 必需字段
+ *
+ * @param field {string} 字段名称
+ * @param fieldtxt {string} 字段汉字名称
+ * @param value {string} 字段值
+ * @returns {boolean}
+ */
+const ness = (field, fieldtxt, value) => {
 	if (value) {
 		$('#' + field + '_txt').text('')
 		return true
@@ -7,46 +15,83 @@ const required = (field, fieldtxt, value) => {
 		return false
 	}
 }
-
-exports.required = required
+exports.ness = ness
 
 exports.name = (field, fieldtxt, value, table, isRequired = true) => {
 	let valid = false, temp
 	if (isRequired) {
-		temp = required(field, fieldtxt, value)
+		temp = ness(field, fieldtxt, value)
 	}
 	if (temp) {
 		if (value.length < 4) {
 			$('#' + field + '_txt').text(fieldtxt + '不能少于4个字符')
 			valid = false
 		} else {
-			let id = $('#id').val(), params
+			let id = $('#id').val() ? $('#id').val() : false,
+				params = {
+					field: field,
+					table: table,
+					value: value
+				}
 			if (id) {
-				params = {
-					id: id,
-					field: 'name',
-					table: table,
-					value: value
-				}
-			} else {
-				params = {
-					field: 'name',
-					table: table,
-					value: value
-				}
+				params['id'] = id
 			}
-			axios.post('/check', params)
-				.then(function(res) {
+			return axios.post('/check', params)
+				.then(res => {
 					if (res.data == 'false') {
+						$('#' + field + '_txt').text('')
 						valid = true
 					} else {
 						$('#' + field + '_txt').text(fieldtxt + '已经存在')
 						valid = false
 					}
+					return valid
 				})
-				.catch(function(err) {
+				.catch(err => {
 					console.log(err)
 				})
+		}
+	}
+	return valid
+}
+
+// exports.checkField = (field, fieldtxt, value, table) => {
+// 	let id = $('#id').val() ? $('#id').val() : false,
+// 		params = {
+// 			field: field,
+// 			table: table,
+// 			value: value
+// 		}
+// 	if (id) {
+// 		params['id'] = id
+// 	}
+// 	return axios.post('/check', params)
+// 		.then(res => {
+// 			if (res.data == 'false') {
+// 				$('#' + field + '_txt').text('')
+// 				valid = true
+// 			} else {
+// 				$('#' + field + '_txt').text(fieldtxt + '已经存在')
+// 				valid = false
+// 			}
+// 			return valid
+// 		})
+// 		.catch(err => {
+// 			console.log(err)
+// 		})
+// }
+
+// 文章标题
+exports.title = (field, fieldtxt, value) => {
+	var valid = false, temp
+	if (isRequired) {
+		temp = ness(field, fieldtxt, value)
+	}
+	if (temp) {
+		if (value.length < 4) {
+			$('#' + field + '_txt').text(fieldtxt + '不能少于4个字符')
+			valid = false
+		} else {
 			$('#' + field + '_txt').text('')
 			valid = true
 		}
@@ -58,7 +103,7 @@ exports.email = (field, value, isRequired = true) => {
 	let valid = false, temp
 	let reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/
 	if (isRequired) {
-		temp = required(field, '邮箱', value)
+		temp = ness(field, '邮箱', value)
 	}
 	if (temp) {
 		if (!reg.test(value)) {
@@ -73,12 +118,12 @@ exports.email = (field, value, isRequired = true) => {
 }
 
 exports.password = (field, value, isRequired = true) => {
-	let valid = false, temp
+	let valid = false, temp = true
 	if (isRequired) {
-		temp = required(field, '密码', value)
+		temp = ness(field, '密码', value)
 	}
 	if (temp) {
-		if (value.length < 6) {
+		if (value.length < 6 && value.length > 0) {
 			$('#' + field + '_txt').text('密码至少要6位')
 			valid = false
 		} else {
@@ -90,12 +135,12 @@ exports.password = (field, value, isRequired = true) => {
 }
 
 exports.repassword = (field, value, isRequired = true) => {
-	let valid = false, temp
+	let valid = false, temp = true
 	if (isRequired) {
-		temp = required(field, '确认密码', value)
+		temp = ness(field, '确认密码', value)
 	}
 	if (temp) {
-		if (value.length < 6) {
+		if (value.length < 6 && value.length > 0) {
 			$('#' + field + '_txt').text('确认密码至少要6位')
 			valid = false
 		} else {
@@ -139,16 +184,21 @@ exports.realname = (field, value) => {
 	return valid
 }
 
-exports.birth_date = (field, value) => {
-	let valid = true
-	if (value) {
+exports.birth_date = (field, fieldtxt, value, isRequired = false) => {
+	let valid = true, temp = true
+	if (isRequired) {
+		temp = ness(field, fieldtxt, value)
+	}
+	if (temp) {
 		if (!/^([0-9]{4})+-([0-1][1-9])+-([0-3][0-9])$/.test(value)) {
-			$('#' + field + '_txt').text('出生日期格式为yyyy-mm-dd')
+			$('#' + field + '_txt').text(fieldtxt + '格式为yyyy-mm-dd')
 			valid = false
 		} else {
 			$('#' + field + '_txt').text('')
 			valid = true
 		}
+	} else {
+		valid = false
 	}
 	return valid
 }
@@ -156,7 +206,7 @@ exports.birth_date = (field, value) => {
 exports.scale = (field, value, isRequired = true) => {
 	let valid = false, temp
 	if (isRequired) {
-		temp = required(field, '分销比例', value)
+		temp = ness(field, '分销比例', value)
 	}
 	if (temp) {
 		if (isNaN(parseFloat(value))) {
@@ -173,11 +223,50 @@ exports.scale = (field, value, isRequired = true) => {
 	return valid
 }
 
-exports.desc = (field, value) => {
-	let valid = false, temp
-	if (value) {
-		if (value.length > 50) {
-			$('#' + field + '_txt').text('角色描述在50个字内')
+exports.desc = (field, fieldtxt, value, lng = 50, isRequired = false) => {
+	let valid = true, temp = true
+	if (isRequired) {
+		temp = ness(field, fieldtxt, value)
+	}
+	if (temp) {
+		if (value.length > lng) {
+			$('#' + field + '_txt').text(fieldtxt + '在' + lng + '个字内')
+			valid = false
+		} else {
+			$('#' + field + '_txt').text('')
+			valid = true
+		}
+	}
+	return valid
+}
+
+exports.img = (field, file) => {
+	if (file.size / 1024 > 200) {
+		$('#' + field + '_txt').text('图片太大')
+		return false
+	}
+	if (file.type !== 'image/png' && file.type !== 'image/jpeg') {
+		$('#' + field + '_txt').text('图片格式只支持png和jpg')
+		return false
+	}
+	$('#' + field + '_txt').text('')
+	return true
+}
+
+/**
+ * 价格、库存数量验证
+ *
+ * @param field {string} 字段名称
+ * @param fieldtxt {string} 字段汉字名称
+ * @param value {string} 字段值
+ * @returns {boolean}
+ */
+exports.number = (field, fieldtxt, value) => {
+	var valid = false, temp
+	temp = ness(field, fieldtxt, value)
+	if (temp) {
+		if (value < 0) {
+			$('#' + field + '_txt').text(fieldtxt + '不能小于0')
 			valid = false
 		} else {
 			$('#' + field + '_txt').text('')
