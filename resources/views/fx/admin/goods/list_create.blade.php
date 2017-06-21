@@ -13,8 +13,8 @@
     <script src="{{url('admin/js/datepicker/locales/bootstrap-datepicker.zh-CN.js')}}"></script>
     <script src="{{url('admin/js/uploads.js')}}"></script>
     <script>
-        //实例化编辑器
-        //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
+      //实例化编辑器
+      //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
       $(function () {
         var ue = UE.getEditor('editor');
         imagePathFormat='/upload/descs/'; 
@@ -33,52 +33,52 @@
           $(this).val(parseFloat($(this).val()).toFixed(0))
         })
         $('#category_id').on('change', function () {
-          ness('category_id', '商品分类', $(this).val())
+          _valid.ness('category_id', '商品分类', $(this).val())
         })
         $('#group_id').on('change', function () {
-          ness('group_id', '商品组', $(this).val())
+          _valid.ness('group_id', '商品组', $(this).val())
         })
         $('#brand_id').on('change', function () {
-          ness('brand_id', '商品品牌', $(this).val())
+          _valid.ness('brand_id', '商品品牌', $(this).val())
         })
         $('#spec_id').on('change', function () {
-          ness('spec_id', '商品规格', $(this).val())
+          _valid.ness('spec_id', '商品规格', $(this).val())
         })
         $('#name').on('blur input', function () {
-          validname('name', '商品名称', $(this).val(), 'product')
+          _valid.name('name', '商品名称', $(this).val(), 'product')
         })
         $('#desc').on('blur input', function () {
-          validdesc('desc', '商品描述', $(this).val(), 50, true)
+          _valid.desc('desc', '商品描述', $(this).val(), 50, true)
         })
         $('#price_raw').on('blur input', function () {
-          validnumber('price_raw', '原价', $(this).val())
+          _valid.number('price_raw', '原价', $(this).val())
         })
         $('#price').on('blur input', function () {
-          validnumber('price', '现价', $(this).val())
+          _valid.number('price', '现价', $(this).val())
         })
         $('#delivery_price').on('blur input', function () {
-          validnumber('delivery_price', '邮费', $(this).val())
+          _valid.number('delivery_price', '邮费', $(this).val())
         })
         $('#stock').on('blur input', function () {
-          validnumber('stock', '库存', $(this).val())
+          _valid.number('stock', '库存', $(this).val())
         })
         $('#low_stock').on('blur input', function () {
-          validnumber('low_stock', '低库存', $(this).val())
+          _valid.number('low_stock', '低库存', $(this).val())
         })
         $('#origin').on('blur input', function () {
-          validdesc('origin', '商品产地', $(this).val(), 50, true)
+          _valid.desc('origin', '商品产地', $(this).val(), 50, true)
         })
         $('#effect').on('blur input', function () {
-          validdesc('effect', '商品作用', $(this).val(), 50, true)
+          _valid.desc('effect', '商品作用', $(this).val(), 50, true)
         })
         $('#date').on('blur input', function () {
-          validbirth_date('date', '生产日期', $(this).val(), true)
+          _valid.birth_date('date', '生产日期', $(this).val(), true)
         })
         $('#state').on('change', function () {
-          ness('state', '商品状态', $(this).val())
+          _valid.ness('state', '商品状态', $(this).val())
         })
         $('#grade').on('change', function () {
-          ness('grade', '商品积分兑换', $(this).val())
+          _valid.ness('grade', '商品积分兑换', $(this).val())
         })
         function submitForm() {
           var category_id = form['category_id']
@@ -97,60 +97,60 @@
           var date = form['date']
           var state = form['state']
           var grade = form['grade']
-          var imgs = form['imgs']
-          if (!ness('category_id', '商品分类', category_id.value)) {
+          var imgs = form['imgs[]']
+          if (!_valid.ness('category_id', '商品分类', category_id.value)) {
             return false
           }
-          if (!ness('group_id', '商品组', group_id.value)) {
+          if (!_valid.ness('group_id', '商品组', group_id.value)) {
             return false
           }
-          if (!ness('brand_id', '商品品牌', brand_id.value)) {
+          if (!_valid.ness('brand_id', '商品品牌', brand_id.value)) {
             return false
           }
-          if (!ness('spec_id', '商品规格', spec_id.value)) {
+          if (!_valid.ness('spec_id', '商品规格', spec_id.value)) {
             return false
           }
-          if (!validname('name', '商品名称', name.value, 'product')) {
+          if (!_valid.name('name', '商品名称', name.value, 'product')) {
             return false
           }
-          if (!validdesc('desc', '商品描述', desc.value, 50, true)) {
+          if (!_valid.desc('desc', '商品描述', desc.value, 50, true)) {
             return false
           }
-          if (!validnumber('price_raw', '原价', price_raw.value)) {
+          if (!_valid.number('price_raw', '原价', price_raw.value)) {
             return false
           }
-          if (!validnumber('price', '现价', price.value)) {
+          if (!_valid.number('price', '现价', price.value)) {
             return false
           }
-          if (!validnumber('delivery_price', '邮费', delivery_price.value)) {
+          if (!_valid.number('delivery_price', '邮费', delivery_price.value)) {
             return false
           }
-          if (!validnumber('stock', '库存', stock.value)) {
+          if (!_valid.number('stock', '库存', stock.value)) {
             return false
           }
-          if (!validnumber('low_stock', '低库存', low_stock.value)) {
+          if (!_valid.number('low_stock', '低库存', low_stock.value)) {
             return false
           }
-          if (!validdesc('origin', '商品产地', origin.value, 50, true)) {
+          if (!_valid.desc('origin', '商品产地', origin.value, 50, true)) {
             return false
           }
-          if (!validdesc('effect', '商品作用', effect.value, 50, true)) {
+          if (!_valid.desc('effect', '商品作用', effect.value, 50, true)) {
             return false
           }
-          if (!validbirth_date('date', '生产日期', date.value, true)) {
+          if (!_valid.birth_date('date', '生产日期', date.value, true)) {
             return false
           }
-          if (!ness('state', '商品状态', state.value)) {
+          if (!_valid.ness('state', '商品状态', state.value)) {
             return false
           }
-          if (!ness('grade', '商品积分兑换', grade.value)) {
+          if (!_valid.ness('grade', '商品积分兑换', grade.value)) {
             return false
           }
           if (imgs.length) {
             var arr = []
             for (var i = 0; i < imgs.length; i++) {
               if (imgs[i].files[0]) {
-                if (!validimg('img', imgs[i].files[0])) {
+                if (!_valid.img('img', imgs[i].files[0])) {
                   return false
                 }
                 arr.push(imgs[i].files[0])

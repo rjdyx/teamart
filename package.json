@@ -24,6 +24,7 @@
     "babel-cli": "^6.24.1",
     "babel-eslint": "^7.2.3",
     "babel-preset-stage-2": "^6.24.1",
+    "bootstrap-datepicker": "^1.7.0",
     "bootstrap-sass": "^3.3.7",
     "cross-env": "^3.2.3",
     "eslint": "^3.19.0",

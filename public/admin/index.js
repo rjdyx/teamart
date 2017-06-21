@@ -10,13 +10,15 @@ require('ionicons/dist/css/ionicons.css')
 require('admin-lte/dist/css/AdminLTE.css')
 require('admin-lte/dist/css/skins/skin-green-light.css')
 require('icheck/skins/square/blue.css')
+require('bootstrap-datepicker/dist/css/bootstrap-datepicker3.css')
 require('bootstrap')
 require('admin-lte')
 require('icheck')
+require('bootstrap-datepicker')
 require('./css/index.css')
 require('./css/index.scss')
 
-let valid = require('./js/validate.js')
+require('expose-loader?_valid!./js/validate.js')
 
 let init = require('./js/index.js')
 $(function () {

@@ -12,23 +12,23 @@
           return submitForm()
         })
         $('#name').on('blur input', function () {
-          validname('name', '分类名称', $(this).val(), 'article_category')
+          _valid.name('name', '分类名称', $(this).val(), 'article_category')
         })
         $('#desc').on('blur input', function () {
-          validdesc('desc', '分类描述', $(this).val())
+          _valid.desc('desc', '分类描述', $(this).val())
         })
         function submitForm() {
           var name = form['name']
           var desc = form['desc']
           var img = form['img']
-          if (!validname('name', '分类名称', name.value, 'product_category')) {
+          if (!_valid.name('name', '分类名称', name.value, 'product_category')) {
             return false
           }
-          if (!validdesc('desc', '分类描述', desc.value)) {
+          if (!_valid.desc('desc', '分类描述', desc.value)) {
             return false
           }
           if (img.files.length > 0) {
-            if (!validimg('img', img.files[0])) {
+            if (!_valid.img('img', img.files[0])) {
               return false
             }
           }
