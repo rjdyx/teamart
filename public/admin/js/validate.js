@@ -17,6 +17,16 @@ const ness = (field, fieldtxt, value) => {
 }
 exports.ness = ness
 
+/**
+ * 检查name
+ *
+ * @param field {string} 字段名称
+ * @param fieldtxt {string} 字段汉字名称
+ * @param value {string} 字段值
+ * @param table {string} /check时的表名
+ * @param isRequired {boolean} 是否必须
+ * @returns {boolean}
+ */
 exports.name = (field, fieldtxt, value, table, isRequired = true) => {
 	let valid = false, temp
 	if (isRequired) {
@@ -81,8 +91,17 @@ exports.name = (field, fieldtxt, value, table, isRequired = true) => {
 // 		})
 // }
 
-// 文章标题
-exports.title = (field, fieldtxt, value) => {
+/**
+ * 检查name 文章标题、后台登录
+ *
+ * @param field {string} 字段名称
+ * @param fieldtxt {string} 字段汉字名称
+ * @param value {string} 字段值
+ * @param table {string} /check时的表名
+ * @param isRequired {boolean} 是否必须
+ * @returns {boolean}
+ */
+exports.title = (field, fieldtxt, value, isRequired = true) => {
 	var valid = false, temp
 	if (isRequired) {
 		temp = ness(field, fieldtxt, value)
@@ -184,6 +203,15 @@ exports.realname = (field, value) => {
 	return valid
 }
 
+/**
+ * 出生日期、生成日期
+ *
+ * @param field {string} 字段名称
+ * @param fieldtxt {string} 字段汉字名称
+ * @param value {string} 字段值
+ * @param isRequired {boolean} 是否必须
+ * @returns {boolean}
+ */
 exports.birth_date = (field, fieldtxt, value, isRequired = false) => {
 	let valid = true, temp = true
 	if (isRequired) {
@@ -240,6 +268,13 @@ exports.desc = (field, fieldtxt, value, lng = 50, isRequired = false) => {
 	return valid
 }
 
+/**
+ * 图片验证
+ *
+ * @param field {string} 图片字段
+ * @param file {file} 文件
+ * @returns {boolean}
+ */
 exports.img = (field, file) => {
 	if (file.size / 1024 > 200) {
 		$('#' + field + '_txt').text('图片太大')

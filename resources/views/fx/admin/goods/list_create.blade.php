@@ -2,15 +2,12 @@
 @section('title')新增商品@endsection
 @section('t1')商品管理@endsection
 @section('css')
-    <link rel="stylesheet" type="text/css" href="{{url('admin/js/datepicker/datepicker3.css')}}">
 @endsection
 @section('script')
     @parent
     <script src="{{url('ueditor/ueditor.config.js')}}"></script>
     <script src="{{url('ueditor/ueditor.all.min.js')}}"></script>
     <script src="{{url('ueditor/lang/zh-cn/zh-cn.js')}}"></script>
-    <script src="{{url('admin/js/datepicker/bootstrap-datepicker.js')}}"></script>
-    <script src="{{url('admin/js/datepicker/locales/bootstrap-datepicker.zh-CN.js')}}"></script>
     <script src="{{url('admin/js/uploads.js')}}"></script>
     <script>
       //实例化编辑器
@@ -18,10 +15,7 @@
       $(function () {
         var ue = UE.getEditor('editor');
         imagePathFormat='/upload/descs/'; 
-        $('#date').datepicker({
-          language: 'zh-CN',
-          format: 'yyyy-mm-dd'
-        });
+        datepicker.datepicker()
         var form = document.forms['listForm']
         $(form).on('submit', function () {
           return submitForm()
@@ -295,10 +289,10 @@
                   <span class="col-sm-4 text-danger form_error" id="effect_txt"></span>
                 </div>
                 <div class="form-group">
-                  <label for="date" class="col-sm-3 control-label"><i style="color:red;">*</i>生产日期</label>
+                  <label for="datepicker" class="col-sm-3 control-label"><i style="color:red;">*</i>生产日期</label>
                   <div class="col-sm-4">
                     <div class="input-group">
-                      <input type="text" name="date" class="form-control pull-right" id="date">
+                      <input type="text" name="date" class="form-control pull-right" id="datepicker">
                       <div class="input-group-addon">
                         <i class="fa fa-calendar"></i>
                       </div>

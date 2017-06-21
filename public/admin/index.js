@@ -15,14 +15,15 @@ require('bootstrap')
 require('admin-lte')
 require('icheck')
 require('bootstrap-datepicker')
+require('bootstrap-datepicker/dist/locales/bootstrap-datepicker.zh-CN.min.js')
 require('./css/index.css')
 require('./css/index.scss')
 
 require('expose-loader?_valid!./js/validate.js')
+require('expose-loader?datepicker!./js/datepicker.js')
 
 let init = require('./js/index.js')
 $(function () {
-	console.log(1)
 	init.nav()
 	init.adduserClick()
 	init.checkboxToggle()

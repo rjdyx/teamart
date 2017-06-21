@@ -2,15 +2,12 @@
 @section('title')编辑商品@endsection
 @section('t1')商品管理@endsection
 @section('css')
-    <link rel="stylesheet" type="text/css" href="{{url('admin/js/datepicker/datepicker3.css')}}">
 @endsection
 @section('script')
     @parent
     <script src="{{url('ueditor/ueditor.config.js')}}"></script>
     <script src="{{url('ueditor/ueditor.all.min.js')}}"></script>
     <script src="{{url('ueditor/lang/zh-cn/zh-cn.js')}}"></script>
-    <script src="{{url('admin/js/datepicker/bootstrap-datepicker.js')}}"></script>
-    <script src="{{url('admin/js/datepicker/locales/bootstrap-datepicker.zh-CN.js')}}"></script>
     <script src="{{url('admin/js/uploads.js')}}"></script>
     <script>
       //实例化编辑器
@@ -18,10 +15,7 @@
       $(function () {
         var ue = UE.getEditor('editor');
         imagePathFormat='/upload/descs/'; 
-        $('#date').datepicker({
-          language: 'zh-CN',
-          format: 'yyyy-mm-dd'
-        });
+        datepicker.datepicker()
         var form = document.forms['listForm']
         $(form).on('submit', function () {
           return submitForm()
@@ -33,16 +27,16 @@
           $(this).val(parseFloat($(this).val()).toFixed(0))
         })
         $('#category_id').on('change', function () {
-          __valid.ness('category_id', '商品分类', $(this).val())
+          _valid.ness('category_id', '商品分类', $(this).val())
         })
         $('#group_id').on('change', function () {
-          __valid.ness('group_id', '商品组', $(this).val())
+          _valid.ness('group_id', '商品组', $(this).val())
         })
         $('#brand_id').on('change', function () {
-          __valid.ness('brand_id', '商品品牌', $(this).val())
+          _valid.ness('brand_id', '商品品牌', $(this).val())
         })
         $('#spec_id').on('change', function () {
-          __valid.ness('spec_id', '商品规格', $(this).val())
+          _valid.ness('spec_id', '商品规格', $(this).val())
         })
         $('#name').on('blur input', function () {
           _valid.name('name', '商品名称', $(this).val(), 'product')
@@ -75,10 +69,10 @@
           _valid.birth_date('date', '生产日期', $(this).val(), true)
         })
         $('#state').on('change', function () {
-          __valid.ness('state', '商品状态', $(this).val())
+          _valid.ness('state', '商品状态', $(this).val())
         })
         $('#grade').on('change', function () {
-          __valid.ness('grade', '商品积分兑换', $(this).val())
+          _valid.ness('grade', '商品积分兑换', $(this).val())
         })
         function submitForm() {
           var category_id = form['category_id']
@@ -98,16 +92,16 @@
           var state = form['state']
           var grade = form['grade']
           var imgs = form['imgs']
-          if (!__valid.ness('category_id', '商品分类', category_id.value)) {
+          if (!_valid.ness('category_id', '商品分类', category_id.value)) {
             return false
           }
-          if (!__valid.ness('group_id', '商品组', group_id.value)) {
+          if (!_valid.ness('group_id', '商品组', group_id.value)) {
             return false
           }
-          if (!__valid.ness('brand_id', '商品品牌', brand_id.value)) {
+          if (!_valid.ness('brand_id', '商品品牌', brand_id.value)) {
             return false
           }
-          if (!__valid.ness('spec_id', '商品规格', spec_id.value)) {
+          if (!_valid.ness('spec_id', '商品规格', spec_id.value)) {
             return false
           }
           if (!_valid.name('name', '商品名称', name.value, 'product')) {
@@ -140,10 +134,10 @@
           if (!_valid.birth_date('date', '生产日期', date.value, true)) {
             return false
           }
-          if (!__valid.ness('state', '商品状态', state.value)) {
+          if (!_valid.ness('state', '商品状态', state.value)) {
             return false
           }
-          if (!__valid.ness('grade', '商品积分兑换', grade.value)) {
+          if (!_valid.ness('grade', '商品积分兑换', grade.value)) {
             return false
           }
           if (imgs.length) {
@@ -298,10 +292,10 @@
                   <span class="col-sm-4 text-danger form_error" id="effect_txt"></span>
                 </div>
                 <div class="form-group">
-                  <label for="date" class="col-sm-3 control-label"><i style="color:red;">*</i>生产日期</label>
+                  <label for="datepicker" class="col-sm-3 control-label"><i style="color:red;">*</i>生产日期</label>
                   <div class="col-sm-4">
                     <div class="input-group">
-                      <input type="text" name="date" class="form-control pull-right" id="date" value="{{$data->date}}">
+                      <input type="text" name="date" class="form-control pull-right" id="datepicker" value="{{$data->date}}">
                       <div class="input-group-addon">
                         <i class="fa fa-calendar"></i>
                       </div>

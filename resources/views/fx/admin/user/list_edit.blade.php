@@ -2,18 +2,12 @@
 @section('title')编辑用户@endsection
 @section('t1')用户管理@endsection
 @section('css')
-	<link rel="stylesheet" type="text/css" href="{{url('admin/js/datepicker/datepicker3.css')}}">
 @endsection
 @section('script')
 	@parent
-	<script src="{{url('admin/js/datepicker/bootstrap-datepicker.js')}}"></script>
-	<script src="{{url('admin/js/datepicker/locales/bootstrap-datepicker.zh-CN.js')}}" charset="UTF-8"></script>
 	<script>
 		$(function () {
-			$('#datepicker').datepicker({
-				language: 'zh-CN',
-				format: 'yyyy-mm-dd'
-			})
+			datepicker.datepicker()
 			var form = document.forms['userForm']
 			$(form).on('submit', function () {
 				return submitForm()

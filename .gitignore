@@ -13,6 +13,7 @@ Homestead.json
 Homestead.yaml
 
 .env
+env.js
 
 /storage/logs/laravel.log
 

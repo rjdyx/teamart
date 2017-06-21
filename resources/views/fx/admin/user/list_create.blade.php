@@ -7,10 +7,7 @@
 	@parent
 	<script>
 		$(function () {
-			$('#datepicker').datepicker({
-				language: 'zh-CN',
-				format: 'yyyy-mm-dd'
-			});
+			datepicker.datepicker()
 			var form = document.forms['userForm']
 			$(form).on('submit', function () {
 				return submitForm()
@@ -132,7 +129,7 @@
 							<div class="form-group">
 								<label class="col-sm-3 control-label" for="datepicker">出生日期</label>
 								<div class="col-sm-4">
-									<div class="input-group date">
+									<div class="input-group">
 										<input type="text" name="birth_date" class="form-control pull-right" id="datepicker" onblur="_valid.birth_date('birth_date', '出生日期', this.value)" oninput="_valid.birth_date('birth_date', '出生日期', this.value)">
 										<div class="input-group-addon">
 											<i class="fa fa-calendar"></i>

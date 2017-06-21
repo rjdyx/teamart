@@ -69,19 +69,22 @@
 	    <form action="/admin/login" method="POST" name="loginForm">
 	    {{ csrf_field() }}
 	      <div class="form-group has-feedback">
-	        <input type="text" class="form-control" name="name" placeholder="账号">
+	        <input type="text" class="form-control" name="name" id="name" placeholder="账号">
 	        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 	      </div>
+          <span class="text-danger" id="name_txt"></span>
 	      <div class="form-group has-feedback">
-	        <input type="password" class="form-control" name="password" placeholder="密码">
+	        <input type="password" class="form-control" name="password" id="password" placeholder="密码">
 	        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
 	      </div>
-	      <div class="form-group has-feedback">
-            <input type="text" name="captcha" class="form-control" placeholder="请输入验证码">
+	      <span class="text-danger" id="password_txt"></span>
+	      <div class="form-group has-feedback clearfix">
+            <input type="text" name="captcha" class="form-control pull-left w50" id="captcha" placeholder="请输入验证码">
             <a onclick="javascript:re_captcha();">
-                <img src="" id="captcha" class="verifi-code" alt="验证码" title="刷新图片" width="100" height="40" id="verifi_code_image" border="0">
+                <img src="" class="verifi-code pull-right J_captcha" alt="验证码" title="刷新图片" width="100" height="40" id="verifi_code_image" border="0">
             </a>
           </div>
+          <span class="text-danger" id="captcha_txt"></span>
 	      <div class="row">
 <!-- 	        <div class="col-xs-8">
 	          <div class="checkbox icheck">
@@ -113,26 +116,49 @@
     <script src="http://localhost:8080/admin/build/index.js"></script> --}}
 
 	<script>
-		// $(function () {
-		// 	$('input').iCheck({
-		// 		checkboxClass: 'icheckbox_square-blue',
-		// 		radioClass: 'iradio_square-blue',
-		// 		increaseArea: '20%' // optional
-		// 	});
-		// });
 		$(function () {
 			function re_captcha(){
 	            axios.get('/captcha')
 	                .then(function (res) {
-	                    $("#captcha").attr('src',res.data) 
+	                    $(".J_captcha").attr('src',res.data) 
 	                })
 	                .catch(function (err) {
 	                    console.log(err)
 	                })
 	        }
 	        re_captcha();
+
+	        var form = document.forms['loginForm']
+
+			$(form).on('submit', function () {
+				return submitForm()
+			})
+			$('#name').on('blur', function () {
+				_valid.title('name', '账号', $(this).val())
+			})
+			$('#password').on('blur', function () {
+				_valid.password('password', $(this).val())
+			})
+			$('#captcha').on('blur', function () {
+				_valid.ness('captcha', '验证码', $(this).val())
+			})
+			function submitForm() {
+				var name = form['name']
+				var password = form['password']
+				var captcha = form['captcha']
+				if (!_valid.title('name', '账号', name.value)) {
+					return false
+				}
+				if (!_valid.password('password', password.value)) {
+					return false
+				}
+				if (!_valid.ness('captcha', '验证码', captcha.value)) {
+					return false
+				}
+				return true
+			}
 		})
 	</script>
-
+      
 </body>
 </html>

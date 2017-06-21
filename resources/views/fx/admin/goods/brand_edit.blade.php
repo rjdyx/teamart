@@ -8,7 +8,7 @@
     <script src="{{url('admin/js/upload.js')}}"></script>
     <script>
       $(function () {
-        var form = document.forms['categoryForm']
+        var form = document.forms['brandForm']
         $(form).on('submit', function () {
           return submitForm()
         })
