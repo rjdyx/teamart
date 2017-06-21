@@ -148,7 +148,7 @@
           }
           if (imgs.length) {
             var arr = []
-            for (let i = 0; i < imgs.length; i++) {
+            for (var i = 0; i < imgs.length; i++) {
               if (imgs[i].files[0]) {
                 if (!validimg('img', imgs[i].files[0])) {
                   return false
@@ -337,7 +337,7 @@
                       <!-- <img class="pull-left upload_img" src="{{url('/admin/images/photo1.png')}}"> -->
                       <label class="btn btn-primary pull-left invisible ml-10" for="img1">修改</label>
                       <div class="btn btn-danger pull-left invisible ml-10 mt-10 J_remove">删除</div>
-                      <input type="file" name="imgs" id="img1" class="form-control invisible J_img" accept="image/jpeg,image/jpg,image/png">
+                      <input type="file" name="imgs[]" id="img1" class="form-control invisible J_img" accept="image/jpeg,image/jpg,image/png">
                     </div>
                   </div>
                   <span class="col-sm-4 text-danger form_error" id="img_txt"></span>

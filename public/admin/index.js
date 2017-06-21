@@ -16,6 +16,8 @@ require('icheck')
 require('./css/index.css')
 require('./css/index.scss')
 
+let valid = require('./js/validate.js')
+
 let init = require('./js/index.js')
 $(function () {
 	init.nav()

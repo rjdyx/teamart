@@ -1,5 +1,5 @@
 @extends('fx.admin.layouts.app')
-
+@section('t1')订单管理@endsection
 @section('title')
 订单列表
 @endsection
@@ -14,17 +14,7 @@
 @endsection
 
 @section('content')
-   <div class="content-wrapper">
-    <!-- agentRole -->
     <div id="agentRole">
-      <!-- Content Header (Page header) -->
-      <section class="content-header">
-        <h1>
-          <a href="#" style="color: #000"><i class="fa fa-home fa_skin" style="margin-right:4px"></i>订单管理</a>
-          <a href="#"><small class="fa_skin"><i class="fa fa-angle-right" style="margin-right: 4px"></i>订单列表</small></a>
-        </h1>
-      </section>
-
       <!-- Main content of agentRole-->
       <section class="content">
         <div class="row">
@@ -115,9 +105,7 @@
       </section>
       <!-- /.content -->
     </div>
-    <!-- /agentRole -->
 
-    <!-- addagent -->
     <div id="addAgent">
       <!-- Content Header (Page header) -->
       <section class="content-header">
@@ -300,7 +288,5 @@
       </section>
       <!-- /.content -->
     </div>
-    <!-- /addagent -->
-  </div>
 
 @endsection

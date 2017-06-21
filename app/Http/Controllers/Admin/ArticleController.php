@@ -54,7 +54,8 @@ class ArticleController extends Controller
     public function edit($id)
     {
         $data = Article::find($id);
-        return view(config('app.theme').'.admin.article.list_edit')->with('data',$data);
+        $lists = ArticleCategory::select('id','name')->get();
+        return view(config('app.theme').'.admin.article.list_edit')->with(['data' => $data, 'lists' => $lists]);
     }
 
     //编辑保存
