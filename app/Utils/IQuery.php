@@ -122,8 +122,8 @@ class IQuery{
     public function uploads($request, $pics='imgs', $minState=true)
     {         
         echo "<pre>";
-       print_r($request->file());
-       die;
+        print_r($request->file('imgs'));
+        die;
         $pics = array();
         $path = config('app.image_path').'/upload/';
         $files = $request->file($pics);
