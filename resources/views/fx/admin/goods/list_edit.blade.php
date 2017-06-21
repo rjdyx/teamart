@@ -334,7 +334,7 @@
                     @if ($imgs)
                       @foreach($imgs as $k => $img)
                       <div class="upload_box pull-left ml-10 mt-10">
-                        <img class="pull-left upload_img" src="{{url('')}}/{{$img}}">
+                        <img class="pull-left upload_img" src="{{url('')}}/{{$img->img}}">
                         <label for="img{{$k}}" class="upload pull-left hidden">
                           <i class="glyphicon glyphicon-plus"></i>
                         </label>

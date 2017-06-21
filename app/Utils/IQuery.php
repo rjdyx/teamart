@@ -99,50 +99,44 @@ class IQuery{
     {
         $file = $request->file($file_pic);
         if ($request->hasFile($file_pic)) {
-            $path = config('app.image_path').'/upload/';
-            $Extension = $file->getClientOriginalExtension();
-            $filename = 'FX_'.time().rand(1,9999).'.'. $Extension;
-            $check = $file->move($path, $filename);
-            $filePath = $path.$filename; //原图路径加名称
-            $pics = array();
-            $pics['pic']= $filePath;//原图
-
-            if($minState) {
-                $newfilePath = $path.'FX_S_'.time().rand(1,9999).'.'. $Extension;//缩略图路径名称
-                $this->img_create_small($filePath,config('app.thumb_width'),config('app.thumb_height'),$newfilePath);  //生成缩略图
-                $pics['thumb']= $newfilePath;//缩略图
-            }
-            return $pics;//返回原图 缩略图 的路径 数组
+            return $this->uploadOrs($file, $minState);
         }else{
             return 'false';
         }
     }
 
+    public function uploadOrs($file, $minState)
+    {
+        $pics = array();
+        $path = config('app.image_path');
+        $Extension = $file->getClientOriginalExtension();
+        $filename = 'FX_'.time().rand(1,9999).'.'. $Extension;
+        $check = $file->move($path, $filename);
+        $filePath = $path.$filename; //原图路径加名称
+        $pics['pic']= $filePath;//原图
+
+        if($minState) {
+            $newfilePath = $path.'FX_S_'.time().rand(1,9999).'.'. $Extension;//缩略图路径名称
+            $this->img_create_small($filePath,config('app.thumb_width'),config('app.thumb_height'),$newfilePath);  //生成缩略图
+            $pics['thumb']= $newfilePath;//缩略图
+        }
+        return $pics;//返回原图 缩略图 的路径 数组
+    }
+
     //组图片异步上传
     public function uploads($request, $pics='imgs', $minState=true)
     {         
-        echo "<pre>";
-        print_r($request->file('imgs'));
-        die;
-        $pics = array();
-        $path = config('app.image_path').'/upload/';
+        $imgs = array();
         $files = $request->file($pics);
-        if (!empty($files)) {
+        if (!empty($files) && count($files) && is_array($files)) {
             foreach ($files as $k => $file) {
-                $Extension = $file->getClientOriginalExtension();
-                $filename = 'FX_'.time().rand(1,9999).'.'. $Extension;
-                $check = $file->move($path, $filename);
-                $filePath = $path.$filename; //原图路径加名称
-                $pics[$k]['pic']= $filePath;//原图
-                if($minState) {
-                    $newfilePath = $path.'FX_S_'.time().rand(1,9999).'.'. $Extension;//缩略图路径名称
-                    $this->img_create_small($filePath,config('app.thumb_width'),config('app.thumb_height'),$newfilePath);  //生成缩略图
-                    $pics[$k]['pic_thumb']= $newfilePath;//缩略图
-                }
+                $imgs[$k] = $this->uploadOrs($file, $minState);
             }
+            return $imgs;
         }
         return 'false';
     }
+
     //生成缩略图
     function img_create_small($big_img, $width, $height, $small_img) {  //原始大图地址，缩略图宽度，高度，缩略图地址
         $imgage = getimagesize($big_img); //得到原始大图片

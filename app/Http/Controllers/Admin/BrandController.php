@@ -121,7 +121,11 @@ class BrandController extends Controller
         if ($imgs != 'false') {
             $model->img = $imgs['pic'];
             $model->thumb = $imgs['thumb'];
-            if ($id == -1 ) IQuery::destroyPic(new Brand, $id, 'img');
+        }
+        if ($id != -1) {
+            if ($imgs != 'false' || $request->del) {
+                IQuery::destroyPic(new Brand, $id, 'img');
+            }
         }
 
         if ($model->save()) {

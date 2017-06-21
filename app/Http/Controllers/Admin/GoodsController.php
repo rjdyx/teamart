@@ -48,7 +48,7 @@ class GoodsController extends Controller
                     'brand.name as brand_name',
                     'spec.name as spec_name'
                 )
-                ->orderBy('product.id','asc')
+                ->orderBy('product.id','desc')
                 ->paginate(10);
 
         //查询所有关联的商品分类
@@ -107,7 +107,7 @@ class GoodsController extends Controller
         $specs = Spec::select('id','name')->get();
         $data = Product::find($id);
         $imgdesc = Group::select('desc')->find($data->group_id);
-        $imgs = ProductImg::find($data->group_id);
+        $imgs = ProductImg::where('group_id',$data->group_id)->get();
         return view(config('app.theme').'.admin.goods.list_edit')
         ->with([
             'data' => $data,
@@ -217,11 +217,11 @@ class GoodsController extends Controller
             //保存关联参数
             $group = Group::find($request->group_id);
             $group->desc = $request->img_desc;
-            $img = new ProductImg;
             $pics = IQuery::uploads($request, 'imgs', true);
             if ($pics != 'false')
             {
                 foreach ($pics as $pic) {
+                    $img = new ProductImg;
                     $img->img = $pic['pic'];
                     $img->thumb = $pic['thumb'];
                     $img->group_id = $request->group_id;
@@ -229,9 +229,9 @@ class GoodsController extends Controller
                 }
             }
             //编辑时删除关联图片
-            if ($id != -1 && isset($request->img_ids)) 
+            if ($id != -1 && isset($request->dels)) 
             {
-                $img_ids = explode(',', $request->img_ids);
+                $img_ids = explode(',', $request->dels);
                 foreach ($img_ids as $img_id) {
                     IQuery::destroyPic(new ProductImg, $img_id, 'img');
                 }
