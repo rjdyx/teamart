@@ -22,6 +22,7 @@ require('expose-loader?_valid!./js/validate.js')
 
 let init = require('./js/index.js')
 $(function () {
+	console.log(1)
 	init.nav()
 	init.adduserClick()
 	init.checkboxToggle()

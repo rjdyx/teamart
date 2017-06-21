@@ -72,7 +72,9 @@
     {{-- <script src="http://localhost:8080/admin/build/vendor-bundle.js"></script>
     <script src="http://localhost:8080/admin/build/index.js"></script> --}}
     @yield('script')
-    
+    <script>
+        console.log(_valid)
+    </script>
     @include("fx.admin.layouts.alert")
 </body>
 </html>
