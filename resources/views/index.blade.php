@@ -41,11 +41,19 @@
             <div class="active-content">
                 <div class="active-contentLeft">
                     <!--<img src="fx/img/pic21.png" style="display: inline-block;height: 200px;width: 100%">-->
-                    <div class="contentLeft-des">碧螺春</div>
+                    <div class="contentLeft-des">
+                    @if(isset($activitys[0]))
+                        {{$activitys[0]->name}}
+                    @endif
+                    </div>
                     <div class="contentLeft-price price">
                         <div class="price-logo">
-                            <img src="fx/img/pic51.png" style="width: 15px;height: 15px;vertical-align: middle;"></div>
-                        12</div>
+                            <img src="fx/img/pic51.png" style="width: 15px;height: 15px;vertical-align: middle;">
+                        </div>
+                    @if(isset($activitys[0]))
+                        {{$activitys[0]->price}}
+                    @endif
+                        </div>
                     <div class="contentLeft-pic">
                         <img src="fx/img/pic5.png" style="width: 100px;height: 120px">
                     </div>
@@ -54,13 +62,24 @@
                     <div class="contentRight-top">
                         <!--<img src="fx/img/pic21.png" style="display: inline-block;height: 99px;width: 100%">-->
                         <div class="contentRight-word">
-                            <div class="contentRight-des">碧螺春好茶</div>
-                            <div class="contentRight-introduce">香甜可口香甜可口</div>
+                            <div class="contentRight-des">
+                            @if(isset($activitys[1]))
+                                {{$activitys[1]->name}}
+                            @endif
+                            </div>
+                            <div class="contentRight-introduce">
+                            @if(isset($activitys[1]))
+                                {{$activitys[1]->desc}}
+                            @endif
+                            </div>
                             <div class="contentRight-price price">
                                 <div class="price-logo">
                                     <img src="fx/img/pic51.png" style="width: 15px;height: 15px;vertical-align: middle;">
                                 </div>
-                                12</div>
+                                @if(isset($activitys[1]))
+                                    {{$activitys[1]->price}}
+                                @endif
+                                </div>
                         </div>
                         <div class="contentRight-pic">
                             <img src="fx/img/pic4.png" style="width: 80px;height: 80px;vertical-align:middle">
@@ -69,13 +88,24 @@
                     <div class="contentRight-bottom">
                         <!--<img src="fx/img/pic21.png" style="display: inline-block;height: 99px;width: 100%">-->
                         <div class="contentRight-words">
-                            <div class="contentRight-des">碧螺春好茶</div>
-                            <div class="contentRight-introduce">香甜可口香甜可口</div>
+                            <div class="contentRight-des">
+                                @if(isset($activitys[2]))
+                                    {{$activitys[2]->name}}
+                                @endif
+                            </div>
+                            <div class="contentRight-introduce">
+                                @if(isset($activitys[2]))
+                                    {{$activitys[2]->desc}}
+                                @endif
+                            </div>
                             <div class="contentRight-price price">
                                 <div class="price-logo">
                                     <img src="fx/img/pic51.png" style="width: 15px;height: 15px;vertical-align: middle;">
                                 </div>
-                                12</div>
+                                @if(isset($activitys[2]))
+                                    {{$activitys[2]->price}}
+                                @endif
+                                </div>
                         </div>
                         <div class="contentRight-pics">
                             <img src="fx/img/pic2.png" style="width: 80px;height: 80px;vertical-align:middle">
@@ -113,11 +143,18 @@
             <div class="active-content">
                 <div class="active-contentLeft">
                     <!--<img src="fx/img/pic21.png" style="display: inline-block;height: 200px;width: 100%">-->
-                    <div class="contentLeft-des">碧螺春</div>
+                    <div class="contentLeft-des">
+                        @if(isset($news[0]))
+                            {{$news[0]->name}}
+                        @endif
+                    </div>
                     <div class="contentLeft-price price">
                         <div class="price-logo">
                             <img src="fx/img/pic51.png" style="width: 15px;height: 15px;vertical-align: middle;"></div>
-                        12</div>
+                        @if(isset($news[0]))
+                            {{$news[0]->price}}
+                        @endif
+                        </div>
                     <div class="contentLeft-pic">
                         <img src="fx/img/pic5.png" style="width: 100px;height: 120px">
                     </div>
@@ -126,13 +163,24 @@
                     <div class="contentRight-top">
                         <!--<img src="fx/img/pic21.png" style="display: inline-block;height: 99px;width: 100%">-->
                         <div class="contentRight-word">
-                            <div class="contentRight-des">碧螺春好茶</div>
-                            <div class="contentRight-introduce">香甜可口香甜可口</div>
+                            <div class="contentRight-des">
+                            @if(isset($news[1]))
+                                {{$news[1]->name}}
+                            @endif
+                            </div>
+                            <div class="contentRight-introduce">
+                                @if(isset($news[1]))
+                                    {{$news[1]->desc}}
+                                @endif
+                            </div>
                             <div class="contentRight-price price">
                                 <div class="price-logo">
                                     <img src="fx/img/pic51.png" style="width: 15px;height: 15px;vertical-align: middle;">
                                 </div>
-                                12</div>
+                            @if(isset($news[1]))
+                                {{$news[1]->price}}
+                            @endif
+                                </div>
                         </div>
                         <div class="contentRight-pic">
                             <img src="fx/img/pic4.png" style="width: 80px;height: 80px;vertical-align:middle">
@@ -141,13 +189,14 @@
                     <div class="contentRight-bottom">
                         <!--<img src="fx/img/pic21.png" style="display: inline-block;height: 99px;width: 100%">-->
                         <div class="contentRight-words">
-                            <div class="contentRight-des">碧螺春好茶</div>
-                            <div class="contentRight-introduce">香甜可口香甜可口</div>
+                            <div class="contentRight-des">@if(isset($news[2])) {{$news[2]->name}} @endif</div>
+                            <div class="contentRight-introduce">@if(isset($news[2])) {{$news[2]->desc}} @endif</div>
                             <div class="contentRight-price price">
                                 <div class="price-logo">
                                     <img src="fx/img/pic51.png" style="width: 15px;height: 15px;vertical-align: middle;">
                                 </div>
-                                12</div>
+                                @if(isset($news[2])) {{$news[2]->price}} @endif
+                                </div>
                         </div>
                         <div class="contentRight-pics">
                             <img src="fx/img/pic2.png" style="width: 80px;height: 80px;vertical-align:middle">
@@ -173,11 +222,12 @@
             <div class="active-content">
                 <div class="active-contentLeft">
                     <!--<img src="fx/img/pic21.png" style="display: inline-block;height: 200px;width: 100%">-->
-                    <div class="contentLeft-des">碧螺春</div>
+                    <div class="contentLeft-des">@if(isset($sells[0])) {{$sells[0]->name}} @endif</div>
                     <div class="contentLeft-price price">
                         <div class="price-logo">
                             <img src="fx/img/pic51.png" style="width: 15px;height: 15px;vertical-align: middle;"></div>
-                        12</div>
+                            @if(isset($sells[0])) {{$sells[0]->price}} @endif
+                        </div>
                     <div class="contentLeft-pic">
                         <img src="fx/img/pic5.png" style="width: 100px;height: 120px">
                     </div>
@@ -186,13 +236,14 @@
                     <div class="contentRight-top">
                         <!--<img src="fx/img/pic21.png" style="display: inline-block;height: 99px;width: 100%">-->
                         <div class="contentRight-word">
-                            <div class="contentRight-des">碧螺春好茶</div>
-                            <div class="contentRight-introduce">香甜可口香甜可口</div>
+                            <div class="contentRight-des">@if(isset($sells[1])) {{$sells[1]->name}} @endif</div>
+                            <div class="contentRight-introduce">@if(isset($sells[1])) {{$sells[1]->desc}} @endif</div>
                             <div class="contentRight-price price">
                                 <div class="price-logo">
                                     <img src="fx/img/pic51.png" style="width: 15px;height: 15px;vertical-align: middle;">
                                 </div>
-                                12</div>
+                                @if(isset($sells[1])) {{$sells[1]->price}} @endif
+                                </div>
                         </div>
                         <div class="contentRight-pic">
                             <img src="fx/img/pic4.png" style="width: 80px;height: 80px;vertical-align:middle">
@@ -201,16 +252,17 @@
                     <div class="contentRight-bottom">
                         <!--<img src="fx/img/pic21.png" style="display: inline-block;height: 99px;width: 100%">-->
                         <div class="contentRight-words">
-                            <div class="contentRight-des">碧螺春好茶</div>
-                            <div class="contentRight-introduce">香甜可口香甜可口</div>
+                            <div class="contentRight-des">@if(isset($sells[2])) {{$sells[2]->name}} @endif</div>
+                            <div class="contentRight-introduce">@if(isset($sells[2])) {{$sells[2]->desc}} @endif</div>
                             <div class="contentRight-price price">
                                 <div class="price-logo">
                                     <img src="fx/img/pic51.png" style="width: 15px;height: 15px;vertical-align: middle;">
                                 </div>
-                                12</div>
+                                @if(isset($sells[2])) {{$sells[2]->price}} @endif
+                                </div>
                         </div>
                         <div class="contentRight-pics">
-                            <img src="fx/img/pic2.png" style="width: 80px;height: 80px;vertical-align:middle">
+                            <img src="" style="width: 80px;height: 80px;vertical-align:middle">
                         </div>
                     </div>
                 </div>
