@@ -77,7 +77,7 @@
 	                      <!-- <img class="pull-left upload_img" src="{{url('/admin/images/photo1.png')}}"> -->
 	                      <label class="btn btn-primary pull-left ml-10 invisible" for="img">修改</label>
 	                      <div class="btn btn-danger pull-left ml-10 invisible J_remove">删除</div>
-	                      <input type="file" name="img" id="img" class="form-control invisible J_img" accept="image/jpeg,image/jpg,image/png" value="{{$user->img}}">
+	                      <input type="file" name="img" id="img" class="form-control invisible J_img" accept="image/jpeg,image/jpg,image/png">
 	                    </div>
 	                  </div>
 	                  <span class="col-sm-4 text-danger form_error" id="img_txt"></span>

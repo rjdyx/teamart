@@ -13,7 +13,8 @@
 
 @section('script')
     @parent
-
+    <script src="{{url('admin/js/upload.js')}}"></script>
+    <script src="{{url('admin/js/uploads.js')}}"></script>
 @endsection
 
 @section('content')
@@ -74,75 +75,36 @@
                   <!-- logo -->
                   <div class="form-group">
                     <label class="col-sm-2 control-label">logo</label>
-                    <div class="col-sm-10">
-                      <ul class="mailbox-attachments clearfix">
-                        <li>
-                          <span class="mailbox-attachment-icon"><i class="fa fa-picture-o"></i></span>
-                          <div class="mailbox-attachment-info">
-                            <a href="#" class="mailbox-attachment-name">
-                              <a href="#" class="btn btn-default btn-xs pull-right"><i class="fa fa-cloud-upload"></i>上传</a>
-                            </a>
-                                <span class="mailbox-attachment-size">
-                                  最大:1.9 MB
-                                  <a href="#" class="btn btn-default btn-xs pull-right"><i class="fa fa-cloud-download"></i>下载</a>
-                                </span>
-                          </div>
-                        </li>
-                      </ul>
+                    <div class="col-sm-4">
+                      <div class="upload_single">
+                        <label for="img" class="upload pull-left">
+                          <i class="glyphicon glyphicon-plus"></i>
+                        </label>
+                        <!-- <img class="pull-left upload_img" src="{{url('/admin/images/photo1.png')}}"> -->
+                        <label class="btn btn-primary pull-left ml-10 invisible" for="img">修改</label>
+                        <div class="btn btn-danger pull-left ml-10 invisible J_remove">删除</div>
+                        <input type="file" name="img" id="img" class="form-control invisible J_img" accept="image/jpeg,image/jpg,image/png">
+                      </div>
                     </div>
+                    <span class="col-sm-4 text-danger form_error" id="img_txt"></span>
                   </div>
                   <!-- 轮播图 -->
                   <div class="form-group">
-                    <label class="col-sm-2 control-label">商品默认图</label>
-                    <div class="col-sm-10">
-                      <ul class="mailbox-attachments clearfix">
-                        <li>
-                          <span class="mailbox-attachment-icon"><i class="fa fa-picture-o"></i></span>
-
-                          <div class="mailbox-attachment-info">
-                            <a href="#" class="mailbox-attachment-name"><i class="fa fa-paperclip"></i> Sep2014-report.pdf</a>
-                                <span class="mailbox-attachment-size">
-                                  1,245 KB
-                                  <a href="#" class="btn btn-default btn-xs pull-right"><i class="fa fa-cloud-download"></i></a>
-                                </span>
-                          </div>
-                        </li>
-                        <li>
-                          <span class="mailbox-attachment-icon"><i class="fa fa-picture-o"></i></span>
-
-                          <div class="mailbox-attachment-info">
-                            <a href="#" class="mailbox-attachment-name"><i class="fa fa-paperclip"></i> App Description.docx</a>
-                                <span class="mailbox-attachment-size">
-                                  1,245 KB
-                                  <a href="#" class="btn btn-default btn-xs pull-right"><i class="fa fa-cloud-download"></i></a>
-                                </span>
-                          </div>
-                        </li>
-                        <li>
-                          <span class="mailbox-attachment-icon has-img"><img src="../img/photo1.png" alt="Attachment"></span>
-
-                          <div class="mailbox-attachment-info">
-                            <a href="#" class="mailbox-attachment-name"><i class="fa fa-camera"></i> photo1.png</a>
-                                <span class="mailbox-attachment-size">
-                                  2.67 MB
-                                  <a href="#" class="btn btn-default btn-xs pull-right"><i class="fa fa-cloud-download"></i></a>
-                                </span>
-                          </div>
-                        </li>
-                        <li>
-                          <span class="mailbox-attachment-icon has-img"><img src="../img/photo1.png" alt="Attachment"></span>
-
-                          <div class="mailbox-attachment-info">
-                            <a href="#" class="mailbox-attachment-name"><i class="fa fa-camera"></i> photo2.png</a>
-                                <span class="mailbox-attachment-size">
-                                  1.9 MB
-                                  <a href="#" class="btn btn-default btn-xs pull-right"><i class="fa fa-cloud-download"></i></a>
-                                </span>
-                          </div>
-                        </li>
-                      </ul>
+                    <label class="col-sm-2 control-label">轮播图</label>
+                    <div class="col-sm-4 upload_list">
+                      <div class="upload_box pull-left ml-10 mt-10">
+                        <label for="img1" class="upload pull-left">
+                          <i class="glyphicon glyphicon-plus"></i>
+                        </label>
+                        <!-- <img class="pull-left upload_img" src="{{url('/admin/images/photo1.png')}}"> -->
+                        <label class="btn btn-primary pull-left invisible ml-10" for="img1">修改</label>
+                        <div class="btn btn-danger pull-left invisible ml-10 mt-10 J_remove">删除</div>
+                        <input type="file" name="imgs" id="img1" class="form-control invisible J_img" accept="image/jpeg,image/jpg,image/png">
+                      </div>
                     </div>
+                    <span class="col-sm-4 text-danger form_error" id="img_txt"></span>
                   </div>
+                <!--  -->
                   <div class="form-group">
                     <label class="col-sm-2 control-label">关键字</label>
                     <div class="col-sm-10">
@@ -152,7 +114,7 @@
                   <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
                       <button type="submit" class="btn btn-success btn-100">确认</button>
-                      <button type="button" class="btn btn-success btn-100">重置</button>
+                      <button type="reset" class="btn btn-success btn-100">重置</button>
                       <button type="button" class="btn btn-success btn-100">取消</button>
                     </div>
                   </div>
