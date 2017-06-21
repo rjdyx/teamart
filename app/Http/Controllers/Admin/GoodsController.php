@@ -234,6 +234,7 @@ class GoodsController extends Controller
                 $img_ids = explode(',', $request->dels);
                 foreach ($img_ids as $img_id) {
                     IQuery::destroyPic(new ProductImg, $img_id, 'img');
+                    ProductImg::destroy($img_id);
                 }
             }
         }

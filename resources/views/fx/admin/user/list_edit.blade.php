@@ -19,28 +19,28 @@
 				return submitForm()
 			})
 			$('#name').on('blur input', function () {
-				validname('name', '用户名', $(this).val(), 'user')
+				_valid.name('name', '用户名', $(this).val(), 'user')
 			})
 			$('#email').on('blur input', function () {
-				validemail('email', $(this).val())
+				_valid.email('email', $(this).val())
 			})
 			$('input[name="gender"]').on('change', function () {
-				ness('gender', '性别', $(this).val())
+				_valid.ness('gender', '性别', $(this).val())
 			})
 			$('#password').on('input', function () {
-				validpassword('password', $(this).val(), false)
+				_valid.password('password', $(this).val(), false)
 			})
 			$('#repassword').on('input', function () {
-				validrepassword('repassword', $(this).val(), false)
+				_valid.repassword('repassword', $(this).val(), false)
 			})
 			$('#phone').on('blur input', function () {
-				validphone('phone', $(this).val())
+				_valid.phone('phone', $(this).val())
 			})
 			$('#realname').on('blur input', function () {
-				validrealname('realname', $(this).val())
+				_valid.realname('realname', $(this).val())
 			})
 			$('#birth_date').on('blur', function () {
-				validbirth_date('birth_date', '出生日期', $(this).val())
+				_valid.birth_date('birth_date', '出生日期', $(this).val())
 			})
 			function submitForm() {
 				var name = form['name']
@@ -51,28 +51,28 @@
 				var phone = form['phone']
 				var realname = form['realname']
 				var birth_date = form['birth_date']
-				if (!validname('name', '用户名', name.value, 'user')) {
+				if (!_valid.name('name', '用户名', name.value, 'user')) {
 					return false
 				}
-				if (!validemail('email', email.value)) {
+				if (!_valid.email('email', email.value)) {
 					return false
 				}
-				if (!ness('gender', '性别', gender.value)) {
+				if (!_valid.ness('gender', '性别', gender.value)) {
 					return false
 				}
-				if (!validpassword('password', password.value, false)) {
+				if (!_valid.password('password', password.value, false)) {
 					return false
 				}
-				if (!validrepassword('repassword', repassword.value, false)) {
+				if (!_valid.repassword('repassword', repassword.value, false)) {
 					return false
 				}
-				if (!validphone('phone', phone.value)) {
+				if (!_valid.phone('phone', phone.value)) {
 					return false
 				}
-				if (!validrealname('realname', realname.value)) {
+				if (!_valid.realname('realname', realname.value)) {
 					return false
 				}
-				if (!validbirth_date('birth_date', '出生日期', birth_date.value)) {
+				if (!_valid.birth_date('birth_date', '出生日期', birth_date.value)) {
 					return false
 				}
 				return true

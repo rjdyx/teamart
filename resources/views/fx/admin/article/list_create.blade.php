@@ -26,23 +26,23 @@
           return submitForm()
         })
         $('#name').on('blur input', function () {
-          validname('name', '文章标题', $(this).val(), 'article')
+          _valid.name('name', '文章标题', $(this).val(), 'article')
         })
         $('#category_id').on('change', function () {
-          ness('category_id', '文章分类', $(this).val())
+          _valid.ness('category_id', '文章分类', $(this).val())
         })
         function submitForm() {
           var name = form['name']
           var category_id = form['category_id']
           var img = form['img']
-          if (!validname('name', '文章标题', name.value, 'article')) {
+          if (!_valid.name('name', '文章标题', name.value, 'article')) {
             return false
           }
-          if (!ness('category_id', '文章分类', category_id.value)) {
+          if (!_valid.ness('category_id', '文章分类', category_id.value)) {
             return false
           }
           if (img.files.length > 0) {
-            if (!validimg('img', img.files[0])) {
+            if (!_valid.img('img', img.files[0])) {
               return false
             }
           }

@@ -20,25 +20,25 @@
           return submitForm()
         })
         $('#name').on('blur input', function () {
-          validname('name', '用户名', $(this).val(), 'parter')
+          _valid.name('name', '用户名', $(this).val(), 'parter')
         })
         $('#scale').on('blur input', function () {
-          validscale('scale', $(this).val())
+          _valid.scale('scale', $(this).val())
         })
         $('#desc').on('blur input', function () {
-          validdesc('desc', '角色描述', $(this).val())
+          _valid.desc('desc', '角色描述', $(this).val())
         })
         function submitForm() {
           var name = form['name']
           var scale = form['scale']
           var desc = form['desc']
-          if (!validname('name', '用户名', $(this).val(), 'parter')) {
+          if (!_valid.name('name', '用户名', $(this).val(), 'parter')) {
             return false
           }
-          if (!validscale('scale', scale.value)) {
+          if (!_valid.scale('scale', scale.value)) {
             return false
           }
-          if (!validdesc('desc', '角色描述', desc.value)) {
+          if (!_valid.desc('desc', '角色描述', desc.value)) {
             return false
           }
           return true

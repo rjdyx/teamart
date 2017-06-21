@@ -26,23 +26,23 @@
           return submitForm()
         })
         $('#name').on('blur input', function () {
-          validname('name', '文章标题', $(this).val(), 'article')
+          _valid.title('name', '文章标题', $(this).val())
         })
         $('#category_id').on('change', function () {
-          ness('category_id', '文章分类', $(this).val())
+          _valid.ness('category_id', '文章分类', $(this).val())
         })
         function submitForm() {
           var name = form['name']
           var category_id = form['category_id']
           var img = form['img']
-          if (!validname('name', '文章标题', name.value, 'article')) {
+          if (!_valid.title('name', '文章标题', name.value)) {
             return false
           }
-          if (!ness('category_id', '文章分类', category_id.value)) {
+          if (!_valid.ness('category_id', '文章分类', category_id.value)) {
             return false
           }
           if (img.files.length > 0) {
-            if (!validimg('img', img.files[0])) {
+            if (!_valid.img('img', img.files[0])) {
               return false
             }
           }
@@ -66,6 +66,7 @@
         <form class="form-horizontal" action="{{url('admin/article/list')}}/{{$data->id}}" method="POST" name="categoryForm" enctype="multipart/form-data">
            {{ csrf_field() }}
            <input type="hidden" value="PUT" name="_method">
+          <input type="hidden" value="0" name="del" id="del">
           <div class="box-body">
             <div class="form-group">
               <label for="name" class="col-sm-2 control-label"><i style="color:red;">*</i>文章标题</label>

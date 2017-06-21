@@ -11,25 +11,25 @@
           return submitForm()
         })
         $('#category_id').on('change', function () {
-          ness('category_id', '商品分类', $(this).val())
+          _valid.ness('category_id', '商品分类', $(this).val())
         })
         $('#name').on('blur input', function () {
-          validname('name', '商品组名称', $(this).val(), 'product_group')
+          _valid.name('name', '商品组名称', $(this).val(), 'product_group')
         })
         $('#desc').on('blur input', function () {
-          validdesc('desc', '商品组描述', $(this).val())
+          _valid.desc('desc', '商品组描述', $(this).val())
         })
         function submitForm() {
           var category_id = form['category_id']
           var name = form['name']
           var desc = form['desc']
-          if (!ness('category_id', '商品分类', category_id.value)) {
+          if (!_valid.ness('category_id', '商品分类', category_id.value)) {
             return false
           }
-          if (!validname('name', '分类名称', name.value, 'product_category')) {
+          if (!_valid.name('name', '分类名称', name.value, 'product_category')) {
             return false
           }
-          if (!validdesc('desc', '分类描述', desc.value)) {
+          if (!_valid.desc('desc', '分类描述', desc.value)) {
             return false
           }
           return true
