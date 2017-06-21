@@ -34,8 +34,8 @@
     <title>@yield('title')</title>
 
     <!-- Bootstrap 3.3.6 -->
-    {{-- <link rel="stylesheet" href="{{url('/admin/build/css/index.css')}}"> --}}
-    <link rel="stylesheet" href="http://localhost:8080/admin/build/css/index.css">
+    <link rel="stylesheet" href="{{url('/admin/build/css/index.css')}}">
+    {{-- <link rel="stylesheet" href="http://localhost:8080/admin/build/css/index.css"> --}}
     <!-- Styles -->
     @yield('css')
     
@@ -67,10 +67,10 @@
         </div>
     </div>
 
-    {{-- <script src="{{url('/admin/build/vendor-bundle.js')}}"></script>
-    <script src="{{url('/admin/build/index.js')}}"></script> --}}
-    <script src="http://localhost:8080/admin/build/vendor-bundle.js"></script>
-    <script src="http://localhost:8080/admin/build/index.js"></script>
+    <script src="{{url('/admin/build/vendor-bundle.js')}}"></script>
+    <script src="{{url('/admin/build/index.js')}}"></script>
+    {{-- <script src="http://localhost:8080/admin/build/vendor-bundle.js"></script>
+    <script src="http://localhost:8080/admin/build/index.js"></script> --}}
     <script src="{{url('admin/js/validate1.js')}}" charset="UTF-8"></script>
     @yield('script')
 
