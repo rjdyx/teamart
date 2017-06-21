@@ -87,8 +87,8 @@
 
 @section('script')
     @parent
-    <script src="http://www.fx.com/admin/build/js/jquery-2.2.3.min.js"></script>
-    <script src="http://www.fx.com/admin/build/js/Chart.min.js"></script>
+    <script src="{{url('admin/js/jquery-2.2.3.min.js')}}"></script>
+    <script src="{{url('admin/js/Chart.min.js')}}"></script>
     <script type="text/javascript">
     $(function(){
     

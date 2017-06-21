@@ -120,7 +120,7 @@ class IQuery{
 
     //组图片异步上传
     public function uploads($request, $pics='imgs', $minState=true)
-    {            
+    {         
         $pics = array();
         $path = config('app.image_path').'/upload/';
         $files = $request->file($pics);

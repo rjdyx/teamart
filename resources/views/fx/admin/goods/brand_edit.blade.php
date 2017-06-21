@@ -74,7 +74,7 @@
                           <i class="glyphicon glyphicon-plus"></i>
                         </label>
                         <label class="btn btn-primary pull-left ml-10" for="img">修改</label>
-                        <div class="btn btn-danger pull-left ml-10 invisible J_remove">删除</div>
+                        <div class="btn btn-danger pull-left ml-10 J_remove">删除</div>
                         <input type="file" name="img" id="img" class="invisible form-control J_img" accept="image/jpeg,image/jpg,image/png">
                       @else
                         <label for="img" class="upload pull-left">

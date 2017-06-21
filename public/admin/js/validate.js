@@ -36,7 +36,7 @@ exports.name = (field, fieldtxt, value, table, isRequired = true) => {
 				}
 			}
 			axios.post('/check', params)
-				.then(function(res) {
+				.then(res => {
 					if (res.data == 'false') {
 						valid = true
 					} else {
@@ -44,7 +44,7 @@ exports.name = (field, fieldtxt, value, table, isRequired = true) => {
 						valid = false
 					}
 				})
-				.catch(function(err) {
+				.catch(err => {
 					console.log(err)
 				})
 			$('#' + field + '_txt').text('')
