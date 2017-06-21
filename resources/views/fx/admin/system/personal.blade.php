@@ -71,13 +71,22 @@
 	                  <label class="col-sm-2 control-label">图片</label>
 	                  <div class="col-sm-4">
 	                    <div class="upload_single">
-	                      <label for="img" class="upload pull-left">
-	                        <i class="glyphicon glyphicon-plus"></i>
-	                      </label>
-	                      <!-- <img class="pull-left upload_img" src="{{url('/admin/images/photo1.png')}}"> -->
-	                      <label class="btn btn-primary pull-left ml-10 invisible" for="img">修改</label>
-	                      <div class="btn btn-danger pull-left ml-10 invisible J_remove">删除</div>
-	                      <input type="file" name="img" id="img" class="form-control invisible J_img" accept="image/jpeg,image/jpg,image/png">
+	                      @if ($user->img) 
+                          <img class="pull-left upload_img" src="{{url('')}}/{{$user->img}}">
+                          <label for="img" class="upload pull-left hidden">
+                            <i class="glyphicon glyphicon-plus"></i>
+                          </label>
+                          <label class="btn btn-primary pull-left ml-10" for="img">修改</label>
+                          <div class="btn btn-danger pull-left ml-10 J_remove">删除</div>
+                          <input type="file" name="img" id="img" class="invisible form-control J_img" accept="image/jpeg,image/jpg,image/png">
+                        @else
+                          <label for="img" class="upload pull-left">
+                            <i class="glyphicon glyphicon-plus"></i>
+                          </label>
+                          <label class="btn btn-primary pull-left ml-10 invisible" for="img">修改</label>
+                          <div class="btn btn-danger pull-left ml-10 invisible J_remove">删除</div>
+                          <input type="file" name="img" id="img" class="invisible form-control J_img" accept="image/jpeg,image/jpg,image/png">
+                        @endif
 	                    </div>
 	                  </div>
 	                  <span class="col-sm-4 text-danger form_error" id="img_txt"></span>

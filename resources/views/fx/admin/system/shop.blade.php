@@ -13,7 +13,6 @@
 
 @section('script')
     @parent
-    <script src="{{url('admin/js/upload.js')}}"></script>
     <script src="{{url('admin/js/uploads.js')}}"></script>
 @endsection
 
@@ -30,6 +29,7 @@
               <form action="{{url('admin/system/shop')}}/{{$shop->id}}" method="POST" class="form-horizontal" enctype="multipart/form-data">
                 {{ csrf_field() }}
                 <input type="hidden" value="PUT" name="_method">
+                <input type="hidden" value="" name="dels" id="dels">
                 <div class="box-body">
                   <div class="form-group">
                     <label for="storeName" class="col-sm-2 control-label">网站名称</label>
@@ -77,33 +77,65 @@
                     <label class="col-sm-2 control-label">logo</label>
                     <div class="col-sm-4">
                       <div class="upload_single">
-                        <label for="img" class="upload pull-left">
-                          <i class="glyphicon glyphicon-plus"></i>
-                        </label>
-                        <!-- <img class="pull-left upload_img" src="{{url('/admin/images/photo1.png')}}"> -->
-                        <label class="btn btn-primary pull-left ml-10 invisible" for="img">修改</label>
-                        <div class="btn btn-danger pull-left ml-10 invisible J_remove">删除</div>
-                        <input type="file" name="img" id="img" class="form-control invisible J_img" accept="image/jpeg,image/jpg,image/png">
+                        @if ($shop->logo) 
+                          <img class="pull-left upload_img" src="{{url('')}}/{{$shop->logo}}">
+                          <label for="img" class="upload pull-left hidden">
+                            <i class="glyphicon glyphicon-plus"></i>
+                          </label>
+                          <label class="btn btn-primary pull-left ml-10" for="img">修改</label>
+                          <div class="btn btn-danger pull-left ml-10 J_remove">删除</div>
+                          <input type="file" name="img" id="img" class="invisible form-control J_img" accept="image/jpeg,image/jpg,image/png">
+                        @else
+                          <label for="img" class="upload pull-left">
+                            <i class="glyphicon glyphicon-plus"></i>
+                          </label>
+                          <label class="btn btn-primary pull-left ml-10 invisible" for="img">修改</label>
+                          <div class="btn btn-danger pull-left ml-10 invisible J_remove">删除</div>
+                          <input type="file" name="img" id="img" class="invisible form-control J_img" accept="image/jpeg,image/jpg,image/png">
+                        @endif
                       </div>
                     </div>
                     <span class="col-sm-4 text-danger form_error" id="img_txt"></span>
                   </div>
                   <!-- 轮播图 -->
-                  <div class="form-group">
-                    <label class="col-sm-2 control-label">轮播图</label>
-                    <div class="col-sm-4 upload_list">
+                   <div class="form-group">
+                  <label class="col-sm-2 control-label">轮播图</label>
+                  <div class="col-sm-4 upload_list">
+                    @if ($imgs)
+                      @foreach($imgs as $k => $img)
+                      <div class="upload_box pull-left ml-10 mt-10">
+                        <img class="pull-left upload_img" src="{{url('')}}/{{$img}}">
+                        <label for="img{{$k + 1}}" class="upload pull-left hidden">
+                          <i class="glyphicon glyphicon-plus"></i>
+                        </label>
+                        <label class="btn btn-primary pull-left ml-10" for="img{{$k + 1}}">修改</label>
+                        <div class="btn btn-danger pull-left ml-10 mt-10 J_remove">删除</div>
+                        <input type="file" name="imgs[]" id="img{{$k + 1}}" data-id="{{$k + 1}}" class="form-control invisible J_img" accept="image/jpeg,image/jpg,image/png">
+                      </div>
+                      @endforeach
+                      @if (count($imgs) + 1 < 5)
+                      <div class="upload_box pull-left ml-10 mt-10">
+                        <label for="img{{count($imgs) + 1}}" class="upload pull-left">
+                          <i class="glyphicon glyphicon-plus"></i>
+                        </label>
+                        <label class="btn btn-primary pull-left ml-10 invisible" for="img{{count($imgs) + 1}}">修改</label>
+                        <div class="btn btn-danger pull-left ml-10 mt-10 invisible J_remove">删除</div>
+                        <input type="file" name="imgs[]" id="img{{count($imgs) + 1}}" class="form-control invisible J_img" accept="image/jpeg,image/jpg,image/png">
+                      </div>
+                      @endif
+                    @else
                       <div class="upload_box pull-left ml-10 mt-10">
                         <label for="img1" class="upload pull-left">
                           <i class="glyphicon glyphicon-plus"></i>
                         </label>
-                        <!-- <img class="pull-left upload_img" src="{{url('/admin/images/photo1.png')}}"> -->
                         <label class="btn btn-primary pull-left invisible ml-10" for="img1">修改</label>
                         <div class="btn btn-danger pull-left invisible ml-10 mt-10 J_remove">删除</div>
-                        <input type="file" name="imgs" id="img1" class="form-control invisible J_img" accept="image/jpeg,image/jpg,image/png">
+                        <input type="file" name="imgs[]" id="img1" class="form-control invisible J_img" accept="image/jpeg,image/jpg,image/png">
                       </div>
-                    </div>
-                    <span class="col-sm-4 text-danger form_error" id="img_txt"></span>
+                    @endif
                   </div>
+                  <span class="col-sm-4 text-danger form_error" id="img_txt"></span>
+                </div>
                 <!--  -->
                   <div class="form-group">
                     <label class="col-sm-2 control-label">关键字</label>

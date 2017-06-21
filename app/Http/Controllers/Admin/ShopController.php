@@ -24,7 +24,12 @@ class ShopController extends Controller
             $shop = new System;
             $shop->save();
         }
-        return view(config('app.theme').'.admin.system.shop')->with('shop',$shop);
+        if($shop->slider ==null){
+            $imgs = null;
+        }else{
+            $imgs =explode(",",$shop->slider) ;
+        }
+        return view(config('app.theme').'.admin.system.shop')->with(['shop'=>$shop,'imgs'=>$imgs]);
     }
 
     //查看单条信息
@@ -91,7 +96,37 @@ class ShopController extends Controller
             $shop->logo = $img['pic'];
         }
 
-        //轮播图待扩展
+        //轮播图
+        if($shop->slider ==null || $shop->slider=='' ){
+            $sliders =  array();;
+        }else{
+            $sliders =explode(",",$shop->slider) ;
+        }
+        if ($id != -1 && isset($request->dels)) 
+        {
+            $img_ids = explode(',', $request->dels);
+            foreach ($img_ids as $img_id) {
+                if (empty($sliders[$img_id-1])) continue;
+                $path = str_replace("\\","/",public_path().'/'.$sliders[$img_id-1]);
+                if (is_file($path)) unlink($path); 
+                $sliders[$img_id-1] = '';
+            }
+        }
+        $pics = IQuery::uploads($request, 'imgs', false);
+        if ($pics != 'false')
+        {
+            foreach ($pics as $pic) {
+                array_push($sliders,$pic['pic']);
+            }
+        }
+
+        $slider = '';
+        foreach($sliders as $temp){
+            if($temp == '') continue;
+            $slider .= $temp.',';
+        }
+        $slider = rtrim($slider, ",");
+        $shop->slider = $slider;
 
         if($shop->save()){
             return Redirect::to('admin/index')->with('status', '保存成功');
