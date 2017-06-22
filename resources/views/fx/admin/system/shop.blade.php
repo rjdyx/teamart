@@ -13,7 +13,54 @@
 
 @section('script')
     @parent
+    <script src="{{url('admin/js/upload.js')}}"></script>
     <script src="{{url('admin/js/uploads.js')}}"></script>
+    <script>
+      $(function () {
+        var form = document.forms['shopForm']
+        $(form).on('submit', function () {
+          return submitForm()
+        })
+        $('#name').on('blur input', function () {
+          _valid.title('name', '网站名称', $(this).val(), 4, false)
+        })
+        $('#email').on('blur input', function () {
+          _valid.email('email', $(this).val(), false)
+        })
+        $('#phone').on('blur input', function () {
+          _valid.phone('phone', $(this).val())
+        })
+        $('#free').on('blur input', function () {
+          _valid.number('free', '免邮金额', $(this).val(), false)
+        })
+        $('#record').on('blur input', function () {
+          _valid.desc('record', '备案号', $(this).val(), 10, false)
+        })
+        function submitForm() {
+          var name = form['name']
+          var email = form['email']
+          var phone = form['phone']
+          var free = form['free']
+          var record = form['record']
+          if (!_valid.title('name', '网站名称', name.value, 4, false)) {
+            return false
+          }
+          if (!_valid.email('email', email.value, false)) {
+            return false
+          }
+          if (!_valid.phone('phone', phone.value)) {
+            return false
+          }
+          if (!_valid.number('free', '免邮金额', free.value, false)) {
+            return false
+          }
+          if (!_valid.desc('record', '备案号', record.value, 10, false)) {
+            return false
+          }
+          return true
+        } 
+      })
+    </script>
 @endsection
 
 @section('content')
@@ -26,57 +73,62 @@
             <div class="box box-success">
               
               <!-- form start -->
-              <form action="{{url('admin/system/shop')}}/{{$shop->id}}" method="POST" class="form-horizontal" enctype="multipart/form-data">
+              <form action="{{url('admin/system/shop')}}/{{$shop->id}}" method="POST" class="form-horizontal" name="shopForm" enctype="multipart/form-data">
                 {{ csrf_field() }}
                 <input type="hidden" value="PUT" name="_method">
+                <input type="hidden" value="" name="del" id="del">
                 <input type="hidden" value="" name="dels" id="dels">
                 <div class="box-body">
                   <div class="form-group">
-                    <label for="storeName" class="col-sm-2 control-label">网站名称</label>
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" id="storeName" placeholder="请输入商店名称" name="name" value="{{$shop->name}}">
+                    <label for="name" class="col-sm-2 control-label">网站名称</label>
+                    <div class="col-sm-6">
+                      <input type="text" class="form-control" id="name" placeholder="请输入商店名称" name="name" value="{{$shop->name}}">
                     </div>
+                    <span class="col-sm-4 text-danger form_error" id="name_txt"></span>
                   </div>
                   <div class="form-group">
-                    <label for="storeTitle" class="col-sm-2 control-label">意见邮箱</label>
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" id="storeTitle" placeholder="请输入联系email" name="email" value="{{$shop->email}}">
+                    <label for="email" class="col-sm-2 control-label">意见邮箱</label>
+                    <div class="col-sm-6">
+                      <input type="text" class="form-control" id="email" placeholder="请输入联系email" name="email" value="{{$shop->email}}">
                     </div>
+                    <span class="col-sm-4 text-danger form_error" id="email_txt"></span>
                   </div>
                   <div class="form-group">
-                    <label for="storeAddress" class="col-sm-2 control-label">热线电话</label>
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" id="storeAddress" placeholder="请输入联系电话" name="phone" value="{{$shop->phone}}">
+                    <label for="phone" class="col-sm-2 control-label">热线电话</label>
+                    <div class="col-sm-6">
+                      <input type="text" class="form-control" id="phone" placeholder="请输入联系电话" name="phone" value="{{$shop->phone}}">
                     </div>
+                    <span class="col-sm-4 text-danger form_error" id="phone_txt"></span>
                   </div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label">验证码开关状态</label>
-                    <div class="col-sm-10">
-                      <label class="col-sm-1 gender_label control-label">
-                        <input type="radio" name="verify_state" id="gender_female" value="0" @if($shop->verify_state===0)checked="checked"@endif>关闭
-                      </label>
-                      <label class="col-sm-11 gender_label control-label">
-                        <input type="radio" name="verify_state" id="gender_male" value="1" @if($shop->verify_state===1)checked="checked"@endif >打开
-                      </label>
-                    </div>
+                    <label class="col-sm-2 gender_label control-label">
+                      <input type="radio" name="verify_state" id="gender_female" value="0" @if($shop->verify_state===0)checked="checked"@endif>关闭
+                    </label>
+                    <label class="col-sm-2 gender_label control-label">
+                      <input type="radio" name="verify_state" id="gender_male" value="1" @if($shop->verify_state===1)checked="checked"@endif >打开
+                    </label>
+                    <span class="col-sm-4 text-danger form_error" id="verify_state_txt"></span>
                   </div>
                   <div class="form-group">
-                    <label for="storeTel" class="col-sm-2 control-label">免邮金额</label>
-                    <div class="col-sm-10">
-                      <input type="number" class="form-control" id="storeTel" placeholder="请输入免邮金额" name="free" value="{{$shop->free}}">
+                    <label for="free" class="col-sm-2 control-label">免邮金额</label>
+                    <div class="col-sm-6">
+                      <input type="number" class="form-control J_FloatNum" id="free" placeholder="请输入免邮金额" name="free" value="{{$shop->free}}">
                     </div>
+                    <span class="col-sm-4 text-danger form_error" id="free_txt"></span>
                   </div>
                   <div class="form-group">
-                    <label for="storeNum" class="col-sm-2 control-label">备案号</label>
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" id="storeNum" placeholder="请输入备案号" name="record" value="{{$shop->record}}">
+                    <label for="record" class="col-sm-2 control-label">备案号</label>
+                    <div class="col-sm-6">
+                      <input type="text" class="form-control" id="record" placeholder="请输入备案号" name="record" value="{{$shop->record}}">
                     </div>
+                    <span class="col-sm-4 text-danger form_error" id="record_txt"></span>
                   </div>
                   <!-- logo -->
                   <div class="form-group">
                     <label class="col-sm-2 control-label">logo</label>
                     <div class="col-sm-4">
-                      <div class="upload_single">
+                      <div class="upload_single ml-10">
                         @if ($shop->logo) 
                           <img class="pull-left upload_img" src="{{url('')}}/{{$shop->logo}}">
                           <label for="img" class="upload pull-left hidden">
@@ -109,8 +161,8 @@
                           <i class="glyphicon glyphicon-plus"></i>
                         </label>
                         <label class="btn btn-primary pull-left ml-10" for="img{{$k + 1}}">修改</label>
-                        <div class="btn btn-danger pull-left ml-10 mt-10 J_remove">删除</div>
-                        <input type="file" name="imgs[]" id="img{{$k + 1}}" data-id="{{$k + 1}}" class="form-control invisible J_img" accept="image/jpeg,image/jpg,image/png">
+                        <div class="btn btn-danger pull-left ml-10 mt-10 J_removes">删除</div>
+                        <input type="file" name="imgs[]" id="img{{$k + 1}}" data-id="{{$k + 1}}" class="form-control invisible J_imgs" accept="image/jpeg,image/jpg,image/png">
                       </div>
                       @endforeach
                       @if (count($imgs) + 1 < 5)
@@ -119,8 +171,8 @@
                           <i class="glyphicon glyphicon-plus"></i>
                         </label>
                         <label class="btn btn-primary pull-left ml-10 invisible" for="img{{count($imgs) + 1}}">修改</label>
-                        <div class="btn btn-danger pull-left ml-10 mt-10 invisible J_remove">删除</div>
-                        <input type="file" name="imgs[]" id="img{{count($imgs) + 1}}" class="form-control invisible J_img" accept="image/jpeg,image/jpg,image/png">
+                        <div class="btn btn-danger pull-left ml-10 mt-10 invisible J_removes">删除</div>
+                        <input type="file" name="imgs[]" id="img{{count($imgs) + 1}}" class="form-control invisible J_imgs" accept="image/jpeg,image/jpg,image/png">
                       </div>
                       @endif
                     @else
@@ -129,12 +181,12 @@
                           <i class="glyphicon glyphicon-plus"></i>
                         </label>
                         <label class="btn btn-primary pull-left invisible ml-10" for="img1">修改</label>
-                        <div class="btn btn-danger pull-left invisible ml-10 mt-10 J_remove">删除</div>
-                        <input type="file" name="imgs[]" id="img1" class="form-control invisible J_img" accept="image/jpeg,image/jpg,image/png">
+                        <div class="btn btn-danger pull-left invisible ml-10 mt-10 J_removes">删除</div>
+                        <input type="file" name="imgs[]" id="img1" class="form-control invisible J_imgs" accept="image/jpeg,image/jpg,image/png">
                       </div>
                     @endif
                   </div>
-                  <span class="col-sm-4 text-danger form_error" id="img_txt"></span>
+                  <span class="col-sm-4 text-danger form_error" id="imgs_txt"></span>
                 </div>
                 <!--  -->
                   <div class="form-group">

@@ -144,7 +144,7 @@
             var arr = []
             for (var i = 0; i < imgs.length; i++) {
               if (imgs[i].files[0]) {
-                if (!_valid.img('img', imgs[i].files[0])) {
+                if (!_valid.img('imgs', imgs[i].files[0])) {
                   return false
                 }
                 arr.push(imgs[i].files[0])
@@ -330,11 +330,11 @@
                       </label>
                       <!-- <img class="pull-left upload_img" src="{{url('/admin/images/photo1.png')}}"> -->
                       <label class="btn btn-primary pull-left invisible ml-10" for="img1">修改</label>
-                      <div class="btn btn-danger pull-left invisible ml-10 mt-10 J_remove">删除</div>
-                      <input type="file" name="imgs[]" id="img1" class="form-control invisible J_img" accept="image/jpeg,image/jpg,image/png">
+                      <div class="btn btn-danger pull-left invisible ml-10 mt-10 J_removes">删除</div>
+                      <input type="file" name="imgs[]" id="img1" class="form-control invisible J_imgs" accept="image/jpeg,image/jpg,image/png">
                     </div>
                   </div>
-                  <span class="col-sm-4 text-danger form_error" id="img_txt"></span>
+                  <span class="col-sm-4 text-danger form_error" id="imgs_txt"></span>
                 </div>
                 <!-- 此处4张图片上传 待完成... -->
                 <div class="form-group">

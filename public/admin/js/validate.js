@@ -52,7 +52,7 @@ exports.name = (field, fieldtxt, value, table, isRequired = true) => {
 						$('#' + field + '_txt').text('')
 						valid = true
 					} else {
-						$('#' + field + '_txt').text(fieldtxt + '已经存在')
+						$('#' + field + '_txt').text(`${fieldtxt}已经存在`)
 						valid = false
 					}
 					return valid
@@ -101,14 +101,14 @@ exports.name = (field, fieldtxt, value, table, isRequired = true) => {
  * @param isRequired {boolean} 是否必须
  * @returns {boolean}
  */
-exports.title = (field, fieldtxt, value, isRequired = true) => {
-	var valid = false, temp
+exports.title = (field, fieldtxt, value, lng = 4, isRequired = true) => {
+	var valid = false, temp = true
 	if (isRequired) {
 		temp = ness(field, fieldtxt, value)
 	}
 	if (temp) {
-		if (value.length < 4) {
-			$('#' + field + '_txt').text(fieldtxt + '不能少于4个字符')
+		if (value.length < lng && value.length > 0) {
+			$('#' + field + '_txt').text(fieldtxt + `不能少于${lng}个字符`)
 			valid = false
 		} else {
 			$('#' + field + '_txt').text('')
@@ -119,18 +119,20 @@ exports.title = (field, fieldtxt, value, isRequired = true) => {
 }
 
 exports.email = (field, value, isRequired = true) => {
-	let valid = false, temp
+	let valid = false, temp = true
 	let reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/
 	if (isRequired) {
 		temp = ness(field, '邮箱', value)
 	}
 	if (temp) {
-		if (!reg.test(value)) {
-			$('#' + field + '_txt').text('邮箱格式不对')
-			valid = false
-		} else {
-			$('#' + field + '_txt').text('')
-			valid = true
+		if (value.length > 0) {
+			if (!reg.test(value)) {
+				$('#' + field + '_txt').text('邮箱格式不对')
+				valid = false
+			} else {
+				$('#' + field + '_txt').text('')
+				valid = true
+			}
 		}
 	}
 	return valid
@@ -296,9 +298,11 @@ exports.img = (field, file) => {
  * @param value {string} 字段值
  * @returns {boolean}
  */
-exports.number = (field, fieldtxt, value) => {
-	var valid = false, temp
-	temp = ness(field, fieldtxt, value)
+exports.number = (field, fieldtxt, value, isRequired = true) => {
+	var valid = false, temp = true
+	if (isRequired) {
+		temp = ness(field, fieldtxt, value)
+	}
 	if (temp) {
 		if (value < 0) {
 			$('#' + field + '_txt').text(fieldtxt + '不能小于0')
