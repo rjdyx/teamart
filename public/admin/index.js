@@ -27,4 +27,10 @@ $(function () {
 	init.nav()
 	init.adduserClick()
 	init.checkboxToggle()
+	$('.J_FloatNum').on('blur', function () {
+		$(this).val(parseFloat($(this).val()).toFixed(2))
+	})
+	$('.J_IntNum').on('blur', function () {
+		$(this).val(parseFloat($(this).val()).toFixed(0))
+	})
 })

@@ -20,7 +20,7 @@
           return submitForm()
         })
         $('#name').on('blur input', function () {
-          _valid.name('name', '文章标题', $(this).val(), 'article')
+          _valid.title('name', '文章标题', $(this).val(), 'article')
         })
         $('#category_id').on('change', function () {
           _valid.ness('category_id', '文章分类', $(this).val())
@@ -29,7 +29,7 @@
           var name = form['name']
           var category_id = form['category_id']
           var img = form['img']
-          if (!_valid.name('name', '文章标题', name.value, 'article')) {
+          if (!_valid.title('name', '文章标题', name.value, 'article')) {
             return false
           }
           if (!_valid.ness('category_id', '文章分类', category_id.value)) {

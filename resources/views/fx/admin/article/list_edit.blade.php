@@ -15,7 +15,7 @@
       $(function () {
         var ue = UE.getEditor('editor');
         imagePathFormat='/upload/descs/';
-        var form = document.forms['categoryForm']
+        var form = document.forms['listForm']
         $(form).on('submit', function () {
           return submitForm()
         })
@@ -57,7 +57,7 @@
         </div>
         <!-- /.box-header -->
         <!-- form start -->
-        <form class="form-horizontal" action="{{url('admin/article/list')}}/{{$data->id}}" method="POST" name="categoryForm" enctype="multipart/form-data">
+        <form class="form-horizontal" action="{{url('admin/article/list')}}/{{$data->id}}" method="POST" name="listForm" enctype="multipart/form-data">
            {{ csrf_field() }}
            <input type="hidden" value="PUT" name="_method">
           <input type="hidden" value="0" name="del" id="del">
