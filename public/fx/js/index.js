@@ -1,5 +1,4 @@
-require('babel-polyfill')
-require('./catelog.js')
+// require('./catelog.js')
 // require('./collect.js')
 // require('./confirmOrder.js')
 // require('./goToUrl.js')

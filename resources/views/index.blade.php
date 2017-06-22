@@ -11,20 +11,44 @@
 @section('script')
     @parent
     <script type="text/javascript" src="{{ url('fx/js/catelog.js') }}"></script>
-    <script type="text/javascript">
-        $youziku.load(".tea,#webfont,.contentLeft-des,.contentRight-introduce,.active-word,.more-word,.contentRight-des,.add-word", "f61ea8f5934348a2916e178809a3cbae", "yuweij");
-        $youziku.draw();
-    </script>
 @endsection
 
 @section('content')
  @include("layouts.header")
-    <div class="content">
-        <div class="lead-pic">
-            <img src="fx/img/pic1.png" style="height:160px;width: 100%">
+    <div class="container base-fontsize">
+        <div class="banner">
+            <img src="fx/img/pic1.png" alt="">
         </div>
-
-
+        <div class="index_box">
+            <div class="index_box_title">
+                <h1>活动商品</h1>
+                <a href="javascript:;">
+                    <span class="chayefont">更多</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+            <div class="index_content_box_content">
+                <div class="icbc_left">
+                    <h5>云南碧螺春绿茶</h5>
+                    <span>$4.99</span>
+                    <img src="fx/img/pic5.png" alt="">
+                </div>
+                <div class="icbc_right">
+                    <div class="icbc_right_goods">
+                        <h5>云南碧螺春绿茶</h5>
+                        <p>清纯可口 清纯可口</p>
+                        <span>$4.99</span>
+                        <img src="fx/img/pic5.png" alt="">
+                    </div>
+                    <div class="icbc_right_goods">
+                        <img src="fx/img/pic5.png" alt="">
+                        <h5>云南碧螺春绿茶</h5>
+                        <p>清纯可口 清纯可口</p>
+                        <span>$4.99</span>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div>
             <div class="active-lead">
                 <div class="active-title">

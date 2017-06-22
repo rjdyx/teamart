@@ -1,0 +1,84 @@
+html, body{
+	height: 100%;
+  -webkit-tap-highlight-color:transparent;
+}
+
+#{$comonElements} {
+	box-sizing: border-box;
+}
+
+a {
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  color: #000;
+}
+
+input[type=text] {
+  -webkit-appearance: none;
+}
+
+
+@font-face {
+  font-family: "Chayefont";
+  src: url(../fonts/chayefont.ttf);
+  font-weight: normal;
+  font-style: normal;
+}
+.chayefont {
+  font-family: "Chayefont";
+}
+
+/*  部分新增的公共 class*/
+
+.block {
+  display: block;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.hide {
+  display: none;
+}
+
+.mt-10 {
+    margin-top: 0.1rem;
+}
+.mr-10 {
+    margin-right: 0.1rem;
+}
+.mb-10 {
+    margin-bottom: 0.1rem;
+}
+.ml-10 {
+    margin-left: 0.1rem;
+}
+
+.pull-left {
+  float: left;
+}
+.pull-right {
+  float: right;
+}
+
+.txt-l {
+  text-align: left;
+}
+.txt-c {
+  text-align: center;
+}
+.txt-r {
+  text-align: right;
+}
+
+@media screen and (max-width:321px){
+  .base-fontsize{font-size:12px}
+}
+
+@media screen and (min-width:321px) and (max-width:400px){
+  .base-fontsize{font-size:14px}
+}
+
+@media screen and (min-width:400px){
+  .base-fontsize{font-size:16px}
+}
