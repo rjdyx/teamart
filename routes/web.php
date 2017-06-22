@@ -109,13 +109,16 @@ Route::group(['namespace'=>'Admin','prefix'=>'admin','middleware'=>['auth','user
 	// 订单管理
 	Route::group(['prefix'=>'order'],function(){
 		Route::resource('/list', 'OrderController');
-		Route::resource('/deliver', 'DeliverController');
+		Route::resource('/close', 'CloseController');
 		Route::resource('/fade', 'FadeController');
 	});
 
 	// 报表统计管理
 	Route::group(['prefix'=>'count'],function(){
+		
 		Route::get('/client', 'SellCountController@client');
+		Route::get('/client/yearcount', 'SellCountController@clientCountYear');
+		Route::get('/client/monthcount', 'SellCountController@clientCountMonth');
 		Route::get('/product', 'SellCountController@product');
 		Route::get('/agency', 'SellCountController@agency');
 	});

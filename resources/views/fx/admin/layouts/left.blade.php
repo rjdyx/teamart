@@ -62,8 +62,8 @@
         </a>
         <ul class="treeview-menu">
           <li><a href="/admin/order/list"><i class="fa fa-circle-o"></i>订单列表</a></li>
-          <li><a href="/admin/order/deliver"><i class="fa fa-circle-o"></i>发货订单列表</a></li>
-          <li><a href="/admin/order/fade"><i class="fa fa-circle-o"></i>退货订单列表</a></li>
+          <li><a href="/admin/order/fade"><i class="fa fa-circle-o"></i>退货订单</a></li>
+          <li><a href="/admin/order/close"><i class="fa fa-circle-o"></i>已完成订单</a></li>
         </ul>
       </li>
       <li class="treeview">

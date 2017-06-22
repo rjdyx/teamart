@@ -12,25 +12,12 @@
       <div class="col-xs-12">
         <div class="box box-success">
           <div class="box-header">
-            <div class="input-group input-group-sm" style="width: 80%;">
-                <div class="row">
-                    <div class="col-sm-2">
-                      <select class="form-control input-sm" id="searchState" name="state">
-                        <option value="" > - 订 单 状 态 - </option>
-                        <option value="pading" @if(isset($_GET['state'])) @if ($_GET['state'] =='pading') selected @endif @endif> 未 付 款 </option>
-                        <option value="paid"@if(isset($_GET['state'])) @if ($_GET['state'] =='paid') selected @endif @endif> 已 付 款 </option>
-                        <option value="delivery"@if(isset($_GET['state'])) @if ($_GET['state'] =='delivery') selected @endif @endif> 已 发 货 </option>
-                        <option value="take"@if(isset($_GET['state'])) @if ($_GET['state'] =='take') selected @endif @endif> 已 收 货 </option>
-                      </select>
-                    </div>
-                    <div class="col-sm-3" style="padding: 0px;">
-                    <input type="text" name="serial" class="form-control pull-right input-sm" id="searchSerial" placeholder="请输入订单号搜索" value="{{isset($_GET['serial'])? $_GET['serial']:''}}">
-                    </div>
-                    <div class="input-group-btn">
-                    <button type="button" onclick="search({{$lists->currentPage()}},['searchSerial','searchState']);" class="btn btn-default">
-                    <i class="fa fa-search"></i>
-                    </button>
-                    </div>
+            <div class="input-group input-group-sm" style="width: 30%;">
+                <input type="text" name="serial" class="form-control pull-right input-sm" id="searchSerial" placeholder="请输入订单号搜索" value="{{isset($_GET['serial'])? $_GET['serial']:''}}">
+                <div class="input-group-btn">
+                <button type="button" onclick="search({{$lists->currentPage()}},['searchSerial']);" class="btn btn-default">
+                <i class="fa fa-search"></i>
+                </button>
                 </div>
             </div>
           </div>
@@ -69,8 +56,7 @@
                 <td>{{$list->memo}}</td>
                 <td>
                   <div style="color: #dd4b39">
-                  <a href="{{url('admin/order/list')}}/{{$list->id}}/edit">
-                  <i class="fa fa-edit" style="margin-right: 5px;cursor: pointer;"></i></a>
+                  <a href="{{url('admin/order/close')}}/{{$list->id}}">详情</a>
                   </div>
                </td>
               </tr>

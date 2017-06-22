@@ -104,6 +104,7 @@ class ArticleController extends Controller
                     $query->whereNull('deleted_at');
                 })
             ], 
+            'category_id'=>'required'
         ]);
 
         if ($id == -1) {

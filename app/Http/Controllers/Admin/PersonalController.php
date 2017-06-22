@@ -66,7 +66,7 @@ class PersonalController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|string',
-            'email' => 'email|nullable',
+            'email' => 'required|email',
             'phone' => 'numeric',
             'gender' => 'in:0,1',
             'password' => 'nullable|string|min:6|max:30',

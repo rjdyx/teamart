@@ -238,15 +238,6 @@
 @endsection
 
 @section('content')
-   @include("fx.admin.layouts.header")
-
-   @include("fx.admin.layouts.left")
-   
-   <div class="content-wrapper">
-    
-    <!-- addagent -->
-    <div id="addAgent">
-      <!-- Content Header (Page header) -->
       <section class="content-header">
         <h1>
           <a href="#" style="color: #000"><i class="fa fa-home fa_skin" style="margin-right:4px"></i>报表统计</a>
@@ -292,9 +283,4 @@
           <!-- /新增代理商角色 -->
         </div>
       </section>
-      <!-- /.content -->
-    </div>
-    <!-- /addagent -->
-  </div>
-
 @endsection

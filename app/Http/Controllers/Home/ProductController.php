@@ -11,8 +11,7 @@ class ProductController extends Controller
 {
 	//商品列表页
 	public function index (Request $request) {
-		$lists = Product::where('user_id',Auth::user()->id)
-		->paginate(config('app.paginate10'));
+		$lists = Product::paginate(config('app.paginate10'));
 		$title = '商品搜索';
 		return view(config('app.theme').'.home.productList')->with(['lists'=>$lists, 'title'=>$title,'footer'=>'product']);
 	}

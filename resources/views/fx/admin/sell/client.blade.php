@@ -90,24 +90,36 @@
     <script src="{{url('admin/js/Chart.min.js')}}"></script>
     <script type="text/javascript">
     $(function(){
-    
-    var areaChartData = {
-      labels: ["2007", "2008", "2009", "2010", "2011", "2012", "2013","2014","2015","2016","2017"],
-      datasets: [
-        {
-          label: "年份",
-          fillColor: "#fff301",
-          strokeColor: "#fff301",
-          pointColor: "#fff301",
-          pointStrokeColor: "#fff",
-          pointHighlightFill: "#fff301",
-          pointHighlightStroke: "#fff301",
-          data: [500,600,700,200,300,455,622,788,986,522,122]
-        }
-      ]
-    };
+      var areaChartData = {
+        labels: ['2017'],
+        datasets: [
+          {
+            label: "年份",
+            fillColor: "#fff301",
+            strokeColor: "#fff301",
+            pointColor: "#fff301",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff301",
+            pointHighlightStroke: "#fff301",
+            data: [500,600,700,200,300,455,622,788,986,522,122]
+          }
+        ]
+      };
+      axios.get('/admin/count/client/yearcount')
+      .then(function (res) {
+          console.log(res.data.years)
+          // console.log(areaChartData.labels)
+          // areaChartData.labels = res.data.years
+          // var lineChartCanvas = $("#lineChartOfYear").get(0).getContext("2d");
+          // var lineChart = new Chart(lineChartCanvas);
+          // var lineChartOptions = areaChartOptions;
+          // lineChart.Line(areaChartData, lineChartOptions);
+      })
+      .catch(function (err) {
+          console.log(err)
+      })
     var monthChartData = {
-      labels: ["2017-01", "2017-02", "2017-03", "2017-04", "2017-05", "2017-06", "2017-07","2017-08","2017-09","2017-10","2017-11"],
+      labels: ["01", "02", "03", "04", "05", "06", "07","08","09","10","11","12"],
       datasets: [
         {
           label: "月份",
@@ -117,7 +129,7 @@
           pointStrokeColor: "#fff",
           pointHighlightFill: "#2bb673",
           pointHighlightStroke: "#2bb673",
-          data: [500,600,700,200,300,455,622,788,986,522,122]
+          data: [500,600,700,200,300,455,622,788,986,522,122,121]
         }
       ]
     };
@@ -178,28 +190,16 @@
 @endsection
 
 @section('content')
-   @include("fx.admin.layouts.header")
-
-   @include("fx.admin.layouts.left")
-   
-   <div class="content-wrapper">
-    
-    <!-- addagent -->
-    <div id="addAgent">
-      <!-- Content Header (Page header) -->
       <section class="content-header">
         <h1>
           <a href="#" style="color: #000"><i class="fa fa-home fa_skin" style="margin-right:4px"></i>报表统计</a>
           <a href="#"><small class="fa_skin"><i class="fa fa-angle-right" style="margin-right: 4px"></i>客户分析</small></a>
         </h1>
       </section>
-      <!-- Main content of addGgent-->
       <section class="content">
         <div class="row">
-          <!-- 新增代理商角色 -->
           <div class="col-xs-12">
             <div class="box box-success">
-              <!-- 第一排信息 -->
               <div class="box-header">
                 <h3 class="box-title">客户分析</h3>
                 <div class="box-tools" style="top: 5px;">
@@ -208,10 +208,8 @@
                   </ul>
                 </div>
               </div>
-              <!-- /.box-header -->
               <form class="form-horizontal">
                 <div class="box-body row" style="margin: 0">
-                  <!-- .box-body-left -->
                   <div class="col-sm-6 box-body-left" style="border-right: 2px solid #dedede">
                     <div class="chart">
                       <div class="chartTips">
@@ -222,8 +220,6 @@
                       <canvas id="lineChartOfYear" style="height:250px"></canvas>
                     </div>
                   </div>
-                  <!-- /.box-body-left -->
-                  <!-- .box-body-right -->
                   <div class="col-sm-6 box-body-right">
                     <div class="chart">
                       <div class="chartTips">
@@ -234,18 +230,10 @@
                       <canvas id="lineChartOfMonth" style="height:250px"></canvas>
                     </div>
                   </div>
-                  <!-- /.box-body-right -->
                 </div>
-                <!-- /.box-body -->
               </form>
             </div>
           </div>
-          <!-- /新增代理商角色 -->
         </div>
       </section>
-      <!-- /.content -->
-    </div>
-    <!-- /addagent -->
-  </div>
-
 @endsection

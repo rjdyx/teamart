@@ -238,15 +238,6 @@
 @endsection
 
 @section('content')
-   @include("fx.admin.layouts.header")
-
-   @include("fx.admin.layouts.left")
-   
-   <div class="content-wrapper">
-    
-    <!-- addagent -->
-    <div id="addAgent">
-      <!-- Content Header (Page header) -->
       <section class="content-header">
         <h1>
           <a href="#" style="color: #000"><i class="fa fa-home fa_skin" style="margin-right:4px"></i>报表统计</a>
@@ -305,18 +296,10 @@
                       <canvas id="salesBarChart" style="height:230px"></canvas>
                     </div>
                   </div>
-                  <!-- /.box-body-right -->
                 </div>
-                <!-- /.box-body -->
               </form>
             </div>
           </div>
-          <!-- /新增代理商角色 -->
         </div>
       </section>
-      <!-- /.content -->
-    </div>
-    <!-- /addagent -->
-  </div>
-
 @endsection
