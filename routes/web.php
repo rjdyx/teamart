@@ -13,14 +13,13 @@
 Route::get('/auth/geetest', 'Auth\AuthController@getGeetest');//极验
 Route::get('admin/login', 'Auth\LoginController@adminLoginCreate');
 Route::post('admin/login', 'Auth\LoginController@adminLogin');
+Route::post('/login/check','Auth\LoginController@loginCheck');//前台登录验证
 Route::get('/layout','Auth\LoginController@layout');//前台退出
 Route::get('/admin/layout','Auth\LoginController@adminLayout');//后台退出
 Route::get('captcha', 'KitController@captcha'); //生成验证码
 
 // 公共接口组
-Route::group(['middleware'=>['auth']],function(){
-	Route::post('/check','UtilsController@check');//字段验证
-});
+Route::post('/check','UtilsController@check');//字段验证
 
 Auth::routes();
 Route::get('/','HomeController@index');//首页

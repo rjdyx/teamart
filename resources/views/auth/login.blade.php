@@ -10,43 +10,6 @@
 @section('script')
     @parent
     <script>
-        // $('.add-name,.add-password').hide();
-        // $('.myName,.password').on('click',function () {
-        //     $('.add-name,.add-password').hide();
-        // })
-        // function loginVali(){
-        //     var name = $(".myName").val();
-        //     var password = $(".password").val();
-        //     var result = true;
-        //     if(name==''){
-        //         $('.add-name').css({'display':'inline-block'})
-        //         $('.add-name').css({'color':'red'});
-        //         result = false;
-        //     }
-        //     if(password==''){
-        //         $('.add-password').css({'display':'inline-block'})
-        //         $('.add-password').css({'color':'red'});
-        //         result = false;
-        //     }
-        //     return result;
-        // };
-
-        // $('.submit').on('click',function() {
-        //     loginVali();
-        // });
-
-        // $('.radio_left_box').click(function(){
-        //     $(this).addClass("radio_selected");
-        //     $('.radio_right_box').removeClass('radio_selected');
-        //     $('.radio_left').attr('checked',true);
-        //     $('.radio_right').attr('checked',false);
-        // });
-        // $('.radio_right_box').click(function(){
-        //     $(this).addClass("radio_selected");
-        //     $('.radio_left_box').removeClass('radio_selected');
-        //     $('.radio_right').attr('checked',true);
-        //     $('.radio_left').attr('checked',false);
-        // });
         function valid() {
             if (!_valid.ness('用户名', $('#name').val())) {
                 return false;
@@ -56,6 +19,30 @@
             }
             return true;
         }
+        function submitForm() {
+            var form = document.forms['form']
+            var params = {
+                name: form['name'].value,
+                password: form['password'].value
+            }
+            var pm = new Promise(function (resolve, reject) {
+                axios.post('/login/check', params)
+                    .then(function (res) {
+                        if (res.data == 200) {
+                            resolve(true)
+                        } else if (res.data == 403) {
+                            $('.form_error').text('登录入口错误')
+                        } else if (res.data == 404) {
+                            $('.form_error').text('账号或密码不正确')
+                        }
+                        resolve(false)
+                    })
+                    .catch(function (err) {
+                        reject(err)
+                    })
+            })
+            return pm
+        }
     </script>
 @endsection
 
@@ -64,7 +51,7 @@
         <div class="login_logo"></div>
         <p class="form_error"></p>
         <div class="login_form">
-            <form method="POST" id="form" action="{{ route('login') }}">
+            <form method="POST" id="form" name="form" action="{{ route('login') }}">
                 {{ csrf_field() }}
                 <label for="name" class="field">
                     <i class="fa fa-user-o"></i>
@@ -91,51 +78,4 @@
             {!! Geetest::render('bind') !!}
         </div>
     </div>
-    <!-- <div class="content">
-        <div class="head">
-          <img src="fx/img/pic41.png" style="width: 300px;height: 300px">
-        </div>
-        <div class="contain">
-            <form role="form" method="POST" id="form" action="{{ route('login') }}">
-            <div class="number">
-                <img src="fx/img/pic34.png" style="width: 20px;height:20px;vertical-align: middle;position: relative;left: 35px">
-                <img src="fx/img/pic23.png" style="width: 250px;height:45px;vertical-align: middle;line-height: 60px">
-
-                <input type="text" class="myName" name="name" placeholder="请输入用户名">
-            </div>
-             {{ csrf_field() }}
-
-            <div class="add-name">请输入用户名</div>
-            <div class="number">
-                <img src="fx/img/pic35.png" style="width: 20px;height:20px;vertical-align: middle;position: relative;left: 35px">
-                <img src="fx/img/pic23.png" style="width: 250px;height:45px;vertical-align: middle;line-height: 60px">
-                <input type="password" class="password" name="password" placeholder="请输入密码">
-            </div>
-            @if ($errors->has('name'))
-                <span class="help-block">
-                    <strong>{{ $errors->first('name') }}</strong>
-                </span>
-            @endif
-            <div class="add-password">请输入密码</div>
-            <div class="choose">
-                <div class="radio_text">
-                    <a href="{{ url('/reset') }}">忘记密码</a> 
-                </div>
-                <div class="radio_text">
-                    <a href="{{ url('/register') }}">注册账号</a> 
-                </div>
-            </div>
-            @if ($errors->has('password'))
-                <span class="help-block">
-                    <strong>{{ $errors->first('password') }}</strong>
-                </span>
-            @endif
-            <div class="number">
-                {{-- {!! Geetest::render('bind') !!} --}}
-            </div>
-
-            <div class="button" id="bid"></div>
-            </form>
-        </div>
-    </div> -->
 @endsection

@@ -1,8 +1,8 @@
 <script src="http://cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
 <script src="https://static.geetest.com/static/tools/gt.js"></script>
-<div id="geetest-captcha"></div>
+<!-- <div id="geetest-captcha"></div> -->
 <!-- <p id="wait" class="show">正在加载验证码...</p> -->
-<p id="wait" class="show"></p>
+<!-- <p id="wait" class="show"></p> -->
 @define use Illuminate\Support\Facades\Config
 <script>
     var geetest = function(url) { 
@@ -11,7 +11,20 @@
             //bind模式
             document.getElementById('valid').addEventListener('click', function () {
                 if (valid()) { // 检查是否可以进行提交
-                    captchaObj.verify();
+                    // console.log(submitForm())
+                    // if (temp) {
+                    //     captchaObj.verify();
+                    // }
+                    var pm = submitForm()
+                    pm.then(function (resolve) {
+                        console.log(resolve)
+                        if (resolve) {
+                            captchaObj.verify();
+                        }
+                    })
+                    .catch(function (reject) {
+                        console.log(reject)
+                    })
                 }
             });
             captchaObj.onSuccess(function () {
@@ -56,7 +69,7 @@
     })();
 </script>
 <style>
-.hide {
+/*.hide {
     display: none;
-}
+}*/
 </style>

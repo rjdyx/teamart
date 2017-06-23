@@ -17,6 +17,27 @@ const ness = (fieldtxt, value) => {
 }
 exports.ness = ness
 
+exports.check = (field, table, value, fieldtxt) => {
+	let params = {
+		field: field,
+		table: table,
+		value: value
+	}
+	return axios.post('/check', params)
+		.then(res => {
+			if (res.data == 'false') {
+				$('.form_error').text('')
+				return true
+			} else {
+				$('.form_error').text(`${fieldtxt}`)
+				return false
+			}
+		})
+		.catch(err => {
+			console.log(err)
+		})
+}
+
 /**
  * 检查name
  *
