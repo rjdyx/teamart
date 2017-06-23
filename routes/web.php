@@ -120,7 +120,9 @@ Route::group(['namespace'=>'Admin','prefix'=>'admin','middleware'=>['auth','user
 		Route::get('/client/yearcount', 'SellCountController@clientCountYear');
 		Route::get('/client/monthcount', 'SellCountController@clientCountMonth');
 		Route::get('/product', 'SellCountController@product');
+		Route::get('/product/ordercount', 'SellCountController@productCountOrder');
 		Route::get('/agency', 'SellCountController@agency');
+		Route::get('/agency/ordercount', 'SellCountController@agencyCountOrder');
 	});
 
 	// 文章管理

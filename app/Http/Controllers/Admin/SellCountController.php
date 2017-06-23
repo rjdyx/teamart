@@ -20,8 +20,8 @@ class SellCountController extends Controller
 {
     //客户统计
     public function client () {
-
-        return view(config('app.theme').'.admin.sell.client');
+        $years = $this->clientCountYear()['years'];//年份数据
+        return view(config('app.theme').'.admin.sell.client')->with(['years'=>$years]);
     }
 
     //统计年份
@@ -56,11 +56,57 @@ class SellCountController extends Controller
 
     //商品统计
     public function product () {
-        return view(config('app.theme').'.admin.sell.product');
+        $datas = $this->orderYearCount();
+        return view(config('app.theme').'.admin.sell.product')->with(['years'=>$datas]);
+    }
+
+    //订单年份统计
+    public function orderYearCount(){
+        $datas = Order::select(DB::raw('distinct date_format(created_at, "%Y") as year'))
+            ->groupBy('year')
+            ->orderBy('year','asc')
+            ->get();
+        $arrs = array();
+        foreach ($datas as $data) {
+            $arrs[] = $data->year;
+        }
+        return $arrs;
+    }
+
+    //订单、总金额 统计
+    public function productCountOrder(Request $request, $agency = false){
+        $year = date('Y');
+        if($request->year) $year = $request->year;  
+
+        $orders = array();
+        $prices = array();
+        for ($i=1; $i<13; $i++) {
+            $orders[$i-1] = $this->orderReturnData($year, $i, $agency);
+            $prices[$i-1] = $this->priceReturnData($year, $i, $agency);
+        }
+        return ['orders'=>$orders,'prices'=>$prices];
+    }
+
+    public function orderReturnData($year, $i, $agency){
+        $order = Order::whereYear('created_at',$year)->whereMonth('created_at',$i);
+        if ($agency) $order = $order ->whereNotNull('pid');
+        return $order->count();
+    }
+
+    public function priceReturnData($year, $i, $agency){
+        $price = Order::whereYear('created_at',$year)->whereMonth('created_at',$i);
+        if ($agency) $price = $price ->whereNotNull('pid');
+        return $price->sum('price');
     }
 
     //分销商统计
     public function agency () {
-        return view(config('app.theme').'.admin.sell.agency');
+        $datas = $this->orderYearCount();
+        return view(config('app.theme').'.admin.sell.agency')->with(['years'=>$datas]);
+    }
+
+    //分销商订单数量、销售额统计
+    public function agencyCountOrder(Request $request){
+        return $this->productCountOrder($request, true);
     }
 }

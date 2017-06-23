@@ -90,149 +90,98 @@
     <script src="{{url('admin/js/Chart.min.js')}}"></script>
     <script type="text/javascript">
     $(function(){
-    
-    var areaChartData = {
-      labels: ["2017-01", "2017-02", "2017-03", "2017-04", "2017-05", "2017-06", "2017-07","2017-08","2017-09","2017-10","2017-11"],
-      datasets: [
-        {
-          label: "订单总数",
-          fillColor: "rgba(210, 214, 222, 1)",
-          strokeColor: "#fef200",
-          pointColor: "#fef200",
-          pointStrokeColor: "#fff",
-          pointHighlightFill: "#fef200",
-          pointHighlightStroke: "#fef200",
-          data: [500,600,700,200,300,455,622,788,986,522,122]
-        },
-        {
-          label: "销售总额",
-          fillColor: "#fff301",
-          strokeColor: "#01aef0",
-          pointColor: "#33bace",
-          pointStrokeColor: "#fff",
-          pointHighlightFill: "#01aef0",
-          pointHighlightStroke: "#01aef0",
-          data: [28, 48, 40, 19, 86, 27, 90,19, 86, 27, 90]
-        }
-      ]
-    };
 
-    var areaChartOptions = {
-      //Boolean - 是否显示尺度
-      showScale: true,
-      //Boolean - 是否显示网格线
-      scaleShowGridLines: true,
-      //String - 网格线颜色
-      scaleGridLineColor: "#818287",
-      //Number - 网格线宽度
-      scaleGridLineWidth: 1,
-      //Boolean - 是否显示水平线（除了x轴）
-      scaleShowHorizontalLines: true,
-      //Boolean - 是否显示垂直线（除了y轴）
-      scaleShowVerticalLines: true,
-      //Boolean - 线是否在点之间弯曲
-      bezierCurve: true,
-      //Number - 点间贝塞尔曲线的张力
-      bezierCurveTension: 0.3,
-      //Boolean - 是否为每个点显示一个点
-      pointDot: true,
-      //Number - 每个点的半径以像素为单位
-      pointDotRadius: 4,
-      //Number - 点笔划的像素宽度
-      pointDotStrokeWidth: 1,
-      //Number - 额外添加的半径，以满足在绘制点以外的点击检测。
-      pointHitDetectionRadius: 20,
-      //Boolean - 是否为数据集显示笔划
-      datasetStroke: true,
-      //Number - 数据集笔划的像素宽度
-      datasetStrokeWidth: 2,
-      //Boolean - 是否用颜色填充数据集
-      datasetFill: false,
-      //String - A legend template
-      legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].lineColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
-      //Boolean - 当响应时，是否保持起始宽高比，如果设置为false，将占用整个容器。
-      maintainAspectRatio: true,
-      //Boolean - 是否使图表响应窗口大小调整。
-      responsive: true
-    };
+      //初始化参数设置
+      var areaChartOptions = {
+        //Boolean - 是否显示尺度
+        showScale: true,
+        //Boolean - 是否显示网格线
+        scaleShowGridLines: true,
+        //String - 网格线颜色
+        scaleGridLineColor: "#818287",
+        //Number - 网格线宽度
+        scaleGridLineWidth: 1,
+        //Boolean - 是否显示水平线（除了x轴）
+        scaleShowHorizontalLines: true,
+        //Boolean - 是否显示垂直线（除了y轴）
+        scaleShowVerticalLines: true,
+        //Boolean - 线是否在点之间弯曲
+        bezierCurve: true,
+        //Number - 点间贝塞尔曲线的张力
+        bezierCurveTension: 0.3,
+        //Boolean - 是否为每个点显示一个点
+        pointDot: true,
+        //Number - 每个点的半径以像素为单位
+        pointDotRadius: 4,
+        //Number - 点笔划的像素宽度
+        pointDotStrokeWidth: 1,
+        //Number - 额外添加的半径，以满足在绘制点以外的点击检测。
+        pointHitDetectionRadius: 20,
+        //Boolean - 是否为数据集显示笔划
+        datasetStroke: true,
+        //Number - 数据集笔划的像素宽度
+        datasetStrokeWidth: 2,
+        //Boolean - 是否用颜色填充数据集
+        datasetFill: false,
+        //String - A legend template
+        legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].lineColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
+        //Boolean - 当响应时，是否保持起始宽高比，如果设置为false，将占用整个容器。
+        maintainAspectRatio: true,
+        //Boolean - 是否使图表响应窗口大小调整。
+        responsive: true
+      };
 
-    //-------------
-    //- LINE CHART -
-    //--------------
-    var lineChartCanvas = $("#lineChartOfYear").get(0).getContext("2d");
-    var lineChart = new Chart(lineChartCanvas);
-    var lineChartOptions = areaChartOptions;
-    lineChart.Line(areaChartData, lineChartOptions);
-  
+      orderDataReturn();
 
-    //-------------
-    //- BAR CHART -
-    //-------------
-    var orderBarData = {
-      labels: ["2017-01", "2017-02", "2017-03", "2017-04", "2017-05", "2017-06", "2017-07","2017-08","2017-09","2017-10","2017-11"],
-      datasets: [
-        {
-          label: "前一月订单量",
-          fillColor: "#fef200",
-          strokeColor: "#fef200",
-          pointColor: "#fef200",
-          pointStrokeColor: "#fff",
-          pointHighlightFill: "#fef200",
-          pointHighlightStroke: "#fef200",
-          data: [500,600,700,200,300,455,622,788,986,522,122]
-        },
-        {
-          label: "后一月订单量",
-          fillColor: "#01aef0",
-          strokeColor: "#01aef0",
-          pointColor: "#01aef0",
-          pointStrokeColor: "#fff",
-          pointHighlightFill: "#01aef0",
-          pointHighlightStroke: "#01aef0",
-          data: [28, 48, 40, 19, 86, 27, 90,19, 86, 27, 90]
-        }
-      ]
-    };
-    var barChartOptions = {
-      //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
-      scaleBeginAtZero: true,
-      //Boolean - Whether grid lines are shown across the chart
-      scaleShowGridLines: true,
-      //String - Colour of the grid lines
-      scaleGridLineColor: "#818287",
-      //Number - Width of the grid lines
-      scaleGridLineWidth: 1,
-      //Boolean - Whether to show horizontal lines (except X axis)
-      scaleShowHorizontalLines: true,
-      //Boolean - Whether to show vertical lines (except Y axis)
-      scaleShowVerticalLines: false,
-      //Boolean - If there is a stroke on each bar
-      barShowStroke: true,
-      //Number - Pixel width of the bar stroke
-      barStrokeWidth: 2,
-      //Number - Spacing between each of the X value sets
-      barValueSpacing: 5,
-      //Number - Spacing between data sets within X values
-      barDatasetSpacing: 1,
-      //String - A legend template
-      legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
-      //Boolean - whether to make the chart responsive
-      responsive: true,
-      maintainAspectRatio: true
-    };
+      //查询某年每月的订单总数和总金额 
+      function orderDataReturn(year){
+        axios.get('/admin/count/product/ordercount',{params: {'year':year}})
+        .then(function (res) {
+          orderDataTo(res.data.orders,res.data.prices);
+        })
+      }
 
-    var barChartCanvas = $("#orderBarChart").get(0).getContext("2d");
-    var barChart = new Chart(barChartCanvas);
-    var barChartData = orderBarData;
-    barChartOptions.datasetFill = false;
-    barChart.Bar(barChartData, barChartOptions);
+      //加载订单数据方法
+      function orderDataTo(orders,prices){
+        var areaChartData = {
+          labels: ["01", "02", "03", "04", "05", "06", "07","08","09","10","11"],
+          datasets: [
+            {
+              label: "订单总数",
+              fillColor: "rgba(210, 214, 222, 1)",
+              strokeColor: "#fef200",
+              pointColor: "#fef200",
+              pointStrokeColor: "#fff",
+              pointHighlightFill: "#fef200",
+              pointHighlightStroke: "#fef200",
+              data: orders
+            },
+            {
+              label: "销售总额",
+              fillColor: "#fff301",
+              strokeColor: "#01aef0",
+              pointColor: "#33bace",
+              pointStrokeColor: "#fff",
+              pointHighlightFill: "#01aef0",
+              pointHighlightStroke: "#01aef0",
+              data: prices
+            }
+          ]
+        };
+        orderStart(areaChartData);
+      }
 
-    var barChartCanvas = $("#salesBarChart").get(0).getContext("2d");
-    var barChart = new Chart(barChartCanvas);
-    var barChartData = orderBarData;
-    barChartOptions.datasetFill = false;
-    barChart.Bar(barChartData, barChartOptions);
+      //激活订单图表
+      function orderStart(areaChartData){
+        var lineChartCanvas = $("#lineChartOfYear").get(0).getContext("2d");
+        var lineChart = new Chart(lineChartCanvas);
+        var lineChartOptions = areaChartOptions;
+        lineChart.Line(areaChartData, lineChartOptions);
+      }
 
+      $("select[name='yearChange']").change(function(){
+        orderDataReturn($(this).val());
+      });
     });
 </script>
 @endsection
@@ -247,7 +196,6 @@
       <!-- Main content of addGgent-->
       <section class="content">
         <div class="row">
-          <!-- 新增代理商角色 -->
           <div class="col-xs-12">
             <div class="box box-success">
               <!-- 第一排信息 -->
@@ -255,7 +203,15 @@
                 <h3 class="box-title">商品订单</h3>
                 <div class="box-tools" style="top: 5px;">
                   <ul class="pagination pagination-sm no-margin pull-right">
-                    <li><a href="#">分析图下载</a></li>
+                    <li>
+                      <select name="yearChange" style="height:30px;">
+                        <option value="">-选择年份查询-</option>
+                        @foreach($years as $year)
+                        <option value="{{$year}}" @if($year== date('Y')) selected @endif>{{$year}}</option>
+                        @endforeach
+                      </select>
+                    </li>
+                    <!-- <li><a href="#">分析图下载</a></li> -->
                   </ul>
                 </div>
               </div>
@@ -263,37 +219,15 @@
               <form class="form-horizontal">
                 <div class="box-body row" style="margin: 0">
                   <!-- .box-body-left -->
-                  <div class="col-sm-6 box-body-left">
+                  <div class="col-sm-12 box-body-left">
                     <div class="chart">
                       <div class="chartTips">
                         <div class="chartTips_top">订单总数<span></span></div>
                         <div class="chartTips_middle">商品总销售<span></span></div>
                         <div class="chartTips_bottom">单量</div>
-                        <div class="pull-right">客户数量/月份</div>
+                        <div class="pull-right">订单数量(金额)/月份</div>
                       </div>
                       <canvas id="lineChartOfYear" style="height:250px"></canvas>
-                    </div>
-                  </div>
-                  <!-- /.box-body-left -->
-                  <!-- .box-body-right -->
-                  <div class="col-sm-6 box-body-right" style="border-left: 2px solid #dedede">
-                    <div class="chart">
-                      <div class="chartTips">
-                        <div class="chartTips_top">前一个月<span></span></div>
-                        <div class="chartTips_middle">后一个月<span></span></div>
-                        <div class="chartTips_bottom">单量</div>
-                        <div class="pull-right">商品订单对比</div>
-                      </div>
-                      <canvas id="orderBarChart" style="height:230px"></canvas>
-                    </div>
-                    <div class="chart">
-                      <div class="chartTips">
-                        <div class="chartTips_top">前一个月<span></span></div>
-                        <div class="chartTips_middle">后一个月<span></span></div>
-                        <div class="chartTips_bottom">总额</div>
-                        <div class="pull-right">销售额对比</div>
-                      </div>
-                      <canvas id="salesBarChart" style="height:230px"></canvas>
                     </div>
                   </div>
                 </div>

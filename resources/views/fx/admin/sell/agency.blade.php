@@ -86,37 +86,12 @@
 @endsection
 
 @section('script')
-    @parent
-    <script src="{{url('admin/js/Chart.min.js')}}"></script>
-    <script type="text/javascript">
-    $(function(){
-    
-    var areaChartData = {
-      labels: ["2017-01", "2017-02", "2017-03", "2017-04", "2017-05", "2017-06", "2017-07","2017-08","2017-09","2017-10","2017-11"],
-      datasets: [
-        {
-          label: "订单总数",
-          fillColor: "rgba(210, 214, 222, 1)",
-          strokeColor: "#fef200",
-          pointColor: "#fef200",
-          pointStrokeColor: "#fff",
-          pointHighlightFill: "#fef200",
-          pointHighlightStroke: "#fef200",
-          data: [500,600,700,200,300,455,622,788,986,522,122]
-        },
-        {
-          label: "销售总额",
-          fillColor: "#fff301",
-          strokeColor: "#01aef0",
-          pointColor: "#33bace",
-          pointStrokeColor: "#fff",
-          pointHighlightFill: "#01aef0",
-          pointHighlightStroke: "#01aef0",
-          data: [28, 48, 40, 19, 86, 27, 90,19, 86, 27, 90]
-        }
-      ]
-    };
+  @parent
+  <script src="{{url('admin/js/Chart.min.js')}}"></script>
+  <script type="text/javascript">
+  $(function(){
 
+    //初始化参数设置
     var areaChartOptions = {
       //Boolean - 是否显示尺度
       showScale: true,
@@ -156,84 +131,59 @@
       responsive: true
     };
 
-    //-------------
-    //- LINE CHART -
-    //--------------
-    var lineChartCanvas = $("#lineChartOfYear").get(0).getContext("2d");
-    var lineChart = new Chart(lineChartCanvas);
-    var lineChartOptions = areaChartOptions;
-    lineChart.Line(areaChartData, lineChartOptions);
-  
+    orderDataReturn();
 
-    //-------------
-    //- BAR CHART -
-    //-------------
-    var orderBarData = {
-      labels: ["2017-01", "2017-02", "2017-03", "2017-04", "2017-05", "2017-06", "2017-07","2017-08","2017-09","2017-10","2017-11"],
-      datasets: [
-        {
-          label: "前一月订单量",
-          fillColor: "#fef200",
-          strokeColor: "#fef200",
-          pointColor: "#fef200",
-          pointStrokeColor: "#fff",
-          pointHighlightFill: "#fef200",
-          pointHighlightStroke: "#fef200",
-          data: [500,600,700,200,300,455,622,788,986,522,122]
-        },
-        {
-          label: "后一月订单量",
-          fillColor: "#01aef0",
-          strokeColor: "#01aef0",
-          pointColor: "#01aef0",
-          pointStrokeColor: "#fff",
-          pointHighlightFill: "#01aef0",
-          pointHighlightStroke: "#01aef0",
-          data: [28, 48, 40, 19, 86, 27, 90,19, 86, 27, 90]
-        }
-      ]
-    };
-    var barChartOptions = {
-      //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
-      scaleBeginAtZero: true,
-      //Boolean - Whether grid lines are shown across the chart
-      scaleShowGridLines: true,
-      //String - Colour of the grid lines
-      scaleGridLineColor: "#818287",
-      //Number - Width of the grid lines
-      scaleGridLineWidth: 1,
-      //Boolean - Whether to show horizontal lines (except X axis)
-      scaleShowHorizontalLines: true,
-      //Boolean - Whether to show vertical lines (except Y axis)
-      scaleShowVerticalLines: false,
-      //Boolean - If there is a stroke on each bar
-      barShowStroke: true,
-      //Number - Pixel width of the bar stroke
-      barStrokeWidth: 2,
-      //Number - Spacing between each of the X value sets
-      barValueSpacing: 5,
-      //Number - Spacing between data sets within X values
-      barDatasetSpacing: 1,
-      //String - A legend template
-      legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
-      //Boolean - whether to make the chart responsive
-      responsive: true,
-      maintainAspectRatio: true
-    };
+    //查询某年每月分销商的订单总数和总金额 
+    function orderDataReturn(year){
+      axios.get('/admin/count/agency/ordercount',{params: {'year':year}})
+      .then(function (res) {
+        orderDataTo(res.data.orders,res.data.prices);
+      })
+    }
 
-    var barChartCanvas = $("#orderBarChart").get(0).getContext("2d");
-    var barChart = new Chart(barChartCanvas);
-    var barChartData = orderBarData;
-    barChartOptions.datasetFill = false;
-    barChart.Bar(barChartData, barChartOptions);
+    //加载订单数据方法
+    function orderDataTo(orders,prices){
+      var areaChartData = {
+        labels: ["01", "02", "03", "04", "05", "06", "07","08","09","10","11","12"],
+        datasets: [
+          {
+            label: "订单总数",
+            fillColor: "rgba(210, 214, 222, 1)",
+            strokeColor: "#fef200",
+            pointColor: "#fef200",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fef200",
+            pointHighlightStroke: "#fef200",
+            data: orders
+          },
+          {
+            label: "销售总额",
+            fillColor: "#fff301",
+            strokeColor: "#01aef0",
+            pointColor: "#33bace",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#01aef0",
+            pointHighlightStroke: "#01aef0",
+            data: prices
+          }
+        ]
+      };
+      orderStart(areaChartData);
+    }
 
-    var barChartCanvas = $("#salesBarChart").get(0).getContext("2d");
-    var barChart = new Chart(barChartCanvas);
-    var barChartData = orderBarData;
-    barChartOptions.datasetFill = false;
-    barChart.Bar(barChartData, barChartOptions);
+    //激活订单图表
+    function orderStart(areaChartData){
+      var lineChartCanvas = $("#lineChartOfYear").get(0).getContext("2d");
+      var lineChart = new Chart(lineChartCanvas);
+      var lineChartOptions = areaChartOptions;
+      lineChart.Line(areaChartData, lineChartOptions);
+    }
 
+    //年份查询数据
+    $("select[name='yearChange']").change(function(){
+      orderDataReturn($(this).val());
     });
+  });
 </script>
 @endsection
 
@@ -247,7 +197,6 @@
       <!-- Main content of addGgent-->
       <section class="content">
         <div class="row">
-          <!-- 新增代理商角色 -->
           <div class="col-xs-12">
             <div class="box box-success">
               <!-- 第一排信息 -->
@@ -255,7 +204,15 @@
                 <h3 class="box-title">代理商销售</h3>
                 <div class="box-tools" style="top: 5px;">
                   <ul class="pagination pagination-sm no-margin pull-right">
-                    <li><a href="#">分析图下载</a></li>
+                    <li>
+                      <select name="yearChange" style="height:30px;">
+                        <option value="">-选择年份查询-</option>
+                        @foreach($years as $year)
+                        <option value="{{$year}}" @if($year== date('Y')) selected @endif>{{$year}}</option>
+                        @endforeach
+                      </select>
+                     </li>
+                    <!-- <li><a href="#">分析图下载</a></li> -->
                   </ul>
                 </div>
               </div>

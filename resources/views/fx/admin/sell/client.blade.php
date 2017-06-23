@@ -5,7 +5,7 @@
 @endsection
 
 @section('css')
-    <style type="text/css">
+  <style type="text/css">
     .content-header>h1{
       font-size: 18px;
       margin: 0;
@@ -85,108 +85,132 @@
   </style>
 @endsection
 
+
 @section('script')
-    @parent
-    <script src="{{url('admin/js/Chart.min.js')}}"></script>
-    <script type="text/javascript">
+  @parent
+  <script src="{{url('admin/js/Chart.min.js')}}"></script>
+  <script type="text/javascript">
+
     $(function(){
-      var areaChartData = {
-        labels: ['2017'],
-        datasets: [
-          {
-            label: "年份",
-            fillColor: "#fff301",
-            strokeColor: "#fff301",
-            pointColor: "#fff301",
-            pointStrokeColor: "#fff",
-            pointHighlightFill: "#fff301",
-            pointHighlightStroke: "#fff301",
-            data: [500,600,700,200,300,455,622,788,986,522,122]
-          }
-        ]
+
+      //初始参数设置
+      var areaChartOptions = {
+        //Boolean - 是否显示尺度
+        showScale: true,
+        //Boolean - 是否显示网格线
+        scaleShowGridLines: true,
+        //String - 网格线颜色
+        scaleGridLineColor: "#818287",
+        //Number - 网格线宽度
+        scaleGridLineWidth: 1,
+        //Boolean - 是否显示水平线（除了x轴）
+        scaleShowHorizontalLines: true,
+        //Boolean - 是否显示垂直线（除了y轴）
+        scaleShowVerticalLines: true,
+        //Boolean - 线是否在点之间弯曲
+        bezierCurve: true,
+        //Number - 点间贝塞尔曲线的张力
+        bezierCurveTension: 0.3,
+        //Boolean - 是否为每个点显示一个点
+        pointDot: true,
+        //Number - 每个点的半径以像素为单位
+        pointDotRadius: 4,
+        //Number - 点笔划的像素宽度
+        pointDotStrokeWidth: 1,
+        //Number - 额外添加的半径，以满足在绘制点以外的点击检测。
+        pointHitDetectionRadius: 20,
+        //Boolean - 是否为数据集显示笔划
+        datasetStroke: true,
+        //Number - 数据集笔划的像素宽度
+        datasetStrokeWidth: 2,
+        //Boolean - 是否用颜色填充数据集
+        datasetFill: false,
+        //String - A legend template
+        legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].lineColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
+        //Boolean - 当响应时，是否保持起始宽高比，如果设置为false，将占用整个容器。
+        maintainAspectRatio: true,
+        //Boolean - 是否使图表响应窗口大小调整。
+        responsive: true
       };
+
+      //查询年份数据
       axios.get('/admin/count/client/yearcount')
       .then(function (res) {
-          console.log(res.data.years)
-          // console.log(areaChartData.labels)
-          // areaChartData.labels = res.data.years
-          // var lineChartCanvas = $("#lineChartOfYear").get(0).getContext("2d");
-          // var lineChart = new Chart(lineChartCanvas);
-          // var lineChartOptions = areaChartOptions;
-          // lineChart.Line(areaChartData, lineChartOptions);
+          yearTo(res.data.years,res.data.values);
       })
-      .catch(function (err) {
-          console.log(err)
+      yearDataReturn();
+
+      //传入数据方法
+      function yearTo(years,values) {
+        var areaChartData = {
+          labels: years,
+          datasets: [
+            {
+              label: "年份",
+              fillColor: "#fff301",
+              strokeColor: "#fff301",
+              pointColor: "#fff301",
+              pointStrokeColor: "#fff",
+              pointHighlightFill: "#fff301",
+              pointHighlightStroke: "#fff301",
+              data: values
+            }
+          ]
+        };
+        specYearTo(areaChartData);
+      }
+
+      //激活图表方法
+      function specYearTo(areaChartData) {
+        var lineChartCanvas = $("#lineChartOfYear").get(0).getContext("2d");
+        var lineChart = new Chart(lineChartCanvas);
+        var lineChartOptions = areaChartOptions;
+        lineChart.Line(areaChartData, lineChartOptions);
+      }
+
+      function yearDataReturn(v) {
+        //查询月份数据
+        axios.get('/admin/count/client/monthcount',{ params: {'year':v}})
+        .then(function (res) {
+            monthTo(res.data);
+        })
+      }
+
+      //传入月份查询数据
+      function monthTo(datas) {
+        var monthChartData = {
+          labels: ["01", "02", "03", "04", "05", "06", "07","08","09","10","11","12"],
+          datasets: [
+            {
+              label: "月份",
+              fillColor: "#2bb673",
+              strokeColor: "#2bb673",
+              pointColor: "#2bb673",
+              pointStrokeColor: "#fff",
+              pointHighlightFill: "#2bb673",
+              pointHighlightStroke: "#2bb673",
+              data: datas
+            }
+          ]
+        };
+        specMonthTo(monthChartData);
+      }
+
+      //激活月份图表
+      function specMonthTo(monthChartData){
+        var lineChartCanvas = $("#lineChartOfMonth").get(0).getContext("2d");
+        var lineChart = new Chart(lineChartCanvas);
+        var lineChartOptions = areaChartOptions;
+        lineChart.Line(monthChartData, lineChartOptions);
+      }
+
+      $("select[name='yearChange']").change(function(){
+        var v = $(this).val();
+        yearDataReturn(v);
       })
-    var monthChartData = {
-      labels: ["01", "02", "03", "04", "05", "06", "07","08","09","10","11","12"],
-      datasets: [
-        {
-          label: "月份",
-          fillColor: "#2bb673",
-          strokeColor: "#2bb673",
-          pointColor: "#2bb673",
-          pointStrokeColor: "#fff",
-          pointHighlightFill: "#2bb673",
-          pointHighlightStroke: "#2bb673",
-          data: [500,600,700,200,300,455,622,788,986,522,122,121]
-        }
-      ]
-    };
-    var areaChartOptions = {
-      //Boolean - 是否显示尺度
-      showScale: true,
-      //Boolean - 是否显示网格线
-      scaleShowGridLines: true,
-      //String - 网格线颜色
-      scaleGridLineColor: "#818287",
-      //Number - 网格线宽度
-      scaleGridLineWidth: 1,
-      //Boolean - 是否显示水平线（除了x轴）
-      scaleShowHorizontalLines: true,
-      //Boolean - 是否显示垂直线（除了y轴）
-      scaleShowVerticalLines: true,
-      //Boolean - 线是否在点之间弯曲
-      bezierCurve: true,
-      //Number - 点间贝塞尔曲线的张力
-      bezierCurveTension: 0.3,
-      //Boolean - 是否为每个点显示一个点
-      pointDot: true,
-      //Number - 每个点的半径以像素为单位
-      pointDotRadius: 4,
-      //Number - 点笔划的像素宽度
-      pointDotStrokeWidth: 1,
-      //Number - 额外添加的半径，以满足在绘制点以外的点击检测。
-      pointHitDetectionRadius: 20,
-      //Boolean - 是否为数据集显示笔划
-      datasetStroke: true,
-      //Number - 数据集笔划的像素宽度
-      datasetStrokeWidth: 2,
-      //Boolean - 是否用颜色填充数据集
-      datasetFill: false,
-      //String - A legend template
-      legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].lineColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
-      //Boolean - 当响应时，是否保持起始宽高比，如果设置为false，将占用整个容器。
-      maintainAspectRatio: true,
-      //Boolean - 是否使图表响应窗口大小调整。
-      responsive: true
-    };
-
-    //-------------
-    //- LINE CHART -
-    //--------------
-    var lineChartCanvas = $("#lineChartOfYear").get(0).getContext("2d");
-    var lineChart = new Chart(lineChartCanvas);
-    var lineChartOptions = areaChartOptions;
-    lineChart.Line(areaChartData, lineChartOptions);
-
-    var lineChartCanvas = $("#lineChartOfMonth").get(0).getContext("2d");
-    var lineChart = new Chart(lineChartCanvas);
-    var lineChartOptions = areaChartOptions;
-    lineChart.Line(monthChartData, lineChartOptions);
-
     });
-</script>
+
+  </script>
 @endsection
 
 @section('content')
@@ -204,7 +228,15 @@
                 <h3 class="box-title">客户分析</h3>
                 <div class="box-tools" style="top: 5px;">
                   <ul class="pagination pagination-sm no-margin pull-right">
-                    <li><a href="#">分析图下载</a></li>
+                    <!-- <li><a href="#">分析图下载</a></li> -->
+                    <li>
+                      <select name="yearChange">
+                        <option value="">-选择年份查询-</option>
+                        @foreach($years as $year)
+                        <option value="{{$year}}" @if($year== date('Y')) selected @endif>{{$year}}</option>
+                        @endforeach
+                      </select>
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -215,7 +247,7 @@
                       <div class="chartTips">
                         <div class="chartTips_top">年份<span></span></div>
                         <div class="chartTips_bottom">人数</div>
-                        <div class="pull-right">客户数量/月份</div>
+                        <div class="pull-right">客户数量/年份</div>
                       </div>
                       <canvas id="lineChartOfYear" style="height:250px"></canvas>
                     </div>
