@@ -1,7 +1,10 @@
 @extends('fx.admin.layouts.app')
 
 @section('title')
-代理商统计
+代理商销售详情
+@endsection
+@section('t1')
+用户管理
 @endsection
 
 @section('css')
@@ -135,7 +138,8 @@
 
     //查询某年每月分销商的订单总数和总金额 
     function orderDataReturn(year){
-      axios.get('/admin/count/agency/ordercount',{params: {'year':year}})
+      var id = $(".content").attr('uid');
+      axios.get('/admin/user/agent/sellcount',{params: {'id':id,'year':year}})
       .then(function (res) {
         orderDataTo(res.data.orders,res.data.prices);
       })
@@ -188,20 +192,15 @@
 @endsection
 
 @section('content')
-      <section class="content-header">
-        <h1>
-          <a href="#" style="color: #000"><i class="fa fa-home fa_skin" style="margin-right:4px"></i>报表统计</a>
-          <a href="#"><small class="fa_skin"><i class="fa fa-angle-right" style="margin-right: 4px"></i>代理商销售</small></a>
-        </h1>
-      </section>
+
       <!-- Main content of addGgent-->
-      <section class="content">
+      <section class="content" uid="{{$id}}">
         <div class="row">
           <div class="col-xs-12">
             <div class="box box-success">
               <!-- 第一排信息 -->
               <div class="box-header">
-                <h3 class="box-title">代理商销售</h3>
+                <h3 class="box-title">代理商销售概况</h3>
                 <div class="box-tools" style="top: 5px;">
                   <ul class="pagination pagination-sm no-margin pull-right">
                     <li>
@@ -211,7 +210,8 @@
                         <option value="{{$year}}" @if($year== date('Y')) selected @endif>{{$year}}年</option>
                         @endforeach
                       </select>
-                     </li>
+                    </li>
+                    <li style="float:right;margin-left:20px;"><a href="{{url('admin/user/agent')}}">返回列表</a></li>
                     <!-- <li><a href="#">分析图下载</a></li> -->
                   </ul>
                 </div>
@@ -231,9 +231,7 @@
                       <canvas id="lineChartOfYear" style="height:250px"></canvas>
                     </div>
                   </div>
-                  <!-- /.box-body-left -->
                 </div>
-                <!-- /.box-body -->
               </form>
             </div>
           </div>

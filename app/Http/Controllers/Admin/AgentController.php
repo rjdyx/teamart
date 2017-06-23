@@ -15,6 +15,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Storage;
 use App\User;
+use App\Order;
 use App\Parter;
 use Redirect;
 use DB;
@@ -71,8 +72,38 @@ class AgentController extends Controller
     //查看
     public function show($id)
     {
-        return User::find($id);
+        $datas = User::join('order','user.id','=','order.pid')
+            ->select(DB::raw('distinct date_format(fx_order.created_at, "%Y") as year'))
+            ->groupBy('year')->orderBy('year','asc')->get();
+        $arrs = array();
+        foreach ($datas as $data) {
+            $arrs[] = $data->year;
+        }
+        return view(config('app.theme').'.admin.user.agent_show')->with(['years'=>$arrs,'id'=>$id]);
     }
+
+    //统计单个代理商某年每月的销售数据
+    public function sellCount(Request $request) 
+    {
+        $id = $request->id;
+        $year = date('Y');
+        if ($request->year) $year = $request->year;
+        $orders = $prices = array();
+        for($i=1; $i<13; $i++){
+            $orders[$i-1] = Order::whereYear('created_at',$year)
+            ->whereMonth('created_at',$i)
+            ->where('state','close') 
+            ->where('pid',$id)
+            ->count();
+            $prices[$i-1] = Order::whereYear('created_at',$year)
+            ->whereMonth('created_at',$i)
+            ->where('state','close') 
+            ->where('pid',$id)
+            ->sum('price');
+        } 
+        return ['orders'=>$orders,'prices'=>$prices];
+    }
+
 
     //单条删除
     public function destroy($id)

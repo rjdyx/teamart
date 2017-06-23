@@ -10,6 +10,9 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Auth::routes();
+Route::get('/','HomeController@index');//首页
+
 Route::get('/auth/geetest', 'Auth\AuthController@getGeetest');//极验
 Route::get('admin/login', 'Auth\LoginController@adminLoginCreate');
 Route::post('admin/login', 'Auth\LoginController@adminLogin');
@@ -21,12 +24,8 @@ Route::get('captcha', 'KitController@captcha'); //生成验证码
 // 公共接口组
 Route::post('/check','UtilsController@check');//字段验证
 
-Auth::routes();
-Route::get('/','HomeController@index');//首页
-
 // Home - 无须登录模块
 Route::group(['namespace'=>'Home','prefix'=>'home'],function(){
-
 	// 商品列表、详情
 	Route::group(['prefix'=>'product'],function(){
 		Route::get('/list','ProductController@index');
@@ -41,7 +40,6 @@ Route::group(['namespace'=>'Home','prefix'=>'home'],function(){
 
 // Home - 须登录模块 (普通会员)
 Route::group(['namespace'=>'Home','prefix'=>'home','middleware'=>['auth']],function(){
-
 	//地址管理
 	Route::resource('/address', 'AddressController');
 
@@ -82,6 +80,7 @@ Route::group(['namespace'=>'Admin','prefix'=>'admin','middleware'=>['auth','user
 	// 用户管理
 	Route::group(['prefix'=>'user'],function(){
 		Route::post('/agent/dels', 'AgentController@dels');
+		Route::get('/agent/sellcount', 'AgentController@sellCount');
 		Route::resource('/agent', 'AgentController');
 		Route::post('/agentrole/dels', 'AgentRoleController@dels');
 		Route::resource('/agentrole', 'AgentRoleController');
