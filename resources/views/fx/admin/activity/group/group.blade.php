@@ -37,13 +37,13 @@
             <div class="input-group-btn">
               <button type="submit" onclick="search({{$lists->currentPage()}},['searchName']);" class="btn btn-default"><i class="fa fa-search"></i></button>
             </div>
-            <div class="btn-group btn-group-sm">
-              <a href="{{url('admin/activity/activityproduct')}}"><button type="button" class="btn btn-block btn-success btn-sm" id="addUser">团购商品</button></a>
-            </div>
-            <div class="btn-group btn-group-xs" style="padding-right: 10px">
-              <a href="{{url('admin/activity/group/create')}}"><button type="button" class="btn btn-block btn-success btn-sm" id="addUser">新建团购</button></a>
-            </div>
+            <!-- <div class="btn-group btn-group-sm">
+              <a href="{{url('admin/activity/activityproduct')}}"><button type="button" class="btn btn-success btn-sm" id="addUser">团购商品</button></a>
+            </div> -->
           </div>
+          <div class="box-tools">
+              <a href="{{url('admin/activity/group/create')}}"><button type="button" class="btn btn-block btn-success btn-sm" id="addUser">新建团购活动</button></a>
+            </div>
           </div>       
           
         <!-- /.box-header -->
@@ -51,7 +51,7 @@
           <table class="table table-hover">
             <tbody><tr>
               <th><!-- <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i></button> --></th>
-              <th>编号</th>
+              <th>活动编号</th>
               <th>活动名称</th>
               <th>优惠价格</th>
               <th>开始时间</th>
@@ -66,7 +66,10 @@
               <td>{{$list->price}}</td>
               <td>{{$list->date_start}}</i></td>
               <td>{{$list->date_end}}</i></td>
-              <td><div style="color: #dd4b39"><a href="{{url('admin/activity/group')}}/{{$list->id}}/edit"><i class="fa fa-edit" style="margin-right: 5px;cursor: pointer;"></i></a><i class="fa fa-trash-o" onclick="del({{$list->id}});" style="margin-right: 5px;cursor: pointer;"></div></i>
+              <td><div style="color: #dd4b39"><form method="GET" action="{{url('admin/activity/activityproduct')}}">
+              <input type="hidden" name="activity_id" value="{{$list->id}}">
+              <button type="submit" class="btn btn-success btn-sm" id="addUser">参与该团购商品</button>
+              </form><a href="{{url('admin/activity/group')}}/{{$list->id}}/edit"><i class="fa fa-edit" style="margin-right: 5px;cursor: pointer;"></i></a><i class="fa fa-trash-o" onclick="del({{$list->id}});" style="margin-right: 5px;cursor: pointer;"></div></i>
               </td>
             </tr>
             @endforeach

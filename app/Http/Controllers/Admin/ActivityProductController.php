@@ -35,13 +35,22 @@ class ActivityProductController extends Controller
 			'activity.name as activity_name')
 		->orderBy('activity_product.id','asc');
                 //->paginate(3);
-		// $lists = ActivityProduct::whereRaw('1=1');      
+		// $lists = ActivityProduct::whereRaw('1=1');
+		$activity_id = 0;  
+		$flag = 0; //标记是否为搜索操作    
 		if ($request->name) {
 			$lists = $lists->where('product.name','like','%'.$request->name.'%')
 			->orwhere('activity.name','like','%'.$request->name.'%');
+			$flag = 1;
+		}else{
+			if($request->activity_id){
+				$activity_id = $request->activity_id;
+				$lists = $lists->where('activity.id','=',$request->activity_id);
+			}
+			$flag = 0;
 		}
 		$lists = $lists->paginate(3);
-		return view(config('app.theme').'.admin.activity.group.activity_product')->with(['lists'=>$lists]);
+		return view(config('app.theme').'.admin.activity.group.activity_product')->with(['lists'=>$lists,'activity_id'=>$activity_id,'flag'=>$flag]);
 	}
 
     //数据查询(团购活动查询)
@@ -55,11 +64,12 @@ class ActivityProductController extends Controller
 	}
 
     //创建
-	public function create()
+	public function create(Request $request)
 	{
-		$activities = Group::select('id','name')->get();
+		$id = $request->activity_id;
+		$activity = Group::find($id);
 		$products = Product::select('id','name')->get();
-		return view(config('app.theme').'.admin.activity.group.activity_product_create')->with(['activities'=>$activities, 'products'=>$products]);
+		return view(config('app.theme').'.admin.activity.group.activity_product_create')->with(['activity'=>$activity, 'products'=>$products]);
 	}
 
     //修改
@@ -79,14 +89,28 @@ class ActivityProductController extends Controller
     //查看
 	public function show($id)
 	{
-		return Group::find($id);
+		$lists = $this->indexData();
+		$lists = $lists->select(
+			'activity_product.*',
+			'product.name as product_name',
+			'product.price as product_price',
+			'activity.price as activity_price',
+			'activity.date_start',
+			'activity.date_end',
+			'activity.name as activity_name')
+		->orderBy('activity_product.id','asc');
+		$lists = $lists->where('activity.id','=',$id);
+		$lists = $lists->paginate(3);
+		$activity_id = $id;
+		return view(config('app.theme').'.admin.activity.group.activity_product')->with(['lists'=>$lists, 'activity_id'=>$activity_id]);
+		//return Group::find($id);
 	}
 
     //单条删除
 	public function destroy($id)
 	{
 		if ($this->del($id)) {
-			return Redirect::back()->with('status','删除成功');
+			return Redirect::to('admin/activity/group')->with('status','删除成功');
 		}
 		return Redirect::back()->withErrors('删除失败');
 	}
@@ -95,21 +119,24 @@ class ActivityProductController extends Controller
 	{
 		if (ActivityProduct::destroy($id)) return true;
 		return false;
+
 	}
 
     //批量删除
 	public function dels(Request $request)
 	{
 		$ids = explode(',', $request->ids);
-		if (Group::destroy($ids)) {
-			return Redirect::back()->with('status','批量删除成功');
+		foreach ($ids as $id) {
+			if (!$this->del($id)) {
+				return Redirect::back()->withErrors('批量删除失败');
+			}
 		}
-		return Redirect::back()->withErrors('批量删除失败');
+		return Redirect::to('admin/activity/group')->with('status','批量删除成功');
 	}
 
     //新建保存
 	public function store(Request $request)
-	{
+	{	
 		return $this->StoreOrUpdate($request);
 	}
 
@@ -146,7 +173,7 @@ class ActivityProductController extends Controller
 		$model->setRawAttributes($request->only(['product_id','activity_id']));
 
 		if ($model->save()) {
-			return Redirect::to('admin/activity/activityproduct')->with('status', '保存成功');
+			return Redirect::to('admin/activity/group')->with('status', '保存成功');
 		}
 		return Redirect::back()->withErrors('保存失败');
 	}
