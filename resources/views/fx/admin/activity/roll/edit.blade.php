@@ -4,15 +4,19 @@
 @section('css')@endsection
 @section('script')
     @parent
+    <script >
+        $(function(){
+          datepicker.datepicker()
+        })
+    </script>
 @endsection
 @section('content')
     <section class="content">
       <div class="row">
-        <!-- 编辑商品品牌 -->
         <div class="col-xs-12">
           <div class="box box-success">
             <div class="box-header with-border">
-              <h3 class="box-title">编辑商品品牌</h3>
+              <h3 class="box-title">编辑优惠券</h3>
             </div>
             <form class="form-horizontal" action="{{url('admin/activity/roll')}}/{{$cheap->id}}" method="POST">
               {{ csrf_field() }}
@@ -43,17 +47,17 @@
                   </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">有效期</label>
-                    <div class="col-sm-4">
-                      <div class="input-group date">
-                        <div class="input-group-addon">
-                          <i class="fa fa-calendar"></i>
-                        </div>
-                        <input type="datetime" name="indate" class="form-control pull-right" id="endDay" value="{{$cheap->indate}}">
+                  <label for="datepicker" class="col-sm-3 control-label">有效期</label>
+                  <div class="col-sm-4">
+                    <div class="input-group">
+                      <input type="text" name="indate" class="form-control pull-right" id="datepicker" value="{{$cheap->indate}}">
+                      <div class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
                       </div>
-                      <!-- /.input group -->
                     </div>
+                    <span class="col-sm-4 text-danger form_error" id="date_txt"></span>
                   </div>
+                </div>
                 <div class="form-group">
                   <label for="inputEmail3" class="col-sm-3 control-label">发放状态</label>
                   <div class="col-sm-4">
