@@ -16,6 +16,9 @@ input[type=text] {
   -webkit-appearance: none;
 }
 
+div {
+  box-sizing: border-box;
+}
 
 @font-face {
   font-family: "Chayefont";

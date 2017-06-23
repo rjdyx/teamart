@@ -9,8 +9,8 @@
         //回调函数(未验证时)       
         var handlerEmbed = function(captchaObj) {
             //bind模式
-            document.getElementById('bid').addEventListener('click', function () {
-                if (loginVali()) { // 检查是否可以进行提交
+            document.getElementById('valid').addEventListener('click', function () {
+                if (valid()) { // 检查是否可以进行提交
                     captchaObj.verify();
                 }
             });
