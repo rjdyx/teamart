@@ -32,18 +32,11 @@ class AgentController extends Controller
             $lists = $lists->where('parter.id','=',$request->role);
         }
 
-        $lists = $lists->select('user.*',
-                         // DB::raw('count(order.price) as price'),
-                         // 'order.price',
-                         'parter.name as parter_name'
-                        )
-                // ->groupBy('user.id')
-                // ->distinct('user.id')
-                // ->orderBy('price','desc')
-                ->orderBy('user.id','asc')
+        $lists = $lists->select('user.*','parter.name as parter_name')
+                ->distinct('user.id')
+                ->orderBy('sell_count','desc')
                 ->paginate(10);
-        // echo "<pre>";
-        // print_r($lists);die;
+
         //查询所有关联的分销角色
         $selects = $this->indexData()->distinct('parter.id')->select('parter.name','parter.id')->get();
 
@@ -53,7 +46,6 @@ class AgentController extends Controller
     //数据查询
     public function indexData () {
         $lists = DB::table('user')->join('parter','user.parter_id','=','parter.id')
-                // ->leftjoin('order','user.id','=','order.pid')
                 ->where('user.type',1)
                 ->whereNull('user.deleted_at')
                 ->whereNull('parter.deleted_at');

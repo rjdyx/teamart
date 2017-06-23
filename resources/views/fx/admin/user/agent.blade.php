@@ -54,6 +54,7 @@
                   <th>性别</th>
                   <th>年龄</th>
                   <th>消费积分</th>
+                  <th>销售总金额</th>
                   <th>操作</th>
                 </tr>
                 @foreach ($lists as $k=>$list)
@@ -68,6 +69,7 @@
                   <td>@if($list->gender) 女 @else 男 @endif</td>
                   <td>@if ($list->birth_date) {{date('Y') - date('Y',strtotime($list->birth_date))}} @else 0 @endif </td>
                   <td>{{$list->grade}}</td>
+                  <td>￥{{sprintf('%.2f',$list->sell_count)}}</td>
                   <td>
                   <div style="color: #dd4b39">
                   <a href="{{url('admin/user/agent')}}/{{$list->id}}/edit">
