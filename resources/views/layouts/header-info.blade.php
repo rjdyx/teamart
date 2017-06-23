@@ -1,4 +1,4 @@
-<header class="base-fontsize">
+<header>
     <div class="header_left pull-left header_back" onclick="javascript:history.go(-1);">返回</div>
     <div class="header_right pull-right">
         <i>

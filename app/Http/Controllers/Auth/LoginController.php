@@ -39,30 +39,30 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest', ['except' => ['layout','adminLayout']]);
+        $this->middleware('guest', ['except' => ['layout','adminLayout','loginCheck']]);
     }
 
 
     //登录方法
     public function login(Request $request)
     {
-        // $result = $this->validate($request, [
-        //   'geetest_challenge' => 'geetest',
-        // ], [
-        //   'geetest' => config('geetest.server_fail_alert')
-        // ]);
-        // if (!$request) {
-        //     $this->incrementLoginAttempts($request); //失败
-        //     return $this->sendFailedLoginResponse($request);
-        // }
-        $this->validateLogin($request);//验证
-        if (!$this->role($request)) return $this->failedLoginCome($request);
         $newRequest = $this->credentials($request);//返回字段
         if ($this->guard()->attempt($newRequest)) {
             return $this->sendLoginResponse($request);//成功
         }
         $this->incrementLoginAttempts($request); //失败
         return $this->sendFailedLoginResponse($request);
+    }
+
+    //判断登录
+    public function loginCheck(Request $request){
+        $this->validateLogin($request);//验证
+        $result = $this->role($request);
+        if ($result == 'false' ) return 404;
+        if (!$this->role($request)) return 403;
+        $newRequest = $this->credentials($request);//返回字段
+        if ($this->guard()->attempt($newRequest)) return 200;
+        return 404;
     }
 
     public function milkcaptchaLogin($captcha) 
@@ -80,6 +80,7 @@ class LoginController extends Controller
     {
         $user = User::where('name',$request->name)->first();
         if ($user) return $user->type;
+        return 'false';
     }
 
     //管理登录方法

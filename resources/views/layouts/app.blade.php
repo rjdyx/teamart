@@ -46,7 +46,7 @@
         ]) !!};
     </script>
 </head>
-<body>
+<body class="base-fontsize">
     @yield('content')
     <!-- Scripts -->
     {{-- <script src="http://cdn.webfont.youziku.com/wwwroot/js/wf/youziku.api.min.js"></script>

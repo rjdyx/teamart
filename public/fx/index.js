@@ -11,7 +11,7 @@ require('ionicons/dist/css/ionicons.css')
 require('./css/index.css')
 require('./sass/index.scss')
 
-// require('expose-loader?_valid!./js/validate.js')
+require('expose-loader?_valid!./js/validate.js')
 // require('expose-loader?datepicker!./js/datepicker.js')
 
 require('./js/index.js')

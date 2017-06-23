@@ -1,5 +1,5 @@
 <!-- 顶部 -->
-<header class="base-fontsize">
+<header>
     <div class="header_left pull-left">
         <i></i>
         <span>分类</span>

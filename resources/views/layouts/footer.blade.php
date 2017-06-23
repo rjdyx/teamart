@@ -43,7 +43,7 @@
         </li>
     </ul>
 </div> -->
-<footer class="base-fontsize">
+<footer>
     <ul class="footer_container">
         <li>
             <a href="{{url('/')}}" @if ($footer == 'home') class="active" @endif>
