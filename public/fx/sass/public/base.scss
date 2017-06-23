@@ -30,6 +30,15 @@ div {
   font-family: "Chayefont";
 }
 
+@font-face {
+  font-family: "formfont";
+  src: url(../fonts/formfont.ttf);
+  font-weight: normal;
+  font-style: normal;
+}
+.formfont {
+  font-family: "formfont";
+}
 /*  部分新增的公共 class*/
 
 .block {
@@ -42,6 +51,10 @@ div {
 
 .hide {
   display: none;
+}
+
+.invisibility {
+  visibility: hidden;
 }
 
 .mt-10 {
@@ -72,6 +85,14 @@ div {
 }
 .txt-r {
   text-align: right;
+}
+
+.fz-18 {
+  font-size: 18px!important;
+}
+
+.fz-20 {
+  font-size: 20px!important;
 }
 
 @media screen and (max-width:321px){

@@ -35,8 +35,8 @@
 
     
     <!-- Styles -->
-    <link rel="stylesheet" href="{{url('/fx/build/css/index.css')}}">
-    {{-- <link rel="stylesheet" href="http://localhost:8080/fx/build/css/index.css"> --}}
+    {{-- <link rel="stylesheet" href="{{url('/fx/build/css/index.css')}}"> --}}
+    <link rel="stylesheet" href="http://localhost:8080/fx/build/css/index.css">
     @yield('css')
 
     <!-- Scripts -->
@@ -54,12 +54,11 @@
         $youziku.load(".tea,#webfont,.contentLeft-des,.contentRight-introduce,.active-word,.more-word,.contentRight-des,.add-word", "f61ea8f5934348a2916e178809a3cbae", "yuweij");
         $youziku.draw();
     </script> --}}
-    <script src="{{url('/fx/build/vendor-bundle.js')}}"></script>
-    <script src="{{url('/fx/build/index.js')}}"></script>
-    {{-- <script src="http://localhost:8080/fx/build/vendor-bundle.js"></script>
-    <script src="http://localhost:8080/fx/build/index.js"></script> --}}
+    {{-- <script src="{{url('/fx/build/vendor-bundle.js')}}"></script>
+    <script src="{{url('/fx/build/index.js')}}"></script> --}}
+    <script src="http://localhost:8080/fx/build/vendor-bundle.js"></script>
+    <script src="http://localhost:8080/fx/build/index.js"></script>
     <script>
-        console.log(1)
         var deviceWidth = document.documentElement.clientWidth;
         if(deviceWidth > 640) deviceWidth = 640;
         document.documentElement.style.fontSize = deviceWidth / 6.4 + 'px';

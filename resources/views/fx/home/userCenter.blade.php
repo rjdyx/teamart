@@ -8,13 +8,19 @@
 
 @section('script')
     @parent
-
 @endsection
 
 @section('content')
 
     @include("layouts.header-info")
 	<!-- 内容 -->
+	<div class="usercenter">
+		<div class="usercenter_info">
+			<div class="usercenter_avatar">
+				<img src="fx/images/usercenter_info_bg.png" alt="">
+			</div>
+		</div>
+	</div>
 	<div class="personal_center_content">
 		<div class="personal_center_img_Bamboo">
 			<div class="personal_center_head_photo"></div>
@@ -65,13 +71,17 @@
 		<div class="personal_center_div_block">
 			<ul class="list_box">
 				<li class="personal_center_block">
-					<div id="personal_center_blackPoint1"></div>
-					<div class="personal_center_block_p">我的账号</div>
+					<a href="{{url('/home/useredit')}}">
+						<div id="personal_center_blackPoint1"></div>
+						<div class="personal_center_block_p">我的账号</div>
+					</a>
 				</li>
 				<li class="personal_center_block">
-					<div id="personal_center_blackPoint2"></div>
-					<div class=""></div>
-					<div class="personal_center_block_p">我的分组</div>
+					<a href="{{url('/home/userasset')}}">
+						<div id="personal_center_blackPoint2"></div>
+						<div class=""></div>
+						<div class="personal_center_block_p">我的分销</div>
+					</a>
 				</li>
 				<li class="personal_center_block">
 					<div id="personal_center_blackPoint3"></div>
@@ -80,14 +90,14 @@
 			</ul>
 			<ul class="list_box">
 				<li class="personal_center_block">
-					<a href="">
+					<a href="{{url('/home/help/list')}}">
 						<div id="personal_center_blackPoint4"></div>
 						<div class="personal_center_block_p">帮助中心</div>
 					</a>
 				</li>
 				<li class="personal_center_block">
 					<div id="personal_center_blackPoint5"></div>
-					<div class="personal_center_block_p">我的二维码</div>
+					<div class="personal_center_block_p">我的收藏</div>
 				</li>
 				<li class="personal_center_block">
 					<a href="{{url('/home/address')}}">
