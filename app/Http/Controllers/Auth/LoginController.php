@@ -57,14 +57,9 @@ class LoginController extends Controller
         // }
         $this->validateLogin($request);//验证
         if (!$this->role($request)) return $this->failedLoginCome($request);
-
-        //验证码验证
-        if ($this->milkcaptchaLogin($request->captcha)) 
-        {
-            $newRequest = $this->credentials($request);//返回字段
-            if ($this->guard()->attempt($newRequest)) {
-                return $this->sendLoginResponse($request);//成功
-            }
+        $newRequest = $this->credentials($request);//返回字段
+        if ($this->guard()->attempt($newRequest)) {
+            return $this->sendLoginResponse($request);//成功
         }
         $this->incrementLoginAttempts($request); //失败
         return $this->sendFailedLoginResponse($request);

@@ -1,0 +1,117 @@
+// livepicture.vue 中使用的选择动画
+
+@mixin axisRotate($start-deg, $name, $frame){
+  $percent: 1%;
+  $piece: (100 / $frame) * $percent;
+  @at-root {
+    @keyframes axis-#{$name} {
+      @for $i from 0 through $frame {
+        $current-frame: ($i * $piece);
+        $deg: $start-deg * $i;
+        @if $deg > 360 {
+          $deg: $deg % 360
+        } @else {
+          $deg: $deg
+        }
+        #{$current-frame} {
+          @if $deg >= 30 {
+            @if $deg <= 150 {
+              z-index: 3;
+            } @else {
+              z-index: 2;
+            }
+          } @else {
+            z-index: 2;
+          }
+          transform: rotate3d(0, 1, 0, $deg);
+        }
+      }
+    }
+  }
+}
+
+@mixin ballRotate($start-deg, $name, $start-top, $start-left, $start-px, $frame){
+  $percent: 1%;
+  $piece: (100 / $frame) * $percent;
+  @at-root {
+    @keyframes ball-#{$name} {
+      $current-top: $start-top;
+      $current-left: $start-left;
+      $px: $start-px;
+      @for $i from 0 through $frame {
+        $current-frame: ($i * $piece);
+        $current-deg: $start-deg + ($i * 30);
+        @if ($current-deg >= 360) {
+          $current-deg: $current-deg % 360
+        }
+        #{$current-frame} {
+          @if ($i > 0) {
+            @if ($current-deg <= 90) {
+              $current-top: $current-top - 1;
+              $px: $px + 4;
+            }
+            @else if ($current-deg > 90) {
+              @if ($current-deg <= 270) {
+                $current-top: $current-top + 1;
+                $px: $px - 4;
+              }
+              @else if ($current-deg > 270) {
+                $current-top: $current-top - 1;
+                $px: $px + 4;
+              }
+            }
+
+            @if ($current-deg <= 180) {
+              @if ($current-deg <= 0) {
+                $current-left: $current-left - 5;
+              }
+              @else if ($current-deg > 0) {
+                $current-left: $current-left + 5;
+              }
+            }
+            @else if ($current-deg > 180) {
+              $current-left: $current-left - 5;
+            }
+
+            @if $current-deg >= 30 {
+              @if $current-deg <= 150 {
+                @if $current-deg == 90 {
+                  z-index: 4;
+                } @else {
+                  z-index: 3;
+                }
+              } @else {
+                z-index: 2;
+              }
+            } @else {
+              z-index: 2;
+            }
+          }
+
+          top: $current-top;
+          left: $current-left;
+          width: $px;
+          height: $px;
+          margin-left: - ($px / 2);
+        }
+      }
+    }
+  }
+}
+
+@mixin rooo($name){
+  $frame: 8;
+  $percent: 1%;
+  $piece: (100 / $frame) * $percent;
+  @at-root {
+    @keyframes #{$name} {
+      @for $i from 0 through $frame {
+        $current-frame: ($i * $piece);
+
+        #{$current-frame} {
+          transform: rotate(-22.5deg * $i);
+        }
+      }
+    }
+  }
+}

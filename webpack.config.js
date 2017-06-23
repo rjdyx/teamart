@@ -30,8 +30,13 @@ const globalValue = env.isAdmin ? {
 	_: 'lodash',
 	'window._': 'lodash',
 
-	$: 'zepto',
-	'window.$': 'zepto'
+	$: 'jquery',
+	jQuery: 'jquery',
+	'window.jQuery': 'jquery',
+	'window.$': 'jquery'
+	// $: 'zepto-webpack'
+
+	// Vue: 'vue'
 }
 
 let outputPath
@@ -39,13 +44,16 @@ let outputPath
 if (env.isServer) {
 	publicPath = env.isAdmin ? path.join('public', 'admin', 'build/') : path.join('public', 'fx', 'build/')
 } else {
-	publicPath = env.isAdmin ? 'http://www.fx.com/admin/build/' : 'http://localhost:8080/fx/build/'
+	publicPath = env.isAdmin ? 'http://www.fx.com/admin/build/' : 'http://www.fx.com/fx/build/'
+	// 避免请求本地字体时跨域
+	// publicPath = env.isAdmin ? 'http://localhost:8080/admin/build/' : 'http://localhost:8080/fx/build/'
 }
 
 let configs = {
 	entry: {
 		index: env.isAdmin ? resolve(rootPath, 'admin') : resolve(rootPath, 'fx'),
-		vendors: env.isAdmin ? ['axios', 'lodash', 'jquery'] : ['axios', 'lodash', 'zepto']
+		vendors: ['axios', 'lodash', 'jquery']
+		// vendors: env.isAdmin ? ['axios', 'lodash', 'jquery'] : ['axios', 'lodash']
 	},
 	output: {
 		filename: '[name].js',
@@ -57,7 +65,8 @@ let configs = {
 		extensions: ['.js', '.json'],
 		alias: {
 			'rootPath': rootPath,
-			'mod': resolve(__dirname, 'node_modules')
+			'mod': resolve(__dirname, 'node_modules'),
+			'components': resolve(__dirname, 'resources', 'assets', 'js', 'components')
 		}
 	},
 	module: {
@@ -133,43 +142,43 @@ let configs = {
 		module: 'empty'
 	}
 }
-if (env.isAdmin) {
-	configs = merge(configs, {
-		module: {
-			rules: [
-				{
-					test: require.resolve('jquery'),
-					use: [
-						{
-							loader: 'expose-loader',
-							options: 'jQuery'
-						},
-						{
-							loader: 'expose-loader',
-							options: '$'
-						}
-					]
-				}
-			]
-		}
-	})
-} else {
-	configs = merge(configs, {
-		module: {
-			rules: [
-				{
-					test: require.resolve('zepto'),
-					use: [
-						{
-							loader: 'expose-loader',
-							options: '$'
-						}
-					]
-				}
-			]
-		}
-	})
-}
+// if (env.isAdmin) {
+configs = merge(configs, {
+	module: {
+		rules: [
+			{
+				test: require.resolve('jquery'),
+				use: [
+					{
+						loader: 'expose-loader',
+						options: 'jQuery'
+					},
+					{
+						loader: 'expose-loader',
+						options: '$'
+					}
+				]
+			}
+		]
+	}
+})
+// } else {
+// 	configs = merge(configs, {
+// 		module: {
+// 			loaders: [
+// 				{
+// 					test: require.resolve('zepto'),
+// 					use: [
+// 						{
+// 							loader: 'expose-loader?window.Zepto!script-loader',
+// 							options: '$'
+// 						}
+// 					]
+// 				}
+// 			]
+// 		}
+// 	})
+// }
 
 if (process.env.NODE_ENV === 'development') {
 	// let devTemplate = env.isAdmin

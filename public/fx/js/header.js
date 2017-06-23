@@ -63,6 +63,6 @@ var header = {
 	// 字体转换
 	fontFamily:function(){
 		$youziku.load(".header_title,.item_list,.userName,.bottom2", "f61ea8f5934348a2916e178809a3cbae", "yuweij");
-	   	$youziku.draw();
+		$youziku.draw();
 	}
 }

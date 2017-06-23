@@ -1,0 +1,12 @@
+.container {
+	height: calc(100% - 2.2rem);
+	padding-top: 1.2rem;
+	overflow: auto;
+	.banner {
+		width: 6.4rem;
+		img {
+			width: 100%;
+		}
+	}
+
+}

@@ -1,0 +1,118 @@
+header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 1000;
+	height: 1.2rem;
+	width: 100%;
+	background-image: url(/fx/images/header_background.png);
+	background-repeat: no-repeat;
+	background-size: cover;
+	.header_left, .header_center, .header_right {
+		height: 1rem;
+		padding: 0.1rem 0;
+	}
+	.header_left, .header_right {
+		width: 1rem;
+		color: #fff;
+		text-align: center;
+		i {
+			display: inline-block;
+			margin: 0 auto;
+			width: 0.42rem;
+			height: 0.42rem;
+			background-size: 100% 100%;
+			background-repeat: no-repeat;
+			background-position: center center;
+			margin-top: 0.08rem;
+		}
+		span {
+			display: block;
+		}
+	}
+	.header_left {
+		margin-right: -1rem;
+		i {
+			background-image: url(/fx/images/icon_category.png);
+		}
+	}
+	.header_left.header_back {
+		line-height: 1.2rem;
+	}
+	.header_center {
+		width: 100%;
+		line-height: 1rem;
+		text-align: center;
+		.header_search_inp {
+			width: 4.3rem;
+			height: 0.64rem;
+			border: 0;
+			border-radius: 0.3rem;
+			padding-left: 0.6rem;
+		}
+		.header_search {
+			position: relative;
+			font-size: 16px;
+			margin-right: -0.5rem;
+		}
+		.header_close {
+			font-size: 16px;
+			margin-left: -0.5rem;
+		}
+		h2 {
+			color: #fff;
+		}
+	}
+	@media screen and (max-width:321px){
+		.header_left.header_back {
+			font-size: 16px;
+		}
+		.header_center {
+			h2 {
+				font-size: 18px;
+			}
+		}
+	}
+	@media screen and (min-width:321px) and (max-width:400px){
+		.header_left.header_back {
+			font-size: 18px;
+		}
+		.header_center {
+			h2 {
+				font-size: 20px;
+			}
+		}
+	}
+	@media screen and (min-width:400px){
+		.header_left.header_back {
+			font-size: 20px;
+		}
+		.header_center {
+			h2 {
+				font-size: 22px;
+			}
+		}
+	}
+	.header_right {
+		margin-left: -1rem;
+		i {
+			position: relative;
+			background-image: url(/fx/images/icon_msg.png);
+			s {
+				position: absolute;
+				top: -0.15rem;
+				right: -0.15rem;
+				display: block;
+				width: 0.3rem;
+				height: 0.3rem;
+				border: 0.02rem solid #BBAD92;
+				font-style: normal;
+				background-color: #F87973;
+				color: #fff;
+				border-radius: 50%;
+			}
+		}
+	}
+}
+
+
