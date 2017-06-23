@@ -42,13 +42,13 @@ use App\Order;
 use App\Observers\OrderObserver;
 
 use App\OrderProduct;
-use App\Observers\OrderProductObserver;
+use App\Observers\OrderDetailObserver;
 
 use App\Parter;
 use App\Observers\ParterObserver;
 
 use App\Product;
-use App\Observers\ProductObserver;
+use App\Observers\GoodsObserver;
 
 use App\ProductCategory;
 use App\Observers\ProductCategoryObserver;
@@ -80,8 +80,7 @@ class LogServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if (!env('APP_DEBUG'))
-        {
+        if (env('APP_DEBUG')){
             User::observe(UserObserver::class);
             Article::observe(ArticleObserver::class);
             ArticleCategory::observe(ArticleCategoryObserver::class);
@@ -94,9 +93,9 @@ class LogServiceProvider extends ServiceProvider
             Comment::observe(CommentObserver::class);
             Feedback::observe(FeedbackObserver::class);
             Order::observe(OrderObserver::class);
-            OrderProduct::observe(OrderProductObserver::class);
+            OrderProduct::observe(OrderDetailObserver::class);
             Parter::observe(ParterObserver::class);
-            Product::observe(ProductObserver::class);
+            Product::observe(GoodslObserver::class);
             ProductCategory::observe(ProductCategoryObserver::class);
             ProductGroup::observe(ProductGroupObserver::class);
             ProductImg::observe(ProductImgObserver::class);

@@ -113,7 +113,7 @@
         </a>
         <ul class="treeview-menu">
           <li><a href="/admin/system/pay"><i class="fa fa-circle-o"></i>支付设置</a></li>
-          <li><a href="/admin/system/send"><i class="fa fa-circle-o"></i>配送设置</a></li>
+          <!-- <li><a href="/admin/system/send"><i class="fa fa-circle-o"></i>配送设置</a></li> -->
           <li><a href="/admin/system/ad"><i class="fa fa-circle-o"></i>广告管理</a></li>
           <li><a href="/admin/system/site"><i class="fa fa-circle-o"></i>站点设置</a></li>
           <li><a href="/admin/system/feedback"><i class="fa fa-circle-o"></i>意见反馈</a></li>

@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use Illuminate\Support\Facades\Auth;
 use App\Order;
+use App\User;
 use IQuery;
 use Cache;
 
@@ -21,9 +22,16 @@ class OrderObserver
     }
 
     //编辑
-    public function updated(Order $Order)
+    public function updated(Order $order)
     {
         $this->logStore('编辑');
+        //更新销售额
+        if ($order->state == 'close' && $order->pid) {
+            $user = User::find($order->pid);
+            $pre_sell = $user->sell_count;
+            $user->sell_count = intval($pre_sell) + intval($order->price);
+            $user->save();
+        }
     }
 
     //删除

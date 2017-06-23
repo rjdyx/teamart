@@ -58,7 +58,7 @@ class LoginController extends Controller
     public function loginCheck(Request $request){
         $this->validateLogin($request);//验证
         $result = $this->role($request);
-        if ($result == 'false' ) return 404;
+        if ($result < 0) return 404;
         if (!$this->role($request)) return 403;
         $newRequest = $this->credentials($request);//返回字段
         if ($this->guard()->attempt($newRequest)) return 200;
@@ -80,7 +80,7 @@ class LoginController extends Controller
     {
         $user = User::where('name',$request->name)->first();
         if ($user) return $user->type;
-        return 'false';
+        return -1;
     }
 
     //管理登录方法

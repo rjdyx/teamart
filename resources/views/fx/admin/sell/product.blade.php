@@ -207,7 +207,7 @@
                       <select name="yearChange" style="height:30px;">
                         <option value="">-选择年份查询-</option>
                         @foreach($years as $year)
-                        <option value="{{$year}}" @if($year== date('Y')) selected @endif>{{$year}}</option>
+                        <option value="{{$year}}" @if($year== date('Y')) selected @endif>{{$year}}年</option>
                         @endforeach
                       </select>
                     </li>

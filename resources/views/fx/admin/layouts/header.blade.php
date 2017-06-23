@@ -24,12 +24,12 @@
           </a>
         </li>
         <!-- Messages: style can be found in dropdown.less-->
-        <li class="dropdown messages-menu">
+<!--         <li class="dropdown messages-menu">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <i class="fa  fa-heart-o"></i>
             <span>帮助</span>
           </a>
-        </li>
+        </li> -->
         <!-- Notifications: style can be found in dropdown.less -->
         <li class="dropdown notifications-menu">
           <a href="{{url('admin/system/shop')}}">
