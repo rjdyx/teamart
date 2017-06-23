@@ -134,6 +134,9 @@ Route::group(['namespace'=>'Admin','prefix'=>'admin','middleware'=>['auth','user
 	// 活动管理
 	Route::group(['prefix'=>'activity'],function(){
 		Route::resource('/group', 'GroupController');
+		Route::post('/group/dels', 'GroupController@dels');
+		Route::resource('/activityproduct', 'ActivityProductController');
+		Route::post('/activityproduct/dels', 'GroupController@dels');
 		Route::resource('/mark', 'MarkController');
 		Route::post('/mark/dels',"MarkController@dels");
 		Route::post('/mark/create/dels',"MarkController@dels");

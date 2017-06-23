@@ -9,5 +9,5 @@ class Group extends Model
 {
 	use SoftDeletes;
     protected $dates = ['deleted_at']; //开启deleted_at
-    public $table='product_group';
+    public $table='activity';
 }
