@@ -3,7 +3,9 @@
 @section('title')
 团购活动
 @endsection
-
+@section('t1')
+促销管理
+@endsection
 @section('css')
 
 @endsection
@@ -14,21 +16,6 @@
 @endsection
 
 @section('content')
-   @include("fx.admin.layouts.header")
-
-   @include("fx.admin.layouts.left")
-   
-   <div class="content-wrapper">
-    <!-- agentRole -->
-    <div id="agentRole">
-      <!-- Content Header (Page header) -->
-      <section class="content-header">
-        <h1 style="cursor: pointer;">
-          <a href="#" style="color: #000"><i class="fa fa-home fa_skin" style="margin-right:4px"></i>促销管理</a>
-          <a href="#"><small class="fa_skin"><i class="fa fa-angle-right" style="margin-right: 4px"></i>团购活动</small></a>
-        </h1>
-      </section>
-
       <!-- Main content of agentRole-->
       <section class="content">
         <div class="row">
@@ -243,8 +230,5 @@
         </div>
       </section>
       <!-- /.content -->
-    </div>
-    <!-- /addagent -->
-  </div>
 
 @endsection

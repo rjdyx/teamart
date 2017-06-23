@@ -11,7 +11,7 @@
   <div class="row">
     <!-- 代理商角色列表 -->
     <div class="col-xs-12">
-      <div class="box box-success">
+      <div class="box box-success"> 
         <div class="box-header">
           <div class="input-group input-group-sm" style="width: 470px;">
             <div class="row">
