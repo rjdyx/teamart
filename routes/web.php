@@ -136,7 +136,9 @@ Route::group(['namespace'=>'Admin','prefix'=>'admin','middleware'=>['auth','user
 		Route::resource('/group', 'GroupController');
 		Route::post('/group/dels', 'GroupController@dels');
 		Route::resource('/activityproduct', 'ActivityProductController');
-		Route::post('/activityproduct/dels', 'GroupController@dels');
+		// Route::get('/activityproduct/create/{id}', 'ActivityProductController@create');
+		// Route::get('/activityproduct/create/{activity_id}/{id}', 'ActivityProductController@destory');
+		Route::post('/activityproduct/dels', 'ActivityProductController@dels');
 		Route::resource('/mark', 'MarkController');
 		Route::post('/mark/dels',"MarkController@dels");
 		Route::post('/mark/create/dels',"MarkController@dels");
