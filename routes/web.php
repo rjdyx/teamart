@@ -152,6 +152,7 @@ Route::group(['namespace'=>'Admin','prefix'=>'admin','middleware'=>['auth','user
 		Route::resource('/shop', 'ShopController');
 		Route::resource('/pay', 'PayController');
 		Route::resource('/send', 'SendController');
+		Route::post('/ad/dels', 'AdController@dels');
 		Route::resource('/ad', 'AdController');
 		Route::resource('/site', 'SiteController');
 		Route::post('/site/dels', 'SiteController@dels');

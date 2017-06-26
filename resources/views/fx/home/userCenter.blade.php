@@ -76,6 +76,7 @@
 					<p class="chayefont">我的账号</p>
 				</a>
 			</li>
+			@if (isset(Auth::user()->type) && Auth::user()->type < 2)
 			<li>
 				<a href="{{url('/home/userasset')}}">
 					<div class="usercenter_nav_icon">
@@ -84,6 +85,7 @@
 					<p class="chayefont">我的分销</p>
 				</a>
 			</li>
+			@endif
 			<li>
 				<a href="{{url('/home/order/list')}}">
 					<div class="usercenter_nav_icon">

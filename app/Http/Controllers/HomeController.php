@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Ad;
+use App\System;
 use App\Product;
 use App\OrderProduct;
 use DB;
@@ -14,9 +16,11 @@ class HomeController extends Controller
 
         //新品推荐
         $news = $this->newProduct();
+
         //活动商品
         $activitys = $this->activityProduct();
         if (count($activitys)<3) $activitys = $this->randProduct(3); 
+
         //热卖商品
         if (count($this->sellProduct())>2) {
             $sells = $this->sellProduct(true);
@@ -24,7 +28,14 @@ class HomeController extends Controller
             $sells = $this->randProduct(3);
         }
 
-        return view('index')->with(['footer'=>'home','activitys'=>$activitys,'news'=>$news,'sells'=>$sells]); 
+        //广告
+        $ads = Ad::where('position','index')->get();
+
+        //轮播
+        $system = System::find(1); $lbs = array();
+        if ($system->slider) $lbs = explode(',', $system->slider);
+
+        return view('index')->with(['footer'=>'home','lbs'=>$lbs,'activitys'=>$activitys,'news'=>$news,'sells'=>$sells,'ads'=>$ads]); 
     }
 
     //随机查询商品

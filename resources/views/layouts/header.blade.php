@@ -14,7 +14,7 @@
     @endif
     <div class="header_center">
         <i class="fa fa-search header_search"></i>
-        <input type="text" class="header_search_inp" placeholder="请输入你搜索的商品">
+        <input type="text" class="header_search_inp" placeholder="请输入你搜索的商品" style="opacity: 0.6;">
         <i class="fa fa-times-circle header_close hide"></i>
     </div>
     <div class="header_container none"></div>

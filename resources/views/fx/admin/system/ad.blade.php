@@ -3,7 +3,9 @@
 @section('title')
 广告设置
 @endsection
-
+@section('t1')
+系统管理
+@endsection
 @section('css')
 
 @endsection
@@ -16,72 +18,59 @@
 @section('content')
   <section class="content">
     <div class="row">
-      <!-- 代理商角色列表 -->
       <div class="col-xs-12">
         <div class="box box-success">
           <div class="box-header">
-            <div class="input-group input-group-sm" style="width: 470px;">
-                <div class="row">
-                  <div class="col-sm-12"><input type="text" name="table_search" class="form-control pull-right input-sm" placeholder="请输入搜索内容"></div>
-                </div>
-                <div class="input-group-btn">
-                  <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                </div>
-            </div>
+              <div class="input-group input-group-sm" style="width: 470px;">
+                  <div class="row">
+                    <div class="col-sm-12"><input type="text" id="searchTitle" name="title" class="form-control pull-right input-sm" placeholder="请输入标题搜索" value="{{isset($_GET['title'])? $_GET['title']:'' }}" ></div>
+                  </div>
+                  <div class="input-group-btn">
+                    <button type="submit" class="btn btn-default" onclick="search({{$lists->currentPage()}},['searchTitle']);"><i class="fa fa-search"></i></button>
+                  </div>
+              </div>
             <div class="box-tools">
-              <button type="button" class="btn btn-block btn-success btn-sm" id="addUser">新广告</button>
+              <a href="{{ url('admin/system/ad/create') }}"><button type="button" class="btn btn-block btn-success btn-sm" id="addUser">新建广告</button></a>
             </div>
           </div>
           <!-- /.box-header -->
           <div class="box-body table-responsive no-padding">
             <table class="table table-hover">
               <tbody><tr>
-                <th><!-- <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i></button> --></th>
+                <th>多选框</th>
                 <th>编号</th>
-                <th>名称</th>
-                <th>链接</th>
-                <th>图片</th>
+                <th>标题</th>
                 <th>描述</th>
+                <th>图片</th>
+                <th>链接</th>
+                <th>展示位置</th>
+                <th>状态</th>
                 <th>操作</th>
               </tr>
-              <tr>
-                <td><input type="checkbox"></td>
-                <td>183</td>
-                <td><i class="fa fa-times"></i></td>
-                <td><i class="fa fa-check fa_skin"></i></td>
-                <td>John Doe</td>
-                <td>John Doe</td>
-                <td><div style="color: #dd4b39"><i class="fa fa-edit" style="margin-right: 5px;cursor: pointer;"></i><i class="fa fa-trash-o" style="margin-right: 5px;cursor: pointer;"></div></i>
-               </td>
-              </tr>
-              <tr>
-                <td><input type="checkbox"></td>
-                <td>183</td>
-                <td><i class="fa fa-times" style="color: #ca0002"></i></td>
-                <td>183</td>
-                <td>183</td>
-                <td>John Doe</td>
-                <td>11-7-2014</td>
-              </tr>
-              <tr>
-                <td><input type="checkbox"></td>
-                <td>183</td>
-                <td>John Doe</td>
-                <td>John Doe</td>
-                <td>John Doe</td>
-                <td><i class="fa fa-times" style="color: #ca0002"></i></td>
-                <td>183</td>
-              </tr>
+              @foreach($lists as $k => $list)
+                <tr>
+                  <td><input type="checkbox" class="check" value="{{$list->id}}"></td>
+                  <td>{{$k + 1}}</td>
+                  <td>{{$list->title}}</td>
+                  <td>{{$list->desc}}</td>
+                  <td><img src="{{url('')}}/{{$list->thumb}}" alt="图片" width="40px" height="40px"></td>
+                  <td>{{$list->url}}</td>
+                  <td>@if($list->position == 'index')首页@endif</td>
+                  <td>@if($list->state)开启 @else 关闭 @endif</td>
+                  <td>
+                  <a href="{{url('admin/system/ad')}}/{{$list->id}}/edit">
+                  <i class="fa fa-edit" style="margin-right: 5px;cursor: pointer;"></i></a>
+                  <i class="fa fa-trash-o" onclick="del({{$list->id}});" style="margin-right: 5px;cursor: pointer;"></i>
+                 </td>
+                </tr>
+              @endforeach
               <tr>
                 <td><button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i></td>
-                <td><button type="button" class="btn btn-block btn-default btn-sm">删除</button></td>
-                <th colspan="5">
+                <td><button type="button" onclick="dels();" class="btn btn-block btn-default btn-sm">删除</button></td>
+                <th colspan="7">
                   <ul class="pagination pagination-sm no-margin pull-right">
-                    <li><a href="#">«</a></li>
-                    <li><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">»</a></li>
+                    {{$lists->appends(['title' => isset($_GET['title'])? $_GET['title']:''])->links() }}
+                      共{{ $lists->lastPage() }}页
                   </ul>
                 </th>
               </tr>
@@ -91,7 +80,6 @@
         </div>
         <!-- /.box -->
       </div>
-      <!-- /代理商角色列表 -->
     </div>
   </section>
 @endsection

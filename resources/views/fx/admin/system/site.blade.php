@@ -41,7 +41,7 @@
               <div class="box-body table-responsive no-padding">
                 <table class="table table-hover">
                   <tbody><tr>
-                    <th><!-- <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i></button> --></th>
+                    <th>多选框</th>
                     <th>编号</th>
                     <th>省份</th>
                     <th>城市</th>
