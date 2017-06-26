@@ -11,10 +11,9 @@
 @endsection
 
 @section('content')
-
 	@include("layouts.header-info")
 	<div class="addressadd">
-		<a href="{{ url('/home/address/create') }}" class="chayefont address_add">添加新地址</a>
+		
 	</div>
 	<div class="addAddress_container">
 		<ul>
@@ -28,11 +27,16 @@
 			</li>
 			<li class="item_list">
 				<span class="item_list_title">所在地区</span>
-				<div class="item_input_container">请选择<img class="right_arrow" src="{{ url('fx/img/right_arrow.png') }}"></div>
+				<div class="item_input_container">
+					<select>
+						<option>请选择&gt;</option>
+						<option>广东</option>
+					</select>
+				</div>
 			</li>
 			<li class="item_list">
 				<span class="item_list_title">街道</span>
-				<div class="item_input_container">请选择<img class="right_arrow" src="{{ url('fx/img/right_arrow.png') }}"></div>
+				<div class="item_input_container">请选择&gt;</div>
 			</li>
 		</ul>
 		<textarea class="addressDetail" placeholder="请填写详细地址，不少于5个字"></textarea>

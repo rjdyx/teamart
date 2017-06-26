@@ -64,5 +64,6 @@
         document.documentElement.style.fontSize = deviceWidth / 6.4 + 'px';
     </script>
     @yield('script')
+    @include("fx.admin.layouts.alert")
 </body>
 </html>
