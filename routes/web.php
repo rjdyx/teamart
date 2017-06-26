@@ -23,7 +23,7 @@ Route::get('captcha', 'KitController@captcha'); //生成验证码
 
 // 公共接口组
 Route::post('/check','UtilsController@check');//字段验证
-
+ 
 // Home - 无须登录模块
 Route::group(['namespace'=>'Home','prefix'=>'home'],function(){
 	// 商品列表、详情
@@ -43,6 +43,7 @@ Route::group(['namespace'=>'Home','prefix'=>'home'],function(){
 Route::group(['namespace'=>'Home','prefix'=>'home','middleware'=>['auth']],function(){
 	//地址管理
 	Route::resource('/address', 'AddressController');
+	Route::get('/address/default/{id}','AddressController@default');
 
 	// 订单部分
 	Route::group(['prefix'=>'order'],function(){

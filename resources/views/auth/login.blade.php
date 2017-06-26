@@ -72,7 +72,7 @@
                     </a>
                 </div>
                 <label for="valid" class="submit">
-                    <input type="button" id="valid">
+                    <input type="submit" id="valid">
                 </label>
             </form>
             {!! Geetest::render('bind') !!}
