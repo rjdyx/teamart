@@ -13,6 +13,9 @@
 @section('content')
 
 	@include("layouts.header-info")
+	<div class="addressadd">
+		<a href="{{ url('/home/address/create') }}" class="chayefont address_add">添加新地址</a>
+	</div>
 	<div class="addAddress_container">
 		<ul>
 			<li class="item_list">

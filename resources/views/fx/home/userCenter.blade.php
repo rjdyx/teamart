@@ -3,7 +3,6 @@
 @section('title') 个人中心 @endsection
 
 @section('css')
-    <link rel="stylesheet" type="text/css" href="{{ asset('fx/css/personalCenter.css') }}">
 @endsection
 
 @section('script')
@@ -14,99 +13,102 @@
 
     @include("layouts.header-info")
 	<!-- 内容 -->
-	<div class="usercenter">
+	<div class="container usercenter">
 		<div class="usercenter_info">
 			<div class="usercenter_avatar">
-				<img src="fx/images/usercenter_info_bg.png" alt="">
+				<img src="/fx/images/usercenter_avatar.png" alt="">
 			</div>
-		</div>
-	</div>
-	<div class="personal_center_content">
-		<div class="personal_center_img_Bamboo">
-			<div class="personal_center_head_photo"></div>
-			<div class="personal_center_name">周星驰</div>
-			<div class="personal_center_toolbar">
-				<ul class="list_box">
-					<li class="personal_center_toolbar_block">
-						<div class="personal_center_toolbar_block_content">积分</div>
-						<div class="personal_center_toolbar_block_content" id="personal_center_toolbar_integral">
-							(0)
-						</div>
-					</li>
-					<li class="personal_center_toolbar_block">
-						<div class="personal_center_toolbar_block_content">所属身份</div>
-						<div class="personal_center_toolbar_block_content" id="personal_center_toolbar_id">
-							(经销商)
-						</div>
-					</li>
-					<li class="personal_center_toolbar_block">
-						<div class="personal_center_toolbar_block_content">消费总额</div>
-						<div class="personal_center_toolbar_block_content" id="personal_center_toolbar_consumption">
-							(0)
-						</div>
-					</li>
-				</ul>
-			</div>	
-		</div>
-
-		<div class="personal_center_div_list">
-			<ul class="list_box">
-				<li id="personal_center_list_one" class="personal_center_list">
-					<span class="personal_center_list_span">累计佣金：</span>
-					<div id="personal_center_commission">5000.00元</div>
-					<div class="personal_center_list_modify_div" id="personal_center_list_button1"></div>
+			<p class="usercenter_name chayefont">DDD</p>
+			<ul class="usercenter_list">
+				<li>
+					<a href="javascript:;">
+						<p>积分</p>
+						<p>(0)</p>
+					</a>
 				</li>
-
-				<li class="personal_center_list">
-					<span class="personal_center_list_span">可提现余额：</span>
-					<div id="personal_center_balance">2000.00元</div>
-					<div class="personal_center_list_modify_div" id="personal_center_list_button2">
-					提现
-						<!-- <input type="button" value="提现" class="personal_center_list_button" id="personal_center_list_button2"> -->
+				<li>
+					<a href="javascript:;">
+						<p>所属身份</p>
+						<p>分销商</p>
+					</a>
+				</li>
+				<li>
+					<a href="javascript:;">
+						<p>消费总额</p>
+						<p>(0)</p>
+					</a>
+				</li>
+			</ul>
+		</div>
+		<div class="usercenter_assets">
+			<ol>
+				<li class="chayefont">累计佣金：</li>
+				<li class="chayefont gray">9999.00元</li>
+				<li class="chayefont">
+					<a href="javascript:;" class="pull-right">
+						<i class="fa fa-angle-right"></i>
+					</a>
+				</li>
+			</ol>
+			<ol>
+				<li class="chayefont">累计佣金：</li>
+				<li class="chayefont red">9999.00元</li>
+				<li class="chayefont">
+					<a href="javascript:;" class="pull-right withdraw">提现</a>
+				</li>
+			</ol>
+		</div>
+		<ul class="usercenter_nav clearfix">
+			<li>
+				<a href="{{url('/home/useredit')}}">
+					<div class="usercenter_nav_icon">
+						<i class="fa fa-pencil"></i>
 					</div>
-				</li>
-			</ul>
-		</div>
-
-		<div class="personal_center_div_block">
-			<ul class="list_box">
-				<li class="personal_center_block">
-					<a href="{{url('/home/useredit')}}">
-						<div id="personal_center_blackPoint1"></div>
-						<div class="personal_center_block_p">我的账号</div>
-					</a>
-				</li>
-				<li class="personal_center_block">
-					<a href="{{url('/home/userasset')}}">
-						<div id="personal_center_blackPoint2"></div>
-						<div class=""></div>
-						<div class="personal_center_block_p">我的分销</div>
-					</a>
-				</li>
-				<li class="personal_center_block">
-					<div id="personal_center_blackPoint3"></div>
-					<div class="personal_center_block_p">我的订单</div>
-				</li>
-			</ul>
-			<ul class="list_box">
-				<li class="personal_center_block">
-					<a href="{{url('/home/help/list')}}">
-						<div id="personal_center_blackPoint4"></div>
-						<div class="personal_center_block_p">帮助中心</div>
-					</a>
-				</li>
-				<li class="personal_center_block">
-					<div id="personal_center_blackPoint5"></div>
-					<div class="personal_center_block_p">我的收藏</div>
-				</li>
-				<li class="personal_center_block">
-					<a href="{{url('/home/address')}}">
-						<div id="personal_center_blackPoint6"></div>
-						<div class="personal_center_block_p">收货地址</div>
-					</a>
-				</li>
-			</ul>
-		</div>
+					<p class="chayefont">我的账号</p>
+				</a>
+			</li>
+			<li>
+				<a href="{{url('/home/userasset')}}">
+					<div class="usercenter_nav_icon">
+						<i class="fa fa-users"></i>
+					</div>
+					<p class="chayefont">我的分销</p>
+				</a>
+			</li>
+			<li>
+				<a href="javascript:;">
+					<div class="usercenter_nav_icon">
+						<i class="fa fa-credit-card"></i>
+					</div>
+					<p class="chayefont">我的订单</p>
+				</a>
+			</li>
+			<li>
+				<a href="{{url('/home/help/list')}}">
+					<div class="usercenter_nav_icon">
+						<i class="fa fa-info"></i>
+					</div>
+					<p class="chayefont">帮助中心</p>
+				</a>
+			</li>
+			<li>
+				<a href="javascript:;">
+					<div class="usercenter_nav_icon">
+						<i class="fa fa-star"></i>
+					</div>
+					<p class="chayefont">我的收藏</p>
+				</a>
+			</li>
+			<li>
+				<a href="{{url('/home/address')}}">
+					<div class="usercenter_nav_icon">
+						<i class="fa fa-location-arrow"></i>
+					</div>
+					<p class="chayefont">收货地址</p>
+				</a>
+			</li>
+		</ul>
+		<div class="usercenter_loginout chayefont">退出</div>
 	</div>
     @include("layouts.footer")
 @endsection

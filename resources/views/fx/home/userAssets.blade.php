@@ -14,6 +14,7 @@
 @section('content')
 
     @include("layouts.header-info")
+    <div class="container userassets"></div>
 	<div class="personal_assets_content">
 
 		<div class="personal_assets_img_Bamboo">
