@@ -120,7 +120,7 @@ exports.title = (field, fieldtxt, value, lng = 4, isRequired = true) => {
 
 exports.email = (field, value, isRequired = true) => {
 	let valid = false, temp = true
-	let reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/
+	let reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+\.([a-zA-Z0-9_-])+/
 	if (isRequired) {
 		temp = ness(field, '邮箱', value)
 	}
@@ -180,7 +180,7 @@ exports.repassword = (field, value, isRequired = true) => {
 exports.phone = (field, value) => {
 	let valid = true
 	if (value) {
-		if (!/^1[34578]\d{9}$/.test(value)) {
+		if (!/^1[3456789]\d{9}$/.test(value)) {
 			$('#' + field + '_txt').text('手机格式不对')
 			valid = false
 		} else {

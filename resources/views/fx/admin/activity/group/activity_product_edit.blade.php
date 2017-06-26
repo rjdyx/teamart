@@ -52,7 +52,7 @@
           <div class="col-sm-offset-2 col-sm-10">
             <button type="submit" class="btn btn-success btn-100">确认</button>
             <button type="reset" class="btn btn-success btn-100">重置</button>
-            <a href="{{ url('admin/activity/activityproduct') }}"><button type="button" class="btn btn-success btn-100" id="cancel_addUser">取消</button></a>
+            <a href="{{ url('admin/activity/group') }}"><button type="button" class="btn btn-success btn-100" id="cancel_addUser">取消</button></a>
           </div>
         </div>
       </div>

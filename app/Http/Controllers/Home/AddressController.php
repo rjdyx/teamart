@@ -13,7 +13,7 @@ class AddressController extends Controller
 	public function index (Request $request) {
 		$title = '地址管理';
 		$lists = Address::where('user_id',Auth::user()->id)->get();
-		return view(config('app.theme').'.home.addressList')->with(['title'=>$title, 'lists'=>$lists]);
+		return view(config('app.theme').'.home.address')->with(['title'=>$title, 'lists'=>$lists]);
 	}
 
 	//地址管理新建

@@ -59,7 +59,6 @@
     {{-- <script src="http://localhost:8080/fx/build/vendor-bundle.js"></script>
     <script src="http://localhost:8080/fx/build/index.js"></script> --}}
     <script>
-        console.log(1)
         var deviceWidth = document.documentElement.clientWidth;
         if(deviceWidth > 640) deviceWidth = 640;
         document.documentElement.style.fontSize = deviceWidth / 6.4 + 'px';

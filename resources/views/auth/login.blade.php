@@ -10,7 +10,7 @@
 @section('script')
     @parent
     <script>
-        function valid() {
+        function validate() {
             if (!_valid.ness('用户名', $('#name').val())) {
                 return false;
             }
@@ -49,25 +49,25 @@
 @section('content')
     <div class="login">
         <div class="login_logo"></div>
-        <p class="form_error"></p>
+        <p class="form_error formfont"></p>
         <div class="login_form">
             <form method="POST" id="form" name="form" action="{{ route('login') }}">
                 {{ csrf_field() }}
                 <label for="name" class="field">
                     <i class="fa fa-user-o"></i>
-                    <input type="text" id="name" class="chayefont" name="name" autocomplete="off" placeholder="请输入用户名">
+                    <input type="text" id="name" class="formfont" name="name" autocomplete="off" placeholder="请输入用户名">
                 </label>
                 <label for="password" class="field">
                     <i class="fa fa-lock"></i>
-                    <input type="password" id="password" class="chayefont" name="password" autocomplete="off" placeholder="请输入密码">
+                    <input type="password" id="password" class="formfont" name="password" autocomplete="off" placeholder="请输入密码">
                 </label>
                 <div class="login_link">
-                    <a class="pull-left" href="{{ url('/reset') }}">
-                        <i class="fa fa-circle-thin"></i>
+                    <a class="pull-left formfont" href="{{ url('/reset') }}">
+                        <!-- <i class="fa fa-circle-thin"></i> -->
                         忘记密码
                     </a>
-                    <a class="pull-left" href="{{ url('/register') }}">
-                        <i class="fa fa-circle"></i>
+                    <a class="pull-left formfont" href="{{ url('/register') }}">
+                        <!-- <i class="fa fa-circle"></i> -->
                         注册账号
                     </a>
                 </div>

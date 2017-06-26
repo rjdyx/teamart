@@ -7,7 +7,7 @@
         var handlerEmbed = function(captchaObj) {
             //bind模式
             document.getElementById('valid').addEventListener('click', function () {
-                if (valid()) { // 检查是否可以进行提交
+                if (validate()) { // 检查是否可以进行提交
                     var pm = submitForm()
                     pm.then(function (resolve) {
                         console.log(resolve)

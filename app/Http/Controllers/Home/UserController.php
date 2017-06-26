@@ -16,14 +16,14 @@ class UserController extends Controller
 		$show = User::find(Auth::user()->id);
 		$title = '个人中心';
 		$footer = 'user';
-		return view(config('app.theme').'.home.personalCenter')->with(['show'=>$show,'title'=>$title,'footer'=>$footer]);
+		return view(config('app.theme').'.home.userCenter')->with(['show'=>$show,'title'=>$title,'footer'=>$footer]);
 	}
 
 	//个人资产
 	public function userAsset () {
 		$show = User::find(Auth::user()->id);
 		$title = '个人资产';
-		return view(config('app.theme').'.home.personalAssets')->with(['show'=>$show,'title'=>$title]);
+		return view(config('app.theme').'.home.userAssets')->with(['show'=>$show,'title'=>$title]);
 	}
 
 	//编辑 用户信息

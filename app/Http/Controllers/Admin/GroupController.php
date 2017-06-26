@@ -34,16 +34,16 @@ class GroupController extends Controller
         return view(config('app.theme').'.admin.activity.group.group')->with(['lists'=>$lists]);
     }
 
-    // //数据查询(团购活动查询)
-    // public function indexData () {
-    //     // $lists = ActivityProduct::join('activity','activity_product.activity_id','=','activity.id')
-    //     //         ->join('product','activity_product.product_id','=','product.id');
-    //     //         // ->whereNull('product.deleted_at')
-    //     //         // ->whereNull('activity.deleted_at');
-    //     // // $lists = Group::orderBy('id','asc');
-    //     // $lists = Group::orderBy('id','asc');
-    //     // return $lists;
-    // }
+    //数据查询(团购活动查询)
+    public function indexData () {
+        // $lists = ActivityProduct::join('activity','activity_product.activity_id','=','activity.id')
+        //         ->join('product','activity_product.product_id','=','product.id');
+        //         // ->whereNull('product.deleted_at')
+        //         // ->whereNull('activity.deleted_at');
+        // // $lists = Group::orderBy('id','asc');
+        // $lists = Group::orderBy('id','asc');
+        // return $lists;
+    }
 
     //创建
     public function create()
@@ -82,10 +82,9 @@ class GroupController extends Controller
         // }
         $activity = Group::find($id);
         $activity_id = $activity->id;
-        if(DB::delete('delete from fx_activity_product where activity_id = '.$activity_id)){
-            if(Group::destroy($id)){
+        DB::delete('delete from fx_activity_product where activity_id = '.$activity_id);
+        if(Group::destroy($id)){
                 return true;
-            }
         }
         return false;
     }
@@ -94,10 +93,12 @@ class GroupController extends Controller
     public function dels(Request $request)
     {
         $ids = explode(',', $request->ids);
-        if (Group::destroy($ids)) {
-            return Redirect::back()->with('status','批量删除成功');
+        foreach ($ids as $id) {
+            if (!$this->del($id)) {
+                return Redirect::back()->withErrors('批量删除失败');
+            }
         }
-        return Redirect::back()->withErrors('批量删除失败');
+        return Redirect::back()->with('status','批量删除成功');
     }
 
     //新建保存
