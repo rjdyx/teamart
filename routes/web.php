@@ -36,6 +36,7 @@ Route::group(['namespace'=>'Home','prefix'=>'home'],function(){
 		Route::get('/list','HelpController@index');
 		Route::get('/detail/{id}','HelpController@detail');
 	});
+	Route::get('/userinfo','UserController@userInfo');
 });
 
 /********************** Home - 须登录模块 (非管理员)  ***************************/
@@ -56,7 +57,7 @@ Route::group(['namespace'=>'Home','prefix'=>'home','middleware'=>['auth']],funct
 	Route::get('/cart','CartController@index');
 
 	//用户部分
-	Route::get('/userinfo','UserController@userInfo');
+	
 	Route::get('/userasset','UserController@userAsset');
 	Route::get('/useredit','UserController@edit');
 	Route::resource('/user', 'UserController');

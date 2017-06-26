@@ -16,7 +16,7 @@ class OrderController extends Controller
 		->where('user_id',Auth::user()->id)
 		->paginate(config('app.paginate10'));
 		$title = '订单管理';
-		return view(config('app.theme').'.home.orderList')->with(['lists'=>$lists,'title'=>$title]);
+		return view(config('app.theme').'.home.orderList')->with(['footer'=>'order','lists'=>$lists,'title'=>$title]);
 	}
 
 	//收藏列表页
@@ -25,6 +25,6 @@ class OrderController extends Controller
 		->where('user_id',Auth::user()->id)
 		->paginate(config('app.paginate10'));
 		$title = '收藏管理';
-		return view(config('app.theme').'.home.collect')->with(['lists'=>$lists,'title'=>$title]);
+		return view(config('app.theme').'.home.collect')->with(['footer'=>'collect','lists'=>$lists,'title'=>$title]);
 	}
 }

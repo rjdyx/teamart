@@ -8,7 +8,7 @@
  */
 namespace App\Http\Controllers\Admin;
 
-use App\System;
+use App\Ad;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Redirect;
@@ -19,14 +19,14 @@ class AdController extends Controller
     //首页 (列表页)
     public function index(Request $request)
     {
-        $lists = System::paginate(config('app.paginate10'));
+        $lists = Ad::paginate(config('app.paginate10'));
         return view(config('app.theme').'.admin.system.ad')->with('lists',$lists);
     }
 
     //查看单条信息
     public function show($id)
     {
-        return System::find($id);
+        return Ad::find($id);
     }
 
     //数据创建
