@@ -20,7 +20,7 @@ class CartController extends Controller
 		->paginate(config('app.paginate10'));
 		$title = '购物车';
 		$footer = 'cart';
-		return view(config('app.theme').'.home.orderList')->with(['lists'=>$lists,'title'=>$title,'footer'=>$footer]);
+		return view(config('app.theme').'.home.cart')->with(['lists'=>$lists,'title'=>$title,'footer'=>$footer]);
 	}
 	//购物车未支付页面
 	public function pending(Request $request){
