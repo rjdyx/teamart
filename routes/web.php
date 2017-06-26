@@ -38,7 +38,7 @@ Route::group(['namespace'=>'Home','prefix'=>'home'],function(){
 	});
 });
 
-// Home - 须登录模块 (普通会员)
+/********************** Home - 须登录模块 (非管理员)  ***************************/
 Route::group(['namespace'=>'Home','prefix'=>'home','middleware'=>['auth']],function(){
 	//地址管理
 	Route::resource('/address', 'AddressController');
@@ -66,12 +66,12 @@ Route::group(['namespace'=>'Home','prefix'=>'home','middleware'=>['auth']],funct
 	Route::post('/feedback','FeedbackController@store');
 });
 
-// Home - 分销商 模块
+/********************** Home - 分销商 ***************************/
 Route::group(['namespace'=>'Home','prefix'=>'home','middleware'=>['auth','userRole:fx']],function(){
 
 });
 
-// Admin - 管理员 模块
+/********************** Admin - 管理员 ***************************/
 Route::group(['namespace'=>'Admin','prefix'=>'admin','middleware'=>['auth','userRole:admin']
 	],function(){
 
