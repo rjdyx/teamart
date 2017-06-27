@@ -1437,6 +1437,12 @@
 			.price {
 				color: #FF4100;
 			}
+			.sell {
+				color: #7A7A7A;
+				i {
+					font-style: normal;
+				}
+			}
 			@media screen and (max-width:321px){
 				h1 {
 					font-size: 16px;
