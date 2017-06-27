@@ -1,6 +1,5 @@
-<!-- 顶部 -->
 <header>
-    <div class="header_left pull-left">
+    <div class="header_left pull-left J_header_category">
         <i></i>
         <span>分类</span>
     </div>
@@ -17,5 +16,27 @@
         <input type="text" class="header_search_inp" placeholder="请输入你搜索的商品" style="opacity: 0.6;">
         <i class="fa fa-times-circle header_close hide"></i>
     </div>
-    <div class="header_container none"></div>
+    <ul class="header_category">
+        <li>
+            <a href="#">分类1</a>
+        </li>
+        <li>
+            <a href="#">分类1</a>
+        </li>
+        <li>
+            <a href="#">分类1</a>
+        </li>
+        <li>
+            <a href="#">分类1</a>
+        </li>
+        <li>
+            <a href="#">分类1</a>
+        </li>
+        <li>
+            <a href="#">分类1</a>
+        </li>
+        <li>
+            <a href="#">分类1</a>
+        </li>
+    </ul>
 </header>

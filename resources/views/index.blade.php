@@ -5,24 +5,10 @@
 @endsection
 
 @section('css')
-    {{-- <link rel="stylesheet" type="text/css" href="{{ asset('fx/css/catelog.css') }}"> --}}
-    <style>
-    .banner{ width:100%; overflow:hidden; position:relative;   }
-    .banner .bd{ position:relative; height:100%; z-index:0;   }
-    .banner .bd li{ zoom:1; vertical-align:middle; }
-    .banner .bd img{ width:100%; height:100%; display:block; border:none;}
-    </style>
 @endsection
 
 @section('script')
     @parent
-    {{-- <script type="text/javascript" src="{{ url('fx/js/catelog.js') }}"></script> --}}
-    <script type="text/javascript" src="{{ url('fx/common/jquery1.42.min.js') }}"></script>
-    <script type="text/javascript" src="{{ url('fx/common/jquery.SuperSlide.2.1.1.js') }}"></script>
-
-    <script>
-        jQuery(".banner").slide({mainCell:".bd ul",effect:"leftLoop",autoPlay:true,easing:"easeInOutElastic",delayTime:1000});
-    </script>
 @endsection
 
 @section('content')
@@ -30,18 +16,17 @@
 @include("layouts.header")
     <div class="container index" >
         <!-- 轮播 -->
-        <div class="banner">
-            <div class="bd">
+        <div class="banner swiper-container">
+            <div class="swiper-wrapper">
                 <ul>
                 @if(count($lbs))
                     @foreach($lbs as $lb)
-                        <li><img src="{{url('')}}/{{$lb}}" alt=""></li> 
+                        <li class="swiper-slide"><img src="{{url('')}}/{{$lb}}" alt=""></li> 
                     @endforeach
                 @else
-                    <li><img src="fx/images/index_banner.png" alt=""></li> 
+                    <li class="swiper-slide"><img src="fx/images/index_banner.png" alt=""></li> 
                 @endif
                 </ul>
-                
             </div>
         </div>
         <div class="index_box">

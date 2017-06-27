@@ -39,6 +39,7 @@
     "lodash": "^4.17.4",
     "mobile-select-area": "^3.0.3",
     "script-loader": "^0.7.0",
+    "swiper": "^3.4.2",
     "vue": "^2.1.10",
     "vue-router": "^2.3.1",
     "vuex": "^2.3.1"

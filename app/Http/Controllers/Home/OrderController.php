@@ -86,4 +86,8 @@ class OrderController extends Controller
         return "添加收藏成功";
 	}}
 
+	public function confirm () {
+		$title = '确认订单';
+		return view(config('app.theme').'.home.confirm')->with(['title'=>$title]);
+	}
 }
