@@ -47,7 +47,7 @@
     </script>
 </head>
 <body class="hold-transition skin-green-light sidebar-mini">
-    
+     
     <div class="wrapper">
         @include("fx.admin.layouts.header")
 

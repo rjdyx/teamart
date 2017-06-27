@@ -103,7 +103,7 @@
 				</a>
 			</li>
 			<li>
-				<a href="javascript:;">
+				<a href="{{url('/home/collect')}}">
 					<div class="usercenter_nav_icon">
 						<i class="fa fa-star"></i>
 					</div>

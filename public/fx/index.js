@@ -5,6 +5,8 @@ require('expose-loader?_!lodash')
 require('babel-polyfill')
 
 // require('normalize.css')
+// require('mobile-select-area/dist/mobile-select-area.css')
+// require('mobile-select-area/dist/dialog.css')
 require('font-awesome/css/font-awesome.css')
 require('ionicons/dist/css/ionicons.css')
 // require('bootstrap')

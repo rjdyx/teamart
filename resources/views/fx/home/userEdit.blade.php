@@ -3,7 +3,7 @@
 @section('title') 个人资料 @endsection
 
 @section('css')
-    <link rel="stylesheet" type="text/css" href="{{ asset('fx/css/personalInformation.css') }}">
+    {{-- <link rel="stylesheet" type="text/css" href="{{ asset('fx/css/personalInformation.css') }}"> --}}
 @endsection
 
 @section('script')
@@ -14,73 +14,49 @@
 @section('content')
 
     @include("layouts.header-info")
-	<!-- 内容 -->
-	<div class="personal_info_content">
-		<div class="personal_assets_img_Bamboo">
-			<div class="personal_assets_head_photo">
-				<div class="img_background_shadow"></div>
-			  	<div class="personal_assets_img_BlackCircle"></div>
-			</div>
-			<div class="personal_assets_two_name">
-				<div class="personal_assets_name">王宝强</div>
-		 		<div class="personal_assets_name" id="personal_assets_recommend_name">推荐人：隔壁老王</div>
-			</div>
+
+	<div class="useredit">
+		<div class="useredit_info mb-10">
+			<label for="img" class="block useredit_avatar">
+				<img src="{{url('fx/images/usercenter_avatar.png')}}">
+			</label>
+			<p class="useredit_name chayefont">王宝强</p>
+			<p class="useredit_name chayefont fz-18">推荐人：隔壁老王</p>
 		</div>
-		
-		<div class="personal_info_div_list">
-			<ul>
-				<li id="personal_info_list_one" class="personal_info_list">
-					<span class="personal_info_list_span">姓名：</span>
-					<div class="personal_info_list_modify_div">
-						<input class="personal_info_list_input" type="text" name="" placeholder="天王盖地虎">
-					</div>
-				</li>
-
-				<li class="personal_info_list">
-					<span class="personal_info_list_span">性别：</span>
-					<div class="personal_info_list_modify_div">
-						<select class="personal_info_list_select">
-							<option selected="true">男</option>
-							<option>女</option>
-						</select>
-					</div>
-				</li>
-
-				<li class="personal_info_list">
-					<span class="personal_info_list_span">手机：</span>
-					<div class="personal_info_list_modify_div">
-						<input class="personal_info_list_input" type="text" name="" placeholder="13560449011">
-					</div>
-				</li>
-
-				<li class="personal_info_list">
-					<span class="personal_info_list_span">QQ：</span>
-					<div class="personal_info_list_modify_div">
-						<input class="personal_info_list_input" type="text" name="" placeholder="455010903">
-					</div>
-				</li>
-
-				<li class="personal_info_list">
-					<span class="personal_info_list_span">生日：</span>
-					<div class="personal_info_list_modify_div">
-						<select class="personal_info_list_select">
-							<option selected="true">男</option>
-							<option>女</option>
-						</select>
-					</div>
-				</li>
-
-				<li class="personal_info_list">
-					<span class="personal_info_list_span">绑定手机号：</span>
-					<div class="personal_info_list_modify_div">
-						<input id="personal_info_list_last" class="personal_info_list_input" type="text" name="" placeholder="未绑定">
-					</div>
-				</li>
-			</ul>
-		</div>
+		<form action="#" name="usereditform">
+			<div class="useredit_item chayefont">
+				<label for="realname">姓名</label>
+				<input type="text" name="realname" id="realname" class="chayefont" autocomplete="off" placeholder="请输入姓名">
+			</div>
+			<div class="useredit_item chayefont">
+				<label for="gender">性别</label>
+				<input type="hidden" name="gender" value="">
+				<div class="pull-right useredit_selection">男<i class="fa fa-angle-down"></i></div>
+			</div>
+			<div class="useredit_item chayefont">
+				<label for="phone">手机</label>
+				<input type="tel" name="phone" id="phone" class="chayefont" autocomplete="off" placeholder="请输入手机号码">
+			</div>
+			<div class="useredit_item chayefont">
+				<label for="email">邮箱</label>
+				<input type="email" name="email" id="email" class="chayefont" autocomplete="off" placeholder="请输入邮箱">
+			</div>
+			<div class="useredit_item chayefont">
+				<label for="birth_date">出生日期</label>
+				<input type="hidden" name="birth_date" value="">
+				<div class="pull-right useredit_selection">5月15日<i class="fa fa-angle-down"></i></div>
+			</div>
+			<div class="useredit_item chayefont">
+				<label for="password">密码</label>
+				<input type="password" name="password" id="password" class="chayefont" autocomplete="off" placeholder="请输入密码">
+			</div>
+			<div class="useredit_item chayefont">
+				<label for="password">确认密码</label>
+				<input type="password" name="repassword" id="repassword" class="chayefont" autocomplete="off" placeholder="请输入确认密码">
+			</div>
+			<input type="file" name="img" id="img" class="invisibility">
+		</form>
+		<div class="chayefont useredit_save">确定保存</div>
 	</div>
-	
-	<!-- 底部 -->
-	<div class="bottom2">确定保存</div>
 @endsection
 

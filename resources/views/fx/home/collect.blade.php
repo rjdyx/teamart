@@ -3,19 +3,154 @@
 @section('title') 我的收藏 @endsection
 
 @section('css')
-    <link rel="stylesheet" type="text/css" href="{{ asset('fx/css/collect.css') }}">
 @endsection
 
 @section('script')
-    @parent
-	<script type="text/javascript" src="{{ url('fx/js/collect.js') }}"></script>
+	@parent
 @endsection
 
 @section('content')
 
-    @include("layouts.header-info")
+	@include("layouts.header-info")
+
+	<div class="container collect">
+		<div class="collect_container">
+			<div class="collect_warpper mb-20">
+				<div class="collect_warpper_tit">
+					<a href="javascript:;" class="chayefont">
+						<i class="fa fa-ban"></i>
+						绿茶宝塔镇河妖
+					</a>
+				</div>
+				<div class="collect_warpper_content clearfix">
+					<div class="collect_warpper_content_img pull-left mr-20">
+						<img src="{{ url('fx/img/shop11.png') }}">
+					</div>
+					<div class="collect_warpper_content_info pull-right">
+						<h5 class="chayefont mb-10">菲律宾进口香蕉</h5>
+						<p>新鲜梨树雪梨发货供货的供货皇冠分隔符梨</p>
+						<div class="collect_warpper_content_info_bottom">
+							<span class="pull-left price">￥212.00</span>
+							<span class="pull-right sell">已售197</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="collect_warpper mb-20">
+				<div class="collect_warpper_tit">
+					<a href="javascript:;" class="chayefont">
+						<i class="fa fa-ban"></i>
+						绿茶宝塔镇河妖
+					</a>
+				</div>
+				<div class="collect_warpper_content clearfix">
+					<div class="collect_warpper_content_img pull-left mr-20">
+						<img src="{{ url('fx/img/shop11.png') }}">
+					</div>
+					<div class="collect_warpper_content_info pull-right">
+						<h5 class="chayefont mb-10">菲律宾进口香蕉</h5>
+						<p>新鲜梨树雪梨发货供货的供货皇冠分隔符梨</p>
+						<div class="collect_warpper_content_info_bottom">
+							<span class="pull-left price">￥212.00</span>
+							<span class="pull-right sell">已售197</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="collect_warpper mb-20">
+				<div class="collect_warpper_tit">
+					<a href="javascript:;" class="chayefont">
+						<i class="fa fa-ban"></i>
+						绿茶宝塔镇河妖
+					</a>
+				</div>
+				<div class="collect_warpper_content clearfix">
+					<div class="collect_warpper_content_img pull-left mr-20">
+						<img src="{{ url('fx/img/shop11.png') }}">
+					</div>
+					<div class="collect_warpper_content_info pull-right">
+						<h5 class="chayefont mb-10">菲律宾进口香蕉</h5>
+						<p>新鲜梨树雪梨发货供货的供货皇冠分隔符梨</p>
+						<div class="collect_warpper_content_info_bottom">
+							<span class="pull-left price">￥212.00</span>
+							<span class="pull-right sell">已售197</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="collect_warpper mb-20">
+				<div class="collect_warpper_tit">
+					<a href="javascript:;" class="chayefont">
+						<i class="fa fa-ban"></i>
+						绿茶宝塔镇河妖
+					</a>
+				</div>
+				<div class="collect_warpper_content clearfix">
+					<div class="collect_warpper_content_img pull-left mr-20">
+						<img src="{{ url('fx/img/shop11.png') }}">
+					</div>
+					<div class="collect_warpper_content_info pull-right">
+						<h5 class="chayefont mb-10">菲律宾进口香蕉</h5>
+						<p>新鲜梨树雪梨发货供货的供货皇冠分隔符梨</p>
+						<div class="collect_warpper_content_info_bottom">
+							<span class="pull-left price">￥212.00</span>
+							<span class="pull-right sell">已售197</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="collect_warpper mb-20">
+				<div class="collect_warpper_tit">
+					<a href="javascript:;" class="chayefont">
+						<i class="fa fa-ban"></i>
+						绿茶宝塔镇河妖
+					</a>
+				</div>
+				<div class="collect_warpper_content clearfix">
+					<div class="collect_warpper_content_img pull-left mr-20">
+						<img src="{{ url('fx/img/shop11.png') }}">
+					</div>
+					<div class="collect_warpper_content_info pull-right">
+						<h5 class="chayefont mb-10">菲律宾进口香蕉</h5>
+						<p>新鲜梨树雪梨发货供货的供货皇冠分隔符梨</p>
+						<div class="collect_warpper_content_info_bottom">
+							<span class="pull-left price">￥212.00</span>
+							<span class="pull-right sell">已售197</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="collect_warpper mb-20">
+				<div class="collect_warpper_tit">
+					<a href="javascript:;" class="chayefont">
+						<i class="fa fa-ban"></i>
+						绿茶宝塔镇河妖
+					</a>
+				</div>
+				<div class="collect_warpper_content clearfix">
+					<div class="collect_warpper_content_img pull-left mr-20">
+						<img src="{{ url('fx/img/shop11.png') }}">
+					</div>
+					<div class="collect_warpper_content_info pull-right">
+						<h5 class="chayefont mb-10">菲律宾进口香蕉</h5>
+						<p>新鲜梨树雪梨发货供货的供货皇冠分隔符梨</p>
+						<div class="collect_warpper_content_info_bottom">
+							<span class="pull-left price">￥212.00</span>
+							<span class="pull-right sell">已售197</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="collect_bottom">
+			<div class="block pull-left txt-l collect_bottom_selection">
+				<span>全选</span>
+			</div>
+			<div class="block pull-left txt-c collect_bottom_del">删除</div>
+		</div>
+	</div>
 	<!-- 我的收藏列表 -->
-	<div class="container">
+	<!-- <div class="container">
 		<div class="products">
 			<ul>
 				<li class="products_list">
@@ -132,15 +267,6 @@
 				</li>
 			</ul>
 		</div>
-	</div>
+	</div> -->
 	<!-- 底部 -->
-	<div class="bottom">
-		<div class="bottom_left">
-			<label class="bottom_img"></label>
-			<p class="all_font">全选</p>
-		</div>
-		<div class="bottom_right">
-			<p class="delete">删除</p>
-		</div>
-	</div>
 @endsection
