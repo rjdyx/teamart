@@ -21,7 +21,6 @@ class AddressController extends Controller
 	public function create () {
 		$title = '新增地址';
 		$user_id = Auth::user()->id;
-		echo $user_id;
 		return view(config('app.theme').'.home.addressAdd')->with(['title'=>$title,'user_id'=>$user_id]);
 	}
 
@@ -82,19 +81,23 @@ class AddressController extends Controller
 	public function canceldefault(){
 		$address = Address::where('user_id',Auth::user()->id)->where('state','=','1')->first();
 		if(empty($address)){
+			//还没设置默认地址
 			return true;
 		}else{
 			$defaultaddress = Address::find($address->id);
 			$defaultaddress->state = 0;
 			if($defaultaddress->save()){
+				//已经取消了默认地址
 				return true;
 			}
+			//取消默认地址失败
 			return false;
 		}
 	}
 
     //更新默认地址
-	public function default($id){
+	public function defaultaddress($id){
+		//判断现在是所有地址都不是默认选中状态，如果是则设定新的默认地址
 		if($this->canceldefault()){
 			$model = Address::find($id);
 			$model->state = 1;
@@ -113,9 +116,7 @@ class AddressController extends Controller
 			'required',
 			'max:50', 
 			], 
-			'province'=>'required',
-			'city'=>'required',
-			'area'=>'required',
+			'address'=>'required',
 			'phone'=>[
 			'required',
 			'max:11',
@@ -127,10 +128,17 @@ class AddressController extends Controller
 		} else {
 			$model = Address::find($id);
 		}
+		$address = explode(',', $request->address);
+		$province = $address[0];
+		$city = $address[1];
+		$area = $address[2];
         //接收数据 加入model
-		$model->setRawAttributes($request->only(['name','user_id','phone','province','city','area','detail','code']));  
+		$model->setRawAttributes($request->only(['name','user_id','phone','detail','code']));  
+		$model->province = $province;
+		$model->city = $city;
+		$model->area = $area;
 		$state = 0;
-		if($request->default == 'on'){
+		if($request->state == 1){
 			if($this->canceldefault()){
 				$state = 1;
 			}else{
