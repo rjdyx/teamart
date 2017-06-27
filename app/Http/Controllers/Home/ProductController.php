@@ -76,7 +76,7 @@ class ProductController extends Controller
 	}
 
 	//商品分类
-	public function productBrand () {
+	public function productCategory () {
 		return ProductCategory::get();
 	}
 
