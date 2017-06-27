@@ -8,6 +8,8 @@ use App\Order;
 use App\OrderProduct;
 use App\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
+
 
 class UserController extends Controller
 {
@@ -34,15 +36,53 @@ class UserController extends Controller
 
 	//个人资产
 	public function userAsset () {
-		$show = User::find(Auth::user()->id);
+		$data = User::find(Auth::user()->id);
 		$title = '个人资产';
-		return view(config('app.theme').'.home.userAssets')->with(['show'=>$show,'title'=>$title]);
+		return view(config('app.theme').'.home.userAssets')->with(['data'=>$data,'title'=>$title]);
 	}
 
 	//编辑 用户信息
 	public function edit () {
-		$show = User::find(Auth::user()->id);
+		$data = User::leftjoin('user as auser','user.parter_id','=','auser.id')
+			->where('user.id','=',Auth::user()->id)
+			->select('user.*','auser.name as pname')
+			->first();
 		$title = '个人信息';
-		return view(config('app.theme').'.home.userEdit')->with(['show'=>$show,'title'=>$title]);
+		return view(config('app.theme').'.home.userEdit')->with(['data'=>$data,'title'=>$title]);
+	}
+
+	//编辑 用户信息
+	public function update (Request $request, $id) {
+		$this->validate($request, [
+            'email' => [
+                'required',
+                'max:50', 
+                //name+软删除 唯一验证               
+                Rule::unique('user')->ignore($id)->where(function($query) use ($id) {
+                    $query->whereNull('deleted_at');
+                })
+            ], 
+            'phone' => [
+                'required',
+                'max:50', 
+                //name+软删除 唯一验证               
+                Rule::unique('user')->ignore($id)->where(function($query) use ($id) {
+                    $query->whereNull('deleted_at');
+                })
+            ], 
+            'realname'=>'nullable|max:50',
+            'gender' => 'required|max:4'
+        ]);
+
+        $model = User::find($id);
+
+        //接收数据 加入model
+        $model->setRawAttributes($request->only(['realname','email','phone','gender','birth_date']));
+
+        $password = $request->password;
+        if ($password) $model->password = bcrypt($password);
+
+        if ($model->save()) return 'true';
+        return 'false';
 	}
 }
