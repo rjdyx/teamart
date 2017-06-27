@@ -231,7 +231,7 @@
  		</ul>
 		<div class="product_container clearfix">
 			<div class="product_warpper pull-left">
-				<a href="#">
+				<a href="{{url('home/product/detail/1')}}">
 					<img src="{{url('fx/img/shop11.png')}}">
 					<h1 class="mt-20 chayefont">菲律宾进口香蕉</h1>
 					<p class="mt-10 mb-10">新鲜梨树雪梨发货供货的供货皇冠分隔符梨</p>
