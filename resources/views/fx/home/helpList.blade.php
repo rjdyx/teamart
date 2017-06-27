@@ -15,7 +15,7 @@
 <div class="helpcenter">
 	<ul class="helpcenter_list">
 		<li>
-			<a href="{{ url('home/detail/1') }}" class="chayefont">个人中心操作大全</a>
+			<a href="{{ url('home/help/detail/1') }}" class="chayefont">个人中心操作大全</a>
 		</li>
 		<li>
 			<a href="javascript:;" class="chayefont">推广二维码更新方法</a>
