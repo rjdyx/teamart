@@ -3,12 +3,26 @@
 @section('title') 个人资料 @endsection
 
 @section('css')
-    {{-- <link rel="stylesheet" type="text/css" href="{{ asset('fx/css/personalInformation.css') }}"> --}}
+    <link rel="stylesheet" type="text/css" href="{{ asset('fx/mui/mui.picker.css') }}">
+    <!-- <link rel="stylesheet" type="text/css" href="{{ asset('fx/mui/mui.css') }}"> -->
 @endsection
 
 @section('script')
     @parent
-
+	<script src="{{ asset('fx/mui/js/mui.min.js') }}"></script>
+	<script src="{{ asset('fx/mui/js/mui.picker.min.js') }}"></script>
+	<script src="{{ asset('fx/mui/js/data.city.js') }}"></script>
+	<script>
+		var start_time_picker = new mui.DtPicker({"type":"date","beginYear":1960,"endYear":2020});
+		$("#useData").on("tap", function(){
+			setTimeout(function(){
+				start_time_picker.show(function(items){
+					$("#useData_id").val(items.text);
+					$("#useData").html(items.text);
+				});
+			},200);
+		});
+	</script>
 @endsection
 
 @section('content')
@@ -43,8 +57,8 @@
 			</div>
 			<div class="useredit_item chayefont">
 				<label for="birth_date">出生日期</label>
-				<input type="hidden" name="birth_date" value="">
-				<div class="pull-right useredit_selection">5月15日<i class="fa fa-angle-down"></i></div>
+				<input type="hidden" name="birth_date" value=""  id="useData_id">
+				<div class="pull-right useredit_selection" id="useData">请选择<i class="fa fa-angle-down"></i></div>
 			</div>
 			<div class="useredit_item chayefont">
 				<label for="password">密码</label>
