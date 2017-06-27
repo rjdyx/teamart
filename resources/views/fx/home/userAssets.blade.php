@@ -3,7 +3,6 @@
 @section('title') 个人资产 @endsection
 
 @section('css')
-    <link rel="stylesheet" type="text/css" href="{{ asset('fx/css/personalAssets.css') }}">
 @endsection
 
 @section('script')
@@ -14,38 +13,27 @@
 @section('content')
 
     @include("layouts.header-info")
-    <div class="container userassets"></div>
-	<div class="personal_assets_content">
-
-		<div class="personal_assets_img_Bamboo">
-			<div class="personal_assets_head_photo">
-				<div class="img_background_shadow"></div>
-			  	<div class="personal_assets_img_BlackCircle"></div>
+    <div class="userassets">
+    	<div class="userassets_info">
+			<div class="userassets_avatar">
+				<img src="{{url('')}}/ @if(Auth::user()){{Auth::user()->img}} @endif" alt="">
 			</div>
-			<div class="personal_assets_two_name">
-				<div class="personal_assets_name">王宝强</div>
-		 		<div class="personal_assets_name" id="personal_assets_recommend_name">推荐人：隔壁老王</div>
+			<p class="userassets_name chayefont">@if(Auth::user()){{Auth::user()->name}} @endif</p>
+			<p class="userassets_name chayefont fz-18">推荐人：@if(Auth::user()){{Auth::user()->name}} @endif</p>
+		</div>
+		<div class="userassets_content mt-20">
+			<div class="userassets_content_row">
+				<span class="pull-left chayefont">累计佣金：</span>
+				<a href="javascript:;" class="pull-right chayefont">记录</a>
+			</div>
+			<div class="userassets_content_row">
+				<span class="pull-left chayefont">可提现余额：</span>
+				<a href="javascript:;" class="pull-right chayefont orange">提现</a>
+			</div>
+			<div class="userassets_content_row">
+				<span class="pull-left chayefont">支付密码管理：</span>
+				<a href="javascript:;" class="pull-right chayefont orange">设置修改</a>
 			</div>
 		</div>
-
-
-		<div class="personal_assets_div_list">
-			<ul>
-				<li id="personal_assets_list_one" class="personal_assets_list">
-					<span class="personal_assets_list_span">累计佣金：</span>
-					<div class="personal_assets_list_modify_div" id="personal_assets_list_button1">记录</div>
-				</li>
-
-				<li class="personal_assets_list">
-					<span class="personal_assets_list_span">可提现余额：</span>
-					<div class="personal_assets_list_modify_div" id="personal_assets_list_button2">提现</div>
-				</li>
-
-				<li class="personal_assets_list">
-					<span class="personal_assets_list_span">支付密码管理：</span>
-					<div class="personal_assets_list_modify_div" id="personal_assets_list_button3">设置修改</div>
-				</li>
-			</ul>
-		</div>
-	</div>
+    </div>
 @endsection

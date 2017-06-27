@@ -3,7 +3,6 @@
 @section('title') 帮助中心 @endsection
 
 @section('css')
-    <link rel="stylesheet" type="text/css" href="{{ asset('fx/css/helpCenter_option.css') }}">
 @endsection
 
 @section('script')
