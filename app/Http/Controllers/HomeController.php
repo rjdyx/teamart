@@ -33,7 +33,7 @@ class HomeController extends Controller
 
         //轮播
         $system = System::find(1); $lbs = array();
-        if ($system->slider) $lbs = explode(',', $system->slider);
+        if (isset($system->slider) && !empty($system->slider)) $lbs = explode(',', $system->slider);
 
         return view('index')->with(['footer'=>'home','lbs'=>$lbs,'activitys'=>$activitys,'news'=>$news,'sells'=>$sells,'ads'=>$ads]); 
     }
