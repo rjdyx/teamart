@@ -1,7 +1,7 @@
 @extends('fx.admin.layouts.app')
 
 @section('title')
-编辑站点
+新建站点
 @endsection
 @section('t1')
 系统管理
@@ -12,7 +12,6 @@
 
 @section('script')
     @parent
-
 @endsection
 
 @section('content')
@@ -26,38 +25,37 @@
               </div>
               <!-- /.box-header -->
               <!-- form start -->
-              <form action="{{url('admin/system/site')}}/{{$site->id}}" method="post" class="form-horizontal">
+              <form action="{{url('admin/system/site')}}" method="post" class="form-horizontal">
                 {{ csrf_field() }}
-                <input type="hidden" value="PUT" name="_method">
                 <div class="box-body">
                   <div class="form-group">
                     <label for="storename" class="col-sm-2 control-label">站点名称</label>
                     <div class="col-sm-10">
-                      <input type="text" name="name"  value="{{$site->name}}" class="form-control" id="storename" placeholder="请输入站点名称">
+                      <input type="text" name="name" class="form-control" id="storename" placeholder="请输入站点名称">
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="Contacts" class="col-sm-2 control-label">经度</label>
                     <div class="col-sm-10">
-                      <input type="text" name="longitude"  value="{{$site->longitude}}" class="form-control" id="Contacts" placeholder="请输入经度">
+                      <input type="text" name="longitude" class="form-control" id="Contacts" placeholder="请输入地图经度">
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="Contacts" class="col-sm-2 control-label">纬度</label>
                     <div class="col-sm-10">
-                      <input type="text"  value="{{$site->latitude}}" name="latitude" class="form-control" id="Contacts" placeholder="请输入纬度">
+                      <input type="text" name="latitude" class="form-control" id="Contacts" placeholder="请输入地图纬度">
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="Contacts" class="col-sm-2 control-label">联系人</label>
                     <div class="col-sm-10">
-                      <input type="text" name="user" class="form-control" id="Contacts" placeholder="请输入联系人"  value="{{$site->user}}">
+                      <input type="text" name="user" class="form-control" id="Contacts" placeholder="请输入联系人">
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="Contacts" class="col-sm-2 control-label">联系电话</label>
                     <div class="col-sm-10">
-                      <input type="text" name="phone" class="form-control" id="Contacts" placeholder="请输入联系电话"  value="{{$site->phone}}">
+                      <input type="text" name="phone" class="form-control" id="Contacts" placeholder="请输入联系电话">
                     </div>
                   </div>
                   <div class="form-group">

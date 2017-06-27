@@ -48,7 +48,8 @@ Route::group(['namespace'=>'Home','prefix'=>'home'],function(){
 Route::group(['namespace'=>'Home','prefix'=>'home','middleware'=>['auth']],function(){
 	//地址管理
 	Route::resource('/address', 'AddressController');
-	Route::get('/address/default/{id}','AddressController@default');
+	Route::post('/address','AddressController@store');
+	Route::get('/address/default/{id}','AddressController@defaultaddress');
 
 	// 订单部分
 	Route::group(['prefix'=>'order'],function(){

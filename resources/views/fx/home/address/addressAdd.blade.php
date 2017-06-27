@@ -3,78 +3,101 @@
 @section('title') 地址管理 @endsection
 
 @section('css')
-    <link rel="stylesheet" type="text/css" href="{{ asset('fx/css/addAddress.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('fx/larea/css/LArea.css') }}">
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            -webkit-appearance: none; //去掉浏览器默认样式
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            -webkit-touch-callout: none;
+            box-sizing: border-box;
+        }
+        
+        html,
+        body {
+            margin: 0 auto;
+            width: 100%;
+            min-height: 100%;
+            overflow-x: hidden; 
+            -webkit-user-select: none;
+        }
+        
+        body {
+            font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+            -webkit-text-size-adjust: 100%; //关闭自动调整字体
+            -webkit-overflow-scrolling: touch;
+            overflow-scrolling: touch;
+        }
+    </style>
 @endsection
 
 @section('script')
     @parent
+
+    <script src="{{ asset('fx/larea/js/LAreaData1.js') }}"></script>
+    <script src="{{ asset('fx/larea/js/LAreaData2.js') }}"></script>
+    <script src="{{ asset('fx/larea/js/LArea.js') }}"></script>
+    <script>
+        var area1 = new LArea();
+        area1.init({
+            'trigger': '#demo1', //触发选择控件的文本框，同时选择完毕后name属性输出到该位置
+            'valueTo': '#value1', //选择完毕后id属性输出到该位置
+            'keys': {
+                id: 'id',
+                name: 'name'
+            }, //绑定数据源相关字段 id对应valueTo的value属性输出 name对应trigger的value属性输出
+            'type': 1, //数据源类型
+            'data': LAreaData //数据源
+        });
+        area1.value=[1,13,3];//控制初始位置，注意：该方法并不会影响到input的value
+        $('#defualtAddress').click(function(){
+			var v = $("input[name='state']").val();
+			if (v > 0) {
+				$('.hiddeni').removeClass('active');
+				$("input[name='state']").val(0);
+			} else {
+				$('.hiddeni').addClass('active');
+				$("input[name='state']").val(1);
+			}
+		});
+    </script>
 @endsection
 
 @section('content')
 	@include("layouts.header-info")
+
 	<div class="addressadd">
-		<a href="{{ url('/home/address/create') }}" class="chayefont address_add">添加新地址</a>
+		<form action="#" name="addressform">
+			<div class="addressadd_item chayefont">
+				<label for="name">收货人</label>
+				<input type="text" name="name" id="name" class="chayefont" autocomplete="off" placeholder="请输入收货人名称">
+			</div>
+			<div class="addressadd_item chayefont">
+				<label for="phone">联系电话</label>
+				<input type="tel" name="phone" id="phone" class="chayefont" autocomplete="off" placeholder="请输入收货人名称">
+			</div>
+			<div class="addressadd_item chayefont">
+				<label for="region">所在地区</label>
+		        <input type="text" id="demo1" name="address" readonly="" placeholder="城市选择特效"  value="广东省,广州市,天河区"/>
+		        <input id="value1" name="addressnum" type="hidden" value="20,234,504"/>
+				<!-- <div class="pull-right addressadd_selection J_msa">请选择<i class="fa fa-angle-right"></i></div> -->
+			</div>
+			<div class="addressadd_item chayefont">
+				<label for="code">邮编</label>
+				<input type="number" name="code" id="code" class="chayefont" placeholder="请输入邮编">
+			</div>
+			<div class="addressadd_item">
+				<textarea name="detail" placeholder="请填写详细地址，不少于5个字"></textarea>
+			</div>
+			<div class="addressadd_item mt-20" id="defualtAddress">
+				<label for="state" class="block">
+					默认地址
+					<i class="pull-right address_default hiddeni"></i>
+				</label>
+				<input type="hidden" name="state" id="state" value="0">
+			</div>
+		</form>
+		<div class="chayefont address_add">保存地址</div>
 	</div>
-	<div class="addAddress_container">
-		<form name="addressform" method="POST" action="{{url('home/address')}}">
-		{{csrf_field()}}
-		<input type="hidden" name="user_id" value="{{$user_id}}">
-		<ul>
-			<li class="item_list">
-				<span class="item_list_title">收货人</span>
-				<div class="item_input_container"><input class="item_input" type="text" name="name" placeholder="隔壁老王"></div>
-			</li>
-			<li class="item_list">
-				<span class="item_list_title">联系电话</span>
-				<div class="item_input_container"><input class="item_input" type="text" name="phone" placeholder="13560449011"></div>
-			</li>
-			<li class="item_list">
-				<span class="item_list_title">邮编</span>
-				<div class="item_input_container"><input class="item_input" type="text" name="code" placeholder="526100"></div>
-			</li>
-			<li class="item_list">
-				<span class="item_list_title">所在省份</span>
-				<div class="item_input_container">
-					<select name="province">
-						<option value="">--请选择省份--</option>
-						<option value="广东省">广东省</option>
-						<option value="江苏省">浙江省</option>
-						<option value="浙江省">江苏</option>
-					</select>
-				</div>
-			</li>
-			<li class="item_list">
-				<span class="item_list_title">所在市</span>
-				<div class="item_input_container">
-					<select name="city">
-						<option value="">--请选择市--</option>
-						<option value="广州市">广州市</option>
-						<option value="杭州市">杭州市</option>
-						<option value="南京市">南京市</option>
-					</select>
-				</div>
-			</li>
-			<li class="item_list">
-				<span class="item_list_title">所在区/县</span>
-				<div class="item_input_container">
-					<select name="area">
-						<option value="">--请选择区--</option>
-						<option value="天河区">天河区</option>
-						<option value="上城区">上城区</option>
-						<option value="玄武区">玄武区</option>
-					</select>
-				</div>
-			</li>
-		</ul>
-		<textarea class="addressDetail" placeholder="请填写详细地址，不少于5个字" name="detail"></textarea>
-		<div class="defaultAddress">
-			<input type="checkbox" name="default" id="default">
-			<label for="state">设为默认地址</label>
-		</div>
-	</div>
-	<!-- 底部 -->
-	<div class="bottom2">
-		<input type="submit" name="submit" value="保存">
-	</div>
-	</form>
 @endsection

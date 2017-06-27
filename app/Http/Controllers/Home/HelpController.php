@@ -12,7 +12,16 @@ class HelpController extends Controller
 {
 	//帮助中心列表页
 	public function index (Request $request) {
-		$lists = ArticleCategory::get();
+		$lists = Article::join('article_category','article.category_id','=','article_category.id')
+				->whereNull('article.deleted_at')
+				->whereNull('article_category.deleted_at');
+		$lists = $lists->select(
+				'article.*',
+				'article_category.name as category_name',
+				'article_category.desc as category_desc'
+		)
+		->orderBy('article.id','asc')
+		->paginate(10);
 		$title = '帮助中心';
 		return view(config('app.theme').'.home.helpList')->with(['lists'=>$lists, 'title'=>$title]);
 	}
@@ -21,6 +30,7 @@ class HelpController extends Controller
 	public function detail (Request $request, $id) {
 		$content = Article::find($id);
 		$title = '帮助中心';
+		//$title = $content->name;
 		return view(config('app.theme').'.home.helpContent')->with(['content'=>$content,'title'=>$title]);
 	}
 }
