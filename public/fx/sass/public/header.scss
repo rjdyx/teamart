@@ -111,6 +111,28 @@ header {
 			}
 		}
 	}
+	.header_category {
+		position: fixed;
+		left: -1.5rem;
+		top: 1.2rem;
+		width: 1.5rem;
+		border-radius: 0.3rem;
+		overflow: hidden;
+		transition: all .5s ease;
+		li {
+			width: 1.5rem;
+			height: 0.8rem;
+			border-bottom: 0.02rem solid #d7d7d7;
+			text-align: center;
+			line-height: 0.8rem;
+			a {
+				display: block;
+				background-color: #FFF;
+			}
+			a:active {
+				background-color: #f2f2f2;
+				color: #ff4077;
+			}	
+		}
+	}
 }
-
-

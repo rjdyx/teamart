@@ -26,8 +26,20 @@
 	@include("layouts.header-info")
 	<div class="container productdetail">
 		<div class="productdetail_container">
-			<div class="productdetail_container_banner">
-				<img src="{{ url('fx/img/detail.png') }}" alt="">
+			<div class="productdetail_container_banner swiper-container">
+			    <div class="swiper-wrapper">
+			        <!-- Slides -->
+			        <div class="swiper-slide">
+			        	<img src="{{ url('fx/img/detail.png') }}" alt="">
+			        </div>
+			        <div class="swiper-slide">
+			        	<img src="{{ url('fx/img/detail.png') }}" alt="">
+			        </div>
+			        <div class="swiper-slide">
+			        	<img src="{{ url('fx/img/detail.png') }}" alt="">
+			        </div>
+			    </div>
+			    <div class="swiper-pagination"></div>
 			</div>
 			<div class="productdetail_container_info">
 				<h1 class="chayefont">云南凤庆功夫金芽红茶</h1>

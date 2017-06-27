@@ -23,15 +23,31 @@ require('expose-loader?_!lodash')
 require('babel-polyfill')
 
 // require('normalize.css')
-// require('mobile-select-area/dist/mobile-select-area.css')
-// require('mobile-select-area/dist/dialog.css')
+require('swiper/dist/css/swiper.css')
 require('font-awesome/css/font-awesome.css')
-require('ionicons/dist/css/ionicons.css')
+// require('ionicons/dist/css/ionicons.css')
 // require('bootstrap')
 require('./sass/index.scss')
 
+require('swiper')
 require('expose-loader?_valid!./js/validate.js')
 // require('expose-loader?datepicker!./js/datepicker.js')
 
-require('./js/index.js')
 // console.log($)
+
+$(function () {
+	$('.J_header_category').on('click tap', function () {
+		if ($('.header_category').hasClass('left-0')) {
+			$('.header_category').removeClass('left-0')
+		} else {
+			$('.header_category').addClass('left-0')
+		}
+	})
+
+	let mySwiper = new Swiper('.swiper-container', {
+		// Optional parameters
+		pagination: '.swiper-pagination',
+		paginationClickable: true,
+		loop: true
+	})
+})

@@ -34,9 +34,7 @@
 
 @section('script')
     @parent
-
     <script src="{{ asset('fx/larea/js/LAreaData1.js') }}"></script>
-    <script src="{{ asset('fx/larea/js/LAreaData2.js') }}"></script>
     <script src="{{ asset('fx/larea/js/LArea.js') }}"></script>
     <script>
         var area1 = new LArea();
@@ -61,6 +59,7 @@
 				$("input[name='state']").val(1);
 			}
 		});
+		
     </script>
 @endsection
 

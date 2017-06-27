@@ -5791,6 +5791,10 @@ footer {
         color: #7A7A7A; }
       .product .product_container .product_warpper .price {
         color: #FF4100; }
+      .product .product_container .product_warpper .sell {
+        color: #7A7A7A; }
+        .product .product_container .product_warpper .sell i {
+          font-style: normal; }
       @media screen and (max-width: 321px) {
         .product .product_container .product_warpper h1 {
           font-size: 16px; }
