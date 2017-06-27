@@ -13,40 +13,141 @@
 
     @include("layouts.header-info")
     
-    <div class="container cart">
-        <div class="cart_search">
-            <input type="text" placeholder="商品名称／商品编号／订单号">
-            <i class="fa fa-search"></i>
-        </div>
-        <div class="cart_tabs">
-            <ul>
-                <li class="active">
-                    <i class="fa fa-align-justify"></i>
-                    <p>全部</p>
-                </li>
-                <li>
-                    <i class="fa fa-money"></i>
-                    <p>待付款</p>
-                </li>
-                <li>
-                    <i class="fa fa-map-marker"></i>
-                    <p>待取货</p>
-                </li>
-                <li>
-                    <i class="fa fa-feed"></i>
-                    <p>待发货</p>
-                </li>
-                <li>
-                    <i class="fa fa-car"></i>
-                    <p>待收货</p>
-                </li>
-                <li>
-                    <i class="fa fa-comment-o"></i>
-                    <p>待评价</p>
-                </li>
-            </ul>
-        </div>
+    <div class="cart">
         <div class="cart_container">
+            <div class="cart_warpper mb-20">
+                <div class="cart_warpper_tit">
+                    <a href="javascript:;" class="chayefont">
+                        <i class="fa fa-ban"></i>
+                        绿茶宝塔镇河妖
+                    </a>
+                </div>
+                <div class="cart_warpper_content clearfix">
+                    <div class="cart_warpper_content_img pull-left mr-20">
+                        <img src="{{ url('fx/img/shop11.png') }}">
+                    </div>
+                    <div class="cart_warpper_content_info pull-right">
+                        <h5 class="chayefont mb-10">菲律宾进口香蕉</h5>
+                        <p>新鲜梨树雪梨发货供货的供货皇冠分隔符梨</p>
+                        <div class="cart_warpper_content_info_bottom">
+                            <span class="pull-left price">￥212.00</span>
+                            <div class="cwcib_number pull-right">
+                                <i class="fa fa-minus-circle"></i>
+                                <span class="sell">&times2</span>
+                                <i class="fa fa-plus-circle"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="cart_warpper mb-20">
+                <div class="cart_warpper_tit">
+                    <a href="javascript:;" class="chayefont">
+                        <i class="fa fa-ban"></i>
+                        绿茶宝塔镇河妖
+                    </a>
+                </div>
+                <div class="cart_warpper_content clearfix">
+                    <div class="cart_warpper_content_img pull-left mr-20">
+                        <img src="{{ url('fx/img/shop11.png') }}">
+                    </div>
+                    <div class="cart_warpper_content_info pull-right">
+                        <h5 class="chayefont mb-10">菲律宾进口香蕉</h5>
+                        <p>新鲜梨树雪梨发货供货的供货皇冠分隔符梨</p>
+                        <div class="cart_warpper_content_info_bottom">
+                            <span class="pull-left price">￥212.00</span>
+                            <div class="cwcib_number pull-right">
+                                <i class="fa fa-minus-circle"></i>
+                                <span class="sell">&times2</span>
+                                <i class="fa fa-plus-circle"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="cart_warpper mb-20">
+                <div class="cart_warpper_tit">
+                    <a href="javascript:;" class="chayefont">
+                        <i class="fa fa-ban"></i>
+                        绿茶宝塔镇河妖
+                    </a>
+                </div>
+                <div class="cart_warpper_content clearfix">
+                    <div class="cart_warpper_content_img pull-left mr-20">
+                        <img src="{{ url('fx/img/shop11.png') }}">
+                    </div>
+                    <div class="cart_warpper_content_info pull-right">
+                        <h5 class="chayefont mb-10">菲律宾进口香蕉</h5>
+                        <p>新鲜梨树雪梨发货供货的供货皇冠分隔符梨</p>
+                        <div class="cart_warpper_content_info_bottom">
+                            <span class="pull-left price">￥212.00</span>
+                            <div class="cwcib_number pull-right">
+                                <i class="fa fa-minus-circle"></i>
+                                <span class="sell">&times2</span>
+                                <i class="fa fa-plus-circle"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="cart_warpper mb-20">
+                <div class="cart_warpper_tit">
+                    <a href="javascript:;" class="chayefont">
+                        <i class="fa fa-ban"></i>
+                        绿茶宝塔镇河妖
+                    </a>
+                </div>
+                <div class="cart_warpper_content clearfix">
+                    <div class="cart_warpper_content_img pull-left mr-20">
+                        <img src="{{ url('fx/img/shop11.png') }}">
+                    </div>
+                    <div class="cart_warpper_content_info pull-right">
+                        <h5 class="chayefont mb-10">菲律宾进口香蕉</h5>
+                        <p>新鲜梨树雪梨发货供货的供货皇冠分隔符梨</p>
+                        <div class="cart_warpper_content_info_bottom">
+                            <span class="pull-left price">￥212.00</span>
+                            <div class="cwcib_number pull-right">
+                                <i class="fa fa-minus-circle"></i>
+                                <span class="sell">&times2</span>
+                                <i class="fa fa-plus-circle"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="cart_warpper mb-20">
+                <div class="cart_warpper_tit">
+                    <a href="javascript:;" class="chayefont">
+                        <i class="fa fa-ban"></i>
+                        绿茶宝塔镇河妖
+                    </a>
+                </div>
+                <div class="cart_warpper_content clearfix">
+                    <div class="cart_warpper_content_img pull-left mr-20">
+                        <img src="{{ url('fx/img/shop11.png') }}">
+                    </div>
+                    <div class="cart_warpper_content_info pull-right">
+                        <h5 class="chayefont mb-10">菲律宾进口香蕉</h5>
+                        <p>新鲜梨树雪梨发货供货的供货皇冠分隔符梨</p>
+                        <div class="cart_warpper_content_info_bottom">
+                            <span class="pull-left price">￥212.00</span>
+                            <div class="cwcib_number pull-right">
+                                <i class="fa fa-minus-circle"></i>
+                                <span class="sell">&times2</span>
+                                <i class="fa fa-plus-circle"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="cart_bottom">
+            <span class="cart_bottom_selection pull-left">全选</span>
+            <div class="cart_bottom_info pull-left">合计：<span class="price">&yen9999.00</span></div>
+            <div class="cart_bottom_settle pull-right">结算</div>
+            <div class="cart_bottom_del pull-right">删除</div>
+        </div>
+        <!-- <div class="cart_container">
             <div class="cart_warpper mb-20">
                 <div class="cart_warpper_tit">
                     <h1 class="pull-left chayefont">
@@ -243,7 +344,7 @@
                     </ul>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
     <!-- 联系卖家 -->
     <!-- 取消订单 -->
