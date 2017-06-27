@@ -71,29 +71,29 @@
 		<form action="#" name="addressform">
 			<div class="addressadd_item chayefont">
 				<label for="name">收货人</label>
-				<input type="text" name="name" id="name" class="chayefont" autocomplete="off" placeholder="请输入收货人名称">
+				<input type="text" name="name" id="name" class="chayefont" autocomplete="off" placeholder="请输入收货人名称" value="{{$data->name}}">
 			</div>
 			<div class="addressadd_item chayefont">
 				<label for="phone">联系电话</label>
-				<input type="tel" name="phone" id="phone" class="chayefont" autocomplete="off" placeholder="请输入收货人名称">
+				<input type="tel" name="phone" value="{{$data->phone}}" id="phone" class="chayefont" autocomplete="off" placeholder="请输入收货人名称">
 			</div>
 			<div class="addressadd_item chayefont">
 				<label for="region">所在地区</label>
-		        <input type="text" id="demo1" name="address" readonly="" placeholder="城市选择特效"  value="广东省,广州市,天河区"/>
+		        <input type="text" id="demo1" value="{{$data->province}},{{$data->city}},{{$data->area}}" name="address" readonly="" placeholder="城市选择特效"  value="广东省,广州市,天河区"/>
 		        <input id="value1" type="hidden" value="20,234,504"/>
 				<!-- <div class="pull-right addressadd_selection J_msa">请选择<i class="fa fa-angle-right"></i></div> -->
 			</div>
 			<div class="addressadd_item chayefont">
 				<label for="code">邮编</label>
-				<input type="number" name="code" id="code" class="chayefont" placeholder="请输入邮编">
+				<input type="number" value="{{$data->code}}" name="code" id="code" class="chayefont" placeholder="请输入邮编">
 			</div>
 			<div class="addressadd_item">
-				<textarea name="detail" placeholder="请填写详细地址，不少于5个字"></textarea>
+				<textarea name="detail" placeholder="请填写详细地址，不少于5个字">{{$data->detail}}</textarea>
 			</div>
 			<div class="addressadd_item mt-20" id="defualtAddress">
 				<label for="state" class="block">
 					默认地址
-					<i class="pull-right address_default hiddeni"></i>
+					<i class="pull-right address_default hiddeni @if($data->state) active @endif" ></i>
 				</label>
 				<input type="hidden" name="state" id="state" value="0">
 			</div>
