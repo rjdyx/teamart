@@ -26,11 +26,16 @@ Route::post('/check','UtilsController@check');//字段验证
  
 // Home - 无须登录模块
 Route::group(['namespace'=>'Home','prefix'=>'home'],function(){
+
 	// 商品列表、详情
 	Route::group(['prefix'=>'product'],function(){
 		Route::get('/list','ProductController@index');
+		Route::get('/list/data','ProductController@listData');//商品列表数据接口
+		Route::get('/brand','ProductController@productBrand');//商品品牌数据接口
+		Route::get('/category','ProductController@productCategory');//商品分类数据接口
 		Route::get('/detail/{id}','ProductController@detail');
 	});
+
 	// 帮助中心列表、详情
 	Route::group(['prefix'=>'help'],function(){
 		Route::get('/list','HelpController@index');
@@ -55,6 +60,7 @@ Route::group(['namespace'=>'Home','prefix'=>'home','middleware'=>['auth']],funct
 	Route::get('/collect','OrderController@collect');
 	Route::get('/collect/del','OrderController@collectDel');
     Route::get('/collect/create','OrderController@collectCreate');
+
 	//购物车
 	Route::resource('/cart','CartController');
 	Route::get('/cart/pending','CartController@pending');

@@ -4,6 +4,8 @@ namespace App\Observers;
 
 use Illuminate\Support\Facades\Auth;
 use App\Order;
+use App\OrderProduct;
+use App\Product;
 use App\User;
 use IQuery;
 use Cache;
@@ -25,12 +27,19 @@ class OrderObserver
     public function updated(Order $order)
     {
         $this->logStore('编辑');
-        //更新销售额
         if ($order->state == 'close' && $order->pid) {
+            //代理商销售总额
             $user = User::find($order->pid);
             $pre_sell = $user->sell_count;
             $user->sell_count = intval($pre_sell) + intval($order->price);
             $user->save();
+            //商品销量更新
+            $datas = OrderProduct::where('order_id',$order->id)->select('product_id as pid','amount')->get();
+            foreach ($datas as $data) {
+                $product = Product::find($data->pid);
+                $product->sell_amount = intval($product->sell_amount) + intval($data->amount);
+                $product->save();
+            }
         }
     }
 
