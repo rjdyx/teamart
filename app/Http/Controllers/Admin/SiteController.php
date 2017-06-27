@@ -37,7 +37,7 @@ class SiteController extends Controller
     //数据创建
     public function create()
     {
-        return view(config('app.theme').'.admin.system.send_create');
+        return view(config('app.theme').'.admin.system.site_create');
     }
 
     //保存新建数据
@@ -85,19 +85,20 @@ class SiteController extends Controller
     public function StoreOrUpdate(Request $request, $id = -1)
     {
         $this->validate($request, [
-            'province' => 'string|string',
-            'city' => 'string',
-            'area' => 'string',
-            'detail' => 'string',
+            'name' => 'required|string|max:100',
+            'longitude' => 'required|max:20',
+            'latitude' => 'required|max:20',
             'user' => 'string',
-            'phone' => 'numeric',
+            'phone' => 'numeric'
         ]);
+
         if($id == -1) {
             $site = new Site;
         }else{
             $site = Site::find($id);
         }
-        $site->setRawAttributes($request->only(['province','city','area','detail','user','phone']));
+        
+        $site->setRawAttributes($request->only(['name','longitude','latitude','user','phone']));
         if ($site->save()) {
             return Redirect::to('admin/system/site')->with('status', '保存成功');
         }else{
