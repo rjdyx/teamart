@@ -69,19 +69,15 @@
                 address: $('#address').val(),
                 code: $('#code').val(),
                 detail: $('#detail').val(),
-                state: $('#state').val(),
-                 _token: $('meta[name="csrf-token"]').attr('content'),
-                _method: "PUT"
+                state: $('#state').val()
             }
-            axios.post('/home/address/' + id, params)
-                .then(function (res) {
-                    console.log(res)
-                    if (res.data) {
-                        // window.location.href = '/home/address'
+            ajax('post', '/home/address' + id, params, true)
+                .then(function (resolve) {
+                    if (resolve) {
+                        prompt.message('保存成功', 'http://' + window.location.host + '/home/userinfo')
+                    } else {
+                        prompt.message('保存失败')
                     }
-                })
-                .catch(function (err) {
-                    console.log(err)
                 })
         })
     </script>
@@ -99,11 +95,11 @@
 			</div>
 			<div class="addressadd_item chayefont">
 				<label for="phone">联系电话</label>
-				<input type="tel" name="phone" value="{{$data->phone}}" id="phone" class="chayefont" autocomplete="off" placeholder="请输入收货人名称">
+				<input type="tel" name="phone" value="{{$data->phone}}" id="phone" class="chayefont" autocomplete="off" placeholder="请输入联系电话">
 			</div>
 			<div class="addressadd_item chayefont">
 				<label for="region">所在地区</label>
-		        <input type="text" id="address" value="{{$data->province}},{{$data->city}},{{$data->area}}" name="address" readonly="" placeholder="城市选择特效"  value="广东省,广州市,天河区"/>
+		        <input type="text" id="address" value="{{$data->province}},{{$data->city}},{{$data->area}}" name="address" readonly="" placeholder="选择地区"  value="广东省,广州市,天河区"/>
 		        <input id="value1" type="hidden" value="20,234,504"/>
 				<!-- <div class="pull-right addressadd_selection J_msa">请选择<i class="fa fa-angle-right"></i></div> -->
 			</div>

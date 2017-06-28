@@ -1,3 +1,4 @@
+import ajax from './ajax.js'
 /**
  * 必需字段
  *
@@ -16,6 +17,7 @@ const ness = (fieldtxt, value) => {
 }
 exports.ness = ness
 
+// 登录和注册
 exports.checkField = (field, value, table, fieldtxt) => {
 	if (!value) {
 		return false
@@ -140,4 +142,24 @@ exports.phone = (value, isRequired = true) => {
 		}
 	}
 	return valid
+}
+
+// 唯一验证方法
+exports.check = (field, value, table = 'user') => {
+	let url = 'http://' + window.location.host + '/check'
+	let params = {
+		field: field,
+		value: value,
+		table: table
+	}
+	return ajax('post', url, params)
+}
+
+exports.validForm = (params) => {
+	let fields = Object.keys(params)
+	fields.forEach(v => {
+		let isRequired = $(`input[name='${v}']`).data('required')
+			params[v]
+			
+	})
 }

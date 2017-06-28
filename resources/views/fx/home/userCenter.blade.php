@@ -6,25 +6,22 @@
 @endsection
 
 @section('script')
-    @parent
-    <script>
-    $("#layout").click(function(){
-        axios.get('/layout')
-        .then(function (res) {
-            alert('退出成功！');
-            window.location.href = 'http://' + window.location.host;
-        })
-        .catch(function (err) {
-            console.log(err)
-            alert('服务器异常！请稍后再试！');
-        })
-    });
-    </script>
+	@parent
+	<script>
+	$(function () {
+		$(".J_loginout").on('click tap', function () {
+			ajax('get', '/layout')
+				.then(function (resolve) {
+					prompt.message('退出成功', 'http://' + window.location.host)
+				})
+		})
+	})
+	</script>
 @endsection
 
 @section('content')
 
-    @include("layouts.header-info")
+	@include("layouts.header-info")
 	<!-- 内容 -->
 	<div class="container usercenter">
 		<div class="usercenter_info">
@@ -120,10 +117,10 @@
 			</li>
 		</ul>
 		@if (Auth::user())
-		<div class="usercenter_loginout chayefont" id="layout">退出</div>
+		<div class="usercenter_loginout chayefont J_loginout">退出</div>
 		@else
 		<a href="{{url('/login')}}"><div class="usercenter_loginout chayefont">登录</div></a>
 		@endif
 	</div>
-    @include("layouts.footer")
+	@include("layouts.footer")
 @endsection

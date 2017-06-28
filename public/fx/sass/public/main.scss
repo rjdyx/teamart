@@ -666,8 +666,28 @@
 				height: 0.84rem;
 				color: #8C8C8C;
 			}
-			.useredit_selection {
+			.gray {
 				color: #8C8C8C;
+			}
+			label.gender {
+				position: relative;
+				display: block;
+				width: 0.7rem;
+			}
+			label.gender::after {
+				content: '';
+				position: absolute;
+				top: 50%;
+				right: 0;
+				display: block;
+				width: 0.3rem;
+				height: 0.3rem;
+				margin-top: -0.15rem;
+				border: 0.02rem solid #aaa;
+				border-radius: 50%;
+			}
+			label.gender.active::after {
+				background-color: #aaa;
 			}
 		}
 		.useredit_item:last-of-type {
@@ -789,6 +809,9 @@
 				font-size: 15px;
 				li {
 					float: left;
+					a {
+						color: #8C8C8C;
+					}
 				}
 				li:first-child {
 					margin-right: 0.2rem;
@@ -1856,6 +1879,33 @@
 			}
 		}
 	}
+	.confirm_container_sum {
+		width: 100%;
+		background-color: #FFF;
+		border-top: 0.01rem solid #E3E3E3;
+		.confirm_container_sum_row {
+			height: 0.96rem;
+			width: 100%;
+			border-bottom: 0.01rem solid #E3E3E3;
+			padding: 0 0.2rem;
+			line-height: 0.96rem;
+			a {
+				display: block;
+			}
+			.gray {
+				color: #aaa;
+			}
+			.price {
+				color: #FF4F03;
+			}
+		}
+		textarea {
+			width: 100%;
+			height: 1rem;
+			border: 0;
+			padding: 0.1rem;
+		}
+	}
 	.confirm_bottom {
 		position: absolute;
 		bottom: 0;
@@ -1869,7 +1919,12 @@
 		.confirm_bottom_sum {
 			width: 4rem;
 			height: 1rem;
-			background-color: rgba(181, 181, 181, 0.5)
+			background-color: rgba(181, 181, 181, 0.5);
+			padding-left: 0.2rem;
+			color: #FEF0EF;
+			.price {
+				color: #FA580D;
+			}
 		}
 		.confirm_bottom_submit {
 			width: calc(100% - 4rem);
@@ -1880,4 +1935,58 @@
 			}
 		}
 	}
+}
+.confirm_type {
+	position: fixed;
+	top: 100%;
+	left: 0;
+	z-index: 1001;
+	height: 100%;
+	width: 100%;
+	background-color: rgba(0,0,0,0.8);
+	transition: all .5s ease;
+	.confirm_type_container {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		height: 60%;
+		width: 100%;
+		background-color: #FFF;
+		h5 {
+			width: 100%;
+			height: 1.2rem;
+			text-align: center;
+			line-height: 1.2rem;
+			border-bottom: 0.01rem solid #DADADA;
+		}
+		.confirm_type_row {
+			width: 100%;
+			height: 1rem;
+			line-height: 1rem;
+			border-bottom: 0.01rem solid #dadada;
+			padding: 0 0.2rem;
+			i {
+				display: block;
+				width: 0.35rem;
+				height: 0.35rem;
+				margin-top: 0.325rem;
+				@include  backgroundImages("/fx/images/address_default.png", cover)
+			}
+			i.active {
+				@include  backgroundImages("/fx/images/address_default_active.png", cover)
+			}
+		}
+		.confirm_type_bottom {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			width: 100%;
+			height: 1rem;
+			line-height: 1rem;
+			text-align: center;
+			color: #fff;
+			@include  backgroundImages("/fx/images/footer_bg.png", cover)
+		}
+	}
+	
 }

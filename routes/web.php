@@ -64,10 +64,10 @@ Route::group(['namespace'=>'Home','prefix'=>'home','middleware'=>['auth']],funct
     Route::get('/collect/create','OrderController@collectCreate');
 
 	//购物车
-//	Route::resource('/cart','CartController');
 	Route::get('/cart/add','CartController@addCart');
 	Route::get('/cart/del','CartController@delCart');
 	Route::get('/cart/update','CartController@updateCart');
+	Route::resource('/cart','CartController');
 
 	//用户部分
 	

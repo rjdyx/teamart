@@ -7,6 +7,29 @@
 
 @section('script')
     @parent
+    <script>
+    	$(function () {
+    		$('.J_show_type').on('click tap', function () {
+    			$('.confirm_type').addClass('top-0')
+    		})
+    		$('.J_hide_type').on('click tap', function () {
+    			$('.confirm_type').removeClass('top-0')
+    		})
+    		$('.J_choose_type').on('click tap', function () {
+    			var v = $(this).data('delivery')
+    			$(this).parents('.confirm_type_container').find('i').removeClass('active')
+    			$(this).find('i').addClass('active')
+    			$('input[name="delivery"]').val(v)
+    			$('#delivery').text($(this).find('span').text())
+    			$('.confirm_address').each(function () {
+    				$(this).addClass('hide')
+    				if ($(this).hasClass(v)) {
+    					$(this).removeClass('hide')
+    				}
+    			})
+    		})
+    	})
+    </script>
 @endsection
 
 @section('content')
@@ -120,9 +143,31 @@
 					</div>
 				</div>
 			</div>
+			<div class="confirm_container_sum">
+				<div class="confirm_container_sum_row">
+					<a href="javascript:;" class="clearfix J_show_type">
+						<span class="pull-left chayefont fz-18">配送方式</span>
+						<span class="pull-right gray fz-14"><s id="delivery">快递</s><i class="fa fa-angle-right ml-10"></i></span>
+						<input type="hidden" value="express" name="delivery">
+					</a>
+				</div>
+				<div class="confirm_container_sum_row">
+					<span class="pull-left chayefont fz-18">运费</span>
+					<span class="pull-right price fz-14">&yen0.00</span>
+				</div>
+				<div class="confirm_container_sum_row">
+					<span class="pull-left chayefont fz-18">商品总额</span>
+					<span class="pull-right price fz-14">&yen21222.00</span>
+				</div>
+				<div class="confirm_container_sum_row">
+					<span class="pull-left chayefont fz-18">买家留言</span>
+					<span class="pull-right gray fz-14">选填</span>
+				</div>
+				<textarea placeholder="请留言"></textarea>
+			</div>
 		</div>
 		<div class="confirm_bottom">
-			<div class="confirm_bottom_sum pull-left">
+			<div class="confirm_bottom_sum pull-left txt-l">
 				合计总金额：<span class="price">&yen212.00</span>
 			</div>
 			<div class="confirm_bottom_submit pull-left">
@@ -130,5 +175,18 @@
 			</div>
 		</div>
 	</div>
-
+	<div class="confirm_type">
+		<div class="confirm_type_container">
+			<h5 class="chayefont fz-18">配送方式</h5>
+			<div class="confirm_type_row J_choose_type" data-delivery="point">
+				<span class="pull-left chayefont fz-16">自取</span>
+				<i class="pull-right"></i>
+			</div>
+			<div class="confirm_type_row J_choose_type" data-delivery="express">
+				<span class="pull-left chayefont fz-16">快递</span>
+				<i class="pull-right active"></i>
+			</div>
+			<div class="confirm_type_bottom chayefont fz-18 J_hide_type">关闭</div>
+		</div>
+	</div>
 @endsection
