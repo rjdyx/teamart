@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Storage;
-use App\Group;
+use App\ProductGroup as Group;
 use App\ProductCategory as Category;
 use Redirect;
 use IQuery;
