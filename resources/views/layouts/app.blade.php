@@ -35,8 +35,8 @@
 
     
     <!-- Styles -->
-    <link rel="stylesheet" href="{{url('/fx/build/css/index.css')}}">
-    {{-- <link rel="stylesheet" href="http://localhost:8080/fx/build/css/index.css"> --}}
+     <link rel="stylesheet" href="{{url('/fx/build/css/index.css')}}">
+    {{--<link rel="stylesheet" href="http://localhost:8080/fx/build/css/index.css">--}}
     @yield('css')
 
     <!-- Scripts -->
@@ -56,14 +56,14 @@
     </script> --}}
     <script src="{{url('/fx/build/vendor-bundle.js')}}"></script>
     <script src="{{url('/fx/build/index.js')}}"></script>
-    {{-- <script src="http://localhost:8080/fx/build/vendor-bundle.js"></script>
-    <script src="http://localhost:8080/fx/build/index.js"></script> --}}
+    {{--<script src="http://localhost:8080/fx/build/vendor-bundle.js"></script>--}}
+    {{--<script src="http://localhost:8080/fx/build/index.js"></script>--}}
     <script>
         var deviceWidth = document.documentElement.clientWidth;
         if(deviceWidth > 640) deviceWidth = 640;
         document.documentElement.style.fontSize = deviceWidth / 6.4 + 'px';
     </script>
     @yield('script')
-    @include("layouts.prompt")
+    @include("fx.admin.layouts.alert")
 </body>
 </html>
