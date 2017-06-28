@@ -35,7 +35,7 @@
               <th>文章标题</th>
               <th>文章分类</th>
               <th>图片</th>
-              <th>添加日期</th>
+              <th>更新日期</th>
               <th>操作</th>
             </tr>
             @foreach ($lists as $k => $list)
@@ -45,7 +45,7 @@
               <td>{{$list->name}}</td>
               <td>{{$list->category_name}}</i></td>
               <td><img src="{{ url('')}}/{{ $list->thumb }}" alt="图标" width="30px" height="30px"></td>
-              <td>John Doe</td>
+              <td>{{$list->updated_at}}</td>
               <td><div style="color: #dd4b39"><a href="{{url('admin/article/list')}}/{{$list->id}}/edit"><i class="fa fa-edit" style="margin-right: 5px;cursor: pointer;"></i></a><i class="fa fa-trash-o"  onclick="del({{$list->id}});" style="margin-right: 5px;cursor: pointer;"></div></i>
               </td>
             </tr>
