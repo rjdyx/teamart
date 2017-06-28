@@ -41,7 +41,7 @@
     <script>
         var area1 = new LArea();
         area1.init({
-            'trigger': '#demo1', //触发选择控件的文本框，同时选择完毕后name属性输出到该位置
+            'trigger': '#address', //触发选择控件的文本框，同时选择完毕后name属性输出到该位置
             'valueTo': '#value1', //选择完毕后id属性输出到该位置
             'keys': {
                 id: 'id',
@@ -68,12 +68,12 @@
                 phone: $('#phone').val(),
                 address: $('#address').val(),
                 code: $('#code').val(),
-                detail: $('#detail').text(),
+                detail: $('#detail').val(),
                 state: $('#state').val(),
                  _token: $('meta[name="csrf-token"]').attr('content'),
-                 method: "PUT"
+                _method: "PUT"
             }
-            axios.post('/home/address/' + id + '/edit', params)
+            axios.post('/home/address/' + id, params)
                 .then(function (res) {
                     console.log(res)
                     if (res.data) {
@@ -103,7 +103,7 @@
 			</div>
 			<div class="addressadd_item chayefont">
 				<label for="region">所在地区</label>
-		        <input type="text" id="demo1" value="{{$data->province}},{{$data->city}},{{$data->area}}" name="address" readonly="" placeholder="城市选择特效"  value="广东省,广州市,天河区"/>
+		        <input type="text" id="address" value="{{$data->province}},{{$data->city}},{{$data->area}}" name="address" readonly="" placeholder="城市选择特效"  value="广东省,广州市,天河区"/>
 		        <input id="value1" type="hidden" value="20,234,504"/>
 				<!-- <div class="pull-right addressadd_selection J_msa">请选择<i class="fa fa-angle-right"></i></div> -->
 			</div>

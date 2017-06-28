@@ -61,6 +61,28 @@
 				$("input[name='state']").val(1);
 			}
 		});
+		$('.J_submit').on('click tap', function () {
+            var id = $('#id').val()
+            var params = {
+                name: $('#name').val(),
+                phone: $('#phone').val(),
+                address: $('#address').val(),
+                code: $('#code').val(),
+                detail: $('#detail').text(),
+                state: $('#state').val(),
+                 _token: $('meta[name="csrf-token"]').attr('content'),             
+            }
+            axios.post('/home/address', params)
+                .then(function (res) {
+                    console.log(res)
+                    if (res.data) {
+                        // window.location.href = '/home/address'
+                    }
+                })
+                .catch(function (err) {
+                    console.log(err)
+                })
+        })
     </script>
 @endsection
 
@@ -98,6 +120,6 @@
 				<input type="hidden" name="state" id="state" value="0">
 			</div>
 		</form>
-		<div class="chayefont address_add">保存地址</div>
+		<div class="chayefont address_add J_submit">保存地址</div>
 	</div>
 @endsection

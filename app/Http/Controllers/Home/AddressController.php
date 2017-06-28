@@ -14,7 +14,7 @@ class AddressController extends Controller
 	public function index (Request $request) { 
 		$title = '地址管理';
 		$lists = Address::where('user_id',Auth::user()->id)->get();
-		return view(config('app.theme').'.home.address.address')->with(['title'=>$title, 'lists'=>$lists]);
+		return view(config('app.theme').'.home.address')->with(['title'=>$title, 'lists'=>$lists]);
 	}
 
 	//地址管理新建
@@ -41,7 +41,7 @@ class AddressController extends Controller
 	{
 		$title = '编辑地址';
 		$data = Address::find($id);
-		return view(config('app.theme').'.home.address.address_edit')->with(['data' => $data,'title' => $title]);
+		return view(config('app.theme').'.home.addressEdit')->with(['data' => $data,'title' => $title]);
 	}
 
     //编辑保存
@@ -133,7 +133,8 @@ class AddressController extends Controller
 		$city = $address[1];
 		$area = $address[2];
         //接收数据 加入model
-		$model->setRawAttributes($request->only(['name','user_id','phone','detail','code']));  
+		$model->setRawAttributes($request->only(['name','phone','detail','code']));  
+		$model->user_id = Auth::user()->id;
 		$model->province = $province;
 		$model->city = $city;
 		$model->area = $area;
