@@ -111,7 +111,6 @@
     <div class="cart">
         <div class="cart_container">
             <div class="cart_list">
-                @foreach($lists as $list)
                 <div class="cart_warpper mb-20">
                     <div class="cart_warpper_tit">
                         <a href="javascript:;" class="chayefont">
@@ -121,28 +120,127 @@
                     </div>
                     <div class="cart_warpper_content clearfix">
                         <div class="cart_warpper_content_img pull-left mr-20">
-                            <img src="{{url('')}}{{ $list->img }}">
+                            <img src="{{ url('fx/img/shop11.png') }}">
                         </div>
                         <div class="cart_warpper_content_info pull-right">
-                            <h5 class="chayefont mb-10">{{$list->name}}</h5>
-                            <p>{{$list->desc}}</p>
+                            <h5 class="chayefont mb-10">菲律宾进口香蕉</h5>
+                            <p>新鲜梨树雪梨发货供货的供货皇冠分隔符梨</p>
                             <div class="cart_warpper_content_info_bottom">
-                                <span class="pull-left price">{{'￥'.$list->price}}</span>
+                                <span class="pull-left price">￥212.00</span>
                                 <div class="cwcib_number pull-right">
                                     <i class="fa fa-minus-circle"></i>
-                                    <span class="sell">&times{{$list->amount}}</span>
+                                    <span class="sell">&times2</span>
                                     <i class="fa fa-plus-circle"></i>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                    @endforeach
+                <div class="cart_warpper mb-20">
+                    <div class="cart_warpper_tit">
+                        <a href="javascript:;" class="chayefont">
+                            <i class="fa fa-ban"></i>
+                            绿茶宝塔镇河妖
+                        </a>
+                    </div>
+                    <div class="cart_warpper_content clearfix">
+                        <div class="cart_warpper_content_img pull-left mr-20">
+                            <img src="{{ url('fx/img/shop11.png') }}">
+                        </div>
+                        <div class="cart_warpper_content_info pull-right">
+                            <h5 class="chayefont mb-10">菲律宾进口香蕉</h5>
+                            <p>新鲜梨树雪梨发货供货的供货皇冠分隔符梨</p>
+                            <div class="cart_warpper_content_info_bottom">
+                                <span class="pull-left price">￥212.00</span>
+                                <div class="cwcib_number pull-right">
+                                    <i class="fa fa-minus-circle"></i>
+                                    <span class="sell">&times2</span>
+                                    <i class="fa fa-plus-circle"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="cart_warpper mb-20">
+                    <div class="cart_warpper_tit">
+                        <a href="javascript:;" class="chayefont">
+                            <i class="fa fa-ban"></i>
+                            绿茶宝塔镇河妖
+                        </a>
+                    </div>
+                    <div class="cart_warpper_content clearfix">
+                        <div class="cart_warpper_content_img pull-left mr-20">
+                            <img src="{{ url('fx/img/shop11.png') }}">
+                        </div>
+                        <div class="cart_warpper_content_info pull-right">
+                            <h5 class="chayefont mb-10">菲律宾进口香蕉</h5>
+                            <p>新鲜梨树雪梨发货供货的供货皇冠分隔符梨</p>
+                            <div class="cart_warpper_content_info_bottom">
+                                <span class="pull-left price">￥212.00</span>
+                                <div class="cwcib_number pull-right">
+                                    <i class="fa fa-minus-circle"></i>
+                                    <span class="sell">&times2</span>
+                                    <i class="fa fa-plus-circle"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="cart_warpper mb-20">
+                    <div class="cart_warpper_tit">
+                        <a href="javascript:;" class="chayefont">
+                            <i class="fa fa-ban"></i>
+                            绿茶宝塔镇河妖
+                        </a>
+                    </div>
+                    <div class="cart_warpper_content clearfix">
+                        <div class="cart_warpper_content_img pull-left mr-20">
+                            <img src="{{ url('fx/img/shop11.png') }}">
+                        </div>
+                        <div class="cart_warpper_content_info pull-right">
+                            <h5 class="chayefont mb-10">菲律宾进口香蕉</h5>
+                            <p>新鲜梨树雪梨发货供货的供货皇冠分隔符梨</p>
+                            <div class="cart_warpper_content_info_bottom">
+                                <span class="pull-left price">￥212.00</span>
+                                <div class="cwcib_number pull-right">
+                                    <i class="fa fa-minus-circle"></i>
+                                    <span class="sell">&times2</span>
+                                    <i class="fa fa-plus-circle"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="cart_warpper mb-20">
+                    <div class="cart_warpper_tit">
+                        <a href="javascript:;" class="chayefont">
+                            <i class="fa fa-ban"></i>
+                            绿茶宝塔镇河妖
+                        </a>
+                    </div>
+                    <div class="cart_warpper_content clearfix">
+                        <div class="cart_warpper_content_img pull-left mr-20">
+                            <img src="{{ url('fx/img/shop11.png') }}">
+                        </div>
+                        <div class="cart_warpper_content_info pull-right">
+                            <h5 class="chayefont mb-10">菲律宾进口香蕉</h5>
+                            <p>新鲜梨树雪梨发货供货的供货皇冠分隔符梨</p>
+                            <div class="cart_warpper_content_info_bottom">
+                                <span class="pull-left price">￥212.00</span>
+                                <div class="cwcib_number pull-right">
+                                    <i class="fa fa-minus-circle"></i>
+                                    <span class="sell">&times2</span>
+                                    <i class="fa fa-plus-circle"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="cart_bottom">
             <span class="cart_bottom_selection pull-left">全选</span>
-            <div class="cart_bottom_info pull-left">合计：<span class="price">&yen{{$totals}}</span></div>
+            <div class="cart_bottom_info pull-left">合计：<span class="price">&yen9999.00</span></div>
             <div class="cart_bottom_settle pull-right"><a href="{{url('/home/order/confirm')}}">结算</a></div>
             <div class="cart_bottom_del pull-right"><a href="javascript:;">删除</a></div>
         </div>

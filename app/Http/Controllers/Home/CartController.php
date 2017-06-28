@@ -15,32 +15,27 @@ class CartController extends Controller
 {
 	//购物车列表页
 	public function index (Request $request) {
-		$lists= Order::join('order_product','order.id','=','order_product.order_id')
-			->join('product','order_product.product_id','=','product.id')
-			->join('product_group','product.group_id','=','product_group.id')
-			->join('product_img','product_img.group_id','=','product_group.id')
-			->where('type','cart')
-			->where('order.user_id',Auth::user()->id)
-			->where('order_product.deleted_at',null)
-			->get();
-		$totals= Order::where('type','cart')
-			->where('order.user_id',Auth::user()->id)
-			->value('price');
+		$lists = Order::join('order_product','order.id','=','order_product.order_id')
+		->join('product','order_product.product_id','=','product.id')
+		->where('order.type','cart')
+		->where('order.user_id',Auth::user()->id)
+		->select('product.*')
+		->paginate(config('app.paginate10'));
 		$title = '购物车';
 		$footer = 'cart';
-		return view(config('app.theme').'.home.cart')->with(['lists'=>$lists,'title'=>$title,'footer'=>$footer,'totals'=>$totals]);
+		return view(config('app.theme').'.home.cart')->with(['lists'=>$lists,'title'=>$title,'footer'=>$footer]);
 	}
 	//添加商品到购物车
-	public function create(Request $request){
+	public function addCart(Request $request){
 
-	     $product_id=$request->product_id;
-
+//	     $product_id=$request->product_id;
+		$product_id=1;
 		$product_price=Product::where('id',$product_id)->value('price');
 		if(!$product_price){
 			return "该商品已下架";
 		}
-		$amount= $request->amount;
-
+//		$amount= $request->amount;
+		$amount=1;
 		$hasOrder = Order::where('user_id',Auth::user()->id)->count('id');
 		if(!$hasOrder){
 		$order = new Order;
@@ -88,9 +83,9 @@ class CartController extends Controller
 		}
 	}
 	//删除购物车
-	public function destory(Request $request){
-		$product_id=$request->product_id;// 商品id
-
+	public function delCart(Request $request){
+//		$product_id=$request->product_id;
+		$product_id=2;
 		$order_product=Order::join('order_product','order.id','=','order_product.order_id')->
 			where('user_id',Auth::user()->id)->where('product_id',$product_id)->first();
 		$order_product_id=	$order_product->id;
@@ -104,16 +99,15 @@ class CartController extends Controller
 
 	}
 	//更新购物车
-	public  function update(Request $request,$id){
-		$product_id=$request->product_id; // 商品id
-		$amount= $request->amount;        //商品数量
-
+	public  function updateCart(Request $request){
+		//	     $product_id=$request->product_id;
+		$product_id=1;
 		$product_price=Product::where('id',$product_id)->value('price');
 		if(!$product_price){
 			return "该商品已下架";
 		}
-
-
+//		$amount= $request->amount;
+		$amount=20;
 		$order=Order::join('order_product','order.id','=','order_product.order_id')->
 		where('user_id',Auth::user()->id)->first();
 		$order_id=$order->order_id;
