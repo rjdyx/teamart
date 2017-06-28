@@ -90,6 +90,7 @@ Route::group(['namespace'=>'Admin','prefix'=>'admin','middleware'=>['auth','user
 	],function(){
 
 	Route::get('/index', 'IndexController@index');
+	Route::get('/index/sells', 'IndexController@sells');
 
 	// 用户管理
 	Route::group(['prefix'=>'user'],function(){
