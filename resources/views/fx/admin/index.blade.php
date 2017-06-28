@@ -16,25 +16,10 @@
 		.fx-box-left-l{height:16px;width:16px;background: #00A75A;margin-top:12px;float:left;}
 		.fx-box-left-r{height:40px;width:80%;line-height: 40px;border-bottom: 2px dotted #00A75A;float:left;margin-left:10px;font-size:25px;color:#767676;}
 		.fx-box-right{height:300px;width:50%;margin-top:100px;margin-left:5%;float:left;}
-
-	.chartTips_top span{
-      background-color: #fef200;
-    }
-    .chartTips_middle span{
-      background-color: #01aef0;
-    }
-    .chartTips_top span,.chartTips_middle span{
-      display: inline-block;
-      width: 20px;
-      height: 10px;
-      margin-left: 10px;
-    }
-    .chartTips_bottom{
-      position: absolute;
-      bottom: 0px;
-      left: 0px;
-      color: #da712f;
-    }
+		.chartTips_top span{background-color: #fef200;}
+	    .chartTips_middle span{background-color: #01aef0;}
+	    .chartTips_top span,.chartTips_middle span{display: inline-block;width: 20px;height: 10px;margin-left: 10px;}
+	    .chartTips_bottom{position: absolute;bottom: 0px;left: 0px;color: #da712f;}
 	</style>
 @endsection
 
@@ -87,16 +72,16 @@
 
 	    //查询某年每月分销商的订单总数和总金额 
 	    function orderDataReturn(year){
-	      axios.get('/admin/count/agency/ordercount',{params: {'year':year}})
+	      axios.get('/admin/index/sells')
 	      .then(function (res) {
-	        orderDataTo(res.data.orders,res.data.prices);
+	        orderDataTo(res.data.dates,res.data.sells,res.data.prices);
 	      })
 	    }
 
 	    //加载订单数据方法
-	    function orderDataTo(orders,prices){
+	    function orderDataTo(dates,orders,prices){
 	      var areaChartData = {
-	        labels: ["01", "02", "03", "04", "05", "06", "07","08","09","10","11","12"],
+	        labels: dates,
 	        datasets: [
 	          {
 	            label: "订单总数",
@@ -178,7 +163,7 @@
               <div class="chartTips">
                 <div class="chartTips_top">销售额<span></span></div>
                 <div class="chartTips_middle">订单量<span></span></div>
-                <div class="pull-right">订单量/周</div>
+                <div class="pull-right">订单量(最近一周)</div>
               </div>
               <canvas id="lineChartOfYear" style="height:250px"></canvas>
             </div>
