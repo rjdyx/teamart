@@ -14,7 +14,7 @@ class AddressController extends Controller
 	public function index (Request $request) { 
 		$title = '地址管理';
 		$lists = Address::where('user_id',Auth::user()->id)->get();
-		return view(config('app.theme').'.home.address.address')->with(['title'=>$title, 'lists'=>$lists]);
+		return view(config('app.theme').'.home.address')->with(['title'=>$title, 'lists'=>$lists]);
 	}
 
 	//地址管理新建
@@ -41,7 +41,7 @@ class AddressController extends Controller
 	{
 		$title = '编辑地址';
 		$data = Address::find($id);
-		return view(config('app.theme').'.home.address.address_edit')->with(['data' => $data,'title' => $title]);
+		return view(config('app.theme').'.home.addressEdit')->with(['data' => $data,'title' => $title]);
 	}
 
     //编辑保存
@@ -102,10 +102,12 @@ class AddressController extends Controller
 			$model = Address::find($id);
 			$model->state = 1;
 			if ($model->save()) {
-				return Redirect::to('home/address')->with('status', '设置成功');
+				//return Redirect::to('home/address')->with('status', '设置成功');
+				return true;
 			}
 		}	
-		return Redirect::back()->withErrors('设置失败');
+		//return Redirect::back()->withErrors('设置失败');
+		return false;
 	}
 
     //保存方法
@@ -133,7 +135,8 @@ class AddressController extends Controller
 		$city = $address[1];
 		$area = $address[2];
         //接收数据 加入model
-		$model->setRawAttributes($request->only(['name','user_id','phone','detail','code']));  
+		$model->setRawAttributes($request->only(['name','phone','detail','code']));  
+		$model->user_id = Auth::user()->id;
 		$model->province = $province;
 		$model->city = $city;
 		$model->area = $area;
@@ -142,13 +145,16 @@ class AddressController extends Controller
 			if($this->canceldefault()){
 				$state = 1;
 			}else{
-				return Redirect::back()->withErrors('设置默认地址时出错');
+				//return Redirect::back()->withErrors('设置默认地址时出错');
+				return false;
 			}
 		}  
 		$model->state = $state;
 		if ($model->save()) {
-			return Redirect::to('home/address')->with('status', '保存成功');
+			//return Redirect::to('home/address')->with('status', '保存成功');
+			return true;
 		}
-		return Redirect::back()->withErrors('保存失败');
+		//return Redirect::back()->withErrors('保存失败');
+		return false;
 	}
 }
