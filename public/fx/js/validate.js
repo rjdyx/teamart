@@ -155,11 +155,106 @@ exports.check = (field, value, table = 'user') => {
 	return ajax('post', url, params)
 }
 
+const necessary = ($inp, value) => {
+	if (value) {
+		$inp.parents('.form_item').removeClass('error')
+		return true
+	} else {
+		$inp.parents('.form_item').addClass('error')
+		return false
+	}
+}
+
+const validate = {
+	name: ($inp, value) => {
+		if (String.trim(value.length < 2)) {
+			$inp.parents('.form_item').addClass('error')
+		} else {
+			$inp.parents('.form_item').removeClass('error')
+		}
+	},
+	email: ($inp, value) => {
+		let reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+\.([a-zA-Z0-9_-])+/
+		if (!reg.test(value)) {
+			$inp.parents('.form_item').addClass('error')
+		} else {
+			$inp.parents('.form_item').removeClass('error')
+		}
+	},
+	phone: ($inp, value) => {
+		if (!/^1[34578]\d{9}$/.test(value)) {
+			$inp.parents('.form_item').addClass('error')
+		} else {
+			$inp.parents('.form_item').removeClass('error')
+		}
+	},
+	detail: ($inp, value) => {
+		console.log(value)
+		if (String.trim(value.length < 5)) {
+			console.log(value)
+			$inp.parents('.form_item').addClass('error')
+		} else {
+			$inp.parents('.form_item').removeClass('error')
+		}
+	},
+	code: ($inp, value) => {
+		if (!/^[1-9][0-9]{5}$/.test(value)) {
+			$inp.parents('.form_item').addClass('error')
+		} else {
+			$inp.parents('.form_item').removeClass('error')
+		}
+	},
+	realname: ($inp, value) => {
+		if (String.trim(value.length < 2)) {
+			$inp.parents('.form_item').addClass('error')
+		} else {
+			$inp.parents('.form_item').removeClass('error')
+		}
+	},
+	password: ($inp, value) => {
+		if (String.trim(value.length < 6)) {
+			$inp.parents('.form_item').addClass('error')
+		} else {
+			$inp.parents('.form_item').removeClass('error')
+		}
+	},
+	repassword: ($inp, value) => {
+		if (String.trim(value.length < 6)) {
+			$inp.parents('.form_item').addClass('error')
+		} else {
+			if ($('#password').val() !== value) {
+				$inp.parents('.form_item').addClass('error')
+			} else {
+				$inp.parents('.form_item').removeClass('error')
+			}
+		}
+	}
+}
+
+exports.bindEvent = (params) => {}
+
+// 表单验证
 exports.validForm = (params) => {
 	let fields = Object.keys(params)
 	fields.forEach(v => {
-		let isRequired = $(`input[name='${v}']`).data('required')
-			params[v]
-			
+		let cinput, isRequired
+		if (v === 'detail') {
+			cinput = $(`textarea[name='${v}']`)
+			isRequired = $(`textarea[name='${v}']`).data('required')
+		} else {
+			cinput = $(`input[name='${v}']`)
+			isRequired = $(`input[name='${v}']`).data('required')
+		}
+		if (isRequired) {
+			if (!necessary(cinput, params[v])) return
+		}
+		if (params[v]) {
+			validate[v] && validate[v](cinput, params[v])
+		}
 	})
+	if ($('.form_item.error').length > 0) {
+		return false
+	} else {
+		// return true
+	}
 }

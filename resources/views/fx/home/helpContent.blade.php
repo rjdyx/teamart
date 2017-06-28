@@ -6,14 +6,14 @@
 @endsection
 
 @section('script')
-    @parent
+@parent
 
 @endsection
 
 @section('content')
 
-	@include("layouts.header-info")
-	<div class="container helpdetail">
-		<img src="{{ url('fx/img/helpCenter_TeaCeremony.png') }}">
-	</div>
+@include("layouts.header-info")
+<div class="container helpdetail">
+	{!! $con !!}
+</div>
 @endsection

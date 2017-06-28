@@ -651,7 +651,7 @@
 	form {
 		height: calc(100% - 4.6rem);
 		overflow: auto;
-		.useredit_item {
+		.form_item {
 			height: 0.84rem;
 			line-height: 0.84rem;
 			margin-top: 0.01rem;
@@ -690,8 +690,16 @@
 				background-color: #aaa;
 			}
 		}
-		.useredit_item:last-of-type {
+		.form_item:last-of-type {
 			border-bottom: 0.01rem solid #F6F7F9; 
+		}
+		.form_item.error{
+			label {
+				color: red;
+			}
+			input {
+				color: red;
+			}
 		}
 	}
 	.useredit_save {
@@ -840,7 +848,7 @@
 	padding-top: 1.2rem;
 	background-color: #EEEFF1;
 	form {
-		.addressadd_item {
+		.form_item {
 			width: 100%;
 			min-height: 0.96rem;
 			line-height: 0.66rem;
@@ -872,9 +880,21 @@
 			.address_default.active {
 				@include  backgroundImages("/fx/images/address_default_active.png", cover)
 			}
+			.form_error {
+				position: absolute;
+			}
 		}
-		.addressadd_item.error {
-			color: red;
+		.form_item.error {
+			label {
+				color: red;
+			}
+			input {
+				color: red;
+			}
+			textarea {
+				color: red;
+				border: 0.01rem solid red;
+			}
 		}
 	}
 	.address_add {
@@ -1988,5 +2008,4 @@
 			@include  backgroundImages("/fx/images/footer_bg.png", cover)
 		}
 	}
-	
 }

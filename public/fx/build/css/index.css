@@ -3121,6 +3121,9 @@ div {
 .left-0 {
   left: 0 !important; }
 
+.top-0 {
+  top: 0 !important; }
+
 @media screen and (max-width: 321px) {
   .base-fontsize {
     font-size: 12px; } }
@@ -3132,6 +3135,48 @@ div {
 @media screen and (min-width: 400px) {
   .base-fontsize {
     font-size: 16px; } }
+
+.prompt {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  z-index: -1;
+  transition: all .5s ease; }
+  .prompt .prompt_box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 4rem;
+    height: 4rem;
+    transform: translate(-50%, -50%);
+    background-color: #FFF;
+    border-radius: 0.1rem;
+    overflow: hidden; }
+    .prompt .prompt_box .prompt_box_content {
+      height: 3rem;
+      width: 100%;
+      padding: 0.1rem;
+      text-align: center;
+      line-height: 2.8rem; }
+    .prompt .prompt_box .prompt_box_btn {
+      display: block;
+      width: 100%;
+      height: 1rem;
+      border-top: 0.01rem solid #dadada;
+      text-align: center;
+      line-height: 1rem; }
+    .prompt .prompt_box .prompt_box_btn:active {
+      background-color: #fafafa; }
+
+.prompt.active {
+  opacity: 1;
+  z-index: 1003; }
 
 header {
   position: fixed;
@@ -3864,24 +3909,45 @@ footer {
   .useredit form {
     height: calc(100% - 4.6rem);
     overflow: auto; }
-    .useredit form .useredit_item {
+    .useredit form .form_item {
       height: 0.84rem;
       line-height: 0.84rem;
       margin-top: 0.01rem;
       font-size: 16px;
       padding: 0 0.38rem;
       border-top: 0.01rem solid #F6F7F9; }
-      .useredit form .useredit_item input {
+      .useredit form .form_item input {
         float: right;
         border: 0;
         text-align: right;
         display: block;
         height: 0.84rem;
         color: #8C8C8C; }
-      .useredit form .useredit_item .useredit_selection {
+      .useredit form .form_item .gray {
         color: #8C8C8C; }
-    .useredit form .useredit_item:last-of-type {
+      .useredit form .form_item label.gender {
+        position: relative;
+        display: block;
+        width: 0.7rem; }
+      .useredit form .form_item label.gender::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        right: 0;
+        display: block;
+        width: 0.3rem;
+        height: 0.3rem;
+        margin-top: -0.15rem;
+        border: 0.02rem solid #aaa;
+        border-radius: 50%; }
+      .useredit form .form_item label.gender.active::after {
+        background-color: #aaa; }
+    .useredit form .form_item:last-of-type {
       border-bottom: 0.01rem solid #F6F7F9; }
+    .useredit form .form_item.error label {
+      color: red; }
+    .useredit form .form_item.error input {
+      color: red; }
   .useredit .useredit_save {
     position: absolute;
     bottom: 0;
@@ -3993,6 +4059,8 @@ footer {
         font-size: 15px; }
         .address .address_warpper .address_warpper_opts ul li {
           float: left; }
+          .address .address_warpper .address_warpper_opts ul li a {
+            color: #8C8C8C; }
         .address .address_warpper .address_warpper_opts ul li:first-child {
           margin-right: 0.2rem; }
   .address .address_add {
@@ -4017,7 +4085,7 @@ footer {
   width: 100%;
   padding-top: 1.2rem;
   background-color: #EEEFF1; }
-  .addressadd form .addressadd_item {
+  .addressadd form .form_item {
     width: 100%;
     min-height: 0.96rem;
     line-height: 0.66rem;
@@ -4025,19 +4093,19 @@ footer {
     border-bottom: 0.01rem solid #E3E3E3;
     background-color: #FFF;
     font-size: 16px; }
-    .addressadd form .addressadd_item input {
+    .addressadd form .form_item input {
       float: right;
       display: block;
       height: 0.66rem;
       border: 0;
       text-align: right; }
-    .addressadd form .addressadd_item textarea {
+    .addressadd form .form_item textarea {
       width: 100%;
       height: 1.9rem;
       border: 0; }
-    .addressadd form .addressadd_item .addressadd_selection {
+    .addressadd form .form_item .addressadd_selection {
       color: #979797; }
-    .addressadd form .addressadd_item .address_default {
+    .addressadd form .form_item .address_default {
       display: block;
       width: 0.62rem;
       height: 0.62rem;
@@ -4045,13 +4113,20 @@ footer {
       background-size: cover;
       background-position: center center;
       background-repeat: no-repeat; }
-    .addressadd form .addressadd_item .address_default.active {
+    .addressadd form .form_item .address_default.active {
       background: url("/fx/images/address_default_active.png");
       background-size: cover;
       background-position: center center;
       background-repeat: no-repeat; }
-  .addressadd form .addressadd_item.error {
+    .addressadd form .form_item .form_error {
+      position: absolute; }
+  .addressadd form .form_item.error label {
     color: red; }
+  .addressadd form .form_item.error input {
+    color: red; }
+  .addressadd form .form_item.error textarea {
+    color: red;
+    border: 0.01rem solid red; }
   .addressadd .address_add {
     position: absolute;
     bottom: 0;
@@ -4831,6 +4906,27 @@ footer {
             font-size: 18px; }
           .confirm .confirm_warpper .confirm_warpper_content .confirm_warpper_content_info p {
             font-size: 16px; } }
+  .confirm .confirm_container_sum {
+    width: 100%;
+    background-color: #FFF;
+    border-top: 0.01rem solid #E3E3E3; }
+    .confirm .confirm_container_sum .confirm_container_sum_row {
+      height: 0.96rem;
+      width: 100%;
+      border-bottom: 0.01rem solid #E3E3E3;
+      padding: 0 0.2rem;
+      line-height: 0.96rem; }
+      .confirm .confirm_container_sum .confirm_container_sum_row a {
+        display: block; }
+      .confirm .confirm_container_sum .confirm_container_sum_row .gray {
+        color: #aaa; }
+      .confirm .confirm_container_sum .confirm_container_sum_row .price {
+        color: #FF4F03; }
+    .confirm .confirm_container_sum textarea {
+      width: 100%;
+      height: 1rem;
+      border: 0;
+      padding: 0.1rem; }
   .confirm .confirm_bottom {
     position: absolute;
     bottom: 0;
@@ -4847,10 +4943,70 @@ footer {
     .confirm .confirm_bottom .confirm_bottom_sum {
       width: 4rem;
       height: 1rem;
-      background-color: rgba(181, 181, 181, 0.5); }
+      background-color: rgba(181, 181, 181, 0.5);
+      padding-left: 0.2rem;
+      color: #FEF0EF; }
+      .confirm .confirm_bottom .confirm_bottom_sum .price {
+        color: #FA580D; }
     .confirm .confirm_bottom .confirm_bottom_submit {
       width: calc(100% - 4rem);
       height: 1rem;
       background-color: rgba(214, 195, 157, 0.5); }
       .confirm .confirm_bottom .confirm_bottom_submit a {
         color: #fff; }
+
+.confirm_type {
+  position: fixed;
+  top: 100%;
+  left: 0;
+  z-index: 1001;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  transition: all .5s ease; }
+  .confirm_type .confirm_type_container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 60%;
+    width: 100%;
+    background-color: #FFF; }
+    .confirm_type .confirm_type_container h5 {
+      width: 100%;
+      height: 1.2rem;
+      text-align: center;
+      line-height: 1.2rem;
+      border-bottom: 0.01rem solid #DADADA; }
+    .confirm_type .confirm_type_container .confirm_type_row {
+      width: 100%;
+      height: 1rem;
+      line-height: 1rem;
+      border-bottom: 0.01rem solid #dadada;
+      padding: 0 0.2rem; }
+      .confirm_type .confirm_type_container .confirm_type_row i {
+        display: block;
+        width: 0.35rem;
+        height: 0.35rem;
+        margin-top: 0.325rem;
+        background: url("/fx/images/address_default.png");
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat; }
+      .confirm_type .confirm_type_container .confirm_type_row i.active {
+        background: url("/fx/images/address_default_active.png");
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat; }
+    .confirm_type .confirm_type_container .confirm_type_bottom {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 1rem;
+      line-height: 1rem;
+      text-align: center;
+      color: #fff;
+      background: url("/fx/images/footer_bg.png");
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat; }

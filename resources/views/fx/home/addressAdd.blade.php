@@ -63,23 +63,22 @@
 			var params = {
 				name: $('#name').val(),
 				phone: $('#phone').val(),
-				address: $('#address').val(),
 				code: $('#code').val(),
 				detail: $('#detail').val(),
+				address: $('#address').val(),
 				state: $('#state').val()
 			}
-			ajax('post', '/home/address', params)
-				.then(function (resolve) {
-					if (resolve) {
-						prompt.message('新增成功', 'http://' + window.location.host + '/home/address')
-					} else {
-						prompt.message('新增失败')
-					}
-				})
+			if (_valid.validForm(params)) {
+				ajax('post', '/home/address', params)
+					.then(function (resolve) {
+						if (resolve) {
+							prompt.message('新增成功', 'http://' + window.location.host + '/home/address')
+						} else {
+							prompt.message('新增失败')
+						}
+					})
+			}
 		})
-		function validForm () {
-			
-		}
     </script>
 @endsection
 
@@ -88,28 +87,28 @@
 
 	<div class="addressadd">
 		<form action="#" name="addressform">
-			<div class="addressadd_item chayefont">
+			<div class="form_item chayefont">
 				<label for="name">收货人</label>
 				<input type="text" name="name" id="name" class="chayefont" data-required="true" autocomplete="off" placeholder="请输入收货人名称">
 			</div>
-			<div class="addressadd_item chayefont">
+			<div class="form_item chayefont">
 				<label for="phone">联系电话</label>
 				<input type="tel" name="phone" id="phone" class="chayefont" data-required="true" autocomplete="off" placeholder="请输入联系电话">
 			</div>
-			<div class="addressadd_item chayefont">
+			<div class="form_item chayefont">
 				<label for="region">所在地区</label>
-		        <input type="text" id="address" name="address" readonly="" data-required="true" placeholder="选择地区"  value="广东省,广州市,天河区"/>
-		        <input id="value1" type="hidden" value="20,234,504"/>
+		        <input type="text" id="address" name="address" readonly="" data-required="true" placeholder="选择地区"  value=""/>
+		        <input id="value1" type="hidden" value=""/>
 				<!-- <div class="pull-right addressadd_selection J_msa">请选择<i class="fa fa-angle-right"></i></div> -->
 			</div>
-			<div class="addressadd_item chayefont">
+			<div class="form_item chayefont">
 				<label for="code">邮编</label>
 				<input type="number" name="code" id="code" class="chayefont" placeholder="请输入邮编">
 			</div>
-			<div class="addressadd_item">
+			<div class="form_item">
 				<textarea name="detail" id="detail" data-required="true" placeholder="请填写详细地址，不少于5个字"></textarea>
 			</div>
-			<div class="addressadd_item mt-20 J_defualtAddress">
+			<div class="form_item mt-20 J_defualtAddress">
 				<label for="state" class="block">
 					默认地址
 					<i class="pull-right address_default"></i>

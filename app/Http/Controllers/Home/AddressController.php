@@ -102,10 +102,12 @@ class AddressController extends Controller
 			$model = Address::find($id);
 			$model->state = 1;
 			if ($model->save()) {
-				return Redirect::to('home/address')->with('status', '设置成功');
+				//return Redirect::to('home/address')->with('status', '设置成功');
+				return true;
 			}
 		}	
-		return Redirect::back()->withErrors('设置失败');
+		//return Redirect::back()->withErrors('设置失败');
+		return false;
 	}
 
     //保存方法
@@ -143,13 +145,16 @@ class AddressController extends Controller
 			if($this->canceldefault()){
 				$state = 1;
 			}else{
-				return Redirect::back()->withErrors('设置默认地址时出错');
+				//return Redirect::back()->withErrors('设置默认地址时出错');
+				return false;
 			}
 		}  
 		$model->state = $state;
 		if ($model->save()) {
-			return Redirect::to('home/address')->with('status', '保存成功');
+			//return Redirect::to('home/address')->with('status', '保存成功');
+			return true;
 		}
-		return Redirect::back()->withErrors('保存失败');
+		//return Redirect::back()->withErrors('保存失败');
+		return false;
 	}
 }

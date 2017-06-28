@@ -29,8 +29,9 @@ class HelpController extends Controller
 	//帮助中心详情页
 	public function detail (Request $request, $id) {
 		$content = Article::find($id);
+		$con = html_entity_decode($content->content);
 		$title = '帮助中心';
 		//$title = $content->name;
-		return view(config('app.theme').'.home.helpContent')->with(['content'=>$content,'title'=>$title]);
+		return view(config('app.theme').'.home.helpContent')->with(['con'=>$con,'title'=>$title]);
 	}
 }

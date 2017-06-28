@@ -104,11 +104,11 @@
 			@if(Auth::user()->type==2)<p class="useredit_name chayefont fz-18">推荐人：@if($data->pname){{$data->pname}}@else 无 @endif</p>@endif
 		</div>
 		<form action="{{url('home/user')}}/{{$data->id}}" id="form">
-			<div class="useredit_item chayefont">
+			<div class="form_item chayefont">
 				<label for="realname">姓名</label>
 				<input type="text" name="realname" id="realname" class="chayefont" autocomplete="off" placeholder="请输入姓名" value="{{$data->realname}}">
 			</div>
-			<div class="useredit_item chayefont">
+			<div class="form_item chayefont">
 				<label for="gender">性别</label>
 				<div class="pull-right">
 					<label class="pull-left mr-20 gray gender @if($data->gender == 0) active @endif" for="male">男</label>
@@ -117,24 +117,24 @@
 				<input type="radio" name="gender" class="invisibility" id="male" value="0" @if($data->gender == 0) checked @endif>
 				<input type="radio" name="gender" class="invisibility" id="female" value="1" @if($data->gender == 1) checked @endif>
 			</div>
-			<div class="useredit_item chayefont">
+			<div class="form_item chayefont">
 				<label for="phone">手机</label>
 				<input type="tel" name="phone" id="phone" data-required="true" class="chayefont" autocomplete="off" placeholder="请输入手机号码" value="{{$data->phone}}">
 			</div>
-			<div class="useredit_item chayefont">
+			<div class="form_item chayefont">
 				<label for="email">邮箱</label>
 				<input type="email" name="email" id="email" data-required="true" class="chayefont" autocomplete="off" placeholder="请输入邮箱" value="{{$data->email}}">
 			</div>
-			<div class="useredit_item chayefont">
+			<div class="form_item chayefont">
 				<label for="birth_date">出生日期</label>
 				<input type="hidden" name="birth_date" value="{{$data->birth_date}}"  id="useData_id">
 				<div class="pull-right gray" id="useData">@if($data->birth_date){{$data->birth_date}} @else 请选择@endif<i class="fa fa-angle-down"></i></div>
 			</div>
-			<div class="useredit_item chayefont">
+			<div class="form_item chayefont">
 				<label for="password">密码</label>
 				<input type="password" name="password" id="password" class="chayefont" autocomplete="off" placeholder="输入修改 (默认不输入)">
 			</div>
-			<div class="useredit_item chayefont">
+			<div class="form_item chayefont">
 				<label for="password">确认密码</label>
 				<input type="password" name="repassword" id="repassword" class="chayefont" autocomplete="off" placeholder="输入密码后再确认密码">
 			</div>
