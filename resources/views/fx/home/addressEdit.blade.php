@@ -51,16 +51,39 @@
             'data': LAreaData //数据源
         });
         area1.value=[1,13,3];//控制初始位置，注意：该方法并不会影响到input的value
-        $('#defualtAddress').click(function(){
+        $('.J_defualtAddress').click(function(){
 			var v = $("input[name='state']").val();
 			if (v > 0) {
-				$('.hiddeni').removeClass('active');
+				$(this).find('i').removeClass('active');
 				$("input[name='state']").val(0);
 			} else {
-				$('.hiddeni').addClass('active');
+				$(this).find('i').addClass('active');
 				$("input[name='state']").val(1);
 			}
 		});
+        $('.J_submit').on('click tap', function () {
+            var id = $('#id').val()
+            var params = {
+                name: $('#name').val(),
+                phone: $('#phone').val(),
+                address: $('#address').val(),
+                code: $('#code').val(),
+                detail: $('#detail').text(),
+                state: $('#state').val(),
+                 _token: $('meta[name="csrf-token"]').attr('content'),
+                 method: "PUT"
+            }
+            axios.post('/home/address/' + id + '/edit', params)
+                .then(function (res) {
+                    console.log(res)
+                    if (res.data) {
+                        // window.location.href = '/home/address'
+                    }
+                })
+                .catch(function (err) {
+                    console.log(err)
+                })
+        })
     </script>
 @endsection
 
@@ -69,6 +92,7 @@
 
 	<div class="addressadd">
 		<form action="#" name="addressform">
+            <input type="hidden" id="id" value="{{$data->id}}">
 			<div class="addressadd_item chayefont">
 				<label for="name">收货人</label>
 				<input type="text" name="name" id="name" class="chayefont" autocomplete="off" placeholder="请输入收货人名称" value="{{$data->name}}">
@@ -88,16 +112,16 @@
 				<input type="number" value="{{$data->code}}" name="code" id="code" class="chayefont" placeholder="请输入邮编">
 			</div>
 			<div class="addressadd_item">
-				<textarea name="detail" placeholder="请填写详细地址，不少于5个字">{{$data->detail}}</textarea>
+				<textarea name="detail" id="detail" placeholder="请填写详细地址，不少于5个字">{{$data->detail}}</textarea>
 			</div>
-			<div class="addressadd_item mt-20" id="defualtAddress">
+			<div class="addressadd_item mt-20 J_defualtAddress">
 				<label for="state" class="block">
 					默认地址
-					<i class="pull-right address_default hiddeni @if($data->state) active @endif" ></i>
+					<i class="pull-right address_default @if($data->state) active @endif" ></i>
 				</label>
 				<input type="hidden" name="state" id="state" value="0">
 			</div>
 		</form>
-		<div class="chayefont address_add">保存地址</div>
+		<div class="chayefont address_add J_submit">保存地址</div>
 	</div>
 @endsection

@@ -1747,6 +1747,115 @@
 	height: 100%;
 	padding-top: 1.2rem;
 	background-color: #EEEFF1;
+	.confirm_address {
+		position: relative;
+		width: 100%;
+		height: 1.6rem;
+		padding: 0.25rem 0.3rem;
+		background-color: #FFF;
+		a {
+			display: block;
+		}
+		i {
+			display: block;
+			height: 1.1rem;
+			width: 0.45rem;
+			line-height: 1.1rem;
+			font-size: 20px;
+		}
+		i.pull-left,
+		i.pull-right {
+			margin: 0;
+		}
+		.confirm_address_info {
+			width: calc(100% - 0.9rem);
+			height: 100%;
+		}
+		.gray {
+			color: #AAAAAA;
+			font-size: 12px;
+		}
+	}
+	.confirm_container {
+		height: calc(100% - 2.8rem);
+		overflow: auto;
+	}
+	.confirm_warpper {
+		height: 3rem;
+		background-color: #FFF;
+		.confirm_warpper_tit {
+			height: 0.78rem;
+			border-bottom: 0.02rem solid #DADADA;
+			padding-left: 0.25rem;
+			line-height: 0.78rem;
+			font-size: 16px;
+			a {
+				position: relative;
+				display: block;
+				color: #595758;
+				i {
+					vertical-align: middle;
+				}
+			}
+		}
+		.confirm_warpper_content {
+			padding: 0.2rem 0.3rem;
+			height: 2.2rem;
+			.confirm_warpper_content_img {
+				width: 28.75%;
+				height: 100%;
+				overflow: hidden;
+				img {
+					display: block;
+					width: 100%;
+				}
+			}
+			.confirm_warpper_content_info {
+				position: relative;
+				width: calc(71.25% - 0.2rem);
+				height: 100%;
+				p {
+					color: #7B7B7B;
+				}
+				.confirm_warpper_content_info_bottom {
+					position: absolute;
+					left: 0;
+					bottom: 0;
+					width: 100%;
+					span.price {
+						color: #FB6969;
+					}
+					span.sell {
+						color: #B5B5B5;
+					}
+				}
+				@media screen and (max-width:321px){
+					h5 {
+						font-size: 14px;
+					}
+					p {
+						font-size: 12px;
+					}
+				}
+				@media screen and (min-width:321px) and (max-width:400px){
+					h5 {
+						font-size: 16px;
+					}
+					p {
+						font-size: 14px;
+					}
+				}
+				@media screen and (min-width:400px){
+					h5 {
+						font-size: 18px;
+					}
+					p {
+						font-size: 16px;
+					}
+				}
+			}
+		}
+	}
 	.confirm_bottom {
 		position: absolute;
 		bottom: 0;
