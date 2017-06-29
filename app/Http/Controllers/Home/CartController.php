@@ -22,6 +22,10 @@ class CartController extends Controller
 			->where('type','cart')
 			->where('order.user_id',Auth::user()->id)
 			->where('order_product.deleted_at',null)
+			->where('product.deleted_at',null)
+			->where('order.deleted_at',null)
+			->where('product_group.deleted_at',null)
+			->where('order_product.deleted_at',null)
 			->get();
 		$totals= Order::where('type','cart')
 			->where('order.user_id',Auth::user()->id)

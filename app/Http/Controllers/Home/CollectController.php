@@ -11,7 +11,7 @@ use App\Product;
 class CollectController extends Controller
 {
 
-    //ÊÕ²ØÁĞ±íÒ³
+    //æ”¶è—åˆ—è¡¨
     public function index(Request $request) {
         $lists= Order::join('order_product','order.id','=','order_product.order_id')
             ->join('product','order_product.product_id','=','product.id')
@@ -22,10 +22,10 @@ class CollectController extends Controller
             ->where('order_product.deleted_at',null)
             ->get();
 //            ->paginate(config('app.paginate10'));
-        $title = 'ÊÕ²Ø¹ÜÀí';
+        $title = 'æ”¶è—ç®¡ç†';
         return view(config('app.theme').'.home.collect')->with(['footer'=>'collect','lists'=>$lists,'title'=>$title]);
     }
-    //ÊÕ²ØÈ¡Ïû
+    //å–æ¶ˆæ”¶è—
     public function destory($id){
        $product_id=$id;
 
@@ -36,21 +36,21 @@ class CollectController extends Controller
         where('order.user_id',Auth::user()->id)->select('*','order_product.id as collect_id')->value('collect_id');
 
         if($this->del($collect_id)){
-//					return Redirect::back()->with('status','É¾³ıÊÕ²Ø³É¹¦');
+
             return 1;
         }else{
-//					return Redirect::back()->withErrors('É¾³ıÊÕ²ØÊ§°Ü');
+
             return 0;
         }
 
-//		return Redirect::back()->withErrors('É¾³ıÊÕ²ØÊ§°Ü');
+
         return 0;
     }
     public function del($id){
         if (OrderProduct::destroy($id)) return true;
         return false;
     }
-    //ÅúÁ¿É¾³ıÊÕ²Ø
+    //æ‰¹é‡å–æ¶ˆæ”¶è—
     public function dels(Request $request)
     {
         $ids = explode(',', $request->ids);
@@ -61,7 +61,7 @@ class CollectController extends Controller
         }
         return 0;
     }
-    //Ôö¼ÓÊÕ²Ø
+    //åŠ å…¥æ”¶è—
     public function create(Request $request){
 		$product_id=$request->id;
 
