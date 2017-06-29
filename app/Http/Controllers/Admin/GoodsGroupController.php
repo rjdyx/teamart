@@ -18,6 +18,7 @@ use App\ProductGroup as Group;
 use App\ProductCategory as Category;
 use Redirect;
 use IQuery;
+use App\ProductImg;
 
 class GoodsGroupController extends Controller
 {
@@ -61,8 +62,9 @@ class GoodsGroupController extends Controller
     {
         $selects = Category::get();
         $data = Group::find($id);
+        $imgs = ProductImg::where('group_id',$id)->get();
         return view(config('app.theme').'.admin.goods.group_edit')
-        ->with(['data'=>$data, 'selects'=>$selects]);
+        ->with(['data'=>$data, 'selects'=>$selects,'imgs'=>$imgs]);
     }
 
     //查看
@@ -133,9 +135,29 @@ class GoodsGroupController extends Controller
         $model->setRawAttributes($request->only(['name','desc','category_id']));
 
         if ($model->save()) {
-            return Redirect::to('admin/goods/group')->with('status', '保存成功');
+            $pics = IQuery::uploads($request, 'imgs', true);
+            if ($pics != 'false')
+            {
+                foreach ($pics as $pic) {
+                    $img = new ProductImg;
+                    $img->img = $pic['pic'];
+                    $img->thumb = $pic['thumb'];
+                    $img->group_id = $model->id;
+                    if (!$img->save()) return Redirect::back()->withErrors('保存失败');
+                }
+            }
+            //编辑时删除关联图片
+            if ($id != -1 && isset($request->dels)) 
+            {
+                $img_ids = explode(',', $request->dels);
+                foreach ($img_ids as $img_id) {
+                    IQuery::destroyPic(new ProductImg, $img_id, 'img');
+                    ProductImg::destroy($img_id);
+                }
+            }
         }
-        return Redirect::back()->withErrors('保存失败');
+        return Redirect::to('admin/goods/group')->with('status', '保存成功');
+
     }
 
 }

@@ -47,7 +47,7 @@
                 <th>编号</th>
                 <th>商品分类</th>
                 <th>商品组名称</th>
-                <th>描述</th>
+                <!-- <th>描述</th> -->
                 <th>操作</th>
               </tr>
               @foreach ($lists as $k => $list)
@@ -56,7 +56,7 @@
                 <td>{{$k + 1}}</td>
                 <td>{{$list->category_name}}</td>
                 <td>{{$list->name}}</td>
-                <td>{{$list->desc}}</td>
+                <!-- <td>{{$list->desc}}</td> -->
                 <td>
                   <div style="color: #dd4b39">
                   <a href="{{url('admin/goods/group')}}/{{$list->id}}/edit">
