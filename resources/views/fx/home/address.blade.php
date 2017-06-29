@@ -53,7 +53,7 @@
 					<p>{{$list->province}}{{$list->city}}{{$list->area}}{{$list->detail}}</p>
 				</div>
 				<div class="address_warpper_opts">
-					<a href="{{url('home/address/default')}}/{{$list->id}}" class="address_default pull-left @if($list->state == 1) active @endif J_setdefault" data-id="{{$list->id}}">默认地址</a>		
+					<a href="javascript:;" class="address_default pull-left @if($list->state == 1) active @endif J_setdefault" data-id="{{$list->id}}">默认地址</a>		
 					<ul class="pull-right">
 						<li>
 							<a href="{{url('home/address')}}/{{$list->id}}/edit">

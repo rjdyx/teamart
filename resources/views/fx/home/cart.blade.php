@@ -10,97 +10,162 @@
     @parent
     <script type="text/javascript" src="{{ url('fx/common/dropload.js') }}"></script>
     <script>
-        var page = 0;
-        var size = 10;
-        $('.cart_container').dropload({
-            scrollArea : $('.cart_container'),
-            domUp : {
-                domClass   : 'dropload-up',
-                domRefresh : '<div class="dropload-refresh">↓下拉刷新</div>',
-                domUpdate  : '<div class="dropload-update">↑释放更新</div>',
-                domLoad    : '<div class="dropload-load"><span class="loading"></span>加载中...</div>'
-            },
-            domDown : {
-                domClass   : 'dropload-down',
-                domRefresh : '<div class="dropload-refresh">↑上拉加载更多</div>',
-                domLoad    : '<div class="dropload-load"><span class="loading"></span>加载中...</div>',
-                domNoData  : '<div class="dropload-noData">没有更多数据了</div>'
-            },
-            loadUpFn : function(me){
-                $.ajax({
-                    type: 'GET',
-                    url: 'json/update.json',
-                    dataType: 'json',
-                    success: function(data){
-                        var result = '';
-                        for(var i = 0; i < data.lists.length; i++){
-                            result +=   '<a class="item opacity" href="'+data.lists[i].link+'">'
-                                            +'<img src="'+data.lists[i].pic+'" alt="">'
-                                            +'<h3>'+data.lists[i].title+'</h3>'
-                                            +'<span class="date">'+data.lists[i].date+'</span>'
-                                        +'</a>';
-                        }
-                        // 为了测试，延迟1秒加载
-                        setTimeout(function(){
-                            $('.lists').html(result);
-                            // 每次数据加载完，必须重置
-                            me.resetload();
-                            // 重置页数，重新获取loadDownFn的数据
-                            page = 0;
-                            // 解锁loadDownFn里锁定的情况
-                            me.unlock();
-                            me.noData(false);
-                        },1000);
-                    },
-                    error: function(xhr, type){
-                        alert('Ajax error!');
-                        // 即使加载出错，也得重置
-                        me.resetload();
-                    }
-                });
-            },
-            loadDownFn : function(me){
-                page++;
-                // 拼接HTML
-                var result = '';
-                $.ajax({
-                    type: 'GET',
-                    url: 'http://ons.me/tools/dropload/json.php?page='+page+'&size='+size,
-                    dataType: 'json',
-                    success: function(data){
-                        var arrLen = data.length;
-                        if(arrLen > 0){
-                            for(var i=0; i<arrLen; i++){
-                                result +=   '<a class="item opacity" href="'+data[i].link+'">'
-                                                +'<img src="'+data[i].pic+'" alt="">'
-                                                +'<h3>'+data[i].title+'</h3>'
-                                                +'<span class="date">'+data[i].date+'</span>'
-                                            +'</a>';
-                            }
-                        // 如果没有数据
-                        }else{
-                            // 锁定
+        $(function () {
+            var page = 0
+            $('.cart_container').dropload({
+                scrollArea : $('.cart_container'),
+                domUp : {
+                    domClass   : 'dropload-up',
+                    domRefresh : '<div class="dropload-refresh">↓下拉刷新</div>',
+                    domUpdate  : '<div class="dropload-update">↑释放更新</div>',
+                    domLoad    : '<div class="dropload-load"><span class="loading"></span>加载中...</div>'
+                },
+                domDown : {
+                    domClass   : 'dropload-down',
+                    domRefresh : '<div class="dropload-refresh">↑上拉加载更多</div>',
+                    domLoad    : '<div class="dropload-load"><span class="loading"></span>加载中...</div>',
+                    domNoData  : '<div class="dropload-noData">没有更多数据了</div>'
+                },
+                loadUpFn : function(me){
+                    getListData(me, 'up')
+                },
+                loadDownFn : function(me){
+                    getListData(me, 'down')
+                },
+                threshold : 50
+            });
+            function getListData (me, type) {
+                if (type == 'down') {
+                    page++
+                } else {
+                    page = 0
+                }
+                ajax('get', '/home/cart/data', {page: page}, false, false, false)
+                    .then(function (res) {
+                        var template = ''
+                        if (res.length > 0) {
+                            res.forEach(function (v) {
+                                template += `
+                                    <div class="cart_warpper mb-20">
+                                        <div class="cart_warpper_tit J_select">
+                                            <a href="javascript:;" class="chayefont">
+                                                <i class="fa fa-ban"></i>
+                                                绿茶宝塔镇河妖
+                                            </a>
+                                        </div>
+                                        <div class="cart_warpper_content clearfix">
+                                            <div class="cart_warpper_content_img pull-left mr-20">
+                                                <img src="${v.img}">
+                                            </div>
+                                            <div class="cart_warpper_content_info pull-right">
+                                                <h5 class="chayefont mb-10">${v.name}</h5>
+                                                <p>${v.desc}</p>
+                                                <div class="cart_warpper_content_info_bottom">
+                                                    <span class="pull-left price">￥${v.price}</span>
+                                                    <div class="cwcib_number pull-right">
+                                                        <i class="fa fa-minus-circle"></i>
+                                                        <span class="sell">&times${v.amount}</span>
+                                                        <i class="fa fa-plus-circle"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `
+                            })
+                        } else {
                             me.lock();
-                            // 无数据
                             me.noData();
                         }
-                        // 为了测试，延迟1秒加载
-                        setTimeout(function(){
-                            // 插入数据到页面，放到最后面
-                            $('.lists').append(result);
-                            // 每次数据插入，必须重置
-                            me.resetload();
-                        },1000);
-                    },
-                    error: function(xhr, type){
-                        alert('Ajax error!');
-                        // 即使加载出错，也得重置
+                        if (type == 'up') {
+                            me.unlock();
+                            me.noData(false);
+                            $('.cart_list').html(result);
+                        } else {
+                            $('.cart_list').append(result);
+                        }
                         me.resetload();
+                    })
+                    .catch(function (err) {
+                        prompt.message('请求错误')
+                        me.resetload()
+                    })
+            }
+            var dels = [], confirm_params = {}
+            $('.cart_warpper').each(function () {
+                var cid = $(this).find('[data-id]').data('id')
+                var camount = parseInt($(this).find('.amount').text())
+                confirm_params[cid] = camount
+            })
+            console.log(confirm_params)
+            $('.J_select').on('click tap', function () {
+                if (!$(this).find('a').hasClass('active')) {
+                    $(this).find('a').addClass('active')
+                    dels.push($(this).data('id'))
+                    if (dels.length == $('.J_select').length) {
+                        $('.J_select_all').find('span').addClass('active')
                     }
-                });
-            },
-            threshold : 50
-        });
+                } else {
+                    $(this).find('a').removeClass('active')
+                    var arr = []
+                    for (var i = 0; i < dels.length; i++) {
+                        if (dels[i] != $(this).data('id')) {
+                            arr.push(dels[i])
+                        }
+                    }
+                    dels = arr
+                }
+                console.log(dels)
+            })
+            $('.J_select_all').on('click tap', function () {
+                if (!$(this).find('span').hasClass('active')) {
+                    $('.J_select')
+                    .each(function () {
+                        $(this).find('a').addClass('active')
+                        dels.push($(this).data('id'))
+                    })
+                    $(this).find('span').addClass('active')
+                } else {
+                    $('.J_select')
+                    .each(function () {
+                        $(this).find('a').removeClass('active')
+                        dels = []
+                    })
+                    $(this).find('span').removeClass('active')
+                }
+                console.log(dels)
+            })
+            $('.J_dels').on('click tap', function () {
+                if (dels.length == 0) {
+                    prompt.message('请选择要删除的商品')
+                    return
+                }
+                ajax('post', '/home/cart/dels', dels)
+                    .then(function (res) {
+                        if (res) {
+                            prompt.message('删除成功')
+                        } else {
+                            prompt.message('删除失败')
+                        }
+                    })
+            })
+            $('.J_minus').on('click tap', function () {
+                var gid = $(this).parents('.cart_warpper').find('.J_select').data('id')
+                if (confirm_params[gid] > 1) {
+                    confirm_params[gid] -= 1
+                    $(this).siblings('.sell').find('.amount').text(confirm_params[gid])
+                } else {
+                    prompt.message('单个商品数量最少为1')
+                }
+                console.log(confirm_params)
+            })
+            $('.J_plus').on('click tap', function () {
+                var gid = $(this).parents('.cart_warpper').find('.J_select').data('id')
+                confirm_params[gid] += 1
+                $(this).siblings('.sell').find('.amount').text(confirm_params[gid])
+                console.log(confirm_params)
+            })
+        })
     </script>
 @endsection
 
@@ -113,7 +178,7 @@
             <div class="cart_list">
                 @foreach($lists as $list)
                 <div class="cart_warpper mb-20">
-                    <div class="cart_warpper_tit">
+                    <div class="cart_warpper_tit J_select" data-id="{{$list->id}}">
                         <a href="javascript:;" class="chayefont">
                             <i class="fa fa-ban"></i>
                             绿茶宝塔镇河妖
@@ -121,7 +186,7 @@
                     </div>
                     <div class="cart_warpper_content clearfix">
                         <div class="cart_warpper_content_img pull-left mr-20">
-                            <img src="{{url('')}}{{ $list->img }}">
+                            <img src="{{url('')}}/{{ $list->img }}">
                         </div>
                         <div class="cart_warpper_content_info pull-right">
                             <h5 class="chayefont mb-10">{{$list->name}}</h5>
@@ -129,34 +194,25 @@
                             <div class="cart_warpper_content_info_bottom">
                                 <span class="pull-left price">{{'￥'.$list->price}}</span>
                                 <div class="cwcib_number pull-right">
-                                    <i class="fa fa-minus-circle"></i>
-                                    <span class="sell">&times{{$list->amount}}</span>
-                                    <i class="fa fa-plus-circle"></i>
+                                    <i class="fa fa-minus-circle J_minus"></i>
+                                    <span class="sell">&times<span class="amount">{{$list->amount}}</span></span>
+                                    <i class="fa fa-plus-circle J_plus"></i>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                    @endforeach
+                @endforeach
             </div>
         </div>
         <div class="cart_bottom">
-            <span class="cart_bottom_selection pull-left">全选</span>
+            <div class="cart_bottom_selection pull-left J_select_all">
+                <span>全选</span>
+            </div>
             <div class="cart_bottom_info pull-left">合计：<span class="price">&yen{{$totals}}</span></div>
             <div class="cart_bottom_settle pull-right"><a href="{{url('/home/order/confirm')}}">结算</a></div>
-            <div class="cart_bottom_del pull-right"><a href="javascript:;">删除</a></div>
+            <div class="cart_bottom_del pull-right J_dels"><a href="javascript:;">删除</a></div>
         </div>
     </div>
-    <!-- 联系卖家 -->
-    <!-- 取消订单 -->
-    <!-- 付款 -->
-
-    <!-- 生成二维码 -->
-
-    <!-- 联系卖家 -->
-    <!-- 查看物流 -->
-    <!-- 确定收货 -->
-
-    <!-- 评价 -->
     @include("layouts.footer")
 @endsection

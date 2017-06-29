@@ -1385,22 +1385,23 @@
 			height: 1rem;
 			padding-left: 0.8rem;
 			line-height: 1rem;
+			span::before {
+				content: '';
+				position: absolute;
+				top: 50%;
+				left: 0.25rem;
+				display: block;
+				width: 0.4rem;
+				height: 0.4rem;  
+				margin-top: -0.2rem;
+				border: 0.01rem	 solid #5C5C5C;
+				border-radius: 50%;
+			}
+			span.active::before {
+				background-color: #5C5C5C;
+			}
 		}
-		.cart_bottom_selection::before {
-			content: '';
-			position: absolute;
-			top: 50%;
-			left: 0.25rem;
-			display: block;
-			width: 0.4rem;
-			height: 0.4rem;
-			margin-top: -0.2rem;
-			border: 0.01rem	 solid #5C5C5C;
-			border-radius: 50%;
-		}
-		.cart_bottom_selection.active::before {
-			background-color: #5C5C5C;
-		}
+		
 		.cart_bottom_info {
 			width: 2.56rem;
 			height: 1rem;
