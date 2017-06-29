@@ -12,3 +12,7 @@ exports.message = (msg, url) => {
 		}, 1000)
 	}
 }
+
+exports.message1 = (msg) => {
+	$('.prompt').addClass('active').find('.prompt_box_content').html(msg)
+}

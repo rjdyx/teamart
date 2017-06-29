@@ -167,7 +167,7 @@ const necessary = ($inp, value) => {
 
 const validate = {
 	name: ($inp, value) => {
-		if (String.trim(value.length < 2)) {
+		if ($.trim(value).length < 2) {
 			$inp.parents('.form_item').addClass('error')
 		} else {
 			$inp.parents('.form_item').removeClass('error')
@@ -189,8 +189,7 @@ const validate = {
 		}
 	},
 	detail: ($inp, value) => {
-		console.log(value)
-		if (String.trim(value.length < 5)) {
+		if ($.trim(value).length < 5) {
 			console.log(value)
 			$inp.parents('.form_item').addClass('error')
 		} else {
@@ -198,28 +197,30 @@ const validate = {
 		}
 	},
 	code: ($inp, value) => {
-		if (!/^[1-9][0-9]{5}$/.test(value)) {
-			$inp.parents('.form_item').addClass('error')
-		} else {
-			$inp.parents('.form_item').removeClass('error')
+		if ($.trim(value).length > 0) {
+			if (!/^[1-9][0-9]{5}$/.test(value)) {
+				$inp.parents('.form_item').addClass('error')
+			} else {
+				$inp.parents('.form_item').removeClass('error')
+			}
 		}
 	},
 	realname: ($inp, value) => {
-		if (String.trim(value.length < 2)) {
+		if ($.trim(value).length < 2) {
 			$inp.parents('.form_item').addClass('error')
 		} else {
 			$inp.parents('.form_item').removeClass('error')
 		}
 	},
 	password: ($inp, value) => {
-		if (String.trim(value.length < 6)) {
+		if ($.trim(value).length < 6) {
 			$inp.parents('.form_item').addClass('error')
 		} else {
 			$inp.parents('.form_item').removeClass('error')
 		}
 	},
 	repassword: ($inp, value) => {
-		if (String.trim(value.length < 6)) {
+		if ($.trim(value).length < 6) {
 			$inp.parents('.form_item').addClass('error')
 		} else {
 			if ($('#password').val() !== value) {
@@ -231,7 +232,16 @@ const validate = {
 	}
 }
 
-exports.bindEvent = (params) => {}
+exports.bindEvent = (fields) => {
+	fields.forEach(v => {
+		$('#' + v).on('input blur', function () {
+			if ($(this).data('required')) {
+				necessary($(this), $(this).val())
+			}
+			validate[v] && validate[v]($(this), $(this).val())
+		})
+	})
+}
 
 // 表单验证
 exports.validForm = (params) => {
@@ -255,6 +265,6 @@ exports.validForm = (params) => {
 	if ($('.form_item.error').length > 0) {
 		return false
 	} else {
-		// return true
+		return true
 	}
 }

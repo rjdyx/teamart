@@ -61,8 +61,8 @@ class AddressController extends Controller
 
 	public function del($id) 
 	{
-		if (Address::destroy($id)) return true;
-		return false;
+		if (Address::destroy($id)) return 'true';
+		return 'false';
 	}
 
     //批量删除
@@ -82,16 +82,16 @@ class AddressController extends Controller
 		$address = Address::where('user_id',Auth::user()->id)->where('state','=','1')->first();
 		if(empty($address)){
 			//还没设置默认地址
-			return true;
+			return 'true';
 		}else{
 			$defaultaddress = Address::find($address->id);
 			$defaultaddress->state = 0;
 			if($defaultaddress->save()){
 				//已经取消了默认地址
-				return true;
+				return 'true';
 			}
 			//取消默认地址失败
-			return false;
+			return 'false';
 		}
 	}
 
@@ -103,11 +103,11 @@ class AddressController extends Controller
 			$model->state = 1;
 			if ($model->save()) {
 				//return Redirect::to('home/address')->with('status', '设置成功');
-				return true;
+				return 'true';
 			}
 		}	
 		//return Redirect::back()->withErrors('设置失败');
-		return false;
+		return 'false';
 	}
 
     //保存方法
@@ -146,15 +146,15 @@ class AddressController extends Controller
 				$state = 1;
 			}else{
 				//return Redirect::back()->withErrors('设置默认地址时出错');
-				return false;
+				return 'false';
 			}
 		}  
 		$model->state = $state;
 		if ($model->save()) {
 			//return Redirect::to('home/address')->with('status', '保存成功');
-			return true;
+			return 'true';
 		}
 		//return Redirect::back()->withErrors('保存失败');
-		return false;
+		return 'false';
 	}
 }
