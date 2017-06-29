@@ -62,9 +62,10 @@ Route::group(['namespace'=>'Home','prefix'=>'home','middleware'=>['auth']],funct
 	});
 
 	//收藏
+	Route::post('/collect/dels','CollectController@dels');
 	Route::resource('/collect','CollectController');
 
-	Route::get('/collect/del','CollectController@collectDel');
+
 
 
 	//购物车

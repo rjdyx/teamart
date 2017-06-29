@@ -15,26 +15,32 @@ class CollectController extends Controller
     public function index(Request $request) {
         $lists= Order::join('order_product','order.id','=','order_product.order_id')
             ->join('product','order_product.product_id','=','product.id')
-            ->join('product_group','product.group_id','=','product_group.id')
-            ->join('product_img','product_img.group_id','=','product_group.id')
             ->where('type','collect')
             ->where('order.user_id',Auth::user()->id)
+            ->where('order.deleted_at',null)
             ->where('order_product.deleted_at',null)
-            ->select('*', 'order_product.id as id')
-            ->get();
+            ->where('product.deleted_at',null)
+            ->select('product.*', 'order_product.id as op_id','product.desc as p_desc','product.img as p_img','product.price as p_price',
+                     'product.sell_amount as p_sell_amount','product.name as p_name')
+
+            ->paginate(10);
+
+
 //            ->paginate(config('app.paginate10'));
         $title = '收藏管理';
         return view(config('app.theme').'.home.collect')->with(['footer'=>'collect','lists'=>$lists,'title'=>$title]);
     }
     //取消收藏
-    public function destory($id){
-       $product_id=$id;
+    public function destroy($product_id){
+
 
         $collect_id = Order::join('order_product','order.id','=','order_product.order_id')->
         join('product','order_product.product_id','=','product.id')->
-        where('product.id',$product_id)->
         where('type','collect')->
-        where('order.user_id',Auth::user()->id)->select('*','order_product.id as collect_id')->value('collect_id');
+        where('order.user_id',Auth::user()->id)->
+        where('order_product.deleted_at','=',null)->
+        where('product.id',$product_id)->
+        select('order_product.id as op_id')->value('op_id');
 
         if($this->del($collect_id)){
 
@@ -45,7 +51,7 @@ class CollectController extends Controller
         }
 
 
-        return 0;
+
     }
     public function del($id){
         if (OrderProduct::destroy($id)) return true;
@@ -54,13 +60,20 @@ class CollectController extends Controller
     //批量取消收藏
     public function dels(Request $request)
     {
-        $ids = explode(',', $request->ids);
+        $ids=$request->all();
+
+
         foreach ($ids as $id) {
             if (!$this->destory($id)) {
+                echo $id;
                 return 0;
             }
         }
-        return 0;
+        return 1;
+
+    }
+    public function show(Request $request){
+        return $this->dels($request);
     }
     //加入收藏
     public function create(Request $request){
