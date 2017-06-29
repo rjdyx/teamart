@@ -45,12 +45,9 @@ class ProductController extends Controller
 
 		$lists = Product::join('product_category','product.category_id','=','product_category.id')
 				->join('brand','product.brand_id','=','brand.id')
-				->join('product_group','product.group_id','=','product_group.id')
-				->leftjoin('product_img','product_group.id','=','product_img.group_id')
 				->whereNull('product.deleted_at')
 				->whereNull('brand.deleted_at')
 				->whereNull('product_category.deleted_at')
-				->whereNull('product_group.deleted_at')
 				->where('product.name', 'like', '%'.$whValue.'%');
 
 		if (!empty($brands) && count($brands)) $lists = $lists->whereIn('brand.id',$brands);	
@@ -64,8 +61,8 @@ class ProductController extends Controller
 					'product.desc',
 					'product.sell_amount',
 					'product.price',
-					'product_img.img',
-					'product_img.thumb'
+					'product.img',
+					'product.thumb'
 					)
 				->orderBy($orField, $order)
 				->distinct('product.id')
