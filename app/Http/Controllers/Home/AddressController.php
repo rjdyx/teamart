@@ -86,32 +86,34 @@ class AddressController extends Controller
 		$address = Address::where('user_id',Auth::user()->id)->where('state','=','1')->first();
 		if(empty($address)){
 			//还没设置默认地址
-			return true;
+			return 'true';
 		}else{
 			$defaultaddress = Address::find($address->id);
 			$defaultaddress->state = 0;
 			if($defaultaddress->save()){
 				//已经取消了默认地址
-				return true;
+				return 'true';
 			}
 			//取消默认地址失败
-			return false;
+			return 'true';
 		}
 	}
 
     //更新默认地址
 	public function defaultaddress($id){
 		//判断现在是所有地址都不是默认选中状态，如果是则设定新的默认地址
-		if($this->canceldefault()){
+		if(strcmp($this->canceldefault(), 'true')==0){
 			$model = Address::find($id);
 			$model->state = 1;
 			if ($model->save()) {
 				//return Redirect::to('home/address')->with('status', '设置成功');
 				return 'true';
+			}else{
+				return false;
 			}
 		}	
 		//return Redirect::back()->withErrors('设置失败');
-		return 'false';
+		return false;
 	}
 
     //保存方法
@@ -129,6 +131,11 @@ class AddressController extends Controller
 			],
 			'detail'=>'required',
 			]);
+		if($request->state == 1){
+			if(strcmp($this->canceldefault(), 'false')==0){
+				return false;
+			}
+		}  
 		if ($id == -1) {
 			$model = new Address;
 		} else {
@@ -139,24 +146,14 @@ class AddressController extends Controller
 		$city = $address[1];
 		$area = $address[1];
 		if (count($address)>2) $area = $address[2];
-
-
         //接收数据 加入model
 		$model->setRawAttributes($request->only(['name','phone','detail','code']));  
 		$model->user_id = Auth::user()->id;
 		$model->province = $province;
 		$model->city = $city;
 		$model->area = $area;
-		$state = 0;
-		if($request->state == 1){
-			if($this->canceldefault()){
-				$state = 1;
-			}else{
-				//return Redirect::back()->withErrors('设置默认地址时出错');
-				return 'false';
-			}
-		}  
-		$model->state = $state;
+		$model->state = $request->state;
+		
 		if ($model->save()) {
 			//return Redirect::to('home/address')->with('status', '保存成功');
 			return 'true';
