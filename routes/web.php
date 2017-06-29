@@ -12,7 +12,8 @@
 */
 Auth::routes();
 Route::get('/','HomeController@index');//首页
-
+Route::get('/reset','Auth\ForgotPasswordController@reset');
+Route::post('/reset/checkemail','Auth\ForgotPasswordController@checkemail');
 Route::get('/auth/geetest', 'Auth\AuthController@getGeetest');//极验
 Route::get('admin/login', 'Auth\LoginController@adminLoginCreate');
 Route::post('admin/login', 'Auth\LoginController@adminLogin');
