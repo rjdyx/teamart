@@ -12,7 +12,8 @@
 */
 Auth::routes();
 Route::get('/','HomeController@index');//首页
-
+Route::get('/reset','Auth\ForgotPasswordController@reset');
+Route::post('/reset/checkemail','Auth\ForgotPasswordController@checkemail');
 Route::get('/auth/geetest', 'Auth\AuthController@getGeetest');//极验
 Route::get('admin/login', 'Auth\LoginController@adminLoginCreate');
 Route::post('admin/login', 'Auth\LoginController@adminLogin');
@@ -57,6 +58,7 @@ Route::group(['namespace'=>'Home','prefix'=>'home','middleware'=>['auth']],funct
 		Route::get('/list','OrderController@index');
 		Route::get('/detail/{id}','OrderController@detail');
     	Route::get('/confirm','OrderController@confirm');
+    	Route::get('/list/data','OrderController@orderListData');
 	});
 
 	//收藏

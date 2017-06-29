@@ -17,12 +17,41 @@ require('expose-loader?prompt!./js/prompt.js')
 const prompt = require('./js/prompt.js')
 
 $(function () {
-	$('.J_header_category').on('click tap', function () {
-		if ($('.header_category').hasClass('left-0')) {
-			$('.header_category').removeClass('left-0')
+	// header 的事件
+	$('.J_show_header_category').on('click tap', function () {
+		$('.header_category').addClass('left-0').animate({
+			'opacity': 1},
+			300,
+			function () {
+				console.log($(this))
+				$('.header_category').find('ul').addClass('left-0')
+			}
+		)
+	})
+	$('.J_hide_header_category').on('click tap', function () {
+		$('.header_category').removeClass('left-0').animate({
+			'opacity': 0},
+			300,
+			function () {
+				$('.header_category').find('ul').removeClass('left-0')
+			}
+		)
+	})
+	$('.J_header_search_inp').on('input', function () {
+		if ($.trim($(this).val()).length > 0) {
+			$(this).siblings('.J_header_search').removeClass('hide')
 		} else {
-			$('.header_category').addClass('left-0')
+			$(this).siblings('.J_header_search').addClass('hide')
 		}
+	})
+	$('.J_header_search').on('click tap', function () {
+		ajax('get', 'url', {query: $('.J_header_search_inp').val()})
+			.then(res => {
+				console.log(res)
+			})
+			.catch(err => {
+				console.log(err)
+			})
 	})
 
 	let mySwiper = new Swiper('.swiper-container', {

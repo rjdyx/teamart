@@ -50,7 +50,7 @@ div {
 }
 
 .hide {
-  display: none;
+  display: none!important;
 }
 
 .invisibility {
@@ -98,6 +98,10 @@ div {
 }
 .txt-r {
   text-align: right;
+}
+
+.fz-12 {
+  font-size: 12px!important;
 }
 
 .fz-14 {
