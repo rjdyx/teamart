@@ -35,6 +35,7 @@ Route::group(['namespace'=>'Home','prefix'=>'home'],function(){
 		Route::get('/brand','ProductController@productBrand');//商品品牌数据接口
 		Route::get('/category','ProductController@productCategory');//商品分类数据接口
 		Route::get('/detail/{id}','ProductController@detail');
+		Route::get('/comment','ProductController@productComment');
 	});
 
 	// 帮助中心列表、详情
@@ -60,9 +61,8 @@ Route::group(['namespace'=>'Home','prefix'=>'home','middleware'=>['auth']],funct
 	});
 
 	//收藏
-	Route::get('/collect','OrderController@collect');
-	Route::get('/collect/del','OrderController@collectDel');
-    Route::get('/collect/create','OrderController@collectCreate');
+	Route::resource('/collect','CollectController');
+	Route::get('/collect/del','CollectController@collectDel');
 
 	//购物车
 

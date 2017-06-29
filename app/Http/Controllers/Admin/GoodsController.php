@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Storage;
-use App\Group;
+use App\ProductGroup as Group;
 use App\Brand;
 use App\Spec;
 use App\ProductCategory as Category;
@@ -217,6 +217,7 @@ class GoodsController extends Controller
             //保存关联参数
             $group = Group::find($request->group_id);
             $group->desc = $request->img_desc;
+            $group->save();
             $pics = IQuery::uploads($request, 'imgs', true);
             if ($pics != 'false')
             {

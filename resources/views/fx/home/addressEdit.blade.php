@@ -116,7 +116,7 @@
 					默认地址
 					<i class="pull-right address_default @if($data->state) active @endif" ></i>
 				</label>
-				<input type="hidden" name="state" id="state" value="0">
+				<input type="hidden" name="state" id="state" value="{{$data->state}}">
 			</div>
 		</form>
 		<div class="chayefont address_add J_submit">保存地址</div>
