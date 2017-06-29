@@ -39,8 +39,7 @@
             </div>
             <div class="index_box_content clearfix">
                 <div class="ibc_single pull-left">
-                    <a href="#">
-                                        
+                    <a href="javascript:;">
                         <h5 class="chayefont">@if(isset($activitys[0])) {{$activitys[0]->name}} @endif</h5>
                         <span class="price"> ￥ @if(isset($activitys[0])) {{sprintf('%.2f', $activitys[0]->price)}} @endif</span>
                         <img src="@if(isset($activitys[0])) {{$activitys[0]->thumb}} @endif" alt="图片">
@@ -48,7 +47,7 @@
                 </div>
                 <div class="ibc_multi pull-right">
                     <div class="ibc_multi_goods top">
-                        <a href="#">
+                        <a href="javascript:;">
                             <img class="pull-right" src="@if(isset($activitys[1])) {{$activitys[1]->image}} @endif" alt="">
                             <h5 class="chayefont">@if(isset($activitys[1])) {{$activitys[1]->name}} @endif</h5>
                             <p class="chayefont">@if(isset($activitys[1])) {{$activitys[1]->desc}} @endif</p>
@@ -56,7 +55,7 @@
                         </a>
                     </div>
                     <div class="ibc_multi_goods txt-r">
-                        <a href="#">
+                        <a href="javascript:;">
                             <img class="pull-left" src="@if(isset($activitys[2])) {{$activitys[2]->image}} @endif" alt="">
                             <h5 class="chayefont">@if(isset($activitys[2])) {{$activitys[2]->name}} @endif</h5>
                             <p class="chayefont">@if(isset($activitys[2])) {{$activitys[2]->desc}} @endif</p>
@@ -94,7 +93,7 @@
                 </div>
                 <div class="ibc_multi pull-left">
                     <div class="ibc_multi_goods top">
-                        <a href="#">
+                        <a href="javascript:;">
                             <img class="pull-right" src="@if(isset($news[1])) {{$news[1]->image}} @endif" alt="">
                             <h5 class="chayefont">@if(isset($news[1])) {{$news[1]->name}} @endif</h5>
                             <p class="chayefont">@if(isset($news[1])) {{$news[1]->desc}} @endif</p>
@@ -102,14 +101,14 @@
                         </a>
                     </div>
                     <div class="ibc_multi_goods_cell left pull-left">
-                        <a href="#">
+                        <a href="javascript:;">
                             <h5 class="chayefont">@if(isset($news[2])) {{$news[2]->name}} @endif</h5>
                             <span class="price">￥ @if(isset($news[2])) {{sprintf('%.2f', $news[2]->price)}} @endif</span>
                             <img src="@if(isset($news[2])) {{$news[2]->image}} @endif" alt="">
                         </a>
                     </div>
                     <div class="ibc_multi_goods_cell right pull-left">
-                        <a href="#">
+                        <a href="javascript:;">
                             <h5 class="chayefont">@if(isset($news[3])) {{$news[3]->name}} @endif</h5>
                             <span class="price">￥ @if(isset($news[3])) {{sprintf('%.2f', $news[3]->price)}} @endif</span>
                             <img src="@if(isset($news[3])) {{$news[3]->image}} @endif" alt="">
@@ -123,7 +122,7 @@
             <div class="index_box_list">
                 <ul class="clearfix">
                     <li>
-                        <a href="#">
+                        <a href="javascript:;">
                             <img src="@if(isset($sells[0])) {{$sells[0]->image}} @endif" alt="">
                             <h5 class="chayefont">@if(isset($sells[0])) {{$sells[0]->name}} @endif</h5>
                             <p class="chayefont">@if(isset($sells[0])) {{$sells[0]->desc}} @endif</p>
@@ -131,7 +130,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="javascript:;">
                             <img src="@if(isset($sells[1])) {{$sells[1]->image}} @endif" alt="">
                             <h5 class="chayefont">@if(isset($sells[1])) {{$sells[1]->name}} @endif</h5>
                             <p class="chayefont">@if(isset($sells[1])) {{$sells[1]->desc}} @endif</p>
@@ -139,7 +138,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="javascript:;">
                             <img src="@if(isset($sells[2])) {{$sells[2]->image}} @endif" alt="">
                             <h5 class="chayefont">@if(isset($sells[2])) {{$sells[2]->name}} @endif</h5>
                             <p class="chayefont">@if(isset($sells[2])) {{$sells[2]->desc}} @endif</p>

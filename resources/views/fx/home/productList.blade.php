@@ -47,6 +47,7 @@
 					getListData(me,'up');
 				},
 				loadDownFn : function(me){
+					console.log(1)
 					getListData(me,'down');
 				},
 				threshold : 50
@@ -269,7 +270,6 @@
 						}
 					}
 					$('.product_list').html(result);
-
 	            }).catch(function (err) {
 	                console.log(err)
 	            });

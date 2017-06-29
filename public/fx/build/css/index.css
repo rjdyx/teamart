@@ -2917,7 +2917,7 @@ button.swiper-pagination-bullet {
 /**
  * $px can has unit or hasn't
 */
-.index .banner_box .banner_box_row p {
+header .header_category ul li a, .index .index_box h1, .index .index_box h5, .index .banner_box .banner_box_row p, .filter .filter_container .filter_category .filter_category_list li a, .filter .filter_container .filter_brand .filter_brand_list li a, .productdetail .productdetail_container .productdetail_container_comment .comment_list li .comment_list_avatar span {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden; }
@@ -3062,7 +3062,7 @@ div {
   display: inline-block; }
 
 .hide {
-  display: none; }
+  display: none !important; }
 
 .invisibility {
   visibility: hidden; }
@@ -3105,6 +3105,9 @@ div {
 
 .txt-r {
   text-align: right; }
+
+.fz-12 {
+  font-size: 12px !important; }
 
 .fz-14 {
   font-size: 14px !important; }
@@ -3182,7 +3185,7 @@ header {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 1000;
+  z-index: 1001;
   height: 1.2rem;
   width: 100%;
   background: url("/fx/images/header_bg.png");
@@ -3190,7 +3193,7 @@ header {
   background-position: center center;
   background-repeat: no-repeat; }
   header .header_left, header .header_center, header .header_right {
-    height: 1rem;
+    height: 1.2rem;
     padding: 0.1rem 0; }
   header .header_left, header .header_right {
     width: 1rem;
@@ -3231,8 +3234,16 @@ header {
       font-size: 16px;
       margin-right: -0.5rem; }
     header .header_center .header_close {
-      font-size: 16px;
-      margin-left: -0.5rem; }
+      position: absolute;
+      left: 4.7rem;
+      top: 50%;
+      display: inline-block;
+      width: 0.5rem;
+      height: 0.5rem;
+      margin-top: -0.25rem;
+      text-align: center;
+      line-height: 0.5rem;
+      font-size: 16px; }
     header .header_center h2 {
       color: #fff; }
   @media screen and (max-width: 321px) {
@@ -3272,24 +3283,32 @@ header {
         border-radius: 50%; }
   header .header_category {
     position: fixed;
-    left: -1.5rem;
-    top: 1.2rem;
-    width: 1.5rem;
-    border-radius: 0.3rem;
-    overflow: hidden;
-    transition: all .5s ease; }
-    header .header_category li {
+    top: 0;
+    right: 100%;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); }
+    header .header_category ul {
+      position: absolute;
+      left: -1.5rem;
+      top: 1.2rem;
       width: 1.5rem;
-      height: 0.8rem;
-      border-bottom: 0.02rem solid #d7d7d7;
-      text-align: center;
-      line-height: 0.8rem; }
-      header .header_category li a {
-        display: block;
-        background-color: #FFF; }
-      header .header_category li a:active {
-        background-color: #f2f2f2;
-        color: #ff4077; }
+      height: 8rem;
+      border-radius: 0.3rem;
+      overflow: auto;
+      transition: all .5s ease; }
+      header .header_category ul li {
+        width: 1.5rem;
+        height: 0.8rem;
+        border-bottom: 0.02rem solid #d7d7d7;
+        text-align: center;
+        line-height: 0.8rem; }
+        header .header_category ul li a {
+          display: block;
+          background-color: #FFF; }
+        header .header_category ul li a:active {
+          background-color: #f2f2f2;
+          color: #ff4077; }
 
 footer {
   position: absolute;
@@ -3602,7 +3621,8 @@ footer {
           margin-bottom: 0.1rem; }
         .index .index_box .index_box_content .ibc_multi .ibc_multi_goods img {
           display: block;
-          height: 100%; }
+          height: 100%;
+          max-width: 1.7rem; }
       .index .index_box .index_box_content .ibc_multi .ibc_multi_goods_cell {
         width: 50%;
         height: 50%;
@@ -4667,6 +4687,7 @@ footer {
           text-align: center;
           margin-bottom: 0.1rem; }
           .filter .filter_container .filter_category .filter_category_list li a {
+            display: block;
             color: #7b7b7b; }
         .filter .filter_container .filter_category .filter_category_list li:nth-child(3n+2),
         .filter .filter_container .filter_category .filter_category_list li:nth-child(3n+3) {
@@ -4697,6 +4718,7 @@ footer {
           text-align: center;
           margin-bottom: 0.1rem; }
           .filter .filter_container .filter_brand .filter_brand_list li a {
+            display: block;
             color: #7b7b7b; }
         .filter .filter_container .filter_brand .filter_brand_list li:nth-child(3n+2),
         .filter .filter_container .filter_brand .filter_brand_list li:nth-child(3n+3) {
@@ -4753,7 +4775,20 @@ footer {
       .productdetail .productdetail_container .productdetail_container_info .price {
         color: #F78223;
         font-size: 14px; }
+      .productdetail .productdetail_container .productdetail_container_info .productdetail_container_info_spec span {
+        font-size: 14px;
+        color: #727071; }
+      .productdetail .productdetail_container .productdetail_container_info .productdetail_container_info_spec ul {
+        width: 100%;
+        overflow: hidden; }
+        .productdetail .productdetail_container .productdetail_container_info .productdetail_container_info_spec ul li a {
+          display: block;
+          padding: 0.1rem;
+          background-color: #d7d7d7;
+          color: #3b3b3b;
+          border-radius: 0.05rem; }
     .productdetail .productdetail_container .productdetail_container_tabs {
+      width: 100%;
       height: 0.8rem;
       border-top: 0.01rem solid #DADADA;
       border-bottom: 0.01rem solid #DADADA;
@@ -4772,6 +4807,15 @@ footer {
         background-repeat: no-repeat; }
       .productdetail .productdetail_container .productdetail_container_tabs a.active {
         color: #FF7D01; }
+    .productdetail .productdetail_container .productdetail_container_tabs.fixed {
+      position: fixed;
+      top: 1.2rem;
+      left: 0;
+      z-index: 1001;
+      background-color: #FFF; }
+    .productdetail .productdetail_container .productdetail_blank {
+      width: 100%;
+      height: 0.8rem; }
     .productdetail .productdetail_container .productdetail_container_detail .productdetail_container_detail_info {
       padding: 0.15rem 0.2rem;
       border-bottom: 0.01rem solid #DADADA; }
@@ -4783,10 +4827,38 @@ footer {
     .productdetail .productdetail_container .productdetail_container_detail .productdetail_container_detail_img img {
       display: block;
       width: 100%; }
-    .productdetail .productdetail_container .productdetail_container_comment {
-      min-height: 3.6rem;
-      text-align: center;
-      line-height: 3.6rem; }
+    .productdetail .productdetail_container .productdetail_container_comment .comment_filter {
+      width: 100%;
+      padding: 0.2rem; }
+      .productdetail .productdetail_container .productdetail_container_comment .comment_filter li a {
+        display: block;
+        padding: 0.1rem;
+        background-color: #d7d7d7;
+        color: #3b3b3b;
+        border-radius: 0.05rem; }
+      .productdetail .productdetail_container .productdetail_container_comment .comment_filter li a:active {
+        background-color: #aaaaaa; }
+    .productdetail .productdetail_container .productdetail_container_comment .comment_list {
+      border-top: 0.02rem solid #DADADA; }
+      .productdetail .productdetail_container .productdetail_container_comment .comment_list li {
+        padding: 0.15rem;
+        border-bottom: 0.01rem solid #dadada; }
+        .productdetail .productdetail_container .productdetail_container_comment .comment_list li .comment_list_avatar {
+          width: 1rem; }
+          .productdetail .productdetail_container .productdetail_container_comment .comment_list li .comment_list_avatar img {
+            display: block;
+            width: 98%; }
+          .productdetail .productdetail_container .productdetail_container_comment .comment_list li .comment_list_avatar span {
+            display: block;
+            text-align: center; }
+        .productdetail .productdetail_container .productdetail_container_comment .comment_list li .comment_list_content {
+          width: calc(100% - 1.5rem); }
+          .productdetail .productdetail_container .productdetail_container_comment .comment_list li .comment_list_content .stars {
+            color: #ffbe00; }
+          .productdetail .productdetail_container .productdetail_container_comment .comment_list li .comment_list_content .comment_list_content_img img {
+            display: block;
+            width: 1rem;
+            height: 1rem; }
   .productdetail .productdetail_bottom {
     position: absolute;
     bottom: 0;
