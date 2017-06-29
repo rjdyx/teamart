@@ -54,9 +54,11 @@ class AddressController extends Controller
 	public function destroy($id)
 	{
 		if ($this->del($id)) {
-			return Redirect::back()->with('status','删除成功');
+			//return Redirect::back()->with('status','删除成功');
+			return 'true';
 		}
-		return Redirect::back()->withErrors('删除失败');
+		//return Redirect::back()->withErrors('删除失败');
+		return 'false';
 	}
 
 	public function del($id) 
@@ -70,11 +72,13 @@ class AddressController extends Controller
 	{
 		$ids = explode(',', $request->ids);
 		foreach ($ids as $id) {
-			if (!$this->del($id)) {
-				return Redirect::back()->withErrors('批量删除失败');
+			if ($this->del($id)=='false') {
+				//return Redirect::back()->withErrors('批量删除失败');
+				return 'false';
 			}
 		}
-		return Redirect::back()->with('status','批量删除成功');
+		//return Redirect::back()->with('status','批量删除成功');
+		return 'true';
 	}
 
 	//取消当前的默认地址选中状态
@@ -82,16 +86,16 @@ class AddressController extends Controller
 		$address = Address::where('user_id',Auth::user()->id)->where('state','=','1')->first();
 		if(empty($address)){
 			//还没设置默认地址
-			return 'true';
+			return true;
 		}else{
 			$defaultaddress = Address::find($address->id);
 			$defaultaddress->state = 0;
 			if($defaultaddress->save()){
 				//已经取消了默认地址
-				return 'true';
+				return true;
 			}
 			//取消默认地址失败
-			return 'false';
+			return false;
 		}
 	}
 
@@ -133,7 +137,10 @@ class AddressController extends Controller
 		$address = explode(',', $request->address);
 		$province = $address[0];
 		$city = $address[1];
-		$area = $address[2];
+		$area = $address[1];
+		if (count($address)>2) $area = $address[2];
+
+
         //接收数据 加入model
 		$model->setRawAttributes($request->only(['name','phone','detail','code']));  
 		$model->user_id = Auth::user()->id;

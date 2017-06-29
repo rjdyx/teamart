@@ -37,14 +37,14 @@ class CartController extends Controller
 	//添加商品到购物车
 	public function create(Request $request){
 
-	     $product_id=$request->product_id;
-
+	     // $product_id=$request->product_id;
+		$product_id = 1;
 		$product_price=Product::where('id',$product_id)->value('price');
 		if(!$product_price){
 			return "该商品已下架";
 		}
-		$amount= $request->amount;
-
+		// $amount= $request->amount;
+$amount = 1;
 		$hasOrder = Order::where('user_id',Auth::user()->id)->count('id');
 		if(!$hasOrder){
 		$order = new Order;

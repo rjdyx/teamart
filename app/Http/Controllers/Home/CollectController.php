@@ -20,6 +20,7 @@ class CollectController extends Controller
             ->where('type','collect')
             ->where('order.user_id',Auth::user()->id)
             ->where('order_product.deleted_at',null)
+            ->select('*', 'order_product.id as id')
             ->get();
 //            ->paginate(config('app.paginate10'));
         $title = '收藏管理';

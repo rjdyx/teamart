@@ -318,7 +318,7 @@
 						<i class="fa fa-angle-right"></i>
 					</a>
 				</div>
-				<ul class="filter_category_list">
+				<ul class="filter_category_list clearfix">
 
 				</ul>
 			</div>
@@ -330,7 +330,7 @@
 						<i class="fa fa-angle-right"></i>
 					</a>
 				</div>
-				<ul class="filter_brand_list">
+				<ul class="filter_brand_list clearfix">
 
 				</ul>
 			</div>
