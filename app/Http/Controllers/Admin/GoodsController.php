@@ -47,15 +47,14 @@ class GoodsController extends Controller
                     'product_group.name as group_name',
                     'brand.name as brand_name',
                     'spec.name as spec_name'
-                )
-                ->orderBy('product.id','desc')
-                ->paginate(10);
+                )->orderBy('product.id','desc')->paginate(10);
 
         //查询所有关联的商品分类
         $categorySelects = $this->indexData()->distinct('product_category.id')->select('product_category.name','product_category.id')->get();
 
         //查询所有关联的商品组
-        $groupSelects = $this->indexData()->distinct('product_group.id')->select('product_group.name','product_group.id')->get();
+        $groupSelects = $this->indexData()->distinct('product_group.id')
+        ->select('product_group.name','product_group.id')->get();
 
         //查询所有关联的商品品牌
         $brandSelects = $this->indexData()->distinct('brand.id')->select('brand.name','brand.id')->get();
@@ -107,7 +106,7 @@ class GoodsController extends Controller
         $specs = Spec::select('id','name')->get();
         $data = Product::find($id);
         $imgdesc = Group::select('desc')->find($data->group_id);
-        $imgs = ProductImg::where('group_id',$data->group_id)->get();
+
         return view(config('app.theme').'.admin.goods.list_edit')
         ->with([
             'data' => $data,
@@ -115,8 +114,7 @@ class GoodsController extends Controller
             'groups'=>$groups,
             'brands'=>$brands,
             'specs'=>$specs,
-            'imgdesc'=>$imgdesc,
-            'imgs'=>$imgs
+            'imgdesc'=>$imgdesc
         ]);
     }
 
@@ -213,33 +211,23 @@ class GoodsController extends Controller
 
         if ($id == -1) $model->user_id = Auth::user()->id;
 
-        if ($model->save()) {
-            //保存关联参数
-            $group = Group::find($request->group_id);
-            $group->desc = $request->img_desc;
-            $group->save();
-            $pics = IQuery::uploads($request, 'imgs', true);
-            if ($pics != 'false')
-            {
-                foreach ($pics as $pic) {
-                    $img = new ProductImg;
-                    $img->img = $pic['pic'];
-                    $img->thumb = $pic['thumb'];
-                    $img->group_id = $request->group_id;
-                    if (!$img->save()) return Redirect::back()->withErrors('保存失败');
-                }
-            }
-            //编辑时删除关联图片
-            if ($id != -1 && isset($request->dels)) 
-            {
-                $img_ids = explode(',', $request->dels);
-                foreach ($img_ids as $img_id) {
-                    IQuery::destroyPic(new ProductImg, $img_id, 'img');
-                    ProductImg::destroy($img_id);
-                }
-            }
+        if ($id != -1 && $request->del) {
+            $model->img = null;
+            $model->thumb = null;
+            IQuery::destroyPic(new Brand, $id, 'img');
         }
-        return Redirect::to('admin/goods/list')->with('status', '保存成功');
+
+        //资源、上传图片名称、是否生成缩略图
+        $imgs = IQuery::upload($request,'img',true);
+        if ($imgs != 'false') {
+            $model->img = $imgs['pic'];
+            $model->thumb = $imgs['thumb'];
+        }
+
+        if ($model->save()) {
+            return Redirect::to('admin/goods/list')->with('status', '保存成功');
+        }
+        return Redirect::back()->withErrors('保存失败');
     }
 
 }

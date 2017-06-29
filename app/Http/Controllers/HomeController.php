@@ -22,11 +22,8 @@ class HomeController extends Controller
         if (count($activitys)<3) $activitys = $this->randProduct(3); 
 
         //热卖商品
-        if (count($this->sellProduct())>2) {
-            $sells = $this->sellProduct(true);
-        }else{
-            $sells = $this->randProduct(3);
-        }
+        $sells = $this->sellProduct();
+        if (count($sells)<3) $sells = $this->randProduct(3);
 
         //广告
         $ads = Ad::where('position','index')->get();
@@ -79,26 +76,14 @@ class HomeController extends Controller
     }
 
     //热卖商品方法
-    public function sellProduct($t = false) 
+    public function sellProduct() 
     {
         $sells = DB::table('product')
-            ->leftjoin('order_product','product.id','=','order_product.product_id')
-            ->leftjoin('order','order_product.order_id','=','order.id')
-            ->join('product_group','product.group_id','=','product_group.id')
-            ->leftjoin('product_img','product_group.id','=','product_img.group_id')
+            ->join('order_product','product.id','=','order_product.product_id')
+            ->join('order','order_product.order_id','=','order.id')
             ->where('order.type','=','order')
-            ->where('order.state','=','close');
-        $arr = array('product.id');
-        if ($t) {
-            $arr = [
-                'product.*','product_img.thumb',
-                'product_img.img as image',
-                'order_product.product_id',
-                DB::raw('SUM(order.amount) as nums')
-            ];
-        }
-
-        $sells = $sells->select($arr)
+            ->where('order.state','=','close')
+            ->select(DB::raw('sum(amount) as nums','product.*'))
             ->groupBy('order_product.product_id')
             ->orderBy('nums','desc')
             ->paginate(3); 

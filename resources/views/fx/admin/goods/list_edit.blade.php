@@ -5,15 +5,11 @@
 @endsection
 @section('script')
     @parent
-    <script src="{{url('ueditor/ueditor.config.js')}}"></script>
-    <script src="{{url('ueditor/ueditor.all.min.js')}}"></script>
-    <script src="{{url('ueditor/lang/zh-cn/zh-cn.js')}}"></script>
-    <script src="{{url('admin/js/uploads.js')}}"></script>
+    <script src="{{url('admin/js/upload.js')}}"></script>
     <script>
       //实例化编辑器
       //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
       $(function () {
-        var ue = UE.getEditor('editor');
         imagePathFormat='/upload/descs/'; 
         datepicker.datepicker()
         var form = document.forms['listForm']
@@ -85,7 +81,7 @@
           var date = form['date']
           var state = form['state']
           var grade = form['grade']
-          var imgs = form['imgs']
+          var img = form['img']
           if (!_valid.ness('category_id', '商品分类', category_id.value)) {
             return false
           }
@@ -134,23 +130,8 @@
           if (!_valid.ness('grade', '商品积分兑换', grade.value)) {
             return false
           }
-          if (imgs.length) {
-            var arr = []
-            for (var i = 0; i < imgs.length; i++) {
-              if (imgs[i].files[0]) {
-                if (!_valid.img('imgs', imgs[i].files[0])) {
-                  return false
-                }
-                arr.push(imgs[i].files[0])
-              }
-            }
-            if (arr.length == 0) {
-              $('#img_txt').text('至少要上传一张商品图片')
-              return false
-            }
-          } else {
-            if (imgs.files.length == 0) {
-              $('#img_txt').text('至少要上传一张商品图片')
+          if (img.files.length > 0) {
+            if (!_valid.img('img', img.files[0])) {
               return false
             }
           }
@@ -318,52 +299,29 @@
                   <span class="col-sm-4 text-danger form_error" id="grade_txt"></span>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-3 control-label"><i style="color:red;">*</i>商品图片</label>
-                  <div class="col-sm-4 upload_list">
-                    @if ($imgs)
-                      @foreach($imgs as $k => $img)
-                      <div class="upload_box pull-left ml-10 mt-10">
-                        <img class="pull-left upload_img" src="{{url('')}}/{{$img->img}}">
-                        <label for="img{{$k + 1}}" class="upload pull-left hidden">
+                  <label class="col-sm-3 control-label">图片</label>
+                  <div class="col-sm-4">
+                    <div class="upload_single">
+                      @if ($data->img) 
+                        <img class="pull-left upload_img" src="{{url('')}}/{{$data->img}}">
+                        <label for="img" class="upload pull-left hidden">
                           <i class="glyphicon glyphicon-plus"></i>
                         </label>
-                        <label class="btn btn-primary pull-left ml-10" for="img{{$k + 1}}">修改</label>
-                        <div class="btn btn-danger pull-left ml-10 mt-10 J_removes">删除</div>
-                        <input type="file" name="imgs[]" id="img{{$k + 1}}" data-id="{{$img->id}}" class="form-control invisible J_imgs" accept="image/jpeg,image/jpg,image/png">
-                      </div>
-                      @endforeach
-                      @if (count($imgs) + 1 < 5)
-                      <div class="upload_box pull-left ml-10 mt-10">
-                        <label for="img{{count($imgs) + 1}}" class="upload pull-left">
+                        <label class="btn btn-primary pull-left ml-10" for="img">修改</label>
+                        <div class="btn btn-danger pull-left ml-10 J_remove">删除</div>
+                        <input type="file" name="img" id="img" class="invisible form-control J_img" accept="image/jpeg,image/jpg,image/png">
+                      @else
+                        <label for="img" class="upload pull-left">
                           <i class="glyphicon glyphicon-plus"></i>
                         </label>
-                        <label class="btn btn-primary pull-left ml-10 invisible" for="img{{count($imgs) + 1}}">修改</label>
-                        <div class="btn btn-danger pull-left ml-10 mt-10 invisible J_removes">删除</div>
-                        <input type="file" name="imgs[]" id="img{{count($imgs) + 1}}" class="form-control invisible J_imgs" accept="image/jpeg,image/jpg,image/png">
-                      </div>
+                        <label class="btn btn-primary pull-left ml-10 invisible" for="img">修改</label>
+                        <div class="btn btn-danger pull-left ml-10 invisible J_remove">删除</div>
+                        <input type="file" name="img" id="img" class="invisible form-control J_img" accept="image/jpeg,image/jpg,image/png">
                       @endif
-                    @else
-                      <div class="upload_box pull-left ml-10 mt-10">
-                        <label for="img1" class="upload pull-left">
-                          <i class="glyphicon glyphicon-plus"></i>
-                        </label>
-                        <label class="btn btn-primary pull-left invisible ml-10" for="img1">修改</label>
-                        <div class="btn btn-danger pull-left invisible ml-10 mt-10 J_removes">删除</div>
-                        <input type="file" name="imgs[]" id="img1" class="form-control invisible J_imgs" accept="image/jpeg,image/jpg,image/png">
-                      </div>
-                    @endif
+                    </div>
                   </div>
-                  <span class="col-sm-4 text-danger form_error" id="imgs_txt"></span>
+                  <span class="col-sm-4 text-danger form_error" id="img_txt"></span>
                 </div>
-                <div class="form-group">
-                  <label class="col-sm-2 control-label">详情图描述</label>
-                  <div class="col-sm-5">
-                    <script id="editor" type="text/plain"  name="img_desc" style="width:1024px;height:400px;border:1px solid #3DCDB4;">
-                    @if(isset($imgdesc->desc)) {{$imgdesc->desc}} @endif
-                    </script>
-                  </div>
-                </div>
-
                 <div class="form-group">
                   <div class="col-sm-offset-3 col-sm-10">
                     <button type="submit" class="btn btn-success btn-100">确认</button>

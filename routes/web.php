@@ -58,6 +58,7 @@ Route::group(['namespace'=>'Home','prefix'=>'home','middleware'=>['auth']],funct
 		Route::get('/list','OrderController@index');
 		Route::get('/detail/{id}','OrderController@detail');
     	Route::get('/confirm','OrderController@confirm');
+    	Route::get('/list/data','OrderController@orderListData');
 	});
 
 	//收藏
