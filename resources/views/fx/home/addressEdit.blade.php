@@ -36,7 +36,6 @@
     @parent
 
     <script src="{{ asset('fx/larea/js/LAreaData1.js') }}"></script>
-    <script src="{{ asset('fx/larea/js/LAreaData2.js') }}"></script>
     <script src="{{ asset('fx/larea/js/LArea.js') }}"></script>
     <script>
         var area1 = new LArea();
@@ -61,6 +60,7 @@
 				$("input[name='state']").val(1);
 			}
 		});
+        _valid.bindEvent(['name', 'phone', 'code', 'detail'])
         $('.J_submit').on('click tap', function () {
             var id = $('#id').val()
             var params = {
@@ -71,14 +71,16 @@
                 detail: $('#detail').val(),
                 state: $('#state').val()
             }
-            ajax('post', '/home/address' + id, params, true)
-                .then(function (resolve) {
-                    if (resolve) {
-                        prompt.message('保存成功', 'http://' + window.location.host + '/home/userinfo')
-                    } else {
-                        prompt.message('保存失败')
-                    }
-                })
+            if (_valid.validForm(params)) {
+                ajax('post', '/home/address/' + id, params, true)
+                    .then(function (resolve) {
+                        if (resolve) {
+                            prompt.message('保存成功', 'http://' + window.location.host + '/home/address')
+                        } else {
+                            prompt.message('保存失败')
+                        }
+                    })
+            }
         })
     </script>
 @endsection
@@ -99,9 +101,8 @@
 			</div>
 			<div class="form_item chayefont">
 				<label for="region">所在地区</label>
-		        <input type="text" id="address" value="{{$data->province}},{{$data->city}},{{$data->area}}" name="address" readonly="" placeholder="选择地区"  value="广东省,广州市,天河区"/>
-		        <input id="value1" type="hidden" value="20,234,504"/>
-				<!-- <div class="pull-right addressadd_selection J_msa">请选择<i class="fa fa-angle-right"></i></div> -->
+		        <input type="text" id="address" value="{{$data->province}},{{$data->city}},{{$data->area}}" name="address" readonly="" placeholder="选择地区"/>
+		        <input id="value1" type="hidden"/>
 			</div>
 			<div class="form_item chayefont">
 				<label for="code">邮编</label>

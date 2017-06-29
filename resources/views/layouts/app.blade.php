@@ -49,11 +49,6 @@
 <body class="base-fontsize">
     @yield('content')
     <!-- Scripts -->
-    {{-- <script src="http://cdn.webfont.youziku.com/wwwroot/js/wf/youziku.api.min.js"></script>
-    <script type="text/javascript">
-        $youziku.load(".tea,#webfont,.contentLeft-des,.contentRight-introduce,.active-word,.more-word,.contentRight-des,.add-word", "f61ea8f5934348a2916e178809a3cbae", "yuweij");
-        $youziku.draw();
-    </script> --}}
     <script src="{{url('/fx/build/vendor-bundle.js')}}"></script>
     <script src="{{url('/fx/build/index.js')}}"></script>
     {{-- <script src="http://localhost:8080/fx/build/vendor-bundle.js"></script>

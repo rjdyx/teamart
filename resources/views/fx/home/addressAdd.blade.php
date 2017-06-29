@@ -59,6 +59,7 @@
 				$("input[name='state']").val(1);
 			}
 		});
+		_valid.bindEvent(['name', 'phone', 'code', 'detail'])
 		$('.J_submit').on('click tap', function () {
 			var params = {
 				name: $('#name').val(),
@@ -97,8 +98,8 @@
 			</div>
 			<div class="form_item chayefont">
 				<label for="region">所在地区</label>
-		        <input type="text" id="address" name="address" readonly="" data-required="true" placeholder="选择地区"  value=""/>
-		        <input id="value1" type="hidden" value=""/>
+		        <input type="text" id="address" name="address" readonly="" data-required="true" placeholder="选择地区"/>
+		        <input id="value1" type="hidden"/>
 				<!-- <div class="pull-right addressadd_selection J_msa">请选择<i class="fa fa-angle-right"></i></div> -->
 			</div>
 			<div class="form_item chayefont">

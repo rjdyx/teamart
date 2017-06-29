@@ -54,15 +54,17 @@ class AddressController extends Controller
 	public function destroy($id)
 	{
 		if ($this->del($id)) {
-			return Redirect::back()->with('status','删除成功');
+			//return Redirect::back()->with('status','删除成功');
+			return 'true';
 		}
-		return Redirect::back()->withErrors('删除失败');
+		//return Redirect::back()->withErrors('删除失败');
+		return 'false';
 	}
 
 	public function del($id) 
 	{
-		if (Address::destroy($id)) return true;
-		return false;
+		if (Address::destroy($id)) return 'true';
+		return 'false';
 	}
 
     //批量删除
@@ -70,11 +72,13 @@ class AddressController extends Controller
 	{
 		$ids = explode(',', $request->ids);
 		foreach ($ids as $id) {
-			if (!$this->del($id)) {
-				return Redirect::back()->withErrors('批量删除失败');
+			if ($this->del($id)=='false') {
+				//return Redirect::back()->withErrors('批量删除失败');
+				return 'false';
 			}
 		}
-		return Redirect::back()->with('status','批量删除成功');
+		//return Redirect::back()->with('status','批量删除成功');
+		return 'true';
 	}
 
 	//取消当前的默认地址选中状态
@@ -103,11 +107,11 @@ class AddressController extends Controller
 			$model->state = 1;
 			if ($model->save()) {
 				//return Redirect::to('home/address')->with('status', '设置成功');
-				return true;
+				return 'true';
 			}
 		}	
 		//return Redirect::back()->withErrors('设置失败');
-		return false;
+		return 'false';
 	}
 
     //保存方法
@@ -146,15 +150,15 @@ class AddressController extends Controller
 				$state = 1;
 			}else{
 				//return Redirect::back()->withErrors('设置默认地址时出错');
-				return false;
+				return 'false';
 			}
 		}  
 		$model->state = $state;
 		if ($model->save()) {
 			//return Redirect::to('home/address')->with('status', '保存成功');
-			return true;
+			return 'true';
 		}
 		//return Redirect::back()->withErrors('保存失败');
-		return false;
+		return 'false';
 	}
 }
