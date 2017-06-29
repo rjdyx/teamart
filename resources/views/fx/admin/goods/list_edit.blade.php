@@ -136,7 +136,7 @@
           }
           if (imgs.length) {
             var arr = []
-            for (let i = 0; i < imgs.length; i++) {
+            for (var i = 0; i < imgs.length; i++) {
               if (imgs[i].files[0]) {
                 if (!_valid.img('imgs', imgs[i].files[0])) {
                   return false
@@ -358,8 +358,7 @@
                 <div class="form-group">
                   <label class="col-sm-2 control-label">详情图描述</label>
                   <div class="col-sm-5">
-                    <script id="editor" type="text/plain"  name="img_desc" 
-                    style="width:1024px;height:400px;border:1px solid #3DCDB4;">
+                    <script id="editor" type="text/plain"  name="img_desc" style="width:1024px;height:400px;border:1px solid #3DCDB4;">
                     @if(isset($imgdesc->desc)) {{$imgdesc->desc}} @endif
                     </script>
                   </div>

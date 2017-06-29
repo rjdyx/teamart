@@ -3,11 +3,15 @@
 @section('title') 商品详情 @endsection
 
 @section('css')
+	<link rel="stylesheet" type="text/css" href="{{ asset('fx/css/dropload.css') }}">
+
 @endsection
 
 @section('script')
     @parent
+    <script type="text/javascript" src="{{ url('fx/common/dropload.js') }}"></script>
     <script>
+    $(function(){
     	$('.J_tabs').on('click', function () {
     		$(this).addClass('active')
     		.siblings().removeClass('active')
@@ -18,7 +22,88 @@
     				$(this).removeClass('hide')
     			}
     		})
-    	})
+    	});
+
+		var page = 0;//分页
+		var params = {id:'',page:0};//定义全局对象
+		params['id'] = {{ $content->id }};
+
+		$('.productdetail_container_comment').dropload({
+			scrollArea : $('.productdetail_container_comment'),
+			domUp : {
+				domClass   : 'dropload-up',
+				domRefresh : '<div class="dropload-refresh">↓下拉刷新</div>',
+				domUpdate  : '<div class="dropload-update">↑释放更新</div>',
+				domLoad    : '<div class="dropload-load"><span class="loading"></span>加载中...</div>'
+			},
+			domDown : {
+				domClass   : 'dropload-down',
+				domRefresh : '<div class="dropload-refresh">↑上拉加载更多</div>',
+				domLoad    : '<div class="dropload-load"><span class="loading"></span>加载中...</div>',
+				domNoData  : '<div class="dropload-noData">没有更多数据了</div>'
+			},
+			loadUpFn : function(me){
+				getListData(me,'up');
+			},
+			loadDownFn : function(me){
+				getListData(me,'down');
+			},
+			threshold : 50
+		});
+
+		//获取列表数据
+		function getListData(me,type) {
+			console.log(22);
+			if (type=='down')
+			{
+				page++;
+				params['page'] = page;
+			}
+			var result = '';
+			var url = 'http://'+window.location.host + '/home/product/comment';
+			axios.get(url, {params:params}).then(function (res) {
+            	var data = res.data
+				var arrLen = data.length;
+				// 拼接HTML
+				if(arrLen > 0){
+					for(var i=0; i<arrLen; i++){
+						//评论部分
+						result +=  '<div class="product_warpper pull-left">';
+						if (data[i]['img'] !== null) {
+							var imgs = data[i]['img'].split(",");
+							for(var j=0;j<imgs.length;j++){
+								result += '<img src=http://' + window.location.host + '/' +imgs[j] + '>';
+							}
+						}
+						result += '<p class="mt-10 mb-10">' + data[i]['content']+'</p>';
+						//评论回复部分
+						if (data[i]['replys'].length > 0) {
+							for(var v; v<data[i]['replys'].length; v++) {
+								result += '<p class="mt-10 mb-10">' + data[i]['replys'][v]['content']+'</p>';
+							}
+						}
+						result += '</div>';
+					}
+				}else{
+					// 如果没有数据 锁定
+					me.lock();
+					// 无数据
+					me.noData();
+				}
+				$('.productdetail_container_comment').append(result);// 插入数据到页面，放到最后面
+				me.resetload();// 每次数据插入，必须重置
+				if (type == 'up') {
+					page = 0;// 重置页数，重新获取loadDownFn的数据
+					// 解锁loadDownFn里锁定的情况
+					me.unlock();
+					me.noData(false);
+				}
+            }).catch(function (err) {
+                console.log(err)
+				me.resetload();// 即使加载出错，也得重置
+            });
+		}
+	});
     </script>
 @endsection
 
@@ -28,27 +113,28 @@
 		<div class="productdetail_container">
 			<div class="productdetail_container_banner swiper-container">
 			    <div class="swiper-wrapper">
-			        <!-- Slides -->
+			        @foreach($imgs as $img)
 			        <div class="swiper-slide">
-			        	<img src="{{ url('fx/img/detail.png') }}" alt="">
+			        	<img src="{{url('')}}/{{$img->img}}" alt="">
 			        </div>
-			        <div class="swiper-slide">
-			        	<img src="{{ url('fx/img/detail.png') }}" alt="">
-			        </div>
-			        <div class="swiper-slide">
-			        	<img src="{{ url('fx/img/detail.png') }}" alt="">
-			        </div>
+			        @endforeach
 			    </div>
 			    <div class="swiper-pagination"></div>
 			</div>
 			<div class="productdetail_container_info">
-				<h1 class="chayefont">云南凤庆功夫金芽红茶</h1>
-				<p class="desc mt-10 mb-10">新鲜梨酥雪梨发货供货的供货皇烦得很冠分隔符梨</p>
-				<span class="price">&yen12.00</span>
-				<p class="mt-10 mb-10">价格：<del>25.00</del></p>
+				<h1 class="chayefont">{{$content->name}}</h1>
+				<p class="desc mt-10 mb-10">{{$content->desc}}</p>
+				<span class="price">&yen{{sprintf('%.2f', $content->price)}}</span>
+				<p class="mt-10 mb-10">价格：<del>{{sprintf('%.2f', $content->raw_price)}}</del></p>
 				<p class="clearfix">
-					<span class="pull-left">快递：<i>0.00</i></span>
-					<span class="pull-right">月销：<i>5555</i>笔</span>
+					<span class="pull-left">快递：<i>{{sprintf('%.2f', $content->delivery_price)}}</i></span>
+					<span class="pull-right">销量：<i>{{$content->sell_amount}}</i>笔</span>
+				</p>
+				<p>
+					<span>规格：</span>
+					@foreach($specs as $spec)
+					<a href="{{url('/home/product/detail')}}/{{$spec->id}}" @if($content->id == $spec->id) class="active" @endif >{{$spec->name}}</a>
+					@endforeach
 				</p>
 			</div>
 			<div class="productdetail_container_tabs">
@@ -58,33 +144,17 @@
 			<div class="productdetail_container_detail" data-tab="detail">
 				<div class="productdetail_container_detail_info clearfix">
 					<ol class="pull-left">
-						<li>生产许可证编号:sc11453010306856</li>
-						<li>厂址:昆明市盘龙区双龙街道办事处庄房</li>
-						<li>储藏方法:在通风干燥无异味的环境下存放</li>
-						<li>净含量:300g</li>
-						<li>系列:倚玛留香</li>
-						<li>级别:一级</li>
-						<li>省份:云南省</li>
-					</ol>
-					<ol class="pull-left">
-						<li>产品标准号:GB/T 13738.2-2008</li>
-						<li>保质期:1095天</li>
-						<li>包装方法:散装</li>
-						<li>是否为有机食品:否</li>
-						<li>生长季节:春季</li>
-						<li>城市:临沧市</li>
-						<li>套餐分量:1人</li>
-						<li>价格段:60-99元</li>
+						<li>生产日期: {{$content->date}}</li>
+						<li>产地: {{$content->origin}}</li>
+						<li>作用: {{$content->effect}}</li>
 					</ol>
 				</div>
 				<div class="productdetail_container_detail_img">
-					<img src="{{ url('fx/img/detai_top.png') }}">
-					<img src="{{ url('fx/img/detai_top.png') }}">
-					<img src="{{ url('fx/img/detai_top.png') }}">
+					{!! html_entity_decode($content->gdesc) !!}
 				</div>
 			</div>
 			<div class="productdetail_container_comment hide" data-tab="comment">
-				暂无评价
+				<!-- 评价区域 -->
 			</div>
 		</div>
 		<div class="productdetail_bottom">
@@ -104,78 +174,4 @@
 			</div>
 		</div>
 	</div>
-	<!-- <div class="container">
-		<div class="myFocus">
-			<div class="slide_content" id="slide_content">
-		        <img class="slide_item" src="{{ url('fx/img/detail.png') }}" alt="1"/>
-		        <img class="slide_item" src="{{ url('fx/img/detail.png') }}" alt="2"/>
-		        <img class="slide_item" src="{{ url('fx/img/detail.png') }}" alt="3"/>
-			</div>
-		<div class="production_description">
-			<h3 class="prot_name">云南凤庆功夫金芽红茶</h3>
-			<p class="prot_whole_name">新鲜梨酥雪梨发货供货的供货皇烦得很冠分隔符梨</p>
-			<p class="new_price">￥<span>12.0</span></p>
-			<p class="old_price">价格&nbsp;:&nbsp;<span>￥25</span></p>
-			<p class="postage_sales"><span class="postage">快递&nbsp;:&nbsp;0.00</span><span class="sales_volume">月销&nbsp;:&nbsp;520笔</span></p>
-		</div>
-		<div class="container_btn_box">
-			<div class="detail_btn">&nbsp;&nbsp;商品详情</div>
-			<div class="comment_btn">&nbsp;&nbsp;评价&nbsp;&nbsp;100</div>
-		</div>
-		<div class="production_detailInfo">
-			<div class="production_detailInfo_left">
-				<p>生产许可证编号:sc11453010306856</p>
-				<p>厂址:昆明市盘龙区双龙街道办事处庄房</p>
-				<p>储藏方法:在通风干燥无异味的环境下存放</p>
-				<p>净含量:300g</p>
-				<p>系列:倚玛留香</p>
-				<p>级别:一级</p>
-				<p>省份:云南省</p>
-			</div>
-			<div class="production_detailInfo_right">
-				<p>产品标准号:GB/T 13738.2-2008</p>
-				<p>保质期:1095天</p>
-				<p>包装方法:散装</p>
-				<p>是否为有机食品:否</p>
-				<p>生长季节:春季</p>
-				<p>城市:临沧市</p>
-				<p>套餐分量:1人</p>
-				<p>价格段:60-99元</p>
-			</div>
-		</div>
-		<div class="prot_img">
-			<ul>
-				<li class="prot_img_single">
-					<img src="{{ url('fx/img/detai_top.png') }}">
-				</li>
-				<li class="prot_img_single">
-					<img src="{{ url('fx/img/detai_top.png') }}">
-				</li>
-				<li class="prot_img_single">
-					<img src="{{ url('fx/img/detai_top.png') }}">
-				</li>
-				<li class="prot_img_single">
-					<img src="{{ url('fx/img/detai_top.png') }}">
-				</li>
-			</ul>
-		</div>
-		<div class="productDetail_bottom">
-			<ul class="productDetail_bottom_container">
-				<li class="service_staff_container myCollection">
-					<img src="{{ url('fx/img/service_staff.png') }}">
-					<p>客服</p>
-				</li>
-				<li class="myCollection">
-					<img src="{{ url('fx/img/start.png') }}">
-					<p>收藏</p>
-				</li>
-				<li class="putIn_shopping_cart productDetail_bottom_item">
-					加入购物车
-				</li>
-				<li class="buy_now productDetail_bottom_item">
-					立即购买
-				</li>
-			</ul>
-		</div>
-	</div> -->
 @endsection

@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Home;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Product;
+use App\ProductImg;
 use App\ProductCategory;
 use App\Brand;
+use App\Comment;
+use App\Reply;
 use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
@@ -66,7 +69,7 @@ class ProductController extends Controller
 					)
 				->orderBy($orField, $order)
 				->distinct('product.id')
-				->paginate(4);
+				->paginate(6);
 		return $lists;
 	}
 
@@ -82,8 +85,37 @@ class ProductController extends Controller
 
 	//商品详情页
 	public function detail (Request $request, $id) {
-		$content = Product::find($id);
+		$content = Product::join('product_group','product.group_id','=','product_group.id')
+					->where('product.id','=',$id)
+					->select('product.*','product_group.desc as gdesc')
+					->first();
+		$imgs = ProductImg::where('group_id',$content->group_id)->get();
+		$specs = Product::join('spec','product.spec_id','=','spec.id')
+					->where('product.group_id','=',$content->group_id)
+					->distinct('spec.id')
+					->select('product.id','spec.name')
+					->get();
 		$title = '商品详情';
-		return view(config('app.theme').'.home.productDetail')->with(['content'=>$content, 'title'=>$title,'footer'=>'product']);
+		return view(config('app.theme').'.home.productDetail')->with(['imgs'=>$imgs,'specs'=>$specs,'content'=>$content, 'title'=>$title,'footer'=>'product']);
+	}
+
+	//查询商品评论
+	public function productComment(Request $request)
+	{
+		$datas = array();
+		$comments = Comment::where('product_id',$request->id)->paginate(5);
+		foreach ($comments as $k => $comment) {
+			$replys = Reply::join('user as auser','reply.auser_id','=','auser.id')
+					->join('user as buser','reply.auser_id','=','buser.id')
+					->where('reply.comment_id',$comment->id)
+					->select('reply.*','auser.name as aname','buser.name as bname')
+					->orderBy('reply.created_at','asc')
+					->get();
+			$datas[$k] = $comment;
+			$datas[$k]['replys'] = $replys;
+		}
+		// echo "<pre>";
+		// print_r($datas);die;
+		return $datas;
 	}
 }
