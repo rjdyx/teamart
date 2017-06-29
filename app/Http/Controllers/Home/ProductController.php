@@ -114,8 +114,6 @@ class ProductController extends Controller
 			$datas[$k] = $comment;
 			$datas[$k]['replys'] = $replys;
 		}
-		// echo "<pre>";
-		// print_r($datas);die;
 		return $datas;
 	}
 }

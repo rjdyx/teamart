@@ -53,7 +53,6 @@
 
 		//获取列表数据
 		function getListData(me,type) {
-			console.log(22);
 			if (type=='down')
 			{
 				page++;

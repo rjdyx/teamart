@@ -137,7 +137,10 @@ class AddressController extends Controller
 		$address = explode(',', $request->address);
 		$province = $address[0];
 		$city = $address[1];
-		$area = $address[2];
+		$area = $address[1];
+		if (count($address)>2) $area = $address[2];
+
+
         //接收数据 加入model
 		$model->setRawAttributes($request->only(['name','phone','detail','code']));  
 		$model->user_id = Auth::user()->id;
