@@ -2,12 +2,12 @@ header {
 	position: fixed;
 	top: 0;
 	left: 0;
-	z-index: 1000;
+	z-index: 1001;
 	height: 1.2rem;
 	width: 100%;
 	@include  backgroundImages("/fx/images/header_bg.png", cover);
 	.header_left, .header_center, .header_right {
-		height: 1rem;
+		height: 1.2rem;
 		padding: 0.1rem 0;
 	}
 	.header_left, .header_right {
@@ -54,8 +54,16 @@ header {
 			margin-right: -0.5rem;
 		}
 		.header_close {
+			position: absolute;
+			left: 4.7rem;
+			top: 50%;
+			display: inline-block;
+			width: 0.5rem;
+			height: 0.5rem;
+			margin-top: -0.25rem;
+			text-align: center;
+			line-height: 0.5rem;
 			font-size: 16px;
-			margin-left: -0.5rem;
 		}
 		h2 {
 			color: #fff;
@@ -113,26 +121,36 @@ header {
 	}
 	.header_category {
 		position: fixed;
-		left: -1.5rem;
-		top: 1.2rem;
-		width: 1.5rem;
-		border-radius: 0.3rem;
-		overflow: hidden;
-		transition: all .5s ease;
-		li {
+		top: 0;
+		right: 100%;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0,0,0,0.5);
+		ul {
+			position: absolute;
+			left: -1.5rem;
+			top: 1.2rem;
 			width: 1.5rem;
-			height: 0.8rem;
-			border-bottom: 0.02rem solid #d7d7d7;
-			text-align: center;
-			line-height: 0.8rem;
-			a {
-				display: block;
-				background-color: #FFF;
+			height: 8rem;
+			border-radius: 0.3rem;
+			overflow: auto;
+			transition: all .5s ease;
+			li {
+				width: 1.5rem;
+				height: 0.8rem;
+				border-bottom: 0.02rem solid #d7d7d7;
+				text-align: center;
+				line-height: 0.8rem;
+				a {
+					display: block;
+					background-color: #FFF;
+					@extend %wrap;
+				}
+				a:active {
+					background-color: #f2f2f2;
+					color: #ff4077;
+				}	
 			}
-			a:active {
-				background-color: #f2f2f2;
-				color: #ff4077;
-			}	
 		}
 	}
 }
