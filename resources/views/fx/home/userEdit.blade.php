@@ -65,6 +65,7 @@
 					}
 				})
 			});
+			_valid.bindEvent(['realname', 'phone', 'email', 'password'])
 			function submitForm(){
 				var form = document.forms['form'];
 				var url = $("form").attr('action');//当前编辑id
@@ -77,14 +78,16 @@
 	                password: form['password'].value,
 	                img: form['img'].files[0]
 	            }
-	            ajax('post', url, params, true, true)
-	            	.then(function (resolve) {
-	            		if (resolve) {
-	            			prompt.message('保存成功', 'http://' + window.location.host + '/home/userinfo')
-	            		} else {
-	            			prompt.message('保存失败')
-	            		}
-	            	})
+	            if (_valid.validForm(params)) {
+	                ajax('post', url, params, true, true)
+		            	.then(function (resolve) {
+		            		if (resolve) {
+		            			prompt.message('保存成功', 'http://' + window.location.host + '/home/userinfo')
+		            		} else {
+		            			prompt.message('保存失败')
+		            		}
+		            	})
+	            }
 			}
 
 		})
@@ -138,7 +141,7 @@
 				<label for="password">确认密码</label>
 				<input type="password" name="repassword" id="repassword" class="chayefont" autocomplete="off" placeholder="输入密码后再确认密码">
 			</div>
-			<input type="file" name="img" id="img" class="invisibility" accept="image/jpeg,image/jpg,image/png">
+			<input type="file" name="img" id="img" class="invisibility" accept="image/jpeg,image/jpg,image/png" capture="camera">
 		</form>
 		<div class="chayefont useredit_save J_submit">确定保存</div>
 	</div>

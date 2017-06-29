@@ -12,6 +12,8 @@
     <script type="text/javascript" src="{{ url('fx/common/dropload.js') }}"></script>
     <script>
     $(function(){
+    	var arr = window.location.pathname.split('/')
+		var id = arr[arr.length-1]
     	$('.J_tabs').on('click', function () {
     		$(this).addClass('active')
     		.siblings().removeClass('active')
@@ -23,7 +25,40 @@
     			}
     		})
     	});
-
+    	$('.J_favo').on('click tap', function () {
+    		var $this = $(this)
+    		if ($this.find('i').hasClass('fa-star-o')) {
+    			ajax('get', '/home/collect/create/', {id: id})
+	    			.then(function (resolve) {
+	    				if (resolve) {
+	    					$this.find('i').removeClass('fa-star-o').addClass('fa-star')
+	    					prompt.message('收藏成功')
+	    				} else {
+	    					prompt.message('收藏失败')
+	    				}
+	    			})
+    		} else {
+    			ajax('delete', '/home/collect/' + id)
+	    			.then(function (resolve) {
+	    				if (resolve) {
+	    					$this.find('i').addClass('fa-star-o').removeClass('fa-star')
+	    					prompt.message('取消收藏成功')
+	    				} else {
+	    					prompt.message('取消收藏失败')
+	    				}
+	    			})
+    		}
+    	})
+    	$('.J_join_cart').on('click tap', function () {
+    		ajax('get', '/home/cart/create/' + id)
+    			.then(function (resolve) {
+    				if (resolve) {
+    					prompt.message('已经加入购物车')
+    				} else {
+    					prompt.message('加入失败')
+    				}
+    			})
+    	})
 		var page = 0;//分页
 		var params = {id:'',page:0};//定义全局对象
 		params['id'] = {{ $content->id }};
@@ -162,11 +197,11 @@
 				<i class="fa fa-headphones mt-10"></i>
 				<p>客服</p>
 			</div>
-			<div class="productdetail_bottom_icon pull-left favo">
+			<div class="productdetail_bottom_icon pull-left favo J_favo">
 				<i class="fa fa-star-o mt-10"></i>
 				<p>收藏</p>
 			</div>
-			<div class="productdetail_bottom_btn pull-left chayefont add_cart">
+			<div class="productdetail_bottom_btn pull-left chayefont add_cart J_join_cart">
 				加入购物车
 			</div>
 			<div class="productdetail_bottom_btn pull-left chayefont buy_now">
