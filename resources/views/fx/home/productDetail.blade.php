@@ -126,7 +126,7 @@
     	$('.J_favo').on('click tap', function () {
     		var $this = $(this)
     		if ($this.find('i').hasClass('fa-star-o')) {
-    			ajax('get', '/home/collect/create/', {id: params['id']})
+    			ajax('post', '/home/collect', {id: params['id']})
 	    			.then(function (resolve) {
 	    				if (resolve) {
 	    					$this.find('i').removeClass('fa-star-o').addClass('fa-star')
@@ -149,10 +149,11 @@
     	})
     	// 加入购物车
     	$('.J_join_cart').on('click tap', function () {
-    		var sid = $(".J_choose_spec[class='active']").attr('pid');
+    		var sid = $(".addcart-specs li[class='active']").attr('pid');
+
     		var num = $('.productspec_container_amount input').val();
     		var params = {id:sid, amount:num};
-    		ajax('post', '/home/cart/create', params)
+    		ajax('post', '/home/cart', params)
     			.then(function (resolve) {
     				if (resolve) {
     					prompt.message('已经加入购物车')

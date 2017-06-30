@@ -13,26 +13,12 @@ class CollectController extends Controller
 
     //收藏列表
     public function index(Request $request) {
-        $lists= Order::join('order_product','order.id','=','order_product.order_id')
-            ->join('product','order_product.product_id','=','product.id')
-            ->where('type','collect')
-            ->where('order.user_id',Auth::user()->id)
-            ->where('order.deleted_at',null)
-            ->where('order_product.deleted_at',null)
-            ->where('product.deleted_at',null)
-            ->select('product.*', 'order_product.id as op_id','product.desc as p_desc','product.img as p_img','product.price as p_price',
-                     'product.sell_amount as p_sell_amount','product.name as p_name')
-
-            ->paginate(5);
-
-
-//            ->paginate(config('app.paginate10'));
+        $lists= $this->searchList();
         $title = '收藏管理';
         return view(config('app.theme').'.home.collect')->with(['footer'=>'collect','lists'=>$lists,'title'=>$title]);
     }
     //取消收藏
     public function destroy($product_id){
-
 
         $collect_id = Order::join('order_product','order.id','=','order_product.order_id')->
         join('product','order_product.product_id','=','product.id')->
@@ -43,15 +29,10 @@ class CollectController extends Controller
         select('order_product.id as op_id')->value('op_id');
 
         if($this->del($collect_id)){
-
             return 1;
         }else{
-
             return 0;
         }
-
-
-
     }
     public function del($id){
         if (OrderProduct::destroy($id)) return true;
@@ -61,8 +42,6 @@ class CollectController extends Controller
     public function dels(Request $request)
     {
         $ids=$request->all();
-
-
         foreach ($ids as $id) {
             if (!$this->destroy($id)) {
                 echo $id;
@@ -73,27 +52,13 @@ class CollectController extends Controller
 
     }
     public function listData(Request $request) {
+            $lists= $this->searchList();
 
-            $lists= Order::join('order_product','order.id','=','order_product.order_id')
-                ->join('product','order_product.product_id','=','product.id')
-                ->where('type','collect')
-                ->where('order.user_id',Auth::user()->id)
-                ->where('order.deleted_at',null)
-                ->where('order_product.deleted_at',null)
-                ->where('product.deleted_at',null)
-                ->select('product.*', 'order_product.id as op_id','product.desc as p_desc','product.img as p_img','product.price as p_price',
-                    'product.sell_amount as p_sell_amount','product.name as p_name')
-
-                ->paginate(5);
-
-
-//            ->paginate(config('app.paginate10'));
-            $title = '收藏管理';
-            return view(config('app.theme').'.home.collect')->with(['footer'=>'collect','lists'=>$lists,'title'=>$title]);
+            return $lists;
         }
 
     //加入收藏
-    public function create(Request $request){
+    public function store(Request $request){
 		$product_id=$request->id;
 
         $hasCollectOrder=Order::where('type','collect')->
@@ -104,7 +69,6 @@ class CollectController extends Controller
             $order=new Order;
         }
         $lists=Order::join('order_product','order.id','=','order_product.order_id')->
-
         where('order_product.product_id',$product_id)->
         where('type','collect')->
         where('order.user_id',Auth::user()->id)->
@@ -113,16 +77,7 @@ class CollectController extends Controller
             return 0;
         }
         else{
-
-            $order->serial=uniqid();
-            $order->method="delivery";
-            $order->user_id=Auth::user()->id;
-            $order->price=0;
-            $order->type='collect';
-            $order->state='close';
-            $order->address_id=0;
-            $order->date=date("Ymd");
-            $order->save();
+            $this->createCollect($order);
             $order_product=new OrderProduct;
             $order_product->order_id=$order->id;
             $order_product->product_id=$product_id;
@@ -132,4 +87,29 @@ class CollectController extends Controller
             $order_product->save();
             return 1;
         }}
+    //创建新的Order信息
+    public function createCollect($order){
+        $order->serial=uniqid();
+        $order->method="delivery";
+        $order->user_id=Auth::user()->id;
+        $order->price=0;
+        $order->type='collect';
+        $order->state='close';
+        $order->address_id=0;
+        $order->date=date("Ymd");
+        $order->save();
+    }
+    //搜索分页
+    public function searchList(){
+        return Order::join('order_product','order.id','=','order_product.order_id')
+            ->join('product','order_product.product_id','=','product.id')
+            ->where('type','collect')
+            ->where('order.user_id',Auth::user()->id)
+            ->where('order.deleted_at',null)
+            ->where('order_product.deleted_at',null)
+            ->where('product.deleted_at',null)
+            ->select('product.*', 'order_product.id as op_id','product.desc as p_desc','product.img as p_img','product.price as p_price',
+                'product.sell_amount as p_sell_amount','product.name as p_name')
+            ->paginate(5);
+    }
 }

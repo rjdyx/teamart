@@ -15,14 +15,7 @@ class CartController extends Controller
 {
 	//购物车列表页
 	public function index (Request $request) {
-		$lists= Order::join('order_product','order.id','=','order_product.order_id')
-			->join('product','order_product.product_id','=','product.id')
-			->where('type','cart')
-			->where('order.user_id',Auth::user()->id)
-			->where('order_product.deleted_at',null)
-			->where('product.deleted_at',null)
-			->where('order.deleted_at',null)
-			->paginate(5);
+		$lists= $this->searchList();
 
 		$totals= Order::where('type','cart')
 			->where('order.user_id',Auth::user()->id)
@@ -32,18 +25,14 @@ class CartController extends Controller
 		return view(config('app.theme').'.home.cart')->with(['lists'=>$lists,'title'=>$title,'footer'=>$footer,'totals'=>$totals]);
 	}
 	//添加商品到购物车
-	public function create(Request $request){
-
+	public function store(Request $request){
+		 $amount= $request->amount;
 	     $product_id=$request->id;
 
 		$product_price=Product::where('id',$product_id)->value('price');
 
-		// $amount= $request->amount;
-        $amount = 1;
-
 		$hasOrder = Order::where('user_id',Auth::user()->id)->
 		where('type','cart')->count('id');
-
 		if(!$hasOrder){
 		$order = new Order;
 		$order->address_id=Address::where('user_id',Auth::user()->id)->value('id');
@@ -54,11 +43,8 @@ class CartController extends Controller
 		$order->date=date("Ymd");
 		$order->save();
 			$order_product=new OrderProduct;
-		$order_product->order_id=$order->id;
-		$order_product->product_id=$product_id;
-		$order_product->amount=$amount;
-		$order_product->price=$product_price*$amount;
-		$order_product->save();
+			$order_id=$order->id;
+			$this->changeOrderProduct($order_product,$amount,$product_price,$order_id,$product_id);
 			return 1;
 		}
 		else{
@@ -70,20 +56,17 @@ class CartController extends Controller
 					$hasOrderProduct=OrderProduct::where('product_id',$product_id)->where('order_id',$order_id)->count();
 					if(!$hasOrderProduct){
 						$order_product=new OrderProduct;
-						$order_product->amount=$amount;
+
 					}else{
-						return 0;
+						$order_product=OrderProduct::where('product_id',$product_id)->where('order_id',$order_id)->first();
+
 			}
 
-			$order_product->order_id=$order_id;
-			$order_product->product_id=$product_id;
 			$order_product_newprice=$product_price*$amount;
 			$order=Order::find($order_id);
 			$order_old_price=$order->price;
-			$order->price=$order_old_price+$order_product_newprice;
-			$order_product->price=$product_price*$amount;
-			$order_product->save();
-
+			$order->price=$order_old_price-$order_product->price+$order_product_newprice;
+			$this->changeOrderProduct($order_product,$amount,$product_price,$order_id,$product_id);
             $order->save();
 			return 1;
 
@@ -92,7 +75,6 @@ class CartController extends Controller
 	//删除购物车
 	public function destroy($id){
 		$product_id=$id;// 商品id
-
 		$order_product=Order::join('order_product','order.id','=','order_product.order_id')->
 			where('user_id',Auth::user()->id)->
 		    where('product_id',$product_id)->
@@ -102,7 +84,6 @@ class CartController extends Controller
 		$order_product_id=	$order_product->id;
 		$order_product_price=	$order_product->price;
 		$order_product_orderId=	$order_product->order_id;
-
         $order=Order::find($order_product_orderId);
 		$order_oldprice=$order->price;
 		$order->price=$order_oldprice-$order_product_price;
@@ -114,14 +95,15 @@ class CartController extends Controller
 		}
 
 	}
+	//删除单条购物车商品
 	public function del($id){
 		if (OrderProduct::destroy($id)) return true;
 		return false;
 	}
+	//批量删除购物车商品
 	public function dels(Request $request)
 	{
 		$ids=$request->all();
-
 
 		foreach ($ids as $id) {
 			if (!$this->destroy($id)) {
@@ -150,31 +132,41 @@ class CartController extends Controller
 		$order=Order::find($order_id);
 		$order_old_price=$order->price;
 		$order_product=OrderProduct::where('product_id',$product_id)->where('order_id',$order_id)->first();
-
-		$order_product->amount=$amount;
 		$order->price=$order_old_price-$order_product->price+$order_product_newprice;
-		$order_product->price=$product_price*$amount;
-		$order_product->save();
+		$this->changeOrderProduct($order_product,$amount,$product_price);
 
 		$order->save();
 
 	}
-
+//分页展示
  public function  listData(Request $request){
-	 $lists= Order::join('order_product','order.id','=','order_product.order_id')
-		 ->join('product','order_product.product_id','=','product.id')
-		 ->where('type','cart')
-		 ->where('order.user_id',Auth::user()->id)
-		 ->where('order_product.deleted_at',null)
-		 ->where('product.deleted_at',null)
-		 ->where('order.deleted_at',null)
-		 ->paginate(5);
+	 $lists= $this->searchList();
 
 	 $totals= Order::where('type','cart')
 		 ->where('order.user_id',Auth::user()->id)
 		 ->value('price');
-	 $title = '购物车';
-	 $footer = 'cart';
-	 return view(config('app.theme').'.home.cart')->with(['lists'=>$lists,'title'=>$title,'footer'=>$footer,'totals'=>$totals]);
+
+	 return ['lists'=>$lists,'$totals'=>$totals];
  }
+	public function searchList(){
+		return Order::join('order_product','order.id','=','order_product.order_id')
+			->join('product','order_product.product_id','=','product.id')
+			->where('type','cart')
+			->where('order.user_id',Auth::user()->id)
+			->where('order_product.deleted_at',null)
+			->where('product.deleted_at',null)
+			->where('order.deleted_at',null)
+			->paginate(5);
+	}
+	public function changeOrderProduct($order_product,$amount,$product_price,$order_id=0,$product_id=0){
+        if($order_id){
+		$order_product->order_id=$order_id;
+		}
+		if($product_id){
+			$order_product->product_id=$product_id;
+		}
+		$order_product->amount=$amount;
+		$order_product->price=$amount*$product_price;
+		$order_product->save();
+	}
 }
