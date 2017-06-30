@@ -167,7 +167,7 @@
 							<h5 class="chayefont mb-10">{{$list->p_name}}</h5>
 							<p>{{$list->p_desc}}</p>
 							<div class="collect_warpper_content_info_bottom">
-								<span class="pull-left price">&yen;{{$list->p_price}}</span>
+								<span class="pull-left price">&yen;{{'￥'.number_format($list->price,2)}}</span>
 								<span class="pull-right sell">{{'已售'.$list->p_sell_amount}}</span>
 							</div>
 						</div>

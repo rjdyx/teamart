@@ -75,12 +75,10 @@ Route::group(['namespace'=>'Home','prefix'=>'home','middleware'=>['auth']],funct
 
 
 	//购物车
+	Route::post('/cart/dels','CartController@dels');
 
 	Route::resource('/cart','CartController');
-	Route::get('/cart/add','CartController@addCart');
-	Route::get('/cart/del','CartController@delCart');
-	Route::get('/cart/update','CartController@updateCart');
-	Route::resource('/cart','CartController');
+
 
 	//用户部分
 	

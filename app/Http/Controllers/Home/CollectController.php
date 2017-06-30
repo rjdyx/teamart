@@ -64,7 +64,7 @@ class CollectController extends Controller
 
 
         foreach ($ids as $id) {
-            if (!$this->destory($id)) {
+            if (!$this->destroy($id)) {
                 echo $id;
                 return 0;
             }

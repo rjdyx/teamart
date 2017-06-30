@@ -125,7 +125,7 @@
     		}
     	})
     	$('.J_join_cart').on('click tap', function () {
-    		ajax('get', '/home/cart/create/' + params['id'])
+    		ajax('get', '/home/cart/create/' ,{id: params['id']})
     			.then(function (resolve) {
     				if (resolve) {
     					prompt.message('已经加入购物车')
