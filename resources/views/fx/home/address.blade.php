@@ -9,28 +9,32 @@
     @parent
 	<script>
 		$(function () {
+			// 设置默认地址
 			$('.J_setdefault').on('click tap', function () {
 				var id = $(this).data('id')
 				var $this = $(this)
 				ajax('get', '/home/address/default/' + id)
 					.then(function (res) {
 						if (res) {
+							prompt.message('修改成功')
 							$this.parents('.address').find('.address_default').removeClass('active')
 							$this.addClass('active')
 						} else {
-							prompt.message1('修改失败')
+							prompt.message('修改失败')
 						}
 					})
 			})
+			// 删除地址
 			$('.J_del').on('click tap', function () {
 				var id = $(this).data('id')
 				var $this = $(this)
 				ajax('delete', '/home/address/' + id)
 					.then(function (res) {
 						if (res) {
+							prompt.message('删除成功')
 							$this.parents('.address_warpper').remove()
 						} else {
-							prompt.message1('删除失败')
+							prompt.message('删除失败')
 						}
 					})
 			})
@@ -50,7 +54,7 @@
 						<span class="chayefont">{{$list->name}}</span>
 						<span class="pull-right phone">{{$list->phone}}</span>
 					</div>
-					<p>{{$list->province}}{{$list->city}}{{$list->area}}{{$list->detail}}</p>
+					<p>{{$list->province}}@if($list->city == $list->area){{$list->city}}@else{{$list->city}}{{$list->area}} @endif{{$list->detail}}</p>
 				</div>
 				<div class="address_warpper_opts">
 					<a href="javascript:;" class="address_default pull-left @if($list->state == 1) active @endif J_setdefault" data-id="{{$list->id}}">默认地址</a>		

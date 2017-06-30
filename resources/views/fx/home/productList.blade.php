@@ -18,6 +18,7 @@
 			var brands = categorys = {};
 			var bstate = cstate = false;
 
+			// 显示筛选
 			$('.J_show_filter').on('click', function () {
 				getBrandOrCategory();
 				$('.filter').addClass('left-0')
@@ -25,6 +26,7 @@
 				$("input[name='max_price']").val(params['max']);
 			})
 
+			// 隐藏筛选
 			$('.J_hide_filter').on('click', function () {
 				$('.filter').removeClass('left-0');
 			});

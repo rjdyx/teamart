@@ -9,11 +9,14 @@
 	@parent
 	<script>
 	$(function () {
+		// 账号退出
 		$(".J_loginout").on('click tap', function () {
-			ajax('get', '/layout')
-				.then(function (resolve) {
-					prompt.message('退出成功', 'http://' + window.location.host)
-				})
+			prompt.question('是否退出', function () {
+				ajax('get', '/layout')
+					.then(function (resolve) {
+						prompt.message('退出成功', 'http://' + window.location.host)
+					})
+			})
 		})
 	})
 	</script>
@@ -26,7 +29,7 @@
 	<div class="container usercenter">
 		<div class="usercenter_info">
 			<div class="usercenter_avatar">
-				<img src="{{url('')}}/ @if(Auth::user()){{Auth::user()->img}} @endif" alt="">
+				<img src="{{url('')}}/@if(Auth::user()){{Auth::user()->img}} @endif" alt="">
 			</div>
 			<p class="usercenter_name chayefont">@if(Auth::user()){{Auth::user()->name}} @endif</p>
 			<ul class="usercenter_list">

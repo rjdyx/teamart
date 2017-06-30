@@ -82,25 +82,68 @@ class ProductController extends Controller
 
 	//商品详情页
 	public function detail (Request $request, $id) {
-		$content = Product::join('product_group','product.group_id','=','product_group.id')
-					->where('product.id','=',$id)
-					->select('product.*','product_group.desc as gdesc')
-					->first();
+		$content = $this->productContent($id);
+		$specs = $this->productSpecs($content->group_id);
 		$imgs = ProductImg::where('group_id',$content->group_id)->get();
+		$title = '商品详情';
+
+		$commentA = Comment::where('product_id',$id)->where('grade','>','60')->count();
+		$commentB = Comment::where('product_id',$id)->where('grade','=','60')->count();
+		$commentC = Comment::where('product_id',$id)->where('grade','<','60')->count();
+		$commentImg = Comment::where('product_id',$id)->whereNotNull('img')->count();
+
+		return view(config('app.theme').'.home.productDetail')->with(['imgs'=>$imgs,'specs'=>$specs,'content'=>$content, 'title'=>$title,'footer'=>'product','commentA'=>$commentA,'commentB'=>$commentB,'commentC'=>$commentC,'commentImg'=>$commentImg,]);
+	}
+
+	//查询商品参数(详情页加入购物车)
+	public function productAddCartData($id)
+	{
+		$content = $this->productContent($id);
+		$specs = $this->productSpecs($content->group_id);
+		return ['specs'=>$specs, 'content'=>$content];
+	}
+
+	//查询规格
+	public function productSpecs($id)
+	{
 		$specs = Product::join('spec','product.spec_id','=','spec.id')
-					->where('product.group_id','=',$content->group_id)
+					->where('product.group_id','=',$id)
 					->distinct('spec.id')
 					->select('product.id','spec.name')
 					->get();
-		$title = '商品详情';
-		return view(config('app.theme').'.home.productDetail')->with(['imgs'=>$imgs,'specs'=>$specs,'content'=>$content, 'title'=>$title,'footer'=>'product']);
+		return $specs;
+	}
+
+	//查询商品详情
+	public function productContent($id)
+	{
+		$data = Product::join('product_group','product.group_id','=','product_group.id')
+					->where('product.id','=',$id)
+					->select('product.*','product_group.desc as gdesc')
+					->first();
+		return $data;
 	}
 
 	//查询商品评论
-	public function productComment(Request $request)
+	public function productComment(Request $request, $product_id)
 	{
 		$datas = array();
-		$comments = Comment::where('product_id',$request->id)->paginate(5);
+		$comments = Comment::join('user','comment.user_id','=','user.id')
+			->where('comment.product_id',$product_id);
+
+		if ($request->grade) {
+			if ($request->grade == 'A') $fh = '>';
+			if ($request->grade == 'B') $fh = '=';
+			if ($request->grade == 'C') $fh = '<';
+			if ($request->grade == 'Img') {
+				$comments = $comments->whereNotNull('comment.img');
+			} else {
+				$comments = $comments->where('comment.grade',$fh,'60');
+			}
+		}
+
+		$comments = $comments->select('comment.*','user.thumb as user_img','user.name as user_name')->paginate(5);
+
 		foreach ($comments as $k => $comment) {
 			$replys = Reply::join('user as auser','reply.auser_id','=','auser.id')
 					->join('user as buser','reply.auser_id','=','buser.id')
@@ -108,9 +151,14 @@ class ProductController extends Controller
 					->select('reply.*','auser.name as aname','buser.name as bname')
 					->orderBy('reply.created_at','asc')
 					->get();
+			$imgs = empty($comment->img)?null:$comment->img;
+			$thumbs = empty($comment->thumb)?null:$comment->thumb;
 			$datas[$k] = $comment;
+			$datas[$k]['img'] = $imgs;
+			$datas[$k]['thumb'] = $thumbs;
 			$datas[$k]['replys'] = $replys;
 		}
+
 		return $datas;
 	}
 }

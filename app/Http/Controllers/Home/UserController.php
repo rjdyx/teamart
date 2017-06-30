@@ -9,7 +9,7 @@ use App\OrderProduct;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
-
+use IQuery;
 
 class UserController extends Controller
 {
@@ -74,10 +74,23 @@ class UserController extends Controller
             'gender' => 'required|max:4'
         ]);
 
-        $model = User::find($id);
+        $model = User::find(Auth::user()->id);
 
         //接收数据 加入model
         $model->setRawAttributes($request->only(['realname','email','phone','gender','birth_date']));
+        
+        if ($request->del) {
+            $model->img = null;
+            $model->thumb = null;
+            IQuery::destroyPic(new Brand, $id, 'img');
+        }
+
+        //资源、上传图片名称、是否生成缩略图
+        $imgs = IQuery::upload($request,'img',true);
+        if ($imgs != 'false') {
+            $model->img = $imgs['pic'];
+            $model->thumb = $imgs['thumb'];
+        }
 
         $password = $request->password;
         if ($password) $model->password = bcrypt($password);

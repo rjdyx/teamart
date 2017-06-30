@@ -6,6 +6,7 @@ use App\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Order;
+use App\Site;
 use App\OrderProduct;
 use Illuminate\Support\Facades\Auth;
 use Redirect;
@@ -55,12 +56,62 @@ class OrderController extends Controller
 
 		$datas = $datas->select(
 					'order_product.amount as order_amount',
-					'order_product.price as order_price',
-					'order.serial','order.id as order_id','order.updated_at as order_date',
+					'order_product.price as order_product_price',
+					'order.serial','order.id as order_id','order.updated_at as order_date','order.price as order_price',
+					'order.state as order_state','order.method as order_method','order.type as order_type',
 					'product.*'
 					)
 					->groupBy('order_product.id')
 					->paginate(10);
-		return $datas;
+		$arrs = array();
+		foreach ($datas as $data) {
+			$arrs[$data->order_id][] = $data;
+		}
+
+		return $arrs;
+	}
+
+	//查看销售站点页
+	public function site(){
+		$title = "自提位置";
+		return view(config('app.theme').'.home.orderSite')->with(['title' => $title]);
+	}
+
+	//所有销售站点数据
+	public function siteListData(){
+		return Site::get();
+	}
+
+	//查看订单物流
+	public function showDelivery($order_id){
+		$title = "物流信息";
+		return view(config('app.theme').'.home.orderDelivery')->with(['title' => $title]);
+	}
+
+	//订单评论
+	public function orderComment($order_id){
+		return view(config('app.theme').'.home.orderComment');
+	}
+
+	//订单state改变方法
+	public function orderOperate($request, $state)
+	{
+		$id = $request->id;
+		$order = Order::find($id);
+		$order->state = $state;
+		if ($order->save()) return 200;
+		return 500;
+	}
+
+	//取消订单
+	public function orderCancell(Request $request)
+	{
+		return $this->orderOperate($request, 'cancell');
+	}
+
+	//申请退货
+	public function orderBack(Request $request)
+	{
+		return $this->orderOperate($request, 'backn');
 	}
 }
