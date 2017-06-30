@@ -6,6 +6,7 @@ use App\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Order;
+use App\Site;
 use App\OrderProduct;
 use Illuminate\Support\Facades\Auth;
 use Redirect;
@@ -68,6 +69,16 @@ class OrderController extends Controller
 		}
 
 		return $arrs;
+	}
+
+	//查看销售站点页
+	public function site(){
+		return view(config('app.theme').'.home.orderSite');
+	}
+
+	//所有销售站点数据
+	public function siteListData(){
+		return Site::get();
 	}
 
 	//查看订单物流

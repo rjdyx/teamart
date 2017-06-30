@@ -200,10 +200,12 @@
             var params = {id:id};
             orderOperate('take', '确认收货', params);
         }
+
         //生成二维码方法
         function order_code(id){
 
         }
+        
         //订单评论方法
         function order_comment(id){
             window.location.href = 'http://'+window.location.host + '/home/order/comment/'+id;
