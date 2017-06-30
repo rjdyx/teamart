@@ -47,11 +47,9 @@
             var result = '';
             var url = 'http://'+window.location.host + '/home/order/list/data';
             axios.get(url, {params:params}).then(function (res) {
-                var data = res.data.data
-                var arrLen = data.length;
-
-                if(arrLen > 0){
-                    result = joint(data, arrLen);
+                var data = res.data
+                if(data != ''){
+                    result = joint(data);
                 }else{
                     // 如果没有数据 锁定
                     me.lock();
@@ -75,60 +73,150 @@
         }
 
         // 拼接HTML
-        function joint(data, arrLen){
-            var result = '';
-            for(var i=0; i<arrLen; i++){
-                var ts = '';
-                var state = data[i]['state'];
-                var method = data[i]['method'];
-                var img = data[i]['img'];
-                var name = data[i]['name'];
-                var desc = data[i]['desc'];
-                var price = data[i]['order_price'];
-                var amount = data[i]['order_amount'];
-                var price_raw = data[i]['price_raw'];
-                var count = price_raw * amount;
-                var date = data[i]['order_date'];
-                // if (state == 'pading') {ts = '等待买家付款';}
-                // if (state == 'paid') {ts = '等待卖家发货';}
-                // if (state == 'delivery') {ts = '等待买家收货';}
-                // if (state == 'take') {ts = '等待买家评价';}
-                // if (method == 'self') {ts = '等待买家提货';}
+        function joint(data){
+            var result = a = b = c = '';
+            var len = 0;
+            $.each(data, function(index, value, array) {
+                len = value.length;
+                $.each(value, function(index2, value2, array2) {
+                    var ts = '';
+                    var state = value2['order_state'];
+                    var oid = value2['order_id'];
+                    var method = value2['order_method'];
+                    var img = value2['img'];
+                    var name = value2['name'];
+                    var desc = value2['desc'];
+                    var price = value2['order_product_price'];
+                    var amount = value2['order_amount'];
+                    var price_raw = value2['price'];
+                    var count = value2['order_price'];
+                    var date = value2['order_date'];
+                    var serial = value2['serial'];
+                    b = '<div class="order_warpper_info">'+
+                        '<div class="order_warpper_info_img pull-left mr-20">' +
+                            '<img src="http://'+ window.location.host +'/'+ img +'">' +
+                        '</div>'+
+                        '<div class="order_warpper_info_detail pull-left mr-20">'+
+                            '<h5 class="chayefont mb-10">' + name + '</h5>'+
+                            '<p>' + desc + '</p>'+
+                        '</div>'+
+                        '<div class="order_warpper_info_price pull-left txt-r">'+
+                            '<span class="block price">&yen' + price + '</span>'+
+                            '<del class="block price_raw">&yen' + price_raw + '</del>'+
+                            '<span class="block times">&times'+amount+'</span>'+
+                        '</div>'+ '</div>';
+                    if (index2 < 1) {    
+                        a = '<div class="order_warpper mb-20">' +
+                                '<div class="order_warpper_tit">' + 
+                                '<h1 class="pull-left chayefont">' +
+                                '<i class="fa fa-ban"></i>' + serial +
+                                '<i class="fa fa-angle-right ml-20"></i>' + '</h1>' +
+                                '<span class="pull-right chayefont">'+ date + '</span>'+'</div>';
+                        c = '<div class="order_warpper_sum txt-r">'+'<span>总' + len + '件商品</span>'+
+                                '<span>合计：<i class="price">&yen' + count + '</i>（包运费）</span>'+
+                                '</div>'+'<div class="order_warpper_opts">'+'<ul class="pull-right">';
 
-                result += '<div class="order_warpper mb-20">' +
-                '<div class="order_warpper_tit">' + 
-                '<h1 class="pull-left chayefont">' +
-                '<i class="fa fa-ban"></i>' + data[i]['serial'] +
-                '<i class="fa fa-angle-right ml-20"></i>' + '</h1>' +
-                '<span class="pull-right chayefont">'+ date + '</span>' + '</div>'+
-                '<div class="order_warpper_info">'+
-                '<div class="order_warpper_info_img pull-left mr-20">' +
-                    '<img src="http://'+ window.location.host +'/'+ img +'">' +
-                '</div>'+
-                '<div class="order_warpper_info_detail pull-left mr-20">'+
-                    '<h5 class="chayefont mb-10">' + name + '</h5>'+
-                    '<p>' + desc + '</p>'+
-                '</div>'+
-                '<div class="order_warpper_info_price pull-left txt-r">'+
-                    '<span class="block price">&yen' + price + '</span>'+
-                    '<del class="block price_raw">&yen' + price_raw + '</del>'+
-                    '<span class="block times">&times'+amount+'</span>'+
-                '</div>'+ '</div>' +
-                '<div class="order_warpper_sum txt-r">'+
-                    '<span>总' + amount + '件商品</span>'+
-                    '<span>合计：<i class="price">&yen' + count + '</i>（包运费）</span>'+
-                '</div>'+
-                '<div class="order_warpper_opts">'+
-                    '<ul class="pull-right">'+
-                    '<li>'+ '<a href="javascript:;" class="chayefont">' +'联系卖家'+ '</a>'+'</li>'+
-                    '<li>'+'<a href="javascript:;" class="chayefont">'+'取消订单'+'</a>'+'</li>'+
-                    '<li>'+'<a href="javascript:;" class="chayefont point">'+'付款'+'</a>'+'</li>'+
-                    '</ul>'+'</div>'+'</div>';
-            }
+                                if (state == 'pading' && method != 'self') {
+                                    c += '<li type="cancell" oid="'+oid+'">'+'<a href="javascript:;" class="chayefont point">'+'取消订单'+'</a>'+'</li>'+
+                                    '<li type="pay" oid="'+oid+'">'+'<a href="javascript:;" class="chayefont point">'+'付款'+'</a>'+'</li>';
+                                }
+                                if (state == 'paid' && method != 'self') {
+                                    c += '<li type="back" oid="'+oid+'">'+'<a href="javascript:;" class="chayefont point">'+'申请退货'+'</a>'+'</li>';
+                                }
+                                if (state == 'delivery' && method != 'self') {
+                                    c += '<li type="delivery" oid="'+oid+'">'+'<a href="javascript:;" class="chayefont point">'+'查看物流'+'</a>'+'</li>'+
+                                    '<li type="take" oid="'+oid+'">'+'<a href="javascript:;" class="chayefont  point">'+'确定收货'+'</a>'+'</li>';
+                                }
+                                if (state == 'take' && method != 'self') {
+                                    c += '<li type="comment" oid="'+oid+'">'+'<a href="javascript:;" class="chayefont point">'+'立即评价'+'</a>'+'</li>';
+                                }
+                                if (state == 'backn' && method != 'self') {
+                                    c += '<li type="back" oid="'+oid+'">'+'<a href="javascript:;" class="chayefont point">'+'退货处理'+'</a>'+'</li>';
+                                }
+                                if (method == 'self') {
+                                    c +='<li type="back" oid="'+oid+'">'+'<a href="javascript:;" class="chayefont point">'+'申请退货'+'</a>'+'</li>'+
+                                    '<li type="code" oid="'+oid+'">'+'<a href="javascript:;" class="chayefont  point">'+'生成二维码'+'</a>'+'</li>';
+                                }
+                        c += '</ul>'+'</div>'+'</div>';
+                        result += a + b;
+                    } else {
+                        result += b;
+                    }    
+                });
+                result += c;
+            });
             return result;
         }
 
-        //按钮点击
+        //订单功能按钮点击
+        $(".order_list").on('click','.pull-right li',function() {
+            var type = $(this).attr('type');
+            var id = $(this).attr('oid');
+            if (type == 'pay') { order_pay(id); }
+            if (type == 'back') { order_back(id); }
+            if (type == 'take') { order_take(id); }
+            if (type == 'code') { order_code(id); }
+            if (type == 'comment') { order_comment(id); }
+            if (type == 'cancell') { order_cancell(id); }
+            if (type == 'delivery') { order_delivery(id); }
+        })
+
+        //订单state状态改变调用方法
+        function orderOperate(addurl, pro, params) {
+            var url = 'http://'+window.location.host + '/home/order/';
+            url+= addurl;
+            axios.get(url, {params:params}).then(function (res) {
+                if (res.data == 200) {
+                    prompt.message(pro+'成功');
+                    searchOrder(false);
+                } else {
+                    prompt.message(pro+'失败！请稍后再试！');
+                }
+            }).catch(function (err) {
+                prompt.message('服务器链接错误！');
+                console.log(err)
+            });  
+        }
+
+        //取消订单方法
+        function order_cancell(id){
+            var params = {id:id};
+            orderOperate('cancell', '取消订单', params);
+        }
+
+        //申请退货方法
+        function order_back(id){
+            var params = {id:id};
+            orderOperate('back', '申请退货', params);
+        }
+
+        //查看物流方法
+        function order_delivery(id){
+            window.location.href = 'http://'+window.location.host + '/home/order/delivery/'+id;
+        }
+
+        //确定收货方法
+        function order_take(id){
+            var params = {id:id};
+            orderOperate('take', '确认收货', params);
+        }
+
+        //生成二维码方法
+        function order_code(id){
+
+        }
+        
+        //订单评论方法
+        function order_comment(id){
+            window.location.href = 'http://'+window.location.host + '/home/order/comment/'+id;
+        }
+
+        //付款方法
+        function order_pay(id){
+            window.location.href = 'http://'+window.location.host + '/home/order/pay/'+id;
+        }
+
+        //按钮点击(订单筛选)
         $(".order_tabs ul li").click(function(){
             $(".order_tabs ul li").removeClass('active');
             $(this).addClass('active');
@@ -140,13 +228,12 @@
         //搜索方法
         function searchOrder(sear) {
             var result = '';
+            params['page'] = 1;// 重置页数，重新获取loadDownFn的数据
             var url = 'http://'+window.location.host + '/home/order/list/data';
             axios.get(url, {params:params}).then(function (res) {
-                var data = res.data.data
-                var arrLen = data.length;
-                if(arrLen > 0){result = joint(data, arrLen);}
+                var data = res.data
+                result = joint(data);
                 $('.order_list').html(result);// 插入数据到页面，放到最后面
-                page = 0;// 重置页数，重新获取loadDownFn的数据
             }).catch(function (err) {
                 console.log(err);
             });
