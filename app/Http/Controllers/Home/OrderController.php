@@ -73,7 +73,8 @@ class OrderController extends Controller
 
 	//查看销售站点页
 	public function site(){
-		return view(config('app.theme').'.home.orderSite');
+		$title = "自提位置";
+		return view(config('app.theme').'.home.orderSite')->with(['title' => $title]);
 	}
 
 	//所有销售站点数据
@@ -83,7 +84,8 @@ class OrderController extends Controller
 
 	//查看订单物流
 	public function showDelivery($order_id){
-		return view(config('app.theme').'.home.orderDelivery');
+		$title = "物流信息";
+		return view(config('app.theme').'.home.orderDelivery')->with(['title' => $title]);
 	}
 
 	//订单评论

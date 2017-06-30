@@ -9,12 +9,15 @@
     @parent
     <script>
     	$(function () {
+    		// 显示选取配送方式弹窗
     		$('.J_show_type').on('click tap', function () {
     			$('.confirm_type').addClass('top-0')
     		})
+    		// 隐藏选取配送方式弹窗
     		$('.J_hide_type').on('click tap', function () {
     			$('.confirm_type').removeClass('top-0')
     		})
+    		// 选取配送方式
     		$('.J_choose_type').on('click tap', function () {
     			var v = $(this).data('delivery')
     			$(this).parents('.confirm_type_container').find('i').removeClass('active')

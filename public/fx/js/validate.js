@@ -190,7 +190,6 @@ const validate = {
 	},
 	detail: ($inp, value) => {
 		if ($.trim(value).length < 5) {
-			console.log(value)
 			$inp.parents('.form_item').addClass('error')
 		} else {
 			$inp.parents('.form_item').removeClass('error')

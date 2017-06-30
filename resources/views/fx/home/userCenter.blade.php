@@ -9,11 +9,14 @@
 	@parent
 	<script>
 	$(function () {
+		// 账号退出
 		$(".J_loginout").on('click tap', function () {
-			ajax('get', '/layout')
-				.then(function (resolve) {
-					prompt.message('退出成功', 'http://' + window.location.host)
-				})
+			prompt.question('是否退出', function () {
+				ajax('get', '/layout')
+					.then(function (resolve) {
+						prompt.message('退出成功', 'http://' + window.location.host)
+					})
+			})
 		})
 	})
 	</script>

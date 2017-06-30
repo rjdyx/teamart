@@ -6,10 +6,17 @@
 	bottom: 0;
 	width: 100%;
 	height: 100%;
-	background-color: rgba(0,0,0,0.4);
 	opacity: 0;
 	z-index: -1;
-	transition: all .5s ease;
+	transition: all .1s ease;
+	.prompt_bg {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0,0,0,0.4);
+	}
 	.prompt_box {
 		position: absolute;
 		top: 50%;
@@ -27,17 +34,41 @@
 			text-align: center;
 			line-height: 2.8rem;
 		}
-		.prompt_box_btn {
-			display: block;
-			width: 100%;
-			height: 1rem;
+		.prompt_box_btns {
 			border-top: 0.01rem solid #dadada;
+			.prompt_box_btn {
+				display: block;
+				width: 50%;
+				height: 1rem;
+				text-align: center;
+				line-height: 1rem;
+			}
+			.prompt_box_btn:last-child {
+				border-left: 0.01rem solid #dadada;
+			}
+			.prompt_box_btn:active {
+				background-color: #fafafa;
+			}
+		}
+	}
+	.prompt_box.message {
+		height: 2rem;
+		.prompt_box_content {
+			height: 2rem;
+			width: 100%;
+			padding: 0.1rem;
 			text-align: center;
-			line-height: 1rem;
+			line-height: 1.8rem;
 		}
-		.prompt_box_btn:active {
-			background-color: #fafafa;
-		}
+	}
+	.image {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		display: block;
+		width: 100%;
+		height: 60%;
+		transform: translate(-50%, -50%);
 	}
 }
 .prompt.active {

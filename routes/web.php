@@ -51,6 +51,7 @@ Route::group(['namespace'=>'Home','prefix'=>'home'],function(){
 		Route::get('/detail/{id}','HelpController@detail');
 	});
 	Route::get('/userinfo','UserController@userInfo');
+	Route::get('/promotion/{type}','IndexController@promotion');
 });
 
 /********************** Home - 须登录模块 (非管理员)  ***************************/
@@ -76,13 +77,15 @@ Route::group(['namespace'=>'Home','prefix'=>'home','middleware'=>['auth']],funct
 	});
 
 	//收藏
+	Route::get('/collect/data','CollectController@ListData');
 	Route::post('/collect/dels','CollectController@dels');
 	Route::resource('/collect','CollectController');
 
 
 	//购物车
+	Route::get('/cart/data','CartController@ListData');
 	Route::post('/cart/dels','CartController@dels');
-
+    
 	Route::resource('/cart','CartController');
 
 

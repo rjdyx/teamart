@@ -88,7 +88,7 @@
                     })
                     .catch(function (err) {
                         prompt.message('请求错误')
-                        me.resetload()
+                        // me.resetload()
                     })
             }
             var dels = [], confirm_params = {}
@@ -98,6 +98,7 @@
                 confirm_params[cid] = camount
             })
             console.log(confirm_params)
+            // 单选
             $('.J_select').on('click tap', function () {
                 if (!$(this).find('a').hasClass('active')) {
                     $(this).find('a').addClass('active')
@@ -117,6 +118,7 @@
                 }
                 console.log(dels)
             })
+            // 全选
             $('.J_select_all').on('click tap', function () {
                 if (!$(this).find('span').hasClass('active')) {
                     $('.J_select')
@@ -135,6 +137,7 @@
                 }
                 console.log(dels)
             })
+            // 删除
             $('.J_dels').on('click tap', function () {
                 if (dels.length == 0) {
                     prompt.message('请选择要删除的商品')
@@ -149,6 +152,7 @@
                         }
                     })
             })
+            // 减少商品数量
             $('.J_minus').on('click tap', function () {
                 var gid = $(this).parents('.cart_warpper').find('.J_select').data('id')
                 if (confirm_params[gid] > 1) {
@@ -159,6 +163,7 @@
                 }
                 console.log(confirm_params)
             })
+            // 增加商品数量
             $('.J_plus').on('click tap', function () {
                 var gid = $(this).parents('.cart_warpper').find('.J_select').data('id')
                 confirm_params[gid] += 1
@@ -209,7 +214,7 @@
             <div class="cart_bottom_selection pull-left J_select_all">
                 <span>全选</span>
             </div>
-            <div class="cart_bottom_info pull-left">合计：<span class="price">&yen{{'￥'.number_format($totals,2)}}</span></div>
+            <div class="cart_bottom_info pull-left">合计：<span class="price">&yen{{number_format($totals,2)}}</span></div>
             <div class="cart_bottom_settle pull-right"><a href="{{url('/home/order/confirm')}}">结算</a></div>
             <div class="cart_bottom_del pull-right J_dels"><a href="javascript:;">删除</a></div>
         </div>
