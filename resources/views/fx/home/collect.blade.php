@@ -63,7 +63,7 @@
 						}
 					})
 			})
-			
+
 	        $('.collect_container').dropload({
 	            scrollArea : $('.collect_container'),
 	            domUp : {
@@ -153,7 +153,7 @@
 			<div class="collect_list">
 				@foreach($lists as $list)
 				<div class="collect_warpper mb-20">
-					<div class="collect_warpper_tit J_select" data-id="{{$list->id}}">
+					<div class="collect_warpper_tit J_select" data-id="{{$list->op_id}}">
 						<a href="javascript:;" class="chayefont">
 							<i class="fa fa-ban"></i>
 							绿茶宝塔镇河妖
@@ -161,14 +161,14 @@
 					</div>
 					<div class="collect_warpper_content clearfix">
 						<div class="collect_warpper_content_img pull-left mr-20">
-							<img src="{{url('')}}/{{ $list->img }}">
+							<img src="{{url('')}}/{{ $list->p_img }}">
 						</div>
 						<div class="collect_warpper_content_info pull-right">
-							<h5 class="chayefont mb-10">{{$list->name}}</h5>
-							<p>{{$list->desc}}</p>
+							<h5 class="chayefont mb-10">{{$list->p_name}}</h5>
+							<p>{{$list->p_desc}}</p>
 							<div class="collect_warpper_content_info_bottom">
-								<span class="pull-left price">&yen;{{$list->price}}</span>
-								<span class="pull-right sell">{{'已售'.$list->sell_amount}}</span>
+								<span class="pull-left price">&yen;{{'￥'.number_format($list->price,2)}}</span>
+								<span class="pull-right sell">{{'已售'.$list->p_sell_amount}}</span>
 							</div>
 						</div>
 					</div>

@@ -11,58 +11,71 @@ use App\Product;
 class CollectController extends Controller
 {
 
-    //ÊÕ²ØÁĞ±íÒ³
+    //æ”¶è—åˆ—è¡¨
     public function index(Request $request) {
         $lists= Order::join('order_product','order.id','=','order_product.order_id')
             ->join('product','order_product.product_id','=','product.id')
-            ->join('product_group','product.group_id','=','product_group.id')
-            ->join('product_img','product_img.group_id','=','product_group.id')
             ->where('type','collect')
             ->where('order.user_id',Auth::user()->id)
+            ->where('order.deleted_at',null)
             ->where('order_product.deleted_at',null)
-            ->select('*', 'order_product.id as id')
-            ->get();
+            ->where('product.deleted_at',null)
+            ->select('product.*', 'order_product.id as op_id','product.desc as p_desc','product.img as p_img','product.price as p_price',
+                     'product.sell_amount as p_sell_amount','product.name as p_name')
+
+            ->paginate(10);
+
+
 //            ->paginate(config('app.paginate10'));
-        $title = 'ÊÕ²Ø¹ÜÀí';
+        $title = 'æ”¶è—ç®¡ç†';
         return view(config('app.theme').'.home.collect')->with(['footer'=>'collect','lists'=>$lists,'title'=>$title]);
     }
-    //ÊÕ²ØÈ¡Ïû
-    public function destory($id){
-       $product_id=$id;
+    //å–æ¶ˆæ”¶è—
+    public function destroy($product_id){
+
 
         $collect_id = Order::join('order_product','order.id','=','order_product.order_id')->
         join('product','order_product.product_id','=','product.id')->
-        where('product.id',$product_id)->
         where('type','collect')->
-        where('order.user_id',Auth::user()->id)->select('*','order_product.id as collect_id')->value('collect_id');
+        where('order.user_id',Auth::user()->id)->
+        where('order_product.deleted_at','=',null)->
+        where('product.id',$product_id)->
+        select('order_product.id as op_id')->value('op_id');
 
         if($this->del($collect_id)){
-//					return Redirect::back()->with('status','É¾³ıÊÕ²Ø³É¹¦');
+
             return 1;
         }else{
-//					return Redirect::back()->withErrors('É¾³ıÊÕ²ØÊ§°Ü');
+
             return 0;
         }
 
-//		return Redirect::back()->withErrors('É¾³ıÊÕ²ØÊ§°Ü');
-        return 0;
+
+
     }
     public function del($id){
         if (OrderProduct::destroy($id)) return true;
         return false;
     }
-    //ÅúÁ¿É¾³ıÊÕ²Ø
+    //æ‰¹é‡å–æ¶ˆæ”¶è—
     public function dels(Request $request)
     {
-        $ids = explode(',', $request->ids);
+        $ids=$request->all();
+
+
         foreach ($ids as $id) {
-            if (!$this->destory($id)) {
+            if (!$this->destroy($id)) {
+                echo $id;
                 return 0;
             }
         }
-        return 0;
+        return 1;
+
     }
-    //Ôö¼ÓÊÕ²Ø
+    public function show(Request $request){
+        return $this->dels($request);
+    }
+    //åŠ å…¥æ”¶è—
     public function create(Request $request){
 		$product_id=$request->id;
 

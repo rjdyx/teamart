@@ -192,7 +192,7 @@
                             <h5 class="chayefont mb-10">{{$list->name}}</h5>
                             <p>{{$list->desc}}</p>
                             <div class="cart_warpper_content_info_bottom">
-                                <span class="pull-left price">{{'￥'.$list->price}}</span>
+                                <span class="pull-left price">{{'￥'.number_format($list->price,2)}}</span>
                                 <div class="cwcib_number pull-right">
                                     <i class="fa fa-minus-circle J_minus"></i>
                                     <span class="sell">&times<span class="amount">{{$list->amount}}</span></span>
@@ -209,7 +209,7 @@
             <div class="cart_bottom_selection pull-left J_select_all">
                 <span>全选</span>
             </div>
-            <div class="cart_bottom_info pull-left">合计：<span class="price">&yen{{$totals}}</span></div>
+            <div class="cart_bottom_info pull-left">合计：<span class="price">&yen{{'￥'.number_format($totals,2)}}</span></div>
             <div class="cart_bottom_settle pull-right"><a href="{{url('/home/order/confirm')}}">结算</a></div>
             <div class="cart_bottom_del pull-right J_dels"><a href="javascript:;">删除</a></div>
         </div>

@@ -88,6 +88,7 @@
                         me.resetload()
                     })
 		}
+
 		$('.J_tabs').on('click', function () {
     		$(this).addClass('active')
     		.siblings().removeClass('active')
@@ -124,7 +125,7 @@
     		}
     	})
     	$('.J_join_cart').on('click tap', function () {
-    		ajax('get', '/home/cart/create/' + params['id'])
+    		ajax('get', '/home/cart/create/' ,{id: params['id']})
     			.then(function (resolve) {
     				if (resolve) {
     					prompt.message('已经加入购物车')
@@ -132,6 +133,70 @@
     					prompt.message('加入失败')
     				}
     			})
+    	})
+    	$('.J_show_productspec').on('click tap', function () {
+    		$('.productspec').addClass('top-0').animate({
+				'opacity': 1},
+				300,
+				function () {
+					$('.productspec_container').addClass('bottom-0')
+				}
+			)
+    	})
+    	$('.J_hide_productspec').on('click tap', function () {
+    		$('.productspec').removeClass('top-0').animate({
+				'opacity': 0},
+				300,
+				function () {
+					$('.productspec_container').removeClass('bottom-0')
+				}
+			)
+    	})
+
+    	$('.J_minus_amount').on('click tap', function () {
+    		var amount = parseInt($(this).siblings('input[name="amount"]').val())
+    		var price = parseInt($(this).parents('.productspec_container').find('#price').val())
+    		if (amount == 1) return;
+    		else {
+    			amount = amount - 1
+    			$(this).siblings('input[name="amount"]').val(amount)
+    			$(this).parents('.productspec_container').find('.sum_price').text((price * amount).toFixed(2))
+    		}
+    	})
+    	$('.J_plus_amount').on('click tap', function () {
+    		var amount = parseInt($(this).siblings('input[name="amount"]').val())
+    		var price = parseFloat($(this).parents('.productspec_container').find('#price').val())
+    		if (amount > 99) return; // ajax请求库存，如果库存不足返回并提示
+    		else {
+    			amount = amount + 1
+    			$(this).siblings('input[name="amount"]').val(amount)
+    			$(this).parents('.productspec_container').find('.sum_price').text((price * amount).toFixed(2))
+    		}
+    	})
+    	$('input[name="amount"]').on('blur', function () {
+    		var amount = parseInt($(this).val())
+    		var price = parseFloat($(this).parents('.productspec_container').find('#price').val())
+    		if (amount > 1) {
+    			$(this).parents('.productspec_container').find('.sum_price').text((price * amount).toFixed(2))
+    		} else {
+    			$(this).val(1)
+    			$(this).parents('.productspec_container').find('.sum_price').text((price * 1).toFixed(2))
+    		}
+    	})
+    	$('.J_choose_spec').on('click tap', function () {
+    		$(this).addClass('active').siblings().removeClass('active')
+
+    		// ajax 写法
+    		// var $this = $(this)
+    		// var specid = $(this).data('specid')
+    		// ajax('get', '/home/product/detail', {id: specid})
+    		// 	.then(function (res) {
+    		// 		$this.addClass('active').siblings().removeClass('active')
+    		// 	})
+    	})
+
+    	$('.J_choose_comment_type').on('click tap', function () {
+    		$(this).addClass('active').siblings().removeClass('active')
     	})
 
     	var tab_offset_top = $('.productdetail_container_tabs').offset().top
@@ -165,7 +230,7 @@
 			<div class="productdetail_container_info">
 				<h1 class="chayefont">{{$content->name}}</h1>
 				<p class="desc mt-10 mb-10">{{$content->desc}}</p>
-				<span class="price">&yen{{sprintf('%.2f', $content->price)}}</span>
+				<span class="price">&yen;{{sprintf('%.2f', $content->price)}}</span>
 				<p class="mt-10 mb-10">价格：<del>{{sprintf('%.2f', $content->raw_price)}}</del></p>
 				<p class="clearfix">
 					<span class="pull-left">快递：<i>{{sprintf('%.2f', $content->delivery_price)}}</i></span>
@@ -202,17 +267,17 @@
 			<div class="productdetail_container_comment hide" data-tab="comment">
 				<!-- 评价区域 -->
 				<ol class="comment_filter clearfix">
-					<li class="pull-left mr-10 mb-10">
+					<li class="pull-left mr-10 mb-10 J_choose_comment_type active">
 						<a href="javascript:;">
 							好评(<span>99</span>)
 						</a>
 					</li>
-					<li class="pull-left mr-10 mb-10">
+					<li class="pull-left mr-10 mb-10 J_choose_comment_type">
 						<a href="javascript:;">
 							好评(<span>99</span>)
 						</a>
 					</li>
-					<li class="pull-left mr-10 mb-10">
+					<li class="pull-left mr-10 mb-10 J_choose_comment_type">
 						<a href="javascript:;">
 							好评(<span>99</span>)
 						</a>
@@ -341,11 +406,63 @@
 				<i class="fa fa-star-o mt-10"></i>
 				<p>收藏</p>
 			</div>
-			<div class="productdetail_bottom_btn pull-left chayefont add_cart J_join_cart">
+			<div class="productdetail_bottom_btn pull-left chayefont add_cart J_show_productspec">
 				加入购物车
 			</div>
 			<div class="productdetail_bottom_btn pull-left chayefont buy_now">
 				立即购买
+			</div>
+		</div>
+	</div>
+	<div class="productspec">
+		<div class="productspec_bg J_hide_productspec"></div>
+		<div class="productspec_container">
+			<div class="productspec_container_info">
+				<div class="productspec_container_info_img pull-left mr-10">
+					<img src="{{url('')}}/{{$imgs[3]->img}}" alt="">
+				</div>
+				<div class="productspec_container_info_content pull-right">
+					<h1 class="mb-10">{{$content->name}}</h1>
+					<p>{{$content->desc}}哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈,哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈</p>
+					<span class="pull-right color-F78223">&yen;<s class="price">{{sprintf('%.2f', $content->price)}}</s></span>
+				</div>
+			</div>
+			<div class="productspec_container_spec">
+				<p>规格：</p>
+				<ul class="clearfix mt-10">
+					@foreach($specs as $spec)
+					<li class="pull-left mr-10 mb-10 J_choose_spec @if($content->id == $spec->id) active @endif" data-specid="{{$spec->id}}">
+						{{-- {{url('/home/product/detail')}}/{{$spec->id}} --}}
+						<a href="javascript:;">{{$spec->name}}</a>
+					</li>
+					@endforeach
+				</ul>
+			</div>
+			<div class="productspec_container_amount">
+				<i class="fa fa-minus-square mr-10 color-d7d7d7 J_minus_amount"></i>
+				<input type="number" autocomplete="off" name="amount" value="1">
+				<i class="fa fa-plus-square ml-10 color-F78223 J_plus_amount"></i>
+			</div>
+			<div class="productspec_container_price">
+				<span class="pull-left color-d7d7d7">合计：</span>
+				<span class="pull-right color-F78223">&yen;<s class="sum_price">{{sprintf('%.2f', $content->price)}}</s></span>
+				<input type="hidden" id="price" value="{{sprintf('%.2f', $content->price)}}">
+			</div>
+			<div class="productspec_container_bottom">
+				<div class="productspec_container_bottom_icon pull-left kefu">
+					<i class="fa fa-headphones mt-10"></i>
+					<p>客服</p>
+				</div>
+				<div class="productspec_container_bottom_icon pull-left favo J_favo">
+					<i class="fa fa-star-o mt-10"></i>
+					<p>收藏</p>
+				</div>
+				<div class="productspec_container_bottom_btn pull-left chayefont add_cart J_join_cart">
+					确定
+				</div>
+				<div class="productspec_container_bottom_btn pull-left chayefont cancel J_hide_productspec">
+					取消
+				</div>
 			</div>
 		</div>
 	</div>

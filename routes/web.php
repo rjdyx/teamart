@@ -12,8 +12,14 @@
 */
 Auth::routes();
 Route::get('/','HomeController@index');//首页
-Route::get('/reset','Auth\ForgotPasswordController@reset');
-Route::post('/reset/checkemail','Auth\ForgotPasswordController@checkemail');
+
+// Route::get('/password/email', 'Auth\ForgotPasswordController@getEmail');
+// Route::post('/password/email', 'Auth\ForgotPasswordController@postEmail');//发送密码重置链接路由
+// Route::get('/password/reset/{token}', 'Auth\ResetPasswordController@getReset');
+// Route::post('/password/reset', 'Auth\ResetPasswordController@postReset');//密码重置路由
+// Route::get('/reset','Auth\ForgotPasswordController@reset');
+// Route::post('/reset/checkemail','Auth\ForgotPasswordController@checkemail');
+
 Route::get('/auth/geetest', 'Auth\AuthController@getGeetest');//极验
 Route::get('admin/login', 'Auth\LoginController@adminLoginCreate');
 Route::post('admin/login', 'Auth\LoginController@adminLogin');
@@ -67,16 +73,17 @@ Route::group(['namespace'=>'Home','prefix'=>'home','middleware'=>['auth']],funct
 	});
 
 	//收藏
+	Route::post('/collect/dels','CollectController@dels');
 	Route::resource('/collect','CollectController');
-	Route::get('/collect/del','CollectController@collectDel');
+
+
+
 
 	//购物车
+	Route::post('/cart/dels','CartController@dels');
 
 	Route::resource('/cart','CartController');
-	Route::get('/cart/add','CartController@addCart');
-	Route::get('/cart/del','CartController@delCart');
-	Route::get('/cart/update','CartController@updateCart');
-	Route::resource('/cart','CartController');
+
 
 	//用户部分
 	

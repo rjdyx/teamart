@@ -1,4 +1,5 @@
-require('expose-loader?$!zepto-webpack')
+// require('expose-loader?$!zepto-webpack')
+require('expose-loader?$!jquery')
 require('expose-loader?axios!axios')
 require('expose-loader?_!lodash')
 
@@ -23,7 +24,6 @@ $(function () {
 			'opacity': 1},
 			300,
 			function () {
-				console.log($(this))
 				$('.header_category').find('ul').addClass('left-0')
 			}
 		)
