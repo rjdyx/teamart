@@ -55,12 +55,50 @@ class OrderController extends Controller
 
 		$datas = $datas->select(
 					'order_product.amount as order_amount',
-					'order_product.price as order_price',
-					'order.serial','order.id as order_id','order.updated_at as order_date',
+					'order_product.price as order_product_price',
+					'order.serial','order.id as order_id','order.updated_at as order_date','order.price as order_price',
+					'order.state as order_state','order.method as order_method','order.type as order_type',
 					'product.*'
 					)
 					->groupBy('order_product.id')
 					->paginate(10);
-		return $datas;
+		$arrs = array();
+		foreach ($datas as $data) {
+			$arrs[$data->order_id][] = $data;
+		}
+
+		return $arrs;
+	}
+
+	//查看订单物流
+	public function showDelivery($order_id){
+		return view(config('app.theme').'.home.orderDelivery');
+	}
+
+	//订单评论
+	public function orderComment($order_id){
+		return view(config('app.theme').'.home.orderComment');
+	}
+
+	//订单state改变方法
+	public function orderOperate($request, $state)
+	{
+		$id = $request->id;
+		$order = Order::find($id);
+		$order->state = $state;
+		if ($order->save()) return 200;
+		return 500;
+	}
+
+	//取消订单
+	public function orderCancell(Request $request)
+	{
+		return $this->orderOperate($request, 'cancell');
+	}
+
+	//申请退货
+	public function orderBack(Request $request)
+	{
+		return $this->orderOperate($request, 'backn');
 	}
 }

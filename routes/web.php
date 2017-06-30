@@ -59,6 +59,11 @@ Route::group(['namespace'=>'Home','prefix'=>'home','middleware'=>['auth']],funct
 		Route::get('/detail/{id}','OrderController@detail');
     	Route::get('/confirm','OrderController@confirm');
     	Route::get('/list/data','OrderController@orderListData');
+    	Route::get('/cancell','OrderController@orderCancell');//取消订单
+    	Route::get('/back','OrderController@orderBack');//退货
+    	Route::get('/delivery/{order_id}','OrderController@showDelivery');//物流信息
+    	Route::get('/comment/{order_id}','OrderController@orderComment');//评论
+    	Route::get('/pay/{order_id}','OrderController@orderPay');//付款
 	});
 
 	//收藏
