@@ -26,7 +26,7 @@
 	<div class="container usercenter">
 		<div class="usercenter_info">
 			<div class="usercenter_avatar">
-				<img src="{{url('')}}/ @if(Auth::user()){{Auth::user()->img}} @endif" alt="">
+				<img src="{{url('')}}/@if(Auth::user()){{Auth::user()->img}} @endif" alt="">
 			</div>
 			<p class="usercenter_name chayefont">@if(Auth::user()){{Auth::user()->name}} @endif</p>
 			<ul class="usercenter_list">

@@ -16,8 +16,8 @@ return [
     'paginate5' => 5,
     'paginate10' => 10,
     'paginate15' => 15,
-    'thumb_width' => 50,
-    'thumb_height' => 50,
+    'thumb_width' => 100,
+    'thumb_height' => 100,
     'image_path' => 'upload/',
     /*
     |--------------------------------------------------------------------------

@@ -16,7 +16,7 @@
     <div class="userassets">
     	<div class="userassets_info">
 			<div class="userassets_avatar">
-				<img src="{{url('')}}/ @if(Auth::user()){{Auth::user()->img}} @endif" alt="">
+				<img src="{{url('')}}/@if(Auth::user()){{Auth::user()->img}} @endif" alt="">
 			</div>
 			<p class="userassets_name chayefont">@if(Auth::user()){{Auth::user()->name}} @endif</p>
 			<p class="userassets_name chayefont fz-18">推荐人：@if(Auth::user()){{Auth::user()->name}} @endif</p>

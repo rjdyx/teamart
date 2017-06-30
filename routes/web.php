@@ -41,7 +41,8 @@ Route::group(['namespace'=>'Home','prefix'=>'home'],function(){
 		Route::get('/brand','ProductController@productBrand');//商品品牌数据接口
 		Route::get('/category','ProductController@productCategory');//商品分类数据接口
 		Route::get('/detail/{id}','ProductController@detail');
-		Route::get('/comment','ProductController@productComment');
+		Route::get('/comment/{product_id}','ProductController@productComment');
+		Route::get('/detail/addcart/{product_id}','ProductController@productAddCartData');
 	});
 
 	// 帮助中心列表、详情

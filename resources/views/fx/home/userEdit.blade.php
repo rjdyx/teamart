@@ -101,12 +101,12 @@
 	<div class="useredit">
 		<div class="useredit_info mb-10">
 			<label for="img" class="block useredit_avatar">
-				<img id="avatar" src="{{url('fx/images/usercenter_avatar.png')}}">
+				<img id="avatar" src="{{url('')}}/{{Auth::user()->img}}">
 			</label>
 			<p class="useredit_name chayefont">{{Auth::user()->name}}</p>
 			@if(Auth::user()->type==2)<p class="useredit_name chayefont fz-18">推荐人：@if($data->pname){{$data->pname}}@else 无 @endif</p>@endif
 		</div>
-		<form action="{{url('home/user')}}/{{$data->id}}" id="form">
+		<form action="{{url('home/user')}}/{{$data->id}}" id="form" enctype="multipart/form-data">
 			<div class="form_item chayefont">
 				<label for="realname">姓名</label>
 				<input type="text" name="realname" id="realname" class="chayefont" autocomplete="off" placeholder="请输入姓名" value="{{$data->realname}}">

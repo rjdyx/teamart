@@ -13,7 +13,7 @@
     <script>
     $(function(){
 		var page = 0;//分页
-		var params = {id:'',page:0};//定义全局对象
+		var params = {id:'', page:0, grade:''};//定义全局对象
 		params['id'] = {{ $content->id }};
 
 		$('.productdetail_container_comment').dropload({
@@ -46,47 +46,68 @@
 				page++;
 				params['page'] = page;
 			}
-			ajax('get', '/home/product/comment', {page: page}, false, false, false)
-                    .then(function (res) {
-                        var template = ''
-                        if (res.length > 0) {
-                            res.forEach(function (v) {
-                                template += `
-                                    <li class="clearfix">
-										<div class="comment_list_avatar pull-left">
-											<img src="{{url('/fx/images/usercenter_avatar.png')}}" alt="">
-											<span>哈哈哈哈</span>
-										</div>
-										<div class="comment_list_content pull-right">
-											<p class="stars">
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-											</p>
-											<p class="fz-12 mt-10 mb-10">哈哈哈哈哈哈哈哈哈哈哈哈,哈哈哈哈哈哈哈哈哈哈哈哈,哈哈哈哈哈哈哈哈,哈哈哈哈哈哈哈哈</p>
-											<div class="comment_list_content_img clearfix">
-												<img class="pull-left mr-10" src="{{url('/fx/images/user_info_bg.png')}}" alt="">
-												<img class="pull-left mr-10" src="{{url('/fx/images/user_info_bg.png')}}" alt="">
-												<img class="pull-left mr-10" src="{{url('/fx/images/user_info_bg.png')}}" alt="">
-											</div>
-											<p class="txt-r mt-10">0000年00月00日 00:00</p>
-										</div>
-									</li>
-                                `
-                            })
-                        } else {
-                            me.lock();
-                            me.noData();
-                        }
-                        $('.comment_list').append(template);
-                        me.resetload();
-                    })
-                    .catch(function (err) {
-                        prompt.message('请求错误')
-                        me.resetload()
-                    })
+			ajax('get', '/home/product/comment/'+params['id'], {page: page}, false, false, false)
+                .then(function (res) {
+                	var template = '';
+                    if (res.length > 0) {
+                    	template = listData(res);
+                    } else {
+                        me.lock();
+                        me.noData();
+                    }
+                    $('.comment_list').append(template);
+                    me.resetload();
+                })
+                .catch(function (err) {
+                    prompt.message('请求错误')
+                });
+		}
+
+		function listData(res){
+			var template = '';
+            res.forEach(function (data) {
+                template += '<li class="clearfix">'+'<div class="comment_list_avatar pull-left">'+
+					'<img src="'+'http://'+window.location.host+'/'+data['user_img']+'" alt="">'+
+					'<span>'+data['user_name']+'</span>'+'</div>'+
+					'<div class="comment_list_content pull-right">'+ '<p class="stars">';
+					//评论星星
+					for (var i=0;i<=data['grade']/20;i++)
+					{
+						template += '<i class="fa fa-star"></i>';
+					}
+				template += '</p>'+ '<p class="fz-12">'+data['content']+'</p>'+
+					'<div class="comment_list_content_img clearfix">';
+				//评论图片
+				if (data['img']) {
+					for(var j=0;j<data['img'].length;j++) {
+						template += '<img class="pull-left mr-10" src="'+'http://'+window.location.host+'/'+data['thumb']+'" alt="">';
+					}
+				}
+				template += '</div>';
+				//评论回复
+				if (data['replys']) {
+					for(var j=0;j<data['replys'].length;j++) {
+						template += '<p class="fz-12">' + data['replys'][j]['aname'] +'<b>回复</b>'+ data['replys'][j]['bname']+'['+data['replys'][j]['created_at']+']:</p>'+ 
+							'<p class="fz-12">'+data['replys'][j]['content']+'</p>';					
+					}
+				}	
+				template += '<p class="txt-r mt-10">'+data['created_at']+'</p>'+'</div>'+'</li>';
+            });
+            return template;
+		}
+
+		function searchComment() {
+			params['page'] = 1;
+			ajax('get', '/home/product/comment/'+params['id'], params, false, false, false)
+                .then(function (res) {
+                	var template = ''
+                    if (res.length > 0) {
+                    	template = listData(res);
+                    }
+                    $('.comment_list').html(template);
+                }).catch(function (err) {
+                	console.log(err)
+                });
 		}
 
 		$('.J_tabs').on('click', function () {
@@ -125,7 +146,10 @@
     		}
     	})
     	$('.J_join_cart').on('click tap', function () {
-    		ajax('get', '/home/cart/create/' ,{id: params['id']})
+    		var sid = $(".J_choose_spec[class='active']").attr('pid');
+    		var num = $('.productspec_container_amount input').val();
+    		var params = {id:sid, amount:num};
+    		ajax('post', '/home/cart/create', params)
     			.then(function (resolve) {
     				if (resolve) {
     					prompt.message('已经加入购物车')
@@ -134,15 +158,45 @@
     				}
     			})
     	})
+
+    	//点击加入购物车
     	$('.J_show_productspec').on('click tap', function () {
-    		$('.productspec').addClass('top-0').animate({
-				'opacity': 1},
-				300,
-				function () {
-					$('.productspec_container').addClass('bottom-0')
-				}
-			)
+			ajax('get', '/home/product/detail/addcart/' + params['id'])
+    			.then(function (resolve) {
+    				if (resolve) {
+    					var v = resolve['content'];
+    					var specs = resolve['specs'];
+    					var template = '';
+    					addCartProductData(v);
+						specs.forEach(function (data) {
+    						template += '<li class="pull-left mr-10 mb-10 J_choose_spec ';  
+    						if (v['spec_id'] == data['id']) {
+    							template += 'active';
+    						}
+    						template += '" pid='+data['id']+'><a href="javascript:;">'+data['name']+'</a></li>';
+    					});	
+						$('.addcart-specs').html(template);
+						//打开加入购物车弹窗
+						$('.productspec').addClass('top-0').animate({
+							'opacity': 1},100,function () {
+							$('.productspec_container').addClass('bottom-0')
+						})
+    				} else {
+    					prompt.message('服务器繁忙！稍后再试！')
+    				}
+    			})
     	})
+
+    	//加入购物车 设置商品参数
+    	function addCartProductData(v) {
+    		$(".productspec_container_info_img img").attr('src','http://'+window.location.host+'/'+v['thumb']);
+    		$(".productspec_container_info_content h1").html(v['name']);
+    		$(".productspec_container_info_content p").html(v['desc']);
+    		$(".productspec_container_info_content span").html('&yen;'+v['price']);
+    		$(".sum_price").html(v['price']);
+    		$("#price").val(v['price']);
+    	}
+
     	$('.J_hide_productspec').on('click tap', function () {
     		$('.productspec').removeClass('top-0').animate({
 				'opacity': 0},
@@ -183,20 +237,27 @@
     			$(this).parents('.productspec_container').find('.sum_price').text((price * 1).toFixed(2))
     		}
     	})
-    	$('.J_choose_spec').on('click tap', function () {
-    		$(this).addClass('active').siblings().removeClass('active')
 
+    	$('.addcart-specs').on('click tap', '.J_choose_spec',function () {
     		// ajax 写法
-    		// var $this = $(this)
-    		// var specid = $(this).data('specid')
-    		// ajax('get', '/home/product/detail', {id: specid})
-    		// 	.then(function (res) {
-    		// 		$this.addClass('active').siblings().removeClass('active')
-    		// 	})
+    		var $this = $(this)
+    		var id = $(this).attr('pid');
+    		ajax('get', '/home/product/detail/addcart/'+ id)
+    			.then(function (res) {
+    				if (res){
+    					var v = res['content'];
+    					addCartProductData(v);
+    					$this.addClass('active').siblings().removeClass('active')
+    				} else {
+    					prompt.message('服务器繁忙！稍后再试！')
+    				}
+    			})
     	})
 
     	$('.J_choose_comment_type').on('click tap', function () {
     		$(this).addClass('active').siblings().removeClass('active')
+    		params['grade'] = $(this).attr('type');
+    		searchComment();
     	})
 
     	var tab_offset_top = $('.productdetail_container_tabs').offset().top
@@ -239,11 +300,11 @@
 				<div class="productdetail_container_info_spec">
 					<span>规格：</span>
 					<ul class="clearfix">
-						@foreach($specs as $spec)
-						<li class="pull-left mr-10 mb-10">
-							<a href="{{url('/home/product/detail')}}/{{$spec->id}}" @if($content->id == $spec->id) class="active" @endif >{{$spec->name}}</a>
+					@foreach($specs as $spec)
+						<li class="pull-left mr-10 mb-10 J_choose_spec" >
+							<a href="{{url('/home/product/detail')}}/{{$spec->id}}" @if($content->id == $spec->id)class="active"  @endif>{{$spec->name}}</a>
 						</li>
-						@endforeach
+					@endforeach
 					</ul>
 				</div>
 			</div>
@@ -267,24 +328,29 @@
 			<div class="productdetail_container_comment hide" data-tab="comment">
 				<!-- 评价区域 -->
 				<ol class="comment_filter clearfix">
-					<li class="pull-left mr-10 mb-10 J_choose_comment_type active">
+					<li class="pull-left mr-10 mb-10 J_choose_comment_type active" type="A">
 						<a href="javascript:;">
-							好评(<span>99</span>)
+							好评(<span>{{$commentA}}</span>)
 						</a>
 					</li>
-					<li class="pull-left mr-10 mb-10 J_choose_comment_type">
+					<li class="pull-left mr-10 mb-10 J_choose_comment_type" type="B">
 						<a href="javascript:;">
-							好评(<span>99</span>)
+							中评(<span>{{$commentB}}</span>)
 						</a>
 					</li>
-					<li class="pull-left mr-10 mb-10 J_choose_comment_type">
+					<li class="pull-left mr-10 mb-10 J_choose_comment_type" type="C">
 						<a href="javascript:;">
-							好评(<span>99</span>)
+							差评(<span>{{$commentC}}</span>)
+						</a>
+					</li>
+					<li class="pull-left mr-10 mb-10 J_choose_comment_type" type="Img">
+						<a href="javascript:;">
+							有图片(<span>{{$commentImg}}</span>)
 						</a>
 					</li>
 				</ol>
 				<ul class="comment_list">
-					<li class="clearfix">
+<!-- 					<li class="clearfix">
 						<div class="comment_list_avatar pull-left">
 							<img src="{{url('/fx/images/usercenter_avatar.png')}}" alt="">
 							<span>哈哈哈哈</span>
@@ -303,97 +369,11 @@
 								<img class="pull-left mr-10" src="{{url('/fx/images/user_info_bg.png')}}" alt="">
 								<img class="pull-left mr-10" src="{{url('/fx/images/user_info_bg.png')}}" alt="">
 							</div>
+							<p class="fz-12">答案地方 <b>回复</b> 打撒 [2018-10-12 12:23:34] ：</p>
+							<p class="fz-12">水电费撒的发生发顺丰.....</p>
 							<p class="txt-r mt-10">0000年00月00日 00:00</p>
 						</div>
-					</li>
-					<li class="clearfix">
-						<div class="comment_list_avatar pull-left">
-							<img src="{{url('/fx/images/usercenter_avatar.png')}}" alt="">
-							<span>哈哈哈哈</span>
-						</div>
-						<div class="comment_list_content pull-right">
-							<p class="stars">
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-							</p>
-							<p class="fz-12 mt-10 mb-10">哈哈哈哈哈哈哈哈哈哈哈哈,哈哈哈哈哈哈哈哈哈哈哈哈,哈哈哈哈哈哈哈哈,哈哈哈哈哈哈哈哈</p>
-							<div class="comment_list_content_img clearfix">
-								<img class="pull-left mr-10" src="{{url('/fx/images/user_info_bg.png')}}" alt="">
-								<img class="pull-left mr-10" src="{{url('/fx/images/user_info_bg.png')}}" alt="">
-								<img class="pull-left mr-10" src="{{url('/fx/images/user_info_bg.png')}}" alt="">
-							</div>
-							<p class="txt-r mt-10">0000年00月00日 00:00</p>
-						</div>
-					</li>
-					<li class="clearfix">
-						<div class="comment_list_avatar pull-left">
-							<img src="{{url('/fx/images/usercenter_avatar.png')}}" alt="">
-							<span>哈哈哈哈</span>
-						</div>
-						<div class="comment_list_content pull-right">
-							<p class="stars">
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-							</p>
-							<p class="fz-12">哈哈哈哈哈哈哈哈哈哈哈哈,哈哈哈</p>
-							<div class="comment_list_content_img clearfix">
-								<img class="pull-left mr-10" src="{{url('/fx/images/user_info_bg.png')}}" alt="">
-								<img class="pull-left mr-10" src="{{url('/fx/images/user_info_bg.png')}}" alt="">
-								<img class="pull-left mr-10" src="{{url('/fx/images/user_info_bg.png')}}" alt="">
-							</div>
-							<p class="txt-r mt-10">0000年00月00日 00:00</p>
-						</div>
-					</li>
-					<li class="clearfix">
-						<div class="comment_list_avatar pull-left">
-							<img src="{{url('/fx/images/usercenter_avatar.png')}}" alt="">
-							<span>哈哈哈哈</span>
-						</div>
-						<div class="comment_list_content pull-right">
-							<p class="stars">
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-							</p>
-							<p class="fz-12">哈哈哈哈哈哈哈哈哈哈哈哈,哈哈哈哈哈哈哈哈</p>
-							<div class="comment_list_content_img clearfix">
-								<img class="pull-left mr-10" src="{{url('/fx/images/user_info_bg.png')}}" alt="">
-								<img class="pull-left mr-10" src="{{url('/fx/images/user_info_bg.png')}}" alt="">
-								<img class="pull-left mr-10" src="{{url('/fx/images/user_info_bg.png')}}" alt="">
-							</div>
-							<p class="txt-r mt-10">0000年00月00日 00:00</p>
-						</div>
-					</li>
-					<li class="clearfix">
-						<div class="comment_list_avatar pull-left">
-							<img src="{{url('/fx/images/usercenter_avatar.png')}}" alt="">
-							<span>哈哈哈哈</span>
-						</div>
-						<div class="comment_list_content pull-right">
-							<p class="stars">
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-							</p>
-							<p class="fz-12">哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈</p>
-							<div class="comment_list_content_img clearfix">
-								<img class="pull-left mr-10" src="{{url('/fx/images/user_info_bg.png')}}" alt="">
-								<img class="pull-left mr-10" src="{{url('/fx/images/user_info_bg.png')}}" alt="">
-								<img class="pull-left mr-10" src="{{url('/fx/images/user_info_bg.png')}}" alt="">
-							</div>
-							<p class="txt-r mt-10">0000年00月00日 00:00</p>
-						</div>
-					</li>
+					</li> -->
 				</ul>
 			</div>
 		</div>
@@ -414,28 +394,24 @@
 			</div>
 		</div>
 	</div>
+
 	<div class="productspec">
 		<div class="productspec_bg J_hide_productspec"></div>
 		<div class="productspec_container">
 			<div class="productspec_container_info">
 				<div class="productspec_container_info_img pull-left mr-10">
-					<img src="{{url('')}}/{{$imgs[3]->img}}" alt="">
+					<img src="" alt="">
 				</div>
 				<div class="productspec_container_info_content pull-right">
-					<h1 class="mb-10">{{$content->name}}</h1>
-					<p>{{$content->desc}}哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈,哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈</p>
-					<span class="pull-right color-F78223">&yen;<s class="price">{{sprintf('%.2f', $content->price)}}</s></span>
+					<h1 class="mb-10">商品名称</h1>
+					<p>商品描述</p>
+					<span class="pull-right color-F78223">&yen;<s class="price">价格</s></span>
 				</div>
 			</div>
 			<div class="productspec_container_spec">
 				<p>规格：</p>
-				<ul class="clearfix mt-10">
-					@foreach($specs as $spec)
-					<li class="pull-left mr-10 mb-10 J_choose_spec @if($content->id == $spec->id) active @endif" data-specid="{{$spec->id}}">
-						{{-- {{url('/home/product/detail')}}/{{$spec->id}} --}}
-						<a href="javascript:;">{{$spec->name}}</a>
-					</li>
-					@endforeach
+				<ul class="clearfix mt-10 addcart-specs">
+
 				</ul>
 			</div>
 			<div class="productspec_container_amount">
@@ -445,8 +421,8 @@
 			</div>
 			<div class="productspec_container_price">
 				<span class="pull-left color-d7d7d7">合计：</span>
-				<span class="pull-right color-F78223">&yen;<s class="sum_price">{{sprintf('%.2f', $content->price)}}</s></span>
-				<input type="hidden" id="price" value="{{sprintf('%.2f', $content->price)}}">
+				<span class="pull-right color-F78223">&yen;<s class="sum_price"> 总价格 </s></span>
+				<input type="hidden" id="price" value="0">
 			</div>
 			<div class="productspec_container_bottom">
 				<div class="productspec_container_bottom_icon pull-left kefu">
