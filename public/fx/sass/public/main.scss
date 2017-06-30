@@ -1728,6 +1728,11 @@
 							color: #3b3b3b;
 							border-radius: 0.05rem;
 						}
+						a.active {
+							border: 0.01rem solid #F78223;
+							color: #F78223;
+							padding: 0.08rem;
+						}
 					}
 				}
 			}
@@ -1795,6 +1800,13 @@
 					}
 					a:active {
 						background-color: #aaaaaa;
+					}
+				}
+				li.active {
+					a {
+						border: 0.01rem solid #F78223;
+						color: #F78223;
+						padding: 0.08rem;
 					}
 				}
 			}
@@ -2091,6 +2103,202 @@
 			text-align: center;
 			color: #fff;
 			@include  backgroundImages("/fx/images/footer_bg.png", cover)
+		}
+	}
+}
+
+// 加入购物车之前规格选择
+.productspec {
+	position: fixed;
+	top: 100%;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 1002;
+	.productspec_bg {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0,0,0,0.5);
+	}
+	.productspec_container {
+		position: absolute;
+		left: 0;
+		bottom: -7rem;
+		width: 100%;
+		height: 7rem;
+		background-color: #FFF;
+		transition: all 0.1s ease;
+		.productspec_container_info {
+			width: 100%;
+			height: 2rem;
+			padding: 0.2rem;
+			.productspec_container_info_img {
+				width: 40%;
+				height: 100%;
+				overflow: hidden;
+				img {
+					display: block;
+					height: 100%;
+				}
+			}
+			.productspec_container_info_content {
+				width: calc(60% - 0.1rem);
+				p {
+					overflow : hidden;
+					text-overflow: ellipsis;
+					display: -webkit-box;
+					-webkit-line-clamp: 3;
+					-webkit-box-orient: vertical;
+				}
+				@media screen and (max-width:321px){
+					h1 {
+						font-size: 14px;
+					}
+					p {
+						font-size: 12px;
+					}
+				}
+				@media screen and (min-width:321px) and (max-width:400px){
+					h1 {
+						font-size: 16px;
+					}
+					p {
+						font-size: 14px;
+					}
+				}
+				@media screen and (min-width:400px){
+					h1 {
+						font-size: 18px;
+					}
+					p {
+						font-size: 16px;
+					}
+				}
+			}
+		}
+		.productspec_container_spec {
+			width: 100%;
+			height: 2rem;
+			padding: 0 0.2rem;
+			p {
+				height: 0.5rem;
+				line-height: 0.5rem;
+			}
+			ul {
+				width: 100%;
+				height: 1.5rem;
+				overflow: auto;
+				li {
+					a {
+						display: block;
+						padding: 0.1rem;
+						background-color: #d7d7d7;
+						color: #3b3b3b;
+						border-radius: 0.05rem;
+					}
+				}
+				li.active {
+					a {
+						border: 0.01rem solid #F78223;
+						color: #F78223;
+						padding: 0.08rem;
+					}
+				}
+			}
+			@media screen and (max-width:321px){
+				p {
+					font-size: 12px;
+				}
+			}
+			@media screen and (min-width:321px) and (max-width:400px){
+				p {
+					font-size: 14px;
+				}
+			}
+			@media screen and (min-width:400px){
+				p {
+					font-size: 16px;
+				}
+			}
+		}
+		.productspec_container_amount {
+			width: 100%;
+			height: 1.3rem;
+			padding: 0.2rem 0.2rem 0;
+			text-align: center;
+			line-height: 1.1rem;
+			i {
+				display: inline-block;
+				width: 0.5rem;
+				height: 0.5rem;
+				vertical-align: middle;
+				line-height: 0.5rem;
+			}
+			input {
+				width: 0.8rem;
+				height: 0.5rem;
+				text-align: center;
+			}
+			@media screen and (max-width:321px){
+				i {
+					font-size: 16px;
+				}
+			}
+			@media screen and (min-width:321px) and (max-width:400px){
+				i {
+					font-size: 18px;
+				}
+			}
+			@media screen and (min-width:400px){
+				i {
+					font-size: 20px;
+				}
+			}
+		}
+		.productspec_container_price {
+			width: 100%;
+			height: 0.7rem;
+			padding: 0 0.2rem;
+			line-height: 0.5rem;
+		}
+		.productspec_container_bottom {
+			position: absolute;
+			bottom: 0;
+			left: 0; 
+			width: 100%;
+			height: 1rem;
+			text-align: center;
+			@include  backgroundImages("/fx/images/footer_bg.png", cover)
+			.productspec_container_bottom_icon {
+				width: 20%;
+				height: 1rem;
+				color: #717171;
+				line-height: 0.4rem;
+				font-size: 16px;
+			}
+			.productspec_container_bottom_btn {
+				width: 30%;
+				height: 1rem;
+				line-height: 1rem;
+				color: #fff;
+				font-size: 18px;
+			}
+			.kefu {
+				background-color: rgba(246,247,249,0.6);
+				border-right: 0.01rem solid #D4D3CE;
+			}
+			.favo {
+				background-color: rgba(246,247,249,0.6);
+			}
+			.add_cart {
+				background-color: rgba(222,216,204,0.7);
+			}
+			.cancel {
+				background-color: rgba(179,166,139,0.5);
+			}
 		}
 	}
 }
