@@ -9,4 +9,9 @@ use Illuminate\Support\Facades\Auth;
 class IndexController extends Controller
 {
     //
+    public function promotion($type)
+    {
+    	$title = "活动商品";
+        return view(config('app.theme').'.home.promotion')->with(['title' => $title]);
+    }
 }

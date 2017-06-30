@@ -50,6 +50,7 @@ Route::group(['namespace'=>'Home','prefix'=>'home'],function(){
 		Route::get('/detail/{id}','HelpController@detail');
 	});
 	Route::get('/userinfo','UserController@userInfo');
+	Route::get('/promotion/{type}','IndexController@promotion');
 });
 
 /********************** Home - 须登录模块 (非管理员)  ***************************/

@@ -12,6 +12,7 @@
     <script>
 		$(function () {
 			var dels = []
+			// 单个选择
 			$('.J_select').on('click tap', function () {
 				if (!$(this).find('a').hasClass('active')) {
 					$(this).find('a').addClass('active')
@@ -31,6 +32,7 @@
 				}
 				console.log(dels)
 			})
+			// 全选
 			$('.J_select_all').on('click tap', function () {
 				if (!$(this).find('span').hasClass('active')) {
 					$('.J_select')
@@ -49,21 +51,26 @@
 				}
 				console.log(dels)
 			})
+			// 删除商品
 			$('.J_dels').on('click tap', function () {
 				if (dels.length == 0) {
                     prompt.message('请选择要删除的商品')
                     return
-                }
-				ajax('post', '/home/collect/dels', dels)
-					.then(function (res) {
-						if (res) {
-							prompt.message('删除成功')
-						} else {
-							prompt.message('删除失败')
-						}
+                } else {
+                	prompt.question('是否删除所选商品', function () {
+						ajax('post', '/home/collect/dels', dels)
+							.then(function (res) {
+								if (res) {
+									prompt.message('删除成功')
+								} else {
+									prompt.message('删除失败')
+								}
+							})
 					})
+                }
 			})
 
+			// 加载
 	        $('.collect_container').dropload({
 	            scrollArea : $('.collect_container'),
 	            domUp : {
@@ -167,7 +174,7 @@
 							<h5 class="chayefont mb-10">{{$list->p_name}}</h5>
 							<p>{{$list->p_desc}}</p>
 							<div class="collect_warpper_content_info_bottom">
-								<span class="pull-left price">&yen;{{'￥'.number_format($list->price,2)}}</span>
+								<span class="pull-left price">&yen;{{number_format($list->price,2)}}</span>
 								<span class="pull-right sell">{{'已售'.$list->p_sell_amount}}</span>
 							</div>
 						</div>

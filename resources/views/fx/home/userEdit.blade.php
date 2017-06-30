@@ -26,10 +26,12 @@
 				},200);
 			});
 
-			$('.gender').on('click tap', function () {
+			// 选择性别
+			$('.J_gender').on('click tap', function () {
 				$(this).addClass('active').siblings().removeClass('active')
 			})
 
+			// 上传图片改变时
 			$('#img').on('change', function () {
 				var file = $(this)[0].files[0]
 				if (file.size / 1024 > 200) {
@@ -114,8 +116,8 @@
 			<div class="form_item chayefont">
 				<label for="gender">性别</label>
 				<div class="pull-right">
-					<label class="pull-left mr-20 gray gender @if($data->gender == 0) active @endif" for="male">男</label>
-					<label class="pull-left gray gender @if($data->gender == 1) active @endif" for="female">女</label>
+					<label class="pull-left mr-20 gray J_gender @if($data->gender == 0) active @endif" for="male">男</label>
+					<label class="pull-left gray J_gender @if($data->gender == 1) active @endif" for="female">女</label>
 				</div>
 				<input type="radio" name="gender" class="invisibility" id="male" value="0" @if($data->gender == 0) checked @endif>
 				<input type="radio" name="gender" class="invisibility" id="female" value="1" @if($data->gender == 1) checked @endif>

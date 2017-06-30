@@ -89,6 +89,7 @@
                     })
 		}
 
+		// 切换
 		$('.J_tabs').on('click', function () {
     		$(this).addClass('active')
     		.siblings().removeClass('active')
@@ -100,6 +101,7 @@
     			}
     		})
     	});
+    	// 收藏
     	$('.J_favo').on('click tap', function () {
     		var $this = $(this)
     		if ($this.find('i').hasClass('fa-star-o')) {
@@ -124,6 +126,7 @@
 	    			})
     		}
     	})
+    	// 加入购物车
     	$('.J_join_cart').on('click tap', function () {
     		ajax('get', '/home/cart/create/' ,{id: params['id']})
     			.then(function (resolve) {
@@ -134,6 +137,7 @@
     				}
     			})
     	})
+    	// 显示产品规格弹窗
     	$('.J_show_productspec').on('click tap', function () {
     		$('.productspec').addClass('top-0').animate({
 				'opacity': 1},
@@ -143,6 +147,7 @@
 				}
 			)
     	})
+    	// 隐藏产品规格弹窗
     	$('.J_hide_productspec').on('click tap', function () {
     		$('.productspec').removeClass('top-0').animate({
 				'opacity': 0},
@@ -153,6 +158,7 @@
 			)
     	})
 
+    	// 减少数量
     	$('.J_minus_amount').on('click tap', function () {
     		var amount = parseInt($(this).siblings('input[name="amount"]').val())
     		var price = parseInt($(this).parents('.productspec_container').find('#price').val())
@@ -163,6 +169,7 @@
     			$(this).parents('.productspec_container').find('.sum_price').text((price * amount).toFixed(2))
     		}
     	})
+    	// 增加数量
     	$('.J_plus_amount').on('click tap', function () {
     		var amount = parseInt($(this).siblings('input[name="amount"]').val())
     		var price = parseFloat($(this).parents('.productspec_container').find('#price').val())
@@ -183,6 +190,7 @@
     			$(this).parents('.productspec_container').find('.sum_price').text((price * 1).toFixed(2))
     		}
     	})
+    	// 选择规格
     	$('.J_choose_spec').on('click tap', function () {
     		$(this).addClass('active').siblings().removeClass('active')
 
@@ -195,11 +203,13 @@
     		// 	})
     	})
 
+    	// 选择评论类型
     	$('.J_choose_comment_type').on('click tap', function () {
     		$(this).addClass('active').siblings().removeClass('active')
     	})
 
     	var tab_offset_top = $('.productdetail_container_tabs').offset().top
+    	// 页面滚动
     	$('.J_scroll').scroll(function () {
     		if ($(this).scrollTop() > tab_offset_top - $('header').height()) {
     			$('.productdetail_container_tabs').addClass('fixed')
