@@ -22,7 +22,8 @@ class CartController extends Controller
 			->where('order_product.deleted_at',null)
 			->where('product.deleted_at',null)
 			->where('order.deleted_at',null)
-			->paginate(10);
+			->paginate(5);
+
 		$totals= Order::where('type','cart')
 			->where('order.user_id',Auth::user()->id)
 			->value('price');
@@ -159,5 +160,21 @@ class CartController extends Controller
 
 	}
 
+ public function  listData(Request $request){
+	 $lists= Order::join('order_product','order.id','=','order_product.order_id')
+		 ->join('product','order_product.product_id','=','product.id')
+		 ->where('type','cart')
+		 ->where('order.user_id',Auth::user()->id)
+		 ->where('order_product.deleted_at',null)
+		 ->where('product.deleted_at',null)
+		 ->where('order.deleted_at',null)
+		 ->paginate(5);
 
+	 $totals= Order::where('type','cart')
+		 ->where('order.user_id',Auth::user()->id)
+		 ->value('price');
+	 $title = '购物车';
+	 $footer = 'cart';
+	 return view(config('app.theme').'.home.cart')->with(['lists'=>$lists,'title'=>$title,'footer'=>$footer,'totals'=>$totals]);
+ }
 }

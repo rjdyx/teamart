@@ -47,7 +47,6 @@
 					getListData(me,'up');
 				},
 				loadDownFn : function(me){
-					console.log(1)
 					getListData(me,'down');
 				},
 				threshold : 50
@@ -187,7 +186,7 @@
 					}
 	            }).catch(function (err) {
 	                console.log(err)
-					me.resetload();// 即使加载出错，也得重置
+					// me.resetload();// 即使加载出错，也得重置
 	            });
 			}
 
@@ -270,6 +269,7 @@
 						}
 					}
 					$('.product_list').html(result);
+
 	            }).catch(function (err) {
 	                console.log(err)
 	            });

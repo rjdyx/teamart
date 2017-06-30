@@ -209,7 +209,7 @@
             <div class="cart_bottom_selection pull-left J_select_all">
                 <span>全选</span>
             </div>
-            <div class="cart_bottom_info pull-left">合计：<span class="price">&yen{{'￥'.number_format($totals,2)}}</span></div>
+            <div class="cart_bottom_info pull-left">合计：<span class="price">&yen{{number_format($totals,2)}}</span></div>
             <div class="cart_bottom_settle pull-right"><a href="{{url('/home/order/confirm')}}">结算</a></div>
             <div class="cart_bottom_del pull-right J_dels"><a href="javascript:;">删除</a></div>
         </div>
