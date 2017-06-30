@@ -20,7 +20,7 @@ class ForgotPasswordController extends Controller
     |
     */
 
-    use SendsPasswordResetEmails;
+    use SendsPasswordResetEmails; //使用这个trait显示发送邮和发送邮件
 
     /**
      * Create a new controller instance.
@@ -31,23 +31,35 @@ class ForgotPasswordController extends Controller
     {
         $this->middleware('guest');
     }
-    public function reset(){ 
-        return view('auth.passwords.email');
-    }
-    public function checkemail(Request $request){
-        $this->validate($request,[
-            'name'=>'required',
-            'email'=>'required'
-        ]);
-       $username= $request->name;
-        $useremail=$request->email;
-        $user = User::where('name',$username)->
-                where('email',$useremail)->count();
-        if($user>0){
-            return view('auth.passwords.reset');
-        }
-        else {
-            return '用户名与邮箱不匹配';
-        }
-    }
+
+    // public function getEmail(){
+    //     return view('auth.passwords.email');
+    // }
+
+    // public function postEmail(){
+
+    // }
+
+
+    // public function reset(){ 
+    //     return view('auth.passwords.email');
+    // }
+
+    // public function checkemail(Request $request){
+    //     $this->validate($request,[
+    //         'name'=>'required',
+    //         'email'=>'required'
+    //     ]);
+    //    $username= $request->name;
+    //     $useremail=$request->email;
+    //     $user = User::where('name',$username)->
+    //             where('email',$useremail)->count();
+    //     if($user>0){
+    //         return view('auth.passwords.reset');
+    //     }
+    //     else {
+    //         return '用户名与邮箱不匹配';
+    //     }
+    // }
+
 }
