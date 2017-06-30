@@ -23,7 +23,7 @@ class CollectController extends Controller
             ->select('product.*', 'order_product.id as op_id','product.desc as p_desc','product.img as p_img','product.price as p_price',
                      'product.sell_amount as p_sell_amount','product.name as p_name')
 
-            ->paginate(10);
+            ->paginate(5);
 
 
 //            ->paginate(config('app.paginate10'));
@@ -72,9 +72,26 @@ class CollectController extends Controller
         return 1;
 
     }
-    public function show(Request $request){
-        return $this->dels($request);
-    }
+    public function listData(Request $request) {
+
+            $lists= Order::join('order_product','order.id','=','order_product.order_id')
+                ->join('product','order_product.product_id','=','product.id')
+                ->where('type','collect')
+                ->where('order.user_id',Auth::user()->id)
+                ->where('order.deleted_at',null)
+                ->where('order_product.deleted_at',null)
+                ->where('product.deleted_at',null)
+                ->select('product.*', 'order_product.id as op_id','product.desc as p_desc','product.img as p_img','product.price as p_price',
+                    'product.sell_amount as p_sell_amount','product.name as p_name')
+
+                ->paginate(5);
+
+
+//            ->paginate(config('app.paginate10'));
+            $title = '收藏管理';
+            return view(config('app.theme').'.home.collect')->with(['footer'=>'collect','lists'=>$lists,'title'=>$title]);
+        }
+
     //加入收藏
     public function create(Request $request){
 		$product_id=$request->id;
