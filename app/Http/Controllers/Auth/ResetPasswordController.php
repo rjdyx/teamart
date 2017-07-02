@@ -18,14 +18,14 @@ class ResetPasswordController extends Controller
     |
     */
 
-    use ResetsPasswords; 
+    use ResetsPasswords; //使用这个实现密码重置
 
     /**
      * Where to redirect users after resetting their password.
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected $redirectTo = '/'; //密码重置后自动跳转的页面位置
 
     /**
      * Create a new controller instance.
@@ -37,12 +37,4 @@ class ResetPasswordController extends Controller
         $this->middleware('guest');
     }
 
-
-    // public function getReset(){
-    //     return view('auth.passwords.reset');
-    // }
-
-    // public function postReset(){
-
-    // }
 }

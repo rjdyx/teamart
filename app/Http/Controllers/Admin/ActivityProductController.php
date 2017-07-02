@@ -34,22 +34,22 @@ class ActivityProductController extends Controller
 			'activity.date_end',
 			'activity.name as activity_name')
 		->orderBy('activity_product.id','asc');
-                //->paginate(3);
-		// $lists = ActivityProduct::whereRaw('1=1');
-		$activity_id = 0;  
-		$flag = 0; //标记是否为搜索操作    
+		$activity_id = 0;   
+		$flag = 0; //标记是否为搜索操作，1为搜索，0为默认显示，搜索结果返回时，前台不可以进行新增活动商品操作   
 		if ($request->name) {
+			//从所有参与商品活动的列表中，显示要搜索的商品-活动信息
 			$lists = $lists->where('product.name','like','%'.$request->name.'%')
 			->orwhere('activity.name','like','%'.$request->name.'%');
 			$flag = 1;
 		}else{
+			//接受一个活动id参数，展示参与该活动的所有商品名称表
 			if($request->activity_id){
 				$activity_id = $request->activity_id;
 				$lists = $lists->where('activity.id','=',$request->activity_id);
 			}
 			$flag = 0;
 		}
-		$lists = $lists->paginate(3);
+		$lists = $lists->paginate(10);
 		return view(config('app.theme').'.admin.activity.group.activity_product')->with(['lists'=>$lists,'activity_id'=>$activity_id,'flag'=>$flag]);
 	}
 
@@ -63,7 +63,7 @@ class ActivityProductController extends Controller
 		return $lists;
 	}
 
-    //创建
+    //创建活动-商品关联
 	public function create(Request $request)
 	{
 		$id = $request->activity_id;
@@ -72,7 +72,7 @@ class ActivityProductController extends Controller
 		return view(config('app.theme').'.admin.activity.group.activity_product_create')->with(['activity'=>$activity, 'products'=>$products]);
 	}
 
-    //修改
+    //修改活动-商品关联关系
 	public function edit($id)
 	{
 		$data = ActivityProduct::find($id);
@@ -86,7 +86,7 @@ class ActivityProductController extends Controller
 		->with(['data'=>$data, 'product'=>$product, 'activity'=>$activity,'activities'=>$activities, 'products'=>$products]);
 	}
 
-    //查看
+    //查看活动-商品关联相关信息
 	public function show($id)
 	{
 		$lists = $this->indexData();
@@ -100,7 +100,7 @@ class ActivityProductController extends Controller
 			'activity.name as activity_name')
 		->orderBy('activity_product.id','asc');
 		$lists = $lists->where('activity.id','=',$id);
-		$lists = $lists->paginate(3);
+		$lists = $lists->paginate(10);
 		$activity_id = $id;
 		return view(config('app.theme').'.admin.activity.group.activity_product')->with(['lists'=>$lists, 'activity_id'=>$activity_id]);
 		//return Group::find($id);

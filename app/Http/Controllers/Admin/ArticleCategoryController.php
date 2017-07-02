@@ -27,7 +27,7 @@ class ArticleCategoryController extends Controller
         if ($request->name) {
             $lists = $lists->where('name','like','%'.$request->name.'%');
         }
-        $lists = $lists->paginate(3);
+        $lists = $lists->paginate(10);
         return view(config('app.theme').'.admin.article.category')->with('lists',$lists);
     }
 
@@ -102,7 +102,7 @@ class ArticleCategoryController extends Controller
                     $query->whereNull('deleted_at');
                 })
             ], 
-            'desc'=>'nullable|max:255'
+            'desc'=>'nullable'
         ]);
 
         if ($id == -1) {

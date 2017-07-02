@@ -24,7 +24,7 @@ class ArticleController extends Controller
     {
         $lists = Article::join('article_category','article.category_id','=','article_category.id')
         ->select('article_category.name as category_name','article.*')
-        ->paginate(3);
+        ->paginate(10);
         if ($request->name) {
             $lists = $lists->where('name','like','%'.$request->name.'%');
         }

@@ -30,19 +30,8 @@ class GroupController extends Controller
         if ($request->name) {
             $lists = $lists->where('name','like','%'.$request->name.'%');
         }
-        $lists = $lists->paginate(3);
+        $lists = $lists->paginate(10);
         return view(config('app.theme').'.admin.activity.group.group')->with(['lists'=>$lists]);
-    }
-
-    //数据查询(团购活动查询)
-    public function indexData () {
-        // $lists = ActivityProduct::join('activity','activity_product.activity_id','=','activity.id')
-        //         ->join('product','activity_product.product_id','=','product.id');
-        //         // ->whereNull('product.deleted_at')
-        //         // ->whereNull('activity.deleted_at');
-        // // $lists = Group::orderBy('id','asc');
-        // $lists = Group::orderBy('id','asc');
-        // return $lists;
     }
 
     //创建
@@ -76,10 +65,6 @@ class GroupController extends Controller
 
     public function del($id) 
     {
-        // if (Group::destroy($id)){
-        //     ActivityProduct
-        //     return true;
-        // }
         $activity = Group::find($id);
         $activity_id = $activity->id;
         DB::delete('delete from fx_activity_product where activity_id = '.$activity_id);
@@ -119,25 +104,20 @@ class GroupController extends Controller
         $this->validate($request, [
             'name' => [
                 'required',
-                'max:50', 
                 //name+软删除 唯一验证               
                 Rule::unique('activity')->ignore($id)->where(function($query) use ($id) {
                     $query->whereNull('deleted_at');
                 })
             ], 
-            'date_start' => [
-            'required', ],   
-            'date_end' => [
-            'required', ],   
-            'desc'=>'nullable|max:255'
+            'date_start' => 'required',   
+            'date_end' => 'required',   
+            'desc'=>'nullable'
         ]);
-
         if ($id == -1) {
             $model = new Group;
         } else {
             $model = Group::find($id);
         }
-
         //接收数据 加入model
         $model->setRawAttributes($request->only(['name','date_start','date_end','desc','price']));
 

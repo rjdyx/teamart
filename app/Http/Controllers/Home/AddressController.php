@@ -54,10 +54,8 @@ class AddressController extends Controller
 	public function destroy($id)
 	{
 		if ($this->del($id)) {
-			//return Redirect::back()->with('status','删除成功');
 			return 'true';
 		}
-		//return Redirect::back()->withErrors('删除失败');
 		return 'false';
 	}
 
@@ -73,11 +71,9 @@ class AddressController extends Controller
 		$ids = explode(',', $request->ids);
 		foreach ($ids as $id) {
 			if ($this->del($id)=='false') {
-				//return Redirect::back()->withErrors('批量删除失败');
 				return 'false';
 			}
 		}
-		//return Redirect::back()->with('status','批量删除成功');
 		return 'true';
 	}
 
@@ -85,7 +81,7 @@ class AddressController extends Controller
 	public function canceldefault(){
 		$address = Address::where('user_id',Auth::user()->id)->where('state','=','1')->first();
 		if(empty($address)){
-			//还没设置默认地址
+			//没设置过默认地址
 			return 'true';
 		}else{
 			$defaultaddress = Address::find($address->id);
@@ -106,14 +102,15 @@ class AddressController extends Controller
 			$model = Address::find($id);
 			$model->state = 1;
 			if ($model->save()) {
-				//return Redirect::to('home/address')->with('status', '设置成功');
+				//设置了默认地址并保存成功
 				return 'true';
 			}else{
-				return false;
+				//默认地址保存失败
+				return 'false';
 			}
 		}	
-		//return Redirect::back()->withErrors('设置失败');
-		return false;
+		//取消数据库中默认地址的选中状态失败
+		return 'false';
 	}
 
     //保存方法
@@ -122,15 +119,18 @@ class AddressController extends Controller
 		$this->validate($request, [
 			'name' => [
 			'required',
-			'max:50', 
+			'min:2', 
 			], 
 			'address'=>'required',
 			'phone'=>[
 			'required',
+			'min:11',
 			'max:11',
 			],
-			'detail'=>'required',
+			'code'=>'required|min:6|max:6',
+			'detail'=>'required|min:5',
 			]);
+		//如果该地址被选择为默认地址，则先取消数据库中的默认地址选中状态
 		if($request->state == 1){
 			if(strcmp($this->canceldefault(), 'false')==0){
 				return false;
@@ -144,8 +144,12 @@ class AddressController extends Controller
 		$address = explode(',', $request->address);
 		$province = $address[0];
 		$city = $address[1];
-		$area = $address[1];
-		if (count($address)>2) $area = $address[2];
+		//如果地址只有省和市时进行判断
+		if (count($address)>2){
+			$area = $address[2];
+		}else{
+			$area = $address[1];
+		}
         //接收数据 加入model
 		$model->setRawAttributes($request->only(['name','phone','detail','code']));  
 		$model->user_id = Auth::user()->id;
@@ -153,12 +157,9 @@ class AddressController extends Controller
 		$model->city = $city;
 		$model->area = $area;
 		$model->state = $request->state;
-		
 		if ($model->save()) {
-			//return Redirect::to('home/address')->with('status', '保存成功');
 			return 'true';
 		}
-		//return Redirect::back()->withErrors('保存失败');
 		return 'false';
 	}
 }
