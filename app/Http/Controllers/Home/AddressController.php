@@ -77,6 +77,13 @@ class AddressController extends Controller
 		return 'true';
 	}
 
+	//查询用户默认地址
+	public function defaultState()
+	{
+		$data = Address::where('state',1)->where('user_id',Auth::user()->id)->first();
+		return $data;
+	}
+
 	//取消当前的默认地址选中状态
 	public function canceldefault(){
 		$address = Address::where('user_id',Auth::user()->id)->where('state','=','1')->first();

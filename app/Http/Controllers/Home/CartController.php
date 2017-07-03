@@ -26,13 +26,13 @@ class CartController extends Controller
 	}
 	//添加商品到购物车
 	public function store(Request $request){
-		 $amount= $request->amount;
-	     $product_id=$request->id;
+		$amount= $request->amount;
+	    $product_id=$request->id;
 
 		$product_price=Product::where('id',$product_id)->value('price');
 
-		$hasOrder = Order::where('user_id',Auth::user()->id)->
-		where('type','cart')->count('id');
+		$hasOrder = Order::where('user_id',Auth::user()->id)->where('type','cart')->count('id');
+		
 		if(!$hasOrder){
 		$order = new Order;
 		$order->address_id=Address::where('user_id',Auth::user()->id)->value('id');

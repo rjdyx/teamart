@@ -8,7 +8,10 @@
 @section('script')
     @parent
     <script>
+
+		var delivery_price = {{$lists->max('delivery_price')}}
     	$(function () {
+
     		// 显示选取配送方式弹窗
     		$('.J_show_type').on('click tap', function () {
     			$('.confirm_type').addClass('top-0')
@@ -20,6 +23,14 @@
     		// 选取配送方式
     		$('.J_choose_type').on('click tap', function () {
     			var v = $(this).data('delivery')
+    			if (v == 'point') {
+    				$(".price-change").html('&yen 0.00');
+    				delivery_price = 0;
+    			} else {
+    				$(".price-change").html('&yen ' + delivery_price);
+    				delivery_price = {{$lists->max('delivery_price')}};
+    			}
+    			countPrice();
     			$(this).parents('.confirm_type_container').find('i').removeClass('active')
     			$(this).find('i').addClass('active')
     			$('input[name="delivery"]').val(v)
@@ -31,7 +42,46 @@
     				}
     			})
     		})
-    	})
+    	});
+
+    	addressData();
+		siteData();
+		countPrice();
+    	//获取默认地址
+    	function addressData() {
+	    	ajax('get', '/home/address/state').then(function (resolve) {
+				if (resolve) {
+					$(".address-defualt1").text(resolve['name']);	
+					$(".address-defualt2").text(resolve['phone']);	
+					$(".address-defualt3").text(resolve['province'] + resolve['city'] + resolve['area'] + resolve['detail']);
+				} else {
+
+				}
+			});
+    	}
+
+    	//获取站点
+    	function siteData() {
+	    	ajax('get', '/home/site/default').then(function (resolve) {
+				if (resolve) {
+					$(".site-defualt").text(resolve['name']);	
+				} else {
+					
+				}
+			});
+    	}
+
+    	//计算总金额
+    	function countPrice() {
+    		var product_price = $(".product-count").attr('count');
+    		var count = parseInt(product_price) + parseInt(delivery_price);
+    		$(".all-count").html('&yen'+count);
+    	}
+
+    	//提交订单
+    	$('.confirm_bottom_submit').click(function(){
+    		prompt.message('提交订单！')
+    	});
     </script>
 @endsection
 
@@ -39,14 +89,14 @@
 	@include("layouts.header-info")
 	<div class="confirm">
 		<div class="confirm_address mb-20 express">
-			<a href="javascript:;" class="clearfix">
+			<a href="{{url('/home/address')}}" class="clearfix">
 				<i class="fa fa-map-marker pull-left"></i>
 				<div class="confirm_address_info pull-left">
 					<p class="clearfix">
-						<span class="pull-left chayefont fz-16">隔壁老王</span>
-						<span class="pull-right gray">13912345678</span>
+						<span class="pull-left chayefont fz-16 address-defualt1"> </span> <!-- 联系人 -->
+						<span class="pull-right gray address-defualt2"> </span><!--  手机 -->
 					</p>
-					<p class="gray">广东省广州市天河区五山街道华南理工大学国家大学科技园2号楼204</p>
+					<p class="gray address-defualt3"> </p><!-- 地址 -->
 				</div>
 				<i class="fa fa-angle-right pull-right txt-r"></i>
 			</a>
@@ -56,96 +106,35 @@
 				<i class="fa fa-map-marker pull-left"></i>
 				<div class="confirm_address_info pull-left">
 					<p>(请选择)自提点</p>
-					<p class="gray">广东省广州市天河区五山街道华南理工大学国家大学科技园2号楼204</p>
+					<p class="gray site-defualt"></p>
 				</div>
 				<i class="fa fa-angle-right pull-right txt-r"></i>
 			</a>
 		</div>
 		<div class="confirm_container">
+		@foreach($lists as $list)
 			<div class="confirm_warpper mb-20">
 				<div class="confirm_warpper_tit">
 					<a href="javascript:;" class="chayefont">
 						<i class="fa fa-ban"></i>
-						绿茶宝塔镇河妖
+						
 					</a>
 				</div>
 				<div class="confirm_warpper_content clearfix">
 					<div class="confirm_warpper_content_img pull-left mr-20">
-						<img src="{{ url('fx/img/shop11.png') }}">
+						<img src="{{ url('') }}/{{$list->thumb}}">
 					</div>
 					<div class="confirm_warpper_content_info pull-right">
-						<h5 class="chayefont mb-10">菲律宾进口香蕉</h5>
-						<p>新鲜梨树雪梨发货供货的供货皇冠分隔符梨</p>
+						<h5 class="chayefont mb-10">{{$list->name}}</h5>
+						<p>{{$list->desc}}</p>
 						<div class="confirm_warpper_content_info_bottom">
-							<span class="pull-left price">￥212.00</span>
-							<span class="pull-right sell">&times1</span>
+							<span class="pull-left price">&yen {{sprintf('%.2f',$list->amount * $list->price)}}</span>
+							<span class="pull-right sell">&times{{$list->amount}}</span>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="confirm_warpper mb-20">
-				<div class="confirm_warpper_tit">
-					<a href="javascript:;" class="chayefont">
-						<i class="fa fa-ban"></i>
-						绿茶宝塔镇河妖
-					</a>
-				</div>
-				<div class="confirm_warpper_content clearfix">
-					<div class="confirm_warpper_content_img pull-left mr-20">
-						<img src="{{ url('fx/img/shop11.png') }}">
-					</div>
-					<div class="confirm_warpper_content_info pull-right">
-						<h5 class="chayefont mb-10">菲律宾进口香蕉</h5>
-						<p>新鲜梨树雪梨发货供货的供货皇冠分隔符梨</p>
-						<div class="confirm_warpper_content_info_bottom">
-							<span class="pull-left price">￥212.00</span>
-							<span class="pull-right sell">&times1</span>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="confirm_warpper mb-20">
-				<div class="confirm_warpper_tit">
-					<a href="javascript:;" class="chayefont">
-						<i class="fa fa-ban"></i>
-						绿茶宝塔镇河妖
-					</a>
-				</div>
-				<div class="confirm_warpper_content clearfix">
-					<div class="confirm_warpper_content_img pull-left mr-20">
-						<img src="{{ url('fx/img/shop11.png') }}">
-					</div>
-					<div class="confirm_warpper_content_info pull-right">
-						<h5 class="chayefont mb-10">菲律宾进口香蕉</h5>
-						<p>新鲜梨树雪梨发货供货的供货皇冠分隔符梨</p>
-						<div class="confirm_warpper_content_info_bottom">
-							<span class="pull-left price">￥212.00</span>
-							<span class="pull-right sell">&times1</span>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="confirm_warpper mb-20">
-				<div class="confirm_warpper_tit">
-					<a href="javascript:;" class="chayefont">
-						<i class="fa fa-ban"></i>
-						绿茶宝塔镇河妖
-					</a>
-				</div>
-				<div class="confirm_warpper_content clearfix">
-					<div class="confirm_warpper_content_img pull-left mr-20">
-						<img src="{{ url('fx/img/shop11.png') }}">
-					</div>
-					<div class="confirm_warpper_content_info pull-right">
-						<h5 class="chayefont mb-10">菲律宾进口香蕉</h5>
-						<p>新鲜梨树雪梨发货供货的供货皇冠分隔符梨</p>
-						<div class="confirm_warpper_content_info_bottom">
-							<span class="pull-left price">￥212.00</span>
-							<span class="pull-right sell">&times1</span>
-						</div>
-					</div>
-				</div>
-			</div>
+		@endforeach
 			<div class="confirm_container_sum">
 				<div class="confirm_container_sum_row">
 					<a href="javascript:;" class="clearfix J_show_type">
@@ -156,11 +145,12 @@
 				</div>
 				<div class="confirm_container_sum_row">
 					<span class="pull-left chayefont fz-18">运费</span>
-					<span class="pull-right price fz-14">&yen0.00</span>
+					<span class="pull-right price fz-14 price-change" >&yen {{sprintf('%.2f',$lists->max('delivery_price'))}}</span>
 				</div>
+
 				<div class="confirm_container_sum_row">
 					<span class="pull-left chayefont fz-18">商品总额</span>
-					<span class="pull-right price fz-14">&yen21222.00</span>
+					<span class="pull-right price fz-14 product-count" count="{{$count}}">&yen {{sprintf('%.2f',$count)}} </span>
 				</div>
 				<div class="confirm_container_sum_row">
 					<span class="pull-left chayefont fz-18">买家留言</span>
@@ -171,7 +161,7 @@
 		</div>
 		<div class="confirm_bottom">
 			<div class="confirm_bottom_sum pull-left txt-l">
-				合计总金额：<span class="price">&yen212.00</span>
+				合计总金额：<span class="price all-count">&yen0.00</span>
 			</div>
 			<div class="confirm_bottom_submit pull-left">
 				<a href="javascript:;">提交订单</a>

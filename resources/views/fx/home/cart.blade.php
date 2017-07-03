@@ -97,7 +97,7 @@
                 var camount = parseInt($(this).find('.amount').text())
                 confirm_params[cid] = camount
             })
-            console.log(confirm_params)
+
             // 单选
             $('.J_select').on('click tap', function () {
                 if (!$(this).find('a').hasClass('active')) {
@@ -116,8 +116,8 @@
                     }
                     dels = arr
                 }
-                console.log(dels)
             })
+            
             // 全选
             $('.J_select_all').on('click tap', function () {
                 if (!$(this).find('span').hasClass('active')) {

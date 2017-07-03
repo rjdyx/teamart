@@ -60,5 +60,6 @@
     </script>
     @yield('script')
     @include("layouts.prompt")
+    <!-- @include("layouts.service")  -->
 </body>
 </html>

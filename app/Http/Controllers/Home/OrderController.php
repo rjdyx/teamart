@@ -6,10 +6,14 @@ use App\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Order;
+use App\User;
+use App\Address;
 use App\Site;
 use App\OrderProduct;
 use Illuminate\Support\Facades\Auth;
 use Redirect;
+use IQuery;
+
 class OrderController extends Controller
 {
 	//订单列表页
@@ -21,11 +25,54 @@ class OrderController extends Controller
 		return view(config('app.theme').'.home.orderList')->with(['footer'=>'order','lists'=>$lists,'title'=>$title]);
 	}
 
+	//订单预处理 (未支付)
+	public function confirmData (Request $request) {
 
+		$datas = $request->data;
+		$order = new Order;
+		$order->user_id = Auth::user()->id;
+		$order->serial = IQuery::orderSerial();
+		$order->type = 'order';
+		$order->state = 'pading';
+		$order->date = date('Y-m-d');
+		$address = Address::where('state',1)->select('id')->first();
+		$address_id = 0;
+		if (isset($address->id)) $address_id = $address->id;
+		$order->address_id = $address_id;
 
-	public function confirm () {
+		$order->pid = Auth::user()->pater_id;
+		if (!$order->save()) return 500;
+
+		foreach($datas as $id => $amount) {
+			$orderProduct = new OrderProduct;
+			$orderProduct->product_id = $id;
+			$orderProduct->amount = $amount;
+			$orderProduct->price = Product::find($id)->price;
+			$orderProduct->order_id = $order->id;
+			$orderProduct->save();
+		}
+		return $order->id;
+	}
+
+	//待支付 选择参数
+	public function confirm (Request $request) {
+
+		$id = $request->id;
+		$lists = OrderProduct::join('product','order_product.product_id','=','product.id')
+				->where('order_product.order_id','=',$id)
+				->whereNull('product.deleted_at')
+				->whereNull('order_product.deleted_at')
+				->select('product.id','product.name','product.desc','product.thumb','product.price','product.delivery_price','order_product.amount')
+				->distinct('product.id')
+				->get();
+
+		$count = 0;
+		foreach ($lists as $list) {
+			$count += $list->price * $list->amount;
+		}
+
 		$title = '确认订单';
-		return view(config('app.theme').'.home.confirm')->with(['title'=>$title]);
+		return view(config('app.theme').'.home.confirm')->with(['title'=>$title,'lists'=>$lists,'count'=>$count]);
 	}
 
 	//订单列表数据

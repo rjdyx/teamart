@@ -50,22 +50,31 @@ Route::group(['namespace'=>'Home','prefix'=>'home'],function(){
 		Route::get('/list','HelpController@index');
 		Route::get('/detail/{id}','HelpController@detail');
 	});
-	Route::get('/userinfo','UserController@userInfo');
-	Route::get('/promotion/{type}','IndexController@promotion');
+
+	//站点
+	Route::get('/site','SiteController@index');//加载站点列表页
+	Route::get('/site/data','SiteController@indexData');//列表页数据接口
+	Route::get('/site/default','SiteController@siteDefualt');//最新站点信息
+
+	Route::get('/userinfo','UserController@userInfo');//个人中心
+	Route::get('/promotion/{type}','IndexController@promotion');//获取更多模版加载
+	Route::get('/index/more','IndexController@promotionData');//首页获取更多数据
 });
 
 /********************** Home - 须登录模块 (非管理员)  ***************************/
 Route::group(['namespace'=>'Home','prefix'=>'home','middleware'=>['auth']],function(){
 	//地址管理
-	Route::resource('/address', 'AddressController');
 	Route::post('/address','AddressController@store');
 	Route::get('/address/default/{id}','AddressController@defaultaddress');
+	Route::get('/address/state','AddressController@defaultState');
+	Route::resource('/address', 'AddressController');
 
 	// 订单部分
 	Route::group(['prefix'=>'order'],function(){
-		Route::get('/list','OrderController@index');
-		Route::get('/detail/{id}','OrderController@detail');
-    	Route::get('/confirm','OrderController@confirm');
+		Route::get('/list','OrderController@index');//商品列表页
+		Route::get('/detail/{id}','OrderController@detail');//商品详情页
+    	Route::post('/confirm','OrderController@confirmData');//订单预处理
+    	Route::get('/confirm','OrderController@confirm');//订单待支付
     	Route::get('/list/data','OrderController@orderListData');
     	Route::get('/cancell','OrderController@orderCancell');//取消订单
     	Route::get('/back','OrderController@orderBack');//退货
@@ -76,6 +85,7 @@ Route::group(['namespace'=>'Home','prefix'=>'home','middleware'=>['auth']],funct
     	Route::get('/site/data','OrderController@siteListData');//站点数据接口
 	});
 
+
 	//收藏
 	Route::get('/collect/data','CollectController@ListData');
 	Route::post('/collect/dels','CollectController@dels');
@@ -85,12 +95,10 @@ Route::group(['namespace'=>'Home','prefix'=>'home','middleware'=>['auth']],funct
 	//购物车
 	Route::get('/cart/data','CartController@ListData');
 	Route::post('/cart/dels','CartController@dels');
-    
 	Route::resource('/cart','CartController');
 
 
 	//用户部分
-	
 	Route::get('/userasset','UserController@userAsset');
 	Route::get('/useredit','UserController@edit');
 	Route::resource('/user', 'UserController');

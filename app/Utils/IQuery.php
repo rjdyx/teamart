@@ -113,4 +113,12 @@ class IQuery{
         $log->save();
     }
 
+    //生成订单号
+    public function orderSerial()
+    {
+        $date = date('Ymd');
+        $rand = rand(99999,999999);
+        $per = 'Fx';
+        return $per.$rand.$date;
+    }
 }

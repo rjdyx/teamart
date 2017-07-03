@@ -11,7 +11,7 @@
     <script type="text/javascript" src="{{ url('fx/common/dropload.js') }}"></script>
     <script>
         $(function () {
-            var page = 0
+            var page = 0;
             $('.promotion_container').dropload({
                 scrollArea : $('.promotion_container'),
                 domUp : {
@@ -40,42 +40,45 @@
                 } else {
                     page = 0
                 }
-                ajax('get', '/home/cart/data', {page: page}, false, false, false)
-                    .then(function (res) {
-                        var template = ''
-                        if (res.length > 0) {
-                            res.forEach(function (v) {
-                                template += `
-                                    <div class="promotion_warpper pull-left">
-										<a href="javascript:;">
-											<img src=http://' + window.location.host + '/' +data[i]['img'] + '>
-											<h1 class="mt-20 chayefont">活动商品</h1>
-											<p class="mt-10 mb-10">活动商品活动商品活动商品活动商品活动商品活动商品活动商品</p>
-											<p class="clearfix">
-												<span class="pull-left price">&yen;999.99</span>
-												<span class="pull-right sell">销量：<i>888</i></span>
-											</p>
-										</a>
-									</div>
-                                `
-                            })
-                        } else {
-                            me.lock();
-                            me.noData();
-                        }
-                        if (type == 'up') {
-                            me.unlock();
-                            me.noData(false);
-                            $('.promotion_list').html(result);
-                        } else {
-                            $('.promotion_list').append(result);
-                        }
-                        me.resetload();
-                    })
-                    .catch(function (err) {
-                        prompt.message('请求错误')
-                        me.resetload()
-                    })
+                var type = $(".promotion").attr('type');
+                ajax('get', '/home/index/more', {page: page,type:type}).then(function (res) {
+                    var template = ''
+                    var data = res.data
+                    if (data.length > 0) {
+ 						template = dataForeach(data);
+                    } else {
+                        me.lock();
+                        me.noData();
+                    }
+                    if (type == 'up') {
+                        me.unlock();
+                        me.noData(false);
+                        $('.promotion_list').html(result);
+                    } else {
+                        $('.promotion_list').append(result);
+                    }
+                    me.resetload();
+                }).catch(function (err) {
+                    prompt.message('服务器异常！请稍后再试！')
+                    // me.resetload()
+                    me.unlock();
+                })
+            }
+
+            //遍历数据到模版
+            function dataForeach(data){
+            	var template = '';
+            	data.forEach(function (v) {
+                    template += '<div class="promotion_warpper pull-left">'+
+							'<a href="http://'+window.location.host+'/home/product/detail/'+v['id']+'">' +
+								'<img src="http://' + window.location.host + '/' +v['img']+'">'+
+								'<h1 class="mt-20 chayefont">'+v['name']+'</h1>'
+								'<p class="mt-10 mb-10">'+v['desc']+'</p>'+ '<p class="clearfix">'+
+								'<span class="pull-left price">&yen;'+v['price']+'</span>'
+								'<span class="pull-right sell">销量：<i>'+v['sell_amount']+
+								'</i></span></p></a></div>';  
+                })
+                return template;
             }
         })
     </script>
@@ -83,75 +86,11 @@
 
 @section('content')
 	@include("layouts.header-info")
-	<div class="promotion">
+	<div class="promotion" type="{{$type}}">
 		<div class="promotion_container">
 			<div class="promotion_list clearfix">
-				<div class="promotion_warpper pull-left">
-					<a href="javascript:;">
-						<img src=http://' + window.location.host + '/' +data[i]['img'] + '>
-						<h1 class="mt-20 chayefont">活动商品</h1>
-						<p class="mt-10 mb-10">活动商品活动商品活动商品活动商品活动商品活动商品活动商品</p>
-						<p class="clearfix">
-							<span class="pull-left price">&yen;999.99</span>
-							<span class="pull-right sell">销量：<i>888</i></span>
-						</p>
-					</a>
-				</div>
-				<div class="promotion_warpper pull-left">
-					<a href="javascript:;">
-						<img src=http://' + window.location.host + '/' +data[i]['img'] + '>
-						<h1 class="mt-20 chayefont">活动商品</h1>
-						<p class="mt-10 mb-10">活动商品活动商品活动商品活动商品活动商品活动商品活动商品</p>
-						<p class="clearfix">
-							<span class="pull-left price">&yen;999.99</span>
-							<span class="pull-right sell">销量：<i>888</i></span>
-						</p>
-					</a>
-				</div>
-				<div class="promotion_warpper pull-left">
-					<a href="javascript:;">
-						<img src="">
-						<h1 class="mt-20 chayefont">活动商品</h1>
-						<p class="mt-10 mb-10">活动商品活动商品活动商品活动商品活动商品活动商品活动商品</p>
-						<p class="clearfix">
-							<span class="pull-left price">&yen;999.99</span>
-							<span class="pull-right sell">销量：<i>888</i></span>
-						</p>
-					</a>
-				</div>
-				<div class="promotion_warpper pull-left">
-					<a href="javascript:;">
-						<img src="">
-						<h1 class="mt-20 chayefont">活动商品</h1>
-						<p class="mt-10 mb-10">活动商品活动商品活动商品活动商品活动商品活动商品活动商品</p>
-						<p class="clearfix">
-							<span class="pull-left price">&yen;999.99</span>
-							<span class="pull-right sell">销量：<i>888</i></span>
-						</p>
-					</a>
-				</div>
-				<div class="promotion_warpper pull-left">
-					<a href="javascript:;">
-						<img src="">
-						<h1 class="mt-20 chayefont">活动商品</h1>
-						<p class="mt-10 mb-10">活动商品活动商品活动商品活动商品活动商品活动商品活动商品</p>
-						<p class="clearfix">
-							<span class="pull-left price">&yen;999.99</span>
-							<span class="pull-right sell">销量：<i>888</i></span>
-						</p>
-					</a>
-				</div>
-				<div class="promotion_warpper pull-left">
-					<a href="javascript:;">
-						<img src="">
-						<h1 class="mt-20 chayefont">活动商品</h1>
-						<p class="mt-10 mb-10">活动商品活动商品活动商品活动商品活动商品活动商品活动商品</p>
-						<p class="clearfix">
-							<span class="pull-left price">&yen;999.99</span>
-							<span class="pull-right sell">销量：<i>888</i></span>
-						</p>
-					</a>
-				</div>
+
+	
 			</div>
 		</div>
 	</div>
