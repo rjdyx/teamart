@@ -4665,15 +4665,14 @@ footer {
       background-color: #FF5500; }
 
 .product {
-  position: relative; }
+  overflow: hidden; }
   .product .product_nav {
     position: absolute;
     top: 1.2rem;
     left: 0;
     width: 100%;
     height: 0.9rem;
-    background-color: #CFCBC0;
-    border-top: 0.1rem solid #fff; }
+    background-color: #CFCBC0; }
     .product .product_nav li {
       position: relative;
       float: left;

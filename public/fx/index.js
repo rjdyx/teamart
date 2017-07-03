@@ -1,5 +1,5 @@
-// require('expose-loader?$!zepto-webpack')
-require('expose-loader?$!jquery')
+require('expose-loader?jquery!jquery')
+require('expose-loader?$!zepto-webpack')
 require('expose-loader?axios!axios')
 require('expose-loader?_!lodash')
 
@@ -11,6 +11,7 @@ require('font-awesome/css/font-awesome.css')
 require('./sass/index.scss')
 
 require('swiper')
+
 require('expose-loader?_valid!./js/validate.js')
 require('expose-loader?ajax!./js/ajax.js')
 require('expose-loader?prompt!./js/prompt.js')
@@ -45,13 +46,15 @@ $(function () {
 		}
 	})
 	$('.J_header_search').on('click tap', function () {
-		ajax('get', 'url', {query: $('.J_header_search_inp').val()})
-			.then(res => {
-				console.log(res)
-			})
-			.catch(err => {
-				console.log(err)
-			})
+		let v = $(this).siblings('input').val()
+		window.location.href = 'http://' + window.location.host + '/home/product/list?name=' + v
+		// ajax('get', 'url', {query: $('.J_header_search_inp').val()})
+		// 	.then(res => {
+		// 		console.log(res)
+		// 	})
+		// 	.catch(err => {
+		// 		console.log(err)
+		// 	})
 	})
 
 	let mySwiper = new Swiper('.swiper-container', {
