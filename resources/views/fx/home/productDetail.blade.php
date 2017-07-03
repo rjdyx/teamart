@@ -223,7 +223,7 @@
     					});	
 						$('.addcart-specs').html(template);
 						//打开加入购物车弹窗
-						$('.productspec').addClass('top-0').animate({
+						jquery('.productspec').addClass('top-0').animate({
 							'opacity': 1},100,function () {
 							$('.productspec_container').addClass('bottom-0')
 						})
@@ -245,7 +245,7 @@
 
     	// 隐藏产品规格弹窗
     	$('.J_hide_productspec').on('click tap', function () {
-    		$('.productspec').removeClass('top-0').animate({
+    		jquery('.productspec').removeClass('top-0').animate({
 				'opacity': 0},
 				300,
 				function () {

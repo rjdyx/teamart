@@ -33,7 +33,7 @@
 				$('.filter').removeClass('left-0');
 			});
 
-			$('.product_container').dropload({
+			var dropload = $('.product_container').dropload({
 				scrollArea : $('.product_container'),
 				domUp : {
 					domClass   : 'dropload-up',
@@ -55,22 +55,79 @@
 				},
 				threshold : 50
 			});
+			
+			function getLists (success, me) {
+				var url = 'http://'+window.location.host + '/home/product/list/data';
+				ajax('get', url, {params:params})
+				.then(function (res) {
+					var result = ''
+					if (res.data.length) {
+						res.data.forEach(function (v) {
+							result += `
+								<div class="product_warpper pull-left">
+									<a href='http://${window.location.host}/home/product/detail/${v.id}'>
+										<img src='http://${window.location.host}/${v.img}'>
+										<h1 class="mt-20 chayefont">${v.name}</h1>
+										<p class="mt-10 mb-10">${v.desc}</p>
+										<p class="clearfix">
+											<span class="pull-left price">&yen;${v.price}</span>
+											<span class="pull-right sell">销量：<i>${v.sell_amount}</i></span>
+										</p>
+									</a>
+								</div>
+							`
+						})
+					} else {
+						if (me) {
+							me.lock();
+							// 无数据
+							me.noData();
+						}
+					}
+					success(result)
+				})
+			}
+
+			//获取列表数据
+			function getListData(me,type) {
+				if (type=='down')
+				{
+					page++;
+					params['page'] = page;
+				} else {
+					params['page'] = page = 1
+				}
+				getLists(function (result) {
+					if (type == 'up') {
+						$('.product_list').html(result);// 插入数据到页面，放到最后面
+					} else {
+						$('.product_list').append(result);// 插入数据到页面，放到最后面
+					}
+					me.resetload();// 每次数据插入，必须重置
+					if (type == 'up') {
+						page = 0;// 重置页数，重新获取loadDownFn的数据
+						// 解锁loadDownFn里锁定的情况
+						me.unlock();
+						me.noData(false);
+					}
+				}, me)
+			}
 
 			//获取所有分类、品牌
 			function getBrandOrCategory() {
 				var url = 'http://'+window.location.host + '/home/product/';
-		        axios.get(url + 'category').then(function (res) {
-		        	categorys = res.data
+				axios.get(url + 'category').then(function (res) {
+					categorys = res.data
 					addCategoryResult(false);
-		        }).catch(function (err) {
-		            console.log(err)
-		        });
-		        axios.get(url + 'brand',{}).then(function (res) {
+				}).catch(function (err) {
+					console.log(err)
+				});
+				axios.get(url + 'brand',{}).then(function (res) {
 					brands = res.data
 					addBrandResult(false);
-		        }).catch(function (err) {
-		            console.log(err)
-		        });
+				}).catch(function (err) {
+					console.log(err)
+				});
 			}
 
 			//添加分类节点
@@ -149,51 +206,6 @@
 				}
 			});
 
-			//获取列表数据
-			function getListData(me,type) {
-				if (type=='down')
-				{
-					page++;
-					params['page'] = page;
-				}
-				var result = '';
-				var url = 'http://'+window.location.host + '/home/product/list/data';
-				axios.get(url, {params:params})
-	            .then(function (res) {
-	            	var data = res.data.data
-					var arrLen = data.length;
-					// 拼接HTML
-					if(arrLen > 0){
-						for(var i=0; i<arrLen; i++){
-							result +=  '<div class="product_warpper pull-left">' +
-							'<a href= http://' + window.location.host +'/home/product/detail/'+ data[i]["id"] + '>' +
-							'<img src=http://' + window.location.host + '/' +data[i]['img'] + '>' +
-							'<h1 class="mt-20 chayefont">' + data[i]['name']+'</h1>'+
-							'<p class="mt-10 mb-10">' + data[i]['desc']+'</p>'+'<p class="clearfix">' +
-							'<span class="pull-left price">&yen'+data[i]['price'] +'</span>'+
-							'<span class="pull-right sell">销量：<i>'+data[i]['sell_amount']+
-							'</i></span>' + '</p>' + '</a>' +'</div>';
-						}
-					}else{
-						// 如果没有数据 锁定
-						me.lock();
-						// 无数据
-						me.noData();
-					}
-					$('.product_list').append(result);// 插入数据到页面，放到最后面
-					me.resetload();// 每次数据插入，必须重置
-					if (type == 'up') {
-						page = 0;// 重置页数，重新获取loadDownFn的数据
-						// 解锁loadDownFn里锁定的情况
-						me.unlock();
-						me.noData(false);
-					}
-	            }).catch(function (err) {
-	                console.log(err)
-					// me.resetload();// 即使加载出错，也得重置
-	            });
-			}
-
 			//点击排序属性
 			$(".order").click(function(){
 				var fx = $(this).attr('order');
@@ -252,31 +264,12 @@
 
 			//条件搜索
 			function searchListData(){
-				var result = '';
-				params['page'] = 1;
-				var url = 'http://'+window.location.host + '/home/product/list/data';
-				axios.get(url, {params:params})
-	            .then(function (res) {
-	            	var data = res.data.data
-					var arrLen = data.length;
-					// 拼接HTML
-					if(arrLen > 0){
-						for(var i=0; i<arrLen; i++){
-							result +=  '<div class="product_warpper pull-left">' +
-							'<a href= http://' + window.location.host +'/home/product/detail/'+ data[i]["id"] + '>' +
-							'<img src=http://' + window.location.host + '/' +data[i]['img'] + '>' +
-							'<h1 class="mt-20 chayefont">' + data[i]['name']+'</h1>'+
-							'<p class="mt-10 mb-10">' + data[i]['desc']+'</p>'+'<p class="clearfix">' +
-							'<span class="pull-left price">&yen'+data[i]['price'] +'</span>'+
-							'<span class="pull-right sell">销量：<i>'+data[i]['sell_amount']+
-							'</i></span>' + '</p>' + '</a>' +'</div>';
-						}
-					}
+				params['page'] = page = 1
+				getLists(function (result) {
 					$('.product_list').html(result);
-
-	            }).catch(function (err) {
-	                console.log(err)
-	            });
+					$('.product_container').scrollTop(0)
+					dropload.resetload()
+				})
 			}
 
 			//单个分类点击事件
@@ -363,10 +356,9 @@
 				<i class="fa fa-filter"></i>
 			</li>
 		</ul>
-		<div class="product_container">
+		<div class="product_container" id="product_container">
 			<div class="product_list clearfix">
-			<!-- 数据放置处 -->
-
+				<!-- 数据放置处 -->
 			</div>
 		</div>
 	</div>
