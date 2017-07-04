@@ -13,7 +13,7 @@
 		$(function () {
 			var dels = []
 			// 单个选择
-			$('.J_select').on('click tap', function () {
+			function selectSingle () {
 				if (!$(this).find('a').hasClass('active')) {
 					$(this).find('a').addClass('active')
 					dels.push($(this).data('id'))
@@ -30,8 +30,7 @@
 					}
 					dels = arr
 				}
-				console.log(dels)
-			})
+			}
 			// 全选
 			$('.J_select_all').on('click tap', function () {
 				if (!$(this).find('span').hasClass('active')) {
@@ -49,7 +48,6 @@
 					})
 					$(this).find('span').removeClass('active')
 				}
-				console.log(dels)
 			})
 			// 删除商品
 			$('.J_dels').on('click tap', function () {
@@ -69,7 +67,24 @@
 					})
                 }
 			})
-
+			$('.J_join_cart').on('click tap', function () {
+				if (dels.length == 0) {
+                    prompt.message('请选择要加入购物车')
+                    return
+                } else {
+                	prompt.question('是否加入购物车', function () {
+						ajax('get', '/home/collect/cart', {ids: dels})
+							.then(function (res) {
+								if (res) {
+									prompt.message('添加成功')
+								} else {
+									prompt.message('添加失败')
+								}
+							})
+					})
+                }
+			})
+			var page = 0
 			// 加载
 	        $('.collect_container').dropload({
 	            scrollArea : $('.collect_container'),
@@ -93,19 +108,18 @@
 	            },
 	            threshold : 50
 	        })
-			var page = 0
 			function getListData (me, type) {
 				if (type == 'down') {
 					page++
 				} else {
-					page = 0
+                	page = 1
 				}
-				ajax('get', '/home/collect/data', { page: page}, false, false, false)
+				ajax('get', '/home/collect/data', {page: page}, false, false, false)
 					.then(function (res) {
-						var template = ''
-						if (res.length > 0) {
-							res.forEach(function (v) {
-								template += `
+						var result = ''
+						if (res.data.length > 0) {
+							res.data.forEach(function (v) {
+								result += `
 									<div class="collect_warpper mb-20">
 										<div class="collect_warpper_tit J_select" data-id="${v.id}">
 											<a href="javascript:;" class="chayefont">
@@ -134,17 +148,22 @@
                             me.noData();
 						}
 						if (type == 'up') {
-                            me.unlock();
-                            me.noData(false);
-                            $('.collect_list').html(result);
+                        	$('.collect_list').html(result);
+                        	$('.J_select_all').find('span').removeClass('active')
+                        	dels = []
 						} else {
 							$('.collect_list').append(result);
 						}
+						$('.J_select').on('click tap', selectSingle)
                         me.resetload();
+                        if (type == 'up') {
+                            me.unlock();
+                            me.noData(false);
+                        }
 					})
 					.catch(function (err) {
 						prompt.message('请求错误')
-						me.resetload()
+						// me.resetload()
 					})
 			}
 		})
@@ -155,10 +174,13 @@
 
 	@include("layouts.header-info")
 
+	@include("layouts.backIndex")
+
 	<div class="container collect">
 		<div class="collect_container">
 			<div class="collect_list">
-				@foreach($lists as $list)
+				<!-- 收藏商品结构 -->
+				{{-- @foreach($lists as $list)
 				<div class="collect_warpper mb-20">
 					<div class="collect_warpper_tit J_select" data-id="{{$list->op_id}}">
 						<a href="javascript:;" class="chayefont">
@@ -180,7 +202,7 @@
 						</div>
 					</div>
 				</div>
-				@endforeach
+				@endforeach --}}
 			</div>
 		</div>
 
@@ -188,6 +210,7 @@
 			<div class="block pull-left txt-l collect_bottom_selection J_select_all">
 				<span>全选</span>
 			</div>
+			<div class="block pull-left txt-c fz-14 collect_bottom_cart J_join_cart">加入购物车</div>
 			<div class="block pull-left txt-c collect_bottom_del J_dels">删除</div>
 		</div>
 	</div>

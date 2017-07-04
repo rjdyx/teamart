@@ -44,7 +44,9 @@
 
 @section('content')
 
-	@include("layouts.header-info") 
+	@include("layouts.header-info")
+
+	@include("layouts.backIndex")
 	<div class="address">
 		<div class="address_container">
 			@foreach($lists as $list)

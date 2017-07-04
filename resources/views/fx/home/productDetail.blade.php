@@ -68,34 +68,44 @@
 
 		function listData(res){
 			var template = '';
-            res.forEach(function (data) {
-                template += '<li class="clearfix">'+'<div class="comment_list_avatar pull-left">'+
-					'<img src="'+'http://'+window.location.host+'/'+data['user_img']+'" alt="">'+
-					'<span>'+data['user_name']+'</span>'+'</div>'+
-					'<div class="comment_list_content pull-right">'+ '<p class="stars">';
-					//评论星星
-					for (var i=0;i<=data['grade']/20;i++)
-					{
-						template += '<i class="fa fa-star"></i>';
-					}
-				template += '</p>'+ '<p class="fz-12">'+data['content']+'</p>'+
-					'<div class="comment_list_content_img clearfix">';
+            res.forEach(function (v) {
+            	template += `<li class="clearfix">
+								<div class="comment_list_avatar pull-left">
+									<img src="http://${window.location.host}/${v.user_img}">
+									<span>${v.user_name}</span>
+								</div>
+								<div class="comment_list_content pull-right">
+									<p class="stars">`
+				//评论星星
+				for (var i=0;i<=data['grade']/20;i++)
+				{
+					template += '<i class="fa fa-star"></i>';
+				}
+				template += `</p>
+							<p class="fz-12">${v.content}</p>
+							<div class="comment_list_content_img clearfix">`
 				//评论图片
-				if (data['img']) {
-					for(var j=0;j<data['img'].length;j++) {
-						template += '<img class="pull-left mr-10" src="'+'http://'+window.location.host+'/'+data['thumb']+'" alt="">';
+				if (v['img']) {
+					for(var j=0;j<v['img'].length;j++) {
+						template += '<img class="pull-left mr-10" src="http://${window.location.host}/${v.thumb}">';
 					}
 				}
-				template += '</div>';
-				//评论回复
-				if (data['replys']) {
-					for(var j=0;j<data['replys'].length;j++) {
-						template += '<p class="fz-12">' + data['replys'][j]['aname'] +'<b>回复</b>'+ data['replys'][j]['bname']+'['+data['replys'][j]['created_at']+']:</p>'+ 
-							'<p class="fz-12">'+data['replys'][j]['content']+'</p>';					
+				template += `</div><p class="txt-r mt-10">${v.created_at}</p>`
+				if (v['replys']) {
+					template += '<div class="comment_reply">'
+					for(var j=0;j<v['replys'].length;j++) {
+						template += `
+							<div class="comment_reply_warpper">
+								<p class="fz-12">${v['replys'][j]['aname']} <b>回复</b> ${v['replys'][j]['bname']}：</p>
+								<p class="fz-12">${v['replys'][j]['content']}</p>
+								<p class="fz-12 txt-r">${v['replys'][j]['created_at']}</p>
+							</div>
+						`
 					}
+					template += '</div>'
 				}	
-				template += '<p class="txt-r mt-10">'+data['created_at']+'</p>'+'</div>'+'</li>';
-            });
+				template += `</div></li>`
+            })
             return template;
 		}
 
@@ -208,6 +218,7 @@
     	function cshPop() {
     		ajax('get', '/home/product/detail/addcart/' + params['id'])
     			.then(function (resolve) {
+    				console.log(resolve)
     				if (resolve) {
     					var v = resolve['content'];
     					var specs = resolve['specs'];
@@ -238,9 +249,10 @@
     		$(".productspec_container_info_img img").attr('src','http://'+window.location.host+'/'+v['thumb']);
     		$(".productspec_container_info_content h1").html(v['name']);
     		$(".productspec_container_info_content p").html(v['desc']);
-    		$(".productspec_container_info_content span").html('&yen;'+v['price']);
-    		$(".sum_price").html(v['price']);
+    		$(".productspec_container_info_content span").html('&yen;'+parseInt(v['price']).toFixed(2));
+    		$(".sum_price").html(parseInt(v['price']).toFixed(2));
     		$("#price").val(v['price']);
+    		$("#amount").val(1)
     	}
 
     	// 隐藏产品规格弹窗
@@ -330,6 +342,11 @@
 @section('content')
 	@include("layouts.header-info")
 	<div class="container productdetail">
+		<div class="productdetail_cart">
+			<a href="{{url('/home/cart')}}">
+				<i class="fa fa-shopping-cart"></i>
+			</a>
+		</div>
 		<div class="productdetail_container J_scroll">
 			<div class="productdetail_container_banner swiper-container">
 			    <div class="swiper-wrapper">
@@ -403,7 +420,7 @@
 					</li>
 				</ol>
 				<ul class="comment_list">
-<!-- 					<li class="clearfix">
+					<!-- <li class="clearfix">
 						<div class="comment_list_avatar pull-left">
 							<img src="{{url('/fx/images/usercenter_avatar.png')}}" alt="">
 							<span>哈哈哈哈</span>
@@ -422,9 +439,34 @@
 								<img class="pull-left mr-10" src="{{url('/fx/images/user_info_bg.png')}}" alt="">
 								<img class="pull-left mr-10" src="{{url('/fx/images/user_info_bg.png')}}" alt="">
 							</div>
-							<p class="fz-12">答案地方 <b>回复</b> 打撒 [2018-10-12 12:23:34] ：</p>
-							<p class="fz-12">水电费撒的发生发顺丰.....</p>
 							<p class="txt-r mt-10">0000年00月00日 00:00</p>
+							<div class="comment_reply">
+								<div class="comment_reply_warpper">
+									<p class="fz-12">答案地方 <b>回复</b> 打撒：</p>
+									<p class="fz-12">水电费撒的发生发顺丰.....</p>
+									<p class="fz-12 txt-r">2018-10-12 12:23:34</p>
+								</div>
+								<div class="comment_reply_warpper">
+									<p class="fz-12">答案地方 <b>回复</b> 打撒：</p>
+									<p class="fz-12">水电费撒的发生发顺丰.....</p>
+									<p class="fz-12 txt-r">2018-10-12 12:23:34</p>
+								</div>
+								<div class="comment_reply_warpper">
+									<p class="fz-12">答案地方 <b>回复</b> 打撒：</p>
+									<p class="fz-12">水电费撒的发生发顺丰.....</p>
+									<p class="fz-12 txt-r">2018-10-12 12:23:34</p>
+								</div>
+								<div class="comment_reply_warpper">
+									<p class="fz-12">答案地方 <b>回复</b> 打撒：</p>
+									<p class="fz-12">水电费撒的发生发顺丰.....</p>
+									<p class="fz-12 txt-r">2018-10-12 12:23:34</p>
+								</div>
+								<div class="comment_reply_warpper">
+									<p class="fz-12">答案地方 <b>回复</b> 打撒：</p>
+									<p class="fz-12">水电费撒的发生发顺丰.....</p>
+									<p class="fz-12 txt-r">2018-10-12 12:23:34</p>
+								</div>
+							</div>
 						</div>
 					</li> -->
 				</ul>
@@ -469,7 +511,7 @@
 			</div>
 			<div class="productspec_container_amount">
 				<i class="fa fa-minus-square mr-10 color-d7d7d7 J_minus_amount"></i>
-				<input type="number" autocomplete="off" name="amount" value="1">
+				<input type="number" autocomplete="off" id="amount" name="amount" value="1">
 				<i class="fa fa-plus-square ml-10 color-F78223 J_plus_amount"></i>
 			</div>
 			<div class="productspec_container_price">

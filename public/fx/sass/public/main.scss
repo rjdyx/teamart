@@ -1,3 +1,4 @@
+// placeholder颜色
 .login,
 .register,
 .reset {
@@ -31,6 +32,23 @@
 	}
 }
 
+// 返回首页按钮
+.backIndex {
+	position: fixed;
+	left: 5%;
+	top: 1.3rem;
+	z-index: 1004;
+	display: block;
+	width: 0.5rem;
+	height: 0.5rem;
+	background-color: rgba(0,0,0,0.5);
+	color: #fff;
+	text-align: center;
+	font-size: 16px;
+	border-radius: 50%;
+}
+
+// 登录
 .login {
 	width: 100%;
 	height: 100%;
@@ -98,6 +116,8 @@
 		margin: 0 auto;
 	}
 }
+
+// 注册
 .register {
 	width: 100%;
 	height: 100%;
@@ -175,6 +195,8 @@
 		margin: 0 auto;
 	}
 }
+
+// 重置
 .reset {
 	width: 100%;
 	height: 100%;
@@ -1099,7 +1121,7 @@
 		@include  backgroundImages("/fx/images/footer_bg.png", cover)
 		.collect_bottom_selection {
 			position: relative;
-			width: calc(100% - 2.5rem);
+			width: calc(100% - 3rem);
 			background-color: rgba(181, 156, 107, 0.2);
 			padding-left: 0.8rem;
 			span {
@@ -1121,9 +1143,15 @@
 				background-color: #FFF;
 			}
 		}
+		.collect_bottom_cart,
 		.collect_bottom_del {
-			width: 2.5rem;
+			width: 1.5rem;
 			font-style: normal;
+		}
+		.collect_bottom_cart {
+			background-color: rgba(165, 125, 49, 0.6);
+		}
+		.collect_bottom_del {
 			background-color: rgba(181, 156, 107, 0.6);
 		}
 	}
@@ -1746,6 +1774,22 @@
 .productdetail {
 	position: relative;
 	height: calc(100% - 1.2rem);
+	.productdetail_cart {
+		position: absolute;
+		right: 0.3rem;
+		top: 1.5rem;
+		width: 0.5rem;
+		height: 0.5rem;
+		background-color: rgba(0,0,0,0.3);
+		border-radius: 50%;
+		z-index: 1004;
+		text-align: center;
+		line-height: 0.5rem;
+		font-size: 20px;
+		a {
+			color: #f78223;
+		}
+	}
 	.productdetail_container {
 		width: 100%;
 		height: calc(100% - 1rem);
@@ -1904,6 +1948,14 @@
 								display: block;
 								width: 1rem;
 								height: 1rem;
+							}
+						}
+						.comment_reply {
+							width: 100%;
+							background-color: #d7d7d7;
+							.comment_reply_warpper {
+								width: 100%;
+								padding: 0.1rem;
 							}
 						}
 					}
@@ -2627,12 +2679,19 @@
 	.ordersite_map {
 		width: 100%;
 		height: 4rem;
-		background-color: pink;
+		text-align: center;
+		line-height: 4rem;
+	}
+	.ordersite_message {
+		width: 100%;
+		height: 1.2rem;
+		padding: 0.1rem 0.2rem;
 	}
 	.ordersite_list {
 		width: 100%;
-		height: calc(100% - 4rem);
+		height: calc(100% - 5.2rem);
 		overflow: auto;
+		border-top: 0.01rem solid #dadada;
 		.ordersite_warp {
 			position: relative;
 			padding: 0.3rem 0.2rem;
@@ -2686,6 +2745,9 @@
 			color: #FBB601;
 			.ordersite_warp_info {
 				h1 {
+					color: #FBB601;
+				}
+				a {
 					color: #FBB601;
 				}
 			}

@@ -7,6 +7,7 @@ require('babel-polyfill')
 
 require('swiper/dist/css/swiper.css')
 require('font-awesome/css/font-awesome.css')
+require('./css/dropload.css')
 // require('ionicons/dist/css/ionicons.css')
 require('./sass/index.scss')
 
@@ -48,20 +49,13 @@ $(function () {
 	$('.J_header_search').on('click tap', function () {
 		let v = $(this).siblings('input').val()
 		window.location.href = 'http://' + window.location.host + '/home/product/list?name=' + v
-		// ajax('get', 'url', {query: $('.J_header_search_inp').val()})
-		// 	.then(res => {
-		// 		console.log(res)
-		// 	})
-		// 	.catch(err => {
-		// 		console.log(err)
-		// 	})
 	})
 
 	let mySwiper = new Swiper('.swiper-container', {
-		// Optional parameters
 		pagination: '.swiper-pagination',
 		paginationClickable: true,
 		loop: true
 	})
+
 	prompt.init()
 })
