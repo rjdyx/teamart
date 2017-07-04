@@ -45,19 +45,21 @@
                     var template = ''
                     var data = res.data
                     if (data.length > 0) {
- 						template = dataForeach(data);
+                        template = dataForeach(data);
                     } else {
                         me.lock();
                         me.noData();
                     }
+                    me.resetload();
+                    if (type == 'up') {
+                        $('.promotion_list').html(template);
+                    } else {
+                        $('.promotion_list').append(template);
+                    }
                     if (type == 'up') {
                         me.unlock();
                         me.noData(false);
-                        $('.promotion_list').html(result);
-                    } else {
-                        $('.promotion_list').append(result);
                     }
-                    me.resetload();
                 }).catch(function (err) {
                     prompt.message('服务器异常！请稍后再试！')
                     // me.resetload()
@@ -69,14 +71,19 @@
             function dataForeach(data){
             	var template = '';
             	data.forEach(function (v) {
-                    template += '<div class="promotion_warpper pull-left">'+
-							'<a href="http://'+window.location.host+'/home/product/detail/'+v['id']+'">' +
-								'<img src="http://' + window.location.host + '/' +v['img']+'">'+
-								'<h1 class="mt-20 chayefont">'+v['name']+'</h1>'
-								'<p class="mt-10 mb-10">'+v['desc']+'</p>'+ '<p class="clearfix">'+
-								'<span class="pull-left price">&yen;'+v['price']+'</span>'
-								'<span class="pull-right sell">销量：<i>'+v['sell_amount']+
-								'</i></span></p></a></div>';  
+                    template += `
+                        <div class="promotion_warpper pull-left">
+                            <a href="http://${window.location.host}/home/product/detail/${v.id}">
+                                <img src="http://${window.location.host}/${v.img}">
+                                <h1 class="mt-20 chayefont">${v.name}</h1>
+                                <p class="mt-10 mb-10">${v.desc}</p>
+                                <p class="clearfix">
+                                    <span class="pull-left price">&yen;${v.price}</span>
+                                    <span class="pull-right sell">销量：<i>${v.sell_amount}</i></span>
+                                </p>
+                            </a>
+                        </div>
+                    `
                 })
                 return template;
             }
@@ -89,7 +96,6 @@
 	<div class="promotion" type="{{$type}}">
 		<div class="promotion_container">
 			<div class="promotion_list clearfix">
-
 	
 			</div>
 		</div>

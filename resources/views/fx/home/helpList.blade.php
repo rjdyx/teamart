@@ -12,6 +12,8 @@
 
 @section('content')
 @include("layouts.header-info")
+
+@include("layouts.backIndex")
 <div class="helpcenter">
 	<ul class="helpcenter_list">
 		@foreach($lists as $list)

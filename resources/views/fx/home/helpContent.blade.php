@@ -13,6 +13,8 @@
 @section('content')
 
 @include("layouts.header-info")
+
+@include("layouts.backIndex")
 <div class="container helpdetail">
 	{!! $con !!}
 </div>

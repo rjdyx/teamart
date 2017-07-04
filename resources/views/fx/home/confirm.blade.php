@@ -52,8 +52,12 @@
 	    	ajax('get', '/home/address/state').then(function (resolve) {
 				if (resolve) {
 					$(".address-defualt1").text(resolve['name']);	
-					$(".address-defualt2").text(resolve['phone']);	
-					$(".address-defualt3").text(resolve['province'] + resolve['city'] + resolve['area'] + resolve['detail']);
+					$(".address-defualt2").text(resolve['phone']);
+					if (resolve['city'] == resolve['area']) {
+						$(".address-defualt3").text(resolve['province'] + resolve['city'] + resolve['detail']);
+					} else {
+						$(".address-defualt3").text(resolve['province'] + resolve['city'] + resolve['area'] + resolve['detail']);
+					}
 				} else {
 
 				}
@@ -87,6 +91,9 @@
 
 @section('content')
 	@include("layouts.header-info")
+	
+	@include("layouts.backIndex")
+
 	<div class="confirm">
 		<div class="confirm_address mb-20 express">
 			<a href="{{url('/home/address')}}" class="clearfix">
@@ -102,7 +109,7 @@
 			</a>
 		</div>
 		<div class="confirm_address mb-20 point hide">
-			<a href="javascript:;" class="clearfix">
+			<a href="{{url('/home/order/site')}}" class="clearfix">
 				<i class="fa fa-map-marker pull-left"></i>
 				<div class="confirm_address_info pull-left">
 					<p>(请选择)自提点</p>
@@ -128,8 +135,8 @@
 						<h5 class="chayefont mb-10">{{$list->name}}</h5>
 						<p>{{$list->desc}}</p>
 						<div class="confirm_warpper_content_info_bottom">
-							<span class="pull-left price">&yen {{sprintf('%.2f',$list->amount * $list->price)}}</span>
-							<span class="pull-right sell">&times{{$list->amount}}</span>
+							<span class="pull-left price">&yen; {{sprintf('%.2f',$list->amount * $list->price)}}</span>
+							<span class="pull-right sell">&times;{{$list->amount}}</span>
 						</div>
 					</div>
 				</div>
@@ -145,12 +152,12 @@
 				</div>
 				<div class="confirm_container_sum_row">
 					<span class="pull-left chayefont fz-18">运费</span>
-					<span class="pull-right price fz-14 price-change" >&yen {{sprintf('%.2f',$lists->max('delivery_price'))}}</span>
+					<span class="pull-right price fz-14 price-change" >&yen; {{sprintf('%.2f',$lists->max('delivery_price'))}}</span>
 				</div>
 
 				<div class="confirm_container_sum_row">
 					<span class="pull-left chayefont fz-18">商品总额</span>
-					<span class="pull-right price fz-14 product-count" count="{{$count}}">&yen {{sprintf('%.2f',$count)}} </span>
+					<span class="pull-right price fz-14 product-count" count="{{$count}}">&yen; {{sprintf('%.2f',$count)}} </span>
 				</div>
 				<div class="confirm_container_sum_row">
 					<span class="pull-left chayefont fz-18">买家留言</span>
@@ -161,7 +168,7 @@
 		</div>
 		<div class="confirm_bottom">
 			<div class="confirm_bottom_sum pull-left txt-l">
-				合计总金额：<span class="price all-count">&yen0.00</span>
+				合计总金额：<span class="price all-count">&yen;0.00</span>
 			</div>
 			<div class="confirm_bottom_submit pull-left">
 				<a href="javascript:;">提交订单</a>

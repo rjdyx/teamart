@@ -11,6 +11,8 @@
 
 @section('content')
     @include("layouts.header-info")
+
+    @include("layouts.backIndex")
 	<div class="orderdelivery">
 		<div class="orderdelivery_order_lists">
             <div class="orderdelivery_warpper">
