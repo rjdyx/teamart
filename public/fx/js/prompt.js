@@ -4,6 +4,7 @@ exports.init = () => {
 			.find('.question').addClass('hide').end()
 			.find('.message').addClass('hide').end()
 			.find('.image').addClass('hide').end()
+			.find('#qrcode').addClass('hide').end()
 	})
 	// 点击取消时
 	$('.J_prompt_no').on('click tap', function () {
@@ -34,13 +35,18 @@ exports.message = (msg, url) => {
 exports.question = (msg, fn) => {
 	$('.prompt').addClass('active').find('.prompt_box_content').html(msg).end()
 		.find('.question').removeClass('hide')
-	$('.J_prompt_yes').on('click tap', function () {
+	$('.J_prompt_yes').off('click tap').on('click tap', function () {
 		fn()
 		$('.prompt').removeClass('active').find('.prompt_box_content').html('').end()
 			.find('.question').addClass('hide')
 	})
 }
-
+// 大图
 exports.image = (src) => {
 	$('.prompt').addClass('active').find('.image').removeClass('hide').attr('src', src)
+}
+
+// 二维码
+exports.qrcode = () => {
+	$('.prompt').addClass('active').find('#qrcode').removeClass('hide')
 }

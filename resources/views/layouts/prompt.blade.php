@@ -11,4 +11,5 @@
 		</div>
 	</div>
 	<img class="J_prompt_img hide image" src="" alt="">
+	<div id="qrcode" class="prompt_qrcode hide"></div>
 </div>

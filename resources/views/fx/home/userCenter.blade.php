@@ -7,8 +7,18 @@
 
 @section('script')
 	@parent
+	<script src="{{url('/fx/js/qrcode.js')}}"></script>
 	<script>
 	$(function () {
+		// 生成二维码
+		setTimeout(function () {
+			var qrcode = new QRCode(document.getElementById("qrcode"), {
+			    text: "http://jindo.dev.naver.com/collie",
+			    width: 2000,
+			    height: 2000
+			})
+		}, 200)
+
 		// 账号退出
 		$(".J_loginout").on('click tap', function () {
 			prompt.question('是否退出', function () {
@@ -17,6 +27,10 @@
 						prompt.message('退出成功', 'http://' + window.location.host)
 					})
 			})
+		})
+		// 显示二维码
+		$('#QRCode').on('click tap', function () {
+			prompt.qrcode()
 		})
 	})
 	</script>
@@ -28,6 +42,11 @@
 	<!-- 内容 -->
 	<div class="container usercenter">
 		<div class="usercenter_info">
+			@if(Auth::user() && Auth::user()->type < 2)
+				<a href="javascript:;" id="QRCode" class="usercenter_info_qrcode">
+					<i class="fa fa-qrcode fz-20"></i>
+				</a>
+			@endif
 			<div class="usercenter_avatar">
 				<img src="{{url('')}}/@if(Auth::user()){{Auth::user()->img}} @endif" alt="">
 			</div>
