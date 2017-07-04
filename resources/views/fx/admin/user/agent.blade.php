@@ -75,7 +75,9 @@
                   <a href="{{url('admin/user/agent')}}/{{$list->id}}">详情 </a>&nbsp;
                   <a href="{{url('admin/user/agent')}}/{{$list->id}}/edit">
                   <i class="fa fa-edit" style="margin-right: 5px;cursor: pointer;"></i></a>
-                  <i class="fa fa-trash-o" onclick="del({{$list->id}});" style="margin-right: 5px;cursor: pointer;"></i>
+                  <i class="fa fa-trash-o" onclick="del({{$list->id}});" style="margin-right: 5px;cursor: pointer;"></i>&nbsp;
+                  <a href="{{url('admin/user/agent/record')}}/{{$list->id}}">佣金</a>
+
                   </div>
                  </td>
                 </tr>
@@ -83,7 +85,7 @@
                 <tr>
                   <td><button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i></td>
                   <td><button type="button" onclick="dels();" class="btn btn-block btn-default btn-sm">删除</button></td>
-                  <th colspan="7">
+                  <th colspan="11">
                     <ul class="pagination pagination-sm no-margin pull-right">
                         {{ $lists->appends(['name' => '','role'=> ''])->links() }}
                         共{{ $lists->lastPage() }}页

@@ -17,8 +17,10 @@ use Illuminate\Support\Facades\Storage;
 use App\User;
 use App\Order;
 use App\Parter;
+use App\Brokerage;
 use Redirect;
 use DB;
+
 class AgentController extends Controller
 {
     //列表页
@@ -186,4 +188,72 @@ class AgentController extends Controller
         }
     }
 
+    //分销商佣金记录
+    public function record(Request $request, $id)
+    {
+        $order = 'desc';
+        $lists = Brokerage::where('user_id', $id);
+        if (!empty($request->date)) 
+        {
+            $lists = $lists->where('date','<=',$request->date); 
+            $order = 'asc';
+        }
+        $lists = $lists->orderBy('date',$order)->paginate(10);
+        return view(config('app.theme').'.admin.user.agent_record')->with(['lists'=>$lists,'id'=>$id]);
+    }
+
+    //创建结账
+    public function solve($id)
+    {
+        $bro = Brokerage::orderBy('created_at','desc')->first();//获取最后一次结账日期
+        $remain = 0;
+        $parter = Parter::find($id);//分销商角色信息
+        $orders = Order::where('pid',$id)->where('state','close');
+        $prices = Order::where('pid',$id)->where('state','close');
+        if (!empty($bro)) {
+            $date = $bro->created_at;
+            $remain = $bro->remain;
+            $orders = $orders ->where('updated_at','>=',$date);
+            $prices = $prices ->where('updated_at','>=',$date);
+        } 
+        $orders = $orders->count();//获取订单数量
+        $counts = $prices->sum('price');//获取订单总金额
+        $prices = $counts * $parter->scale;//佣金总额
+        return view(config('app.theme').'.admin.user.agent_record_create')->with(['parter'=>$parter,'id'=>$id,'orders'=>$orders,'prices'=>$prices,'remain'=>$remain]);
+    }
+
+    //结账处理
+    public function recordStore(Request $request)
+    {
+        $this->validate($request, [
+            'price'=>'required'
+        ]);
+
+        $model = new Brokerage;
+
+        //接收数据 加入model
+        $model->setRawAttributes($request->only(['scale','count','amount','price']));
+        $model->date = date('Y-m-d');
+        $model->user_id = $request->id;
+        $model->remain = ($request->count) + ($request->remain) - ($request->price);
+
+        if ($model->save()) return Redirect::to('admin/user/agent/record/'.$request->id)->with('status', '保存成功');
+        return Redirect::back()->withErrors('保存失败');
+    }
+
+    //佣金记录单条删除
+    public function recordDel(Request $request)
+    {
+        $id = $request->id;
+        if (Brokerage::destroy($id)) return Redirect::back()->with('删除成功');
+        return Redirect::back()->withErrors('删除失败');
+    }
+
+    //佣金记录批量删除
+    public function recordDels(Request $request)
+    {
+        $ids = explode(',',$request->ids);
+        if (Brokerage::destroy($ids)) return Redirect::back()->with('删除成功');
+        return Redirect::back()->withErrors('删除失败');
+    }
 }

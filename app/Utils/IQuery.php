@@ -14,7 +14,7 @@ use App\Log;
 use ReflectionClass;
 
 class IQuery{
-    
+
     //图片异步上传
     public function upload($request, $file_pic='img', $minState=true)
     {

@@ -16,7 +16,7 @@ class CreateParterTable extends Migration
         Schema::create('parter', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name',30)->comment('分销名称');
-            $table->double('scale', 5, 2)->comment('分销比列')->nullable();
+            $table->double('scale', 4, 2)->comment('分销比列')->nullable();
             $table->string('desc',50)->comment('描述')->nullable();
             $table->softDeletes();
             $table->timestamps();

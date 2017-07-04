@@ -29,7 +29,6 @@
             $("#dels").submit();
           }
         }
-
       }
     </script>
 

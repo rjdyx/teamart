@@ -11,6 +11,7 @@ use App\Brand;
 use App\Comment;
 use App\Reply;
 use Illuminate\Support\Facades\Auth;
+use IQuery;
 
 class ProductController extends Controller
 {
@@ -66,7 +67,8 @@ class ProductController extends Controller
 					)
 				->orderBy($orField, $order)
 				->distinct('product.id')
-				->paginate(6);
+				->paginate(10);
+
 		return $lists;
 	}
 

@@ -58,7 +58,7 @@
 			
 			function getLists (success, me) {
 				var url = 'http://'+window.location.host + '/home/product/list/data';
-				ajax('get', url, {params:params})
+				ajax('get', url, params)
 				.then(function (res) {
 					var result = ''
 					if (res.data.length) {
