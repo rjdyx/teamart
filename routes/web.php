@@ -123,7 +123,12 @@ Route::group(['namespace'=>'Admin','prefix'=>'admin','middleware'=>['auth','user
 	// 用户管理
 	Route::group(['prefix'=>'user'],function(){
 		Route::post('/agent/dels', 'AgentController@dels');
-		Route::get('/agent/sellcount', 'AgentController@sellCount');
+		Route::get('/agent/sellcount', 'AgentController@sellCount');//代理商图表数据
+		Route::get('/agent/record/{id}', 'AgentController@record');//佣金记录列表
+		Route::get('/agent/record/solve/{id}', 'AgentController@solve');//佣金记录创建
+		Route::post('/agent/record/store', 'AgentController@recordStore');//佣金记录结账处理
+		Route::post('/agent/record/del', 'AgentController@recordDel');//佣金记录单条删除
+		Route::post('/agent/record/dels', 'AgentController@recordDels');//佣金记录批量删除
 		Route::resource('/agent', 'AgentController');
 		Route::post('/agentrole/dels', 'AgentRoleController@dels');
 		Route::resource('/agentrole', 'AgentRoleController');

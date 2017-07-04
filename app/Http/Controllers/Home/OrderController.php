@@ -65,7 +65,7 @@ class OrderController extends Controller
 				->select('product.id','product.name','product.desc','product.thumb','product.price','product.delivery_price','order_product.amount')
 				->distinct('product.id')
 				->get();
-
+				
 		$count = 0;
 		foreach ($lists as $list) {
 			$count += $list->price * $list->amount;

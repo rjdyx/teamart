@@ -11,7 +11,9 @@
 	<script>
 		//定义全局对象
 		var params = {type:'', up:'', name:'', brand:'', category:'', min:'', max:'',page:1};
-		
+		params['name'] = "{{isset($_GET['name'])?$_GET['name']:''}}";
+		params['category'] = "{{isset($_GET['category'])?$_GET['category']:''}}";
+
 		$(function () {
 			var page = 0;//分页
 			var brands = categorys = {};
@@ -55,7 +57,7 @@
 			
 			function getLists (success, me) {
 				var url = 'http://'+window.location.host + '/home/product/list/data';
-				ajax('get', url, {params:params})
+				ajax('get', url, params)
 				.then(function (res) {
 					var result = ''
 					if (res.data.length) {
