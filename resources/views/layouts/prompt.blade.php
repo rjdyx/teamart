@@ -10,5 +10,5 @@
 			<a href="javascript:;" class="prompt_box_btn pull-left J_prompt_no">取消</a>
 		</div>
 	</div>
-	<img class="J_prompt_img hide image" src="{{url('/fx/images/usercenter_avatar.png')}}" alt="">
+	<img class="J_prompt_img hide image" src="" alt="">
 </div>

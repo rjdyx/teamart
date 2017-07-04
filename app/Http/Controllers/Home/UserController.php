@@ -39,11 +39,13 @@ class UserController extends Controller
 	public function userAsset () {
 		$data = Brokerage::where('user_id',Auth::user()->id)->orderBy('created_at','desc')->first();
 		$check = 'false'; 
+		$await = 0;
 		if (!empty($data)) {
 			$check = $data->created_at;
+			$await = $data->remain;
 		}
 		$allprices = $this->brokerage();//累计金额
-		$prices = $this->brokerage($check) + $data->remain;//可提现余额
+		$prices = $this->brokerage($check) + $await;//可提现余额
 		$title = '个人资产';
 		return view(config('app.theme').'.home.userAssets')->with(['data'=>$data,'title'=>$title,'allprices'=>$allprices,'prices'=>$prices]);
 	}
