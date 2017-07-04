@@ -62,7 +62,7 @@
 				<li class="chayefont">累计佣金：</li>
 				<li class="chayefont red">{{sprintf('%.2f', $sells)}}元</li>
 				<li class="chayefont">
-					<a href="javascript:;" class="pull-right withdraw">提现</a>
+					<a href="javascript:;" class="pull-right withdraw">详细</a>
 				</li>
 			</ol>
 		</div>

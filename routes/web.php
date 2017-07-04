@@ -88,6 +88,7 @@ Route::group(['namespace'=>'Home','prefix'=>'home','middleware'=>['auth']],funct
 
 	//收藏
 	Route::get('/collect/data','CollectController@ListData');
+	Route::get('/collect/cart','CollectController@storeCart');
 	Route::post('/collect/dels','CollectController@dels');
 	Route::resource('/collect','CollectController');
 

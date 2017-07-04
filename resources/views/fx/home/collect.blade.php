@@ -123,8 +123,7 @@
 									<div class="collect_warpper mb-20">
 										<div class="collect_warpper_tit J_select" data-id="${v.id}">
 											<a href="javascript:;" class="chayefont">
-												<i class="fa fa-ban"></i>
-												绿茶宝塔镇河妖
+												<i class="fa"></i>
 											</a>
 										</div>
 										<div class="collect_warpper_content clearfix">

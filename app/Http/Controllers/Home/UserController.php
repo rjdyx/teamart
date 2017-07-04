@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Order;
 use App\OrderProduct;
 use App\User;
+use App\Brokerage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use IQuery;
@@ -26,7 +27,7 @@ class UserController extends Controller
 
 			//佣金计算
 			if (Auth::user()->type == 1){
-				//待定 后面补上...
+				$sells = $this->brokerage();//累计金额
 			}
 		}
 		$title = '个人中心';
@@ -36,10 +37,26 @@ class UserController extends Controller
 
 	//个人资产
 	public function userAsset () {
-		$data = User::find(Auth::user()->id);
+		$data = Brokerage::where('user_id',Auth::user()->id)->orderBy('created_at','desc')->first();
+		$check = 'false'; 
+		if (!empty($data)) {
+			$check = $data->created_at;
+		}
+		$allprices = $this->brokerage();//累计金额
+		$prices = $this->brokerage($check) + $data->remain;//可提现余额
 		$title = '个人资产';
-		return view(config('app.theme').'.home.userAssets')->with(['data'=>$data,'title'=>$title]);
+		return view(config('app.theme').'.home.userAssets')->with(['data'=>$data,'title'=>$title,'allprices'=>$allprices,'prices'=>$prices]);
 	}
+
+	//订单金额统计方法
+	public function brokerage($check ='false')
+	{
+		$prices = Order::where('type','order')
+				->where('state','close')
+				->where('pid',Auth::user()->id);
+		if ($check != 'false') $prices = $prices->where('updated_at','>=',$check);
+		return $prices->sum('price');		
+	}	
 
 	//编辑 用户信息
 	public function edit () {
