@@ -123,6 +123,7 @@
             // 全选
             $('.J_select_all').on('click tap', function () {
                 if (!$(this).find('span').hasClass('active')) {
+                    dels = []
                     $('.J_select')
                     .each(function () {
                         $(this).addClass('active')

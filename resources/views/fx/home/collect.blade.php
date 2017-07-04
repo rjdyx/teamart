@@ -14,14 +14,15 @@
 			var dels = []
 			// 单个选择
 			function selectSingle () {
-				if (!$(this).find('a').hasClass('active')) {
-					$(this).find('a').addClass('active')
+				if (!$(this).hasClass('active')) {
+					$(this).addClass('active')
 					dels.push($(this).data('id'))
 					if (dels.length == $('.J_select').length) {
 						$('.J_select_all').find('span').addClass('active')
 					}
 				} else {
-					$(this).find('a').removeClass('active')
+					$(this).removeClass('active')
+					$('.J_select_all').find('span').removeClass('active')
 					var arr = []
 					for (var i = 0; i < dels.length; i++) {
 						if (dels[i] != $(this).data('id')) {
@@ -30,24 +31,27 @@
 					}
 					dels = arr
 				}
+				console.log(dels)
 			}
 			// 全选
 			$('.J_select_all').on('click tap', function () {
 				if (!$(this).find('span').hasClass('active')) {
+					dels = []
 					$('.J_select')
 					.each(function () {
-						$(this).find('a').addClass('active')
+						$(this).addClass('active')
 						dels.push($(this).data('id'))
 					})
 					$(this).find('span').addClass('active')
 				} else {
 					$('.J_select')
 					.each(function () {
-						$(this).find('a').removeClass('active')
+						$(this).removeClass('active')
 						dels = []
 					})
 					$(this).find('span').removeClass('active')
 				}
+				console.log(dels)
 			})
 			// 删除商品
 			$('.J_dels').on('click tap', function () {
@@ -76,6 +80,7 @@
 					})
                 }
 			})
+			// 加入购物车
 			$('.J_join_cart').on('click tap', function () {
 				if (dels.length == 0) {
                     prompt.message('请选择要加入购物车')
@@ -129,23 +134,17 @@
 						if (res.data.length > 0) {
 							res.data.forEach(function (v) {
 								result += `
-									<div class="collect_warpper mb-20">
-										<div class="collect_warpper_tit J_select" data-id="${v.id}">
-											<a href="javascript:;" class="chayefont">
-												<i class="fa"></i>
-											</a>
+									<div class="collect_warpper mb-20 clearfix">
+										<i class="collect_warpper_select J_select" data-id="${v.id}"></i>
+										<div class="collect_warpper_content_img pull-left mr-20">
+											<img src="${v.img}">
 										</div>
-										<div class="collect_warpper_content clearfix">
-											<div class="collect_warpper_content_img pull-left mr-20">
-												<img src="${v.img}">
-											</div>
-											<div class="collect_warpper_content_info pull-right">
-												<h5 class="chayefont mb-10">${v.name}</h5>
-												<p>${v.desc}</p>
-												<div class="collect_warpper_content_info_bottom">
-													<span class="pull-left price">￥${v.price}</span>
-													<span class="pull-right sell">已售${v.sell_amount}</span>
-												</div>
+										<div class="collect_warpper_content_info pull-right">
+											<h5 class="chayefont mb-10">${v.name}</h5>
+											<p>${v.desc}</p>
+											<div class="collect_warpper_content_info_bottom">
+												<span class="pull-left price">￥${v.price}</span>
+												<span class="pull-right sell">已售${v.sell_amount}</span>
 											</div>
 										</div>
 									</div>
