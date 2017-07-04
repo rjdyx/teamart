@@ -35,7 +35,7 @@
 
     
     <!-- Styles -->
-    {{-- <link rel="stylesheet" href="{{url('/fx/build/css/index.css')}}"> --}}
+    <link rel="stylesheet" href="{{url('/fx/build/css/index.css')}}">
     <link rel="stylesheet" href="http://localhost:8080/fx/build/css/index.css">
     @yield('css')
 
@@ -49,8 +49,8 @@
 <body class="base-fontsize">
     @yield('content')
     <!-- Scripts -->
-    {{-- <script src="{{url('/fx/build/vendor-bundle.js')}}"></script>
-    <script src="{{url('/fx/build/index.js')}}"></script> --}}
+    <script src="{{url('/fx/build/vendor-bundle.js')}}"></script>
+    <script src="{{url('/fx/build/index.js')}}"></script>
     <script src="http://localhost:8080/fx/build/vendor-bundle.js"></script>
     <script src="http://localhost:8080/fx/build/index.js"></script>
     <script>

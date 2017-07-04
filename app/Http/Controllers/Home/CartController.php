@@ -14,7 +14,8 @@ use App\Address;
 class CartController extends Controller
 {
 	//购物车列表页
-	public function index (Request $request) {
+	public function index (Request $request) 
+	{
 		$lists= $this->searchList();
 
 		$totals= Order::where('type','cart')
@@ -22,10 +23,13 @@ class CartController extends Controller
 			->value('price');
 		$title = '购物车';
 		$footer = 'cart';
-		return view(config('app.theme').'.home.cart')->with(['lists'=>$lists,'title'=>$title,'footer'=>$footer,'totals'=>$totals]);
+		return view(config('app.theme').'.home.cart')
+		->with(['lists'=>$lists,'title'=>$title,'footer'=>$footer,'totals'=>$totals]);
 	}
+
 	//添加商品到购物车
-	public function store(Request $request){
+	public function store(Request $request)
+	{
 		$amount= $request->amount;
 	    $product_id=$request->id;
 
