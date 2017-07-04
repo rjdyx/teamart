@@ -38,13 +38,13 @@
                 if (type == 'down') {
                     page++
                 } else {
-                    page = 0
+                    page = 1
                 }
                 ajax('get', '/home/cart/data', {page: page}, false, false, false)
                     .then(function (res) {
                         var template = ''
-                        if (res.length > 0) {
-                            res.forEach(function (v) {
+                        if (res.data.length > 0) {
+                            res.data.forEach(function (v) {
                                 template += `
                                     <div class="cart_warpper mb-20">
                                         <div class="cart_warpper_tit J_select">
@@ -61,7 +61,7 @@
                                                 <h5 class="chayefont mb-10">${v.name}</h5>
                                                 <p>${v.desc}</p>
                                                 <div class="cart_warpper_content_info_bottom">
-                                                    <span class="pull-left price">￥${v.price}</span>
+                                                    <span class="pull-left price">￥${parseInt(v.price).toFixed(2)}</span>
                                                     <div class="cwcib_number pull-right">
                                                         <i class="fa fa-minus-circle"></i>
                                                         <span class="sell">&times${v.amount}</span>
@@ -78,15 +78,23 @@
                             me.noData();
                         }
                         if (type == 'up') {
+                            $('.cart_list').html(template);
+                        } else {
+                            $('.cart_list').append(template);
+                        }
+                         $('.J_select').off('click tap').on('click tap', selectSingle)
+                         // 减少商品数量
+                        $('.J_minus').off('click tap').on('click tap', minus)
+                        // 增加商品数量
+                        $('.J_plus').off('click tap').on('click tap', plus)
+                        me.resetload();
+                        if (type == 'up') {
                             me.unlock();
                             me.noData(false);
-                            $('.cart_list').html(result);
-                        } else {
-                            $('.cart_list').append(result);
                         }
-                        me.resetload();
                     })
                     .catch(function (err) {
+                        console.dir(err)
                         prompt.message('请求错误')
                         // me.resetload()
                     })
@@ -99,7 +107,7 @@
             })
 
             // 单选
-            $('.J_select').on('click tap', function () {
+            function selectSingle () {
                 if (!$(this).find('a').hasClass('active')) {
                     $(this).find('a').addClass('active')
                     dels.push($(this).data('id'))
@@ -116,8 +124,8 @@
                     }
                     dels = arr
                 }
-            })
-            
+            }
+
             // 全选
             $('.J_select_all').on('click tap', function () {
                 if (!$(this).find('span').hasClass('active')) {
@@ -153,7 +161,7 @@
                     })
             })
             // 减少商品数量
-            $('.J_minus').on('click tap', function () {
+            function minus () {
                 var gid = $(this).parents('.cart_warpper').find('.J_select').data('id')
                 if (confirm_params[gid] > 1) {
                     confirm_params[gid] -= 1
@@ -162,14 +170,15 @@
                     prompt.message('单个商品数量最少为1')
                 }
                 console.log(confirm_params)
-            })
+            }
+            
             // 增加商品数量
-            $('.J_plus').on('click tap', function () {
+            function plus () {
                 var gid = $(this).parents('.cart_warpper').find('.J_select').data('id')
                 confirm_params[gid] += 1
                 $(this).siblings('.sell').find('.amount').text(confirm_params[gid])
                 console.log(confirm_params)
-            })
+            }
         })
     </script>
 @endsection
@@ -181,7 +190,7 @@
     <div class="cart">
         <div class="cart_container">
             <div class="cart_list">
-                @foreach($lists as $list)
+                {{-- @foreach($lists as $list)
                 <div class="cart_warpper mb-20">
                     <div class="cart_warpper_tit J_select" data-id="{{$list->id}}">
                         <a href="javascript:;" class="chayefont">
@@ -207,7 +216,7 @@
                         </div>
                     </div>
                 </div>
-                @endforeach
+                @endforeach --}}
             </div>
         </div>
         <div class="cart_bottom">

@@ -140,13 +140,13 @@ class CartController extends Controller
 	}
 //分页展示
  public function  listData(Request $request){
-	 $lists= $this->searchList();
+	$lists= $this->searchList();
 
-	 $totals= Order::where('type','cart')
-		 ->where('order.user_id',Auth::user()->id)
-		 ->value('price');
+	 // $totals= Order::where('type','cart')
+		//  ->where('order.user_id',Auth::user()->id)
+		//  ->value('price');
 
-	 return ['lists'=>$lists,'$totals'=>$totals];
+	 return $lists;
  }
 	public function searchList(){
 		return Order::join('order_product','order.id','=','order_product.order_id')

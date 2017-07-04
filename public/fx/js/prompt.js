@@ -41,6 +41,6 @@ exports.question = (msg, fn) => {
 	})
 }
 
-exports.image = () => {
-	$('.prompt').addClass('active').find('.image').removeClass('hide')
+exports.image = (src) => {
+	$('.prompt').addClass('active').find('.image').removeClass('hide').attr('src', src)
 }
