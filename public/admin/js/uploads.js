@@ -39,7 +39,7 @@ $(function() {
 		var template = '<div class="upload_box pull-left ml-10 mt-10"><label for="img' + nid + '" class="upload pull-left"><i class="glyphicon glyphicon-plus"></i></label><label class="btn btn-primary pull-left invisible ml-10" for="img' + nid + '">修改</label><div class="btn btn-danger pull-left invisible ml-10 mt-10 J_remove">删除</div><input type="file" name="imgs[]" id="img' + nid + '" class="form-control invisible J_imgs" accept="image/jpeg,image/jpg,image/png"></div>'
 		$('.upload_list').append(template)
 			.find('.J_imgs').off('change', showImg).on('change', showImg).end()
-			.find('.J_removes').off('change', showImg).on('click', removeFile)
+			.find('.J_removes').off('click', removeFile).on('click', removeFile)
 	}
 	function removeFile () {
 		var idx = $(this).siblings('input').attr('id').substr(-1)

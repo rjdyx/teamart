@@ -20,7 +20,13 @@ const ajax = (type, url, data = {}, isEdit = false, hasfile = false, errFn = tru
 			}
 			let fd = new FormData()
 			for (let i in data) {
-				fd.append(i, data[i])
+				if (i === 'imgs[]') {
+					data[i].forEach((v) => {
+						fd.append('imgs[]', v)
+					})
+				} else {
+					fd.append(i, data[i])
+				}
 			}
 			datas = fd
 		} else {

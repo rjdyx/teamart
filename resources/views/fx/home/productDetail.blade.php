@@ -341,6 +341,8 @@
 
 @section('content')
 	@include("layouts.header-info")
+
+	@include("layouts.backIndex")
 	<div class="container productdetail">
 		<div class="productdetail_cart">
 			<a href="{{url('/home/cart')}}">

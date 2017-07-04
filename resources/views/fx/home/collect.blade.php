@@ -60,6 +60,15 @@
 							.then(function (res) {
 								if (res) {
 									prompt.message('删除成功')
+									$('.J_select').each(function () {
+										var $this = $(this)
+										dels.forEach(function (v) {
+											if (v == $this.data('id')) {
+												$this.parent().remove()
+											}
+										})
+									})
+									dels = []
 								} else {
 									prompt.message('删除失败')
 								}
@@ -149,11 +158,13 @@
 						if (type == 'up') {
                         	$('.collect_list').html(result);
                         	$('.J_select_all').find('span').removeClass('active')
+							$('.J_select').on('click tap', selectSingle)
                         	dels = []
 						} else {
 							$('.collect_list').append(result);
+							$('.J_select').off('click tap')
+							$('.J_select').on('click tap', selectSingle)
 						}
-						$('.J_select').on('click tap', selectSingle)
                         me.resetload();
                         if (type == 'up') {
                             me.unlock();
