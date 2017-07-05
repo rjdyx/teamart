@@ -50,12 +50,12 @@
               }
             }
             if (arr.length == 0) {
-              $('#img_txt').text('至少要上传一张商品图片')
+              $('#imgs_txt').text('至少要上传一张商品图片')
               return false
             }
           } else {
             if (imgs.files.length == 0) {
-              $('#img_txt').text('至少要上传一张商品图片')
+              $('#imgs_txt').text('至少要上传一张商品图片')
               return false
             }
           }

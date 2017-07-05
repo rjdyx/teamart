@@ -10,12 +10,26 @@
 	<script src="{{url('/fx/js/qrcode.js')}}"></script>
 	<script>
 	$(function () {
+		// navigator.getUserMedia
+		// navigator.mediaDevices.getUserMedia({
+		// 	audio: false,
+		// 	video: {
+		// 		width: { min: 1024, ideal: 1280, max: 1920 },
+		// 		height: { min: 776, ideal: 720, max: 1080 }
+		// 	}
+		// })
+		// .then(function(mediaStream) {
+		// 	console.dir(mediaStream)
+		// })
+		// .catch(function(error) {
+		// 	console.log(error)
+		// })
 		// 生成二维码
 		setTimeout(function () {
 			var qrcode = new QRCode(document.getElementById("qrcode"), {
 			    text: "http://jindo.dev.naver.com/collie",
-			    width: 2000,
-			    height: 2000
+			    width: 1024,
+			    height: 1024
 			})
 		}, 200)
 
@@ -29,8 +43,13 @@
 			})
 		})
 		// 显示二维码
-		$('#QRCode').on('click tap', function () {
+		$('.J_QRcode').on('click tap', function () {
 			prompt.qrcode()
+		})
+
+		// 扫描二维码
+		$('.J_getQRcode').on('click tap', function () {
+			// prompt.qrcode()
 		})
 	})
 	</script>

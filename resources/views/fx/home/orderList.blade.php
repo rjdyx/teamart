@@ -55,6 +55,7 @@
                     me.noData();
                 }
                 $('.order_list').append(result);// 插入数据到页面，放到最后面
+                $(".J_opts").off('click tap').on('click tap', orderOpts)
                 me.resetload();// 每次数据插入，必须重置
                 if (type == 'up') {
                     page = 0;// 重置页数，重新获取loadDownFn的数据
@@ -69,30 +70,6 @@
                 me.noData(false);
                 // me.resetload();// 即使加载出错，也得重置
             })
-            // axios.get(url, {params:params}).then(function (res) {
-            //     var data = res.data
-            //     if(data != ''){
-            //         result = joint(data);
-            //     }else{
-            //         // 如果没有数据 锁定
-            //         me.lock();
-            //         // 无数据
-            //         me.noData();
-            //     }
-            //     $('.order_list').append(result);// 插入数据到页面，放到最后面
-            //     me.resetload();// 每次数据插入，必须重置
-            //     if (type == 'up') {
-            //         page = 0;// 重置页数，重新获取loadDownFn的数据
-            //         // 解锁loadDownFn里锁定的情况
-            //         me.unlock();
-            //         me.noData(false);
-            //     }
-            // }).catch(function (err) {
-            //     console.log(err)
-            //     me.unlock();
-            //     me.noData(false);
-            //     // me.resetload();// 即使加载出错，也得重置
-            // });
         }
 
         // 拼接HTML
@@ -138,27 +115,29 @@
                         c = '<div class="order_warpper_sum txt-r">'+'<span>总' + len + '件商品</span>'+
                                 '<span>合计：<i class="price">&yen' + count + '</i>（包运费）</span>'+
                                 '</div>'+'<div class="order_warpper_opts">'+'<ul class="pull-right">';
-
+                                if (state == 'cancell' && method != 'self') {
+                                    c += '<li>'+'<a href="javascript:;" class="chayefont">'+'订单已取消'+'</a>'+'</li>';
+                                }
                                 if (state == 'pading' && method != 'self') {
-                                    c += '<li type="cancell" oid="'+oid+'">'+'<a href="javascript:;" class="chayefont point">'+'取消订单'+'</a>'+'</li>'+
-                                    '<li type="pay" oid="'+oid+'">'+'<a href="javascript:;" class="chayefont point">'+'付款'+'</a>'+'</li>';
+                                    c += '<li class="J_opts" type="cancell" oid="'+oid+'">'+'<a href="javascript:;" class="chayefont point">'+'取消订单'+'</a>'+'</li>'+
+                                    '<li class="J_opts" type="pay" oid="'+oid+'">'+'<a href="javascript:;" class="chayefont point">'+'付款'+'</a>'+'</li>';
                                 }
                                 if (state == 'paid' && method != 'self') {
-                                    c += '<li type="back" oid="'+oid+'">'+'<a href="javascript:;" class="chayefont point">'+'申请退货'+'</a>'+'</li>';
+                                    c += '<li class="J_opts" type="back" oid="'+oid+'">'+'<a href="javascript:;" class="chayefont point">'+'申请退货'+'</a>'+'</li>';
                                 }
                                 if (state == 'delivery' && method != 'self') {
-                                    c += '<li type="delivery" oid="'+oid+'">'+'<a href="javascript:;" class="chayefont point">'+'查看物流'+'</a>'+'</li>'+
-                                    '<li type="take" oid="'+oid+'">'+'<a href="javascript:;" class="chayefont  point">'+'确定收货'+'</a>'+'</li>';
+                                    c += '<li class="J_opts" type="delivery" oid="'+oid+'">'+'<a href="javascript:;" class="chayefont point">'+'查看物流'+'</a>'+'</li>'+
+                                    '<li class="J_opts" type="take" oid="'+oid+'">'+'<a href="javascript:;" class="chayefont  point">'+'确定收货'+'</a>'+'</li>';
                                 }
                                 if (state == 'take' && method != 'self') {
-                                    c += '<li type="comment" oid="'+oid+'">'+'<a href="javascript:;" class="chayefont point">'+'立即评价'+'</a>'+'</li>';
+                                    c += '<li class="J_opts" type="comment" oid="'+oid+'">'+'<a href="javascript:;" class="chayefont point">'+'立即评价'+'</a>'+'</li>';
                                 }
                                 if (state == 'backn' && method != 'self') {
-                                    c += '<li type="back" oid="'+oid+'">'+'<a href="javascript:;" class="chayefont point">'+'退货处理'+'</a>'+'</li>';
+                                    c += '<li class="J_opts" type="back" oid="'+oid+'">'+'<a href="javascript:;" class="chayefont point">'+'退货处理'+'</a>'+'</li>';
                                 }
                                 if (method == 'self') {
-                                    c +='<li type="back" oid="'+oid+'">'+'<a href="javascript:;" class="chayefont point">'+'申请退货'+'</a>'+'</li>'+
-                                    '<li type="code" oid="'+oid+'">'+'<a href="javascript:;" class="chayefont  point">'+'生成二维码'+'</a>'+'</li>';
+                                    c +='<li class="J_opts" type="back" oid="'+oid+'">'+'<a href="javascript:;" class="chayefont point">'+'申请退货'+'</a>'+'</li>'+
+                                    '<li class="J_opts" type="code" oid="'+oid+'">'+'<a href="javascript:;" class="chayefont  point">'+'生成二维码'+'</a>'+'</li>';
                                 }
                         c += '</ul>'+'</div>'+'</div>';
                         result += a + b;
@@ -172,7 +151,7 @@
         }
 
         //订单功能按钮点击
-        $(".order_list").on('click','.pull-right li',function() {
+        function orderOpts() {
             var type = $(this).attr('type');
             var id = $(this).attr('oid');
             if (type == 'pay') { order_pay(id); }
@@ -182,7 +161,7 @@
             if (type == 'comment') { order_comment(id); }
             if (type == 'cancell') { order_cancell(id); }
             if (type == 'delivery') { order_delivery(id); }
-        })
+        }
 
         //订单state状态改变调用方法
         function orderOperate(addurl, pro, params) {
@@ -267,6 +246,7 @@
                 result = joint(data);
                 $('.order_list').html(result);// 插入数据到页面，放到最后面
                 dropload.resetload()
+                $(".J_opts").on('click tap', orderOpts)
             })
         }
 
@@ -321,7 +301,7 @@
         </div>
         <div class="order_container">
             <div class="order_list">
-        <!-- <div class="order_warpper mb-20">
+        <!--    <div class="order_warpper mb-20">
                     <div class="order_warpper_tit">
                         <h1 class="pull-left chayefont">
                             <i class="fa fa-ban"></i>

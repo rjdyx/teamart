@@ -56,6 +56,8 @@ const ajax = (type, url, data = {}, isEdit = false, hasfile = false, errFn = tru
 						prompt.message(msg)
 					} else if (err.response.status === 500) {
 						prompt.message('服务错误，请稍后再试')
+					} else if (err.response.status === 401) {
+						prompt.message('请先登录', 'http://' + window.location.host + '/login')
 					} else {
 						prompt.message('请求错误')
 					}

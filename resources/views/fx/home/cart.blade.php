@@ -76,7 +76,7 @@
                             $('.cart_list').append(template);
                         }
                         $('.cart_warpper').each(function () {
-                            var cid = $(this).find('.J_select').data('id')
+                            var cid = $(this).find('.J_select').data('pid')
                             var camount = parseInt($(this).find('.amount').text())
                             confirm_params[cid] = camount
                         })
@@ -183,6 +183,7 @@
             // 减少商品数量
             function minus () {
                 var gid = $(this).parents('.cart_warpper').find('.J_select').data('pid')
+                console.log(confirm_params[gid])
                 if (confirm_params[gid] > 1) {
                     confirm_params[gid] -= 1
                     $(this).siblings('.sell').find('.amount').text(confirm_params[gid])
@@ -223,8 +224,8 @@
             // 计算总价
             function totals () {
                 var total = 0
-                dels.forEach(function (v) {
-                    var price = parseFloat($(`[data-id="${v}"]`).data('price'))
+                pids.forEach(function (v) {
+                    var price = parseFloat($(`[data-pid="${v}"]`).data('price'))
                     total += price * confirm_params[v]
                 })
                 return total.toFixed(2)

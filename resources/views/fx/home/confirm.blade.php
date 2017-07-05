@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title') 地址管理 @endsection
+@section('title') 确认订单 @endsection
 
 @section('css')
 @endsection
@@ -79,7 +79,7 @@
     	function countPrice() {
     		var product_price = $(".product-count").attr('count');
     		var count = parseInt(product_price) + parseInt(delivery_price);
-    		$(".all-count").html('&yen'+count);
+    		$(".all-count").html('&yen;'+count);
     	}
 
     	//提交订单
@@ -100,10 +100,10 @@
 				<i class="fa fa-map-marker pull-left"></i>
 				<div class="confirm_address_info pull-left">
 					<p class="clearfix">
-						<span class="pull-left chayefont fz-16 address-defualt1"> </span> <!-- 联系人 -->
-						<span class="pull-right gray address-defualt2"> </span><!--  手机 -->
+						<span class="pull-left chayefont fz-20 address-defualt1"> </span> <!-- 联系人 -->
+						<span class="pull-right gray fz-16 address-defualt2"> </span><!--  手机 -->
 					</p>
-					<p class="gray address-defualt3"> </p><!-- 地址 -->
+					<p class="gray fz-14 address-defualt3"> </p><!-- 地址 -->
 				</div>
 				<i class="fa fa-angle-right pull-right txt-r"></i>
 			</a>
@@ -112,8 +112,8 @@
 			<a href="{{url('/home/order/site')}}" class="clearfix">
 				<i class="fa fa-map-marker pull-left"></i>
 				<div class="confirm_address_info pull-left">
-					<p>(请选择)自提点</p>
-					<p class="gray site-defualt"></p>
+					<p>当前自提点</p>
+					<p class="gray fz-16 site-defualt"></p>
 				</div>
 				<i class="fa fa-angle-right pull-right txt-r"></i>
 			</a>
