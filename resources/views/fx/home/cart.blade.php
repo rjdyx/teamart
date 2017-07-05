@@ -48,7 +48,7 @@
                             res.data.forEach(function (v) {
                                 template += `
                                     <div class="cart_warpper mb-20 clearfix">
-                                        <i class="cart_warpper_select J_select" data-id="${v.id}"></i>
+                                        <i class="cart_warpper_select J_select" data-id="${v.opid}"></i>
                                         <div class="cart_warpper_content_img pull-left mr-20">
                                             <img src="${v.img}">
                                         </div>
@@ -59,7 +59,7 @@
                                                 <span class="pull-left price">￥${parseInt(v.price).toFixed(2)}</span>
                                                 <div class="cwcib_number pull-right">
                                                     <i class="fa fa-minus-circle J_minus"></i>
-                                                    <span class="sell">&times;<span class="amount">${v.amount}</span></span>
+                                                    <span class="sell" stock="${v.stock}">&times;<span class="amount" opid="${v.opid}">${v.amount}</span></span>
                                                     <i class="fa fa-plus-circle J_plus"></i>
                                                 </div>
                                             </div>
@@ -146,23 +146,26 @@
                     prompt.message('请选择要删除的商品')
                     return
                 }
-                ajax('post', '/home/cart/dels', dels)
-                    .then(function (res) {
-                        if (res) {
-                            prompt.message('删除成功')
-                            $('.J_select').each(function () {
-                                var $this = $(this)
-                                dels.forEach(function (v) {
-                                    if (v == $this.data('id')) {
-                                        $this.parent().remove()
-                                    }
+                prompt.question('是否删除',function () {
+                    ajax('post', '/home/cart/dels', dels)
+                        .then(function (res) {
+                            if (res) {
+                                prompt.message('删除成功')
+                                $('.J_select').each(function () {
+                                    var $this = $(this)
+                                    dels.forEach(function (v) {
+                                        if (v == $this.data('id')) {
+                                            $this.parent().remove()
+                                        }
+                                    })
                                 })
-                            })
-                            dels = []
-                        } else {
-                            prompt.message('删除失败')
-                        }
-                    })
+                                dels = []
+                            } else {
+                                prompt.message('删除失败')
+                            }
+                        })
+                })
+                
             })
             // 减少商品数量
             function minus () {
@@ -170,6 +173,8 @@
                 if (confirm_params[gid] > 1) {
                     confirm_params[gid] -= 1
                     $(this).siblings('.sell').find('.amount').text(confirm_params[gid])
+                    var id = $(this).siblings('.sell').find('.amount').attr('opid')
+                    updateAmount(id, confirm_params[gid]);
                 } else {
                     prompt.message('单个商品数量最少为1')
                 }
@@ -177,12 +182,28 @@
             }
             
             // 增加商品数量
-            // 需要ajax判断后台库存是否足够
             function plus () {
                 var gid = $(this).parents('.cart_warpper').find('.J_select').data('id')
-                confirm_params[gid] += 1
-                $(this).siblings('.sell').find('.amount').text(confirm_params[gid])
+                var stock = $(this).siblings('.sell').attr('stock')
+                if (stock >= confirm_params[gid]){
+                    confirm_params[gid] += 1
+                    $(this).siblings('.sell').find('.amount').text(confirm_params[gid])
+                    var id = $(this).siblings('.sell').find('.amount').attr('opid')
+                    updateAmount(id, confirm_params[gid]);
+                } else {
+                    prompt.message('商品数量已达到库存上限')
+                }
                 console.log(confirm_params)
+            }
+
+            //修改商品数量
+            function updateAmount(id, amount){
+                var params = {id:id,amount:amount}
+                ajax('post', '/home/cart/update/amount', params).then(function (res) {
+                    if (!res) {
+                        prompt.message('服务器异常！请稍后再试！')
+                    }
+                })  
             }
 
             // 结算
@@ -191,16 +212,17 @@
                     prompt.message('请选择要结算的商品')
                     return
                 }
-                var params = {}
+                var params = {
+                    data:{}
+                }
                 dels.forEach(function (v) {
-                    params[v] = confirm_params[v]
+                    params['data'][v] = confirm_params[v]
                 })
                 var url = 'http://' + window.location.host + '/home/order/confirm?id=';
                 ajax('post', '/home/order/confirm', params)
                     .then(function (resolve) {
-                        console.log(resolve)
                         if (resolve) {
-                            window.location.href = url + resolve;   
+                            window.location.href = url + resolve;  
                         } else {
                             prompt.message('服务器异常！请稍后再试！')
                         }

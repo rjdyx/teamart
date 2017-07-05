@@ -76,6 +76,7 @@ class CartController extends Controller
 
 		}
 	}
+
 	//删除购物车
 	public function destroy($id){
 		$product_id=$id;// 商品id
@@ -142,26 +143,27 @@ class CartController extends Controller
 		$order->save();
 
 	}
-//分页展示
- public function  listData(Request $request){
-	$lists= $this->searchList();
 
-	 // $totals= Order::where('type','cart')
-		//  ->where('order.user_id',Auth::user()->id)
-		//  ->value('price');
+	//分页展示
+	public function  listData(Request $request)
+	{
+		return $this->searchList();
+	}
 
-	 return $lists;
- }
-	public function searchList(){
+	public function searchList()
+	{
 		return Order::join('order_product','order.id','=','order_product.order_id')
 			->join('product','order_product.product_id','=','product.id')
 			->where('type','cart')
 			->where('order.user_id',Auth::user()->id)
-			->where('order_product.deleted_at',null)
-			->where('product.deleted_at',null)
-			->where('order.deleted_at',null)
+			->whereNull('order_product.deleted_at')
+			->whereNull('product.deleted_at')
+			->whereNull('order.deleted_at')
+			->distinct('product.id')
+			->select('product.*','order_product.id as opid','order_product.amount','order.id as order_id')
 			->paginate(5);
 	}
+
 	public function changeOrderProduct($order_product,$amount,$product_price,$order_id=0,$product_id=0){
         if($order_id){
 		$order_product->order_id=$order_id;
@@ -172,5 +174,16 @@ class CartController extends Controller
 		$order_product->amount=$amount;
 		$order_product->price=$amount*$product_price;
 		$order_product->save();
+	}
+
+	//修改购物车商品数量
+	public function updateAmount(Request $request)
+	{
+		$id = $request->id;
+		$amount = $request->amount;
+		$data = OrderProduct::find($id);
+		$data->amount = $amount;
+		if ($data->save()) return 1;
+		return 0;
 	}
 }

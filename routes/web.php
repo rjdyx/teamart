@@ -95,6 +95,7 @@ Route::group(['namespace'=>'Home','prefix'=>'home','middleware'=>['auth']],funct
 
 	//购物车
 	Route::get('/cart/data','CartController@ListData');
+	Route::post('/cart/update/amount','CartController@updateAmount');
 	Route::post('/cart/dels','CartController@dels');
 	Route::resource('/cart','CartController');
 

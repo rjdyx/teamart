@@ -65,7 +65,7 @@ class CollectController extends Controller
     {
         $ids = $request->all();
         foreach ($ids as $id) {
-            if (!$this->destroy($id)) return 0;
+            if (!$this->del($id)) return 0;
         }
         return 1;
     }
@@ -118,7 +118,7 @@ class CollectController extends Controller
         $order->state = 'pading';
         $order->address_id = 0;
         $order->date = date("Y-m-d");
-        if ($type) $order->type = 'cart';
+        if ($type) $order->type = $type;
         if ($order->save()) return $order;
         return 0;
     }
@@ -126,24 +126,59 @@ class CollectController extends Controller
     //收藏加入购物车
     public function storeCart(Request $request)
     {
-        $ids =  $request->ids;
-        $order = $this->createCollect(new Order, 'cart'); //新建订单
-        if (!$order) return 0;
-        foreach ($ids as $id) {
-            if (!$this->addOrderProduct($id, $order->id)) return 0;
+        $ids = $request->ids;
+        $neworder = true;
+        foreach ($ids as $id) {   
+            $cart = $this->issetCart($id);
+            if (empty($cart->id)) {
+                if ($neworder) {
+                    $order = $this->createCollect(new Order, 'cart'); //新建购物车订单
+                    if ($order) {
+                        $neworder = false;
+                    }else{
+                        return 0;
+                    }
+                }
+                if (!$this->addOrderProduct($id, $order->id)) return 0;
+            } else {
+                if (!$this->editOrderProduct($cart->id)) return 0;
+            }    
         }
         return  1;
     }
 
-    //添加商品订单关联方法
+    //添加 商品订单关联方法
     public function addOrderProduct($id, $order_id)
-    {
+    {   
         $order_product = new OrderProduct;
         $order_product->order_id = $order_id;
         $order_product->product_id = $id;
         $order_product->price = Product::find($id)->price;
         $order_product->amount = 1;
+
         if ($order_product->save()) return 1;
         return 0;
+    }
+
+    //编辑数量 商品订单关联方法
+    public function editOrderProduct($id)
+    {   
+        $order_product = OrderProduct::find($id);
+        $amount = $order_product->amount + 1;
+        $order_product->amount = $amount;
+        $order_product->price = (Product::find($order_product->product_id)->price) * $amount;
+
+        if ($order_product->save()) return 1;
+        return 0;
+    }
+
+    public function issetCart($id)
+    {
+        $data = OrderProduct::join('order','order_product.order_id','=','order.id')
+            ->where('order_product.product_id','=',$id)
+            ->where('order.type','=','cart')
+            ->select('order_product.id')
+            ->first();
+        return $data;
     }
 }

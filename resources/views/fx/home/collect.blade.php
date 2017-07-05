@@ -135,7 +135,7 @@
 							res.data.forEach(function (v) {
 								result += `
 									<div class="collect_warpper mb-20 clearfix">
-										<i class="collect_warpper_select J_select" data-id="${v.id}"></i>
+										<i class="collect_warpper_select J_select" data-id="${v.op_id}"></i>
 										<div class="collect_warpper_content_img pull-left mr-20">
 											<img src="${v.img}">
 										</div>
