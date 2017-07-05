@@ -1,5 +1,5 @@
 @extends('fx.admin.layouts.app')
-@section('title')新增商品组@endsection
+@section('title')编辑商品组@endsection
 @section('t1')商品管理@endsection
 @section('css')@endsection
 @section('script')
@@ -25,12 +25,15 @@
         // $('#desc').on('blur input', function () {
         //   _valid.desc('desc', '商品组描述', $(this).val())
         // })
+        $('#dels').on('input', function () {
+          console.log($(this).val())
+        })
         function submitForm() {
           var category_id = form['category_id']
           var name = form['name']
           var desc = form['desc']
           var imgs = form['imgs[]']
-
+          console.dir(imgs.length)
           if (!_valid.ness('category_id', '商品分类', category_id.value)) {
             return false
           }
@@ -48,15 +51,17 @@
                   return false
                 }
                 arr.push(imgs[i].files[0])
+              } else if ($(imgs[i]).data('id')) {
+                 arr.push($(imgs[i]).data('id'))
               }
             }
             if (arr.length == 0) {
-              $('#img_txt').text('至少要上传一张商品图片')
+              $('#imgs_txt').text('至少要上传一张商品图片')
               return false
             }
           } else {
             if (imgs.files.length == 0) {
-              $('#img_txt').text('至少要上传一张商品图片')
+              $('#imgs_txt').text('至少要上传一张商品图片')
               return false
             }
           }
@@ -72,12 +77,13 @@
         <div class="col-xs-12">
           <div class="box box-success">
             <div class="box-header with-border">
-              <h3 class="box-title">新增商品组</h3>
+              <h3 class="box-title">编辑商品组</h3>
             </div>
-            <form class="form-horizontal" action="{{url('admin/goods/group')}}/{{$data->id}}" method="POST" name="groupForm">
+            <form class="form-horizontal" action="{{url('admin/goods/group')}}/{{$data->id}}" method="POST" name="groupForm" enctype="multipart/form-data">
               {{ csrf_field() }}
               <input type="hidden" value="PUT" name="_method">
               <input type="hidden" value="{{$data->id}}" name="id" id="id">
+              <input type="hidden" id="dels" name="dels">
               <div class="box-body">
                 <div class="form-group">
                   <label for="category_id" class="col-sm-3 control-label"><i style="color:red;">*</i>商品分类</label>

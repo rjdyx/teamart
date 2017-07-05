@@ -603,11 +603,6 @@
 		height: 3.6rem;
 		overflow: hidden;
 		@include  backgroundImages("/fx/images/user_info_bg.png", cover)
-		.usercenter_info_qrcode {
-			position: absolute;
-			right: 10%;
-			top: 1.2rem;
-		}
 		.usercenter_avatar {
 			width: 2rem;
 			height: 2rem;
@@ -1647,6 +1642,9 @@
 			width: 50%;
 			padding: 0.2rem 0.15rem;
 			border-bottom: 0.01rem solid #E3E3E3;
+			h1 {
+				color: #444;
+			}
 			img {
 				display: block;
 				width: 2.83rem;
@@ -1915,11 +1913,11 @@
 							background-color: #d7d7d7;
 							color: #3b3b3b;
 							border-radius: 0.05rem;
+							border: 0.01rem solid #d7d7d7;
 						}
 						a.active {
-							border: 0.01rem solid #F78223;
+							border-color: #F78223;
 							color: #F78223;
-							padding: 0.08rem;
 						}
 					}
 				}
@@ -2209,7 +2207,6 @@
 		height: 1rem;
 		line-height: 1rem;
 		text-align: center;
-		border-top: 0.01rem solid #DADADA;
 		@include  backgroundImages("/fx/images/footer_bg.png", cover)
 		.confirm_bottom_sum {
 			width: 4rem;
@@ -2376,13 +2373,13 @@
 						background-color: #d7d7d7;
 						color: #3b3b3b;
 						border-radius: 0.05rem;
+						border: 0.01rem solid #d7d7d7;
 					}
 				}
 				li.active {
 					a {
-						border: 0.01rem solid #F78223;
+						border-color: #F78223;
 						color: #F78223;
-						padding: 0.08rem;
 					}
 				}
 			}

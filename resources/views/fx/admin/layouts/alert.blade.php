@@ -12,8 +12,8 @@
       //单条删除
       function del(id) {
         if (confirm('确定要删除这条记录吗？')==true){ 
-          $("#del").attr('action', window.location.href.split('?')[0] + '/' + id);
-          $("#del").submit();
+          $("#data_del").attr('action', window.location.href.split('?')[0] + '/' + id);
+          $("#data_del").submit();
         }
       }
       //多条删除
@@ -21,12 +21,12 @@
         if ($(".check:checked").length > 0) {
           if (confirm('确定要删除选中记录吗？')==true){ 
             var ids = Array();
-            $("#dels").attr('action', window.location.href.split('?')[0] + '/dels');
+            $("#data_dels").attr('action', window.location.href.split('?')[0] + '/dels');
             $(".check:checked").each(function(){
                 ids.push($(this).val());
             });
             $("#delsIds").val(ids);
-            $("#dels").submit();
+            $("#data_dels").submit();
           }
         }
       }
@@ -66,13 +66,13 @@
     </style>
 
     <!-- 单条数据删除 -->
-    <form action="" method="POST" id="del">
+    <form action="" method="POST" id="data_del">
       {{ method_field('DELETE') }}
       {{ csrf_field() }}
     </form>
 
     <!-- 多条数据删除 -->
-    <form action="" method="POST" id="dels">
+    <form action="" method="POST" id="data_dels">
       {{ csrf_field() }}
       <input type="hidden" name="ids" id="delsIds" value="">
     </form>
