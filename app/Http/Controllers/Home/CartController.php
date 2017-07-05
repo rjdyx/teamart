@@ -111,10 +111,7 @@ class CartController extends Controller
 		$ids=$request->all();
 
 		foreach ($ids as $id) {
-			if (!$this->destroy($id)) {
-
-				return 0;
-			}
+			if (!$this->del($id)) return 0;
 		}
 		return 1;
 
