@@ -6,7 +6,9 @@
     @parent
     <script >
         $(function(){
-          datepicker.datepicker()
+          datepicker.datepicker({
+            endDate: ''
+          })
         })
     </script>
 @endsection
