@@ -25,9 +25,6 @@
         // $('#desc').on('blur input', function () {
         //   _valid.desc('desc', '商品组描述', $(this).val())
         // })
-        $('#dels').on('input', function () {
-          console.log($(this).val())
-        })
         function submitForm() {
           var category_id = form['category_id']
           var name = form['name']
@@ -91,7 +88,7 @@
                     <select name="category_id" class="form-control" id="category_id">
                       <option value="">-请选择商品分类-</option>
                       @foreach($selects as $select)
-                        <option value="{{$select->id}}" @if ($select->id == $data->id) selected @endif>{{$select->name}}</option>
+                        <option value="{{$select->id}}" @if ($select->id == $data->category_id) selected @endif>{{$select->name}}</option>
                       @endforeach
                     </select>
                   </div>

@@ -135,6 +135,7 @@ class GoodsGroupController extends Controller
         $model->setRawAttributes($request->only(['name','desc','category_id']));
 
         if ($model->save()) {
+            $gid = $id;
             if ($id == -1) $gid = $model->id; 
             $pics = IQuery::uploads($request, 'imgs', true);
             if ($pics != 'false')
@@ -143,7 +144,7 @@ class GoodsGroupController extends Controller
                     $img = new ProductImg;
                     $img->img = $pic['pic'];
                     $img->thumb = $pic['thumb'];
-                    $img->group_id = $id;
+                    $img->group_id = $gid;
                     if (!$img->save()) return Redirect::back()->withErrors('保存失败');
                 }
             }
