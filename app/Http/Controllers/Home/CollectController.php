@@ -129,7 +129,8 @@ class CollectController extends Controller
         $ids = $request->ids;
         $neworder = true;
         foreach ($ids as $id) {   
-            $cart = $this->issetCart($id);
+            $product = OrderProduct::find($id);
+            $cart = $this->issetCart($product->product_id);
             if (empty($cart->id)) {
                 if ($neworder) {
                     $order = $this->createCollect(new Order, 'cart'); //新建购物车订单
@@ -139,7 +140,8 @@ class CollectController extends Controller
                         return 0;
                     }
                 }
-                if (!$this->addOrderProduct($id, $order->id)) return 0;
+
+                if (!$this->addOrderProduct($product->product_id, $order->id)) return 0;
             } else {
                 if (!$this->editOrderProduct($cart->id)) return 0;
             }    
@@ -172,10 +174,10 @@ class CollectController extends Controller
         return 0;
     }
 
-    public function issetCart($id)
+    public function issetCart($product_id)
     {
         $data = OrderProduct::join('order','order_product.order_id','=','order.id')
-            ->where('order_product.product_id','=',$id)
+            ->where('order_product.product_id','=',$product_id)
             ->where('order.type','=','cart')
             ->select('order_product.id')
             ->first();
