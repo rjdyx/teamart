@@ -3,7 +3,6 @@
 @section('title') 活动商品 @endsection
 
 @section('css')
-	<link rel="stylesheet" type="text/css" href="{{ asset('fx/css/dropload.css') }}">
 @endsection
 
 @section('script')
@@ -50,12 +49,12 @@
                         me.lock();
                         me.noData();
                     }
-                    me.resetload();
                     if (type == 'up') {
                         $('.promotion_list').html(template);
                     } else {
                         $('.promotion_list').append(template);
                     }
+                    me.resetload();
                     if (type == 'up') {
                         me.unlock();
                         me.noData(false);

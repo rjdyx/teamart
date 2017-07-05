@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('title') 个人资产 @endsection
-	<link rel="stylesheet" type="text/css" href="{{ asset('fx/css/dropload.css') }}">
 @section('css')
 @endsection
 

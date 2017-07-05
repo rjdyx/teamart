@@ -3,8 +3,6 @@
 @section('title') 商品详情 @endsection
 
 @section('css')
-	<link rel="stylesheet" type="text/css" href="{{ asset('fx/css/dropload.css') }}">
-
 @endsection
 
 @section('script')
@@ -178,6 +176,11 @@
     			.then(function (resolve) {
     				if (resolve) {
     					prompt.message('已经加入购物车')
+    					$('.productspec_container').removeClass('bottom-0')
+    					jquery('.productspec').animate({
+							'opacity': 0},100,function () {
+							$('.productspec').removeClass('top-0')
+						})
     				} else {
     					prompt.message('加入失败')
     				}

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Product;
-
+use DB;
 class IndexController extends Controller
 {
     //首页更多列表页

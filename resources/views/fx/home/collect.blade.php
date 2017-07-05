@@ -3,7 +3,6 @@
 @section('title') 我的收藏 @endsection
 
 @section('css')
-	<link rel="stylesheet" type="text/css" href="{{ asset('fx/css/dropload.css') }}">
 @endsection
 
 @section('script')

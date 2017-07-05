@@ -24,10 +24,10 @@
     		$('.J_choose_type').on('click tap', function () {
     			var v = $(this).data('delivery')
     			if (v == 'point') {
-    				$(".price-change").html('&yen 0.00');
+    				$(".price-change").html('&yen; 0.00');
     				delivery_price = 0;
     			} else {
-    				$(".price-change").html('&yen ' + delivery_price);
+    				$(".price-change").html('&yen; ' + delivery_price);
     				delivery_price = {{$lists->max('delivery_price')}};
     			}
     			countPrice();
@@ -120,24 +120,16 @@
 		</div>
 		<div class="confirm_container">
 		@foreach($lists as $list)
-			<div class="confirm_warpper mb-20">
-				<div class="confirm_warpper_tit">
-					<a href="javascript:;" class="chayefont">
-						<i class="fa fa-ban"></i>
-						
-					</a>
+			<div class="confirm_warpper clearfix mb-20">
+				<div class="confirm_warpper_content_img pull-left mr-20">
+					<img src="{{ url('') }}/{{$list->thumb}}">
 				</div>
-				<div class="confirm_warpper_content clearfix">
-					<div class="confirm_warpper_content_img pull-left mr-20">
-						<img src="{{ url('') }}/{{$list->thumb}}">
-					</div>
-					<div class="confirm_warpper_content_info pull-right">
-						<h5 class="chayefont mb-10">{{$list->name}}</h5>
-						<p>{{$list->desc}}</p>
-						<div class="confirm_warpper_content_info_bottom">
-							<span class="pull-left price">&yen; {{sprintf('%.2f',$list->amount * $list->price)}}</span>
-							<span class="pull-right sell">&times;{{$list->amount}}</span>
-						</div>
+				<div class="confirm_warpper_content_info pull-right">
+					<h5 class="chayefont mb-10">{{$list->name}}</h5>
+					<p>{{$list->desc}}</p>
+					<div class="confirm_warpper_content_info_bottom">
+						<span class="pull-left price">&yen; {{sprintf('%.2f',$list->amount * $list->price)}}</span>
+						<span class="pull-right sell">&times;{{$list->amount}}</span>
 					</div>
 				</div>
 			</div>

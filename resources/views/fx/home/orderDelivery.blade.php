@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title') 发表评论 @endsection
+@section('title') 物流查询 @endsection
 
 @section('css')
 @endsection

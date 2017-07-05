@@ -18,13 +18,10 @@ class CartController extends Controller
 	{
 		$lists= $this->searchList();
 
-		$totals= Order::where('type','cart')
-			->where('order.user_id',Auth::user()->id)
-			->value('price');
 		$title = '购物车';
 		$footer = 'cart';
 		return view(config('app.theme').'.home.cart')
-		->with(['lists'=>$lists,'title'=>$title,'footer'=>$footer,'totals'=>$totals]);
+		->with(['lists'=>$lists,'title'=>$title,'footer'=>$footer]);
 	}
 
 	//添加商品到购物车
