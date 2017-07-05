@@ -86,6 +86,7 @@
                         $('.J_minus').off('click tap').on('click tap', minus)
                         // 增加商品数量
                         $('.J_plus').off('click tap').on('click tap', plus)
+                        $('.J_select_all').find('span').removeClass('active')
                         me.resetload();
                         if (type == 'up') {
                             me.unlock();

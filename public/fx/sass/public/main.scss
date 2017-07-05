@@ -46,6 +46,11 @@
 	text-align: center;
 	font-size: 16px;
 	border-radius: 50%;
+	i {
+		width: 0.5rem;
+		height: 0.5rem;
+		line-height: 0.5rem;
+	}
 }
 
 // 登录
@@ -517,6 +522,11 @@
 		height: 3.6rem;
 		overflow: hidden;
 		@include  backgroundImages("/fx/images/user_info_bg.png", cover)
+		.usercenter_info_qrcode {
+			position: absolute;
+			right: 10%;
+			top: 1.2rem;
+		}
 		.usercenter_avatar {
 			width: 2rem;
 			height: 2rem;
@@ -709,6 +719,25 @@
 			}
 			a.orange {
 				color: #EE7700;
+			}
+		}
+		.userassets_container {
+			width: 100%;
+			height: calc(100% - 2.2rem);
+			overflow: auto;
+			.userassets_container_warpper {
+				width: 100%;
+				padding: 0.1rem;
+				border-top: 0.01rem solid #d7d7d7;
+				ul {
+					width: 100%;
+					li {
+						width: 20%;
+						text-align: center;
+						line-height: 0.5rem;
+					}
+				}
+				
 			}
 		}
 	}
