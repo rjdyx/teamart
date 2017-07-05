@@ -26,9 +26,10 @@ class OrderController extends Controller
 	}
 
 	//订单预处理 (未支付)
-	public function confirmData (Request $request) {
-
+	public function confirmData (Request $request) 
+	{
 		$datas = $request->data;
+		if (!count($datas)) return 0;
 		$order = new Order;
 		$order->user_id = Auth::user()->id;
 		$order->serial = IQuery::orderSerial();
@@ -49,14 +50,37 @@ class OrderController extends Controller
 			$orderProduct->amount = $amount;
 			$orderProduct->price = Product::find($id)->price;
 			$orderProduct->order_id = $order->id;
-			$orderProduct->save();
+			if (!$orderProduct->save()) return 0;
+			$this->delCartProduct($id);
 		}
 		return $order->id;
 	}
 
-	//待支付 选择参数
-	public function confirm (Request $request) {
+	//删除购物车商品方法
+	public function delCartProduct($product_id)
+	{
+		$cart = $this->issetCart($product_id);
+		if (empty($cart->id)) return 0;
+		if (OrderProduct::destroy($cart->id)) return 1;
+		return 0;
+	}
 
+    //判断购物车商品是否存在
+    public function issetCart($product_id)
+    {
+        $data = OrderProduct::join('order','order_product.order_id','=','order.id')
+            ->where('order_product.product_id','=',$product_id)
+            ->where('order.type','=','cart')
+            ->whereNull('order.deleted_at')
+			->whereNull('order_product.deleted_at')
+            ->select('order_product.id')
+            ->first();
+        return $data;
+    }
+
+	//待支付 选择参数
+	public function confirm (Request $request) 
+	{
 		$id = $request->id;
 		$lists = OrderProduct::join('product','order_product.product_id','=','product.id')
 				->where('order_product.order_id','=',$id)

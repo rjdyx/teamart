@@ -12,7 +12,7 @@
     <script>
         $(function () {
             var page = 0
-            var dels = [], confirm_params = {}
+            var dels = [], confirm_params = {} , pids = [];
             $('.cart_container').dropload({
                 scrollArea : $('.cart_container'),
                 domUp : {
@@ -48,7 +48,7 @@
                             res.data.forEach(function (v) {
                                 template += `
                                     <div class="cart_warpper mb-20 clearfix">
-                                        <i class="cart_warpper_select J_select" data-id="${v.opid}"></i>
+                                        <i class="cart_warpper_select J_select" data-id="${v.opid}" data-pid="${v.id}"></i>
                                         <div class="cart_warpper_content_img pull-left mr-20">
                                             <img src="${v.img}">
                                         </div>
@@ -59,7 +59,7 @@
                                                 <span class="pull-left price">￥${parseInt(v.price).toFixed(2)}</span>
                                                 <div class="cwcib_number pull-right">
                                                     <i class="fa fa-minus-circle J_minus"></i>
-                                                    <span class="sell" stock="${v.stock}">&times;<span class="amount" opid="${v.opid}">${v.amount}</span></span>
+                                                    <span class="sell" stock="${v.stock}">&times;<span class="amount" opid="${v.opid}" pid="${v.id}">${v.amount}</span></span>
                                                     <i class="fa fa-plus-circle J_plus"></i>
                                                 </div>
                                             </div>
@@ -105,19 +105,26 @@
                 if (!$(this).hasClass('active')) {
                     $(this).addClass('active')
                     dels.push($(this).data('id'))
+                    pids.push($(this).data('pid'))
                     if (dels.length == $('.J_select').length) {
                         $('.J_select_all').find('span').addClass('active')
                     }
                 } else {
                     $(this).removeClass('active')
                     $('.J_select_all').find('span').removeClass('active')
-                    var arr = []
+                    var arr = brr = []
                     for (var i = 0; i < dels.length; i++) {
                         if (dels[i] != $(this).data('id')) {
                             arr.push(dels[i])
                         }
                     }
+                    for (var j = 0; j < pids.length; j++) {
+                        if (pids[j] != $(this).data('id')) {
+                            brr.push(pids[j])
+                        }
+                    }
                     dels = arr
+                    pids = brr
                 }
             }
 
@@ -125,10 +132,12 @@
             $('.J_select_all').on('click tap', function () {
                 if (!$(this).find('span').hasClass('active')) {
                     dels = []
+                    pids = []
                     $('.J_select')
                     .each(function () {
                         $(this).addClass('active')
                         dels.push($(this).data('id'))
+                        pids.push($(this).data('pid'))
                     })
                     $(this).find('span').addClass('active')
                 } else {
@@ -136,6 +145,7 @@
                     .each(function () {
                         $(this).removeClass('active')
                         dels = []
+                        pids = []
                     })
                     $(this).find('span').removeClass('active')
                 }
@@ -170,7 +180,7 @@
             })
             // 减少商品数量
             function minus () {
-                var gid = $(this).parents('.cart_warpper').find('.J_select').data('id')
+                var gid = $(this).parents('.cart_warpper').find('.J_select').data('pid')
                 if (confirm_params[gid] > 1) {
                     confirm_params[gid] -= 1
                     $(this).siblings('.sell').find('.amount').text(confirm_params[gid])
@@ -184,7 +194,7 @@
             
             // 增加商品数量
             function plus () {
-                var gid = $(this).parents('.cart_warpper').find('.J_select').data('id')
+                var gid = $(this).parents('.cart_warpper').find('.J_select').data('pid')
                 var stock = $(this).siblings('.sell').attr('stock')
                 if (stock >= confirm_params[gid]){
                     confirm_params[gid] += 1
@@ -216,9 +226,10 @@
                 var params = {
                     data:{}
                 }
-                dels.forEach(function (v) {
-                    params['data'][v] = confirm_params[v]
+                pids.forEach(function (v) {
+                    params['data'][v] = $('.amount[pid="'+ v +'"]').html()
                 })
+                console.log(params)
                 var url = 'http://' + window.location.host + '/home/order/confirm?id=';
                 ajax('post', '/home/order/confirm', params)
                     .then(function (resolve) {
@@ -273,7 +284,7 @@
             <div class="cart_bottom_selection pull-left J_select_all">
                 <span>全选</span>
             </div>
-            <div class="cart_bottom_info pull-left">合计：<span class="price">&yen;{{number_format($totals,2)}}</span></div>
+            <div class="cart_bottom_info pull-left">合计：<span class="price">&yen;0.00</span></div>
             <div class="cart_bottom_settle pull-right J_comfirm"><a href="javascript:;">结算</a></div>
             <div class="cart_bottom_del pull-right J_dels"><a href="javascript:;">删除</a></div>
         </div>

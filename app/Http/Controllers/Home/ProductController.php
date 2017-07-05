@@ -10,6 +10,7 @@ use App\ProductCategory;
 use App\Brand;
 use App\Comment;
 use App\Reply;
+use App\Order;
 use Illuminate\Support\Facades\Auth;
 use IQuery;
 
@@ -93,8 +94,17 @@ class ProductController extends Controller
 		$commentB = Comment::where('product_id',$id)->where('grade','=','60')->count();
 		$commentC = Comment::where('product_id',$id)->where('grade','<','60')->count();
 		$commentImg = Comment::where('product_id',$id)->whereNotNull('img')->count();
+		$commentAmount = Comment::where('product_id',$id)->count();
 
-		return view(config('app.theme').'.home.productDetail')->with(['imgs'=>$imgs,'specs'=>$specs,'content'=>$content, 'title'=>$title,'footer'=>'product','commentA'=>$commentA,'commentB'=>$commentB,'commentC'=>$commentC,'commentImg'=>$commentImg,]);
+		//查询商品是否被收藏
+		$collect = Order::join('order_product','order.id','=','order_product.order_id')
+					->where('type','=','collect')
+					->where('order_product.product_id','=',$id)
+					->whereNull('order_product.deleted_at')
+					->select('order.id')
+					->first();
+
+		return view(config('app.theme').'.home.productDetail')->with(['imgs'=>$imgs,'specs'=>$specs,'content'=>$content, 'title'=>$title,'footer'=>'product','commentA'=>$commentA,'commentB'=>$commentB,'commentC'=>$commentC,'commentImg'=>$commentImg,'commentAmount'=>$commentAmount,'collect'=>$collect]);
 	}
 
 	//查询商品参数(详情页加入购物车)
@@ -160,7 +170,6 @@ class ProductController extends Controller
 			$datas[$k]['thumb'] = $thumbs;
 			$datas[$k]['replys'] = $replys;
 		}
-
 		return $datas;
 	}
 }

@@ -187,7 +187,7 @@
     	// 立即购买（待支付）
     	function storeBuy() {
     		var num = $('.productspec_container_amount input').val();
-    		var params = {data:{2:3}};
+    		var params = {data:{}};
     		params['data'][popid] = num;
 
     		var url = 'http://' + window.location.host + '/home/order/confirm?id=';
@@ -382,7 +382,7 @@
 			</div>
 			<div class="productdetail_container_tabs">
 				<a href="javascript:;" class="J_tabs pull-left chayefont active" data-tag="detail">商品详情</a>
-				<a href="javascript:;" class="J_tabs pull-left chayefont" data-tag="comment">评价<span>1000</span></a>
+				<a href="javascript:;" class="J_tabs pull-left chayefont" data-tag="comment">评价<span>{{$commentAmount}}</span></a>
 			</div>
 			<div class="hide productdetail_blank"></div>
 			<div class="productdetail_container_detail" data-tab="detail">
@@ -480,7 +480,7 @@
 				<p>客服</p>
 			</div>
 			<div class="productdetail_bottom_icon pull-left favo J_favo">
-				<i class="fa fa-star-o mt-10"></i>
+				<i class="fa mt-10 @if(isset($collect->id)) fa-star @else fa-star-o @endif"></i>
 				<p>收藏</p>
 			</div>
 			<div class="productdetail_bottom_btn pull-left chayefont add_cart J_show_productspec">

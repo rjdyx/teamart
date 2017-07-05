@@ -79,37 +79,19 @@ class CollectController extends Controller
     //加入收藏
     public function store(Request $request)
     {
-		$product_id=$request->id;
-        $hasCollectOrder=Order::where('type','collect')->where('user_id',Auth::user()->id);
+		$product_id = $request->id;//商品id
+        $order = Order::where('type','collect')->where('user_id',Auth::user()->id)->first();
 
-        if($hasCollectOrder->count()){
-            $order=$hasCollectOrder->first();
-        }else{
-            $order=new Order;
+        if (empty($order->id)){
+            $order = createCollect('collect');
         }
-
-        $lists = Order::join('order_product','order.id','=','order_product.order_id')
-                ->where('order_product.product_id',$product_id)
-                ->where('type','collect')
-                ->where('order.user_id',Auth::user()->id)
-                ->whereNull('order_product.deleted_at')
-                ->count('order.id');
-
-        if ($lists) return 0;
-        $this->createCollect($order);
-        $order_product = new OrderProduct;
-        $order_product->order_id = $order->id;
-        $order_product->product_id = $product_id;
-        $price = Product::where('id',2)->value('price');
-        $order_product->price = $price;
-        $order_product->amount = 1;
-        $order_product->save();
-        return 1;
+        return $this->addOrderProduct($product_id, $order->id);
     }
 
     //创建新的Order信息
-    public function createCollect($order, $type = false)
+    public function createCollect($type = false)
     {
+        $order = new Order;
         $order->serial = uniqid();
         $order->method = "delivery";
         $order->user_id = Auth::user()->id;
@@ -128,19 +110,22 @@ class CollectController extends Controller
     {
         $ids = $request->ids;
         $neworder = true;
+        $issetOrder = Order::where('type','cart')->where('user_id',Auth::user()->id)->first();//查询是否有购物车订单
+
         foreach ($ids as $id) {   
             $product = OrderProduct::find($id);
             $cart = $this->issetCart($product->product_id);
             if (empty($cart->id)) {
-                if ($neworder) {
-                    $order = $this->createCollect(new Order, 'cart'); //新建购物车订单
+                if ($neworder && !empty($issetOrder->id)) {
+                    $order = $this->createCollect('cart'); //新建购物车订单
                     if ($order) {
                         $neworder = false;
                     }else{
                         return 0;
                     }
+                } else {
+                    $order = $issetOrder;
                 }
-
                 if (!$this->addOrderProduct($product->product_id, $order->id)) return 0;
             } else {
                 if (!$this->editOrderProduct($cart->id)) return 0;
@@ -178,7 +163,10 @@ class CollectController extends Controller
     {
         $data = OrderProduct::join('order','order_product.order_id','=','order.id')
             ->where('order_product.product_id','=',$product_id)
+            ->where('user_id',Auth::user()->id)
             ->where('order.type','=','cart')
+            ->whereNull('order.deleted_at')
+            ->whereNull('order_product.deleted_at')
             ->select('order_product.id')
             ->first();
         return $data;
