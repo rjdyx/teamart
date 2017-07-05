@@ -42,7 +42,7 @@
 	<!-- 内容 -->
 	<div class="container usercenter">
 		<div class="usercenter_info">
-			@if(Auth::user() && Auth::user()->type < 2)
+			@if(Auth::user() && Auth::user()->type == 1)
 				<a href="javascript:;" id="QRCode" class="usercenter_info_qrcode">
 					<i class="fa fa-qrcode fz-20"></i>
 				</a>
@@ -62,7 +62,7 @@
 					<a href="javascript:;">
 						<p>所属身份</p>
 						<p>@if(Auth::user())
-							@if (Auth::user()->type < 2) 分销商 @else 普通会员 @endif
+							@if (Auth::user()->type == 1) 分销商 @else 普通会员 @endif
 						 @endif
 						 </p>
 					</a>

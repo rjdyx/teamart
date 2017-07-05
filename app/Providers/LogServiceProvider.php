@@ -80,7 +80,7 @@ class LogServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if (env('APP_DEBUG')){
+        if (!env('APP_DEBUG')){
             User::observe(UserObserver::class);
             Article::observe(ArticleObserver::class);
             ArticleCategory::observe(ArticleCategoryObserver::class);

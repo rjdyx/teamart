@@ -23,7 +23,7 @@ class BrandController extends Controller
     //列表页
     public function index(Request $request)
     {
-        $lists = Brand::orderBy('id','asc');
+        $lists = Brand::orderBy('id','desc');
         if ($request->name) {
             $lists = $lists->where('name','like','%'.$request->name.'%');
         }

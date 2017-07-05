@@ -20,12 +20,10 @@ class MarkController extends Controller
     //首页 (列表页)
     public function index(Request $request)
     {
-
-
         if($request->sort!=0){
             return $this->sort($request);
         }else{
-        $lists = Product::where('grade',1)->orderBy('id','asc')->paginate(config('app.paginate5'));
+        $lists = Product::where('grade',1)->orderBy('id','desc')->paginate(config('app.paginate5'));
         return view(config('app.theme').'.admin.activity.mark')->with('lists',$lists);
         }
     }

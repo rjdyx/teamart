@@ -22,7 +22,7 @@ class FeedbackController extends Controller
        if($request){
            return $this->sort($request);
        }
-        $lists = Feedback::orderBy('id','asc')->paginate(config('app.paginate5'));
+        $lists = Feedback::orderBy('id','desc')->paginate(config('app.paginate5'));
         return view(config('app.theme').'.admin.system.feedback')->with('lists',$lists);
     }
 

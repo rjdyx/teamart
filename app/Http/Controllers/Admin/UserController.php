@@ -23,7 +23,7 @@ class UserController extends Controller
     //列表页
     public function index(Request $request)
     {
-        $lists = User::where('type','>',1)->orderBy('id','asc');
+        $lists = User::where('type','>',1)->orderBy('id','desc');
         if ($request->name) {
             $lists = $lists->where('name','like','%'.$request->name.'%')
                     ->Orwhere('realname','like','%'.$request->name.'%');

@@ -48,7 +48,7 @@
                 <div class="ibc_multi pull-right">
                     <div class="ibc_multi_goods top">
                         <a href="{{url('/home/product/detail')}}/@if(isset($activitys[1])){{$activitys[1]->id}}@endif">
-                            <img class="pull-right" src="@if(isset($activitys[1])) {{$activitys[1]->image}} @endif" alt="">
+                            <img class="pull-right" src="@if(isset($activitys[1])) {{$activitys[1]->thumb}} @endif" alt="">
                             <h5 class="chayefont">@if(isset($activitys[1])) {{$activitys[1]->name}} @endif</h5>
                             <p class="chayefont">@if(isset($activitys[1])) {{$activitys[1]->desc}} @endif</p>
                             <span class="price">￥ @if(isset($activitys[1])) {{sprintf('%.2f', $activitys[1]->price)}} @endif</span>
@@ -56,7 +56,7 @@
                     </div>
                     <div class="ibc_multi_goods txt-r">
                         <a href="{{url('/home/product/detail')}}/@if(isset($activitys[2])){{$activitys[2]->id}}@endif">
-                            <img class="pull-left" src="@if(isset($activitys[2])) {{$activitys[2]->image}} @endif" alt="">
+                            <img class="pull-left" src="@if(isset($activitys[2])) {{$activitys[2]->thumb}} @endif" alt="">
                             <h5 class="chayefont">@if(isset($activitys[2])) {{$activitys[2]->name}} @endif</h5>
                             <p class="chayefont">@if(isset($activitys[2])) {{$activitys[2]->desc}} @endif</p>
                             <span class="price">￥ @if(isset($activitys[2])) {{sprintf('%.2f', $activitys[2]->price)}} @endif</span>
@@ -88,13 +88,13 @@
                     <a href="{{url('/home/product/detail')}}/@if(isset($news[0])){{$news[0]->id}}@endif">
                         <h5 class="chayefont">@if(isset($news[0])) {{$news[0]->name}} @endif</h5>
                         <span class="price">￥ @if(isset($news[0])) {{sprintf('%.2f', $news[0]->price)}} @endif</span>
-                        <img src="@if(isset($news[0])) {{$news[0]->image}} @endif" alt="">
+                        <img src="@if(isset($news[0])) {{$news[0]->thumb}} @endif" alt="">
                     </a>
                 </div>
                 <div class="ibc_multi pull-left">
                     <div class="ibc_multi_goods top">
                         <a href="{{url('/home/product/detail')}}/@if(isset($news[1])){{$news[1]->id}}@endif">
-                            <img class="pull-right" src="@if(isset($news[1])) {{$news[1]->image}} @endif" alt="">
+                            <img class="pull-right" src="@if(isset($news[1])) {{$news[1]->thumb}} @endif" alt="">
                             <h5 class="chayefont">@if(isset($news[1])) {{$news[1]->name}} @endif</h5>
                             <p class="chayefont">@if(isset($news[1])) {{$news[1]->desc}} @endif</p>
                             <span class="price">￥ @if(isset($news[1])) {{sprintf('%.2f', $news[1]->price)}} @endif</span>
@@ -104,14 +104,14 @@
                         <a href="{{url('/home/product/detail')}}/@if(isset($news[2])){{$news[2]->id}}@endif">
                             <h5 class="chayefont">@if(isset($news[2])) {{$news[2]->name}} @endif</h5>
                             <span class="price">￥ @if(isset($news[2])) {{sprintf('%.2f', $news[2]->price)}} @endif</span>
-                            <img src="@if(isset($news[2])) {{$news[2]->image}} @endif" alt="">
+                            <img src="@if(isset($news[2])) {{$news[2]->thumb}} @endif" alt="">
                         </a>
                     </div>
                     <div class="ibc_multi_goods_cell right pull-left">
                         <a href="{{url('/home/product/detail')}}/@if(isset($news[3])){{$news[3]->id}}@endif">
                             <h5 class="chayefont">@if(isset($news[3])) {{$news[3]->name}} @endif</h5>
                             <span class="price">￥ @if(isset($news[3])) {{sprintf('%.2f', $news[3]->price)}} @endif</span>
-                            <img src="@if(isset($news[3])) {{$news[3]->image}} @endif" alt="">
+                            <img src="@if(isset($news[3])) {{$news[3]->thumb}} @endif" alt="">
                         </a>
                     </div>
                 </div>
@@ -123,7 +123,7 @@
                 <ul class="clearfix">
                     <li>
                         <a href="{{url('/home/product/detail')}}/@if(isset($sells[0])){{$sells[0]->id}}@endif">
-                            <img src="@if(isset($sells[0])) {{$sells[0]->image}} @endif" alt="">
+                            <img src="@if(isset($sells[0])) {{$sells[0]->thumb}} @endif" alt="">
                             <h5 class="chayefont">@if(isset($sells[0])) {{$sells[0]->name}} @endif</h5>
                             <p class="chayefont">@if(isset($sells[0])) {{$sells[0]->desc}} @endif</p>
                             <span class="price">￥ @if(isset($sells[0])) {{sprintf('%.2f', $sells[0]->price)}} @endif</span>
@@ -131,7 +131,7 @@
                     </li>
                     <li>
                         <a href="{{url('/home/product/detail')}}/@if(isset($sells[1])){{$sells[1]->id}}@endif">
-                            <img src="@if(isset($sells[1])) {{$sells[1]->image}} @endif" alt="">
+                            <img src="@if(isset($sells[1])) {{$sells[1]->thumb}} @endif" alt="">
                             <h5 class="chayefont">@if(isset($sells[1])) {{$sells[1]->name}} @endif</h5>
                             <p class="chayefont">@if(isset($sells[1])) {{$sells[1]->desc}} @endif</p>
                             <span class="price">￥ @if(isset($sells[1])) {{sprintf('%.2f', $sells[1]->price)}} @endif</span>
@@ -139,7 +139,7 @@
                     </li>
                     <li>
                         <a href="{{url('/home/product/detail')}}/@if(isset($sells[2])){{$sells[2]->id}}@endif">
-                            <img src="@if(isset($sells[2])) {{$sells[2]->image}} @endif" alt="">
+                            <img src="@if(isset($sells[2])) {{$sells[2]->thumb}} @endif" alt="">
                             <h5 class="chayefont">@if(isset($sells[2])) {{$sells[2]->name}} @endif</h5>
                             <p class="chayefont">@if(isset($sells[2])) {{$sells[2]->desc}} @endif</p>
                             <span class="price">￥ @if(isset($sells[2])) {{sprintf('%.2f', $sells[2]->price)}} @endif</span>

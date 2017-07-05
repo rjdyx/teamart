@@ -74,7 +74,7 @@
             <div class="box-header with-border">
               <h3 class="box-title">新增商品组</h3>
             </div>
-            <form class="form-horizontal" action="{{url('admin/goods/group')}}/{{$data->id}}" method="POST" name="groupForm">
+            <form class="form-horizontal" action="{{url('admin/goods/group')}}/{{$data->id}}" method="POST" name="groupForm" enctype="multipart/form-data">
               {{ csrf_field() }}
               <input type="hidden" value="PUT" name="_method">
               <input type="hidden" value="{{$data->id}}" name="id" id="id">

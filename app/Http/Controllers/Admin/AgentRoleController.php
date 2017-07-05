@@ -22,7 +22,7 @@ class AgentRoleController extends Controller
     //列表页
     public function index(Request $request)
     {
-        $lists = Parter::orderBy('scale','asc');
+        $lists = Parter::orderBy('scale','desc');
         if ($request->name) {
             $lists = $lists->where('name','like','%'.$request->name.'%');
         }

@@ -39,11 +39,7 @@ class HomeController extends Controller
     public function randProduct($num = 3)
     {
         if (!Product::first()) return null;
-        $rands = Product::join('product_group','product.group_id','=','product_group.id')
-            ->join('product_img','product_group.id','=','product_img.group_id')
-            ->where('state','=',1)
-            ->select('product.*','product_img.img as image','product_img.thumb')
-            ->distinct('product.id')
+        $rands = Product::where('state','=',1)
             ->inRandomOrder()
             ->paginate($num);
         return $rands;
@@ -53,12 +49,7 @@ class HomeController extends Controller
     public function newProduct()
     {
         if (!Product::first()) return null;
-        $news = Product::join('product_group','product.group_id','=','product_group.id')
-            ->leftjoin('product_img','product_group.id','=','product_img.group_id')
-            ->select('product.*','product_img.img as image','product_img.thumb')
-            ->distinct('product.id')
-            ->orderBy('product.id','desc')
-            ->paginate(4);
+        $news = Product::orderBy('product.id','desc')->paginate(4);
         return $news;
     }
 
@@ -66,9 +57,7 @@ class HomeController extends Controller
     public function activityProduct() 
     {
         $activitys = Product::join('activity_product','product.id','=','activity_product.id')
-            ->join('product_group','product.group_id','=','product_group.id')
-            ->join('product_img','product_group.id','=','product_img.group_id')
-            ->select('product.*','product_img.img as image','product_img.thumb')
+            ->select('product.*')
             ->distinct('product.id')
             ->orderBy('product.id','desc')
             ->paginate(3);

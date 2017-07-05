@@ -24,6 +24,7 @@ class CreateSystemTable extends Migration
             $table->text('keywords')->nullable()->comment('关键字');
             $table->tinyInteger('verify_state')->default(1)->comment('验证码开关(0关1开)');
             $table->double('free', 15, 2)->comment('免邮金额')->nullable();
+            $table->string('qq',255)->nullable()->comment('QQ');
             // $table->double('full_cut', 15, 2)->comment('满减')->nullable();
             $table->timestamps();
         });

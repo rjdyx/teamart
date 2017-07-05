@@ -25,8 +25,7 @@
         })
 		function getListData (me) {
 			page++
-			ajax('get', '/ddd', {page: page}, false, false, false)
-				.then(function (res) {
+			ajax('get', '/home/userasset/brokerage/data', {page: page}).then(function (res) {
 					var result = ''
 					if (res.data.length > 0) {
 						res.data.forEach(function (v) {
@@ -35,26 +34,26 @@
 									<ul class="clearfix">
 										<li class="pull-left">
 											<p>总金额</p>
-											<p>888.00</p>
+											<p>&yen; ${v.count}</p>
 										</li>
 										<li class="pull-left">
 											<p>佣金比</p>
-											<p>0.2</p>
+											<p>${v.scale}</p>
 										</li>
 										<li class="pull-left">
 											<p>订单数量</p>
-											<p>888</p>
+											<p>${v.amount}</p>
 										</li>
 										<li class="pull-left">
 											<p>实际金额</p>
-											<p>88</p>
+											<p>&yen; ${v.price}</p>
 										</li>
 										<li class="pull-left">
 											<p>未结清余额</p>
-											<p>8.88</p>
+											<p>&yen; ${v.remain}</p>
 										</li>
 									</ul>
-									<p class="mt-10 txt-r">结账日期：0000-00-00</p>
+									<p class="mt-10 txt-r">结账日期：${v.date}</p>
 								</div>
 							`
 						})
@@ -62,7 +61,7 @@
 						me.lock();
                         me.noData();
 					}
-					$('.collect_list').append(result);
+					$('.userassets_list').append(result);
                     me.resetload();
 				})
 				.catch(function (err) {
@@ -96,206 +95,7 @@
 			</div>
 			<div class="userassets_container mt-20">
 				<div class="userassets_list">
-					<div class="userassets_container_warpper">
-						<ul class="clearfix">
-							<li class="pull-left">
-								<p>总金额</p>
-								<p>888.00</p>
-							</li>
-							<li class="pull-left">
-								<p>佣金比</p>
-								<p>0.2</p>
-							</li>
-							<li class="pull-left">
-								<p>订单数量</p>
-								<p>888</p>
-							</li>
-							<li class="pull-left">
-								<p>实际金额</p>
-								<p>88</p>
-							</li>
-							<li class="pull-left">
-								<p>未结清余额</p>
-								<p>8.88</p>
-							</li>
-						</ul>
-						<p class="mt-10 txt-r">结账日期：0000-00-00</p>
-					</div>
-					<div class="userassets_container_warpper">
-						<ul class="clearfix">
-							<li class="pull-left">
-								<p>总金额</p>
-								<p>888.00</p>
-							</li>
-							<li class="pull-left">
-								<p>佣金比</p>
-								<p>0.2</p>
-							</li>
-							<li class="pull-left">
-								<p>订单数量</p>
-								<p>888</p>
-							</li>
-							<li class="pull-left">
-								<p>实际金额</p>
-								<p>88</p>
-							</li>
-							<li class="pull-left">
-								<p>未结清余额</p>
-								<p>8.88</p>
-							</li>
-						</ul>
-						<p class="mt-10 txt-r">结账日期：0000-00-00</p>
-					</div>
-					<div class="userassets_container_warpper">
-						<ul class="clearfix">
-							<li class="pull-left">
-								<p>总金额</p>
-								<p>888.00</p>
-							</li>
-							<li class="pull-left">
-								<p>佣金比</p>
-								<p>0.2</p>
-							</li>
-							<li class="pull-left">
-								<p>订单数量</p>
-								<p>888</p>
-							</li>
-							<li class="pull-left">
-								<p>实际金额</p>
-								<p>88</p>
-							</li>
-							<li class="pull-left">
-								<p>未结清余额</p>
-								<p>8.88</p>
-							</li>
-						</ul>
-						<p class="mt-10 txt-r">结账日期：0000-00-00</p>
-					</div>
-					<div class="userassets_container_warpper">
-						<ul class="clearfix">
-							<li class="pull-left">
-								<p>总金额</p>
-								<p>888.00</p>
-							</li>
-							<li class="pull-left">
-								<p>佣金比</p>
-								<p>0.2</p>
-							</li>
-							<li class="pull-left">
-								<p>订单数量</p>
-								<p>888</p>
-							</li>
-							<li class="pull-left">
-								<p>实际金额</p>
-								<p>88</p>
-							</li>
-							<li class="pull-left">
-								<p>未结清余额</p>
-								<p>8.88</p>
-							</li>
-						</ul>
-						<p class="mt-10 txt-r">结账日期：0000-00-00</p>
-					</div>
-					<div class="userassets_container_warpper">
-						<ul class="clearfix">
-							<li class="pull-left">
-								<p>总金额</p>
-								<p>888.00</p>
-							</li>
-							<li class="pull-left">
-								<p>佣金比</p>
-								<p>0.2</p>
-							</li>
-							<li class="pull-left">
-								<p>订单数量</p>
-								<p>888</p>
-							</li>
-							<li class="pull-left">
-								<p>实际金额</p>
-								<p>88</p>
-							</li>
-							<li class="pull-left">
-								<p>未结清余额</p>
-								<p>8.88</p>
-							</li>
-						</ul>
-						<p class="mt-10 txt-r">结账日期：0000-00-00</p>
-					</div>
-					<div class="userassets_container_warpper">
-						<ul class="clearfix">
-							<li class="pull-left">
-								<p>总金额</p>
-								<p>888.00</p>
-							</li>
-							<li class="pull-left">
-								<p>佣金比</p>
-								<p>0.2</p>
-							</li>
-							<li class="pull-left">
-								<p>订单数量</p>
-								<p>888</p>
-							</li>
-							<li class="pull-left">
-								<p>实际金额</p>
-								<p>88</p>
-							</li>
-							<li class="pull-left">
-								<p>未结清余额</p>
-								<p>8.88</p>
-							</li>
-						</ul>
-						<p class="mt-10 txt-r">结账日期：0000-00-00</p>
-					</div>
-					<div class="userassets_container_warpper">
-						<ul class="clearfix">
-							<li class="pull-left">
-								<p>总金额</p>
-								<p>888.00</p>
-							</li>
-							<li class="pull-left">
-								<p>佣金比</p>
-								<p>0.2</p>
-							</li>
-							<li class="pull-left">
-								<p>订单数量</p>
-								<p>888</p>
-							</li>
-							<li class="pull-left">
-								<p>实际金额</p>
-								<p>88</p>
-							</li>
-							<li class="pull-left">
-								<p>未结清余额</p>
-								<p>8.88</p>
-							</li>
-						</ul>
-						<p class="mt-10 txt-r">结账日期：0000-00-00</p>
-					</div>
-					<div class="userassets_container_warpper">
-						<ul class="clearfix">
-							<li class="pull-left">
-								<p>总金额</p>
-								<p>888.00</p>
-							</li>
-							<li class="pull-left">
-								<p>佣金比</p>
-								<p>0.2</p>
-							</li>
-							<li class="pull-left">
-								<p>订单数量</p>
-								<p>888</p>
-							</li>
-							<li class="pull-left">
-								<p>实际金额</p>
-								<p>88</p>
-							</li>
-							<li class="pull-left">
-								<p>未结清余额</p>
-								<p>8.88</p>
-							</li>
-						</ul>
-						<p class="mt-10 txt-r">结账日期：0000-00-00</p>
-					</div>
+
 				</div>
 			</div>
 		</div>

@@ -15,7 +15,7 @@ class CreateUsersTable extends Migration
     {
         Schema::create('user', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('pid')->comment('分销商id')->nullable();
+            $table->integer('parter_id')->nullable()->comment('分销id');
             $table->string('name',30)->comment('用户名');
             $table->string('email',50)->comment('邮箱')->nullable();
             $table->string('password',255)->comment('密码');
@@ -27,6 +27,7 @@ class CreateUsersTable extends Migration
             $table->tinyInteger('type')->default(2)->comment('用户类型');
             $table->tinyInteger('gender')->default(0)->comment('性别(0男、1女)');
             $table->integer('grade')->default(0)->comment('积分');
+            $table->double('sell_count', 15, 2)->default(0.00)->nullable()->comment('代理商销售总额');
             $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();

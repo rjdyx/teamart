@@ -28,12 +28,7 @@ class IndexController extends Controller
     //最新商品
     public function newProduct()
     {
-        $news = Product::join('product_group','product.group_id','=','product_group.id')
-            ->leftjoin('product_img','product_group.id','=','product_img.group_id')
-            ->select('product.*','product_img.img as image','product_img.thumb')
-            ->distinct('product.id')
-            ->orderBy('product.id','desc')
-            ->paginate(10);
+        $news = Product::orderBy('product.id','desc')->paginate(10);
         return $news;
     }
 

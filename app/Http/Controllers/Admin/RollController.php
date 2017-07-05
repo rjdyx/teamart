@@ -28,7 +28,7 @@ class RollController extends Controller
         if($name!=''||$name!=null){
             $lists = $lists->where('name','like','%'.$name.'%');
         }
-        $lists = $lists ->paginate(config('app.paginate10'));
+        $lists = $lists->orderBy('id','desc')->paginate(config('app.paginate10'));
         return view(config('app.theme').'.admin.activity.roll.index')->with('lists',$lists);
     }
 

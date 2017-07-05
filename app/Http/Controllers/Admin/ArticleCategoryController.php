@@ -23,7 +23,7 @@ class ArticleCategoryController extends Controller
     //首页 (列表页)
     public function index(Request $request)
     {
-        $lists = ArticleCategory::orderBy('id','asc');
+        $lists = ArticleCategory::orderBy('id','desc');
         if ($request->name) {
             $lists = $lists->where('name','like','%'.$request->name.'%');
         }

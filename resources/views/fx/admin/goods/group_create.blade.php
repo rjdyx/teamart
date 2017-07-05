@@ -73,7 +73,7 @@
             <div class="box-header with-border">
               <h3 class="box-title">新增商品组</h3>
             </div>
-            <form class="form-horizontal" action="{{url('admin/goods/group')}}" method="POST" name="groupForm">
+            <form class="form-horizontal" action="{{url('admin/goods/group')}}" method="POST" name="groupForm" enctype="multipart/form-data">
               {{ csrf_field() }}
               <div class="box-body">
                 <div class="form-group">

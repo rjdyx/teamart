@@ -60,6 +60,13 @@ class UserController extends Controller
 		return $prices->sum('price');		
 	}	
 
+	//资产记录
+	public function brokerageList()
+	{
+		$data = Brokerage::where('user_id',Auth::user()->id)->paginate(10);
+		return $data;
+	}
+
 	//编辑 用户信息
 	public function edit () {
 		$data = User::leftjoin('user as auser','user.parter_id','=','auser.id')
