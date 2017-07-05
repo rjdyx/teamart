@@ -50,6 +50,10 @@ $(function () {
 		window.location.href = 'http://' + window.location.host + '/home/product/list?name=' + v
 	})
 
+	$('.J_backIndex').on('click tap', function () {
+		window.location.href = 'http://' + window.location.host
+	})
+
 	let mySwiper = new Swiper('.swiper-container', {
 		pagination: '.swiper-pagination',
 		paginationClickable: true,

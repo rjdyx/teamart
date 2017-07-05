@@ -21,7 +21,7 @@ class IndexController extends Controller
     //首页更多列表页数据接口
     public function promotionData(Request $request)
     {	
-    	if ($request->type == 'activity') return $this->newProduct();
+    	if ($request->type != 'activity') return $this->newProduct();
 		return $this->sellProduct();
     }
 
