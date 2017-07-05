@@ -27,7 +27,7 @@
     <meta name="msapplication-TileColor" content="#000"/>
     <!-- Windows 8 磁贴颜色 -->
     <meta name="msapplication-TileImage" content="icon.png"/>
-    
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
