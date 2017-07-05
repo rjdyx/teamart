@@ -61,7 +61,12 @@
 	<!-- 内容 -->
 	<div class="container usercenter">
 		<div class="usercenter_info">
-			<div class="usercenter_avatar @if(Auth::user() && Auth::user()->type < 2) J_QRcode @else J_getQRcode @endif">
+			@if(Auth::user() && Auth::user()->type == 1)
+				<a href="javascript:;" id="QRCode" class="usercenter_info_qrcode">
+					<i class="fa fa-qrcode fz-20"></i>
+				</a>
+			@endif
+			<div class="usercenter_avatar">
 				<img src="{{url('')}}/@if(Auth::user()){{Auth::user()->img}} @endif" alt="">
 			</div>
 			<p class="usercenter_name chayefont">@if(Auth::user()){{Auth::user()->name}} @endif</p>
@@ -76,7 +81,7 @@
 					<a href="javascript:;">
 						<p>所属身份</p>
 						<p>@if(Auth::user())
-							@if (Auth::user()->type < 2) 分销商 @else 普通会员 @endif
+							@if (Auth::user()->type == 1) 分销商 @else 普通会员 @endif
 						 @endif
 						 </p>
 					</a>

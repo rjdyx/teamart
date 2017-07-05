@@ -20,7 +20,7 @@ class UserTableSeeder extends Seeder
             $user = new User;
             $user->name = 'admin';
             $user->email = 'admin@qq.com';
-            $user->password = bcrypt(888888);
+            $user->password = bcrypt('adminadmin');
             $user->type = 0;
             $user->save();
         }
@@ -31,7 +31,7 @@ class UserTableSeeder extends Seeder
             $user = new User;
             $user->name = 'sell';
             $user->email = 'sell@qq.com';
-            $user->password = bcrypt(888888);
+            $user->password = bcrypt('sellsell');
             $user->type = 1;
             $user->save();
         }
@@ -42,7 +42,7 @@ class UserTableSeeder extends Seeder
             $user = new User;
             $user->name = 'user';
             $user->email = 'user@qq.com';
-            $user->password = bcrypt(888888);
+            $user->password = bcrypt('useruser');
             $user->type = 2;
             $user->save();
         }

@@ -30,7 +30,7 @@ class GroupController extends Controller
         if ($request->name) {
             $lists = $lists->where('name','like','%'.$request->name.'%');
         }
-        $lists = $lists->paginate(10);
+        $lists = $lists->orderBy('id','desc')->paginate(10);
         return view(config('app.theme').'.admin.activity.group.group')->with(['lists'=>$lists]);
     }
 

@@ -33,7 +33,7 @@ class GoodsGroupController extends Controller
             $lists = $lists->where('product_category.id','=',$request->category);
         }
         $lists = $lists->select('product_group.*','product_category.name as category_name')
-                ->orderBy('product_group.id','asc')
+                ->orderBy('product_group.id','desc')
                 ->paginate(10);
 
         //查询所有关联的商品分类
@@ -135,6 +135,7 @@ class GoodsGroupController extends Controller
         $model->setRawAttributes($request->only(['name','desc','category_id']));
 
         if ($model->save()) {
+            if ($id == -1) $gid = $model->id; 
             $pics = IQuery::uploads($request, 'imgs', true);
             if ($pics != 'false')
             {
@@ -142,7 +143,7 @@ class GoodsGroupController extends Controller
                     $img = new ProductImg;
                     $img->img = $pic['pic'];
                     $img->thumb = $pic['thumb'];
-                    $img->group_id = $model->id;
+                    $img->group_id = $id;
                     if (!$img->save()) return Redirect::back()->withErrors('保存失败');
                 }
             }

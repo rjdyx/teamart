@@ -23,7 +23,7 @@ class CategoryController extends Controller
     //列表页
     public function index(Request $request)
     {
-        $lists = Category::orderBy('id','asc');
+        $lists = Category::orderBy('id','desc');
         if ($request->name) {
             $lists = $lists->where('name','like','%'.$request->name.'%');
         }

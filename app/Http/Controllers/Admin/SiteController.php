@@ -24,7 +24,7 @@ class SiteController extends Controller
         if($request->detail!=''||$request->detail!=null){
             $lists = $lists->where('detail','like','%'.$detail.'%');
         }
-        $lists = $lists->paginate(config('app.paginate10'));
+        $lists = $lists->orderBy('id','desc')->paginate(config('app.paginate10'));
         return view(config('app.theme').'.admin.system.site')->with('lists',$lists);
     }
 

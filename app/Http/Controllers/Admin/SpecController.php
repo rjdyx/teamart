@@ -23,7 +23,7 @@ class SpecController extends Controller
     //列表页
     public function index(Request $request)
     {
-        $lists = Spec::orderBy('id','asc');
+        $lists = Spec::orderBy('id','desc');
         if ($request->name) {
             $lists = $lists->where('name','like','%'.$request->name.'%');
         }

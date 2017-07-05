@@ -16,11 +16,9 @@ class CreateCommentTable extends Migration
         Schema::create('comment', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('product_id')->comment('商品id');
-            $table->integer('before_id')->comment('用户id');
-            $table->integer('after_id')->nullable()->comment('用户id');
+            $table->integer('user_id')->comment('用户id');
             $table->integer('grade')->default(100)->comment('满意度');
             $table->text('content')->comment('评论内容');
-            $table->tinyInteger('type')->default(0)->comment('默认0评论 (1为回复)');
             $table->string('img',255)->nullable()->comment('评论图片');
             $table->string('thumb',255)->nullable()->comment('缩略图');
             $table->softDeletes();

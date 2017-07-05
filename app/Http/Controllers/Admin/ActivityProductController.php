@@ -33,7 +33,7 @@ class ActivityProductController extends Controller
 			'activity.date_start',
 			'activity.date_end',
 			'activity.name as activity_name')
-		->orderBy('activity_product.id','asc');
+		->orderBy('activity_product.id','desc');
 		$activity_id = 0;   
 		$flag = 0; //标记是否为搜索操作，1为搜索，0为默认显示，搜索结果返回时，前台不可以进行新增活动商品操作   
 		if ($request->name) {

@@ -16,10 +16,9 @@ class CreateSiteTable extends Migration
         //
         Schema::create('site', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('province',100)->comment('省');
-            $table->string('city',100)->comment('市');
-            $table->string('area',255)->comment('区/县');
-            $table->string('detail',255)->comment('详细地址');
+            $table->string('name',100)->comment('站点名称');
+            $table->double('longitude')->comment('经度');
+            $table->double('latitude')->comment('纬度');
             $table->string('user',50)->comment('负责人');
             $table->string('phone',50)->comment('站点电话');
             $table->softDeletes();

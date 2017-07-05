@@ -23,6 +23,7 @@ class ArticleController extends Controller
     public function index(Request $request)
     {
         $lists = Article::join('article_category','article.category_id','=','article_category.id')
+        ->orderBy('article.id','desc')
         ->select('article_category.name as category_name','article.*')
         ->paginate(10);
         if ($request->name) {

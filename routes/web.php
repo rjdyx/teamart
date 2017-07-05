@@ -102,6 +102,7 @@ Route::group(['namespace'=>'Home','prefix'=>'home','middleware'=>['auth']],funct
 
 	//用户部分
 	Route::get('/userasset','UserController@userAsset');
+	Route::get('/userasset/brokerage/data','UserController@brokerageList');
 	Route::get('/useredit','UserController@edit');
 	Route::resource('/user', 'UserController');
 
