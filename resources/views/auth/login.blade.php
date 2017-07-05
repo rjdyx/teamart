@@ -47,6 +47,7 @@
 @endsection
 
 @section('content')
+    @include("layouts.backIndex")
     <div class="login">
         <div class="login_logo"></div>
         <p class="form_error formfont"></p>

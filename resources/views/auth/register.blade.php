@@ -73,6 +73,7 @@
 @endsection
 
 @section('content')
+    @include("layouts.backIndex")
     <div class="register">
         <div class="register_logo"></div>
         <p class="form_error formfont"></p>

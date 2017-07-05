@@ -3,7 +3,6 @@
 @section('title') 订单管理 @endsection
 
 @section('css')
-    <link rel="stylesheet" type="text/css" href="{{ asset('fx/css/dropload.css') }}">
 @endsection
 
 @section('script')
@@ -14,7 +13,7 @@
         //定义全局对象
         var params = {state:'', serial:'',page:1};
 
-        $('.order_container').dropload({
+        var dropload = $('.order_container').dropload({
             scrollArea : $('.order_container'),
             domUp : {
                 domClass   : 'dropload-up',
@@ -46,8 +45,7 @@
             }
             var result = '';
             var url = 'http://'+window.location.host + '/home/order/list/data';
-            axios.get(url, {params:params}).then(function (res) {
-                var data = res.data
+            ajax('get', url, params, false, false, false).then(function (data) {
                 if(data != ''){
                     result = joint(data);
                 }else{
@@ -64,12 +62,37 @@
                     me.unlock();
                     me.noData(false);
                 }
-            }).catch(function (err) {
+            })
+            .catch(function (err) {
                 console.log(err)
                 me.unlock();
                 me.noData(false);
                 // me.resetload();// 即使加载出错，也得重置
-            });
+            })
+            // axios.get(url, {params:params}).then(function (res) {
+            //     var data = res.data
+            //     if(data != ''){
+            //         result = joint(data);
+            //     }else{
+            //         // 如果没有数据 锁定
+            //         me.lock();
+            //         // 无数据
+            //         me.noData();
+            //     }
+            //     $('.order_list').append(result);// 插入数据到页面，放到最后面
+            //     me.resetload();// 每次数据插入，必须重置
+            //     if (type == 'up') {
+            //         page = 0;// 重置页数，重新获取loadDownFn的数据
+            //         // 解锁loadDownFn里锁定的情况
+            //         me.unlock();
+            //         me.noData(false);
+            //     }
+            // }).catch(function (err) {
+            //     console.log(err)
+            //     me.unlock();
+            //     me.noData(false);
+            //     // me.resetload();// 即使加载出错，也得重置
+            // });
         }
 
         // 拼接HTML
@@ -165,29 +188,30 @@
         function orderOperate(addurl, pro, params) {
             var url = 'http://'+window.location.host + '/home/order/';
             url+= addurl;
-            axios.get(url, {params:params}).then(function (res) {
-                if (res.data == 200) {
+            ajax('get', url, params).then(function (data) {
+                if (data == 200) {
                     prompt.message(pro+'成功');
                     searchOrder(false);
                 } else {
                     prompt.message(pro+'失败！请稍后再试！');
                 }
-            }).catch(function (err) {
-                prompt.message('服务器链接错误！');
-                console.log(err)
-            });  
+            })
         }
 
         //取消订单方法
         function order_cancell(id){
             var params = {id:id};
-            orderOperate('cancell', '取消订单', params);
+            prompt.question('是否要取消该订单', function () {
+                orderOperate('cancell', '取消订单', params);
+            })
         }
 
         //申请退货方法
         function order_back(id){
             var params = {id:id};
-            orderOperate('back', '申请退货', params);
+            prompt.question('是否要申请退货', function () {
+                orderOperate('back', '申请退货', params);
+            })
         }
 
         //查看物流方法
@@ -198,12 +222,22 @@
         //确定收货方法
         function order_take(id){
             var params = {id:id};
-            orderOperate('take', '确认收货', params);
+            prompt.question('是否确认收货', function () {
+                orderOperate('take', '确认收货', params);
+            })
         }
 
         //生成二维码方法
         function order_code(id){
-
+            var qrcode = new QRCode(document.getElementById("qrcode"), {
+                text: "http://jindo.dev.naver.com/collie",
+                width: 2000,
+                height: 2000
+            })
+            prompt.message('二维码生成中')
+            setTimeout(function () {
+                prompt.qrcode()
+            }, 1010)
         }
         
         //订单评论方法
@@ -217,9 +251,8 @@
         }
 
         //按钮点击(订单筛选)
-        $(".order_tabs ul li").click(function(){
-            $(".order_tabs ul li").removeClass('active');
-            $(this).addClass('active');
+        $(".J_tabs").on('click tap', function(){
+            $(this).addClass('active').siblings().removeClass('active')
             params['state'] = $(this).attr('state');
             params['serial'] = '';
             searchOrder(false);
@@ -230,20 +263,18 @@
             var result = '';
             params['page'] = 1;// 重置页数，重新获取loadDownFn的数据
             var url = 'http://'+window.location.host + '/home/order/list/data';
-            axios.get(url, {params:params}).then(function (res) {
-                var data = res.data
+            ajax('get', url, params).then(function (data) {
                 result = joint(data);
                 $('.order_list').html(result);// 插入数据到页面，放到最后面
-            }).catch(function (err) {
-                console.log(err);
-            });
+                dropload.resetload()
+            })
         }
 
-        $('#serialSubmit').click(function(){
+        // 提交查询按钮
+        $('.J_serialSubmit').on('click tap', function(){
             params['serial'] = $('#orderSerial').val();
             params['state'] = '';
-            $(".order_tabs ul li").removeClass('active');
-            $(".order_tabs ul li[state='']").addClass('active');
+            $(".J_tabs[state='']").addClass('active').siblings().removeClass('active');
             searchOrder(true);
         })
     </script>
@@ -257,31 +288,32 @@
         <div class="order_search">
             <input type="text" placeholder="商品名称／商品编号／订单号" id="orderSerial">
             <i class="fa fa-search"></i>
+            <i class="fa fa-chevron-circle-right J_serialSubmit"></i>
             <!-- <input type="submit" id="serialSubmit"> -->
         </div>
         <div class="order_tabs">
             <ul>
-                <li class="active" state=''>
+                <li class="active J_tabs" state=''>
                     <i class="fa fa-align-justify"></i>
                     <p>全部</p>
                 </li>
-                <li state='pading'>
+                <li class="J_tabs" state='pading'>
                     <i class="fa fa-money"></i>
                     <p>待付款</p>
                 </li>
-                <li state='self'>
+                <li class="J_tabs" state='self'>
                     <i class="fa fa-map-marker"></i>
                     <p>待取货</p>
                 </li>
-                <li state='paid'>
+                <li class="J_tabs" state='paid'>
                     <i class="fa fa-feed"></i>
                     <p>待发货</p>
                 </li>
-                <li state='delivery'>
+                <li class="J_tabs" state='delivery'>
                     <i class="fa fa-car"></i>
                     <p>待收货</p>
                 </li>
-                <li state='take'>
+                <li class="J_tabs" state='take'>
                     <i class="fa fa-comment-o"></i>
                     <p>待评价</p>
                 </li>

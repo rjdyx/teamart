@@ -3,7 +3,6 @@
 @section('title') 订单管理 @endsection
 
 @section('css')
-    <link rel="stylesheet" type="text/css" href="{{ asset('fx/css/dropload.css') }}">
 @endsection
 
 @section('script')
@@ -48,7 +47,7 @@
                             res.data.forEach(function (v) {
                                 template += `
                                     <div class="cart_warpper mb-20 clearfix">
-                                        <i class="cart_warpper_select J_select" data-id="${v.opid}" data-pid="${v.id}"></i>
+                                        <i class="cart_warpper_select J_select" data-id="${v.opid}" data-pid="${v.id}" data-price="${v.price}"></i>
                                         <div class="cart_warpper_content_img pull-left mr-20">
                                             <img src="${v.img}">
                                         </div>
@@ -56,7 +55,7 @@
                                             <h5 class="chayefont mb-10">${v.name}</h5>
                                             <p>${v.desc}</p>
                                             <div class="cart_warpper_content_info_bottom">
-                                                <span class="pull-left price">￥${parseInt(v.price).toFixed(2)}</span>
+                                                <span class="pull-left price">&yen;${parseInt(v.price).toFixed(2)}</span>
                                                 <div class="cwcib_number pull-right">
                                                     <i class="fa fa-minus-circle J_minus"></i>
                                                     <span class="sell" stock="${v.stock}">&times;<span class="amount" opid="${v.opid}" pid="${v.id}">${v.amount}</span></span>
@@ -126,6 +125,7 @@
                     dels = arr
                     pids = brr
                 }
+                $('.cart_bottom').find('.total').text(totals)
             }
 
             // 全选
@@ -149,6 +149,7 @@
                     })
                     $(this).find('span').removeClass('active')
                 }
+                $('.cart_bottom').find('.total').text(totals)
                 console.log(dels)
             })
             // 删除
@@ -171,6 +172,7 @@
                                     })
                                 })
                                 dels = []
+                                $('.cart_bottom').find('.total').text('0.00')
                             } else {
                                 prompt.message('删除失败')
                             }
@@ -214,7 +216,18 @@
                     if (!res) {
                         prompt.message('服务器异常！请稍后再试！')
                     }
+                    $('.cart_bottom').find('.total').text(totals)
                 })  
+            }
+
+            // 计算总价
+            function totals () {
+                var total = 0
+                dels.forEach(function (v) {
+                    var price = parseFloat($(`[data-id="${v}"]`).data('price'))
+                    total += price * confirm_params[v]
+                })
+                return total.toFixed(2)
             }
 
             // 结算
@@ -284,7 +297,7 @@
             <div class="cart_bottom_selection pull-left J_select_all">
                 <span>全选</span>
             </div>
-            <div class="cart_bottom_info pull-left">合计：<span class="price">&yen;0.00</span></div>
+            <div class="cart_bottom_info pull-left">合计：<span class="price">&yen;<span class="total">0.00</span></span></div>
             <div class="cart_bottom_settle pull-right J_comfirm"><a href="javascript:;">结算</a></div>
             <div class="cart_bottom_del pull-right J_dels"><a href="javascript:;">删除</a></div>
         </div>

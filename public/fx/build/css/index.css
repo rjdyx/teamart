@@ -3471,24 +3471,28 @@ footer {
 
 .login ::-webkit-input-placeholder,
 .register ::-webkit-input-placeholder,
+.email ::-webkit-input-placeholder,
 .reset ::-webkit-input-placeholder {
   /* WebKit browsers */
   color: #fff; }
 
 .login :-moz-placeholder,
 .register :-moz-placeholder,
+.email :-moz-placeholder,
 .reset :-moz-placeholder {
   /* Mozilla Firefox 4 to 18 */
   color: #fff; }
 
 .login ::-moz-placeholder,
 .register ::-moz-placeholder,
+.email ::-moz-placeholder,
 .reset ::-moz-placeholder {
   /* Mozilla Firefox 19+ */
   color: #fff; }
 
 .login :-ms-input-placeholder,
 .register :-ms-input-placeholder,
+.email :-ms-input-placeholder,
 .reset :-ms-input-placeholder {
   /* Internet Explorer 10+ */
   color: #fff; }
@@ -3679,7 +3683,7 @@ footer {
     color: red;
     margin: 0 auto; }
 
-.reset {
+.email {
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -3687,19 +3691,29 @@ footer {
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat; }
-  .reset .login_logo {
+  .email .email_step {
     height: 3.5rem;
     width: 5rem;
-    margin: 0.5rem auto 0.2rem;
-    background: url("/fx/images/login_logo.png");
-    background-size: cover;
-    background-position: center 0;
-    background-repeat: no-repeat; }
-  .reset .login_form {
+    margin: 0.5rem auto 0.2rem; }
+    .email .email_step h1 {
+      width: 100%;
+      height: 1.3rem;
+      line-height: 1.3rem; }
+    .email .email_step p {
+      width: 100%;
+      height: 1rem;
+      padding: 0.1rem;
+      color: #fff;
+      line-height: 0.8rem;
+      border-radius: 0.5rem;
+      background-color: #d5aa7a; }
+    .email .email_step p.active {
+      background-color: #c18b4f; }
+  .email .email_form {
     padding: 0.1rem; }
-    .reset .login_form label {
+    .email .email_form label {
       display: block; }
-    .reset .login_form label.field {
+    .email .email_form label.field {
       position: relative;
       width: 4.3rem;
       height: 0.7rem;
@@ -3710,19 +3724,19 @@ footer {
       background-size: 100% 100%;
       background-position: center center;
       background-repeat: no-repeat; }
-      .reset .login_form label.field input {
+      .email .email_form label.field input {
         padding-left: 0.7rem;
         font-size: 16px;
         background-color: transparent;
         border: 0;
         color: #fff; }
-      .reset .login_form label.field i {
+      .email .email_form label.field i {
         position: absolute;
         left: 0.3rem;
         top: 50%;
         font-size: 16px;
         transform: translateY(-50%); }
-    .reset .login_form label.submit {
+    .email .email_form label.submit {
       width: 1.3rem;
       height: 1.3rem;
       margin: 0.2rem auto 0;
@@ -3730,16 +3744,78 @@ footer {
       background-size: cover;
       background-position: center center;
       background-repeat: no-repeat; }
-      .reset .login_form label.submit input {
+      .email .email_form label.submit input {
         visibility: hidden; }
-    .reset .login_form .login_link {
+  .email .form_error {
+    min-height: 0.3rem;
+    width: 4.3rem;
+    font-size: 14px;
+    color: red;
+    margin: 0 auto; }
+
+.reset {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: url("/fx/images/login_bg.png");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat; }
+  .reset .reset_step {
+    height: 3.5rem;
+    width: 5rem;
+    margin: 0.5rem auto 0.2rem; }
+    .reset .reset_step h1 {
+      width: 100%;
+      height: 1.3rem;
+      line-height: 1.3rem; }
+    .reset .reset_step p {
+      width: 100%;
+      height: 1rem;
+      padding: 0.1rem;
+      color: #fff;
+      line-height: 0.8rem;
+      border-radius: 0.5rem;
+      background-color: #d5aa7a; }
+    .reset .reset_step p.active {
+      background-color: #c18b4f; }
+  .reset .reset_form {
+    padding: 0.1rem; }
+    .reset .reset_form label {
+      display: block; }
+    .reset .reset_form label.field {
+      position: relative;
       width: 4.3rem;
-      height: 0.4rem;
-      margin: 0 auto 0.1rem;
-      font-size: 16px; }
-      .reset .login_form .login_link a {
-        display: block;
-        width: 50%; }
+      height: 0.7rem;
+      line-height: 0.7rem;
+      margin: 0 auto 0.3rem;
+      color: #fff;
+      background: url("/fx/images/login_field_bg.png");
+      background-size: 100% 100%;
+      background-position: center center;
+      background-repeat: no-repeat; }
+      .reset .reset_form label.field input {
+        padding-left: 0.7rem;
+        font-size: 16px;
+        background-color: transparent;
+        border: 0;
+        color: #fff; }
+      .reset .reset_form label.field i {
+        position: absolute;
+        left: 0.3rem;
+        top: 50%;
+        font-size: 16px;
+        transform: translateY(-50%); }
+    .reset .reset_form label.submit {
+      width: 1.3rem;
+      height: 1.3rem;
+      margin: 0.2rem auto 0;
+      background: url("/fx/images/form_submit.png");
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat; }
+      .reset .reset_form label.submit input {
+        visibility: hidden; }
   .reset .form_error {
     min-height: 0.3rem;
     width: 4.3rem;
@@ -4525,13 +4601,16 @@ footer {
     padding-left: 0.6rem; }
   .order .order_search i {
     position: absolute;
-    left: 0.4rem;
     top: 50%;
     display: block;
     width: 0.3rem;
     height: 0.3rem;
     font-size: 14px;
     margin-top: -0.15rem; }
+  .order .order_search i.fa-search {
+    left: 0.4rem; }
+  .order .order_search i.fa-chevron-circle-right {
+    right: 0.4rem; }
 
 .order .order_tabs {
   width: 100%;
@@ -5180,60 +5259,46 @@ footer {
     height: calc(100% - 2.8rem);
     overflow: auto; }
   .confirm .confirm_warpper {
-    height: 3rem;
+    padding: 0.2rem 0.3rem;
+    height: 2.2rem;
     background-color: #FFF; }
-    .confirm .confirm_warpper .confirm_warpper_tit {
-      height: 0.78rem;
-      border-bottom: 0.02rem solid #DADADA;
-      padding-left: 0.25rem;
-      line-height: 0.78rem;
-      font-size: 16px; }
-      .confirm .confirm_warpper .confirm_warpper_tit a {
-        position: relative;
+    .confirm .confirm_warpper .confirm_warpper_content_img {
+      width: 28.75%;
+      height: 100%;
+      overflow: hidden; }
+      .confirm .confirm_warpper .confirm_warpper_content_img img {
         display: block;
-        color: #595758; }
-        .confirm .confirm_warpper .confirm_warpper_tit a i {
-          vertical-align: middle; }
-    .confirm .confirm_warpper .confirm_warpper_content {
-      padding: 0.2rem 0.3rem;
-      height: 2.2rem; }
-      .confirm .confirm_warpper .confirm_warpper_content .confirm_warpper_content_img {
-        width: 28.75%;
-        height: 100%;
-        overflow: hidden; }
-        .confirm .confirm_warpper .confirm_warpper_content .confirm_warpper_content_img img {
-          display: block;
-          width: 100%; }
-      .confirm .confirm_warpper .confirm_warpper_content .confirm_warpper_content_info {
-        position: relative;
-        width: calc(71.25% - 0.2rem);
-        height: 100%; }
-        .confirm .confirm_warpper .confirm_warpper_content .confirm_warpper_content_info p {
-          color: #7B7B7B; }
-        .confirm .confirm_warpper .confirm_warpper_content .confirm_warpper_content_info .confirm_warpper_content_info_bottom {
-          position: absolute;
-          left: 0;
-          bottom: 0;
-          width: 100%; }
-          .confirm .confirm_warpper .confirm_warpper_content .confirm_warpper_content_info .confirm_warpper_content_info_bottom span.price {
-            color: #FB6969; }
-          .confirm .confirm_warpper .confirm_warpper_content .confirm_warpper_content_info .confirm_warpper_content_info_bottom span.sell {
-            color: #B5B5B5; }
-        @media screen and (max-width: 321px) {
-          .confirm .confirm_warpper .confirm_warpper_content .confirm_warpper_content_info h5 {
-            font-size: 14px; }
-          .confirm .confirm_warpper .confirm_warpper_content .confirm_warpper_content_info p {
-            font-size: 12px; } }
-        @media screen and (min-width: 321px) and (max-width: 400px) {
-          .confirm .confirm_warpper .confirm_warpper_content .confirm_warpper_content_info h5 {
-            font-size: 16px; }
-          .confirm .confirm_warpper .confirm_warpper_content .confirm_warpper_content_info p {
-            font-size: 14px; } }
-        @media screen and (min-width: 400px) {
-          .confirm .confirm_warpper .confirm_warpper_content .confirm_warpper_content_info h5 {
-            font-size: 18px; }
-          .confirm .confirm_warpper .confirm_warpper_content .confirm_warpper_content_info p {
-            font-size: 16px; } }
+        width: 100%; }
+    .confirm .confirm_warpper .confirm_warpper_content_info {
+      position: relative;
+      width: calc(71.25% - 0.2rem);
+      height: 100%; }
+      .confirm .confirm_warpper .confirm_warpper_content_info p {
+        color: #7B7B7B; }
+      .confirm .confirm_warpper .confirm_warpper_content_info .confirm_warpper_content_info_bottom {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%; }
+        .confirm .confirm_warpper .confirm_warpper_content_info .confirm_warpper_content_info_bottom span.price {
+          color: #FB6969; }
+        .confirm .confirm_warpper .confirm_warpper_content_info .confirm_warpper_content_info_bottom span.sell {
+          color: #B5B5B5; }
+      @media screen and (max-width: 321px) {
+        .confirm .confirm_warpper .confirm_warpper_content_info h5 {
+          font-size: 14px; }
+        .confirm .confirm_warpper .confirm_warpper_content_info p {
+          font-size: 12px; } }
+      @media screen and (min-width: 321px) and (max-width: 400px) {
+        .confirm .confirm_warpper .confirm_warpper_content_info h5 {
+          font-size: 16px; }
+        .confirm .confirm_warpper .confirm_warpper_content_info p {
+          font-size: 14px; } }
+      @media screen and (min-width: 400px) {
+        .confirm .confirm_warpper .confirm_warpper_content_info h5 {
+          font-size: 18px; }
+        .confirm .confirm_warpper .confirm_warpper_content_info p {
+          font-size: 16px; } }
   .confirm .confirm_container_sum {
     width: 100%;
     background-color: #FFF;

@@ -132,7 +132,8 @@ class OrderController extends Controller
 					'order.state as order_state','order.method as order_method','order.type as order_type',
 					'product.*'
 					)
-					->groupBy('order_product.id')
+					->distinct('order_product.id')
+					// ->groupBy('order_product.id')
 					->paginate(10);
 		$arrs = array();
 		foreach ($datas as $data) {
