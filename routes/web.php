@@ -184,17 +184,16 @@ Route::group(['namespace'=>'Admin','prefix'=>'admin','middleware'=>['auth','user
 
 	// 活动管理
 	Route::group(['prefix'=>'activity'],function(){
-		Route::resource('/group', 'GroupController');
 		Route::post('/group/dels', 'GroupController@dels');
-		Route::resource('/activityproduct', 'ActivityProductController');
-		// Route::get('/activityproduct/create/{id}', 'ActivityProductController@create');
-		// Route::get('/activityproduct/create/{activity_id}/{id}', 'ActivityProductController@destory');
+		Route::resource('/group', 'GroupController');
 		Route::post('/activityproduct/dels', 'ActivityProductController@dels');
-		Route::resource('/mark', 'MarkController');
+		Route::resource('/activityproduct', 'ActivityProductController');
+		Route::get('/mark/product',"MarkController@getProduct");
 		Route::post('/mark/dels',"MarkController@dels");
 		Route::post('/mark/create/dels',"MarkController@dels");
-		Route::resource('/roll', 'RollController');
 		Route::post('/roll/dels','RollController@dels');
+		Route::resource('/mark', 'MarkController');
+		Route::resource('/roll', 'RollController');
 	});
 
 	// 系统管理

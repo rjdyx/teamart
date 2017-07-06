@@ -79,15 +79,15 @@
     					<input type="hidden" value="0" name="del" id="del">
     					<div class="box-body">
     						<div class="form-group">
-    							<label for="inputName3" class="col-sm-2 control-label">团购活动名称</label>
+    							<label for="inputName3" class="col-sm-3 control-label">团购活动名称</label>
 
-    							<div class="col-sm-10">
+    							<div class="col-sm-3">
     								<input type="text" class="form-control" id="name" placeholder="请输入团购活动名称" name="name" value="{{$data->name}}">
     							</div>
     						</div>
     						<div class="form-group">
-    							<label class="col-sm-2 control-label" for="date_start">活动开始时间</label>
-    							<div class="col-sm-10">
+    							<label class="col-sm-3 control-label" for="date_start">活动开始时间</label>
+    							<div class="col-sm-3">
     								<div class="input-group date">
     									<div class="input-group-addon">
     										<i class="fa fa-calendar"></i>
@@ -98,8 +98,8 @@
     							</div>
     						</div>
     						<div class="form-group">
-    							<label class="col-sm-2 control-label" for="date_end">活动结束时间</label>
-    							<div class="col-sm-10">
+    							<label class="col-sm-3 control-label" for="date_end">活动结束时间</label>
+    							<div class="col-sm-3">
     								<div class="input-group date">
     									<div class="input-group-addon">
     										<i class="fa fa-calendar"></i>
@@ -110,28 +110,27 @@
     							</div>
     						</div>
     						<div class="form-group">
-    							<label for="price" class="col-sm-2 control-label">团购价格</label>
+    							<label for="price" class="col-sm-3 control-label">团购价格</label>
 
-    							<div class="col-sm-10">
-    								<input type="text" class="form-control" id="price" placeholder="请输入团购价数额" name="price"  value="{{$data->price}}">
+    							<div class="col-sm-3">
+    								<input type="number" class="form-control" id="price" placeholder="请输入团购价数额" name="price"  value="{{$data->price}}">
     							</div>
     						</div>
     						<div class="form-group">
-    							<label class="col-sm-2 control-label" for="editor">活动说明</label>
+    							<label class="col-sm-1 control-label" for="editor">活动说明</label>
     							<div class="col-sm-10">
     								<script id="editor" type="text/plain"  name="desc" 
     								style="width:1024px;height:400px;border:1px solid #3DCDB4;">{{$data->desc}}</script>
     							</div>
     						</div>
     						<div class="form-group">
-    							<div class="col-sm-offset-2 col-sm-10">
+    							<div class="col-sm-offset-2 col-sm-3">
     								<button type="submit" class="btn btn-success btn-100">确认</button>
     								<button type="reset" class="btn btn-success btn-100">重置</button>
     								<a href="{{url('admin/activity/group')}}"><button type="button" class="btn btn-success btn-100" id="cancel_addUser">取消</button></a>
     							</div>
     						</div>
     					</div>
-    					<!-- /.box-body -->
     				</form>
     			</div>
     		</div>

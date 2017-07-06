@@ -1,137 +1,110 @@
 @extends('fx.admin.layouts.app')
-
-
-@section('title')积分商品@endsection
-@section('t1')活动@endsection
-
+@section('title')新增积分商品@endsection
+@section('t1')促销管理@endsection
 @section('css')
-
 @endsection
-
 @section('script')
     @parent
+    <script>
+      $(function () {
+        var form = document.forms['brandForm']
+        $(form).on('submit', function () {
+          return submitForm()
+        })
+        // $('#name').on('blur input', function () {
+        //   _valid.name('name', '品牌名称', $(this).val(), 'brand')
+        // })
+        // $('#desc').on('blur input', function () {
+        //   _valid.desc('desc', '品牌描述', $(this).val())
+        // })
+        function submitForm() {
+          // var name = form['name']
+          // var desc = form['desc']
+          // var img = form['img']
+          // if (!_valid.name('name', '品牌名称', name.value, 'brand')) {
+          //   return false
+          // }
+          // if (!_valid.desc('desc', '品牌描述', desc.value)) {
+          //   return false
+          // }
+          return true
+        }
+      })
 
+        //分类变化
+        $("#category").change(function(){
+            product($(this).val());
+        })
+
+        //查询商品
+        function product(cid){
+            var params = {id:cid};
+            axios.get('/admin/activity/mark/product', {params: params}).then(function (res) {
+                var tmp = '';
+                var data = res.data;
+                if (data.length) {
+                    data.forEach(function (v) {
+                        tmp += '<span style="margin-right:20px;"><input type="checkbox" class="checkboxe" name="pid[]" value="'+v['id']+'">&nbsp;'+v['name']+'</span>';
+                        $('.tmple').html(tmp);
+                    })
+                }
+            })
+        }
+
+        $("#allCheckbox").click(function(){
+            $('.checkboxe').prop('checked',$(this).is(':checked'));
+        })
+    </script>
 @endsection
-
 @section('content')
-
-
-
-
-            <!-- Main content of agentRole-->
-            <section class="content">
-                <div class="row">
-                    <!-- 代理商角色列表 -->
-                    <div class="col-xs-12">
-                        <div class="box box-success">
-                            <div class="box-header">
-                                <div class="input-group input-group-sm" style="width: 470px;">
-                                    <form action="{{url("admin/activity/mark/")}}" method="get">
-                                    <div class="row">
-                                        <div class="col-sm-4">
-
-                                            <select class="form-control input-sm" name="sort">
-                                                @if(empty($_GET['sort']))
-                                                    <option value="20"  >状态</option>
-                                                    <option value="21"  >有货</option>
-                                                    <option value="22"  >无货</option>
-                                                @else
-                                                    <option value="0">状态</option>
-
-                                                    <option value="21"
-                                                            @if($_GET['sort'] == 21)
-                                                            selected
-                                                            @endif
-                                                    >有货</option>
-                                                    <option value="22"
-                                                            @if($_GET['sort'] == 22)
-                                                            selected
-                                                            @endif
-                                                    >无货</option>
-                                                @endif
-                                            </select>
-                                        </div>
-                                        <div class="col-sm-8"><input type="text" name="table_search" class="form-control pull-right input-sm" placeholder="请输入搜索内容"></div>
-                                    </div>
-                                    <div class="input-group-btn">
-                                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-
-                                    </div>
-                                    </form>
-                                </div>
-                                <div class="box-tools">
-                                    <a href="{{url("admin/activity/mark/")}}"> <button type="button" class="btn btn-block btn-success btn-sm" id="addUser">积分商品</button></a>
-                                </div>
-                            </div>
-                            <!-- /.box-header -->
-                            <div class="box-body table-responsive no-padding">
-
-                                <table class="table table-hover">
-                                    <tbody><tr>
-                                        <th><!-- <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i></button> --></th>
-                                        <th>编号</th>
-                                        <th>商品名称</th>
-                                        <th>状态</th>
-                                        <th>积分使用</th>
-                                        <th>库存</th>
-                                        <th>描述</th>
-                                        <th>当前价格</th>
-                                        <th>操作</th>
-                                    </tr>
-                                    @foreach($lists as $k=>$list)
-                                        <tr>
-                                            <td><input type="checkbox" class="check" value="{{$list->id}}"></td>
-                                            <td>{{$k+1}}</td>
-                                            <td>{{$list->name}}</td>
-                                            @if($list->state==1)
-                                                <td> 有货 </td>
-                                            @else
-                                                <td> 缺货 </td>
-                                            @endif
-                                            @if($list->grade==1)
-                                                <td> 可使用 </td>
-                                            @else
-                                                <td> 不可用 </td>
-                                            @endif
-                                            <td>{{$list->stock}}</td>
-                                            <td>{{$list->desc}}</td>
-                                            <td>{{$list->price}}</td>
-
-                                            <td><div style="color: #dd4b39"><a href="{{url("admin/activity/mark/$list->id/edit")}}"><i class="fa fa-trash-o"  style="margin-right: 5px;cursor: pointer;"></i></a></div>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-
-                                    <tr>
-                                        <td><button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o">全选</i></td>
-
-                                        <td><button type="button" onclick="dels();" class="btn btn-block btn-default btn-sm">添加</button></td>
-
-
-                                        <th colspan="9">
-                                            @if(isset($_GET['sort']))
-                                                {{$lists->appends('sort',$_GET['sort'])->links()}}
-                                            @else
-                                                {{$lists->links()}}
-                                            @endif
-                                            共{{ $lists->lastPage() }}页
-                                        </th>
-                                    </tr>
-                                    </tbody></table>
-                            </div>
-                            <!-- /.box-body -->
-                        </div>
-                        <!-- /.box -->
-                    </div>
-                    <!-- /代理商角色列表 -->
+    <section class="content">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box box-success">
+            <div class="box-header with-border">
+              <h3 class="box-title">新增积分商品</h3>
+            </div>
+            <form class="form-horizontal" action="{{url('admin/activity/mark')}}" method="POST" name="brandForm">
+              {{ csrf_field() }}
+              <div class="box-body">
+                <div class="form-group">
+                  <label for="name" class="col-sm-3 control-label"><i style="color:red;">*</i>商品分类</label>
+                  <div class="col-sm-4">
+                    <select name="" id="category"  class="form-control">
+                        <option value="">-请选择商品分类-</option>
+                        @foreach($lists as $list)
+                        <option value="{{$list->id}}">{{$list->name}}</option>
+                        @endforeach
+                    </select>
+                  </div>
+                  <span class="col-sm-4 text-danger form_error" id="name_txt"></span>
                 </div>
-            </section>
-            <!-- /.content -->
+                <div class="form-group">
+                  <label for="desc" class="col-sm-3 control-label">商品</label>
+                  <div class="col-sm-4 tmple">
 
-        <!-- /agentRole -->
-
-        <!-- addagent -->
-
-            <!-- /.content -->
-
+                  </div>
+                  <span class="col-sm-4 text-danger form_error" id="desc_txt"></span>
+                </div>
+                <div class="form-group">
+                  <label for="desc" class="col-sm-3 control-label"></label>
+                  <div class="col-sm-4">
+                    全选 <input type="checkbox" id="allCheckbox">
+                  </div>
+                  <span class="col-sm-4 text-danger form_error" id="desc_txt"></span>
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-offset-3 col-sm-10">
+                    <button type="submit" class="btn btn-success btn-100">确认</button>
+                    <button type="reset" class="btn btn-success btn-100">重置</button>
+                    <a href="{{ url('admin/activity/mark') }}"><button type="button" class="btn btn-success btn-100" id="cancel_addAgent">取消</button></a>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
 @endsection
+
