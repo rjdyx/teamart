@@ -123,7 +123,7 @@
                                 </div>
                             </div>`
                     if (index2 < 1) {    
-                        a = `'  <div class="order_warpper mb-20">
+                        a = `   <div class="order_warpper mb-20">
                                     <div class="order_warpper_tit">
                                         <h1 class="pull-left chayefont">订单号：${serial}<i class="fa fa-angle-right ml-20"></i></h1>
                                         <span class="pull-right chayefont">${date}</span>
