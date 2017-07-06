@@ -9,6 +9,8 @@ use App\Order;
 use App\User;
 use App\Address;
 use App\Site;
+use App\Cheap;
+use App\System;
 use App\OrderProduct;
 use Illuminate\Support\Facades\Auth;
 use Redirect;
@@ -83,20 +85,59 @@ class OrderController extends Controller
 	{
 		$id = $request->id;
 		$lists = OrderProduct::join('product','order_product.product_id','=','product.id')
+				->leftjoin('activity_product',function($join){
+					$join->on('product.id','=','activity_product.product_id')
+					->whereNull('activity_product.deleted_at');	
+				})
+				->leftjoin('activity',function($join){
+					$join->on('activity_product.activity_id','=','activity.id')
+						->where('activity.date_start','<=',date('Y-m-d H:i:s'))
+						->where('activity.date_end','>=',date('Y-m-d H:i:s'))
+						->whereNull('activity.deleted_at');
+				})
 				->where('order_product.order_id','=',$id)
 				->whereNull('product.deleted_at')
 				->whereNull('order_product.deleted_at')
-				->select('product.id','product.name','product.desc','product.thumb','product.price','product.delivery_price','order_product.amount')
+				->select(
+					'product.id','product.name',
+					'product.desc','product.thumb','product.price',
+					'product.delivery_price','order_product.amount',
+					'product.grade','product.state','activity.price as activity_price'
+				)
 				->distinct('product.id')
 				->get();
-				
-		$count = 0;
+
+		
+		$delivery_price = System::find(1)->free; //查询包邮金额
+
+		$count = 0; $grade = 1; $d_price = 0;
+
 		foreach ($lists as $list) {
-			$count += $list->price * $list->amount;
+			$price = $list->price;
+			if ($list->activity_price) $price = $list->activity_price;//活动商品价格
+			$count += $price * $list->amount;//商品总价格
+			if (!$list->grade) $grade = 0;//不能使用积分
 		}
 
+		$count2 = $count;
+		//包邮时 优惠券总价 加入配送价格
+		if ($count >= $delivery_price && $delivery_price) {
+			$d_price = 1;//包邮
+			$count2 = $count + $lists->max('delivery_price'); 
+		}
+
+		//查询优惠券
+		$cheaps = Cheap::join('cheap_user','cheap.id','=','cheap_user.cheap_id')
+		        ->where('cheap.indate','>=',date('Y-m-d H:i:s'))
+		        ->where('cheap_user.user_id','=',Auth::user()->id)
+		        ->whereNull('cheap.deleted_at')
+		        ->whereNull('cheap_user.deleted_at')
+		        ->where('cheap.full','<=',$count2)
+		        ->select('cheap.*')
+		        ->get();
+
 		$title = '确认订单';
-		return view(config('app.theme').'.home.confirm')->with(['title'=>$title,'lists'=>$lists,'count'=>$count]);
+		return view(config('app.theme').'.home.confirm')->with(['title'=>$title,'lists'=>$lists,'count'=>$count,'grade'=>$grade,'cheaps'=>$cheaps]);
 	}
 
 	//订单列表数据

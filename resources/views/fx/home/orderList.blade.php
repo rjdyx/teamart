@@ -242,7 +242,7 @@
 
         //付款方法
         function order_pay(id){
-            window.location.href = 'http://'+window.location.host + '/home/order/pay/'+id;
+            window.location.href = 'http://'+window.location.host + '/home/order/confirm?id='+id;
         }
 
         //按钮点击(订单筛选)

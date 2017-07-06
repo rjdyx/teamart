@@ -110,6 +110,12 @@ Route::group(['namespace'=>'Home','prefix'=>'home','middleware'=>['auth']],funct
 	//意见反馈
 	Route::get('/feedback','FeedbackController@index');
 	Route::post('/feedback','FeedbackController@store');
+
+	//促销管理
+	Route::group(['prefix'=>'sell'],function(){
+		Route::get('/roll','SellController@roll');//优惠券
+		Route::get('/many','SellController@many');//团购
+	});
 });
 
 /********************** Home - 分销商 ***************************/

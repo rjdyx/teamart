@@ -10,6 +10,7 @@
     <script>
 
 		var delivery_price = {{$lists->max('delivery_price')}}
+		var grade_price = 0;
     	$(function () {
 
     		// 显示选取配送方式弹窗
@@ -78,13 +79,23 @@
     	//计算总金额
     	function countPrice() {
     		var product_price = $(".product-count").attr('count');
-    		var count = parseInt(product_price) + parseInt(delivery_price);
+    		var count = parseFloat(product_price) + parseFloat(delivery_price) - parseFloat(grade_price);
     		$(".all-count").html('&yen;'+count);
     	}
 
     	//提交订单
     	$('.confirm_bottom_submit').click(function(){
     		prompt.message('提交订单！')
+    	});
+
+    	//积分抵扣金额
+    	$("#gradeChange").click(function(){
+    		var grade = $(".user-grade").attr('grade');
+    		grade_price = 0;
+    		if ($(this).is(':checked')) {
+    			grade_price = grade/100;
+    		}
+    		countPrice();
     	});
     </script>
 @endsection
@@ -128,7 +139,13 @@
 					<h5 class="chayefont mb-10">{{$list->name}}</h5>
 					<p>{{$list->desc}}</p>
 					<div class="confirm_warpper_content_info_bottom">
-						<span class="pull-left price">&yen; {{sprintf('%.2f',$list->amount * $list->price)}}</span>
+						<span class="pull-left price">&yen; 
+						@if ($list->activity_price)
+							{{sprintf('%.2f',$list->activity_price * $list->amount)}}
+						@else
+							{{sprintf('%.2f',$list->amount * $list->price)}}
+						@endif
+						</span>
 						<span class="pull-right sell">&times;{{$list->amount}}</span>
 					</div>
 				</div>
@@ -151,10 +168,34 @@
 					<span class="pull-left chayefont fz-18">商品总额</span>
 					<span class="pull-right price fz-14 product-count" count="{{$count}}">&yen; {{sprintf('%.2f',$count)}} </span>
 				</div>
+				
+				<div class="confirm_container_sum_row">
+					<span class="pull-left chayefont fz-18">积分抵扣</span>
+					<span class="pull-right price fz-14 user-grade" grade="{{Auth::user()->grade}}">
+					<input type="checkbox" id="gradeChange" @if (!$grade) disabled="true"@endif>
+					@if ($grade) {{Auth::user()->grade}}分 @else 不可用 @endif
+					</span>
+				</div>
+				
+				<div class="confirm_container_sum_row">
+					<span class="pull-left chayefont fz-18">优惠券</span>
+					<span class="pull-right gray fz-14">
+						<select name="" id="" @if(!count($cheaps)) disabled="true "@endif>
+							<option value="">
+								@if(count($cheaps))-请选择- @else -无优惠券- @endif
+							</option>
+							@foreach ($cheaps as $va)
+								<option value="{{$va->cut}}">{{$va->name}}</option>
+							@endforeach
+						</select>
+					</span>
+				</div>
+				
 				<div class="confirm_container_sum_row">
 					<span class="pull-left chayefont fz-18">买家留言</span>
 					<span class="pull-right gray fz-14">选填</span>
 				</div>
+
 				<textarea placeholder="请留言"></textarea>
 			</div>
 		</div>
