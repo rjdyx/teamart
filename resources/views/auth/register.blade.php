@@ -74,12 +74,23 @@
 
 @section('content')
     @include("layouts.backIndex")
+    
+    <!-- 绑定分销商数据 -->
+    <?php 
+        $v = '';
+        if ($_GET) {
+            foreach ($_GET as $value) {
+                $v = base64_decode($value);
+            }
+        }
+    ?>
     <div class="register">
         <div class="register_logo"></div>
         <p class="form_error formfont"></p>
         <div class="register_form">
             <form method="POST" id="form" name="form" action="{{ route('register') }}">
                 {{ csrf_field() }}
+                <input type="hidden" value="{{$v}}" name="agent_id">
                 <label for="name" class="field">
                     <i class="fa fa-user-o"></i>
                     <input type="text" id="name" class="formfont" name="name" autocomplete="off" placeholder="请输入用户名">

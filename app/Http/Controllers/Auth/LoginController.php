@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
 use Session;
 use Redirect;
 use App\User;
@@ -39,9 +40,30 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest', ['except' => ['layout','adminLayout','loginCheck']]);
+        $this->middleware('guest', ['except' => ['layout','adminLayout','loginCheck','bindAgent']]);
     }
 
+    //会员扫码绑定分销商
+    public function bindAgent($id)
+    {
+        $id = base64_decode($id);// id解码
+        //判断登录情况
+        if (Auth::user()) {
+            if (Auth::user()->type != 2) return redirect('/admin/login');
+            $bind = $this->bind($id);
+            return redirect('/');
+        } else {
+            return redirect('/register?'.base64_encode('agentid').'='.base64_encode($id));
+        }
+    }
+
+    //绑定分销商方法
+    public function bind($id)
+    {
+        $user = User::find(Auth::user()->id);
+        $user->parter_id = $id;
+        return $user->save();
+    }
 
     //登录方法
     public function login(Request $request)
