@@ -54,7 +54,7 @@
                                         </div>
                                         <div class="cart_warpper_content_info pull-right">
                                             <h5 class="chayefont mb-10">${v.name}</h5>
-                                            <p>${v.desc}</p>
+                                            <p class="desc">${v.desc}</p>
                                             <div class="cart_warpper_content_info_bottom">
                                                 <span class="pull-left price">&yen;${parseInt(v.price).toFixed(2)}</span>
                                                 <div class="cwcib_number pull-right">

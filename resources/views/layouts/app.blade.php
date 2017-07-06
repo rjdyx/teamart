@@ -57,6 +57,11 @@
         var deviceWidth = document.documentElement.clientWidth;
         if(deviceWidth > 640) deviceWidth = 640;
         document.documentElement.style.fontSize = deviceWidth / 6.4 + 'px';
+
+        // 返回按钮事件绑定
+        $('.J_header_back').on('click tap', function () {
+            history.go(-1)
+        })
     </script>
     @yield('script')
     @include("layouts.prompt")

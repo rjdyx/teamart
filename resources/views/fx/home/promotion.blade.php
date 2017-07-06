@@ -84,7 +84,7 @@
                             <a href="http://${window.location.host}/home/product/detail/${v.id}">
                                 <img src="http://${window.location.host}/${v.img}">
                                 <h1 class="mt-20 chayefont">${v.name}</h1>
-                                <p class="mt-10 mb-10">${v.desc}</p>
+                                <p class="mt-10 mb-10 desc">${v.desc}</p>
                                 <p class="clearfix">
                                     <span class="pull-left price">&yen;${v.price}</span>
                                     <span class="pull-right sell">销量：<i>${v.sell_amount}</i></span>

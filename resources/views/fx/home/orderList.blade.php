@@ -108,54 +108,79 @@
                     var count = value2['order_price'];
                     var date = value2['order_date'];
                     var serial = value2['serial'];
-                    b = '<div class="order_warpper_info">'+
-                        '<div class="order_warpper_info_img pull-left mr-20">' +
-                            '<img src="http://'+ window.location.host +'/'+ img +'">' +
-                        '</div>'+
-                        '<div class="order_warpper_info_detail pull-left mr-20">'+
-                            '<h5 class="chayefont mb-10">' + name + '</h5>'+
-                            '<p>' + desc + '</p>'+
-                        '</div>'+
-                        '<div class="order_warpper_info_price pull-left txt-r">'+
-                            '<span class="block price">&yen' + price + '</span>'+
-                            '<del class="block price_raw">&yen' + price_raw + '</del>'+
-                            '<span class="block times">&times'+amount+'</span>'+
-                        '</div>'+ '</div>';
+                    b = `   <div class="order_warpper_info">
+                                <div class="order_warpper_info_img pull-left mr-20">
+                                    <img src="http://window.location.host/${img}">
+                                </div>
+                                <div class="order_warpper_info_detail pull-left mr-20">
+                                    <h5 class="chayefont mb-10">${name}</h5>
+                                    <p class="desc">${desc}</p>
+                                </div>
+                                <div class="order_warpper_info_price pull-left txt-r">
+                                    <span class="block price">&yen;${price}</span>
+                                    <del class="block price_raw">&yen;${price_raw}</del>
+                                    <span class="block times">&times;${amount}</span>
+                                </div>
+                            </div>`
                     if (index2 < 1) {    
-                        a = '<div class="order_warpper mb-20">' +
-                                '<div class="order_warpper_tit">' + 
-                                '<h1 class="pull-left chayefont">' +
-                                '订单号：' + serial +
-                                '<i class="fa fa-angle-right ml-20"></i>' + '</h1>' +
-                                '<span class="pull-right chayefont">'+ date + '</span>'+'</div>';
-                        c = '<div class="order_warpper_sum txt-r">'+'<span>总' + len + '件商品</span>'+
-                                '<span>合计：<i class="price">&yen' + count + '</i>（包运费）</span>'+
-                                '</div>'+'<div class="order_warpper_opts">'+'<ul class="pull-right">';
+                        a = `   <div class="order_warpper mb-20">
+                                    <div class="order_warpper_tit">
+                                        <h1 class="pull-left chayefont">订单号：${serial}<i class="fa fa-angle-right ml-20"></i></h1>
+                                        <span class="pull-right chayefont">${date}</span>
+                                    </div>`
+                            c = `   <div class="order_warpper_sum txt-r">
+                                        <span>总${len}件商品</span>
+                                        <span>合计：<i class="price">&yen;${count}</i>（包运费）</span>
+                                    </div>
+                                    <div class="order_warpper_opts">
+                                        <ul class="pull-right">`
                                 if (state == 'cancell' && method != 'self') {
-                                    c += '<li>'+'<a href="javascript:;" class="chayefont">'+'订单已取消'+'</a>'+'</li>';
+                                    c += `  <li>
+                                                <a href="javascript:;" class="chayefont">订单已取消</a>
+                                            </li>`
                                 }
                                 if (state == 'pading' && method != 'self') {
-                                    c += '<li class="J_opts" type="cancell" oid="'+oid+'">'+'<a href="javascript:;" class="chayefont point">'+'取消订单'+'</a>'+'</li>'+
-                                    '<li class="J_opts" type="pay" oid="'+oid+'">'+'<a href="javascript:;" class="chayefont point">'+'付款'+'</a>'+'</li>';
+                                    c += `  <li class="J_opts" type="cancell" oid="${oid}">
+                                                <a href="javascript:;" class="chayefont point">取消订单</a>
+                                            </li>
+                                            <li class="J_opts" type="pay" oid="${oid}">
+                                                <a href="javascript:;" class="chayefont point">付款</a>
+                                            </li>`
                                 }
                                 if (state == 'paid' && method != 'self') {
-                                    c += '<li class="J_opts" type="back" oid="'+oid+'">'+'<a href="javascript:;" class="chayefont point">'+'申请退货'+'</a>'+'</li>';
+                                    c += `  <li class="J_opts" type="back" oid="${oid}">
+                                                <a href="javascript:;" class="chayefont point">申请退货</a>
+                                            </li>`
                                 }
                                 if (state == 'delivery' && method != 'self') {
-                                    c += '<li class="J_opts" type="delivery" oid="'+oid+'">'+'<a href="javascript:;" class="chayefont point">'+'查看物流'+'</a>'+'</li>'+
-                                    '<li class="J_opts" type="take" oid="'+oid+'">'+'<a href="javascript:;" class="chayefont  point">'+'确定收货'+'</a>'+'</li>';
+                                    c += `  <li class="J_opts" type="delivery" oid="${oid}">
+                                                <a href="javascript:;" class="chayefont point">查看物流</a>
+                                            </li>
+                                            <li class="J_opts" type="take" oid="${oid}">
+                                                <a href="javascript:;" class="chayefont  point">确定收货</a>
+                                            </li>`
                                 }
                                 if (state == 'take' && method != 'self') {
-                                    c += '<li class="J_opts" type="comment" oid="'+oid+'">'+'<a href="javascript:;" class="chayefont point">'+'立即评价'+'</a>'+'</li>';
+                                    c += `  <li class="J_opts" type="comment" oid="${oid}">
+                                                <a href="javascript:;" class="chayefont point">立即评价</a>
+                                            </li>`
                                 }
                                 if (state == 'backn' && method != 'self') {
-                                    c += '<li class="J_opts" type="back" oid="'+oid+'">'+'<a href="javascript:;" class="chayefont point">'+'退货处理'+'</a>'+'</li>';
+                                    c += `  <li class="J_opts" type="back" oid="${oid}">
+                                                <a href="javascript:;" class="chayefont point">退货处理</a>
+                                            </li>`
                                 }
                                 if (method == 'self') {
-                                    c +='<li class="J_opts" type="back" oid="'+oid+'">'+'<a href="javascript:;" class="chayefont point">'+'申请退货'+'</a>'+'</li>'+
-                                    '<li class="J_opts" type="code" oid="'+oid+'">'+'<a href="javascript:;" class="chayefont  point">'+'生成二维码'+'</a>'+'</li>';
+                                    c += `  <li class="J_opts" type="back" oid="${oid}">
+                                                <a href="javascript:;" class="chayefont point">申请退货</a>
+                                            </li>
+                                            <li class="J_opts" type="code" oid="${oid}">
+                                                <a href="javascript:;" class="chayefont  point">生成二维码</a>
+                                            </li>`
                                 }
-                        c += '</ul>'+'</div>'+'</div>';
+                        c += `          </ul>
+                                    </div>
+                                </div>`
                         result += a + b;
                     } else {
                         result += b;
