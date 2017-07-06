@@ -60,6 +60,14 @@
 					} else {
 						me.lock();
                         me.noData();
+                        if (page == 1) {
+                            $('.dropload-down').hide()
+                            $('.userassets_container').find('.userassets_nodata').remove()
+                            $('.userassets_container').append(`
+                            <div class="userassets_nodata txt-c">
+                                暂无记录
+                            </div>`)
+                        }
 					}
 					$('.userassets_list').append(result);
                     me.resetload();

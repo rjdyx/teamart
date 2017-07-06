@@ -204,6 +204,13 @@ const validate = {
 			}
 		}
 	},
+	address: ($inp, value) => {
+		if ($.trim(value).length === 0) {
+			$inp.parents('.form_item').addClass('error')
+		} else {
+			$inp.parents('.form_item').removeClass('error')
+		}
+	},
 	realname: ($inp, value) => {
 		if ($.trim(value).length < 2) {
 			$inp.parents('.form_item').addClass('error')

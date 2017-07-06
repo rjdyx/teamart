@@ -75,6 +75,9 @@
 				</div>
 			</div>
 			@endforeach
+			@if (!count($lists))
+			<div class="address_nodata txt-c fz-20">暂时还没有收货地址</div>
+			@endif
 		</div>
 		<a href="{{ url('/home/address/create') }}" class="chayefont address_add">添加新地址</a>
 	</div>

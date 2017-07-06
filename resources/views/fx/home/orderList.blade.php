@@ -38,10 +38,14 @@
 
         //获取列表数据
         function getListData(me,type) {
+            console.log(2)
             if (type=='down')
             {
                 page++;
                 params['page'] = page;
+            } else {
+                params['page'] = 1;
+                $('.dropload-down').show()
             }
             var result = '';
             var url = 'http://'+window.location.host + '/home/order/list/data';
@@ -53,12 +57,24 @@
                     me.lock();
                     // 无数据
                     me.noData();
+                    if (params['page'] == 1) {
+                        $('.dropload-down').hide()
+                        $('.order_container').find('.order_nodata').remove()
+                        $('.order_container').append(`
+                        <div class="order_nodata txt-c">
+                            还没有订单，去<a href="{{url('')}}">下单</a>吧
+                        </div>`)
+                    }
                 }
-                $('.order_list').append(result);// 插入数据到页面，放到最后面
+                if (type == 'up') {
+                    $('.order_list').html(result);
+                } else {
+                    $('.order_list').append(result);// 插入数据到页面，放到最后面
+                }
                 $(".J_opts").off('click tap').on('click tap', orderOpts)
                 me.resetload();// 每次数据插入，必须重置
                 if (type == 'up') {
-                    page = 0;// 重置页数，重新获取loadDownFn的数据
+                    page = 0;
                     // 解锁loadDownFn里锁定的情况
                     me.unlock();
                     me.noData(false);
@@ -109,7 +125,7 @@
                         a = '<div class="order_warpper mb-20">' +
                                 '<div class="order_warpper_tit">' + 
                                 '<h1 class="pull-left chayefont">' +
-                                '<i class="fa fa-ban"></i>' + serial +
+                                '订单号：' + serial +
                                 '<i class="fa fa-angle-right ml-20"></i>' + '</h1>' +
                                 '<span class="pull-right chayefont">'+ date + '</span>'+'</div>';
                         c = '<div class="order_warpper_sum txt-r">'+'<span>总' + len + '件商品</span>'+
@@ -170,7 +186,7 @@
             ajax('get', url, params).then(function (data) {
                 if (data == 200) {
                     prompt.message(pro+'成功');
-                    searchOrder(false);
+                    searchOrder();
                 } else {
                     prompt.message(pro+'失败！请稍后再试！');
                 }
@@ -234,19 +250,29 @@
             $(this).addClass('active').siblings().removeClass('active')
             params['state'] = $(this).attr('state');
             params['serial'] = '';
-            searchOrder(false);
+            searchOrder();
         });
 
         //搜索方法
-        function searchOrder(sear) {
+        function searchOrder() {
             var result = '';
             params['page'] = 1;// 重置页数，重新获取loadDownFn的数据
             var url = 'http://'+window.location.host + '/home/order/list/data';
             ajax('get', url, params).then(function (data) {
+                console.log(1)
+                $('.order_container').find('.order_nodata').remove()
+                $('.dropload-down').show()
+                if (params['page'] == 1 && data.length == 0) {
+                    $('.dropload-down').hide()
+                    $('.order_container').append(`
+                    <div class="order_nodata txt-c">
+                        还没有订单，去<a href="{{url('')}}">下单</a>吧
+                    </div>`)
+                }
                 result = joint(data);
                 $('.order_list').html(result);// 插入数据到页面，放到最后面
                 dropload.resetload()
-                $(".J_opts").on('click tap', orderOpts)
+                $(".J_opts").off('click tap').on('click tap', orderOpts)
             })
         }
 
@@ -255,7 +281,7 @@
             params['serial'] = $('#orderSerial').val();
             params['state'] = '';
             $(".J_tabs[state='']").addClass('active').siblings().removeClass('active');
-            searchOrder(true);
+            searchOrder();
         })
     </script>
 @endsection

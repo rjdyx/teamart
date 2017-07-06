@@ -15,6 +15,8 @@ require('swiper')
 require('expose-loader?_valid!./js/validate.js')
 require('expose-loader?ajax!./js/ajax.js')
 require('expose-loader?prompt!./js/prompt.js')
+require('expose-loader?backTop!./js/backTop.js')
+// require('expose-loader?zdropload!./js/zdropload.js')
 
 const prompt = require('./js/prompt.js')
 

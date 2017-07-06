@@ -13,12 +13,13 @@
 		var params = {type:'', up:'', name:'', brand:'', category:'', min:'', max:'',page:1};
 		params['name'] = "{{isset($_GET['name'])?$_GET['name']:''}}";
 		params['category'] = "{{isset($_GET['category'])?$_GET['category']:''}}";
-
 		$(function () {
 			var page = 0;//分页
 			var brands = categorys = {};
 			var bstate = cstate = false;
 
+			// 返回顶部
+			backTop('product_container')
 			// 显示筛选
 			$('.J_show_filter').on('click', function () {
 				getBrandOrCategory();
@@ -361,5 +362,7 @@
 			</div>
 		</div>
 	</div>
+	@include("layouts.backTop")
+
 	@include("layouts.footer")
 @endsection

@@ -177,9 +177,12 @@ exports.repassword = (field, value, isRequired = true) => {
 	return valid
 }
 
-exports.phone = (field, value) => {
-	let valid = true
-	if (value) {
+exports.phone = (field, value, isRequired = false) => {
+	let valid = true, temp = true
+	if (isRequired) {
+		temp = ness(field, '手机', value)
+	}
+	if (temp) {
 		if (!/^1[3456789]\d{9}$/.test(value)) {
 			$('#' + field + '_txt').text('手机格式不对')
 			valid = false
@@ -187,6 +190,8 @@ exports.phone = (field, value) => {
 			$('#' + field + '_txt').text('')
 			valid = true
 		}
+	} else {
+		valid = false
 	}
 	return valid
 }
@@ -306,6 +311,40 @@ exports.number = (field, fieldtxt, value, isRequired = true) => {
 	if (temp) {
 		if (value < 0) {
 			$('#' + field + '_txt').text(fieldtxt + '不能小于0')
+			valid = false
+		} else {
+			$('#' + field + '_txt').text('')
+			valid = true
+		}
+	}
+	return valid
+}
+
+exports.lng = (field, value, isRequired = true) => {
+	var valid = false, temp = true
+	if (isRequired) {
+		temp = ness(field, '经度', value)
+	}
+	if (temp) {
+		if (!/^[\-\+]?(0?\d{1,2}\.\d{1,6}|1[0-7]?\d{1}\.\d{1,6}|180\.0{1,6})$/.test(value)) {
+			$('#' + field + '_txt').text('经度格式不正确')
+			valid = false
+		} else {
+			$('#' + field + '_txt').text('')
+			valid = true
+		}
+	}
+	return valid
+}
+
+exports.lat = (field, value, isRequired = true) => {
+	var valid = false, temp = true
+	if (isRequired) {
+		temp = ness(field, '纬度', value)
+	}
+	if (temp) {
+		if (!/^[\-\+]?([0-8]?\d{1}\.\d{1,6}|90\.0{1,6})$/.test(value)) {
+			$('#' + field + '_txt').text('纬度格式不正确')
 			valid = false
 		} else {
 			$('#' + field + '_txt').text('')

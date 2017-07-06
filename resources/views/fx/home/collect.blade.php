@@ -126,6 +126,7 @@
 					page++
 				} else {
                 	page = 1
+                	$('.dropload-down').show()
 				}
 				ajax('get', '/home/collect/data', {page: page}, false, false, false)
 					.then(function (res) {
@@ -151,7 +152,15 @@
 							})
 						} else {
 							me.lock();
-                            me.noData();
+                        	me.noData();
+                        	if (page == 1) {
+								$('.dropload-down').hide()
+	                        	$('.collect_container').find('.collect_nodata').remove()
+								$('.collect_container').append(`
+								<div class="collect_nodata txt-c">
+									你还没有收藏，快去<a href="{{url('')}}">首页</a>看看吧
+								</div>`)
+                        	}
 						}
 						if (type == 'up') {
                         	$('.collect_list').html(result);
