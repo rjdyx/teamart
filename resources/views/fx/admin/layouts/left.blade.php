@@ -53,7 +53,7 @@
 
         </ul>
       </li>
-      <li>
+      <li class="treeview">
         <a href="#">
           <i class="fa fa-th"></i> <span>订单管理</span>
           <span class="pull-right-container">

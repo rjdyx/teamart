@@ -55,6 +55,14 @@
                     } else {
                         me.lock();
                         me.noData();
+                        if (page == 1) {
+                            $('.dropload-down').hide()
+                            $('.productdetail_container_comment').find('.comment_nodata').remove()
+                            $('.productdetail_container_comment').append(`
+                            <div class="comment_nodata txt-c">
+                                暂无评价
+                            </div>`)
+                        }
                     }
                     $('.comment_list').append(template);
                     me.resetload();

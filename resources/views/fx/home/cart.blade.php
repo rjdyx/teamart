@@ -39,6 +39,7 @@
                     page++
                 } else {
                     page = 1
+                    $('.dropload-down').show()
                 }
                 ajax('get', '/home/cart/data', {page: page}, false, false, false)
                     .then(function (res) {
@@ -69,6 +70,14 @@
                         } else {
                             me.lock();
                             me.noData();
+                            if (page == 1) {
+                                $('.dropload-down').hide()
+                                $('.cart_container').find('.cart_nodata').remove()
+                                $('.cart_container').append(`
+                                <div class="cart_nodata txt-c">
+                                    你的购物车还没有商品，快去<a href="{{url('')}}">首页</a>看看吧
+                                </div>`)
+                            }
                         }
                         if (type == 'up') {
                             $('.cart_list').html(template);

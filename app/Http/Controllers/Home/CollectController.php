@@ -83,7 +83,7 @@ class CollectController extends Controller
         $order = Order::where('type','collect')->where('user_id',Auth::user()->id)->first();
 
         if (empty($order->id)){
-            $order = createCollect('collect');
+            $order = $this->createCollect('collect');
         }
         return $this->addOrderProduct($product_id, $order->id);
     }

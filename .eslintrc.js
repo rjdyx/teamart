@@ -29,6 +29,7 @@ module.exports = {
     "no-unused-vars": 0,
     'no-eval': 0,
     "eqeqeq": 0,
-    "one-var": 0
+    "one-var": 0,
+    "no-useless-escape": 0
   }
 }

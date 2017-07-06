@@ -51,15 +51,15 @@
     	function addressData() {
 	    	ajax('get', '/home/address/state').then(function (resolve) {
 				if (resolve) {
-					$(".address-defualt1").text(resolve['name']);	
-					$(".address-defualt2").text(resolve['phone']);
+					$(".address-name").text(resolve['name']);	
+					$(".address-phone").text(resolve['phone']);
 					if (resolve['city'] == resolve['area']) {
-						$(".address-defualt3").text(resolve['province'] + resolve['city'] + resolve['detail']);
+						$(".address-detail").text(resolve['province'] + resolve['city'] + resolve['detail']);
 					} else {
-						$(".address-defualt3").text(resolve['province'] + resolve['city'] + resolve['area'] + resolve['detail']);
+						$(".address-detail").text(resolve['province'] + resolve['city'] + resolve['area'] + resolve['detail']);
 					}
 				} else {
-
+					$(".address-name").text('创建新地址');
 				}
 			});
     	}
@@ -68,7 +68,7 @@
     	function siteData() {
 	    	ajax('get', '/home/site/default').then(function (resolve) {
 				if (resolve) {
-					$(".site-defualt").text(resolve['name']);	
+					$(".site-name").text(resolve['name']);
 				} else {
 					
 				}
@@ -100,10 +100,10 @@
 				<i class="fa fa-map-marker pull-left"></i>
 				<div class="confirm_address_info pull-left">
 					<p class="clearfix">
-						<span class="pull-left chayefont fz-20 address-defualt1"> </span> <!-- 联系人 -->
-						<span class="pull-right gray fz-16 address-defualt2"> </span><!--  手机 -->
+						<span class="pull-left chayefont fz-20 address-name"> </span> <!-- 联系人 -->
+						<span class="pull-right gray fz-16 address-phone"> </span><!--  手机 -->
 					</p>
-					<p class="gray fz-14 address-defualt3"> </p><!-- 地址 -->
+					<p class="gray fz-14 address-detail"> </p><!-- 地址 -->
 				</div>
 				<i class="fa fa-angle-right pull-right txt-r"></i>
 			</a>
@@ -113,7 +113,7 @@
 				<i class="fa fa-map-marker pull-left"></i>
 				<div class="confirm_address_info pull-left">
 					<p>当前自提点</p>
-					<p class="gray fz-16 site-defualt"></p>
+					<p class="gray fz-16 site-name"></p>
 				</div>
 				<i class="fa fa-angle-right pull-right txt-r"></i>
 			</a>

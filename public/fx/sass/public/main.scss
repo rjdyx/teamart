@@ -34,10 +34,10 @@
 }
 
 // 返回首页按钮
-.backIndex {
+.backIndex,
+.backTop {
 	position: fixed;
 	right: 5%;
-	top: 1.3rem;
 	z-index: 1004;
 	display: block;
 	width: 0.5rem;
@@ -52,6 +52,12 @@
 		height: 0.5rem;
 		line-height: 0.5rem;
 	}
+}
+.backIndex {
+	top: 1.3rem;
+}
+.backTop {
+	bottom: 1.5rem;
 }
 
 // 登录
@@ -801,6 +807,12 @@
 			width: 100%;
 			height: calc(100% - 2.2rem);
 			overflow: auto;
+			.userassets_nodata {
+				height: 3rem;
+				width: 100%;
+				line-height: 3rem;
+				background-color: #fff;
+			}
 			.userassets_container_warpper {
 				width: 100%;
 				padding: 0.1rem;
@@ -813,7 +825,6 @@
 						line-height: 0.5rem;
 					}
 				}
-				
 			}
 		}
 	}
@@ -1026,6 +1037,12 @@
 			}
 		}
 	}
+	.address_nodata {
+		height: 3rem;
+		width: 100%;
+		line-height: 3rem;
+		background-color: #fff;
+	}
 	.address_add {
 		position: absolute;
 		bottom: 0;
@@ -1192,6 +1209,15 @@
 					font-size: 16px;
 				}
 			}
+		}
+	}
+	.collect_nodata {
+		height: 3rem;
+		width: 100%;
+		line-height: 3rem;
+		background-color: #fff;
+		a {
+			color: #f78223;
 		}
 	}
 	.collect_bottom {
@@ -1446,6 +1472,15 @@
 				}
 			}
 		}
+		.order_nodata {
+			height: 3rem;
+			width: 100%;
+			line-height: 3rem;
+			background-color: #fff;
+			a {
+				color: #f78223;
+			}
+		}
 	}
 }
 
@@ -1457,6 +1492,15 @@
 	.cart_container {
 		height: calc(100% - 1rem);
 		overflow: auto;
+	}
+	.cart_nodata {
+		height: 3rem;
+		width: 100%;
+		line-height: 3rem;
+		background-color: #fff;
+		a {
+			color: #f78223;
+		}
 	}
 	.cart_warpper {
 		position: relative;
@@ -2036,6 +2080,15 @@
 					}
 				}
 			}
+			.comment_nodata {
+				height: 1rem;
+				width: 100%;
+				line-height: 1rem;
+				background-color: #fff;
+				a {
+					color: #f78223;
+				}
+			}
 		}
 	}
 	.productdetail_bottom {
@@ -2486,6 +2539,15 @@
 		width: 100%;
 		height: 100%;
 		overflow: auto;
+		.promotion_nodata {
+			height: 3rem;
+			width: 100%;
+			line-height: 3rem;
+			background-color: #fff;
+			a {
+				color: #f78223;
+			}
+		}
 		.promotion_list {
 			border-top: 0.01rem solid #E3E3E3;
 		}

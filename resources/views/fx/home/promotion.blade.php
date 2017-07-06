@@ -37,7 +37,8 @@
                 if (type == 'down') {
                     page++
                 } else {
-                    page = 0
+                    page = 1
+                    $('.dropload-down').show()
                 }
                 var type = $(".promotion").attr('type');
                 ajax('get', '/home/index/more', {page: page,type:type}).then(function (res) {
@@ -48,6 +49,14 @@
                     } else {
                         me.lock();
                         me.noData();
+                        if (page == 1) {
+                            $('.dropload-down').hide()
+                            $('.promotion_container').find('.promotion_nodata').remove()
+                            $('.promotion_container').append(`
+                            <div class="promotion_nodata txt-c">
+                                你的购物车还没有商品，快去<a href="{{url('')}}">首页</a>看看吧
+                            </div>`)
+                        }
                     }
                     if (type == 'up') {
                         $('.promotion_list').html(template);

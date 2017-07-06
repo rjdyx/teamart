@@ -59,7 +59,7 @@
 				$("input[name='state']").val(1);
 			}
 		});
-		_valid.bindEvent(['name', 'phone', 'code', 'detail'])
+		_valid.bindEvent(['name', 'phone', 'code', 'detail', 'address'])
 		$('.J_submit').on('click tap', function () {
 			var params = {
 				name: $('#name').val(),
@@ -104,7 +104,7 @@
 			</div>
 			<div class="form_item chayefont">
 				<label for="code">邮编</label>
-				<input type="number" name="code" id="code" class="chayefont" placeholder="请输入邮编">
+				<input type="number" name="code" id="code" class="chayefont" data-required="true" placeholder="请输入邮编">
 			</div>
 			<div class="form_item">
 				<textarea name="detail" id="detail" data-required="true" placeholder="请填写详细地址，不少于5个字"></textarea>
