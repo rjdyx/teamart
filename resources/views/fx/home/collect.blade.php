@@ -141,7 +141,7 @@
 										</div>
 										<div class="collect_warpper_content_info pull-right">
 											<h5 class="chayefont mb-10">${v.name}</h5>
-											<p>${v.desc}</p>
+											<p class="desc">${v.desc}</p>
 											<div class="collect_warpper_content_info_bottom">
 												<span class="pull-left price">￥${v.price}</span>
 												<span class="pull-right sell">已售${v.sell_amount}</span>

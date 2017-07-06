@@ -35,8 +35,8 @@
 
     
     <!-- Styles -->
-    <link rel="stylesheet" href="{{url('/fx/build/css/index.css')}}">
-    {{-- <link rel="stylesheet" href="http://localhost:8080/fx/build/css/index.css"> --}}
+    {{-- <link rel="stylesheet" href="{{url('/fx/build/css/index.css')}}"> --}}
+    <link rel="stylesheet" href="http://localhost:8080/fx/build/css/index.css">
     @yield('css')
 
     <!-- Scripts -->
@@ -49,14 +49,19 @@
 <body class="base-fontsize">
     @yield('content')
     <!-- Scripts -->
-    <script src="{{url('/fx/build/vendor-bundle.js')}}"></script>
-    <script src="{{url('/fx/build/index.js')}}"></script>
-    {{-- <script src="http://localhost:8080/fx/build/vendor-bundle.js"></script>
-    <script src="http://localhost:8080/fx/build/index.js"></script> --}}
+    {{-- <script src="{{url('/fx/build/vendor-bundle.js')}}"></script>
+    <script src="{{url('/fx/build/index.js')}}"></script> --}}
+    <script src="http://localhost:8080/fx/build/vendor-bundle.js"></script>
+    <script src="http://localhost:8080/fx/build/index.js"></script>
     <script>
         var deviceWidth = document.documentElement.clientWidth;
         if(deviceWidth > 640) deviceWidth = 640;
         document.documentElement.style.fontSize = deviceWidth / 6.4 + 'px';
+
+        // 返回按钮事件绑定
+        $('.J_header_back').on('click tap', function () {
+            history.go(-1)
+        })
     </script>
     @yield('script')
     @include("layouts.prompt")

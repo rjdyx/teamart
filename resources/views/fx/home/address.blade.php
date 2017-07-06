@@ -38,6 +38,16 @@
 						}
 					})
 			})
+
+			// 结算页跳转过来时的操作
+			if (sessionStorage.getItem('chaye')){
+				$('.J_header_back').off('click tap').on('click tap', function () {
+					var chaye = sessionStorage.getItem('chaye')
+					sessionStorage.removeItem('chaye')
+					window.location.href = chaye
+				})
+			}
+				
 		})
 	</script>
 @endsection

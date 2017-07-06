@@ -212,8 +212,12 @@ const validate = {
 		}
 	},
 	realname: ($inp, value) => {
-		if ($.trim(value).length < 2) {
-			$inp.parents('.form_item').addClass('error')
+		if ($.trim(value).length > 0) {
+			if ($.trim(value).length < 2) {
+				$inp.parents('.form_item').addClass('error')
+			} else {
+				$inp.parents('.form_item').removeClass('error')
+			}
 		} else {
 			$inp.parents('.form_item').removeClass('error')
 		}

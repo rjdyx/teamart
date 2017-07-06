@@ -42,6 +42,20 @@
     				}
     			})
     		})
+
+    		// 跳转到地址页
+    		$('.J_jump_address').on('click tap', function () {
+    			if (sessionStorage) {
+    				sessionStorage.setItem('chaye', window.location.href)
+    			}
+    			window.location.href = 'http://' + window.location.host + '/home/address'
+    		})
+
+    		// 重置返回按钮
+    		$('.J_header_back').off('click tap').on('click tap', function () {
+				history.go(-1)
+			})
+
     	});
 
     	addressData();
@@ -96,7 +110,7 @@
 
 	<div class="confirm">
 		<div class="confirm_address mb-20 express">
-			<a href="{{url('/home/address')}}" class="clearfix">
+			<a href="javascript:;" class="clearfix J_jump_address">
 				<i class="fa fa-map-marker pull-left"></i>
 				<div class="confirm_address_info pull-left">
 					<p class="clearfix">
@@ -126,7 +140,7 @@
 				</div>
 				<div class="confirm_warpper_content_info pull-right">
 					<h5 class="chayefont mb-10">{{$list->name}}</h5>
-					<p>{{$list->desc}}</p>
+					<p class="desc">{{$list->desc}}</p>
 					<div class="confirm_warpper_content_info_bottom">
 						<span class="pull-left price">&yen; {{sprintf('%.2f',$list->amount * $list->price)}}</span>
 						<span class="pull-right sell">&times;{{$list->amount}}</span>
