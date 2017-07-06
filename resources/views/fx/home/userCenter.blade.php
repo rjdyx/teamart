@@ -9,7 +9,9 @@
 	@parent
 	<script src="{{url('/fx/js/qrcode.js')}}"></script>
 	<script>
+
 	$(function () {
+
 		// navigator.getUserMedia
 		// navigator.mediaDevices.getUserMedia({
 		// 	audio: false,
@@ -26,8 +28,9 @@
 		// })
 		// 生成二维码
 		setTimeout(function () {
+			var uid = $('.J_QRcode').attr('uid');
 			var qrcode = new QRCode(document.getElementById("qrcode"), {
-			    text: "http://jindo.dev.naver.com/collie",
+			    text: "http://"+window.location.host+'/bind/agent/'+ uid,
 			    width: 1024,
 			    height: 1024
 			})
@@ -61,7 +64,7 @@
 	<!-- 内容 -->
 	<div class="container usercenter">
 		<div class="usercenter_info">
-			<div class="usercenter_avatar @if(Auth::user() && Auth::user()->type == 1) J_QRcode @else J_getQRcode @endif">
+			<div class="usercenter_avatar @if(Auth::user() && Auth::user()->type == 1) J_QRcode @else J_getQRcode @endif" uid="@if(Auth::user() && Auth::user()->type == 1) {{base64_encode(Auth::user()->id)}} @endif">
 				<img src="{{url('')}}/@if(Auth::user()){{Auth::user()->img}} @endif" alt="">
 			</div>
 			<p class="usercenter_name chayefont">@if(Auth::user()){{Auth::user()->name}} @endif</p>
@@ -156,6 +159,7 @@
 		<div class="usercenter_loginout chayefont J_loginout">退出</div>
 		@else
 		<a href="{{url('/login')}}"><div class="usercenter_loginout chayefont">登录</div></a>
+		<a href="{{url('/register')}}"><div class="usercenter_loginout chayefont">注册</div></a>
 		@endif
 	</div>
 	@include("layouts.footer")

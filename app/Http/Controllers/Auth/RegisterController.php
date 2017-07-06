@@ -81,39 +81,17 @@ class RegisterController extends Controller
                 $this->loginUsername() => '用户名或密码错误！',
             ]);
     }
-    /**
-     * Create a new user.
-     *
-     * @param array $data
-     *
-     * @return User
-     */
+
     protected function createUser(array $data)
     {
-        // $user = new User;
-        // $user->email = $data->email;
         return User::create([
             'email'       => $data['email'],
             'name'    => $data['name'],
             'password'    => bcrypt($data['password']),
             'phone'        => $data['phone'],
-            'gender'        => $data['gender']
+            'gender'        => $data['gender'],
+            'parter_id'        => $data['agent_id']
         ]);
     }
     
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return User
-     */
-    protected function create(array $data)
-    {
-        return 22;
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
-    }
 }
