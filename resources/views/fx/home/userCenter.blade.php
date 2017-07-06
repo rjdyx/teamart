@@ -9,7 +9,6 @@
 	@parent
 	<script src="{{url('/fx/js/qrcode.js')}}"></script>
 	<script>
-
 	$(function () {
 
 		// navigator.getUserMedia
@@ -152,6 +151,22 @@
 						<i class="fa fa-location-arrow"></i>
 					</div>
 					<p class="chayefont">收货地址</p>
+				</a>
+			</li>
+			<li>
+				<a href="{{url('/home/order/site')}}">
+					<div class="usercenter_nav_icon">
+						<i class="fa fa-map-marker"></i>
+					</div>
+					<p class="chayefont">查看站点</p>
+				</a>
+			</li>
+			<li>
+				<a href="{{url('/home/address')}}">
+					<div class="usercenter_nav_icon">
+						<i class="fa fa-ticket"></i>
+					</div>
+					<p class="chayefont">优惠券</p>
 				</a>
 			</li>
 		</ul>

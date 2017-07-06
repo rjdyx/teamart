@@ -95,11 +95,11 @@
 		<div class="userassets_content mt-20">
 			<div class="userassets_content_row">
 				<span class="pull-left chayefont">佣金累计：</span>
-				<a href="javascript:;" class="pull-right chayefont orange">&yen {{$allprices}}</a>
+				<a href="javascript:;" class="pull-right chayefont orange">&yen; {{$allprices}}</a>
 			</div>
 			<div class="userassets_content_row">
 				<span class="pull-left chayefont">佣金余额：</span>
-				<a href="javascript:;" class="pull-right chayefont orange">&yen {{$prices}}</a>
+				<a href="javascript:;" class="pull-right chayefont orange">&yen; {{$prices}}</a>
 			</div>
 			<div class="userassets_container mt-20">
 				<div class="userassets_list">

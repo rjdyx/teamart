@@ -24,6 +24,7 @@
 						}
 					})
 			})
+			
 			// 删除地址
 			$('.J_del').on('click tap', function () {
 				var id = $(this).data('id')
