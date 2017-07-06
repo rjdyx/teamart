@@ -12,6 +12,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Product;
+use App\ProductCategory;
 use Redirect;
 use IQuery;
 
@@ -20,12 +21,12 @@ class MarkController extends Controller
     //首页 (列表页)
     public function index(Request $request)
     {
-        if($request->sort!=0){
-            return $this->sort($request);
-        }else{
-        $lists = Product::where('grade',1)->orderBy('id','desc')->paginate(config('app.paginate5'));
+        $name = $request->name;
+        $lists = Product::where('grade',1)->orderBy('id','desc')
+                ->where('name','like','%'.$name.'%')
+                ->paginate(config('app.paginate5'));
+
         return view(config('app.theme').'.admin.activity.mark')->with('lists',$lists);
-        }
     }
 
     //查看单条信息
@@ -33,6 +34,7 @@ class MarkController extends Controller
     {
         return $this->sort($request);
     }
+
     //排序
     public function sort($request){
         $sort=$request->input("sort");
@@ -43,101 +45,66 @@ class MarkController extends Controller
         }else{
             $lists=new Product;
         }
-        if($sort==11){
-            $lists =$lists->where('grade',1)->where('state',1)->paginate(config('app.paginate5'));
-            return view(config('app.theme').'.admin.activity.mark')->with('lists',$lists);
-        }
-        if($sort==12){
-            $lists =$lists->where('grade',1)->where('state',0)->paginate(config('app.paginate5'));
-            return view(config('app.theme').'.admin.activity.mark')->with('lists',$lists);
-        }
-        if($sort==10){
-            $lists =$lists->where('grade',1)->orderBy('id','asc')->paginate(config('app.paginate5'));
-            return view(config('app.theme').'.admin.activity.mark')->with('lists',$lists);
-        }
-        if($sort==21){
-            $lists =$lists->where('grade',0)->where('state',1)->paginate(config('app.paginate5'));
-            return view(config('app.theme').'.admin.activity.mark_create')->with('lists',$lists);
-        }
-        if($sort==22){
-            $lists =$lists->where('grade',0)->where('state',0)->paginate(config('app.paginate5'));
-            return view(config('app.theme').'.admin.activity.mark_create')->with('lists',$lists);
-        }
-        if($sort==20){
-            $lists =$lists->where('grade',0)->orderBy('id','asc')->paginate(config('app.paginate5'));
-            return view(config('app.theme').'.admin.activity.mark_create')->with('lists',$lists);
-        }
-
-
-
     }
 
     //数据创建
     public function create()
     {
-        $lists=Product::where('grade',0)->orderBy('id','asc')->paginate(config('app.paginate5'));
+        $lists = ProductCategory::get();
         return view(config('app.theme').'.admin.activity.mark_create')->with('lists',$lists);
     }
 
-    //保存新建数据
+    //获取商品 分类作为条件
+    public function getProduct(Request $request)
+    {
+        $id = $request->id;
+        $data = Product::where('category_id',$id)
+            ->where('grade',0)
+            ->get();
+        return $data;
+    }
+
+    //保存积分商品
     public function store(Request $request)
     {
-        return $this->StoreOrUpdate($request);
-    }
+        $this->validate($request, [
+            'pid'=>'required'
+        ]);
+        $ids = $request->pid;
 
-    //将积分状态修改为0
-    public function edit($id)
-    {
-        $lists=Product::where('id',$id)->get();
-        foreach($lists as $list){
-            if($list->grade==1){
-                $lists=Product::where('id',$id)->update(['grade'=>0]);
-                if($lists){
-                    return Redirect::back()->with('status','删除成功');
-                }
-                return Redirect::back()->withErrors('删除失败');
-            }else{
-                $lists=Product::where('id',$id)->update(['grade'=>1]);
-                if($lists){
-                    return Redirect::back()->with('status','添加积分商品成功');
-                }
-                return Redirect::back()->withErrors('添加积分商品失败');
-            }
+        foreach ($ids as $id) {
+            $data = Product::find($id);        
+            $data->grade = 1;
+            if (!$data->save()) Redirect::back()->withErrors('添加积分商品失败');
         }
-
-
+        return Redirect::to('/admin/activity/mark')->with('status','添加积分商品成功');
     }
+
     //批量将积分状态修改为0
     public function dels(Request $request)
     {
         $ids = explode(',', $request->ids);
         foreach ($ids as $id) {
-            if (!$this->edit($id)) {
+            if (!$this->updataGrade($id)) {
                 return Redirect::back()->withErrors('批量删除失败');
             }
         }
         return Redirect::back()->with('status','批量删除成功');
     }
 
-    //编辑保存
-    public function update(Request $request, $id)
-    {
-        return $this->StoreOrUpdate($request, $id);
-    }
-
     //单条删除
     public function destroy($id)
     {
+        if ($this->updataGrade($id)) return Redirect::back()->with('status','删除成功');
         return Redirect::back()->withErrors('删除失败');
     }
 
-
-    //保存方法
-    public function StoreOrUpdate(Request $request, $id = -1)
+    //编辑保存
+    public function updataGrade($id)
     {
-        $this->validate($request, [
-  
-        ]);
-
+        $data = Product::find($id);        
+        $data->grade = 0;
+        if ($data->save()) return 1;
+        return 0;
     }
 }

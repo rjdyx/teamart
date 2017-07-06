@@ -24,22 +24,10 @@
       <div class="box box-success">
         <div class="box-header">
           <div class="input-group input-group-sm" style="width: 470px;">
-            <div class="row">
-              <div class="col-sm-4">
-                <select class="form-control input-sm">
-                  <option>状态</option>
-                  <option>1</option>
-                  <option>2</option>
-                </select>
-              </div>
-              <div class="col-sm-8"><input type="text" name="name" class="form-control pull-right input-sm" placeholder="请输入团购活动名称" id="searchName" value="{{isset($_GET['name'])?$_GET['name']:''}}"></div>
-            </div>
+              <div class="col-sm-13"><input type="text" name="name" class="form-control pull-right input-sm" placeholder="请输入团购活动名称" id="searchName" value="{{isset($_GET['name'])?$_GET['name']:''}}"></div>
             <div class="input-group-btn">
               <button type="submit" onclick="search({{$lists->currentPage()}},['searchName']);" class="btn btn-default"><i class="fa fa-search"></i></button>
             </div>
-            <!-- <div class="btn-group btn-group-sm">
-              <a href="{{url('admin/activity/activityproduct')}}"><button type="button" class="btn btn-success btn-sm" id="addUser">团购商品</button></a>
-            </div> -->
           </div>
           <div class="box-tools">
               <a href="{{url('admin/activity/group/create')}}"><button type="button" class="btn btn-block btn-success btn-sm" id="addUser">新建团购活动</button></a>
@@ -50,7 +38,7 @@
         <div class="box-body table-responsive no-padding">
           <table class="table table-hover">
             <tbody><tr>
-              <th><!-- <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i></button> --></th>
+              <th>多选框</th>
               <th>活动编号</th>
               <th>活动名称</th>
               <th>优惠价格</th>

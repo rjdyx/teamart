@@ -34,7 +34,7 @@
 
     <style>
       .alert{
-        width:200px;
+        width:220px;
         height:120px;
         position:absolute;
         left: 45%;

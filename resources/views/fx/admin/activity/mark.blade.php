@@ -1,7 +1,7 @@
 @extends('fx.admin.layouts.app')
 
 @section('title')积分商品@endsection
-@section('t1')活动@endsection
+@section('t1')促销管理@endsection
 
 @section('css')
 @endsection
@@ -13,23 +13,16 @@
 @section('content')
   <section class="content">
     <div class="row">
-      <!-- 代理商角色列表 -->
       <div class="col-xs-12">
         <div class="box box-success">
           <div class="box-header">
-            <div class="input-group input-group-sm" style="width:50%;">
+            <div class="input-group input-group-sm" style="width:30%;">
                 <div class="row">
-                  <div class="col-sm-4">
-                    <select class="form-control input-sm" name="state" id="searchState">
-                        <option value="" >状态</option>
-                        <option value="1" >有货</option>
-                        <option value="0" >无货</option>
-                    </select>
-                  </div>
-                  <div class="col-sm-8"><input type="text" name="name" class="form-control pull-right input-sm" placeholder="请输入搜索内容" id="searchName"></div>
+
+                  <div class="col-sm-12"><input type="text" name="name" class="form-control pull-right input-sm" placeholder="请输入商品名称搜索" value="{{isset($_GET['name'])?$_GET['name']:''}}" id="searchName"></div>
                 </div>
                 <div class="input-group-btn">
-                  <button type="submit" class="btn btn-default"  onclick="search({{$lists->currentPage()}},['searchName','searchState']);"><i class="fa fa-search"></i></button>
+                  <button type="submit" class="btn btn-default"  onclick="search({{$lists->currentPage()}},['searchName']);"><i class="fa fa-search"></i></button>
                 </div>
             </div>
             <div class="box-tools">
@@ -58,7 +51,9 @@
                 <td>&yen; {{$list->price}}</td>
                 <td>@if($list->state==1) 有货 @else缺货 @endif </td>
                 <td>{{$list->stock}}</td>
-                <td><div style="color: #dd4b39"><a href="{{url("admin/activity/mark/$list->id/edit")}}"><i class="fa fa-trash-o"  style="margin-right: 5px;cursor: pointer;"></i></a></div>
+                <td><div style="color: #dd4b39">
+                  <i class="fa fa-trash-o" onclick="del({{$list->id}});"  style="margin-right: 5px;cursor: pointer;"></i>
+                </div>
                </td>
               </tr>
               @endforeach
