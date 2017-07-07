@@ -94,7 +94,7 @@
     	function countPrice() {
     		var product_price = $(".product-count").attr('count');
     		var count = parseFloat(product_price) + parseFloat(delivery_price) - parseFloat(grade_price);
-    		$(".all-count").html('&yen;'+count);
+    		$(".all-count").html('&yen;'+count.toFixed(2));
     	}
 
     	//提交订单
@@ -103,11 +103,14 @@
     	});
 
     	//积分抵扣金额
-    	$("#gradeChange").click(function(){
+    	$("#gradeChange").on('change', function(){
     		var grade = $(".user-grade").attr('grade');
     		grade_price = 0;
     		if ($(this).is(':checked')) {
     			grade_price = grade/100;
+    			$('.confirm_grade').addClass('active')
+    		} else {
+    			$('.confirm_grade').removeClass('active')
     		}
     		countPrice();
     	});
@@ -186,22 +189,20 @@
 				<div class="confirm_container_sum_row">
 					<span class="pull-left chayefont fz-18">积分抵扣</span>
 					<span class="pull-right price fz-14 user-grade" grade="{{Auth::user()->grade}}">
-					<input type="checkbox" id="gradeChange" @if (!$grade) disabled="true"@endif>
-					@if ($grade) {{Auth::user()->grade}}分 @else 不可用 @endif
+						<input type="checkbox" id="gradeChange" class="invisibility" @if (!$grade) disabled="true"@endif>
+						@if ($grade) {{Auth::user()->grade}}分 @else 不可用 @endif
 					</span>
+					<label for="gradeChange" class="confirm_grade pull-right"></label>
 				</div>
 				
 				<div class="confirm_container_sum_row">
 					<span class="pull-left chayefont fz-18">优惠券</span>
 					<span class="pull-right gray fz-14">
-						<select name="" id="" @if(!count($cheaps)) disabled="true "@endif>
-							<option value="">
-								@if(count($cheaps))-请选择- @else -无优惠券- @endif
-							</option>
-							@foreach ($cheaps as $va)
-								<option value="{{$va->cut}}">{{$va->name}}</option>
-							@endforeach
-						</select>
+						@if(count($cheaps))
+							<s id="roll">请选择</s><i class="fa fa-angle-right ml-10"></i>
+						@else 
+							<s>无优惠券</s>
+						@endif
 					</span>
 				</div>
 				
@@ -234,6 +235,20 @@
 				<i class="pull-right active"></i>
 			</div>
 			<div class="confirm_type_bottom chayefont fz-18 J_hide_type">关闭</div>
+		</div>
+	</div>
+	<div class="confirm_roll">
+		<div class="confirm_roll_container">
+			<h5 class="chayefont fz-18">优惠卷</h5>
+			<div class="confirm_roll_list">
+				@foreach ($cheaps as $va)
+				<div class="confirm_roll_row J_choose_roll" data-cut="{{$va->cut}}">
+					<span class="pull-left chayefont fz-16">{{$va->name}}</span>
+					<i class="pull-right"></i>
+				</div>
+				@endforeach
+			</div>
+			<div class="confirm_roll_bottom chayefont fz-18 J_hide_roll">关闭</div>
 		</div>
 	</div>
 @endsection

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title') 发表评论 @endsection
+@section('title') 站点位置 @endsection
 
 @section('css')
 @endsection

@@ -128,23 +128,22 @@ header {
 		background-color: rgba(0,0,0,0.5);
 		ul {
 			position: absolute;
-			left: -80%;
-			top: 0;
-			width: 80%;
-			height: 100%;
+			left: -3.5rem;
+			top: 1.2rem;
+			width: 3.5rem;
+			height: calc(100% - 1.2rem);
 			overflow: auto;
 			transition: all .3s ease;
-			background-color: #FFF;
+			background-color: rgba(199, 193, 180, 0.9);
 			li {
 				width: 100%;
-				height: 0.8rem;
+				height: 1rem;
 				border-bottom: 0.02rem solid #d7d7d7;
-				line-height: 0.8rem;
-				@include  backgroundImages("/fx/images/index_box_title.png", 90% 80%, left 0.05rem)
+				line-height: 0.98rem;
 				a {
 					display: block;
-					color: #fff;
-					padding-left: 13%;
+					color: #252525;
+					font-weight: bold;
 					@extend %wrap;
 				}
 				a:active {

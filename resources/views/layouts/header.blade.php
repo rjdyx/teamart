@@ -23,7 +23,7 @@
         <ul>
             @foreach($categorys as $category)
             <li>
-                <a class="chayefont" href="{{url('/home/product/list')}}?category={{$category->id}}">{{$category->name}}</a>
+                <a class="chayefont txt-c fz-14" href="{{url('/home/product/list')}}?category={{$category->id}}">{{$category->name}}</a>
             </li>
             @endforeach
         </ul>

@@ -711,8 +711,8 @@
 			height: 1.8rem;
 			width: 33.333%;
 			background-color: #DED8CC;
-			border-right: 0.01rem solid #fff;
-			margin-bottom: 0.01rem;
+			border-right: 0.02rem solid #fff;
+			margin-bottom: 0.02rem;
 			text-align: center;
 			a {
 				display: block;
@@ -2261,6 +2261,16 @@
 			.price {
 				color: #FF4F03;
 			}
+			.confirm_grade {
+				display: block;
+				width: 0.5rem;
+				height: 0.5rem;
+				margin-top: 0.23rem;
+				@include backgroundImages('/fx/images/address_default.png')
+			}
+			.confirm_grade.active {
+				@include backgroundImages('/fx/images/address_default_active.png')
+			}
 		}
 		textarea {
 			width: 100%;
@@ -2339,6 +2349,64 @@
 			}
 		}
 		.confirm_type_bottom {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			width: 100%;
+			height: 1rem;
+			line-height: 1rem;
+			text-align: center;
+			color: #fff;
+			@include  backgroundImages("/fx/images/footer_bg.png", cover)
+		}
+	}
+}
+.confirm_roll {
+	position: fixed;
+	top: 100%;
+	left: 0;
+	z-index: 1001;
+	height: 100%;
+	width: 100%;
+	background-color: rgba(0,0,0,0.8);
+	transition: all .5s ease;
+	.confirm_roll_container {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		height: 100%;
+		width: 100%;
+		background-color: #FFF;
+		h5 {
+			width: 100%;
+			height: 1.2rem;
+			text-align: center;
+			line-height: 1.2rem;
+			border-bottom: 0.01rem solid #DADADA;
+		}
+		.confirm_roll_list {
+			height: calc(100% - 1.2rem);
+			width: 100%;
+			overflow: auto;
+		}
+		.confirm_roll_row {
+			width: 100%;
+			height: 1rem;
+			line-height: 1rem;
+			border-bottom: 0.01rem solid #dadada;
+			padding: 0 0.2rem;
+			i {
+				display: block;
+				width: 0.35rem;
+				height: 0.35rem;
+				margin-top: 0.325rem;
+				@include  backgroundImages("/fx/images/address_default.png", cover)
+			}
+			i.active {
+				@include  backgroundImages("/fx/images/address_default_active.png", cover)
+			}
+		}
+		.confirm_roll_bottom {
 			position: absolute;
 			bottom: 0;
 			left: 0;
@@ -3012,6 +3080,257 @@
 		.orderdelivery_lists_process.active::before,
 		.orderdelivery_lists_process.active::after {
 			background-color: #FFBE22;
+		}
+	}
+}
+
+// 优惠券
+.roll {
+	background-color: #EFEFF1;
+	.roll_list {
+		width: 100%;
+		li {
+			width: 100%;
+			height: 2rem;
+			background-color: #FFF;
+			// .roll_info {
+			// 	width: 70%;
+			// 	color: #a7a7a7;
+			// 	h1 {
+			// 		color: #333;
+			// 	}
+			// 	.price {
+			// 		color: #EE7700;
+			// 	}
+			// 	time {
+			// 		color: #ff5c5d;
+			// 	}
+			// }
+			// .roll_info.useless {
+			// 	h1 {
+			// 		color: #7a7a7a;;
+			// 	}
+			// 	.price {
+			// 		color: #7a7a7a;
+			// 	}
+			// 	time {
+			// 		color: #7a7a7a;
+			// 	}
+			// }
+			// .roll_state {
+			// 	position: relative;
+			// 	width: 30%;
+			// 	height: 100%;
+			// 	.roll_get,
+			// 	.roll_take,
+			// 	.roll_used,
+			// 	.roll_over {
+			// 		position: absolute;
+			// 		top: 50%;
+			// 		left: 50%;
+			// 		display: block;
+			// 		height: 0.6rem;
+			// 		width: 80%;
+			// 		transform: translate(-50%, -50%);
+			// 		color: #fff;
+			// 		line-height: 0.6rem;
+			// 		border-radius: 0.3rem;
+			// 	}
+			// 	.roll_get {
+			// 		background-color: #0099ff;
+			// 	}
+			// 	.roll_take {
+			// 		background-color: #ef5a5b;
+			// 	}
+			// 	.roll_used,
+			// 	.roll_over {
+			// 		background-color: #7a7a7a;
+			// 	}
+			// }
+			.roll_info {
+				width: calc(100% - 2rem);
+				height: 2rem;
+				padding: 0.2rem;
+				@media screen and (max-width:321px){
+					.roll_name {
+						font-size: 14px;
+					}
+				}
+				@media screen and (min-width:321px) and (max-width:400px){
+					.roll_name {
+						font-size: 16px;
+					}
+				}
+				@media screen and (min-width:400px){
+					.roll_name {
+						font-size: 18px;
+					}
+				}
+				.roll_desc {
+					height: 0.6rem;
+					@extend %wrap2
+				}
+				.roll_time,
+				.roll_desc {
+					color: #7d7d7d;
+				}
+				.roll_name {
+					color: #333;
+				}
+			}
+			.roll_price {
+				width: 2rem;
+				height: 2rem;
+				padding: 0.2rem 0;
+				color: #fff;
+				.roll_cut {
+					.yen {
+						font-style: normal;
+					}
+					@media screen and (max-width:321px){
+						.yen {
+							font-size: 20px;
+						}
+						.cut {
+							font-size: 28px;
+						}
+					}
+					@media screen and (min-width:321px) and (max-width:400px){
+						.yen {
+							font-size: 22px;
+						}
+						.cut {
+							font-size: 30px;
+						}
+					}
+					@media screen and (min-width:400px){
+						.yen {
+							font-size: 24px;
+						}
+						.cut {
+							font-size: 32px;
+						}
+					}
+				}
+				.roll_full {}
+				a {
+					width: 1.2rem;
+					height: 0.4rem;
+					line-height: 0.4rem;
+					border-radius: 0.3rem;
+					color: #fff;
+					@extend %marginLR
+				}
+				a.roll_get {
+					background-color: #ff0018;
+				}
+				a.roll_take {
+					background-color: #1296db;
+				}
+				a.roll_used {
+					background-color: #7d7d7d;
+				}
+				a.roll_over {
+					background-color: #7d7d7d;
+				}
+			}
+			.roll_price.get {
+				@include backgroundImages("/fx/images/roll_get.png", $repeat: repeat-y)
+			}
+			.roll_price.take {
+				@include backgroundImages("/fx/images/roll_take.png", $repeat: repeat-y)
+			}
+			.roll_price.useless {
+				@include backgroundImages("/fx/images/roll_useless.png", $repeat: repeat-y)
+			}
+		}
+	}
+	.roll_nodata {
+		height: 3rem;
+		width: 100%;
+		line-height: 3rem;
+		background-color: #fff;
+		a {
+			color: #f78223;
+		}
+	}
+}
+
+// 团购
+.many {
+	background-color: #EFEFF1;
+	.many_list {
+		width: 100%;
+		.many_wrapper {
+			width: 100%;
+			padding: 0.1rem;
+			background-color: #FFF;
+			.many_left {
+				h1 {
+					color: #535353;
+				}
+				p {
+					color: #7d7d7d;
+				}
+				p.before,
+				p.start {
+					time {
+						color: #E87F14;
+					}
+					b {
+						color: #E87F14;
+					}
+				}
+				p.over {
+					time {
+						color: #7d7d7d;
+					}
+				}
+			}
+			.many_right {
+				color: #535353;
+				.price {
+					color: #EE7700;
+				}
+				a {
+					display: block;
+					height: 0.6rem;
+					color: #fff;
+					line-height: 0.6rem;
+					border-radius: 0.3rem;
+					padding-left: 0.2rem;
+					@include backgroundImages('/fx/images/btn_bg.png')
+				}
+				a.before,
+				a.start {
+					color: #E87F14;
+				}
+				a.over {
+					color: #7d7d7d;
+				}
+			}
+			.many_desc {
+				width: 100%;
+				img {
+					display: block;
+					width: 100%;
+				}
+			}
+		}
+		.many_wrapper.over {
+			color: #7a7a7a!important;
+			.price {
+				color: #7a7a7a;
+			}
+		}
+	}
+	.many_nodata {
+		height: 3rem;
+		width: 100%;
+		line-height: 3rem;
+		background-color: #fff;
+		a {
+			color: #f78223;
 		}
 	}
 }

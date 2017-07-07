@@ -114,9 +114,9 @@ Route::group(['namespace'=>'Home','prefix'=>'home','middleware'=>['auth']],funct
 	Route::post('/feedback','FeedbackController@store');
 
 	//促销管理
-	Route::group(['prefix'=>'sell'],function(){
-		Route::get('/roll','SellController@roll');//优惠券
-		Route::get('/many','SellController@many');//团购
+	Route::group(['prefix'=>'activity'],function(){
+		Route::get('/roll','ActivityController@roll');//优惠券
+		Route::get('/many','ActivityController@many');//团购
 	});
 });
 
