@@ -2988,12 +2988,16 @@ button.swiper-pagination-bullet {
 /**
  * $px can has unit or hasn't
 */
+.roll .roll_list li .roll_price a {
+  margin-left: auto;
+  margin-right: auto; }
+
 header .header_category ul li a, .index .index_box h1, .index .index_box h5, .index .banner_box .banner_box_row p, .filter .filter_container .filter_category .filter_category_list li a, .filter .filter_container .filter_brand .filter_brand_list li a, .productdetail .productdetail_container .productdetail_container_comment .comment_list li .comment_list_avatar span {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden; }
 
-.product .product_container .product_warpper p.desc, .promotion .promotion_container .promotion_warpper p.desc {
+.product .product_container .product_warpper p.desc, .promotion .promotion_container .promotion_warpper p.desc, .roll .roll_list li .roll_info .roll_desc {
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -3427,26 +3431,22 @@ header {
     background-color: rgba(0, 0, 0, 0.5); }
     header .header_category ul {
       position: absolute;
-      left: -80%;
-      top: 0;
-      width: 80%;
-      height: 100%;
+      left: -3.5rem;
+      top: 1.2rem;
+      width: 3.5rem;
+      height: calc(100% - 1.2rem);
       overflow: auto;
       transition: all .3s ease;
-      background-color: #FFF; }
+      background-color: rgba(199, 193, 180, 0.9); }
       header .header_category ul li {
         width: 100%;
-        height: 0.8rem;
+        height: 1rem;
         border-bottom: 0.02rem solid #d7d7d7;
-        line-height: 0.8rem;
-        background: url("/fx/images/index_box_title.png");
-        background-size: 90% 80%;
-        background-position: left 0.05rem;
-        background-repeat: no-repeat; }
+        line-height: 0.98rem; }
         header .header_category ul li a {
           display: block;
-          color: #fff;
-          padding-left: 13%; }
+          color: #252525;
+          font-weight: bold; }
         header .header_category ul li a:active {
           background-color: #f2f2f2;
           color: #ff4077; }
@@ -4124,8 +4124,8 @@ footer {
     height: 1.8rem;
     width: 33.333%;
     background-color: #DED8CC;
-    border-right: 0.01rem solid #fff;
-    margin-bottom: 0.01rem;
+    border-right: 0.02rem solid #fff;
+    margin-bottom: 0.02rem;
     text-align: center; }
     .usercenter .usercenter_nav li a {
       display: block; }
@@ -5379,6 +5379,20 @@ footer {
         color: #aaa; }
       .confirm .confirm_container_sum .confirm_container_sum_row .price {
         color: #FF4F03; }
+      .confirm .confirm_container_sum .confirm_container_sum_row .confirm_grade {
+        display: block;
+        width: 0.5rem;
+        height: 0.5rem;
+        margin-top: 0.23rem;
+        background: url("/fx/images/address_default.png");
+        background-size: 100% 100%;
+        background-position: center center;
+        background-repeat: no-repeat; }
+      .confirm .confirm_container_sum .confirm_container_sum_row .confirm_grade.active {
+        background: url("/fx/images/address_default_active.png");
+        background-size: 100% 100%;
+        background-position: center center;
+        background-repeat: no-repeat; }
     .confirm .confirm_container_sum textarea {
       width: 100%;
       height: 1rem;
@@ -5454,6 +5468,66 @@ footer {
         background-position: center center;
         background-repeat: no-repeat; }
     .confirm_type .confirm_type_container .confirm_type_bottom {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 1rem;
+      line-height: 1rem;
+      text-align: center;
+      color: #fff;
+      background: url("/fx/images/footer_bg.png");
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat; }
+
+.confirm_roll {
+  position: fixed;
+  top: 100%;
+  left: 0;
+  z-index: 1001;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  transition: all .5s ease; }
+  .confirm_roll .confirm_roll_container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #FFF; }
+    .confirm_roll .confirm_roll_container h5 {
+      width: 100%;
+      height: 1.2rem;
+      text-align: center;
+      line-height: 1.2rem;
+      border-bottom: 0.01rem solid #DADADA; }
+    .confirm_roll .confirm_roll_container .confirm_roll_list {
+      height: calc(100% - 1.2rem);
+      width: 100%;
+      overflow: auto; }
+    .confirm_roll .confirm_roll_container .confirm_roll_row {
+      width: 100%;
+      height: 1rem;
+      line-height: 1rem;
+      border-bottom: 0.01rem solid #dadada;
+      padding: 0 0.2rem; }
+      .confirm_roll .confirm_roll_container .confirm_roll_row i {
+        display: block;
+        width: 0.35rem;
+        height: 0.35rem;
+        margin-top: 0.325rem;
+        background: url("/fx/images/address_default.png");
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat; }
+      .confirm_roll .confirm_roll_container .confirm_roll_row i.active {
+        background: url("/fx/images/address_default_active.png");
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat; }
+    .confirm_roll .confirm_roll_container .confirm_roll_bottom {
       position: absolute;
       bottom: 0;
       left: 0;
@@ -5960,3 +6034,147 @@ footer {
     .orderdelivery .orderdelivery_lists .orderdelivery_lists_process.active::before,
     .orderdelivery .orderdelivery_lists .orderdelivery_lists_process.active::after {
       background-color: #FFBE22; }
+
+.roll {
+  background-color: #EFEFF1; }
+  .roll .roll_list {
+    width: 100%; }
+    .roll .roll_list li {
+      width: 100%;
+      height: 2rem;
+      background-color: #FFF; }
+      .roll .roll_list li .roll_info {
+        width: calc(100% - 2rem);
+        height: 2rem;
+        padding: 0.2rem; }
+        @media screen and (max-width: 321px) {
+          .roll .roll_list li .roll_info .roll_name {
+            font-size: 14px; } }
+        @media screen and (min-width: 321px) and (max-width: 400px) {
+          .roll .roll_list li .roll_info .roll_name {
+            font-size: 16px; } }
+        @media screen and (min-width: 400px) {
+          .roll .roll_list li .roll_info .roll_name {
+            font-size: 18px; } }
+        .roll .roll_list li .roll_info .roll_desc {
+          height: 0.6rem; }
+        .roll .roll_list li .roll_info .roll_time,
+        .roll .roll_list li .roll_info .roll_desc {
+          color: #7d7d7d; }
+        .roll .roll_list li .roll_info .roll_name {
+          color: #333; }
+      .roll .roll_list li .roll_price {
+        width: 2rem;
+        height: 2rem;
+        padding: 0.2rem 0;
+        color: #fff; }
+        .roll .roll_list li .roll_price .roll_cut .yen {
+          font-style: normal; }
+        @media screen and (max-width: 321px) {
+          .roll .roll_list li .roll_price .roll_cut .yen {
+            font-size: 20px; }
+          .roll .roll_list li .roll_price .roll_cut .cut {
+            font-size: 28px; } }
+        @media screen and (min-width: 321px) and (max-width: 400px) {
+          .roll .roll_list li .roll_price .roll_cut .yen {
+            font-size: 22px; }
+          .roll .roll_list li .roll_price .roll_cut .cut {
+            font-size: 30px; } }
+        @media screen and (min-width: 400px) {
+          .roll .roll_list li .roll_price .roll_cut .yen {
+            font-size: 24px; }
+          .roll .roll_list li .roll_price .roll_cut .cut {
+            font-size: 32px; } }
+        .roll .roll_list li .roll_price a {
+          width: 1.2rem;
+          height: 0.4rem;
+          line-height: 0.4rem;
+          border-radius: 0.3rem;
+          color: #fff; }
+        .roll .roll_list li .roll_price a.roll_get {
+          background-color: #ff0018; }
+        .roll .roll_list li .roll_price a.roll_take {
+          background-color: #1296db; }
+        .roll .roll_list li .roll_price a.roll_used {
+          background-color: #7d7d7d; }
+        .roll .roll_list li .roll_price a.roll_over {
+          background-color: #7d7d7d; }
+      .roll .roll_list li .roll_price.get {
+        background: url("/fx/images/roll_get.png");
+        background-size: 100% 100%;
+        background-position: center center;
+        background-repeat: repeat-y; }
+      .roll .roll_list li .roll_price.take {
+        background: url("/fx/images/roll_take.png");
+        background-size: 100% 100%;
+        background-position: center center;
+        background-repeat: repeat-y; }
+      .roll .roll_list li .roll_price.useless {
+        background: url("/fx/images/roll_useless.png");
+        background-size: 100% 100%;
+        background-position: center center;
+        background-repeat: repeat-y; }
+  .roll .roll_nodata {
+    height: 3rem;
+    width: 100%;
+    line-height: 3rem;
+    background-color: #fff; }
+    .roll .roll_nodata a {
+      color: #f78223; }
+
+.many {
+  background-color: #EFEFF1; }
+  .many .many_list {
+    width: 100%; }
+    .many .many_list .many_wrapper {
+      width: 100%;
+      padding: 0.1rem;
+      background-color: #FFF; }
+      .many .many_list .many_wrapper .many_left h1 {
+        color: #535353; }
+      .many .many_list .many_wrapper .many_left p {
+        color: #7d7d7d; }
+      .many .many_list .many_wrapper .many_left p.before time,
+      .many .many_list .many_wrapper .many_left p.start time {
+        color: #E87F14; }
+      .many .many_list .many_wrapper .many_left p.before b,
+      .many .many_list .many_wrapper .many_left p.start b {
+        color: #E87F14; }
+      .many .many_list .many_wrapper .many_left p.over time {
+        color: #7d7d7d; }
+      .many .many_list .many_wrapper .many_right {
+        color: #535353; }
+        .many .many_list .many_wrapper .many_right .price {
+          color: #EE7700; }
+        .many .many_list .many_wrapper .many_right a {
+          display: block;
+          height: 0.6rem;
+          color: #fff;
+          line-height: 0.6rem;
+          border-radius: 0.3rem;
+          padding-left: 0.2rem;
+          background: url("/fx/images/btn_bg.png");
+          background-size: 100% 100%;
+          background-position: center center;
+          background-repeat: no-repeat; }
+        .many .many_list .many_wrapper .many_right a.before,
+        .many .many_list .many_wrapper .many_right a.start {
+          color: #E87F14; }
+        .many .many_list .many_wrapper .many_right a.over {
+          color: #7d7d7d; }
+      .many .many_list .many_wrapper .many_desc {
+        width: 100%; }
+        .many .many_list .many_wrapper .many_desc img {
+          display: block;
+          width: 100%; }
+    .many .many_list .many_wrapper.over {
+      color: #7a7a7a !important; }
+      .many .many_list .many_wrapper.over .price {
+        color: #7a7a7a; }
+  .many .many_nodata {
+    height: 3rem;
+    width: 100%;
+    line-height: 3rem;
+    background-color: #fff; }
+    .many .many_nodata a {
+      color: #f78223; }

@@ -32,7 +32,7 @@
         <div class="index_box">
             <div class="index_box_title">
                 <h1 class="pull-left chayefont">活动商品</h1>
-                <a href="{{url('/home/promotion/activity')}}" class="pull-right">
+                <a href="{{url('/home/activity/many')}}" class="pull-right">
                     <span class="chayefont">更多</span>
                     <i class="fa fa-angle-right"></i>
                 </a>

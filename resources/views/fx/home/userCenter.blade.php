@@ -162,7 +162,7 @@
 				</a>
 			</li>
 			<li>
-				<a href="{{url('/home/address')}}">
+				<a href="{{url('/home/activity/roll')}}">
 					<div class="usercenter_nav_icon">
 						<i class="fa fa-ticket"></i>
 					</div>
