@@ -77,13 +77,15 @@ Route::group(['namespace'=>'Home','prefix'=>'home','middleware'=>['auth']],funct
     	Route::post('/confirm','OrderController@confirmData');//订单预处理
     	Route::get('/confirm','OrderController@confirm');//订单待支付
     	Route::get('/list/data','OrderController@orderListData');
-    	Route::get('/cancell','OrderController@orderCancell');//取消订单
-    	Route::get('/back','OrderController@orderBack');//退货
     	Route::get('/delivery/{order_id}','OrderController@showDelivery');//物流信息
+    	Route::get('/delivery_data','OrderController@deliveryData');//追溯物流信息
     	Route::get('/comment/{order_id}','OrderController@orderComment');//评论
     	Route::get('/pay/{order_id}','OrderController@orderPay');//付款
     	Route::get('/site','OrderController@site');//站点地图页
     	Route::get('/site/data','OrderController@siteListData');//站点数据接口
+    	Route::get('/backn/reason/{id}','OrderController@backnReason');//退货理由
+    	Route::post('/operate/{type}','OrderController@orderOperate');//订单state改变
+
 	});
 
 

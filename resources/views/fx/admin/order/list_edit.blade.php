@@ -89,6 +89,7 @@
                 <label for="">{{$data->province}}{{$data->city}}{{$data->area}}{{$data->detail}}</label>
               </li>
               <li><label for="">物流单号: </label><label for="">&nbsp;{{$data->delivery_serial}}</label></li>
+              <li><label for="">快递公司: </label><label for="">&nbsp;{{$data->coding}}</label></li>
               <li><label for="">收货人: </label><label for="">&nbsp;{{$data->address_name}}</label></li>
               <li><label for="">联系电话: </label><label for="">&nbsp;{{$data->address_phone}}</label></li>
               @endif
@@ -128,6 +129,17 @@
                       <select class="form-control input-sm" name="method" onchange="requiedx();">
                         <option value="self" @if($data->method=='self')selected @endif > 站 点 自 提 </option>
                         <option value="delivery" @if($data->method=='delivery')selected @endif > 物 流 运 输 </option>
+                      </select>
+                  </div>
+                  <span class="col-sm-4 text-danger form_error" id="method_txt"></span>
+                </div>
+                <div class="form-group">
+                  <label for="name" class="col-sm-3 control-label">快递公司</label>
+                  <div class="col-sm-4">
+                      <select class="form-control input-sm" name="method" onchange="requiedx();">
+                      <option value="">-请选择快递公司-</option>
+                        <option value="STO" @if($data->method=='STO')selected @endif > 申通快递 </option>
+                        <option value="HHTT" @if($data->method=='HHTT')selected @endif > 天天快递 </option>
                       </select>
                   </div>
                   <span class="col-sm-4 text-danger form_error" id="method_txt"></span>

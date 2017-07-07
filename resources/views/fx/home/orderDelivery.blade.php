@@ -7,6 +7,27 @@
 
 @section('script')
     @parent
+    <script>
+        var url = 'http://'+window.location.host+'/home/order/delivery_data';
+        //code:物流单号、 id:订单id 、coding快递公司编号
+        var params = {id:"{{$data->id}}",code:"{{$data->delivery_serial}}",coding:"{{$data->coding}}"}
+        // var params = {code:3333416009794,order:8025019758554139,coding:'STO'}
+        ajax('get', url, params).then(function (data) {
+            if (data) {
+                var res = data;
+                var tmp = '';
+                for(var i= res.length-1;i>=0;i--) {
+                    tmp += `<div class="orderdelivery_lists_process`;
+                    if (i == res.length-1) tmp += ` active`;
+                    tmp += `"><p class="mb-10">${res[i]['AcceptStation']}</p>
+                    <p class="fz-12 txt-r">${res[i]['AcceptTime']}</p></div>`; 
+                }
+                $(".orderdelivery_lists").html(tmp);
+            } else {
+                prompt.message('查询失败！请稍后再试！');
+            }
+        })
+    </script>
 @endsection
 
 @section('content')
@@ -15,70 +36,32 @@
     @include("layouts.backIndex")
 	<div class="orderdelivery">
 		<div class="orderdelivery_order_lists">
+        @foreach($lists as $list)
             <div class="orderdelivery_warpper">
                 <div class="orderdelivery_warpper_img pull-left mr-20">
-                    <img src="{{url('fx/images/goods_avatar.png')}}">
+                    <img src="{{url('')}}/{{$list->thumb}}">
                 </div>
                 <div class="orderdelivery_warpper_detail pull-left mr-20">
-                    <h5 class="chayefont mb-10">菲律宾进口香蕉</h5>
-                    <p>新鲜梨酥雪梨发货供货的供货皇冠分隔符梨</p>
+                    <h5 class="chayefont mb-10">{{$list->name}}</h5>
+                    <p>{{$list->desc}}</p>
                 </div>
                 <div class="orderdelivery_warpper_price pull-left txt-r">
-                    <span class="block price">&yen;212.00</span>
-                    <del class="block price_raw">&yen;299.00</del>
-                    <span class="block times">&times;2</span>
+                    <span class="block price">&yen;{{$list->price}}</span>
+                    <del class="block price_raw">&yen;{{$list->raw_price * $list->amount}}</del>
+                    <span class="block times">&times;{{$list->amount}}</span>
                 </div>
             </div>
-            <div class="orderdelivery_warpper">
-                <div class="orderdelivery_warpper_img pull-left mr-20">
-                    <img src="{{url('fx/images/goods_avatar.png')}}">
-                </div>
-                <div class="orderdelivery_warpper_detail pull-left mr-20">
-                    <h5 class="chayefont mb-10">菲律宾进口香蕉</h5>
-                    <p>新鲜梨酥雪梨发货供货的供货皇冠分隔符梨</p>
-                </div>
-                <div class="orderdelivery_warpper_price pull-left txt-r">
-                    <span class="block price">&yen;212.00</span>
-                    <del class="block price_raw">&yen;299.00</del>
-                    <span class="block times">&times;2</span>
-                </div>
-            </div>
-            <div class="orderdelivery_warpper">
-                <div class="orderdelivery_warpper_img pull-left mr-20">
-                    <img src="{{url('fx/images/goods_avatar.png')}}">
-                </div>
-                <div class="orderdelivery_warpper_detail pull-left mr-20">
-                    <h5 class="chayefont mb-10">菲律宾进口香蕉</h5>
-                    <p>新鲜梨酥雪梨发货供货的供货皇冠分隔符梨</p>
-                </div>
-                <div class="orderdelivery_warpper_price pull-left txt-r">
-                    <span class="block price">&yen;212.00</span>
-                    <del class="block price_raw">&yen;299.00</del>
-                    <span class="block times">&times;2</span>
-                </div>
-            </div>
+        @endforeach
 		</div>
 		<div class="orderdelivery_sender mt-20">
 			由DD快递提供配送服务,xx配送员配送中
 			<a href="tel:88888" class="pull-right color-F78223"><i class="fa fa-mobile"></i></a>
 		</div>
 		<div class="orderdelivery_lists mt-20">
-			<div class="orderdelivery_lists_process active">
-				<p class="mb-10">极大发圣诞节扣篮大赛极大发圣诞节扣篮大赛极大发圣诞节扣篮大赛极大发圣诞节扣篮大赛</p>
+<!-- 			<div class="orderdelivery_lists_process active">
+				<p class="mb-10">sss</p>
 				<p class="fz-12 txt-r">0000年00月00日 00时00分00秒</p>
-			</div>
-			<div class="orderdelivery_lists_process">
-				<p class="mb-10">极大发圣诞节扣篮大赛极大发圣诞节扣篮大赛极大发圣诞节扣篮大赛极大发圣诞节扣篮大赛</p>
-				<p class="fz-12 txt-r">0000年00月00日 00时00分00秒</p>
-			</div>
-			<div class="orderdelivery_lists_process">
-				<p class="mb-10">极大发圣诞节扣篮大赛极大发圣诞节扣篮大赛极大发圣诞节扣篮大赛极大发圣诞节扣篮大赛</p>
-				<p class="fz-12 txt-r">0000年00月00日 00时00分00秒</p>
-			</div>
-			<div class="orderdelivery_lists_process">
-				<p class="mb-10">极大发圣诞节扣篮大赛极大发圣诞节扣篮大赛极大发圣诞节扣篮大赛极大发圣诞节扣篮大赛</p>
-				<p class="fz-12 txt-r">0000年00月00日 00时00分00秒</p>
-			</div>
+			</div> -->
 		</div>
 	</div>
 @endsection

@@ -22,9 +22,10 @@ class CreateOrderTable extends Migration
             $table->string('serial',100)->comment('订单号');
             $table->double('price', 10, 2)->default(0.00)->comment('价格');
             $table->string('type',50)->comment('订单类型(order订单、cart购物车、collect收藏)');
-            $table->string('state',50)->default('pending')->comment('订单状态(pending未支付、paid已支付、close关闭、cancelled取消、recede退货)');
+            $table->string('state',50)->default('pending')->comment('订单状态(pending未支付、paid已支付、close关闭、cancelled取消、backn退货、backy已退货)');
             $table->string('delivery_serial',100)->nullable()->comment('物流单号');
             $table->string('reason',255)->nullable()->comment('退货理由');
+            $table->string('coding',50)->nullable()->comment('物流公司编号');
             $table->dateTime('date')->comment('下单日期');
             $table->text('memo')->nullable()->comment('备注');
             $table->softDeletes();

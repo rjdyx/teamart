@@ -11,6 +11,7 @@ namespace app\Utils;
 use Illuminate\Support\Facades\Auth;
 use DB;
 use App\Log;
+use App\System;
 use ReflectionClass;
 
 class IQuery{
@@ -120,5 +121,79 @@ class IQuery{
         $rand = rand(99999,999999);
         $per = 'Fx';
         return $per.$rand.$date;
+    }
+
+
+    /**
+     * Json方式 查询订单物流轨迹
+     * $code 订单号 (可缺省)
+     * $order 物流单号
+     */
+    function getOrderTracesByJson($code, $coding = "STO", $order=0)
+    {
+        $system = System::find(1);
+        if (empty($system->delivery_id)) return false;
+        $ID = $system->delivery_id;//商户id
+        $key = $system->delivery_key;//API key
+        $url = 'http://api.kdniao.cc/Ebusiness/EbusinessOrderHandle.aspx';//请求地址
+        $requestData="{'OrderCode':'".$order."','ShipperCode':'".$coding."','LogisticCode':'".$code."'}";
+        $datas = array(
+            'EBusinessID' => $ID,
+            'RequestType' => '1002',
+            'RequestData' => urlencode($requestData) ,
+            'DataType' => '2',
+        );
+        $datas['DataSign'] = $this->encrypt($requestData, $key);
+        $result = $this->sendPost($url, $datas);   
+        //根据公司业务处理返回的信息......
+        return $result;
+    }
+
+    /**
+     * 电商Sign签名生成
+     * @param data 内容   
+     * @param appkey Appkey
+     * @return DataSign签名
+     */
+    function encrypt($data, $appkey) {
+        return urlencode(base64_encode(md5($data.$appkey)));
+    }
+    /**
+     *  post提交数据 
+     * @param  string $url 请求Url
+     * @param  array $datas 提交的数据 
+     * @return url响应返回的html
+     */
+    function sendPost($url, $datas) {
+        $temps = array();   
+        foreach ($datas as $key => $value) {
+            $temps[] = sprintf('%s=%s', $key, $value);      
+        }   
+        $post_data = implode('&', $temps);
+        $url_info = parse_url($url);
+        if(empty($url_info['port']))
+        {
+            $url_info['port']=80;   
+        }
+        $httpheader = "POST " . $url_info['path'] . " HTTP/1.0\r\n";
+        $httpheader.= "Host:" . $url_info['host'] . "\r\n";
+        $httpheader.= "Content-Type:application/x-www-form-urlencoded\r\n";
+        $httpheader.= "Content-Length:" . strlen($post_data) . "\r\n";
+        $httpheader.= "Connection:close\r\n\r\n";
+        $httpheader.= $post_data;
+        $fd = fsockopen($url_info['host'], $url_info['port']);
+        fwrite($fd, $httpheader);
+        $gets = "";
+        $headerFlag = true;
+        while (!feof($fd)) {
+            if (($header = @fgets($fd)) && ($header == "\r\n" || $header == "\n")) {
+                break;
+            }
+        }
+        while (!feof($fd)) {
+            $gets.= fread($fd, 128);
+        }
+        fclose($fd);  
+        return $gets;
     }
 }

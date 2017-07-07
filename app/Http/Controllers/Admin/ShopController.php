@@ -88,6 +88,8 @@ class ShopController extends Controller
         $shop->free = $request->free;//免邮金额
         $shop->record = $request->record;//备案号
         $shop->keywords = $request->keywords;//关键字
+        $shop->delivery_id = $request->delivery_id;//物流商户id
+        $shop->delivery_key = $request->delivery_key;//物流密匙key
 
         //logo
         $img = IQuery::upload($request,'img',false);

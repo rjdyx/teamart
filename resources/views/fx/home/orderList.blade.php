@@ -48,7 +48,7 @@
                 $('.dropload-down').show()
             }
             var result = '';
-            var url = 'http://'+window.location.host + '/home/order/list/data';
+            var url = 'http://'+ window.location.host + '/home/order/list/data';
             ajax('get', url, params, false, false, false).then(function (data) {
                 if(data != ''){
                     result = joint(data);
@@ -110,7 +110,7 @@
                     var serial = value2['serial'];
                     b = `   <div class="order_warpper_info">
                                 <div class="order_warpper_info_img pull-left mr-20">
-                                    <img src="http://window.location.host/${img}">
+                                    <img src="http://${window.location.host}/${img}">
                                 </div>
                                 <div class="order_warpper_info_detail pull-left mr-20">
                                     <h5 class="chayefont mb-10">${name}</h5>
@@ -208,7 +208,7 @@
         function orderOperate(addurl, pro, params) {
             var url = 'http://'+window.location.host + '/home/order/';
             url+= addurl;
-            ajax('get', url, params).then(function (data) {
+            ajax('post', url, params).then(function (data) {
                 if (data == 200) {
                     prompt.message(pro+'成功');
                     searchOrder();
@@ -228,9 +228,8 @@
 
         //申请退货方法
         function order_back(id){
-            var params = {id:id};
             prompt.question('是否要申请退货', function () {
-                orderOperate('back', '申请退货', params);
+                window.location.href = 'http://'+window.location.host + '/home/order/backn/reason/'+id;
             })
         }
 
@@ -284,7 +283,6 @@
             params['page'] = 1;// 重置页数，重新获取loadDownFn的数据
             var url = 'http://'+window.location.host + '/home/order/list/data';
             ajax('get', url, params).then(function (data) {
-                console.log(1)
                 $('.order_container').find('.order_nodata').remove()
                 $('.dropload-down').show()
                 if (params['page'] == 1 && data.length == 0) {
