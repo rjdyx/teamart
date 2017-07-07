@@ -40,7 +40,8 @@
                     page = 1
                     $('.dropload-down').show()
                 }
-                ajax('get', 'url', {page: page}).then(function (res) {
+                var url = 'http://'+window.location.host+'/home/activity/many/data'
+                ajax('get', url, {page: page}).then(function (res) {
                     var template = ''
                     var data = res.data
                     if (data.length > 0) {
@@ -64,12 +65,13 @@
                     }
                     // 设置倒计时
                     $('p.start').each(function () {
+                        var $this = $(this)
                         setInterval(function () {
                             var now = Date.now()
-                            var times = countdown($(this).data('end') - now)
-                            $(this).find('.hour').text(times.hour)
-                            $(this).find('.min').text(times.min)
-                            $(this).find('.second').text(times.second)
+                            var times = countdown($this.data('end') - now)
+                            $this.find('.hour').text(times.hour)
+                            $this.find('.min').text(times.min)
+                            $this.find('.second').text(times.second)
                         }, 1000)
                     })
                     me.resetload();
@@ -122,6 +124,7 @@
                 })
                 return template;
             }
+
             // 计算时分秒并获取时分秒
             // 参数是毫秒戳
             function countdown (date) {
@@ -148,7 +151,7 @@
 	@include("layouts.header-info")
 	<div class="many container">
         <div class="many_list">
-            <div class="many_wrapper mb-20 clearfix">
+<!--             <div class="many_wrapper mb-20 clearfix">
                 <div class="many_left pull-left">
                     <h1 class="fz-20 chayefont">活动名称</h1>
                     <p class="before fz-14 mt-10"><time class="mr-10">0000-00-00</time>活动即将开始</p>
@@ -189,8 +192,32 @@
                 <div class="many_desc">
                     <img src="{{url('/fx/images/user_info_bg.png')}}" alt="">
                 </div>
-            </div>
+            </div> -->
         </div>
 	</div>
 	@include("layouts.footer")
 @endsection
+
+
+
+<script language="javascript" type="text/javascript"> 
+var interval = 1000; 
+function ShowCountDown(year,month,day,divname) 
+{ 
+var now = new Date(); 
+var endDate = new Date(year, month-1, day); 
+var leftTime=endDate.getTime()-now.getTime(); 
+var leftsecond = parseInt(leftTime/1000); 
+//var day1=parseInt(leftsecond/(24*60*60*6)); 
+var day1=Math.floor(leftsecond/(60*60*24)); 
+var hour=Math.floor((leftsecond-day1*24*60*60)/3600); 
+var minute=Math.floor((leftsecond-day1*24*60*60-hour*3600)/60); 
+var second=Math.floor(leftsecond-day1*24*60*60-hour*3600-minute*60); 
+var cc = document.getElementById(divname); 
+cc.innerHTML = "脚本之家提示距离"+year+"年"+month+"月"+day+"日还有："+day1+"天"+hour+"小时"+minute+"分"+second+"秒"; 
+} 
+window.setInterval(function(){ShowCountDown(2010,4,20,'divdown1');}, interval); 
+</script> 
+
+<div id="divdown1"></div> 
+

@@ -64,7 +64,6 @@
 <!-- Main content of addGgent-->
 <section class="content">
 	<div class="row">
-		<!-- 新增代理商角色 -->
 		<div class="col-xs-12">
 			<div class="box box-success">
 				<div class="box-header with-border">

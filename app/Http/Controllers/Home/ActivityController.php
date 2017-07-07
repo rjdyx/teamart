@@ -24,4 +24,11 @@ class ActivityController extends Controller
 		$title = '团购活动';
 		return view(config('app.theme').'.home.activity.many')->with(['title'=>$title]);
 	}
+
+	//团购数据
+	public function manyData ()
+	{
+		$lists = Activity::orderBy('date_start','desc')->paginate(10);
+		return $lists;
+	}
 }

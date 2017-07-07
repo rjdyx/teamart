@@ -64,11 +64,10 @@
     <!-- Main content of addGgent-->
     <section class="content">
     	<div class="row">
-    		<!-- 新增代理商角色 -->
     		<div class="col-xs-12">
     			<div class="box box-success">
     				<div class="box-header with-border">
-    					<h3 class="box-title">新增团购</h3>
+    					<h3 class="box-title">编辑团购</h3>
     				</div>
     				<!-- /.box-header -->
     				<!-- form start -->
@@ -88,11 +87,11 @@
     						<div class="form-group">
     							<label class="col-sm-3 control-label" for="date_start">活动开始时间</label>
     							<div class="col-sm-3">
-    								<div class="input-group date">
+    								<div class="input-group datetime">
     									<div class="input-group-addon">
     										<i class="fa fa-calendar"></i>
     									</div>
-    									<input type="date" class="form-control pull-right" id="date_start" name="date_start"  value="{{$data->date_start}}">
+    									<input type="datetime" class="form-control pull-right" id="date_start" name="date_start"  value="{{$data->date_start}}">
     								</div>
     								<!-- /.input group -->
     							</div>
@@ -100,11 +99,11 @@
     						<div class="form-group">
     							<label class="col-sm-3 control-label" for="date_end">活动结束时间</label>
     							<div class="col-sm-3">
-    								<div class="input-group date">
+    								<div class="input-group datetime">
     									<div class="input-group-addon">
     										<i class="fa fa-calendar"></i>
     									</div>
-    									<input type="date" class="form-control pull-right" id="date_end" name="date_end"   value="{{$data->date_start}}">
+    									<input type="datetime" class="form-control pull-right" id="date_end" name="date_end"   value="{{$data->date_start}}">
     								</div>
     								<!-- /.input group -->
     							</div>

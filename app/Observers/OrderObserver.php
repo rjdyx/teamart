@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Order;
 use App\OrderProduct;
 use App\Product;
+use App\Delivery;
 use App\User;
 use IQuery;
 use Cache;
@@ -52,9 +53,22 @@ class OrderObserver
         if ($order->state == 'paid') {
             $this->stockUpdate('-');
         }
+
         //退货更新库存
         if ($order->state == 'backy') {
             $this->stockUpdate('+');
+        }
+
+        //收货后存储物流信息
+        if ($order->state == 'take') {
+            $datas = json_decode(IQuery::getOrderTracesByJson($order->delivery_serial, $order->coding),true)['Traces'];
+            foreach ($datas as $data) {
+                $delivery = new Delivery;
+                $delivery->order_id = $order->id;
+                $delivery->content = $data['AcceptStation'];
+                $delivery->date = $data['AcceptTime'];
+                $delivery->save();
+            }
         }
 
     }

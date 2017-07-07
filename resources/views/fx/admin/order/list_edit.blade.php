@@ -136,11 +136,19 @@
                 <div class="form-group">
                   <label for="name" class="col-sm-3 control-label">快递公司</label>
                   <div class="col-sm-4">
-                      <select class="form-control input-sm" name="method" onchange="requiedx();">
-                      <option value="">-请选择快递公司-</option>
-                        <option value="STO" @if($data->method=='STO')selected @endif > 申通快递 </option>
-                        <option value="HHTT" @if($data->method=='HHTT')selected @endif > 天天快递 </option>
-                      </select>
+                    <select class="form-control input-sm" name="method" onchange="requiedx();">
+                    <option value="">-请选择快递公司-</option>
+                    <option value="EMS" @if($data->coding=='EMS')selected @endif >EMS</option>
+                    <option value="STO" @if($data->coding=='STO')selected @endif >申通快递</option>
+                    <option value="HHTT" @if($data->coding=='HHTT')selected @endif >天天快递</option>
+                    <option value="DBL" @if($data->coding=='DBL')selected @endif >德邦快递</option>
+                    <option value="SF" @if($data->coding=='SF')selected @endif >顺丰快递</option>
+                    <option value="YD" @if($data->coding=='YD')selected @endif >韵达快递</option>
+                    <option value="ZJS" @if($data->coding=='ZJS')selected @endif >宅急送</option>
+                    <option value="ZTO" @if($data->coding=='ZTO')selected @endif >中通快递</option>
+                    <option value="HTKY" @if($data->coding=='HTKY')selected @endif >百世快递</option>
+                    <option value="YTO" @if($data->coding=='YTO')selected @endif >圆通快递</option>
+                    </select>
                   </div>
                   <span class="col-sm-4 text-danger form_error" id="method_txt"></span>
                 </div>

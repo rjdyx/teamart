@@ -85,7 +85,6 @@ Route::group(['namespace'=>'Home','prefix'=>'home','middleware'=>['auth']],funct
     	Route::get('/site/data','OrderController@siteListData');//站点数据接口
     	Route::get('/backn/reason/{id}','OrderController@backnReason');//退货理由
     	Route::post('/operate/{type}','OrderController@orderOperate');//订单state改变
-
 	});
 
 
@@ -117,6 +116,7 @@ Route::group(['namespace'=>'Home','prefix'=>'home','middleware'=>['auth']],funct
 	Route::group(['prefix'=>'activity'],function(){
 		Route::get('/roll','ActivityController@roll');//优惠券
 		Route::get('/many','ActivityController@many');//团购
+		Route::get('/many/data','ActivityController@manyData');//团购数据接口
 	});
 });
 
