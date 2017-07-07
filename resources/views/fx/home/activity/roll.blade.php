@@ -11,28 +11,28 @@
     <script>
         $(function () {
             var page = 0;
-            // $('.roll').dropload({
-            //     scrollArea : $('.roll'),
-            //     domUp : {
-            //         domClass   : 'dropload-up',
-            //         domRefresh : '<div class="dropload-refresh">↓下拉刷新</div>',
-            //         domUpdate  : '<div class="dropload-update">↑释放更新</div>',
-            //         domLoad    : '<div class="dropload-load"><span class="loading"></span>加载中...</div>'
-            //     },
-            //     domDown : {
-            //         domClass   : 'dropload-down',
-            //         domRefresh : '<div class="dropload-refresh">↑上拉加载更多</div>',
-            //         domLoad    : '<div class="dropload-load"><span class="loading"></span>加载中...</div>',
-            //         domNoData  : '<div class="dropload-noData">没有更多数据了</div>'
-            //     },
-            //     loadUpFn : function(me){
-            //         getListData(me, 'up')
-            //     },
-            //     loadDownFn : function(me){
-            //         getListData(me, 'down')
-            //     },
-            //     threshold : 50
-            // });
+            $('.roll').dropload({
+                scrollArea : $('.roll'),
+                domUp : {
+                    domClass   : 'dropload-up',
+                    domRefresh : '<div class="dropload-refresh">↓下拉刷新</div>',
+                    domUpdate  : '<div class="dropload-update">↑释放更新</div>',
+                    domLoad    : '<div class="dropload-load"><span class="loading"></span>加载中...</div>'
+                },
+                domDown : {
+                    domClass   : 'dropload-down',
+                    domRefresh : '<div class="dropload-refresh">↑上拉加载更多</div>',
+                    domLoad    : '<div class="dropload-load"><span class="loading"></span>加载中...</div>',
+                    domNoData  : '<div class="dropload-noData">没有更多数据了</div>'
+                },
+                loadUpFn : function(me){
+                    getListData(me, 'up')
+                },
+                loadDownFn : function(me){
+                    getListData(me, 'down')
+                },
+                threshold : 50
+            });
             function getListData (me, type) {
                 if (type == 'down') {
                     page++
@@ -79,7 +79,7 @@
             //遍历数据到模版
             function dataForeach(data){
             	var template = '';
-                var type = '' // over为过期，used为已使用，take为已领取, get为未领取
+                var type = '' // over为过期，used为已使用，take为已领取, get为领取
                 var typetxt = ''
                 var now = Date.now()
             	data.forEach(function (v) {
@@ -90,14 +90,16 @@
                     }
                     // 缺少用户是否使用或者领取的状态判断
                     template += `
-                        <li class="clearfix mb-20">
-                            <div class="roll_info ${type == 'used' || type == 'over' ? 'useless' : ''} pull-left">
-                                <h1 class="fz-20 chayefont">${v.name}</h1>
-                                <p class="mt-10 mb-10">满<span>${v.full}</span>元减<span class="fz-20 ml-10 mr-10 price">${v.cut}</span>元</p>
-                                <p>有效期至<time class="fz-14 ml-10">${v.indate.split(' ')[0]}</time></p>
+                        <li class="clearfix mb-20 ${type == 'used' || type == 'over' ? 'used' : ''}">
+                            <div class="pull-left roll_info">
+                                <h1 class="chayefont">${v.name}</h1>
+                                <p class="roll_desc mt-10 mb-10">${v.desc}</p>
+                                <p class="roll_time get txt-r">有效期至${v.indate.split(' ')[0]}</p>
                             </div>
-                            <div class="roll_state pull-right">
-                                <a href="javascript:;" class="roll_${type} txt-c">${typetxt}</a>
+                            <div class="pull-right roll_price">
+                                <p class="roll_cut txt-c fz-20"><i class="yen mr-10">&yen;</i><span class="cut">${v.cut}</span></p>
+                                <p class="roll_full txt-c mt-10 chayefont fz-14">满<span class="full">${v.full}</span>元可用</p>
+                                <a href="javascript:;" class="roll_${type} block txt-c mt-10 chayefont">${typetxt}</a>
                             </div>
                         </li>
                     `
@@ -126,93 +128,52 @@
 	@include("layouts.header-info")
 	<div class="roll container">
         <ul class="roll_list">
-
-            <!-- <li class="clearfix mb-20">
-                <div class="roll_info pull-left">
-                    <h1 class="fz-20 chayefont">优惠券11</h1>
-                    <p class="mt-10 mb-10">满<span>9999.00</span>元减<span class="fz-20 ml-10 mr-10 price">8888.00</span>元</p>
-                    <p>有效期至<time class="fz-14 ml-10">0000-00-00</time></p>
-                </div>
-                <div class="roll_state pull-right">
-                    <a href="javascript:;" class="roll_get txt-c">领取</a>
-                </div>
-            </li>
-            <li class="clearfix mb-20">
-                <div class="roll_info pull-left">
-                    <h1 class="fz-20 chayefont">优惠券11</h1>
-                    <p class="mt-10 mb-10">满<span>9999.00</span>元减<span class="fz-20 ml-10 mr-10 price">8888.00</span>元</p>
-                    <p>有效期至<time class="fz-14 ml-10">0000-00-00</time></p>
-                </div>
-                <div class="roll_state pull-right">
-                    <a href="javascript:;" class="roll_take txt-c">已领取</a>
-                </div>
-            </li>
-            <li class="clearfix mb-20">
-                <div class="roll_info useless pull-left">
-                    <h1 class="fz-20 chayefont">优惠券11</h1>
-                    <p class="mt-10 mb-10">满<span>9999.00</span>元减<span class="fz-20 ml-10 mr-10 price">8888.00</span>元</p>
-                    <p>有效期至<time class="fz-14 ml-10">0000-00-00</time></p>
-                </div>
-                <div class="roll_state pull-right">
-                    <a href="javascript:;" class="roll_used txt-c">已使用</a>
-                </div>
-            </li>
-            <li class="clearfix mb-20">
-                <div class="roll_info useless pull-left">
-                    <h1 class="fz-20 chayefont">优惠券11</h1>
-                    <p class="mt-10 mb-10">满<span>9999.00</span>元减<span class="fz-20 ml-10 mr-10 price">8888.00</span>元</p>
-                    <p>有效期至<time class="fz-14 ml-10">0000-00-00</time></p>
-                </div>
-                <div class="roll_state pull-right">
-                    <a href="javascript:;" class="roll_over txt-c">已过期</a>
-                </div>
-            </li> -->
             <li class="clearfix mb-20">
                 <div class="pull-left roll_info">
-                    <h1 class="roll_name">优惠券名</h1>
+                    <h1 class="chayefont">优惠券名</h1>
                     <p class="roll_desc mt-10 mb-10">优惠券名描述优惠券名描述优惠券名描述优惠券名描述优惠券名描述优惠券名描述</p>
-                    <p class="roll_time txt-r">有效期至0000-00-00</p>
+                    <p class="roll_time get txt-r">有效期至0000-00-00</p>
                 </div>
-                <div class="pull-right roll_price get">
-                    <p class="roll_cut txt-c"><i class="yen">&yen;</i><span class="cut">888</span></p>
-                    <p class="roll_full txt-c">满<span class="full">999</span>元可用</p>
-                    <a href="javascript:;" class="roll_get block txt-c mt-10">领取</a>
+                <div class="pull-right roll_price">
+                    <p class="roll_cut txt-c fz-20"><i class="yen mr-10">&yen;</i><span class="cut">888</span></p>
+                    <p class="roll_full txt-c mt-10 chayefont fz-14">满<span class="full">999</span>元可用</p>
+                    <a href="javascript:;" class="roll_get block txt-c mt-10 chayefont">领取</a>
+                </div>
+            </li>
+            <li class="clearfix mb-20 used">
+                <div class="pull-left roll_info">
+                    <h1 class="chayefont">优惠券名</h1>
+                    <p class="roll_desc mt-10 mb-10">优惠券名描述优惠券名描述优惠券名描述优惠券名描述优惠券名描述优惠券名描述</p>
+                    <p class="roll_time get txt-r">有效期至0000-00-00</p>
+                </div>
+                <div class="pull-right roll_price">
+                    <p class="roll_cut txt-c fz-20"><i class="yen mr-10">&yen;</i><span class="cut">888</span></p>
+                    <p class="roll_full txt-c mt-10 chayefont fz-14">满<span class="full">999</span>元可用</p>
+                    <a href="javascript:;" class="roll_over block txt-c mt-10 chayefont">已过期</a>
                 </div>
             </li>
             <li class="clearfix mb-20">
                 <div class="pull-left roll_info">
-                    <h1 class="roll_name">优惠券名</h1>
+                    <h1 class="chayefont">优惠券名</h1>
                     <p class="roll_desc mt-10 mb-10">优惠券名描述优惠券名描述优惠券名描述优惠券名描述优惠券名描述优惠券名描述</p>
-                    <p class="roll_time txt-r">有效期至0000-00-00</p>
+                    <p class="roll_time get txt-r">有效期至0000-00-00</p>
                 </div>
-                <div class="pull-right roll_price take">
-                    <p class="roll_cut txt-c"><i class="yen">&yen;</i><span class="cut">888</span></p>
-                    <p class="roll_full txt-c">满<span class="full">999</span>元可用</p>
-                    <a href="javascript:;" class="roll_take block txt-c mt-10">已领取</a>
+                <div class="pull-right roll_price">
+                    <p class="roll_cut txt-c fz-20"><i class="yen mr-10">&yen;</i><span class="cut">888</span></p>
+                    <p class="roll_full txt-c mt-10 chayefont fz-14">满<span class="full">999</span>元可用</p>
+                    <a href="javascript:;" class="roll_take block txt-c mt-10 chayefont">已领取</a>
                 </div>
             </li>
-            <li class="clearfix mb-20">
+            <li class="clearfix mb-20 used">
                 <div class="pull-left roll_info">
-                    <h1 class="roll_name">优惠券名</h1>
+                    <h1 class="chayefont">优惠券名</h1>
                     <p class="roll_desc mt-10 mb-10">优惠券名描述优惠券名描述优惠券名描述优惠券名描述优惠券名描述优惠券名描述</p>
-                    <p class="roll_time txt-r">有效期至0000-00-00</p>
+                    <p class="roll_time get txt-r">有效期至0000-00-00</p>
                 </div>
-                <div class="pull-right roll_price useless">
-                    <p class="roll_cut txt-c"><i class="yen">&yen;</i><span class="cut">888</span></p>
-                    <p class="roll_full txt-c">满<span class="full">999</span>元可用</p>
-                    <a href="javascript:;" class="roll_used block txt-c mt-10">已使用</a>
-                </div>
-            </li>
-            <li class="clearfix mb-20">
-                <div class="pull-left roll_info">
-                    <h1 class="roll_name">优惠券名</h1>
-                    <p class="roll_desc mt-10 mb-10">优惠券名描述优惠券名描述优惠券名描述优惠券名描述优惠券名描述优惠券名描述</p>
-                    <p class="roll_time txt-r">有效期至0000-00-00</p>
-                </div>
-                <div class="pull-right roll_price useless">
-                    <p class="roll_cut txt-c"><i class="yen">&yen;</i><span class="cut">888</span></p>
-                    <p class="roll_full txt-c">满<span class="full">999</span>元可用</p>
-                    <a href="javascript:;" class="roll_over block txt-c mt-10">已过期</a>
+                <div class="pull-right roll_price">
+                    <p class="roll_cut txt-c fz-20"><i class="yen mr-10">&yen;</i><span class="cut">888</span></p>
+                    <p class="roll_full txt-c mt-10 chayefont fz-14">满<span class="full">999</span>元可用</p>
+                    <a href="javascript:;" class="roll_used block txt-c mt-10 chayefont">已使用</a>
                 </div>
             </li>
         </ul>

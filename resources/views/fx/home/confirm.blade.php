@@ -44,6 +44,23 @@
     			})
     		})
 
+    		// 显示选择优惠券
+    		$('.J_show_roll').on('click tap', function () {
+    			$('.confirm_roll').addClass('top-0')
+    		})
+    		// 隐藏选择优惠券
+    		$('.J_hide_roll').on('click tap', function () {
+    			$('.confirm_roll').removeClass('top-0')
+    		})
+    		$('.J_choose_roll').on('click tap', function () {
+    			var cut = $(this).data('cut')
+    			var id = $(this).data('id')
+    			$('#roll').val(id)
+    			$(this).parents('.confirm_type_container').find('i').removeClass('active')
+    			$(this).find('i').addClass('active')
+    			countPrice(cut);
+    		})
+
     		// 跳转到地址页
     		$('.J_jump_address').on('click tap', function () {
     			if (sessionStorage) {
@@ -91,9 +108,11 @@
     	}
 
     	//计算总金额
-    	function countPrice() {
+    	// cut 为优惠券减去价格
+    	function countPrice(cut) {
     		var product_price = $(".product-count").attr('count');
-    		var count = parseFloat(product_price) + parseFloat(delivery_price) - parseFloat(grade_price);
+    		cut = cut == undefined ? 0 : cut
+    		var count = parseFloat(product_price) + parseFloat(delivery_price) - parseFloat(grade_price) - parseFloat(cut);
     		$(".all-count").html('&yen;'+count.toFixed(2));
     	}
 
@@ -197,13 +216,16 @@
 				
 				<div class="confirm_container_sum_row">
 					<span class="pull-left chayefont fz-18">优惠券</span>
-					<span class="pull-right gray fz-14">
-						@if(count($cheaps))
-							<s id="roll">请选择</s><i class="fa fa-angle-right ml-10"></i>
-						@else 
+					@if(count($cheaps))
+						<span class="pull-right gray fz-14 J_show_roll">
+							<s>请选择</s><i class="fa fa-angle-right ml-10"></i>
+						</span>
+						<input type="hidden" value="0" id="roll">
+					@else 
+						<span class="pull-right gray fz-14">
 							<s>无优惠券</s>
-						@endif
-					</span>
+						</span>
+					@endif
 				</div>
 				
 				<div class="confirm_container_sum_row">
@@ -242,11 +264,15 @@
 			<h5 class="chayefont fz-18">优惠卷</h5>
 			<div class="confirm_roll_list">
 				@foreach ($cheaps as $va)
-				<div class="confirm_roll_row J_choose_roll" data-cut="{{$va->cut}}">
+				<div class="confirm_roll_row J_choose_roll" data-cut="{{$va->cut}}" data-id="{{$va->id}}">
 					<span class="pull-left chayefont fz-16">{{$va->name}}</span>
 					<i class="pull-right"></i>
 				</div>
 				@endforeach
+				<div class="confirm_roll_row J_choose_roll" data-cut="0" data-id="0">
+					<span class="pull-left chayefont fz-16">不使用</span>
+					<i class="pull-right active"></i>
+				</div>
 			</div>
 			<div class="confirm_roll_bottom chayefont fz-18 J_hide_roll">关闭</div>
 		</div>

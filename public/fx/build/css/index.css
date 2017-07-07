@@ -2988,7 +2988,10 @@ button.swiper-pagination-bullet {
 /**
  * $px can has unit or hasn't
 */
-.roll .roll_list li .roll_price a {
+.roll .roll_list li .roll_price .roll_get,
+.roll .roll_list li .roll_price .roll_take,
+.roll .roll_list li .roll_price .roll_used,
+.roll .roll_list li .roll_price .roll_over {
   margin-left: auto;
   margin-right: auto; }
 
@@ -6040,80 +6043,79 @@ footer {
   .roll .roll_list {
     width: 100%; }
     .roll .roll_list li {
+      position: relative;
       width: 100%;
       height: 2rem;
-      background-color: #FFF; }
+      padding: 0.15rem 0.25rem;
+      background-color: #EBE2D1; }
       .roll .roll_list li .roll_info {
-        width: calc(100% - 2rem);
-        height: 2rem;
-        padding: 0.2rem; }
+        width: 65%; }
         @media screen and (max-width: 321px) {
-          .roll .roll_list li .roll_info .roll_name {
-            font-size: 14px; } }
-        @media screen and (min-width: 321px) and (max-width: 400px) {
-          .roll .roll_list li .roll_info .roll_name {
+          .roll .roll_list li .roll_info h1 {
             font-size: 16px; } }
-        @media screen and (min-width: 400px) {
-          .roll .roll_list li .roll_info .roll_name {
-            font-size: 18px; } }
-        .roll .roll_list li .roll_info .roll_desc {
-          height: 0.6rem; }
-        .roll .roll_list li .roll_info .roll_time,
-        .roll .roll_list li .roll_info .roll_desc {
-          color: #7d7d7d; }
-        .roll .roll_list li .roll_info .roll_name {
-          color: #333; }
-      .roll .roll_list li .roll_price {
-        width: 2rem;
-        height: 2rem;
-        padding: 0.2rem 0;
-        color: #fff; }
-        .roll .roll_list li .roll_price .roll_cut .yen {
-          font-style: normal; }
-        @media screen and (max-width: 321px) {
-          .roll .roll_list li .roll_price .roll_cut .yen {
-            font-size: 20px; }
-          .roll .roll_list li .roll_price .roll_cut .cut {
-            font-size: 28px; } }
         @media screen and (min-width: 321px) and (max-width: 400px) {
-          .roll .roll_list li .roll_price .roll_cut .yen {
-            font-size: 22px; }
-          .roll .roll_list li .roll_price .roll_cut .cut {
-            font-size: 30px; } }
+          .roll .roll_list li .roll_info h1 {
+            font-size: 18px; } }
         @media screen and (min-width: 400px) {
-          .roll .roll_list li .roll_price .roll_cut .yen {
-            font-size: 24px; }
-          .roll .roll_list li .roll_price .roll_cut .cut {
-            font-size: 32px; } }
-        .roll .roll_list li .roll_price a {
+          .roll .roll_list li .roll_info h1 {
+            font-size: 20px; } }
+        .roll .roll_list li .roll_info .roll_desc {
+          line-height: 0.3rem;
+          color: #707068; }
+        .roll .roll_list li .roll_info .roll_time.get {
+          color: #DD5150; }
+        .roll .roll_list li .roll_info .roll_time.take {
+          color: #FD8000; }
+      .roll .roll_list li .roll_price {
+        width: calc(100% - 65% - 0.4rem); }
+        .roll .roll_list li .roll_price .roll_cut,
+        .roll .roll_list li .roll_price .roll_full {
+          color: #CC2714; }
+        .roll .roll_list li .roll_price .roll_cut i {
+          font-style: normal; }
+        .roll .roll_list li .roll_price .roll_get,
+        .roll .roll_list li .roll_price .roll_take,
+        .roll .roll_list li .roll_price .roll_used,
+        .roll .roll_list li .roll_price .roll_over {
+          display: block;
           width: 1.2rem;
           height: 0.4rem;
           line-height: 0.4rem;
-          border-radius: 0.3rem;
           color: #fff; }
-        .roll .roll_list li .roll_price a.roll_get {
-          background-color: #ff0018; }
-        .roll .roll_list li .roll_price a.roll_take {
-          background-color: #1296db; }
-        .roll .roll_list li .roll_price a.roll_used {
-          background-color: #7d7d7d; }
-        .roll .roll_list li .roll_price a.roll_over {
-          background-color: #7d7d7d; }
-      .roll .roll_list li .roll_price.get {
-        background: url("/fx/images/roll_get.png");
-        background-size: 100% 100%;
-        background-position: center center;
-        background-repeat: repeat-y; }
-      .roll .roll_list li .roll_price.take {
-        background: url("/fx/images/roll_take.png");
-        background-size: 100% 100%;
-        background-position: center center;
-        background-repeat: repeat-y; }
-      .roll .roll_list li .roll_price.useless {
-        background: url("/fx/images/roll_useless.png");
-        background-size: 100% 100%;
-        background-position: center center;
-        background-repeat: repeat-y; }
+        .roll .roll_list li .roll_price .roll_get {
+          background: url("/fx/images/roll_get.png");
+          background-size: cover;
+          background-position: center center;
+          background-repeat: no-repeat; }
+        .roll .roll_list li .roll_price .roll_take {
+          background: url("/fx/images/roll_take.png");
+          background-size: cover;
+          background-position: center center;
+          background-repeat: no-repeat; }
+        .roll .roll_list li .roll_price .roll_used,
+        .roll .roll_list li .roll_price .roll_over {
+          background: url("/fx/images/roll_useless.png");
+          background-size: cover;
+          background-position: center center;
+          background-repeat: no-repeat; }
+    .roll .roll_list li.used {
+      background-color: #CFCFCD; }
+      .roll .roll_list li.used .roll_time,
+      .roll .roll_list li.used .roll_cut,
+      .roll .roll_list li.used .roll_full {
+        color: #fff !important; }
+    .roll .roll_list li::before {
+      content: '';
+      position: absolute;
+      left: 65%;
+      top: 0;
+      display: block;
+      width: 0.4rem;
+      height: 2rem;
+      background: url("/fx/images/roll_border.png");
+      background-size: 50% 100%;
+      background-position: center center;
+      background-repeat: no-repeat; }
   .roll .roll_nodata {
     height: 3rem;
     width: 100%;

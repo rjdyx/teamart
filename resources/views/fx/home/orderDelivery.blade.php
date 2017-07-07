@@ -53,10 +53,10 @@
             </div>
         @endforeach
 		</div>
-		<div class="orderdelivery_sender mt-20">
+		<!-- <div class="orderdelivery_sender mt-20">
 			由DD快递提供配送服务,xx配送员配送中
 			<a href="tel:88888" class="pull-right color-F78223"><i class="fa fa-mobile"></i></a>
-		</div>
+		</div> -->
 		<div class="orderdelivery_lists mt-20">
 <!-- 			<div class="orderdelivery_lists_process active">
 				<p class="mb-10">sss</p>
