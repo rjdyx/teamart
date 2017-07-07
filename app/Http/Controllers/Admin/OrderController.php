@@ -85,7 +85,7 @@ class OrderController extends Controller
         ]);
 
         $model = Order::find($id);
-        $model->setRawAttributes($request->only(['state','method','delivery_serial']));
+        $model->setRawAttributes($request->only(['state','method','delivery_serial','coding']));
         if ($model->save()) {
             return Redirect::to('admin/order/list')->with('status', '保存成功');
         }

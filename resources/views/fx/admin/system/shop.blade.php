@@ -22,7 +22,7 @@
           return submitForm()
         })
         $('#name').on('blur input', function () {
-          _valid.title('name', '网站名称', $(this).val(), 4, false)
+          _valid.title('name', '网站名称', $(this).val(), 2, false)
         })
         $('#email').on('blur input', function () {
           _valid.email('email', $(this).val(), false)
@@ -34,7 +34,7 @@
           _valid.number('free', '免邮金额', $(this).val(), false)
         })
         $('#record').on('blur input', function () {
-          _valid.desc('record', '备案号', $(this).val(), 10, false)
+          _valid.desc('record', '备案号', $(this).val(), 20, false)
         })
         function submitForm() {
           var name = form['name']
@@ -42,7 +42,7 @@
           var phone = form['phone']
           var free = form['free']
           var record = form['record']
-          if (!_valid.title('name', '网站名称', name.value, 4, false)) {
+          if (!_valid.title('name', '网站名称', name.value, 2, false)) {
             return false
           }
           if (!_valid.email('email', email.value, false)) {
@@ -54,7 +54,7 @@
           if (!_valid.number('free', '免邮金额', free.value, false)) {
             return false
           }
-          if (!_valid.desc('record', '备案号', record.value, 10, false)) {
+          if (!_valid.desc('record', '备案号', record.value, 20, false)) {
             return false
           }
           return true
@@ -65,14 +65,11 @@
 
 @section('content')
    
-      <!-- Main content of addGgent-->
       <section class="content">
         <div class="row">
-          <!-- 新增代理商角色 -->
           <div class="col-xs-12">
             <div class="box box-success">
               
-              <!-- form start -->
               <form action="{{url('admin/system/shop')}}/{{$shop->id}}" method="POST" class="form-horizontal" name="shopForm" enctype="multipart/form-data">
                 {{ csrf_field() }}
                 <input type="hidden" value="PUT" name="_method">
@@ -123,6 +120,20 @@
                       <input type="text" class="form-control" id="record" placeholder="请输入备案号" name="record" value="{{$shop->record}}">
                     </div>
                     <span class="col-sm-4 text-danger form_error" id="record_txt"></span>
+                  </div>
+                  <div class="form-group">
+                    <label for="delivery_id" class="col-sm-2 control-label">物流商户ID</label>
+                    <div class="col-sm-6">
+                      <input type="text" class="form-control" id="delivery_id" placeholder="请输入商户ID" name="delivery_id" value="{{$shop->delivery_id}}">
+                    </div>
+                    <span class="col-sm-4 text-danger form_error" id="delivery_id_txt"></span>
+                  </div>
+                  <div class="form-group">
+                    <label for="delivery_id" class="col-sm-2 control-label">物流密匙Key</label>
+                    <div class="col-sm-6">
+                      <input type="text" class="form-control" id="delivery_key" placeholder="请输入密匙" name="delivery_key" value="{{$shop->delivery_key}}">
+                    </div>
+                    <span class="col-sm-4 text-danger form_error" id="delivery_key_txt"></span>
                   </div>
                   <!-- logo -->
                   <div class="form-group">

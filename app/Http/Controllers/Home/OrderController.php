@@ -11,6 +11,7 @@ use App\Address;
 use App\Site;
 use App\Cheap;
 use App\System;
+use App\Delivery;
 use App\OrderProduct;
 use Illuminate\Support\Facades\Auth;
 use Redirect;
@@ -191,14 +192,42 @@ class OrderController extends Controller
 	}
 
 	//所有销售站点数据
-	public function siteListData(){
+	public function siteListData()
+	{
 		return Site::get();
 	}
 
 	//查看订单物流
-	public function showDelivery($order_id){
+	public function showDelivery($order_id)
+	{
 		$title = "物流信息";
-		return view(config('app.theme').'.home.orderDelivery')->with(['title' => $title]);
+		$lists = OrderProduct::where('order_product.order_id','=',$order_id)
+				->join('product','order_product.product_id','=','product.id')
+				->join('order','order_product.order_id','=','order.id')
+				->where('order.user_id','=',Auth::user()->id)
+				->select('product.thumb','product.price as raw_price',
+					'product.name','product.desc','order.delivery_serial',
+					'order_product.amount','order_product.price'
+				)->get();
+
+		$data = Order::where('order.user_id','=',Auth::user()->id)->find($order_id);
+
+		return view(config('app.theme').'.home.orderDelivery')
+				->with(['title' => $title,'lists'=>$lists,'data'=>$data]);
+	}
+
+	//查看物流信息
+	public function deliveryData(Request $request)
+	{
+		$id = $request->id;
+		$code = $request->code;
+		$coding = $request->coding;
+		//判断是否从数据库取出数据
+		$data = Order::find($id);
+		$result = Delivery::where('order_id',$id)->get();
+		if (count($result)) return $result;
+		$result =  json_decode(IQuery::getOrderTracesByJson($code, $coding),true)['Traces'];
+		return $result;
 	}
 
 	//订单评论
@@ -206,25 +235,23 @@ class OrderController extends Controller
 		return view(config('app.theme').'.home.orderComment');
 	}
 
-	//订单state改变方法
-	public function orderOperate($request, $state)
+	//订单state改变
+	public function orderOperate(Request $request, $state)
 	{
-		$id = $request->id;
-		$order = Order::find($id);
+		$order = Order::find($request->id);
 		$order->state = $state;
+		if ($state == 'backn') {
+			$order->reason = $request->reason.'&'.$request->desc;
+		}
 		if ($order->save()) return 200;
 		return 500;
 	}
 
-	//取消订单
-	public function orderCancell(Request $request)
+	//退货理由
+	public function backnReason($id)
 	{
-		return $this->orderOperate($request, 'cancell');
-	}
-
-	//申请退货
-	public function orderBack(Request $request)
-	{
-		return $this->orderOperate($request, 'backn');
+		$title = "订单退货";
+		return view(config('app.theme').'.home.order.backn_reason')
+				->with(['title' => $title,'id'=>$id]);
 	}
 }

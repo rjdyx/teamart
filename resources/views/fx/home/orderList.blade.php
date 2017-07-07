@@ -111,7 +111,7 @@
                         var serial = value2['serial'];
                         b = `   <div class="order_warpper_info">
                                     <div class="order_warpper_info_img pull-left mr-20">
-                                        <img src="http://window.location.host/${img}">
+                                        <img src="http://${window.location.host}/${img}">
                                     </div>
                                     <div class="order_warpper_info_detail pull-left mr-20">
                                         <h5 class="chayefont mb-10">${name}</h5>
@@ -229,9 +229,8 @@
 
             //申请退货方法
             function order_back(id){
-                var params = {id:id};
                 prompt.question('是否要申请退货', function () {
-                    orderOperate('back', '申请退货', params);
+                    window.location.href = 'http://'+window.location.host + '/home/order/backn/reason/'+id;
                 })
             }
 
