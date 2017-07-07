@@ -135,6 +135,11 @@
                                         </div>
                                         <div class="order_warpper_opts">
                                             <ul class="pull-right">`
+                                    if (state != 'paid' && state != 'pading') {
+                                        c += `  <li class="J_opts" type="delivery" oid="${oid}">
+                                                <a href="javascript:;" class="chayefont point">查看物流</a>
+                                            </li>`
+                                    }
                                     if (state == 'cancell' && method != 'self') {
                                         c += `  <li>
                                                     <a href="javascript:;" class="chayefont">订单已取消</a>
@@ -154,10 +159,7 @@
                                                 </li>`
                                     }
                                     if (state == 'delivery' && method != 'self') {
-                                        c += `  <li class="J_opts" type="delivery" oid="${oid}">
-                                                    <a href="javascript:;" class="chayefont point">查看物流</a>
-                                                </li>
-                                                <li class="J_opts" type="take" oid="${oid}">
+                                        c += `  <li class="J_opts" type="take" oid="${oid}">
                                                     <a href="javascript:;" class="chayefont  point">确定收货</a>
                                                 </li>`
                                     }
