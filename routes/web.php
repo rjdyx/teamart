@@ -115,6 +115,8 @@ Route::group(['namespace'=>'Home','prefix'=>'home','middleware'=>['auth']],funct
 	//促销管理
 	Route::group(['prefix'=>'activity'],function(){
 		Route::get('/roll','ActivityController@roll');//优惠券
+		Route::get('/roll/data','ActivityController@rollData');//优惠券数据接口
+		Route::get('/roll/get','ActivityController@getRoll');//获取优惠券
 		Route::get('/many','ActivityController@many');//团购
 		Route::get('/many/data','ActivityController@manyData');//团购数据接口
 	});
