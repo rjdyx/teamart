@@ -253,7 +253,7 @@
             function order_code(id){
                 $("#qrcode").html('')
                 var qrcode = new QRCode(document.getElementById("qrcode"), {
-                    text: `http://${window.location.host}/home/order/list/id`,
+                    text: `http://${window.location.host}/home/order/list/${id}`,
                     width: 1024,
                     height: 1024
                 })

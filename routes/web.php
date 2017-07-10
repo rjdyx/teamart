@@ -80,6 +80,8 @@ Route::group(['namespace'=>'Home','prefix'=>'home','middleware'=>['auth']],funct
     	Route::get('/delivery/{order_id}','OrderController@showDelivery');//物流信息
     	Route::get('/delivery_data','OrderController@deliveryData');//追溯物流信息
     	Route::get('/comment/{order_id}','OrderController@orderComment');//评论
+    	Route::get('/comment/product/{id}','OrderController@getOrderProduct');//获取订单商品
+    	Route::post('/comment/store/{id}','OrderController@commentStore');//订单评论处理（保存）
     	Route::get('/pay/{order_id}','OrderController@orderPay');//付款
     	Route::get('/site','OrderController@site');//站点地图页
     	Route::get('/site/data','OrderController@siteListData');//站点数据接口
@@ -87,20 +89,17 @@ Route::group(['namespace'=>'Home','prefix'=>'home','middleware'=>['auth']],funct
     	Route::post('/operate/{type}','OrderController@orderOperate');//订单state改变
 	});
 
-
 	//收藏
 	Route::get('/collect/data','CollectController@ListData');
 	Route::get('/collect/cart','CollectController@storeCart');
 	Route::post('/collect/dels','CollectController@dels');
 	Route::resource('/collect','CollectController');
 
-
 	//购物车
 	Route::get('/cart/data','CartController@ListData');
 	Route::post('/cart/update/amount','CartController@updateAmount');
 	Route::post('/cart/dels','CartController@dels');
 	Route::resource('/cart','CartController');
-
 
 	//用户部分
 	Route::get('/userasset','UserController@userAsset');
@@ -113,7 +112,7 @@ Route::group(['namespace'=>'Home','prefix'=>'home','middleware'=>['auth']],funct
 	Route::post('/feedback','FeedbackController@store');
 
 	//促销管理
-	Route::group(['prefix'=>'activity'],function(){
+	Route::group(['prefix'=>'activity','middleware'=>['auth']],function(){
 		Route::get('/roll','ActivityController@roll');//优惠券
 		Route::get('/roll/data','ActivityController@rollData');//优惠券数据接口
 		Route::get('/roll/get','ActivityController@getRoll');//获取优惠券

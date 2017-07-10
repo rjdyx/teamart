@@ -12,6 +12,7 @@ use App\Site;
 use App\Cheap;
 use App\System;
 use App\Delivery;
+use App\Comment;
 use App\OrderProduct;
 use Illuminate\Support\Facades\Auth;
 use Redirect;
@@ -232,7 +233,56 @@ class OrderController extends Controller
 
 	//订单评论
 	public function orderComment($order_id){
-		return view(config('app.theme').'.home.orderComment');
+		$order = Order::find($order_id);
+		$state = isset($order->state)?$order->state:'';
+		if ($state != 'take') return Redirect::to('/home/order/list');
+		return view(config('app.theme').'.home.orderComment')->with(['id'=>$order_id]);
+	}
+
+	//获取订单商品
+	public function getOrderProduct($id)
+	{
+		$data = OrderProduct::join('product','order_product.product_id','=','product.id')
+				->where('order_product.order_id',$id)
+				->select('product.price','product.thumb',
+					'product.name','product.desc','product.id',
+					'order_product.amount','order_product.price as order_price'
+				)->get();
+		return $data;
+	}
+
+	//评论处理
+	public function commentStore(Request $request, $id)
+	{
+		$img = $thumb = null;
+		$imgs = $thumbs = array();
+		//资源、上传图片名称、是否生成缩略图
+        $pics = IQuery::uploads($request, 'imgs', true);
+        if ($pics != 'false') {
+            foreach ($pics as $pic) {
+                $imgs[] = $pic['pic'];
+                $thumbs[] = $pic['thumb'];
+            }
+            $img = implode(',', $imgs);
+            $thumb = implode(',', $thumbs);
+        }
+
+        //获取订单商品
+        $goods = $this->getOrderProduct($id);
+		foreach ($goods as $good) {
+			$model = new Comment;
+			$model->product_id = $good->id;
+			$model->user_id = Auth::user()->id;
+			$model->grade = $request->grade * 20;
+			$model->content = $request->content;
+			$model->img = $request->img;
+			$model->thumb = $request->thumb;
+			if (!$model->save()) return 0;
+		}
+		$order = Order::find($id);
+		$order->state = 'close';
+		if ($order->save())	return 1;
+		return 0;
 	}
 
 	//订单state改变

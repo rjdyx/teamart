@@ -9,6 +9,39 @@
 	@parent
 	<script>
 		$(function () {
+
+			ajax('get', '/home/order/comment/product/' + "{{$id}}").then(function (res) {
+				var data = res
+				if (data.length) {
+					addProduct (data)
+				} else {
+					prompt.message('获取数据失败')
+				}
+			})
+
+			function addProduct (data) {
+				var template = ''
+				data.forEach(function (v,k){
+					var order_price = v.order_price * v.amount
+					var price = v.price * v.amount
+					template = `<div class="ordercomment_warpper">
+					<div class="ordercomment_warpper_img pull-left mr-20">
+						<img src="http://${window.location.host}/${v.thumb}">
+					</div>
+					<div class="ordercomment_warpper_detail pull-left mr-20">
+						<h5 class="chayefont mb-10">${v.name}</h5>
+						<p>${v.desc}</p>
+					</div>
+					<div class="ordercomment_warpper_price pull-left txt-r">
+						<span class="block price">&yen;${order_price}</span>
+						<del class="block price_raw">&yen;${price}</del>
+						<span class="block times">&times;${v.amount}</span>
+					</div>
+					</div>`
+				})
+				$(".ordercomment_lists").html(template)
+			}
+
 			// 评分
 			$('.J_grade').on('click tap', function () {
 				var grade = parseInt($(this).data('grade'))
@@ -44,10 +77,17 @@
 					grade: $('#grade').val(),
 					'imgs[]': files
 				}
-				ajax('post', '/home/order/comment', params, false, true)
-					.then(function (res) {
-						console.log(res)
-					})
+				ajax('post', '/home/order/comment/store/'+"{{$id}}", params, false, true)
+				.then(function (res) {
+					if (res) {
+						prompt.message('评论成功！')
+						setTimeout(function(){
+							window.location.href = 'http://'+window.location.host+'/home/order/list';
+						},1000)
+					} else {
+						prompt.message('服务器繁忙,请稍后再试！')
+					}
+				})
 			})
 
 			function showImg () {
@@ -84,6 +124,7 @@
 				}
 				fr.readAsDataURL(file)
 			}
+
 			function addFile () {
 				var nid = Date.now()
 				var template = `
@@ -126,48 +167,7 @@
 			<div class='ordercomment_header_center chayefont'><h2>发表评价</h2></div>
 		</div>
 		<div class="ordercomment_lists">
-			<div class="ordercomment_warpper">
-				<div class="ordercomment_warpper_img pull-left mr-20">
-					<img src="{{url('fx/images/goods_avatar.png')}}">
-				</div>
-				<div class="ordercomment_warpper_detail pull-left mr-20">
-					<h5 class="chayefont mb-10">菲律宾进口香蕉</h5>
-					<p>新鲜梨酥雪梨发货供货的供货皇冠分隔符梨</p>
-				</div>
-				<div class="ordercomment_warpper_price pull-left txt-r">
-					<span class="block price">&yen;212.00</span>
-					<del class="block price_raw">&yen;299.00</del>
-					<span class="block times">&times;2</span>
-				</div>
-			</div>
-			<div class="ordercomment_warpper">
-				<div class="ordercomment_warpper_img pull-left mr-20">
-					<img src="{{url('fx/images/goods_avatar.png')}}">
-				</div>
-				<div class="ordercomment_warpper_detail pull-left mr-20">
-					<h5 class="chayefont mb-10">菲律宾进口香蕉</h5>
-					<p>新鲜梨酥雪梨发货供货的供货皇冠分隔符梨</p>
-				</div>
-				<div class="ordercomment_warpper_price pull-left txt-r">
-					<span class="block price">&yen;212.00</span>
-					<del class="block price_raw">&yen;299.00</del>
-					<span class="block times">&times;2</span>
-				</div>
-			</div>
-			<div class="ordercomment_warpper">
-				<div class="ordercomment_warpper_img pull-left mr-20">
-					<img src="{{url('fx/images/goods_avatar.png')}}">
-				</div>
-				<div class="ordercomment_warpper_detail pull-left mr-20">
-					<h5 class="chayefont mb-10">菲律宾进口香蕉</h5>
-					<p>新鲜梨酥雪梨发货供货的供货皇冠分隔符梨</p>
-				</div>
-				<div class="ordercomment_warpper_price pull-left txt-r">
-					<span class="block price">&yen;212.00</span>
-					<del class="block price_raw">&yen;299.00</del>
-					<span class="block times">&times;2</span>
-				</div>
-			</div>
+
 		</div>
 		<div class="ordercomment_comment mt-20">
 			<textarea placeholder="评价" id ="content"></textarea>
