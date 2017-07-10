@@ -143,12 +143,17 @@
 				$('.ordercomment_imgs_list').find('.J_remove_img').off('click tap', removeFile).on('click tap', removeFile)
 			}
 			function removeFile () {
-				var id = $(this).parents('li').find('input').attr('id')
-				$(this).parent().find('img').remove()
-				$(this).parent().addClass('hide').siblings('label').removeClass('hide')
-				$(this).parents('li').find('input').remove()
-				$(this).parents('li').append(`<input type="file" name="imgs[]" id="${id}" class="invisibility J_imgs absolute" accept="image/jpeg,image/jpg,image/png" capture="camera">`)
-				$('.J_imgs').off('change', showImg).on('change', showImg)
+				if ($('.ordercomment_imgs_list').find('img').length == 4) {
+					var id = $(this).parents('li').find('input').attr('id')
+					$(this).parent().find('img').remove()
+					$(this).parent().addClass('hide').siblings('label').removeClass('hide')
+					$(this).parents('li').find('input').remove()
+					$(this).parents('li').append(`<input type="file" name="imgs[]" id="${id}" class="invisibility J_imgs absolute" accept="image/jpeg,image/jpg,image/png" capture="camera">`)
+					var cl = $(this).parents('li').clone()
+					$('.ordercomment_imgs_list').append(cl)
+					$('.J_imgs').off('change', showImg).on('change', showImg)
+				}
+				$(this).parents('li').remove()
 			}
 			// 图片变化
 			$('.J_imgs').on('change', showImg)

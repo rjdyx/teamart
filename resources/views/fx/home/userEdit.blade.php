@@ -35,11 +35,11 @@
 			$('#img').on('change', function () {
 				var file = $(this)[0].files[0]
 				if (file.size / 1024 > 200) {
-					prompt.error('图片太大')
+					prompt.message('图片太大')
 					return
 				}
 				if (file.type !== 'image/png' && file.type !== 'image/jpeg') {
-					prompt.error('图片格式只支持png和jpg')
+					prompt.message('图片格式只支持png和jpg')
 					return
 				}
 				var fr = new FileReader()

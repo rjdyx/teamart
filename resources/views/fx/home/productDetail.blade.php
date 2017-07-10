@@ -68,6 +68,7 @@
                     me.resetload();
                 })
                 .catch(function (err) {
+                	console.dir(err)
                     prompt.message('请求错误')
                 });
 		}
@@ -83,7 +84,7 @@
 								<div class="comment_list_content pull-right">
 									<p class="stars">`
 				//评论星星
-				for (var i=0;i<=data['grade']/20;i++)
+				for (var i=0;i<v['grade']/20;i++)
 				{
 					template += '<i class="fa fa-star"></i>';
 				}

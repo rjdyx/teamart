@@ -465,6 +465,7 @@
 						color: #787876;
 						margin-top: 0.1rem;
 						margin-bottom: 0.1rem;
+						@extend %wrap2
 					}
 					img {
 						display: block;
@@ -552,6 +553,7 @@
 						font-size: 12px;
 						margin-top: 0.05rem;
 						margin-bottom: 0.05rem;
+						@extend %wrap2;
 					}
 					@media screen and (max-width:321px){
 						h5 {
@@ -2776,6 +2778,7 @@
 			width: 2.6rem;
 			p {
 				color: #959595;
+				@extend %wrap3;
 			}
 			@media screen and (max-width:321px){
 				h5 {
@@ -2985,6 +2988,7 @@
 			width: 2.6rem;
 			p {
 				color: #959595;
+				@extend %wrap3;
 			}
 			@media screen and (max-width:321px){
 				h5 {
