@@ -7,7 +7,7 @@
     @parent
     <script>
       $(function () {
-        datepicker.datepicker()
+        datepicker();
         var form = document.forms['userForm']
         $(form).on('submit', function () {
           return submitForm()

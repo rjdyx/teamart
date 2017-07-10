@@ -62,7 +62,7 @@
                     <span class="col-sm-4 text-danger form_error" id="date_txt"></span>
                   </div>
                 </div>
-                <div class="form-group">
+<!--                 <div class="form-group">
                   <label for="inputEmail3" class="col-sm-3 control-label">发放状态</label>
                   <div class="col-sm-4">
                     <select name="state" class="form-control">
@@ -75,7 +75,7 @@
                       @endforeach
                     </select>
                   </div>
-                </div>
+                </div> -->
                 <div class="form-group">
                   <label for="inputEmail3" class="col-sm-3 control-label">描述</label>
                   <div class="col-sm-4">

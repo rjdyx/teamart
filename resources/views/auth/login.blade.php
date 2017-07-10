@@ -64,7 +64,7 @@
                 </label>
                 <div class="login_link">
                     <!-- 输入邮箱和更改密码的页面的跳转地址：/password/reset/{id} -->
-                    <a class="pull-left formfont" href="{{ url('/password/reset') }}">
+                    <a class="pull-left formfont" href="{{ url('/password/email') }}">
                         <!-- <i class="fa fa-circle-thin"></i> -->
                         忘记密码
                     </a>

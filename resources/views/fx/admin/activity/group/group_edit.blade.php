@@ -100,7 +100,7 @@
     						</div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label" for="date_start">活动时间</label>
-                                <div class="col-sm-5">
+                                <div class="col-sm-3">
                                     <div class="input-group datetime">
                                         <div class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
