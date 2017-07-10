@@ -18,44 +18,56 @@
         //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
       $(function () {
         var ue = UE.getEditor('editor');
-        var form = document.forms['listForm']
+        datepicker({
+            enableTime: true,
+            disable: false,
+            dateFormat: 'Y-m-d H:i:S',
+            mode: 'range',
+            onChange: function(selectedDates, dateStr, instance) {
+                if (dateStr.indexOf('至') > -1) {
+                    console.log(dateStr.split('至'))
+                    $('#date_start').val(dateStr.split('至')[0])
+                    $('#date_end').val(dateStr.split('至')[1])
+                    $('#date_txt').text('')
+                }
+            }
+        })
+        var form = document.forms['activity_form']
         $(form).on('submit', function () {
           return submitForm()
         })
         $('#name').on('blur input', function () {
-          _valid.name('name', '团购活动名称', $(this).val(), 'name')
+          _valid.title('name', '团购活动名称', $(this).val())
         })
         $('#price').on('blur input', function () {
           _valid.number('price', '团购价格', $(this).val())
         })
-         $('#date_start').on('blur input', function () {
-          _valid.birth_date('date_start', '生产日期', $(this).val(), true)
-        })
-          $('#date_end').on('blur input', function () {
-          _valid.birth_date('date_end', '生产日期', $(this).val(), true)
-        })
+        //  $('#date_start').on('blur input', function () {
+        //   _valid.birth_date('date_start', '活动开始时间', $(this).val(), true)
+        // })
+        //   $('#date_end').on('blur input', function () {
+        //   _valid.birth_date('date_end', '活动结束时间', $(this).val(), true)
+        // })
           $('#desc').on('blur input', function () {
           _valid.desc('desc', '商品组描述', $(this).val())
         })
         function submitForm() {
-          var name = form['name']
-          var endDay = form['endDay']
-          var startDay = form['startDay']
-          var price = form['price']
-          if (!_valid.name('name', '团购活动名称', name.value, 'article')) {
-            return false
-          }
-          if (!_valid.number('price', '现价', price.value)) {
-            return false
-          }
-          if (!_valid.birth_date('date_end', '活动开始时间', date_end.value, true)) {
-            return false
-          }
-          if (!_valid.birth_date('date_start', '活动结束时间', date_start.value, true)) {
-            return false
-          }
-          return true
-        }
+			var name = form['name']
+			var date_start = form['date_start']
+			var date_end = form['date_end']
+			var price = form['price']
+			if (!_valid.title('name', '团购活动名称', name.value)) {
+				return false
+			}
+			if (!date_start.value || !date_end.value) {
+				$('#date_txt').text('请选择活动时间')
+				return false
+			}
+			if (!_valid.number('price', '现价', price.value)) {
+				return false
+			}
+			return true
+		}
       })
     </script>
 @endsection
@@ -75,13 +87,28 @@
 				{{ csrf_field() }}
 					<div class="box-body">
 						<div class="form-group">
-							<label for="inputName3" class="col-sm-3 control-label">团购活动名称</label>
+							<label for="name" class="col-sm-3 control-label">团购活动名称</label>
 
 							<div class="col-sm-3">
 								<input type="text" class="form-control" id="name" placeholder="请输入团购活动名称" name="name">
 							</div>
+							<span class="col-sm-4 text-danger form_error" id="name_txt"></span>
 						</div>
 						<div class="form-group">
+                            <label class="col-sm-3 control-label" for="date_start">活动时间</label>
+                            <div class="col-sm-5">
+                                <div class="input-group datetime">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input type="text" class="form-control pull-right" id="datepicker">
+                                    <input type="hidden" id="date_start" name="date_start">
+                                    <input type="hidden" id="date_end" name="date_end">
+                                </div>
+                            </div>
+                            <span class="col-sm-4 text-danger form_error" id="date_txt"></span>
+                        </div>
+						<!-- <div class="form-group">
 							<label class="col-sm-3 control-label" for="date_start">活动开始时间</label>
 							<div class="col-sm-3">
 								<div class="input-group date">
@@ -90,7 +117,6 @@
 									</div>
 									<input type="date" class="form-control pull-right" id="date_start" name="date_start">
 								</div>
-								<!-- /.input group -->
 							</div>
 						</div>
 						<div class="form-group">
@@ -102,15 +128,15 @@
 									</div>
 									<input type="date" class="form-control pull-right" id="date_end" name="date_end">
 								</div>
-								<!-- /.input group -->
 							</div>
-						</div>
+						</div> -->
 						<div class="form-group">
 							<label for="price" class="col-sm-3 control-label">团购价格</label>
 
 							<div class="col-sm-3">
 								<input type="number" class="form-control" id="price" placeholder="请输入团购价数额" name="price">
 							</div>
+							<span class="col-sm-4 text-danger form_error" id="price_txt"></span>
 						</div>
 						<div class="form-group">
 							<label class="col-sm-1 control-label" for="editor">活动说明</label>

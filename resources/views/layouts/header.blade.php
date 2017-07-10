@@ -4,12 +4,13 @@
         <span>分类</span>
     </div>
     @if(Auth::user())
-<!--     <div class="header_right pull-right">
-        <i>
+    <div class="header_right pull-right">
+        <div class="header_kefu txt-c">
+            <i class="fa fa-headphones fz-20"></i>
             <s>8</s>
-        </i>
-        <span>消息</span>
-    </div> -->
+        </div>
+        <span>客服</span>
+    </div>
     @endif
     <div class="header_center">
         <i class="fa fa-search header_search"></i>

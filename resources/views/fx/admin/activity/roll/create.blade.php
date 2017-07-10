@@ -6,8 +6,10 @@
     @parent
     <script >
         $(function(){
-          datepicker.datepicker({
-            endDate: ''
+          datepicker({
+            enableTime: true,
+            disable: false,
+            dateFormat: 'Y-m-d H:i:S'
           })
         })
     </script>

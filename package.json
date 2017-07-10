@@ -22,7 +22,6 @@
     "babel-cli": "^6.24.1",
     "babel-eslint": "^7.2.3",
     "babel-preset-stage-2": "^6.24.1",
-    "bootstrap-datepicker": "^1.7.0",
     "bootstrap-sass": "^3.3.7",
     "cross-env": "^3.2.3",
     "eslint": "^3.19.0",
@@ -32,13 +31,11 @@
     "eslint-plugin-html": "^2.0.0",
     "eslint-plugin-promise": "^3.4.0",
     "eslint-plugin-standard": "^2.0.1",
+    "flatpickr": "^3.0.6",
     "html-webpack-plugin": "^2.28.0",
     "laravel-mix": "^0.8.3",
     "lodash": "^4.17.4",
     "script-loader": "^0.7.0",
-    "swiper": "^3.4.2",
-    "vue": "^2.1.10",
-    "vue-router": "^2.3.1",
-    "vuex": "^2.3.1"
+    "swiper": "^3.4.2"
   }
 }

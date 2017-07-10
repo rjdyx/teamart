@@ -7,7 +7,15 @@
 	@parent
 	<script>
 		$(function () {
-			datepicker.datepicker()
+			
+			// 参数是一个对象
+			// opts.selector = opts.selector != undefined ? opts.selector : '#datepicker' // 选择器
+			// opts.enableTime = opts.enableTime != undefined ? opts.enableTime : false // 是否获取时间
+			// opts.disable = opts.disable != undefined ? opts.disable : true // 是否禁用时间
+			// opts.mode = opts.mode != undefined ? opts.mode : false // 为true时变成选择范围模式
+			// opts.disableFn // 禁用时间时要使用的函数，如果不传入会使用默认函数
+			// opts.dateFormat = opts.dateFormat != undefined ? opts.dateFormat : 'Y-m-d' // 默认格式 'Y-m-d H:i:S'为完整的时分秒格式
+			datepicker()
 			var form = document.forms['userForm']
 			$(form).on('submit', function () {
 				return submitForm()

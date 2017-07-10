@@ -19,9 +19,6 @@ header {
 			margin: 0 auto;
 			width: 0.42rem;
 			height: 0.42rem;
-			background-size: 100% 100%;
-			background-repeat: no-repeat;
-			background-position: center center;
 			margin-top: 0.08rem;
 		}
 		span {
@@ -101,12 +98,17 @@ header {
 	}
 	.header_right {
 		margin-left: -1rem;
-		i {
+		.header_kefu {
 			position: relative;
-			@include  backgroundImages("/fx/images/icon_msg.png");
+			width: 0.5rem;
+			height: 0.5rem;
+			@extend %marginLR;
+			i {
+				line-height: 0.42rem;
+			}
 			s {
 				position: absolute;
-				top: -0.15rem;
+				top: -0.1rem;
 				right: -0.15rem;
 				display: block;
 				width: 0.3rem;
@@ -118,6 +120,7 @@ header {
 				border-radius: 50%;
 			}
 		}
+		
 	}
 	.header_category {
 		position: fixed;

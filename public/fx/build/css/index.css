@@ -2988,7 +2988,7 @@ button.swiper-pagination-bullet {
 /**
  * $px can has unit or hasn't
 */
-.roll .roll_list li .roll_price .roll_get,
+header .header_right .header_kefu, .roll .roll_list li .roll_price .roll_get,
 .roll .roll_list li .roll_price .roll_take,
 .roll .roll_list li .roll_price .roll_used,
 .roll .roll_list li .roll_price .roll_over {
@@ -3348,9 +3348,6 @@ header {
       margin: 0 auto;
       width: 0.42rem;
       height: 0.42rem;
-      background-size: 100% 100%;
-      background-repeat: no-repeat;
-      background-position: center center;
       margin-top: 0.08rem; }
     header .header_left span, header .header_right span {
       display: block; }
@@ -3407,15 +3404,15 @@ header {
       font-size: 22px; } }
   header .header_right {
     margin-left: -1rem; }
-    header .header_right i {
+    header .header_right .header_kefu {
       position: relative;
-      background: url("/fx/images/icon_msg.png");
-      background-size: 100% 100%;
-      background-position: center center;
-      background-repeat: no-repeat; }
-      header .header_right i s {
+      width: 0.5rem;
+      height: 0.5rem; }
+      header .header_right .header_kefu i {
+        line-height: 0.42rem; }
+      header .header_right .header_kefu s {
         position: absolute;
-        top: -0.15rem;
+        top: -0.1rem;
         right: -0.15rem;
         display: block;
         width: 0.3rem;
@@ -6180,3 +6177,102 @@ footer {
     background-color: #fff; }
     .many .many_nodata a {
       color: #f78223; }
+
+.backnreason {
+  position: relative;
+  height: 100%;
+  padding-top: 1.2rem;
+  background-color: #EEEFF1; }
+  .backnreason .backnreason_row {
+    width: 100%;
+    background-color: #FFF;
+    height: 0.96rem;
+    border-bottom: 0.01rem solid #E3E3E3;
+    padding: 0 0.2rem;
+    line-height: 0.96rem; }
+    .backnreason .backnreason_row .gray {
+      color: #aaa; }
+  .backnreason .backnreason_desc {
+    width: 100%;
+    height: 3rem;
+    border: 0;
+    padding: 0.2rem; }
+  .backnreason .backnreason_bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1rem;
+    line-height: 1rem;
+    text-align: center;
+    color: #fff;
+    background: url("/fx/images/footer_bg.png");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat; }
+    .backnreason .backnreason_bottom .submit {
+      width: 50%;
+      background-color: rgba(214, 195, 157, 0.5); }
+    .backnreason .backnreason_bottom .cancel {
+      width: 50%;
+      background-color: rgba(181, 181, 181, 0.5); }
+
+.backnreason_select {
+  position: fixed;
+  top: 100%;
+  left: 0;
+  z-index: 1001;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  transition: all .5s ease; }
+  .backnreason_select .backnreason_select_container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #FFF; }
+    .backnreason_select .backnreason_select_container h5 {
+      width: 100%;
+      height: 1.2rem;
+      text-align: center;
+      line-height: 1.2rem;
+      border-bottom: 0.01rem solid #DADADA; }
+    .backnreason_select .backnreason_select_container .backnreason_select_list {
+      height: calc(100% - 1.2rem);
+      width: 100%;
+      overflow: auto; }
+    .backnreason_select .backnreason_select_container .backnreason_select_row {
+      width: 100%;
+      height: 1rem;
+      line-height: 1rem;
+      border-bottom: 0.01rem solid #dadada;
+      padding: 0 0.2rem; }
+      .backnreason_select .backnreason_select_container .backnreason_select_row i {
+        display: block;
+        width: 0.35rem;
+        height: 0.35rem;
+        margin-top: 0.325rem;
+        background: url("/fx/images/address_default.png");
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat; }
+      .backnreason_select .backnreason_select_container .backnreason_select_row i.active {
+        background: url("/fx/images/address_default_active.png");
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat; }
+    .backnreason_select .backnreason_select_container .backnreason_select_bottom {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 1rem;
+      line-height: 1rem;
+      text-align: center;
+      color: #fff;
+      background: url("/fx/images/footer_bg.png");
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat; }
