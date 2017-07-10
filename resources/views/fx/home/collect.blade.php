@@ -10,7 +10,7 @@
 	<script type="text/javascript" src="{{ url('fx/common/dropload.js') }}"></script>
     <script>
 		$(function () {
-			var dels = []
+			var dels = [] // 删除收藏id
 			// 单个选择
 			function selectSingle () {
 				if (!$(this).hasClass('active')) {
@@ -71,6 +71,7 @@
 											}
 										})
 									})
+									$('.J_select_all').find('span').removeClass('active')
 									dels = []
 								} else {
 									prompt.message('删除失败')
@@ -137,7 +138,7 @@
 									<div class="collect_warpper mb-20 clearfix">
 										<i class="collect_warpper_select J_select" data-id="${v.op_id}"></i>
 										<div class="collect_warpper_content_img pull-left mr-20">
-											<img src="${v.img}">
+											<img src="http://${window.location.host}/${v.img}">
 										</div>
 										<div class="collect_warpper_content_info pull-right">
 											<h5 class="chayefont mb-10">${v.name}</h5>

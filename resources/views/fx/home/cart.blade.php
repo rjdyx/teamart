@@ -11,7 +11,7 @@
     <script>
         $(function () {
             var page = 0
-            var dels = [], confirm_params = {} , pids = [];
+            var dels = [], confirm_params = {} , pids = []; // dels删除集合 pid商品id confirm_params商品ID对应数量
             $('.cart_container').dropload({
                 scrollArea : $('.cart_container'),
                 domUp : {
@@ -48,9 +48,9 @@
                             res.data.forEach(function (v) {
                                 template += `
                                     <div class="cart_warpper mb-20 clearfix">
-                                        <i class="cart_warpper_select J_select" data-id="${v.opid}" data-pid="${v.id}" data-price="${v.price}"></i>
+                                        <i class="cart_warpper_select J_select" data-opid="${v.opid}" data-pid="${v.id}" data-price="${v.price}"></i>
                                         <div class="cart_warpper_content_img pull-left mr-20">
-                                            <img src="${v.img}">
+                                            <img src="http://${window.location.host}/${v.img}">
                                         </div>
                                         <div class="cart_warpper_content_info pull-right">
                                             <h5 class="chayefont mb-10">${v.name}</h5>
@@ -59,7 +59,7 @@
                                                 <span class="pull-left price">&yen;${parseInt(v.price).toFixed(2)}</span>
                                                 <div class="cwcib_number pull-right">
                                                     <i class="fa fa-minus-circle J_minus"></i>
-                                                    <span class="sell" stock="${v.stock}">&times;<span class="amount" opid="${v.opid}" pid="${v.id}">${v.amount}</span></span>
+                                                    <span class="sell" stock="${v.stock}">&times;<span class="amount" data-opid="${v.opid}" data-pid="${v.id}">${v.amount}</span></span>
                                                     <i class="fa fa-plus-circle J_plus"></i>
                                                 </div>
                                             </div>
@@ -112,7 +112,7 @@
             function selectSingle () {
                 if (!$(this).hasClass('active')) {
                     $(this).addClass('active')
-                    dels.push($(this).data('id'))
+                    dels.push($(this).data('opid'))
                     pids.push($(this).data('pid'))
                     if (dels.length == $('.J_select').length) {
                         $('.J_select_all').find('span').addClass('active')
@@ -120,21 +120,21 @@
                 } else {
                     $(this).removeClass('active')
                     $('.J_select_all').find('span').removeClass('active')
-                    var arr = brr = []
+                    var arr = [], brr = []
                     for (var i = 0; i < dels.length; i++) {
-                        if (dels[i] != $(this).data('id')) {
+                        if (dels[i] != $(this).data('opid')) {
                             arr.push(dels[i])
                         }
                     }
                     for (var j = 0; j < pids.length; j++) {
-                        if (pids[j] != $(this).data('id')) {
+                        if (pids[j] != $(this).data('pid')) {
                             brr.push(pids[j])
                         }
                     }
                     dels = arr
                     pids = brr
                 }
-                $('.cart_bottom').find('.total').text(totals)
+                $('.cart_bottom').find('.total').text(totals())
             }
 
             // 全选
@@ -145,7 +145,7 @@
                     $('.J_select')
                     .each(function () {
                         $(this).addClass('active')
-                        dels.push($(this).data('id'))
+                        dels.push($(this).data('opid'))
                         pids.push($(this).data('pid'))
                     })
                     $(this).find('span').addClass('active')
@@ -175,12 +175,13 @@
                                 $('.J_select').each(function () {
                                     var $this = $(this)
                                     dels.forEach(function (v) {
-                                        if (v == $this.data('id')) {
+                                        if (v == $this.data('opid')) {
                                             $this.parent().remove()
                                         }
                                     })
                                 })
                                 dels = []
+                                pids = []
                                 $('.cart_bottom').find('.total').text('0.00')
                             } else {
                                 prompt.message('删除失败')
@@ -192,11 +193,10 @@
             // 减少商品数量
             function minus () {
                 var gid = $(this).parents('.cart_warpper').find('.J_select').data('pid')
-                console.log(confirm_params[gid])
                 if (confirm_params[gid] > 1) {
                     confirm_params[gid] -= 1
                     $(this).siblings('.sell').find('.amount').text(confirm_params[gid])
-                    var id = $(this).siblings('.sell').find('.amount').attr('opid')
+                    var id = $(this).siblings('.sell').find('.amount').data('opid')
                     updateAmount(id, confirm_params[gid]);
                 } else {
                     prompt.message('单个商品数量最少为1')
@@ -211,7 +211,7 @@
                 if (stock >= confirm_params[gid]){
                     confirm_params[gid] += 1
                     $(this).siblings('.sell').find('.amount').text(confirm_params[gid])
-                    var id = $(this).siblings('.sell').find('.amount').attr('opid')
+                    var id = $(this).siblings('.sell').find('.amount').data('opid')
                     updateAmount(id, confirm_params[gid]);
                 } else {
                     prompt.message('商品数量已达到库存上限')
@@ -226,12 +226,14 @@
                     if (!res) {
                         prompt.message('服务器异常！请稍后再试！')
                     }
-                    $('.cart_bottom').find('.total').text(totals)
+                    $('.cart_bottom').find('.total').text(totals())
                 })  
             }
 
             // 计算总价
             function totals () {
+                console.log(dels)
+                console.log(pids)
                 var total = 0
                 pids.forEach(function (v) {
                     var price = parseFloat($(`[data-pid="${v}"]`).data('price'))
@@ -250,7 +252,7 @@
                     data:{}
                 }
                 pids.forEach(function (v) {
-                    params['data'][v] = $('.amount[pid="'+ v +'"]').html()
+                    params['data'][v] = $('.amount[data-pid="'+ v +'"]').html()
                 })
                 console.log(params)
                 var url = 'http://' + window.location.host + '/home/order/confirm?id=';

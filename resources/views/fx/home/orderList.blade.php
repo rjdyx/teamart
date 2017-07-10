@@ -75,7 +75,7 @@
                     $(".J_opts").off('click tap').on('click tap', orderOpts)
                     me.resetload();// 每次数据插入，必须重置
                     if (type == 'up') {
-                        page = 0;
+                        page = 1;
                         // 解锁loadDownFn里锁定的情况
                         me.unlock();
                         me.noData(false);
@@ -284,6 +284,7 @@
             //搜索方法
             function searchOrder() {
                 var result = '';
+                page = 1
                 params['page'] = 1;// 重置页数，重新获取loadDownFn的数据
                 var url = 'http://'+window.location.host + '/home/order/list/data';
                 ajax('get', url, params).then(function (data) {

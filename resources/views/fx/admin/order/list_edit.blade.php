@@ -136,7 +136,7 @@
                 <div class="form-group">
                   <label for="name" class="col-sm-3 control-label">快递公司</label>
                   <div class="col-sm-4">
-                    <select class="form-control input-sm" name="method" onchange="requiedx();">
+                    <select class="form-control input-sm" name="coding" onchange="requiedx();">
                     <option value="">-请选择快递公司-</option>
                     <option value="EMS" @if($data->coding=='EMS')selected @endif >EMS</option>
                     <option value="STO" @if($data->coding=='STO')selected @endif >申通快递</option>
