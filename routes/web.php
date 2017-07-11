@@ -54,6 +54,7 @@ Route::group(['namespace'=>'Home','prefix'=>'home'],function(){
 	Route::get('/userinfo','UserController@userInfo');//个人中心
 	Route::get('/promotion/{type}','IndexController@promotion');//获取更多模版加载
 	Route::get('/index/more','IndexController@promotionData');//首页获取更多数据
+	Route::get('/feedback','FeedbackController@index');//意见反馈页面
 });
 
 /********************** Home - 须登录模块 (非管理员)  ***************************/

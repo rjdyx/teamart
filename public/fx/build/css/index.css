@@ -6276,3 +6276,76 @@ footer {
       background-size: cover;
       background-position: center center;
       background-repeat: no-repeat; }
+
+.feedback {
+  position: relative;
+  height: 100%;
+  padding-top: 1.2rem;
+  background-color: #EEEFF1; }
+  .feedback .feedback_row {
+    width: 100%;
+    background-color: #FFF;
+    height: 0.96rem;
+    border-bottom: 0.01rem solid #E3E3E3;
+    padding: 0 0.2rem;
+    line-height: 0.96rem; }
+    .feedback .feedback_row input {
+      height: 0.94rem;
+      line-height: 0.94rem;
+      border: 0; }
+  .feedback .feedback_content {
+    width: 100%;
+    height: 3rem;
+    border: 0;
+    padding: 0.2rem; }
+  .feedback .feedback_imgs {
+    padding: 0 0.21rem;
+    background-color: #FFF;
+    overflow: hidden; }
+    .feedback .feedback_imgs .feedback_imgs_list li label {
+      display: block;
+      width: 1rem;
+      height: 1rem;
+      text-align: center;
+      line-height: 1rem;
+      border: 0.02rem solid #C9C9C9;
+      font-size: 20px;
+      color: #717171; }
+    .feedback .feedback_imgs .feedback_imgs_list li .feedback_imgs_list_img {
+      position: relative;
+      width: 1rem;
+      height: 1rem; }
+      .feedback .feedback_imgs .feedback_imgs_list li .feedback_imgs_list_img img {
+        display: block;
+        width: 1rem;
+        height: 1rem; }
+      .feedback .feedback_imgs .feedback_imgs_list li .feedback_imgs_list_img i {
+        position: absolute;
+        top: -0.1rem;
+        right: -0.1rem;
+        display: block;
+        width: 0.2rem;
+        height: 0.2rem;
+        color: red;
+        background-color: #FFF; }
+    .feedback .feedback_imgs .feedback_imgs_list li input {
+      width: 1rem; }
+  .feedback .feedback_bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1rem;
+    line-height: 1rem;
+    text-align: center;
+    color: #fff;
+    background: url("/fx/images/footer_bg.png");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat; }
+    .feedback .feedback_bottom .submit {
+      width: 50%;
+      background-color: rgba(214, 195, 157, 0.5); }
+    .feedback .feedback_bottom .cancel {
+      width: 50%;
+      background-color: rgba(181, 181, 181, 0.5); }
