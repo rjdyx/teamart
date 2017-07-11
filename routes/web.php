@@ -80,6 +80,7 @@ Route::group(['namespace'=>'Home','prefix'=>'home','middleware'=>['auth','userRo
     	Route::get('/site/data','OrderController@siteListData');//站点数据接口
     	Route::get('/backn/reason/{id}','OrderController@backnReason');//退货理由
     	Route::post('/operate/{type}','OrderController@orderOperate');//订单state改变
+    	Route::get('/{id}','OrderController@orderDetail');//订单详情
 	});
 
 	//收藏

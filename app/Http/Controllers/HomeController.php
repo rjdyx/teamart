@@ -67,16 +67,20 @@ class HomeController extends Controller
     //热卖商品方法
     public function sellProduct() 
     {
-        $sells = DB::table('product')
-            ->join('order_product','product.id','=','order_product.product_id')
-            ->join('order','order_product.order_id','=','order.id')
+        $sells = DB::table('order')
+            ->join('order_product','order.id','=','order_product.order_id')
+            ->join('product','order_product.product_id','=','product.id')
             ->where('order.type','=','order')
             ->where('order.state','=','close')
-            ->select(DB::raw('sum(amount) as nums','product.*'))
-            ->groupBy('order_product.product_id')
+            ->select(DB::raw('sum(fx_order_product.amount) as nums'),'order_product.product_id as id')
+            ->groupBy('product_id')
             ->orderBy('nums','desc')
-            ->paginate(3); 
-        return $sells;
+            ->paginate(3);
+        $ids = array(); 
+        foreach ($sells as $sell) {
+            $ids[] = $sell->id;
+        }
+        return Product::whereIn('id',$ids)->paginate(3);
     }
 
     public function shopping()

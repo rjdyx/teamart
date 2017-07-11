@@ -57,8 +57,9 @@
     			var cut = $(this).data('cut')
     			var id = $(this).data('id')
     			$('#roll').val(id)
-    			$(this).parents('.confirm_type_container').find('i').removeClass('active')
     			$(this).find('i').addClass('active')
+    			$(this).siblings().find('i').removeClass('active')
+    			$('.J_show_roll').find('s').text($(this).find('span').text())
     			countPrice(cut);
     		})
 

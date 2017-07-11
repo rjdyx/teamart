@@ -23,10 +23,10 @@
           _valid.title('title', '广告标题', $(this).val(), 'product')
         })
         $('#desc').on('blur input', function () {
-          _valid.desc('desc', '广告描述', $(this).val(), 255, true)
+          _valid.desc('desc', '广告描述', $(this).val(), 255)
         })
         $('#url').on('blur input', function () {
-          _valid.desc('url', '链接', $(this).val(), 255, true)
+          _valid.desc('url', '链接', $(this).val(), 255)
         })
 
         function submitForm() {

@@ -64,6 +64,7 @@ const ajax = (type, url, data = {}, isEdit = false, hasfile = false, errFn = tru
 				} else {
 					reject(err)
 				}
+				return false
 			})
 	})
 	return pm

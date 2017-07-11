@@ -31,7 +31,7 @@
         </div>
         <p class="form_error formfont txt-c"></p>
         <div class="reset_form">
-            <form method="POST" id="form" name="form" action="{{ url('password/reset') }}" onsubmit="return submitForm">
+            <form method="POST" id="form" name="form" action="{{ url('password/reset') }}" onsubmit="return submitForm()">
             <input type="hidden" name="token" value="{{ $token }}">
                 {{ csrf_field() }}
                 <label for="password" class="field">

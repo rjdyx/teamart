@@ -14,7 +14,7 @@
 		var params = {id:'', page:0, grade:''};//定义全局对象
     	var popid = '';
     	var poptype = 'cart';
-
+    	var uid = {{Auth::user() ? Auth::user()->id : 0}} //用户id
 		params['id'] = {{ $content->id }};
 
 		$('.productdetail_container_comment').dropload({
@@ -66,6 +66,9 @@
                     }
                     $('.comment_list').append(template);
                     me.resetload();
+                    $('.J_show_image').off('click tap').on('click tap', function () {
+                    	prompt.image($(this).data('img'))
+                    })
                 })
                 .catch(function (err) {
                 	console.dir(err)
@@ -93,8 +96,10 @@
 							<div class="comment_list_content_img clearfix">`
 				//评论图片
 				if (v['img']) {
-					for(var j=0;j<v['img'].length;j++) {
-						template += '<img class="pull-left mr-10" src="http://${window.location.host}/${v.thumb}">';
+					var imgs = v['img'].split(',')
+					var thumb = v['thumb'].split(',')
+					for(var j=0;j<imgs.length;j++) {
+						template += `<img class="pull-left mr-10 J_show_image" src="http://${window.location.host}/${thumb[j]}" data-img="http://${window.location.host}/${imgs[j]}">`;
 					}
 				}
 				template += `</div><p class="txt-r mt-10">${v.created_at}</p>`
@@ -103,6 +108,7 @@
 					for(var j=0;j<v['replys'].length;j++) {
 						template += `
 							<div class="comment_reply_warpper">
+								${v.user_id == uid ? '<a href="javascript:;" class="comment_reply_btn J_reply_btn">回复</a>' : ''}
 								<p class="fz-12">${v['replys'][j]['aname']} <b>回复</b> ${v['replys'][j]['bname']}：</p>
 								<p class="fz-12">${v['replys'][j]['content']}</p>
 								<p class="fz-12 txt-r">${v['replys'][j]['created_at']}</p>
@@ -412,7 +418,12 @@
 			<div class="productdetail_container_comment hide" data-tab="comment">
 				<!-- 评价区域 -->
 				<ol class="comment_filter clearfix">
-					<li class="pull-left mr-10 mb-10 J_choose_comment_type active" type="A">
+					<li class="pull-left mr-10 mb-10 J_choose_comment_type active" type="">
+						<a href="javascript:;">
+							全部(<span>{{$commentAmount}}</span>)
+						</a>
+					</li>
+					<li class="pull-left mr-10 mb-10 J_choose_comment_type" type="A">
 						<a href="javascript:;">
 							好评(<span>{{$commentA}}</span>)
 						</a>

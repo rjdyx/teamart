@@ -29,7 +29,7 @@ class OrderObserver
     {
         $this->logStore('编辑');
 
-        if ($order->state == 'close' &&) {
+        if ($order->state == 'close') {
 
             //代理商销售总额
             if ($order->pid) {
@@ -51,17 +51,18 @@ class OrderObserver
 
         //发货更新库存
         if ($order->state == 'paid') {
-            $this->stockUpdate('-');
+            $this->stockUpdate(0);
         }
 
         //退货更新库存
         if ($order->state == 'backy') {
-            $this->stockUpdate('+');
+            $this->stockUpdate(1);
         }
 
         //收货后存储物流信息
         if ($order->state == 'take') {
-            $datas = json_decode(IQuery::getOrderTracesByJson($order->delivery_serial, $order->coding),true)['Traces'];
+            $deliverys = IQuery::getOrderTracesByJson($order->delivery_serial, $order->coding);
+            $datas = empty($deliverys)?array():json_decode($deliverys,true)['Traces'];
             foreach ($datas as $data) {
                 $delivery = new Delivery;
                 $delivery->order_id = $order->id;
@@ -79,9 +80,15 @@ class OrderObserver
         $lists = Order::join('order_product','order.id','=','order_product.order_id')
                 ->select('order_product.amount','order_product.product_id as id')
                 ->get();
+
         foreach ($lists as $list) {
             $product = Product::find($list->id);
-            $product->stock = intval($product->stock) .$type. intval($list->amount);
+            if ($type) {
+                $stock = intval($product->stock) + intval($list->amount);
+            } else{
+                $stock = intval($product->stock) + intval($list->amount);
+            }
+            $product->stock = $stock;
             $product->save();
         }
     }

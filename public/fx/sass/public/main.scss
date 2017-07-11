@@ -33,9 +33,9 @@
 	}
 }
 
-// 返回首页按钮
-.backIndex,
-.backTop {
+.backIndex, // 返回首页按钮
+.backTop, // 返回顶部
+.floatkefu { //客服
 	position: fixed;
 	right: 5%;
 	z-index: 1004;
@@ -53,12 +53,14 @@
 		line-height: 0.5rem;
 	}
 }
-.backIndex {
+.backIndex,
+.floatkefu {
 	top: 1.3rem;
 }
 .backTop {
 	bottom: 1.5rem;
 }
+
 
 // 登录
 .login {
@@ -223,18 +225,6 @@
 			height: 1.3rem;
 			line-height: 1.3rem;
 		}
-		p {
-			width: 100%;
-			height: 1rem;
-			padding: 0.1rem;
-			color: #fff;
-			line-height: 0.8rem;
-			border-radius: 0.5rem;
-			background-color: #d5aa7a;
-		}
-		p.active {
-			background-color: #c18b4f;
-		}
 	}
 	.email_form {
 		padding: 0.1rem;
@@ -296,18 +286,6 @@
 			width: 100%;
 			height: 1.3rem;
 			line-height: 1.3rem;
-		}
-		p {
-			width: 100%;
-			height: 1rem;
-			padding: 0.1rem;
-			color: #fff;
-			line-height: 0.8rem;
-			border-radius: 0.5rem;
-			background-color: #d5aa7a;
-		}
-		p.active {
-			background-color: #c18b4f;
 		}
 	}
 	.reset_form {
@@ -751,6 +729,7 @@
 		font-size: 18px;
 	}
 }
+// 用户资产
 .userassets {
 	width: 100%;
 	height: 100%;
@@ -964,7 +943,7 @@
 		width: 100%;
 	}
 }
-
+// 地址列表
 .address {
 	position: relative;
 	height: 100%;
@@ -1059,6 +1038,7 @@
 		@include  backgroundImages("/fx/images/footer_bg.png", cover)
 	}
 }
+// 新增编辑地址
 .addressadd {
 	position: relative;
 	height: 100%;
@@ -1129,8 +1109,8 @@
 		@include  backgroundImages("/fx/images/footer_bg.png", cover)
 	}
 }
-.addressedit {}
 
+// 收藏
 .collect{
 	position: relative;
 	height: calc(100% - 1.2rem);
@@ -1172,6 +1152,9 @@
 			position: relative;
 			width: calc(71.25% - 0.2rem);
 			height: 100%;
+			h5 {
+				@extend %wrap
+			}
 			p {
 				color: #7B7B7B;
 			}
@@ -1273,7 +1256,7 @@
 		}
 	}
 }
-
+// 订单列表
 .order {
 	.order_search {
 		position: relative;
@@ -1381,6 +1364,9 @@
 				}
 				.order_warpper_info_detail {
 					width: 2.6rem;
+					h5 {
+						@extend %wrap
+					}
 					p {
 						color: #959595;
 					}
@@ -1491,7 +1477,7 @@
 		}
 	}
 }
-
+// 购物车
 .cart{
 	position: relative;
 	height: calc(100% - 1rem);
@@ -1542,6 +1528,9 @@
 			position: relative;
 			width: calc(71.25% - 0.2rem);
 			height: 100%;
+			h5 {
+				@extend %wrap
+			}
 			p {
 				color: #7B7B7B;
 			}
@@ -1656,7 +1645,7 @@
 		}
 	}
 }
-
+// 产品列表
 .product {
 	overflow: hidden;
 	.product_nav {
@@ -1698,7 +1687,10 @@
 			padding: 0.2rem 0.15rem;
 			border-bottom: 0.01rem solid #E3E3E3;
 			h1 {
+				height: 1rem;
+				line-height: 0.5rem;
 				color: #444;
+				@extend %wrap2;
 			}
 			img {
 				display: block;
@@ -1906,6 +1898,7 @@
 		}
 	}
 }
+// 商品详细
 .productdetail {
 	position: relative;
 	height: calc(100% - 1.2rem);
@@ -2089,8 +2082,16 @@
 							width: 100%;
 							background-color: #d7d7d7;
 							.comment_reply_warpper {
+								position: relative;
 								width: 100%;
 								padding: 0.1rem;
+								.comment_reply_btn {
+									position: absolute;
+									right: 0.1rem;
+									top: 0.1rem;
+									display: block;
+									color: #009fff;
+								}
 							}
 						}
 					}
@@ -2145,6 +2146,7 @@
 	}
 }
 
+// 确认订单
 .confirm{
 	position: relative;
 	height: 100%;
@@ -2200,6 +2202,9 @@
 			position: relative;
 			width: calc(71.25% - 0.2rem);
 			height: 100%;
+			h5 {
+				@extend %wrap
+			}
 			p {
 				color: #7B7B7B;
 			}
@@ -2310,6 +2315,7 @@
 		}
 	}
 }
+// 确认订单快速或者自提
 .confirm_type {
 	position: fixed;
 	top: 100%;
@@ -2317,13 +2323,12 @@
 	z-index: 1001;
 	height: 100%;
 	width: 100%;
-	background-color: rgba(0,0,0,0.8);
 	transition: all .5s ease;
 	.confirm_type_container {
 		position: absolute;
 		bottom: 0;
 		left: 0;
-		height: 60%;
+		height: 100%;
 		width: 100%;
 		background-color: #FFF;
 		h5 {
@@ -2363,6 +2368,7 @@
 		}
 	}
 }
+// 确认订单优惠券
 .confirm_roll {
 	position: fixed;
 	top: 100%;
@@ -3461,4 +3467,105 @@
 			background-color: rgba(181, 181, 181, 0.5);
 		}
 	}
+}
+
+// 订单详情
+.orderdetail {
+	width: 100%;
+	height: 100%;
+	padding-top: 1.2rem;
+	background-color: #EFEFF1;
+	.orderdetail_warpper {
+		width: 100%;
+		background-color: #FFF;
+		.orderdetail_warpper_info {
+			height: 1.82rem;
+			padding: 0.14rem 0.21rem;
+			background-color: #F6F6F6;
+			.orderdetail_warpper_info_img {
+				width: 1.52rem;
+				img {
+					display: block;
+					width: 100%;
+				}
+			}
+			.orderdetail_warpper_info_detail {
+				width: 2.6rem;
+				h5 {
+					@extend %wrap
+				}
+				p {
+					color: #959595;
+				}
+				p.desc {
+					@extend %wrap3
+				}
+				@media screen and (max-width:321px){
+					h5 {
+						font-size: 14px;
+					}
+					p {
+						font-size: 12px;
+					}
+				}
+				@media screen and (min-width:321px) and (max-width:400px){
+					h5 {
+						font-size: 16px;
+					}
+					p {
+						font-size: 14px;
+					}
+				}
+				@media screen and (min-width:400px){
+					h5 {
+						font-size: 18px;
+					}
+					p {
+						font-size: 16px;
+					}
+				}
+			}
+			.orderdetail_warpper_info_price {
+				width: calc(100% - 4.52rem);
+				.price{
+					color: #FF5C5D;
+					margin-bottom: 0.15rem;
+				}
+				.times, .price_raw {
+					color: #B5B5B5;
+				}
+				.times {
+					margin-top: 0.25rem;
+				}
+			}
+		}
+		.orderdetail_warpper_cheap {
+			height: 0.96rem;
+			width: 100%;
+			border-bottom: 0.01rem solid #E3E3E3;
+			padding: 0 0.2rem;
+			line-height: 0.96rem;
+			a {
+				display: block;
+			}
+			.gray {
+				color: #aaa;
+			}
+			.price {
+				color: #FF4F03;
+			}
+		}
+		.orderdetail_warpper_sum {
+			height: 0.8rem;
+			border-bottom: 0.01rem solid #EEEFF1;
+			line-height: 0.8rem;
+			padding-right: 0.22rem;
+			color: #848484;
+			.price {
+				font-style: normal;
+				color: #FF5C5D;
+			}
+		}
+	}
+
 }

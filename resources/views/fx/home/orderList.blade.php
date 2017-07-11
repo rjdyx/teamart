@@ -134,7 +134,10 @@
                                             <span>合计：<i class="price">&yen;${count}</i>（包运费）</span>
                                         </div>
                                         <div class="order_warpper_opts">
-                                            <ul class="pull-right">`
+                                            <ul class="pull-right">
+                                                <li>
+                                                    <a href="http://${window.location.host}/home/order/${oid}" class="chayefont point">订单详情</a>
+                                                </li>`
                                     if (state != 'paid' && state != 'pading') {
                                         c += `  <li class="J_opts" type="delivery" oid="${oid}">
                                                 <a href="javascript:;" class="chayefont point">查看物流</a>

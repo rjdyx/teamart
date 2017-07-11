@@ -82,7 +82,7 @@ class RollController extends Controller
             'full' => 'numeric',
             'cut' =>'numeric',
             'amount' => 'numeric',
-            'state' => 'in:0,1',
+            // 'state' => 'in:0,1',
             //'indate' => ,//待补充
             'desc' => 'string|nullable',
         ]);
@@ -93,7 +93,7 @@ class RollController extends Controller
             $cheap = Cheap::find($id);
         }
 
-        $cheap->setRawAttributes($request->only(['name','full','cut','amount','indate','state','desc']));
+        $cheap->setRawAttributes($request->only(['name','full','cut','amount','indate','desc']));
 
         if($cheap->save()){
             return Redirect::to('admin/activity/roll')->with('status', '保存成功');

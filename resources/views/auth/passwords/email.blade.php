@@ -12,30 +12,27 @@
     <script>
         //判断邮箱是否存在
         function checkEmail() {
-            var params = {email:$('#email').val()}
-            axios.get('/check/email', params).then(function (res) {
+            var email = $.trim($('#email').val())
+            var params = {email:email}
+            return ajax('get', '/check/email', params).then(function (res) {
                 if (res) {
                     return true
                 } else{
+                    $('.form_error').text('邮箱不存在')
                     return false
                 }
-            }).catch(function (err) {
-                console.log(err)
-                return false
             })
         }
 
         function submitForm() {
             var form = document.forms['form']
             //邮箱是否存在
-            if (!checkEmail) {
+            if (!_valid.email($('#email').val())) {
                 return false
             }
-
-            if (!_valid.email($('#email').val())) {
-                return false;
+            if (!checkEmail()) {
+                return false
             }
-
             return true
         }
     </script>

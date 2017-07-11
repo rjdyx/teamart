@@ -149,5 +149,8 @@
             </div>
         </div>
     </div>
+    @include("layouts.service")
+    
     @include("layouts.footer")
+
 @endsection

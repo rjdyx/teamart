@@ -2995,19 +2995,19 @@ header .header_right .header_kefu, .roll .roll_list li .roll_price .roll_get,
   margin-left: auto;
   margin-right: auto; }
 
-header .header_category ul li a, .index .index_box h1, .index .index_box h5, .index .banner_box .banner_box_row p, .filter .filter_container .filter_category .filter_category_list li a, .filter .filter_container .filter_brand .filter_brand_list li a, .productdetail .productdetail_container .productdetail_container_comment .comment_list li .comment_list_avatar span {
+header .header_category ul li a, .index .index_box h1, .index .index_box h5, .index .banner_box .banner_box_row p, .collect .collect_warpper .collect_warpper_content_info h5, .order .order_container .order_warpper .order_warpper_info .order_warpper_info_detail h5, .cart .cart_warpper .cart_warpper_content_info h5, .filter .filter_container .filter_category .filter_category_list li a, .filter .filter_container .filter_brand .filter_brand_list li a, .productdetail .productdetail_container .productdetail_container_comment .comment_list li .comment_list_avatar span, .confirm .confirm_warpper .confirm_warpper_content_info h5, .orderdetail .orderdetail_warpper .orderdetail_warpper_info .orderdetail_warpper_info_detail h5 {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden; }
 
-.index .index_box .index_box_content .ibc_multi .ibc_multi_goods p, .index .index_box .index_box_list ul li p, .product .product_container .product_warpper p.desc, .promotion .promotion_container .promotion_warpper p.desc, .roll .roll_list li .roll_info .roll_desc {
+.index .index_box .index_box_content .ibc_multi .ibc_multi_goods p, .index .index_box .index_box_list ul li p, .product .product_container .product_warpper h1, .product .product_container .product_warpper p.desc, .promotion .promotion_container .promotion_warpper p.desc, .roll .roll_list li .roll_info .roll_desc {
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical; }
 
-.collect .collect_warpper .collect_warpper_content_info p.desc, .order .order_container .order_warpper .order_warpper_info .order_warpper_info_detail p.desc, .cart .cart_warpper .cart_warpper_content_info p.desc, .confirm .confirm_warpper .confirm_warpper_content_info p.desc, .productspec .productspec_container .productspec_container_info .productspec_container_info_content p, .ordercomment .ordercomment_warpper .ordercomment_warpper_detail p, .orderdelivery .orderdelivery_warpper .orderdelivery_warpper_detail p {
+.collect .collect_warpper .collect_warpper_content_info p.desc, .order .order_container .order_warpper .order_warpper_info .order_warpper_info_detail p.desc, .cart .cart_warpper .cart_warpper_content_info p.desc, .confirm .confirm_warpper .confirm_warpper_content_info p.desc, .productspec .productspec_container .productspec_container_info .productspec_container_info_content p, .ordercomment .ordercomment_warpper .ordercomment_warpper_detail p, .orderdelivery .orderdelivery_warpper .orderdelivery_warpper_detail p, .orderdetail .orderdetail_warpper .orderdetail_warpper_info .orderdetail_warpper_info_detail p.desc {
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -3540,7 +3540,8 @@ footer {
   color: #979797; }
 
 .backIndex,
-.backTop {
+.backTop,
+.floatkefu {
   position: fixed;
   right: 5%;
   z-index: 1004;
@@ -3553,12 +3554,14 @@ footer {
   font-size: 16px;
   border-radius: 50%; }
   .backIndex i,
-  .backTop i {
+  .backTop i,
+  .floatkefu i {
     width: 0.5rem;
     height: 0.5rem;
     line-height: 0.5rem; }
 
-.backIndex {
+.backIndex,
+.floatkefu {
   top: 1.3rem; }
 
 .backTop {
@@ -3724,16 +3727,6 @@ footer {
       width: 100%;
       height: 1.3rem;
       line-height: 1.3rem; }
-    .email .email_step p {
-      width: 100%;
-      height: 1rem;
-      padding: 0.1rem;
-      color: #fff;
-      line-height: 0.8rem;
-      border-radius: 0.5rem;
-      background-color: #d5aa7a; }
-    .email .email_step p.active {
-      background-color: #c18b4f; }
   .email .email_form {
     padding: 0.1rem; }
     .email .email_form label {
@@ -3794,16 +3787,6 @@ footer {
       width: 100%;
       height: 1.3rem;
       line-height: 1.3rem; }
-    .reset .reset_step p {
-      width: 100%;
-      height: 1rem;
-      padding: 0.1rem;
-      color: #fff;
-      line-height: 0.8rem;
-      border-radius: 0.5rem;
-      background-color: #d5aa7a; }
-    .reset .reset_step p.active {
-      background-color: #c18b4f; }
   .reset .reset_form {
     padding: 0.1rem; }
     .reset .reset_form label {
@@ -4956,6 +4939,8 @@ footer {
       padding: 0.2rem 0.15rem;
       border-bottom: 0.01rem solid #E3E3E3; }
       .product .product_container .product_warpper h1 {
+        height: 1rem;
+        line-height: 0.5rem;
         color: #444; }
       .product .product_container .product_warpper img {
         display: block;
@@ -5249,8 +5234,15 @@ footer {
             width: 100%;
             background-color: #d7d7d7; }
             .productdetail .productdetail_container .productdetail_container_comment .comment_list li .comment_list_content .comment_reply .comment_reply_warpper {
+              position: relative;
               width: 100%;
               padding: 0.1rem; }
+              .productdetail .productdetail_container .productdetail_container_comment .comment_list li .comment_list_content .comment_reply .comment_reply_warpper .comment_reply_btn {
+                position: absolute;
+                right: 0.1rem;
+                top: 0.1rem;
+                display: block;
+                color: #009fff; }
     .productdetail .productdetail_container .productdetail_container_comment .comment_nodata {
       height: 1rem;
       width: 100%;
@@ -5432,13 +5424,12 @@ footer {
   z-index: 1001;
   height: 100%;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.8);
   transition: all .5s ease; }
   .confirm_type .confirm_type_container {
     position: absolute;
     bottom: 0;
     left: 0;
-    height: 60%;
+    height: 100%;
     width: 100%;
     background-color: #FFF; }
     .confirm_type .confirm_type_container h5 {
@@ -6349,3 +6340,70 @@ footer {
     .feedback .feedback_bottom .cancel {
       width: 50%;
       background-color: rgba(181, 181, 181, 0.5); }
+
+.orderdetail {
+  width: 100%;
+  height: 100%;
+  padding-top: 1.2rem;
+  background-color: #EFEFF1; }
+  .orderdetail .orderdetail_warpper {
+    width: 100%;
+    background-color: #FFF; }
+    .orderdetail .orderdetail_warpper .orderdetail_warpper_info {
+      height: 1.82rem;
+      padding: 0.14rem 0.21rem;
+      background-color: #F6F6F6; }
+      .orderdetail .orderdetail_warpper .orderdetail_warpper_info .orderdetail_warpper_info_img {
+        width: 1.52rem; }
+        .orderdetail .orderdetail_warpper .orderdetail_warpper_info .orderdetail_warpper_info_img img {
+          display: block;
+          width: 100%; }
+      .orderdetail .orderdetail_warpper .orderdetail_warpper_info .orderdetail_warpper_info_detail {
+        width: 2.6rem; }
+        .orderdetail .orderdetail_warpper .orderdetail_warpper_info .orderdetail_warpper_info_detail p {
+          color: #959595; }
+        @media screen and (max-width: 321px) {
+          .orderdetail .orderdetail_warpper .orderdetail_warpper_info .orderdetail_warpper_info_detail h5 {
+            font-size: 14px; }
+          .orderdetail .orderdetail_warpper .orderdetail_warpper_info .orderdetail_warpper_info_detail p {
+            font-size: 12px; } }
+        @media screen and (min-width: 321px) and (max-width: 400px) {
+          .orderdetail .orderdetail_warpper .orderdetail_warpper_info .orderdetail_warpper_info_detail h5 {
+            font-size: 16px; }
+          .orderdetail .orderdetail_warpper .orderdetail_warpper_info .orderdetail_warpper_info_detail p {
+            font-size: 14px; } }
+        @media screen and (min-width: 400px) {
+          .orderdetail .orderdetail_warpper .orderdetail_warpper_info .orderdetail_warpper_info_detail h5 {
+            font-size: 18px; }
+          .orderdetail .orderdetail_warpper .orderdetail_warpper_info .orderdetail_warpper_info_detail p {
+            font-size: 16px; } }
+      .orderdetail .orderdetail_warpper .orderdetail_warpper_info .orderdetail_warpper_info_price {
+        width: calc(100% - 4.52rem); }
+        .orderdetail .orderdetail_warpper .orderdetail_warpper_info .orderdetail_warpper_info_price .price {
+          color: #FF5C5D;
+          margin-bottom: 0.15rem; }
+        .orderdetail .orderdetail_warpper .orderdetail_warpper_info .orderdetail_warpper_info_price .times, .orderdetail .orderdetail_warpper .orderdetail_warpper_info .orderdetail_warpper_info_price .price_raw {
+          color: #B5B5B5; }
+        .orderdetail .orderdetail_warpper .orderdetail_warpper_info .orderdetail_warpper_info_price .times {
+          margin-top: 0.25rem; }
+    .orderdetail .orderdetail_warpper .orderdetail_warpper_cheap {
+      height: 0.96rem;
+      width: 100%;
+      border-bottom: 0.01rem solid #E3E3E3;
+      padding: 0 0.2rem;
+      line-height: 0.96rem; }
+      .orderdetail .orderdetail_warpper .orderdetail_warpper_cheap a {
+        display: block; }
+      .orderdetail .orderdetail_warpper .orderdetail_warpper_cheap .gray {
+        color: #aaa; }
+      .orderdetail .orderdetail_warpper .orderdetail_warpper_cheap .price {
+        color: #FF4F03; }
+    .orderdetail .orderdetail_warpper .orderdetail_warpper_sum {
+      height: 0.8rem;
+      border-bottom: 0.01rem solid #EEEFF1;
+      line-height: 0.8rem;
+      padding-right: 0.22rem;
+      color: #848484; }
+      .orderdetail .orderdetail_warpper .orderdetail_warpper_sum .price {
+        font-style: normal;
+        color: #FF5C5D; }

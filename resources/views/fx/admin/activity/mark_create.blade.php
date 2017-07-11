@@ -47,6 +47,8 @@
                         tmp += '<span style="margin-right:20px;"><input type="checkbox" class="checkboxe" name="pid[]" value="'+v['id']+'">&nbsp;'+v['name']+'</span>';
                         $('.tmple').html(tmp);
                     })
+                } else {
+                  $('.tmple').html(`<span>该类商品已经全部添加完毕</span>`);
                 }
             })
         }

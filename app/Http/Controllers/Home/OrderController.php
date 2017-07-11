@@ -168,13 +168,7 @@ class OrderController extends Controller
 	//订单列表数据
 	public function orderListData(Request $request)
 	{
-		$datas = Order::where('order.user_id','=',Auth::user()->id)
-				->join('order_product','order.id','=','order_product.order_id')
-				->join('product','order_product.product_id','=','product.id')
-				->where('order.type','=','order')
-				->whereNull('product.deleted_at')
-				->whereNull('order_product.deleted_at')
-				->whereNull('order.deleted_at');
+		$datas = Order::where('type','order');
 
 		$state = $request->state;//订单状态
 		$serial = $request->serial;//订单号
@@ -191,22 +185,38 @@ class OrderController extends Controller
 		}
 		if ($serial) $datas = $datas->where('order.serial','like','%'.$serial.'%');
 
-		$datas = $datas->select(
+		$datas = $datas->select('id')->paginate(10);
+
+		$arrs = array();
+		foreach ($datas as $data) {
+			$res = $this->orderListProducts($data->id);
+			if (count($res)) {
+				$arrs[$data->id] = $res;
+			}
+		}
+		return $arrs;
+	}
+
+	public function orderListProducts($id) 
+	{
+		$datas = Order::where('order.user_id','=',Auth::user()->id)
+				->join('order_product','order.id','=','order_product.order_id')
+				->join('product','order_product.product_id','=','product.id')
+				->where('order.id','=',$id)
+				->where('order.type','=','order')
+				->whereNull('product.deleted_at')
+				->whereNull('order_product.deleted_at')
+				->whereNull('order.deleted_at')
+				->select(
 					'order_product.amount as order_amount',
 					'order_product.price as order_product_price',
 					'order.serial','order.id as order_id','order.updated_at as order_date','order.price as order_price',
 					'order.state as order_state','order.method as order_method','order.type as order_type',
 					'product.*'
 					)
-					->distinct('order_product.id')
-					// ->groupBy('order_product.id')
-					->paginate(10);
-		$arrs = array();
-		foreach ($datas as $data) {
-			$arrs[$data->order_id][] = $data;
-		}
-
-		return $arrs;
+				->distinct('order_product.id')
+				->get();
+		return $datas;
 	}
 
 	//查看销售站点页
@@ -289,7 +299,6 @@ class OrderController extends Controller
             $img = implode(',', $imgs);
             $thumb = implode(',', $thumbs);
         }
-
         //获取订单商品
         $goods = $this->getOrderProduct($id);
 		foreach ($goods as $good) {
@@ -298,8 +307,8 @@ class OrderController extends Controller
 			$model->user_id = Auth::user()->id;
 			$model->grade = $request->grade * 20;
 			$model->content = $request->content;
-			$model->img = $request->img;
-			$model->thumb = $request->thumb;
+			$model->img = $img;
+			$model->thumb = $thumb;
 			if (!$model->save()) return 0;
 		}
 		$order = Order::find($id);
@@ -325,6 +334,13 @@ class OrderController extends Controller
 	{
 		$title = "订单退货";
 		return view(config('app.theme').'.home.order.backn_reason')
+				->with(['title' => $title,'id'=>$id]);
+	}
+
+	// 订单详情
+	public function orderDetail ($id) {
+		$title = "订单详情";
+		return view(config('app.theme').'.home.order.detail')
 				->with(['title' => $title,'id'=>$id]);
 	}
 }
