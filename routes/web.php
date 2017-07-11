@@ -13,6 +13,7 @@
 
 Route::get('/','HomeController@index');//首页
 Route::get('/auth/geetest', 'Auth\AuthController@getGeetest');//极验
+Route::get('/check/email', 'Auth\RegisterController@checkEmail');//判断邮箱是否存在
 Route::get('admin/login', 'Auth\LoginController@adminLoginCreate');
 Route::post('admin/login', 'Auth\LoginController@adminLogin');
 Route::post('/login/check','Auth\LoginController@loginCheck');//前台登录验证

@@ -10,11 +10,32 @@
 @section('script')
     @parent
     <script>
+        //判断邮箱是否存在
+        function checkEmail() {
+            var params = {email:$('#email').val()}
+            axios.get('/check/email', params).then(function (res) {
+                if (res) {
+                    return true
+                } else{
+                    return false
+                }
+            }).catch(function (err) {
+                console.log(err)
+                return false
+            })
+        }
+
         function submitForm() {
             var form = document.forms['form']
+            //邮箱是否存在
+            if (!checkEmail) {
+                return false
+            }
+
             if (!_valid.email($('#email').val())) {
                 return false;
             }
+
             return true
         }
     </script>
@@ -28,11 +49,12 @@
         </div>
         <p class="form_error formfont txt-c"></p>
         <div class="email_form">
+
+            <!-- 这个保留 -->
             @if (session('status'))
-                <div class="alert alert-success">
-                    {{ session('status') }}
-                </div>
+            <p>{{ session('status') }}</p>
             @endif
+
             <form method="POST" id="form" name="form" action="{{ url('password/email') }}" onsubmit="return submitForm()">
                 {{ csrf_field() }}
                 <label for="email" class="field">

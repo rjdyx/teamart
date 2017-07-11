@@ -94,4 +94,11 @@ class RegisterController extends Controller
         ]);
     }
     
+    //判断邮箱是否存在
+    public function checkEmail(Request $request)
+    {
+        $res = User::where('email',$request->email)->first();
+        if (empty($res)) return 0;
+        return 1;
+    }
 }
