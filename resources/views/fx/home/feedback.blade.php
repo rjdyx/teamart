@@ -104,12 +104,14 @@
 						imgs.push($(this)[0].files[0])
 					}
 				})
+
 				var params = {
 					contact: contact,
 					content: content,
 					'imgs[]': imgs
 				}
-				ajax('post', 'url', params).then(function (res) {
+				var url = 'http://'+window.location.host+'/home/feedback';
+				ajax('post', url, params, false, true).then(function (res) {
 					if (res) {
 						prompt.message('反馈成功')
 					} else {
@@ -126,7 +128,7 @@
 	<div class="feedback">
 		<div class="feedback_row">
             <span class="pull-left chayefont fz-18">联系方式</span>
-            <input type="text" name="contact" id="contact" class="pull-right txt-r chayefont fz-16">
+            <input type="text" name="contact" placeholder="QQ/邮箱/电话" id="contact" class="pull-right txt-r chayefont fz-16">
         </div>
         <div class="feedback_row">
             <span class="pull-left chayefont fz-18">反馈内容：</span>

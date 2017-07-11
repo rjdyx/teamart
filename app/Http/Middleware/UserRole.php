@@ -4,6 +4,8 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
+use Redirect;
+
 class UserRole
 {
     /**
@@ -15,15 +17,14 @@ class UserRole
      */
     public function handle($request, Closure $next, $role)
     {
-        if ($role == 'admin') {
-            if (Auth::user()->type) {
-                abort(403);
-            }
-        } else {
-            if (Auth::user()->type > 1) {
-                abort(403);
-            }
-        }
+        $type = Auth::user()->type;
+        
+        if ($role == 'admin' && $type>0) return Redirect::to('/');
+
+        if ($role == 'sell' && $type != 1) return Redirect::to('/');
+
+        if ($role == 'user' && $type<1) return Redirect::to('/admin/index');
+
         return $next($request);
     }
 }

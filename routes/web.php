@@ -52,11 +52,10 @@ Route::group(['namespace'=>'Home','prefix'=>'home'],function(){
 	Route::get('/userinfo','UserController@userInfo');//个人中心
 	Route::get('/promotion/{type}','IndexController@promotion');//获取更多模版加载
 	Route::get('/index/more','IndexController@promotionData');//首页获取更多数据
-	Route::get('/feedback','FeedbackController@index');//意见反馈页面
 });
 
 /********************** Home - 须登录模块 (非管理员)  ***************************/
-Route::group(['namespace'=>'Home','prefix'=>'home','middleware'=>['auth']],function(){
+Route::group(['namespace'=>'Home','prefix'=>'home','middleware'=>['auth','userRole:user']],function(){
 	//地址管理
 	Route::post('/address','AddressController@store');
 	Route::get('/address/default/{id}','AddressController@defaultaddress');
@@ -69,7 +68,8 @@ Route::group(['namespace'=>'Home','prefix'=>'home','middleware'=>['auth']],funct
 		Route::get('/detail/{id}','OrderController@detail');//商品详情页
     	Route::post('/confirm','OrderController@confirmData');//订单预处理
     	Route::get('/confirm','OrderController@confirm');//订单待支付
-    	Route::get('/list/data','OrderController@orderListData');
+    	Route::get('/list/data','OrderController@orderListData');//订单商品列表数据
+    	Route::get('/state/{id}','OrderController@getOrderState');//订单状态
     	Route::get('/delivery/{order_id}','OrderController@showDelivery');//物流信息
     	Route::get('/delivery_data','OrderController@deliveryData');//追溯物流信息
     	Route::get('/comment/{order_id}','OrderController@orderComment');//评论
@@ -95,8 +95,6 @@ Route::group(['namespace'=>'Home','prefix'=>'home','middleware'=>['auth']],funct
 	Route::resource('/cart','CartController');
 
 	//用户部分
-	Route::get('/userasset','UserController@userAsset');
-	Route::get('/userasset/brokerage/data','UserController@brokerageList');
 	Route::get('/useredit','UserController@edit');
 	Route::resource('/user', 'UserController');
 
@@ -114,15 +112,19 @@ Route::group(['namespace'=>'Home','prefix'=>'home','middleware'=>['auth']],funct
 	});
 });
 
-/********************** Home - 分销商 ***************************/
-Route::group(['namespace'=>'Home','prefix'=>'home','middleware'=>['auth','userRole:fx']],function(){
 
+/********************** Home - 分销商 ***************************/
+Route::group(['namespace'=>'Home','prefix'=>'home','middleware'=>['auth','userRole:sell']],function(){
+	// 个人资产
+	Route::get('/userasset','UserController@userAsset');
+	Route::get('/userasset/brokerage/data','UserController@brokerageList');
 });
 
-/********************** Admin - 管理员 ***************************/
-Route::group(['namespace'=>'Admin','prefix'=>'admin','middleware'=>['auth','userRole:admin']
-	],function(){
 
+/********************** Admin - 管理员 ***************************/
+Route::group(['namespace'=>'Admin','prefix'=>'admin','middleware'=>['auth','userRole:admin']],function(){
+
+	//首页
 	Route::get('/index', 'IndexController@index');
 	Route::get('/index/sells', 'IndexController@sells');
 
@@ -167,7 +169,6 @@ Route::group(['namespace'=>'Admin','prefix'=>'admin','middleware'=>['auth','user
 
 	// 报表统计管理
 	Route::group(['prefix'=>'count'],function(){
-		
 		Route::get('/client', 'SellCountController@client');
 		Route::get('/client/yearcount', 'SellCountController@clientCountYear');
 		Route::get('/client/monthcount', 'SellCountController@clientCountMonth');
@@ -214,7 +215,6 @@ Route::group(['namespace'=>'Admin','prefix'=>'admin','middleware'=>['auth','user
 		Route::resource('/feedback','FeedbackController');
 		Route::post('/feedback/dels', 'FeedbackController@dels');
 	});
-
 });
 
 

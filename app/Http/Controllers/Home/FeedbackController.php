@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use PhpParser\Node\Expr\Cast\Array_;
 use Illuminate\Support\Facades\Auth;
+use IQuery;
 
 class FeedbackController extends Controller
 {
@@ -16,55 +17,33 @@ class FeedbackController extends Controller
         $title = '意见反馈';
         return view(config('app.theme').'.home.feedback')->with('title', $title);
     }
+
     public function store(Request $request)
     {
-        define("FILEPATH","localhost");
         $this->validate($request, [
-            'fcontent' => 'required|max:255',
-            'fphone' => 'required|min:8|max:11|regex:[^[0-9]]',
-            'fname' => 'required'
+            'contact' => 'required|max:50',
+            'content' => 'required|max:2000',
         ]);
-        $feedback = new \App\Feedback;
-        $feedback->name = $request->fname;
-        $feedback->content = $request->fcontent;
-        $feedback->phone = $request->fphone;
-        $file = $request->file('fphoto');
-        $destinationPath = 'upload/feedback';
-        $allowed_extensions = ['png', 'gif', 'jpg'];
-        if(!$file){
-            $fileName=0;
-        }else {
-            if ($file->getClientOriginalExtension() && !in_array($file->getClientOriginalExtension(), $allowed_extensions)) {
-                return ['error' => 'you only upload PNG,GIF,JPG photo'];
-            }
-            $extension = $file->getClientOriginalExtension();
+        $model = new Feedback;
+        $model->contact = $request->contact;
+        $model->content = $request->content;
+        $model->date = date('Y-m-d H:i:s');
+        $model->user_id = Auth::user()->id;
 
-            $fileName = str_random(10) . '.' . $extension;
-            $file->move($destinationPath, $fileName);
-            //$filepath = asset($destinationPath, $fileName);
+        $img = null;
+        $imgs = array();
+        //资源、上传图片名称、是否生成缩略图
+        $pics = IQuery::uploads($request, 'imgs', true);
+        if ($pics != 'false') {
+            foreach ($pics as $pic) {
+                $imgs[] = $pic['pic'];
+            }
+            $img = implode(',', $imgs);
+            $model->img = $img;
         }
 
-        if ($feedback->save()) {
-            $feedback1 = new \App\Feedback;
-            $feedback_rs = $feedback1::where('phone', $request->fphone)->get();
-            foreach ($feedback_rs as $value) {
-                $feedback_id = $value->id;
+        if ($model->save()) return 1;
+        return 0;
+    }
 
-            }
-            if($fileName) {
-                $feedbackImage = new \App\FeedbackImage;
-                $feedbackImage->path =  $fileName;
-                $feedbackImage->feedback_id = $feedback_id;
-
-                if ($feedbackImage->save()) {
-                    return 'ok';
-                } else {
-                    return redirect()->back()->withInput()->withErrors('提交失败');
-                }
-            }else{
-                return 'ok';
-            }
-
-        }
-
-    }}
+}
