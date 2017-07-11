@@ -13,7 +13,8 @@ class FeedbackController extends Controller
 {
     //
     public function index(){
-        return view(config('app.theme').'.home.feedback');
+        $title = '意见反馈';
+        return view(config('app.theme').'.home.feedback')->with('title', $title);
     }
     public function store(Request $request)
     {

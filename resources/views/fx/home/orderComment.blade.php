@@ -9,7 +9,6 @@
 	@parent
 	<script>
 		$(function () {
-
 			ajax('get', '/home/order/comment/product/' + "{{$id}}").then(function (res) {
 				var data = res
 				if (data.length) {
@@ -89,77 +88,6 @@
 					}
 				})
 			})
-
-			function showImg () {
-				var $this = $(this)
-				var file = this.files[0]
-				var idx = parseInt($this.attr('id').substr(-1))
-				var id = $this.attr('id')
-				var $box = $('label[for="' + id + '"]').parent()
-				if (file.size / 1024 > 200) {
-					prompt.message('图片太大')
-					return false
-				}
-				if (file.type !== 'image/png' && file.type !== 'image/jpeg') {
-					prompt.message('图片格式只支持png和jpg')
-					return false
-				}
-				$box.find('img').remove()
-				var fr = new FileReader()
-				fr.onload = function(e) {
-					if ($box.find('img').length > 0) {
-						return
-					}
-					var img = new Image()
-					img.src = e.target.result
-					if ($('.ordercomment_imgs_list').find('li').length < 4) {
-						addFile()
-					}
-					$box.find('.ordercomment_imgs_list_img').append(img)
-					$box.find('img').on('click tap', function () {
-						prompt.image($(this).attr('src'))
-					})
-					$box.find('label').addClass('hide')
-					$box.find('.ordercomment_imgs_list_img').removeClass('hide')
-				}
-				fr.readAsDataURL(file)
-			}
-
-			function addFile () {
-				var nid = Date.now()
-				var template = `
-					<li class="pull-left mr-20 relative">
-						<label for="img${nid}">
-							<i class="fa fa-camera"></i>
-						</label>
-						<div class="ordercomment_imgs_list_img hide">
-							<i class="fa fa-times-circle J_remove_img"></i>
-						</div>
-	                    <input type="file" name="imgs[]" id="img${nid}" class="invisibility J_imgs absolute" accept="image/jpeg,image/jpg,image/png" capture="camera">
-	                </li>
-				`
-				$('.ordercomment_imgs_list').append(template)
-				$('.ordercomment_imgs_list').find('.J_imgs').off('change', showImg).on('change', showImg)
-				$('.ordercomment_imgs_list').find('.J_remove_img').off('click tap', removeFile).on('click tap', removeFile)
-			}
-			function removeFile () {
-				if ($('.ordercomment_imgs_list').find('img').length == 4) {
-					var id = $(this).parents('li').find('input').attr('id')
-					$(this).parent().find('img').remove()
-					$(this).parent().addClass('hide').siblings('label').removeClass('hide')
-					$(this).parents('li').find('input').remove()
-					$(this).parents('li').append(`<input type="file" name="imgs[]" id="${id}" class="invisibility J_imgs absolute" accept="image/jpeg,image/jpg,image/png" capture="camera">`)
-					var cl = $(this).parents('li').clone()
-					$('.ordercomment_imgs_list').append(cl)
-					$('.J_imgs').off('change', showImg).on('change', showImg)
-				}
-				$(this).parents('li').remove()
-			}
-			// 图片变化
-			$('.J_imgs').on('change', showImg)
-			// 删除图片
-			$('.J_remove_img').on('click tap', removeFile)
-			// prompt.image()
 		})
 	</script>
 @endsection

@@ -169,6 +169,14 @@
 					<p class="chayefont">优惠券</p>
 				</a>
 			</li>
+			<li>
+				<a href="{{url('/home/feedback')}}">
+					<div class="usercenter_nav_icon">
+						<i class="fa fa-feed"></i>
+					</div>
+					<p class="chayefont">意见反馈</p>
+				</a>
+			</li>
 		</ul>
 		@if (Auth::user())
 		<div class="usercenter_loginout chayefont J_loginout">退出</div>
