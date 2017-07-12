@@ -17,17 +17,15 @@
     <div class="container index" >
         <!-- 轮播 -->
         <div class="banner swiper-container">
-            <div class="swiper-wrapper">
-                <ul>
-                @if(count($lbs))
-                    @foreach($lbs as $lb)
-                        <li class="swiper-slide"><img src="{{url('')}}/{{$lb}}" alt=""></li> 
-                    @endforeach
-                @else
-                    <li class="swiper-slide"><img src="fx/images/index_banner.png" alt=""></li> 
-                @endif
-                </ul>
-            </div>
+            <ul class="swiper-wrapper">
+            @if(count($lbs))
+                @foreach($lbs as $lb)
+                    <li class="swiper-slide"><img src="{{url('')}}/{{$lb}}" alt=""></li> 
+                @endforeach
+            @else
+                <li class="swiper-slide"><img src="fx/images/index_banner.png" alt=""></li> 
+            @endif
+            </ul>
         </div>
         <div class="index_box">
             <div class="index_box_title">
