@@ -61,11 +61,11 @@
             <span class="pull-right fz-14">未付款</span>
         </div>
         <!-- 物流 -->
-        <!-- <div class="delivery">
-            <a href="javascript:;">查看物流详情</a>
-        </div> -->
+        <div class="delivery mt-10 txt-c fz-16">
+            <a href="javascript:;">点击查看物流详情</a>
+        </div>
         <!-- 评价 -->
-        <div class="comment">
+        <div class="comment mt-10">
             <h5 class="chayefont fz-18 mb-10">您的评价：</h5>
             <div class="comment_grade mb-10">
                 <span>满意度：</span>
@@ -79,17 +79,24 @@
                     <img src="{{url('/fx/images/usercenter_avatar.png')}}" class="J_show_img" alt="">
                 </li>
                 <li class="pull-left mr-10">
-                    <img src="{{url('/fx/images/usercenter_avatar.png')}}" alt="">
+                    <img src="{{url('/fx/images/usercenter_avatar.png')}}" class="J_show_img" alt="">
                 </li>
                 <li class="pull-left mr-10">
-                    <img src="{{url('/fx/images/usercenter_avatar.png')}}" alt="">
+                    <img src="{{url('/fx/images/usercenter_avatar.png')}}" class="J_show_img" alt="">
                 </li>
                 <li class="pull-left mr-10">
-                    <img src="{{url('/fx/images/usercenter_avatar.png')}}" alt="">
+                    <img src="{{url('/fx/images/usercenter_avatar.png')}}" class="J_show_img" alt="">
                 </li>
             </ul>
         </div>
         <!-- 退货 -->
-        <div class="backn"></div>
+        <div class="backn mt-10">
+            <div class="backn_reason">
+                <span class="pull-left chayefont fz-18">退货理由：</span>
+                <span class="pull-right fz-14">理由111</span>
+            </div>
+            <!-- 如果是其他理由的话需要 -->
+            <p class="hide">其他理由其他理由其他理由其他理由其他理由，其他理由其他理由其他理由，其他理由其他理由，其他理由其他理由其他理由，其他理由其他理由其他理由其他理由</p>
+        </div>
     </div>
 @endsection

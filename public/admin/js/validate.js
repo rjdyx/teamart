@@ -33,7 +33,7 @@ exports.name = (field, fieldtxt, value, table, isRequired = true) => {
 		temp = ness(field, fieldtxt, value)
 	}
 	if (temp) {
-		if (value.length < 4) {
+		if (value.length < 2) {
 			$('#' + field + '_txt').text(fieldtxt + '不能少于4个字符')
 			valid = false
 		} else {
@@ -101,7 +101,7 @@ exports.name = (field, fieldtxt, value, table, isRequired = true) => {
  * @param isRequired {boolean} 是否必须
  * @returns {boolean}
  */
-exports.title = (field, fieldtxt, value, lng = 4, isRequired = true) => {
+exports.title = (field, fieldtxt, value, lng = 2, isRequired = true) => {
 	var valid = false, temp = true
 	if (isRequired) {
 		temp = ness(field, fieldtxt, value)

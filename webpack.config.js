@@ -42,9 +42,9 @@ const globalValue = env.isAdmin ? {
 let outputPath
 
 if (env.isServer) {
-	publicPath = env.isAdmin ? path.join('public', 'admin', 'build/') : path.join('public', 'fx', 'build/')
+	outputPath = env.isAdmin ? path.join('public', 'admin', 'build/') : path.join('public', 'fx', 'build/')
 } else {
-	publicPath = env.isAdmin ? 'http://fx.caishi360.com/admin/build/' : 'http://fx.caishi360.com/fx/build/'
+	outputPath = env.isAdmin ? env.app_url + 'admin/build/' : env.app_url + 'fx/build/'
 	// 避免请求本地字体时跨域
 	// publicPath = env.isAdmin ? 'http://localhost:8080/admin/build/' : 'http://localhost:8080/fx/build/'
 }
@@ -59,7 +59,7 @@ let configs = {
 		filename: '[name].js',
 		path: env.isAdmin ? path.join(rootPath, 'admin', 'build') : path.join(rootPath, 'fx', 'build'),
 		chunkFilename: '[id].[name].js',
-		publicPath: publicPath
+		publicPath: outputPath
 	},
 	resolve: {
 		extensions: ['.js', '.json'],

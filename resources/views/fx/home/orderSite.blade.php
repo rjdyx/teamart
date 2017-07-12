@@ -10,27 +10,6 @@
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak={{env('ORDER_SITE')}}"></script>
     <script>
     	$(function () {
-    // 		function initBMap () {
-				// if (!window.BMap) {
-				// 	window.BMap = {}
-				// 	window.BMap._preloader = new Promise(function(resolve, reject) {
-				// 		window._initBaiduMap = function _initBaiduMap () {
-				// 			resolve(window.BMap)
-				// 			document.body.removeChild(script)
-				// 			window.BMap._preloader = null
-				// 			window._initBaiduMap = null
-				// 		}
-				// 		var script = document.createElement('script')
-				// 		document.body.appendChild(script)
-				// 		script.src = `//api.map.baidu.com/api?v=2.0&ak=SyKH8dteZj7B80nhTnFIs5KEtMY1idvH&callback=_initBaiduMap`
-				// 	})
-				// 	return window.BMap._preloader
-				// } else if (!window.BMap._preloader) {
-				// 	return Promise.resolve(window.BMap)
-				// } else {
-				// 	return window.BMap._preloader
-				// }
-    // 		}
     		function renderMap (points) {
     			function getaddress (map, BMap, point) {
     				var myGeo = new BMap.Geocoder();

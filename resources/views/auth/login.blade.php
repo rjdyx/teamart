@@ -50,25 +50,25 @@
     @include("layouts.backIndex")
     <div class="login">
         <div class="login_logo"></div>
-        <p class="form_error formfont"></p>
+        <p class="form_error chayefont"></p>
         <div class="login_form">
             <form method="POST" id="form" name="form" action="{{ route('login') }}">
                 {{ csrf_field() }}
                 <label for="name" class="field">
                     <i class="fa fa-user-o"></i>
-                    <input type="text" id="name" class="formfont" name="name" autocomplete="off" placeholder="请输入用户名">
+                    <input type="text" id="name" class="chayefont" name="name" autocomplete="off" placeholder="请输入用户名">
                 </label>
                 <label for="password" class="field">
                     <i class="fa fa-lock"></i>
-                    <input type="password" id="password" class="formfont" name="password" autocomplete="off" placeholder="请输入密码">
+                    <input type="password" id="password" class="chayefont" name="password" autocomplete="off" placeholder="请输入密码">
                 </label>
                 <div class="login_link">
                     <!-- 输入邮箱和更改密码的页面的跳转地址：/password/reset/{id} -->
-                    <a class="pull-left formfont" href="{{ url('/password/reset') }}">
+                    <a class="pull-left chayefont" href="{{ url('/password/reset') }}">
                         <!-- <i class="fa fa-circle-thin"></i> -->
                         忘记密码
                     </a>
-                    <a class="pull-left formfont" href="{{ url('/register') }}">
+                    <a class="pull-left chayefont" href="{{ url('/register') }}">
                         <!-- <i class="fa fa-circle"></i> -->
                         注册账号
                     </a>
