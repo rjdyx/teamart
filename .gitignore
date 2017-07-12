@@ -18,3 +18,6 @@ env.js
 /storage/logs/laravel.log
 
 npm-debug.log
+/public/fx/build
+/env.js
+/public/admin/build
