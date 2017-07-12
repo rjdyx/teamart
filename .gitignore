@@ -21,3 +21,4 @@ npm-debug.log
 /public/fx/build
 /env.js
 /public/admin/build
+/node_modules/node-sass
