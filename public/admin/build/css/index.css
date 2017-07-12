@@ -263,8 +263,8 @@ th {
 @font-face {
   font-family: 'Glyphicons Halflings';
 
-  src: url(http://www.fx.com/admin/build/f4769f9bdb7466be65088239c12046d1.eot);
-  src: url(http://www.fx.com/admin/build/f4769f9bdb7466be65088239c12046d1.eot?#iefix) format('embedded-opentype'), url(http://www.fx.com/admin/build/448c34a56d699c29117adc64c43affeb.woff2) format('woff2'), url(http://www.fx.com/admin/build/fa2772327f55d8198301fdb8bcfc8158.woff) format('woff'), url(http://www.fx.com/admin/build/e18bbf611f2a2e43afc071aa2f4e1512.ttf) format('truetype'), url(http://www.fx.com/admin/build/89889688147bd7575d6327160d64e760.svg#glyphicons_halflingsregular) format('svg');
+  src: url(http://fx.caishi360.com/admin/build/f4769f9bdb7466be65088239c12046d1.eot);
+  src: url(http://fx.caishi360.com/admin/build/f4769f9bdb7466be65088239c12046d1.eot?#iefix) format('embedded-opentype'), url(http://fx.caishi360.com/admin/build/448c34a56d699c29117adc64c43affeb.woff2) format('woff2'), url(http://fx.caishi360.com/admin/build/fa2772327f55d8198301fdb8bcfc8158.woff) format('woff'), url(http://fx.caishi360.com/admin/build/e18bbf611f2a2e43afc071aa2f4e1512.ttf) format('truetype'), url(http://fx.caishi360.com/admin/build/89889688147bd7575d6327160d64e760.svg#glyphicons_halflingsregular) format('svg');
 }
 .glyphicon {
   position: relative;
@@ -6763,8 +6763,8 @@ button.close {
  * -------------------------- */
 @font-face {
   font-family: 'FontAwesome';
-  src: url(http://www.fx.com/admin/build/674f50d287a8c48dc19ba404d20fe713.eot);
-  src: url(http://www.fx.com/admin/build/674f50d287a8c48dc19ba404d20fe713.eot?#iefix&v=4.7.0) format('embedded-opentype'), url(http://www.fx.com/admin/build/af7ae505a9eed503f8b8e6982036873e.woff2) format('woff2'), url(http://www.fx.com/admin/build/fee66e712a8a08eef5805a46892932ad.woff) format('woff'), url(http://www.fx.com/admin/build/b06871f281fee6b241d60582ae9369b9.ttf) format('truetype'), url(http://www.fx.com/admin/build/912ec66d7572ff821749319396470bde.svg#fontawesomeregular) format('svg');
+  src: url(http://fx.caishi360.com/admin/build/674f50d287a8c48dc19ba404d20fe713.eot);
+  src: url(http://fx.caishi360.com/admin/build/674f50d287a8c48dc19ba404d20fe713.eot?#iefix&v=4.7.0) format('embedded-opentype'), url(http://fx.caishi360.com/admin/build/af7ae505a9eed503f8b8e6982036873e.woff2) format('woff2'), url(http://fx.caishi360.com/admin/build/fee66e712a8a08eef5805a46892932ad.woff) format('woff'), url(http://fx.caishi360.com/admin/build/b06871f281fee6b241d60582ae9369b9.ttf) format('truetype'), url(http://fx.caishi360.com/admin/build/912ec66d7572ff821749319396470bde.svg#fontawesomeregular) format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -9140,7 +9140,7 @@ body {
   position: relative;
 }
 .layout-boxed {
-  background: url(http://www.fx.com/admin/build/7799dece2c79854f63f09e7dfa528b88.jpg) repeat fixed;
+  background: url(http://fx.caishi360.com/admin/build/7799dece2c79854f63f09e7dfa528b88.jpg) repeat fixed;
 }
 /*
  * Content Wrapper - contains the main content
@@ -15035,7 +15035,7 @@ span.flatpickr-weekday {
   }
 }
 .logo-szy {
-    background: url(http://www.fx.com/admin/build/1a56a9e07875901dff058922267ecdee.png) center center no-repeat;
+    background: url(http://fx.caishi360.com/admin/build/1a56a9e07875901dff058922267ecdee.png) center center no-repeat;
     text-indent: -9999px;
     background-size: 100% 50px;
     margin: 0 auto;

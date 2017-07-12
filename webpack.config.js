@@ -44,7 +44,7 @@ let outputPath
 if (env.isServer) {
 	publicPath = env.isAdmin ? path.join('public', 'admin', 'build/') : path.join('public', 'fx', 'build/')
 } else {
-	publicPath = env.isAdmin ? 'http://www.fx.com/admin/build/' : 'http://www.fx.com/fx/build/'
+	publicPath = env.isAdmin ? 'http://fx.caishi360.com/admin/build/' : 'http://fx.caishi360.com/fx/build/'
 	// 避免请求本地字体时跨域
 	// publicPath = env.isAdmin ? 'http://localhost:8080/admin/build/' : 'http://localhost:8080/fx/build/'
 }

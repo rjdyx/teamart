@@ -4,5 +4,5 @@ module.exports = {
 	// http://fx.caishi360.com/
 	// http://www.fx.com/
 	isServer: false,
-	isAdmin: true // side == true ? 'admin' : 'fx'
+	isAdmin: false // side == true ? 'admin' : 'fx'
 }

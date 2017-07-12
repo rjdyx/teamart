@@ -7,6 +7,16 @@
 
 @section('script')
     @parent
+    <script>
+        // 评论内容省略
+        $('.J_comment').on('click tap', function () {
+            $(this).toggleClass('active')
+        })
+        // 显示评论图片
+        $('.J_show_img').on('click tap', function () {
+            prompt.image($(this).attr('src'))
+        })
+    </script>
 @endsection
 
 @section('content')
@@ -63,18 +73,18 @@
                 <i class="fa fa-star"></i>
                 <i class="fa fa-star"></i>
             </div>
-            <p class="comment_content mb-10">评价内容评价内容评价内容评价内容评价内容评价内容评价内容,评价评价内容评价内容评价内容评价内容评价内容评价内容评价内容,评价内容评价内容评价内容评价内容评价内容评价内容评价内容,评价内容评价内容评价内容评价内容评价内容评价内容评价内容,评价内容评价内容评价内容评价内容评价内容评价内容评价内容,评价内容评价内容评价内容评价内容评价内容评价内容评价内容,评价内容评价内容评价内容评价内容评价内容评价内容评价内容内容评价内容评价内容</p>
-            <ul class="comment_imgs">
-                <li>
+            <p class="comment_content mb-10 active J_comment">评价内容评价内容评价内容评价内容评价内容评价内容评价内容,评价评价内容评价内容评价内容评价内容评价内容评价内容评价内容,评价内容评价内容评价内容评价内容评价内容评价内,容评价内容,评价内容评价内容评价内容评价内容评价内容评价内容评价内容,评价内容评价内容评价内容评价内容评价内容评价内容评价内容,评价内容评价内容评价内容评价内容评价内容评价内容评价内容,评价内容评价内容评价内容评价内容评价内容评价内容评价内容内容评价内容评价内容</p>
+            <ul class="comment_imgs clearfix">
+                <li class="pull-left mr-10">
+                    <img src="{{url('/fx/images/usercenter_avatar.png')}}" class="J_show_img" alt="">
+                </li>
+                <li class="pull-left mr-10">
                     <img src="{{url('/fx/images/usercenter_avatar.png')}}" alt="">
                 </li>
-                <li>
+                <li class="pull-left mr-10">
                     <img src="{{url('/fx/images/usercenter_avatar.png')}}" alt="">
                 </li>
-                <li>
-                    <img src="{{url('/fx/images/usercenter_avatar.png')}}" alt="">
-                </li>
-                <li>
+                <li class="pull-left mr-10">
                     <img src="{{url('/fx/images/usercenter_avatar.png')}}" alt="">
                 </li>
             </ul>

@@ -581,8 +581,8 @@ button.swiper-pagination-bullet {
  * -------------------------- */
 @font-face {
   font-family: 'FontAwesome';
-  src: url(http://www.fx.com/fx/build/674f50d287a8c48dc19ba404d20fe713.eot);
-  src: url(http://www.fx.com/fx/build/674f50d287a8c48dc19ba404d20fe713.eot?#iefix&v=4.7.0) format('embedded-opentype'), url(http://www.fx.com/fx/build/af7ae505a9eed503f8b8e6982036873e.woff2) format('woff2'), url(http://www.fx.com/fx/build/fee66e712a8a08eef5805a46892932ad.woff) format('woff'), url(http://www.fx.com/fx/build/b06871f281fee6b241d60582ae9369b9.ttf) format('truetype'), url(http://www.fx.com/fx/build/912ec66d7572ff821749319396470bde.svg#fontawesomeregular) format('svg');
+  src: url(http://fx.caishi360.com/fx/build/674f50d287a8c48dc19ba404d20fe713.eot);
+  src: url(http://fx.caishi360.com/fx/build/674f50d287a8c48dc19ba404d20fe713.eot?#iefix&v=4.7.0) format('embedded-opentype'), url(http://fx.caishi360.com/fx/build/af7ae505a9eed503f8b8e6982036873e.woff2) format('woff2'), url(http://fx.caishi360.com/fx/build/fee66e712a8a08eef5805a46892932ad.woff) format('woff'), url(http://fx.caishi360.com/fx/build/b06871f281fee6b241d60582ae9369b9.ttf) format('truetype'), url(http://fx.caishi360.com/fx/build/912ec66d7572ff821749319396470bde.svg#fontawesomeregular) format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -3130,7 +3130,7 @@ div {
 
 @font-face {
   font-family: "Chayefont";
-  src: url(http://www.fx.com/fx/build/a91181f3db84689cdada8e079681945f.ttf);
+  src: url(http://fx.caishi360.com/fx/build/a91181f3db84689cdada8e079681945f.ttf);
   font-weight: normal;
   font-style: normal; }
 
@@ -3139,7 +3139,7 @@ div {
 
 @font-face {
   font-family: "formfont";
-  src: url(http://www.fx.com/fx/build/9d8026a4c6964211ac49c78c8cc6e068.ttf);
+  src: url(http://fx.caishi360.com/fx/build/9d8026a4c6964211ac49c78c8cc6e068.ttf);
   font-weight: normal;
   font-style: normal; }
 
@@ -6423,4 +6423,14 @@ footer {
         color: #FCBF26; }
     .orderdetail .comment .comment_content {
       width: 100%;
-      height: 3rem; }
+      height: auto; }
+    .orderdetail .comment .comment_content.active {
+      height: 1rem; }
+    .orderdetail .comment .comment_imgs {
+      width: 100%; }
+      .orderdetail .comment .comment_imgs li {
+        width: 1rem;
+        height: 1rem; }
+        .orderdetail .comment .comment_imgs li img {
+          display: block;
+          width: 100%; }
