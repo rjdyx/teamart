@@ -62,7 +62,7 @@
                     <i class="fa fa-lock"></i>
                     <input type="password" id="password" class="chayefont" name="password" autocomplete="off" placeholder="请输入密码">
                 </label>
-                <div class="login_link">
+                <div class="login_link txt-c">
                     <!-- 输入邮箱和更改密码的页面的跳转地址：/password/reset/{id} -->
                     <a class="pull-left chayefont" href="{{ url('/password/reset') }}">
                         <!-- <i class="fa fa-circle-thin"></i> -->

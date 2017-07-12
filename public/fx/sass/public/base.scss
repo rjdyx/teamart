@@ -1,6 +1,8 @@
 html, body{
 	height: 100%;
   -webkit-tap-highlight-color:transparent;
+  max-width: 640px;
+  @extend %marginLR;
 }
 
 #{$comonElements} {
@@ -20,15 +22,15 @@ div {
   box-sizing: border-box;
 }
 
-@font-face {
-  font-family: "Chayefont";
-  src: url(../fonts/chayefont.ttf) format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
-.chayefont {
-  font-family: "Chayefont";
-}
+// @font-face {
+//   font-family: "Chayefont";
+//   src: url(../fonts/chayefont.ttf) format('truetype');
+//   font-weight: normal;
+//   font-style: normal;
+// }
+// .chayefont {
+//   font-family: "Chayefont";
+// }
 
 /*  部分新增的公共 class*/
 

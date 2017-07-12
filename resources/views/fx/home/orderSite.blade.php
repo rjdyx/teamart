@@ -82,8 +82,8 @@
     			ajax('get', '/home/site/data')
     				.then(function (res) {
     					var template = ''
-    					if (res.length) {
-    						res.forEach(function (v) {
+    					if (res.data.length) {
+    						res.data.forEach(function (v) {
     							template += `
     								<div class="ordersite_warp clearfix J_choose_site" data-lat="${v.latitude}" data-lng="${v.longitude}">
 										<i class="fa fa-map-marker"></i>
@@ -97,11 +97,11 @@
 									</div>
     							`
     						})
+    						$('.ordersite_message').removeClass('hide')
     					} else {
     						template += '<div class="txt-c mt-20 fz-20">暂无自提点</div>'
     					}
     					$('.ordersite_list').html(template)
-    					$('.ordersite_message').removeClass('hide')
     					var points = []
     					$('.J_choose_site').each(function (idx, elem) {
     						if (idx == 0) {
