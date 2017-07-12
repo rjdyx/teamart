@@ -31,6 +31,7 @@
             type: "get",
             dataType: "json",
             success: function(data) {
+                console.dir(data)
                 initGeetest({
                     gt: data.gt,
                     challenge: data.challenge,

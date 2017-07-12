@@ -47,13 +47,38 @@
             </div>
         </div>
         <div class="orderdetail_state">
-            <span>订单当前状态：</span>
-            <span>未付款</span>
+            <span class="pull-left chayefont fz-18">订单当前状态：</span>
+            <span class="pull-right fz-14">未付款</span>
         </div>
         <!-- 物流 -->
-        <div class="delivery"></div>
+        <!-- <div class="delivery">
+            <a href="javascript:;">查看物流详情</a>
+        </div> -->
         <!-- 评价 -->
-        <div class="comment"></div>
+        <div class="comment">
+            <h5 class="chayefont fz-18 mb-10">您的评价：</h5>
+            <div class="comment_grade mb-10">
+                <span>满意度：</span>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+            </div>
+            <p class="comment_content mb-10">评价内容评价内容评价内容评价内容评价内容评价内容评价内容,评价评价内容评价内容评价内容评价内容评价内容评价内容评价内容,评价内容评价内容评价内容评价内容评价内容评价内容评价内容,评价内容评价内容评价内容评价内容评价内容评价内容评价内容,评价内容评价内容评价内容评价内容评价内容评价内容评价内容,评价内容评价内容评价内容评价内容评价内容评价内容评价内容,评价内容评价内容评价内容评价内容评价内容评价内容评价内容内容评价内容评价内容</p>
+            <ul class="comment_imgs">
+                <li>
+                    <img src="{{url('/fx/images/usercenter_avatar.png')}}" alt="">
+                </li>
+                <li>
+                    <img src="{{url('/fx/images/usercenter_avatar.png')}}" alt="">
+                </li>
+                <li>
+                    <img src="{{url('/fx/images/usercenter_avatar.png')}}" alt="">
+                </li>
+                <li>
+                    <img src="{{url('/fx/images/usercenter_avatar.png')}}" alt="">
+                </li>
+            </ul>
+        </div>
         <!-- 退货 -->
         <div class="backn"></div>
     </div>
