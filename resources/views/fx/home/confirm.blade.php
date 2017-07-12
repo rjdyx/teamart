@@ -146,40 +146,6 @@
     		}
     		countPrice();
     	});
-
-
-
-    if(<?php echo $unifiedOrderResult["code_url"] != NULL; ?>)
-    {
-        var url = "<?php echo $code_url;?>";
-        //参数1表示图像大小，取值范围1-10；参数2表示质量，取值范围'L','M','Q','H'
-        var qr = qrcode(10, 'M');
-        qr.addData(url);
-        qr.make();
-        var wording=document.createElement('p');
-        var code=document.createElement('DIV');
-        code.innerHTML = qr.createImgTag();
-        var element=document.getElementById("qrcode");
-        element.appendChild(wording);
-        element.appendChild(code);
-    }
-        
-    setInterval("ajaxstatus()",3000);//1000为1秒钟
-    function ajaxstatus() {
-        $.ajax({
-            type: "get",
-            url: "http://www.caishi360.com/user/orders/getNumberState",//文件路由
-            data: {
-                "order_number":"<?php echo $order_number?>"
-            },
-            dataType: "json",//json等等
-            success: function (data) {
-                if(data=='paid') {
-                    window.location.href="http://www.caishi360.com/user/orders/pay/successful";
-                }
-            }
-        });
-    } 
     </script>
 @endsection
 
