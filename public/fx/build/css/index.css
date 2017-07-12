@@ -3130,21 +3130,12 @@ div {
 
 @font-face {
   font-family: "Chayefont";
-  src: url(http://fx.caishi360.com/fx/build/a91181f3db84689cdada8e079681945f.ttf);
+  src: url(http://fx.caishi360.com/fx/build/9d8026a4c6964211ac49c78c8cc6e068.ttf) format("truetype");
   font-weight: normal;
   font-style: normal; }
 
 .chayefont {
   font-family: "Chayefont"; }
-
-@font-face {
-  font-family: "formfont";
-  src: url(http://fx.caishi360.com/fx/build/9d8026a4c6964211ac49c78c8cc6e068.ttf);
-  font-weight: normal;
-  font-style: normal; }
-
-.formfont {
-  font-family: "formfont"; }
 
 /*  部分新增的公共 class*/
 .block {
@@ -6414,6 +6405,15 @@ footer {
     padding: 0 0.2rem;
     line-height: 0.96rem;
     background-color: #FFF; }
+  .orderdetail .delivery {
+    height: 0.96rem;
+    width: 100%;
+    border-bottom: 0.01rem solid #E3E3E3;
+    padding: 0 0.2rem;
+    line-height: 0.96rem;
+    background-color: #FFF; }
+    .orderdetail .delivery a {
+      display: block; }
   .orderdetail .comment {
     padding: 0.2rem;
     background-color: #FFF; }
@@ -6434,3 +6434,13 @@ footer {
         .orderdetail .comment .comment_imgs li img {
           display: block;
           width: 100%; }
+  .orderdetail .backn {
+    background-color: #FFF; }
+    .orderdetail .backn .backn_reason {
+      height: 0.96rem;
+      width: 100%;
+      border-bottom: 0.01rem solid #E3E3E3;
+      padding: 0 0.2rem;
+      line-height: 0.96rem; }
+    .orderdetail .backn p {
+      padding: 0.2rem; }

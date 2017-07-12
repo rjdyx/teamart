@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="initial-scale=1,maximum-scale=1, minimum-scale=1">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1, minimum-scale=1, user-scalable=0">
     <!-- 避免IE使用兼容模式 -->
     <!-- 针对手持设备优化，主要是针对一些老的不识别viewport的浏览器，比如黑莓 -->
     <meta name="HandheldFriendly" content="true">

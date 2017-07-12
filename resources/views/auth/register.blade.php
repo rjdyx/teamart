@@ -86,47 +86,47 @@
     ?>
     <div class="register">
         <div class="register_logo"></div>
-        <p class="form_error formfont"></p>
+        <p class="form_error chayefont"></p>
         <div class="register_form">
             <form method="POST" id="form" name="form" action="{{ route('register') }}">
                 {{ csrf_field() }}
                 <input type="hidden" value="{{$v}}" name="agent_id">
                 <label for="name" class="field">
                     <i class="fa fa-user-o"></i>
-                    <input type="text" id="name" class="formfont" name="name" autocomplete="off" placeholder="请输入用户名">
+                    <input type="text" id="name" class="chayefont" name="name" autocomplete="off" placeholder="请输入用户名">
                 </label>
                 <label for="password" class="field">
                     <i class="fa fa-lock"></i>
-                    <input type="password" id="password" class="formfont" name="password" autocomplete="off" placeholder="请输入密码">
+                    <input type="password" id="password" class="chayefont" name="password" autocomplete="off" placeholder="请输入密码">
                 </label>
                 <label for="repassword" class="field">
                     <i class="fa fa-lock"></i>
-                    <input type="password" id="repassword" class="formfont" name="repassword" autocomplete="off" placeholder="请输入确认密码">
+                    <input type="password" id="repassword" class="chayefont" name="repassword" autocomplete="off" placeholder="请输入确认密码">
                 </label>
                 <label for="email" class="field">
                     <i class="fa fa-envelope-o"></i>
-                    <input type="email" id="email" class="formfont" name="email" autocomplete="off" placeholder="请输入邮箱">
+                    <input type="email" id="email" class="chayefont" name="email" autocomplete="off" placeholder="请输入邮箱">
                 </label>
                 <label for="phone" class="field">
                     <i class="fa fa-mobile fz-20"></i>
-                    <input type="phone" id="phone" class="formfont" name="phone" autocomplete="off" placeholder="请输入手机">
+                    <input type="phone" id="phone" class="chayefont" name="phone" autocomplete="off" placeholder="请输入手机">
                 </label>
                 <div class="register_gender clearfix">
                     <label for="gender_male" class="pull-left fa fa-circle-thin">
                         男
-                        <input type="radio" id="gender_male" class="formfont invisibility" name="gender" value="0">
+                        <input type="radio" id="gender_male" class="chayefont invisibility" name="gender" value="0">
                     </label>
                     <label for="gender_female" class="fa fa-circle-thin pull-left">
                         女
-                        <input type="radio" id="gender_female" class="formfont invisibility" name="gender" value="1">
+                        <input type="radio" id="gender_female" class="chayefont invisibility" name="gender" value="1">
                     </label>
                 </div>
                 <div class="register_link">
-                    <a class="pull-left formfont" href="{{ url('/login') }}">
+                    <a class="pull-left chayefont" href="{{ url('/login') }}">
                         <!-- <i class="fa fa-circle-thin"></i> -->
                         已有账号
                     </a>
-                    <a class="pull-left formfont" href="{{ url('/login') }}">
+                    <a class="pull-left chayefont" href="{{ url('/login') }}">
                         <!-- <i class="fa fa-circle"></i> -->
                         注册说明
                     </a>

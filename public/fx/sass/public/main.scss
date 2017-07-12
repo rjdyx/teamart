@@ -3575,7 +3575,17 @@
 		line-height: 0.96rem;
 		background-color: #FFF;
 	}
-	.delivery {}
+	.delivery {
+		height: 0.96rem;
+		width: 100%;
+		border-bottom: 0.01rem solid #E3E3E3;
+		padding: 0 0.2rem;
+		line-height: 0.96rem;
+		background-color: #FFF;
+		a {
+			display: block;
+		}
+	}
 	.comment {
 		padding: 0.2rem;
 		background-color: #FFF;
@@ -3605,5 +3615,17 @@
 			}
 		}
 	}
-	.backn {}
+	.backn {
+		background-color: #FFF;
+		.backn_reason {
+			height: 0.96rem;
+			width: 100%;
+			border-bottom: 0.01rem solid #E3E3E3;
+			padding: 0 0.2rem;
+			line-height: 0.96rem;
+		}
+		p {
+			padding: 0.2rem;
+		}
+	}
 }

@@ -22,7 +22,7 @@ div {
 
 @font-face {
   font-family: "Chayefont";
-  src: url(../fonts/chayefont.ttf);
+  src: url(../fonts/chayefont.ttf) format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -30,15 +30,6 @@ div {
   font-family: "Chayefont";
 }
 
-@font-face {
-  font-family: "formfont";
-  src: url(../fonts/formfont.ttf);
-  font-weight: normal;
-  font-style: normal;
-}
-.formfont {
-  font-family: "formfont";
-}
 /*  部分新增的公共 class*/
 
 .block {
