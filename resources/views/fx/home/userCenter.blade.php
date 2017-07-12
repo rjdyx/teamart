@@ -77,9 +77,12 @@
 				<li>
 					<a href="javascript:;">
 						<p>所属身份</p>
-						<p>@if(Auth::user())
+						<p>
+						@if(Auth::user())
 							@if (Auth::user()->type == 1) 分销商 @else 普通会员 @endif
-						 @endif
+						@else
+							无
+						@endif
 						 </p>
 					</a>
 				</li>
