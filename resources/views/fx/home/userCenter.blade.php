@@ -154,7 +154,7 @@
 				</a>
 			</li>
 			<li>
-				<a href="{{url('/home/order/site')}}">
+				<a href="{{url('/home/site')}}">
 					<div class="usercenter_nav_icon">
 						<i class="fa fa-map-marker"></i>
 					</div>

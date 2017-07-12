@@ -76,8 +76,6 @@ Route::group(['namespace'=>'Home','prefix'=>'home','middleware'=>['auth','userRo
     	Route::get('/comment/product/{id}','OrderController@getOrderProduct');//获取订单商品
     	Route::post('/comment/store/{id}','OrderController@commentStore');//订单评论处理（保存）
     	Route::get('/pay/{order_id}','OrderController@orderPay');//付款
-    	Route::get('/site','OrderController@site');//站点地图页
-    	Route::get('/site/data','OrderController@siteListData');//站点数据接口
     	Route::get('/backn/reason/{id}','OrderController@backnReason');//退货理由
     	Route::post('/operate/{type}','OrderController@orderOperate');//订单state改变
     	Route::get('/{id}','OrderController@orderDetail');//订单详情

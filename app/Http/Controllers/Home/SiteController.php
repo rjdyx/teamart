@@ -14,9 +14,8 @@ class SiteController extends Controller
 	public function index () 
 	{ 
 		$title = '站点信息';
-		return view(config('app.theme').'.home.site');
+		return view(config('app.theme').'.home.orderSite')->with(['title' => $title]);
 	}
-
 
 	//站点列表数据接口
 	public function indexData (Request $request) 

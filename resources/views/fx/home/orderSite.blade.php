@@ -7,7 +7,7 @@
 
 @section('script')
     @parent
-    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=SyKH8dteZj7B80nhTnFIs5KEtMY1idvH"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak={{env('ORDER_SITE')}}"></script>
     <script>
     	$(function () {
     // 		function initBMap () {
@@ -100,7 +100,7 @@
 
     		// 获取自提点列表
     		function getSiteList () {
-    			ajax('get', '/home/order/site/data')
+    			ajax('get', '/home/site/data')
     				.then(function (res) {
     					var template = ''
     					if (res.length) {

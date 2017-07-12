@@ -204,7 +204,7 @@
 			</a>
 		</div>
 		<div class="confirm_address mb-20 point hide">
-			<a href="{{url('/home/order/site')}}" class="clearfix">
+			<a href="{{url('/home/site')}}" class="clearfix">
 				<i class="fa fa-map-marker pull-left"></i>
 				<div class="confirm_address_info pull-left">
 					<p>当前自提点</p>

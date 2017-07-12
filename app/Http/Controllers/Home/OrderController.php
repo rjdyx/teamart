@@ -219,18 +219,6 @@ class OrderController extends Controller
 		return $datas;
 	}
 
-	//查看销售站点页
-	public function site(){
-		$title = "自提位置";
-		return view(config('app.theme').'.home.orderSite')->with(['title' => $title]);
-	}
-
-	//所有销售站点数据
-	public function siteListData()
-	{
-		return Site::get();
-	}
-
 	//查看订单物流
 	public function showDelivery($order_id)
 	{
