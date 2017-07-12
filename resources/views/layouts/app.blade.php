@@ -34,8 +34,8 @@
     <title>@yield('title')</title>
 
     <!-- Styles -->
-    {{-- <link rel="stylesheet" href="{{url('/fx/build/css/index.css')}}"> --}}
-    <link rel="stylesheet" href="http://localhost:8080/fx/build/css/index.css">
+    <link rel="stylesheet" href="{{url('/fx/build/css/index.css')}}">
+    {{-- <link rel="stylesheet" href="http://localhost:8080/fx/build/css/index.css"> --}}
     @yield('css')
 
     <!-- Scripts -->
