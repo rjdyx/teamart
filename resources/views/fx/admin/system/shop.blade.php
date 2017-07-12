@@ -135,6 +135,13 @@
                     </div>
                     <span class="col-sm-4 text-danger form_error" id="delivery_key_txt"></span>
                   </div>
+                  <div class="form-group">
+                    <label for="delivery_id" class="col-sm-2 control-label">客服QQ</label>
+                    <div class="col-sm-6">
+                      <input type="text" class="form-control" id="qq" placeholder="请输入QQ号" name="qq" value="{{$shop->qq}}">
+                    </div>
+                    <span class="col-sm-4 text-danger form_error" id="delivery_key_txt"></span>
+                  </div>
                   <!-- logo -->
                   <div class="form-group">
                     <label class="col-sm-2 control-label">logo</label>
