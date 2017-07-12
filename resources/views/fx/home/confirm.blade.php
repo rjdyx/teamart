@@ -146,40 +146,6 @@
     		}
     		countPrice();
     	});
-
-
-
-    if(<?php echo $unifiedOrderResult["code_url"] != NULL; ?>)
-    {
-        var url = "<?php echo $code_url;?>";
-        //参数1表示图像大小，取值范围1-10；参数2表示质量，取值范围'L','M','Q','H'
-        var qr = qrcode(10, 'M');
-        qr.addData(url);
-        qr.make();
-        var wording=document.createElement('p');
-        var code=document.createElement('DIV');
-        code.innerHTML = qr.createImgTag();
-        var element=document.getElementById("qrcode");
-        element.appendChild(wording);
-        element.appendChild(code);
-    }
-        
-    setInterval("ajaxstatus()",3000);//1000为1秒钟
-    function ajaxstatus() {
-        $.ajax({
-            type: "get",
-            url: "http://www.caishi360.com/user/orders/getNumberState",//文件路由
-            data: {
-                "order_number":"<?php echo $order_number?>"
-            },
-            dataType: "json",//json等等
-            success: function (data) {
-                if(data=='paid') {
-                    window.location.href="http://www.caishi360.com/user/orders/pay/successful";
-                }
-            }
-        });
-    } 
     </script>
 @endsection
 
@@ -189,39 +155,39 @@
 	@include("layouts.backIndex")
 	
 	<?php
-	    include_once str_replace("\\","/",public_path())."/WPay/WxPayPubHelper/WxPayPubHelper.php";
-	    //使用统一支付接口
-	    $unifiedOrder = new UnifiedOrder_pub();
-	    $unifiedOrder->setParameter("body",'微信购买'); //商品描述
-	    //自定义订单号，此处仅作举例
-	    $timeStamp = time();
-	    $out_trade_no = WxPayConf_pub::APPID."$timeStamp"; 
-	    $unifiedOrder->setParameter("out_trade_no",$order_number);//商户订单号 
-	    $unifiedOrder->setParameter("total_fee",$count*100);//总金额
-	    $unifiedOrder->setParameter("notify_url",WxPayConf_pub::NOTIFY_URL);//通知地址 
-	    $unifiedOrder->setParameter("trade_type","NATIVE");//交易类型
-	    $unifiedOrder->setParameter("sub_mch_id","1444913102");//交易类型
-	    //获取统一支付接口结果
-	    $unifiedOrderResult = $unifiedOrder->getResult();
-	    //商户根据实际情况设置相应的处理流程
-	    if ($unifiedOrderResult["return_code"] == "FAIL") 
-	    {
-	        //商户自行增加处理流程
-	        echo "通信出错：".$unifiedOrderResult['return_msg']."<br>";
-	    }
-	    elseif($unifiedOrderResult["result_code"] == "FAIL")
-	    {
-	        //商户自行增加处理流程
-	        echo "错误代码：".$unifiedOrderResult['err_code']."<br>";
-	        echo "错误代码描述：".$unifiedOrderResult['err_code_des']."<br>";
-	    }
-	    elseif($unifiedOrderResult["code_url"] != NULL)
-	    {
-	        //从统一支付接口获取到code_url
-	        $code_url = $unifiedOrderResult["code_url"];
-	        //商户自行增加处理流程
-	        //......
-	    }
+	    // include_once str_replace("\\","/",public_path())."/WPay/WxPayPubHelper/WxPayPubHelper.php";
+	    // //使用统一支付接口
+	    // $unifiedOrder = new UnifiedOrder_pub();
+	    // $unifiedOrder->setParameter("body",'微信购买'); //商品描述
+	    // //自定义订单号，此处仅作举例
+	    // $timeStamp = time();
+	    // $out_trade_no = WxPayConf_pub::APPID."$timeStamp"; 
+	    // $unifiedOrder->setParameter("out_trade_no",$order_number);//商户订单号 
+	    // $unifiedOrder->setParameter("total_fee",$count*100);//总金额
+	    // $unifiedOrder->setParameter("notify_url",WxPayConf_pub::NOTIFY_URL);//通知地址 
+	    // $unifiedOrder->setParameter("trade_type","NATIVE");//交易类型
+	    // $unifiedOrder->setParameter("sub_mch_id","1444913102");//交易类型
+	    // //获取统一支付接口结果
+	    // $unifiedOrderResult = $unifiedOrder->getResult();
+	    // //商户根据实际情况设置相应的处理流程
+	    // if ($unifiedOrderResult["return_code"] == "FAIL") 
+	    // {
+	    //     //商户自行增加处理流程
+	    //     echo "通信出错：".$unifiedOrderResult['return_msg']."<br>";
+	    // }
+	    // elseif($unifiedOrderResult["result_code"] == "FAIL")
+	    // {
+	    //     //商户自行增加处理流程
+	    //     echo "错误代码：".$unifiedOrderResult['err_code']."<br>";
+	    //     echo "错误代码描述：".$unifiedOrderResult['err_code_des']."<br>";
+	    // }
+	    // elseif($unifiedOrderResult["code_url"] != NULL)
+	    // {
+	    //     //从统一支付接口获取到code_url
+	    //     $code_url = $unifiedOrderResult["code_url"];
+	    //     //商户自行增加处理流程
+	    //     //......
+	    // }
 	?>
 	<div class="confirm">
 		<div class="confirm_address mb-20 express">
