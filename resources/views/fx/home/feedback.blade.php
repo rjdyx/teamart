@@ -114,6 +114,10 @@
 				ajax('post', url, params, false, true).then(function (res) {
 					if (res) {
 						prompt.message('反馈成功')
+						$('#contact').val('')
+						$('#content').val('')
+						$('.feedback_imgs_list').find('li').remove()
+						addFile()
 					} else {
 						prompt.message('反馈失败')
 					}

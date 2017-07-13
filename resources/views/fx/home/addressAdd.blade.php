@@ -48,6 +48,7 @@
             'type': 1, //数据源类型
             'data': LAreaData //数据源
         });
+        console.dir(LAreaData)
         area1.value=[1,13,3];//控制初始位置，注意：该方法并不会影响到input的value
         $('.J_defualtAddress').click(function(){
 			var v = $("input[name='state']").val();
@@ -80,6 +81,11 @@
 					})
 			}
 		})
+		var test = ''
+		LAreaData.forEach(function (v) {
+			test += `<li data-id="${v.id}" data-name="${v.name}">${v.name}</li>`
+		})
+		$('.province').append(test)
     </script>
 @endsection
 
@@ -119,4 +125,18 @@
 		</form>
 		<div class="chayefont address_add J_submit">保存地址</div>
 	</div>
+	<!-- <div class="areaSelector">
+		<div class="areaSelector_bg"></div>
+		<div class="areaSelector_container">
+			<div class="areaSelector_opts clearfix">
+				<a href="javascript:;" class="pull-left fz-14">取消</a>
+				<a href="javascript:;" class="pull-right fz-14">确定</a>
+			</div>
+			<div class="areaSelector_area clearfix">
+				<ul class="pull-left area_list province"></ul>
+				<ul class="pull-left area_list city"></ul>
+				<ul class="pull-left area_list area"></ul>
+			</div>
+		</div>
+	</div> -->
 @endsection

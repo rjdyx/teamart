@@ -108,20 +108,20 @@
                     <span class="block times">&times;{{$data->amount}}</span>
                 </div>
             </div>
-            @if ($order->type!='close' || $order->type!='backn' || $order->type!='backy')
+            @if ($order->type=='close' || $order->type=='backn' || $order->type=='backy')
             <div class="comment mt-10">
-                @if(!empty($data->cid))
+                @if(!empty($data['comment']->id))
                     <!-- <h5 class="chayefont fz-18 mb-10">您的评价：</h5> -->
                     <div class="comment_grade mb-10">
                         <span>满意度：</span>
-                        @for($i=0;$i<$data->cgrade/20;$i++)
+                        @for($i=0;$i<$data['comment']->cgrade/20;$i++)
                         <i class="fa fa-star"></i>
                         @endfor
                     </div>
-                    <p class="comment_content mb-10 active J_comment">{{$data->content}}</p>
+                    <p class="comment_content mb-10 active J_comment">{{$data['comment']->content}}</p>
                     <ul class="comment_imgs clearfix">
-                    @if(!empty($data->cthumb))
-                        @foreach(explode(',',$data->cthumb) as $img)
+                    @if(!empty($data['comment']->cthumb))
+                        @foreach(explode(',',$data['comment']->cthumb) as $img)
                         <li class="pull-left mr-10">
                             <img src="{{url('')}}/{{$img}}" class="J_show_img" alt="">
                         </li>

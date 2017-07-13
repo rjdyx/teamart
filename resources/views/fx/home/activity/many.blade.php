@@ -117,7 +117,7 @@
                                 </div>
                                 <div class="many_right pull-right">
                                     <p class="chayefont">全场<span class="price">${v.price}</span>元</p>
-                                    <a href="http://${window.location.host}/home/promotion/type?id=${v.id}" class="txt-c ${type} mt-10 mb-10 chayefont">${type == 'over' ? '活动已结束' : '去看看'}</a>
+                                    <a href="http://${window.location.host}/home/promotion/activity?id=${v.id}" class="txt-c ${type} mt-10 mb-10 chayefont">${type == 'over' ? '活动已结束' : '去看看'}</a>
                                 </div>`
                     template += `<div class="many_desc pull-left">${v.desc}</div>
                         </div>`

@@ -41,7 +41,8 @@
                     $('.dropload-down').show()
                 }
                 var type = $(".promotion").attr('type');
-                ajax('get', '/home/index/more', {page: page,type:type}).then(function (res) {
+                var id = "{{$_GET['id']}}"
+                ajax('get', '/home/index/more', {page: page,type:type,id:id}).then(function (res) {
                     var template = ''
                     var data = res.data
                     if (data.length > 0) {

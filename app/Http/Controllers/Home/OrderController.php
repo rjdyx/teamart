@@ -347,26 +347,32 @@ class OrderController extends Controller
 		if ($order->user_id != Auth::user()->id) return Redirect::back();//订单无效
 
 		$goods = Product::join('order_product','product.id','=','order_product.product_id')
-				->leftjoin('comment','product.id','=','comment.product_id')
 				->where('order_product.order_id','=',$id)
 				->whereNull('product.deleted_at')
 				->whereNull('order_product.deleted_at')
+				->distinct('product.id')
 				->select('product.name','product.desc',
 					'product.thumb','product.id',
-					'product.price as raw_price','comment.id as cid',
-					'order_product.amount','order_product.price',
-					'comment.grade as cgrade','comment.content',
-					'comment.img as cimg','comment.thumb as cthumb'
+					'product.price as raw_price',
+					'order_product.amount','order_product.price'
 				)->get();
 
 		$datas = array();
 		foreach ($goods as $k=>$good) {
 			$datas[$k] = $good;
-			$datas[$k]['replys'] = $this->commentReply($good->cid);
+			$datas[$k]['comment'] = $this->detailComment($good->id, $id);
+			$cid = isset($datas[$k]['comment']->id)?$datas[$k]['comment']->id:'';
+			$datas[$k]['replys'] = $this->commentReply($cid);
 		}
 
 		return view(config('app.theme').'.home.order.detail')
 				->with(['title' => $title,'order'=>$order,'datas'=>$datas]);
+	}
+
+	public function detailComment($id, $order_id)
+	{
+		if (empty($id)) return null;
+		return  Comment::where('order_id',$order_id)->find($id);
 	}
 
 	public function commentReply($id)
