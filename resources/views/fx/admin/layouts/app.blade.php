@@ -35,7 +35,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@if(count($data)){{$data->name}} @endif @yield('title')</title>
+    <title>@if(count($data)){{$data->name}} @endif - @yield('title')</title>
 
     <!-- Bootstrap 3.3.6 -->
     <link rel="stylesheet" href="{{url('/admin/build/css/index.css')}}">
