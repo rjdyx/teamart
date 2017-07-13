@@ -1,8 +1,12 @@
+<?php 
+    $data = App\System::first();
+ ?>
 <!DOCTYPE html>
 <html lang="{{ config('app.locale') }}" style="height: 100%;width:100%;">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="keywords" content="@if(count($data)){{$data->keywords}} @endif">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 避免IE使用兼容模式 -->
     <!-- 针对手持设备优化，主要是针对一些老的不识别viewport的浏览器，比如黑莓 -->
@@ -31,7 +35,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title')</title>
+    <title>@if(count($data)){{$data->name}} @endif @yield('title')</title>
 
     <!-- Bootstrap 3.3.6 -->
     <link rel="stylesheet" href="{{url('/admin/build/css/index.css')}}">
