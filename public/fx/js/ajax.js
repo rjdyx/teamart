@@ -20,9 +20,10 @@ const ajax = (type, url, data = {}, isEdit = false, hasfile = false, errFn = tru
 			}
 			let fd = new FormData()
 			for (let i in data) {
-				if (i === 'imgs[]') {
+				// if (i === 'imgs[]') {
+				if (data[i] instanceof Array) { // 如果是数组就需要添加数据
 					data[i].forEach((v) => {
-						fd.append('imgs[]', v)
+						fd.append(i, v)
 					})
 				} else {
 					fd.append(i, data[i])
@@ -35,7 +36,6 @@ const ajax = (type, url, data = {}, isEdit = false, hasfile = false, errFn = tru
 	} else {
 		datas = data
 	}
-
 	let pm = new Promise((resolve, reject) => {
 		axios[type](url, datas, config)
 			.then(res => {

@@ -30,8 +30,8 @@
 			var uid = $('.J_QRcode').attr('uid');
 			var qrcode = new QRCode(document.getElementById("qrcode"), {
 			    text: "http://"+window.location.host+'/bind/agent/'+ uid,
-			    width: 1024,
-			    height: 1024
+			    width: 512,
+			    height: 512
 			})
 		}, 200)
 

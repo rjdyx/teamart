@@ -107,7 +107,7 @@
                                     <p class="${type} fz-14 mt-10" data-start="${manyStart}" data-end="${manyEnd}">`
                     if (type == 'start') {
                         var times = countdown(manyEnd - now)
-                        template += `<time class="hour fz-14">${times.hour}</time><b class="ml-10 mr-10">:</b><time class="min fz-14">${times.min}</time><b class="ml-10 mr-10">:</b><time class="second fz-14">${times.second}</time>`
+                        template += `距离活动结束还有<time class="hour fz-14 ml-10">${times.hour}</time><b class="ml-10 mr-10">:</b><time class="min fz-14">${times.min}</time><b class="ml-10 mr-10">:</b><time class="second fz-14">${times.second}</time>`
                     } else if (type == 'before') {
                         template += `<time class="mr-10">${v.date_start.split(' ')[0]}</time>活动即将开始`
                     } else if (type == 'over') {
@@ -119,7 +119,7 @@
                                     <p class="chayefont">全场<span class="price">${v.price}</span>元</p>
                                     <a href="http://${window.location.host}/home/promotion/type?id=${v.id}" class="txt-c ${type} mt-10 mb-10 chayefont">${type == 'over' ? '活动已结束' : '去看看'}</a>
                                 </div>`
-                    template += `<div class="many_desc">${v.desc}</div>
+                    template += `<div class="many_desc pull-left">${v.desc}</div>
                         </div>`
                 })
                 return template;

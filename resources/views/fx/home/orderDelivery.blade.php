@@ -11,7 +11,7 @@
         var url = 'http://'+window.location.host+'/home/order/delivery_data';
         //code:物流单号、 id:订单id 、coding快递公司编号
         var params = {id:"{{$data->id}}",code:"{{$data->delivery_serial}}",coding:"{{$data->coding}}"}
-        // var params = {code:3333416009794,order:8025019758554139,coding:'STO'}
+        // var params = {code:3333416009794,id:8025019758554139,coding:'STO'}
         ajax('get', url, params).then(function (data) {
             if (data) {
                 var res = data;

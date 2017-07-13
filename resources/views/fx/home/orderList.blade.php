@@ -126,18 +126,19 @@
                         if (index2 < 1) {    
                             a = `   <div class="order_warpper mb-20">
                                         <div class="order_warpper_tit">
-                                            <h1 class="pull-left chayefont">订单号：${serial}<i class="fa fa-angle-right ml-20"></i></h1>
-                                            <span class="pull-right chayefont">${date}</span>
+                                            <h1 class="pull-left chayefont">订单号：${serial}</h1>
+                                            <a href="http://${window.location.host}/home/order/${oid}" class="pull-right">详情<i class="fa fa-angle-right ml-10"></i></a>
                                         </div>`
                                 c = `   <div class="order_warpper_sum txt-r">
                                             <span>总${len}件商品</span>
                                             <span>合计：<i class="price">&yen;${count}</i>（包运费）</span>
                                         </div>
+                                        <div class="order_warpper_sum txt-r">
+                                            <span>下单时间：</span>
+                                            <span>${date}</span>
+                                        </div>
                                         <div class="order_warpper_opts">
-                                            <ul class="pull-right">
-                                                <li>
-                                                    <a href="http://${window.location.host}/home/order/${oid}" class="chayefont point">订单详情</a>
-                                                </li>`
+                                            <ul class="pull-right">`
                                     if (state != 'paid' && state != 'pading') {
                                         c += `  <li class="J_opts" type="delivery" oid="${oid}">
                                                 <a href="javascript:;" class="chayefont point">查看物流</a>
@@ -257,8 +258,8 @@
                 $("#qrcode").html('')
                 var qrcode = new QRCode(document.getElementById("qrcode"), {
                     text: `http://${window.location.host}/home/order/list/${id}`,
-                    width: 1024,
-                    height: 1024
+                    width: 512,
+                    height: 512
                 })
                 prompt.message('二维码生成中')
                 setTimeout(function () {
@@ -279,6 +280,7 @@
             //按钮点击(订单筛选)
             $(".J_tabs").on('click tap', function(){
                 $(this).addClass('active').siblings().removeClass('active')
+                $('.order_container').scrollTop(0)
                 params['state'] = $(this).attr('state');
                 params['serial'] = '';
                 searchOrder();

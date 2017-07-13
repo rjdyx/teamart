@@ -34,7 +34,6 @@
 
 @section('script')
     @parent
-
     <script src="{{ asset('fx/larea/js/LAreaData1.js') }}"></script>
     <script src="{{ asset('fx/larea/js/LArea.min.js') }}"></script>
     <script>

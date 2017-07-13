@@ -13,7 +13,6 @@
 			function showImg () {
 				var $this = $(this)
 				var file = this.files[0]
-				var idx = parseInt($this.attr('id').substr(-1))
 				var id = $this.attr('id')
 				var $box = $('label[for="' + id + '"]').parent()
 				if (file.size / 1024 > 200) {
@@ -32,8 +31,8 @@
 					}
 					var img = new Image()
 					img.src = e.target.result
-					if ($('.ordercomment_imgs_list').find('li').length < 4) {
-						addFile()
+					if ($this.parents('.ordercomment_imgs_list').find('li').length < 4) {
+						addFile($this)
 					}
 					$box.find('.ordercomment_imgs_list_img').append(img)
 					$box.find('img').on('click tap', function () {
@@ -44,7 +43,7 @@
 				}
 				fr.readAsDataURL(file)
 			}
-			function addFile () {
+			function addFile ($elem) {
 				var nid = Date.now()
 				var template = `
 					<li class="pull-left mr-20 relative">
@@ -54,35 +53,42 @@
 						<div class="ordercomment_imgs_list_img hide">
 							<i class="fa fa-times-circle J_remove_img"></i>
 						</div>
-	                    <input type="file" name="imgs[]" id="img${nid}" class="invisibility J_imgs absolute" accept="image/jpeg,image/jpg,image/png" capture="camera">
+	                    <input type="file" name="${$elem.attr('name')}" id="img${nid}" class="invisibility J_imgs absolute" accept="image/jpeg,image/jpg,image/png" capture="camera">
 	                </li>
 				`
-				$('.ordercomment_imgs_list').append(template)
-				$('.ordercomment_imgs_list').find('.J_imgs').off('change', showImg).on('change', showImg)
-				$('.ordercomment_imgs_list').find('.J_remove_img').off('click tap', removeFile).on('click tap', removeFile)
+				console.log($elem.parents('.ordercomment_imgs_list'))
+				$elem.parents('.ordercomment_imgs_list').append(template)
+				$elem.parents('.ordercomment_imgs_list').find('.J_imgs').off('change', showImg).on('change', showImg)
+				$elem.parents('.ordercomment_imgs_list').find('.J_remove_img').off('click tap', removeFile).on('click tap', removeFile)
 			}
 			function removeFile () {
-				if ($('.ordercomment_imgs_list').find('img').length == 4) {
+				if ($(this).parents('.ordercomment_imgs_list').find('img').length == 4) {
 					var id = $(this).parents('li').find('input').attr('id')
+					var name = $(this).parents('li').find('input').attr('name')
 					$(this).parent().find('img').remove()
 					$(this).parent().addClass('hide').siblings('label').removeClass('hide')
 					$(this).parents('li').find('input').remove()
-					$(this).parents('li').append(`<input type="file" name="imgs[]" id="${id}" class="invisibility J_imgs absolute" accept="image/jpeg,image/jpg,image/png" capture="camera">`)
+					$(this).parents('li').append(`<input type="file" name="${name}" id="${id}" class="invisibility J_imgs absolute" accept="image/jpeg,image/jpg,image/png" capture="camera">`)
 					var cl = $(this).parents('li').clone()
-					$('.ordercomment_imgs_list').append(cl)
+					$(this).parents('.ordercomment_imgs_list').append(cl)
 					$('.J_imgs').off('change', showImg).on('change', showImg)
 				}
 				$(this).parents('li').remove()
 			}
-			// 图片变化
-			$('.J_imgs').on('change', showImg)
-			// 删除图片
-			$('.J_remove_img').on('click tap', removeFile)
+			// // 图片变化
+			// $('.J_imgs').on('change', showImg)
+			// // 删除图片
+			// $('.J_remove_img').on('click tap', removeFile)
 			
 			ajax('get', '/home/order/comment/product/' + "{{$id}}").then(function (res) {
 				var data = res
 				if (data.length) {
 					addProduct (data)
+					// 图片变化
+					$('.J_imgs').on('change', showImg)
+					// 删除图片
+					$('.J_remove_img').on('click tap', removeFile)
+					$('.J_grade').on('click tap', grade)
 				} else {
 					prompt.message('获取数据失败')
 				}
@@ -90,64 +96,111 @@
 
 			function addProduct (data) {
 				var template = ''
-				data.forEach(function (v,k){
+				data.forEach(function (v){
 					var order_price = v.order_price * v.amount
 					var price = v.price * v.amount
-					template = `<div class="ordercomment_warpper">
-					<div class="ordercomment_warpper_img pull-left mr-20">
-						<img src="http://${window.location.host}/${v.thumb}">
-					</div>
-					<div class="ordercomment_warpper_detail pull-left mr-20">
-						<h5 class="chayefont mb-10">${v.name}</h5>
-						<p>${v.desc}</p>
-					</div>
-					<div class="ordercomment_warpper_price pull-left txt-r">
-						<span class="block price">&yen;${order_price}</span>
-						<del class="block price_raw">&yen;${price}</del>
-						<span class="block times">&times;${v.amount}</span>
-					</div>
+					template += `
+					<div class="ordercomment_container mb-10" data-id="${v.id}">
+						<div class="ordercomment_warpper">
+							<div class="ordercomment_warpper_img pull-left mr-20">
+								<img src="http://${window.location.host}/${v.thumb}">
+							</div>
+							<div class="ordercomment_warpper_detail pull-left mr-20">
+								<h5 class="chayefont mb-10">${v.name}</h5>
+								<p>${v.desc}</p>
+							</div>
+							<div class="ordercomment_warpper_price pull-left txt-r">
+								<span class="block price">&yen;${order_price}</span>
+								<del class="block price_raw">&yen;${price}</del>
+								<span class="block times">&times;${v.amount}</span>
+							</div>
+						</div>
+						<div class="ordercomment_comment mt-20">
+							<textarea placeholder="评价" id ="content${v.id}"></textarea>
+						</div>
+						<div class="ordercomment_score mt-20 clearfix">
+							<span class="pull-left">满意度：</span>
+							<div class="ordercomment_score_star pull-left">
+								<i class="fa fa-star-o J_grade" data-grade="1"></i>
+								<i class="fa fa-star-o J_grade" data-grade="2"></i>
+								<i class="fa fa-star-o J_grade" data-grade="3"></i>
+								<i class="fa fa-star-o J_grade" data-grade="4"></i>
+								<i class="fa fa-star-o J_grade" data-grade="5"></i>
+							</div>
+							<input type="hidden" id="grade${v.id}" value="0">
+						</div>
+						<div class="ordercomment_imgs mt-20">
+							<span>晒图：</span>
+							<ul class="ordercomment_imgs_list mt-20 clearfix">
+								<li class="pull-left mr-20 relative">
+									<label for="img[${v.id}]${Date.now()}">
+										<i class="fa fa-camera"></i>
+									</label>
+									<div class="ordercomment_imgs_list_img hide">
+										<i class="fa fa-times-circle J_remove_img"></i>
+									</div>
+									<input type="file" name="imgs${v.id}[]" id="img[${v.id}]${Date.now()}" class="invisibility J_imgs absolute" accept="image/jpeg,image/jpg,image/png" capture="camera">
+								</li>
+							</ul>
+						</div>
 					</div>`
 				})
-				$(".ordercomment_lists").html(template)
+				$(".ordercomment_lists").append(template)
 			}
 
 			// 评分
-			$('.J_grade').on('click tap', function () {
+			function grade () {
+				var id = $(this).parents('.ordercomment_container').data('id')
 				var grade = parseInt($(this).data('grade'))
-				$('.J_grade').each(function (idx, elem) {
+				$(this).parents('.ordercomment_score_star').find('i').each(function (idx, elem) {
 					if (idx <= (grade - 1)) {
 						$(this).addClass('active fa-star').removeClass('fa-star-o')
 					} else {
 						$(this).removeClass('active fa-star').addClass('fa-star-o')
 					}
 				})
-				$('#grade').val(grade)
-			})
+				$('#grade' + id).val(grade)
+			}
 
 			// 提交
 			$('.J_comment').on('click tap', function () {
 				// ajax提交
-				if ($.trim($('#content').val()) == '' || $.trim($('#content').val()).length < 5) {
-					prompt.message('评价至少要5个字')
-					return
-				}
-				if ($('#grade').val() <= 0) {
-					prompt.message('请选择您的满意度')
-					return
-				}
-				var files = []
-				$('.J_imgs').each(function () {
-					if ($(this)[0].files[0]) {
-						files.push($(this)[0].files[0])
+				// if ($.trim($('#content').val()) == '' || $.trim($('#content').val()).length < 5) {
+				// 	prompt.message('评价至少要5个字')
+				// 	return
+				// }
+				// if ($('#grade').val() <= 0) {
+				// 	prompt.message('请选择您的满意度')
+				// 	return
+				// }
+				
+				var params = {}, temp = true
+				$('.ordercomment_container').each(function () {
+					var id = $(this).data('id')
+					if ($.trim($('#content' + id).val()) == '' || $.trim($('#content' + id).val()).length < 5) {
+						prompt.message('评价至少要5个字')
+						temp = false
+						return
 					}
+					if ($('#grade' + id).val() <= 0) {
+						prompt.message('请选择您的满意度')
+						temp = false
+						return
+					}
+					var files = []
+					$(this).find('.J_imgs').each(function () {
+						if ($(this)[0].files[0]) {
+							files.push($(this)[0].files[0])
+						}
+					})
+					params['content' + id] = $('#content' + id).val()
+					params['grade' + id] = $('#grade' + id).val()
+					params['imgs' + id + '[]'] = files
 				})
-				var params = {
-					content: $('#content').val(),
-					grade: $('#grade').val(),
-					'imgs[]': files
-				}
+				if (!temp) return
 				ajax('post', '/home/order/comment/store/'+"{{$id}}", params, false, true)
 				.then(function (res) {
+					console.dir(res)
 					if (res) {
 						prompt.message('评论成功！')
 						setTimeout(function(){
@@ -172,7 +225,7 @@
 		<div class="ordercomment_lists">
 
 		</div>
-		<div class="ordercomment_comment mt-20">
+		<!-- <div class="ordercomment_comment mt-20">
 			<textarea placeholder="评价" id ="content"></textarea>
 		</div>
 		<div class="ordercomment_score mt-20 clearfix">
@@ -199,6 +252,6 @@
 					<input type="file" name="imgs[]" id="img1" class="invisibility J_imgs absolute" accept="image/jpeg,image/jpg,image/png" capture="camera">
 				</li>
 			</ul>
-		</div>
+		</div> -->
 	</div>
 @endsection
