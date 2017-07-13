@@ -109,7 +109,7 @@
                 <label for="inputEmail3" class="col-sm-2 control-label">文章内容</label>
                 <div class="col-sm-5">
                   <script id="editor" type="text/plain"  name="content" 
-                  style="width:1024px;height:400px;border:1px solid #3DCDB4;">{{$data->content}}</script>
+                  style="width:1024px;height:400px;border:1px solid #3DCDB4;">{!! html_entity_decode($data->content) !!}</script>
                 </div>
               </div>
               <div class="form-group">

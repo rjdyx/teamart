@@ -10,14 +10,9 @@
 @endsection
 @section('script')
 @parent
-<script src="{{url('ueditor/ueditor.config.js')}}"></script>
-<script src="{{url('ueditor/ueditor.all.min.js')}}"></script>
-<script src="{{url('ueditor/lang/zh-cn/zh-cn.js')}}"></script>
+    <script src="{{url('admin/js/upload.js')}}"></script>
 <script>
-        //实例化编辑器
-        //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
       $(function () {
-        var ue = UE.getEditor('editor');
         datepicker({
             enableTime: true,
             disable: false,
@@ -83,7 +78,7 @@
 				</div>
 				<!-- /.box-header -->
 				<!-- form start -->
-				<form class="form-horizontal" action="{{url('admin/activity/group')}}" method="POST" name="activity_form">
+				<form class="form-horizontal" action="{{url('admin/activity/group')}}" method="POST" name="activity_form" enctype="multipart/form-data">
 				{{ csrf_field() }}
 					<div class="box-body">
 						<div class="form-group">
@@ -108,28 +103,6 @@
                             </div>
                             <span class="col-sm-4 text-danger form_error" id="date_txt"></span>
                         </div>
-						<!-- <div class="form-group">
-							<label class="col-sm-3 control-label" for="date_start">活动开始时间</label>
-							<div class="col-sm-3">
-								<div class="input-group date">
-									<div class="input-group-addon">
-										<i class="fa fa-calendar"></i>
-									</div>
-									<input type="date" class="form-control pull-right" id="date_start" name="date_start">
-								</div>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-3 control-label" for="date_end">活动结束时间</label>
-							<div class="col-sm-3">
-								<div class="input-group date">
-									<div class="input-group-addon">
-										<i class="fa fa-calendar"></i>
-									</div>
-									<input type="date" class="form-control pull-right" id="date_end" name="date_end">
-								</div>
-							</div>
-						</div> -->
 						<div class="form-group">
 							<label for="price" class="col-sm-3 control-label">团购价格</label>
 
@@ -138,13 +111,21 @@
 							</div>
 							<span class="col-sm-4 text-danger form_error" id="price_txt"></span>
 						</div>
-						<div class="form-group">
-							<label class="col-sm-1 control-label" for="editor">活动说明</label>
-							<div class="col-sm-3">
-								<script id="editor" type="text/plain"  name="desc" 
-								style="width:1024px;height:400px;border:1px solid #3DCDB4;"></script>
-							</div>
-						</div>
+						                <!-- 此处图片上传. -->
+		                <div class="form-group">
+		                  <label class="col-sm-3 control-label">活动图片</label>
+		                  <div class="col-sm-4">
+		                    <div class="upload_single">
+		                      <label for="img" class="upload pull-left">
+		                        <i class="glyphicon glyphicon-plus"></i>
+		                      </label>
+		                      <label class="btn btn-primary pull-left ml-10 invisible" for="img">修改</label>
+		                      <div class="btn btn-danger pull-left ml-10 invisible J_remove">删除</div>
+		                      <input type="file" name="img" id="img" class="form-control invisible J_img" accept="image/jpeg,image/jpg,image/png">
+		                    </div>
+		                  </div>
+		                  <span class="col-sm-4 text-danger form_error" id="img_txt"></span>
+		                </div>
 						<div class="form-group">
 							<div class="col-sm-offset-2 col-sm-3">
 								<button type="submit" class="btn btn-success btn-100">确认</button>

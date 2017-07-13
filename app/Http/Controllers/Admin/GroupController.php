@@ -68,9 +68,7 @@ class GroupController extends Controller
         $activity = Group::find($id);
         $activity_id = $activity->id;
         DB::delete('delete from fx_activity_product where activity_id = '.$activity_id);
-        if(Group::destroy($id)){
-                return true;
-        }
+        if(Group::destroy($id)) return true;
         return false;
     }
 
@@ -118,8 +116,20 @@ class GroupController extends Controller
         } else {
             $model = Group::find($id);
         }
+
         //接收数据 加入model
-        $model->setRawAttributes($request->only(['name','date_start','date_end','desc','price']));
+        $model->setRawAttributes($request->only(['name','date_start','date_end','price']));
+        
+        if ($id != -1 && $request->del) {
+            $model->desc = null;
+            IQuery::destroyPic(new Group, $id, 'img');
+        }
+
+        //资源、上传图片名称、是否生成缩略图
+        $imgs = IQuery::upload($request,'img',false);
+        if ($imgs != 'false') {
+            $model->desc = $imgs['pic'];
+        }
 
         if ($model->save()) {
             return Redirect::to('admin/activity/group')->with('status', '保存成功');

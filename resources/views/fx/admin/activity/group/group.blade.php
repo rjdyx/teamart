@@ -54,10 +54,9 @@
               <td>{{$list->price}}</td>
               <td>{{$list->date_start}}</i></td>
               <td>{{$list->date_end}}</i></td>
-              <td><div style="color: #dd4b39"><form method="GET" action="{{url('admin/activity/activityproduct')}}">
-              <input type="hidden" name="activity_id" value="{{$list->id}}">
-              <button type="submit" class="btn btn-success btn-sm" id="addUser">参与该团购商品</button>
-              </form><a href="{{url('admin/activity/group')}}/{{$list->id}}/edit"><i class="fa fa-edit" style="margin-right: 5px;cursor: pointer;"></i></a><i class="fa fa-trash-o" onclick="del({{$list->id}});" style="margin-right: 5px;cursor: pointer;"></div></i>
+              <td><div style="color: #dd4b39">
+              <a href="{{url('admin/activity/activityproduct')}}?activity_id={{$list->id}}">商品</a>&nbsp;
+              <a href="{{url('admin/activity/group')}}/{{$list->id}}/edit"><i class="fa fa-edit" style="margin-right: 5px;cursor: pointer;"></i></a><i class="fa fa-trash-o" onclick="del({{$list->id}});" style="margin-right: 5px;cursor: pointer;"></div></i>
               </td>
             </tr>
             @endforeach
@@ -73,13 +72,9 @@
               </tr>
           </tbody></table>
         </div>
-        <!-- /.box-body -->
       </div>
-      <!-- /.box -->
     </div>
-    <!-- /代理商角色列表 -->
   </div>
 </section>
-<!-- /.content -->
 
 @endsection

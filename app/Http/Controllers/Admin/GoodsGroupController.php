@@ -121,8 +121,7 @@ class GoodsGroupController extends Controller
                 Rule::unique('product_group')->ignore($id)->where(function($query) use ($id) {
                     $query->whereNull('deleted_at');
                 })
-            ], 
-            'desc'=>'nullable|max:255'
+            ]
         ]);
 
         if ($id == -1) {

@@ -282,6 +282,7 @@ class OrderController extends Controller
 			$imgs = $this->imgComment ($request, $good->id);
 			$model = new Comment;
 			$model->product_id = $good->id;
+			$model->order_id = $id;
 			$model->user_id = Auth::user()->id;
 			$model->grade = $request->input('grade'.$good->id) * 20;
 			$model->content = $request->input('content'.$good->id);

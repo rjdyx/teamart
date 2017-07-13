@@ -143,7 +143,7 @@
                   <label class="col-sm-2 control-label">详情图描述</label>
                   <div class="col-sm-5">
                     <script id="editor" type="text/plain"  name="desc" style="width:1024px;height:400px;border:1px solid #3DCDB4;">
-                    @if(isset($imgdesc->desc)) {{$imgdesc->desc}} @endif
+                    @if(isset($data->desc)) {!! html_entity_decode($data->desc) !!} @endif
                     </script>
                   </div>
                 </div>

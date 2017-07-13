@@ -153,7 +153,7 @@
               {{ csrf_field() }}
               <input type="hidden" value="PUT" name="_method">
               <input type="hidden" value="{{$data->id}}" name="id" id="id">
-              <input type="hidden" value="" name="dels" id="dels">
+              <input type="hidden" value="" name="del" id="del">
               <div class="box-body">
                 <div class="form-group">
                   <label class="col-sm-3 control-label"><i style="color:red;">*</i>商品分类</label>
