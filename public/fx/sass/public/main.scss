@@ -337,10 +337,12 @@
 
 .container {
 	width: 100%;
-	height: calc(100% - 2.2rem);
+	// height: calc(100% - 2.2rem);
+	height: 100%;
 	padding-top: 1.2rem;
+	padding-bottom: 1rem;
 	overflow: auto;
-	box-sizing: content-box;
+	// box-sizing: content-box;
 }
 
 .index {
@@ -1114,11 +1116,12 @@
 // 收藏
 .collect{
 	position: relative;
-	height: calc(100% - 1.2rem);
-	padding-top: 1.2rem;
+	// height: calc(100% - 1.2rem);
+	// padding-top: 1.2rem;
 	background-color: #EEEFF1;
 	.collect_container {
-		height: calc(100% - 1rem);
+		// height: calc(100% - 1rem);
+		height: 100%;
 		overflow: auto;
 	}
 	.collect_warpper {
@@ -1415,8 +1418,7 @@
 			}
 			.order_warpper_sum {
 				height: 0.8rem;
-				border-top: 0.01rem solid #EEEFF1;
-				border-bottom: 0.01rem solid #EEEFF1;
+				border-bottom: 0.02rem solid #EEEFF1;
 				line-height: 0.8rem;
 				padding-right: 0.22rem;
 				color: #848484;
@@ -1902,7 +1904,7 @@
 // 商品详细
 .productdetail {
 	position: relative;
-	height: calc(100% - 1.2rem);
+	// height: calc(100% - 1.2rem);
 	.productdetail_cart {
 		position: absolute;
 		right: 5%;
@@ -1921,7 +1923,8 @@
 	}
 	.productdetail_container {
 		width: 100%;
-		height: calc(100% - 1rem);
+		// height: calc(100% - 1rem);
+		height: 100%;
 		overflow: auto;
 		.productdetail_container_banner {
 			width: 100%;
@@ -2162,7 +2165,7 @@
 		a {
 			display: block;
 		}
-		i {
+		i { 
 			display: block;
 			height: 1.1rem;
 			width: 0.45rem;
@@ -2645,6 +2648,9 @@
 			width: 50%;
 			padding: 0.2rem 0.15rem;
 			border-bottom: 0.01rem solid #E3E3E3;
+			h1 {
+				@extend %wrap;
+			}
 			img {
 				display: block;
 				width: 2.83rem;
@@ -2783,6 +2789,9 @@
 		}
 		.ordercomment_warpper_detail {
 			width: 2.6rem;
+			h5 {
+				@extend %wrap;
+			}
 			p {
 				color: #959595;
 				@extend %wrap3;
@@ -3106,10 +3115,11 @@
 			position: relative;
 			width: 100%;
 			height: 2rem;
-			padding: 0.15rem 0.25rem;
+			padding: 0.15rem 0;
 			background-color: #EBE2D1;
 			.roll_info {
 				width: 65%;
+				padding-left: 0.1rem;
 				@media screen and (max-width:321px){
 					h1 {
 						font-size: 16px;

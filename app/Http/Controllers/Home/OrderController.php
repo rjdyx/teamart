@@ -275,34 +275,40 @@ class OrderController extends Controller
 	//评论处理
 	public function commentStore(Request $request, $id)
 	{
-		$img = $thumb = null;
-		$imgs = $thumbs = array();
-		//资源、上传图片名称、是否生成缩略图
-        $pics = IQuery::uploads($request, 'imgs', true);
-        if ($pics != 'false') {
-            foreach ($pics as $pic) {
-                $imgs[] = $pic['pic'];
-                $thumbs[] = $pic['thumb'];
-            }
-            $img = implode(',', $imgs);
-            $thumb = implode(',', $thumbs);
-        }
         //获取订单商品
         $goods = $this->getOrderProduct($id);
 		foreach ($goods as $good) {
+			$imgs = $this->imgComment ($request, $good->id);
 			$model = new Comment;
 			$model->product_id = $good->id;
 			$model->user_id = Auth::user()->id;
-			$model->grade = $request->grade * 20;
-			$model->content = $request->content;
-			$model->img = $img;
-			$model->thumb = $thumb;
+			$model->grade = $request->input('grade'.$good->id) * 20;
+			$model->content = $request->input('content'.$good->id);
+			$model->img = $imgs['img'];
+			$model->thumb = $imgs['thumb'];
 			if (!$model->save()) return 0;
 		}
+
 		$order = Order::find($id);
 		$order->state = 'close';
 		if ($order->save())	return 1;
 		return 0;
+	}
+
+	public function imgComment ($request, $id) {
+		$datas = array();
+		$imgs = $thumbs = array();
+		//资源、上传图片名称、是否生成缩略图
+        $pics = IQuery::uploads($request, 'imgs'.$id, true);
+		if ($pics != 'false') {
+            foreach ($pics as $pic) {
+                $imgs[] = $pic['pic'];
+                $thumbs[] = $pic['thumb'];
+            }
+            $datas['img'] = implode(',', $imgs);
+            $datas['thumb'] = implode(',', $thumbs);
+        }
+        return $datas;
 	}
 
 	//订单state改变

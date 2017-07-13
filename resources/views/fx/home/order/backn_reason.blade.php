@@ -40,6 +40,11 @@
             })
             $('.J_choose_select').on('click tap', function () {
                 $('#reason').val($(this).data('value'))
+                if ($(this).data('value') == '1') {
+                    $('#desc').removeAttr('disabled')
+                } else {
+                    $('#desc').attr('disabled', true).val('')
+                }
                 $(this).siblings().find('i').removeClass('active')
                 $(this).find('i').addClass('active')
                 $('.J_show_select').html($(this).find('span').text())
@@ -62,7 +67,7 @@
         <div class="backnreason_row">
             <span class="pull-left chayefont fz-18">其它理由：</span>
         </div>
-        <textarea class="backnreason_desc" id="desc" placeholder="（选填）其他退货的理由"></textarea>
+        <textarea class="backnreason_desc" id="desc" placeholder="（选填）其他退货的理由" disabled="true"></textarea>
         <div class="backnreason_bottom">
             <div class="pull-left submit chayefont fz-16" id="submit">申请退货</div>
             <div class="pull-left cancel chayefont fz-16" onclick="history.go(-1);">取消退货</div>
