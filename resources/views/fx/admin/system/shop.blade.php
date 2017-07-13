@@ -84,6 +84,12 @@
                     <span class="col-sm-4 text-danger form_error" id="name_txt"></span>
                   </div>
                   <div class="form-group">
+                    <label class="col-sm-2 control-label">关键字</label>
+                    <div class="col-sm-6">
+                      <input type="text" class="form-control" placeholder="请输入关键字 (多个以，隔开)" name="keywords" value="{{$shop->keywords}}">
+                    </div>
+                  </div>
+                  <div class="form-group">
                     <label for="email" class="col-sm-2 control-label">意见邮箱</label>
                     <div class="col-sm-6">
                       <input type="text" class="form-control" id="email" placeholder="请输入联系email" name="email" value="{{$shop->email}}">
@@ -98,7 +104,7 @@
                     <span class="col-sm-4 text-danger form_error" id="phone_txt"></span>
                   </div>
                   <div class="form-group">
-                    <label class="col-sm-2 control-label">验证码开关状态</label>
+                    <label class="col-sm-2 control-label">验证码</label>
                     <label class="col-sm-2 gender_label control-label">
                       <input type="radio" name="verify_state" id="gender_female" value="0" @if($shop->verify_state===0)checked="checked"@endif>关闭
                     </label>
@@ -206,18 +212,11 @@
                   </div>
                   <span class="col-sm-4 text-danger form_error" id="imgs_txt"></span>
                 </div>
-                <!--  -->
-                  <div class="form-group">
-                    <label class="col-sm-2 control-label">关键字</label>
-                    <div class="col-sm-10">
-                      <textarea class="form-control" rows="3" placeholder="请输入关键字 ..." name="keywords">{{$shop->keywords}}</textarea>
-                    </div>
-                  </div>
+
                   <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
                       <button type="submit" class="btn btn-success btn-100">确认</button>
                       <button type="reset" class="btn btn-success btn-100">重置</button>
-                      <button type="button" class="btn btn-success btn-100">取消</button>
                     </div>
                   </div>
                 </div>

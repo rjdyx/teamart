@@ -54,15 +54,10 @@
 </head>
 <body class="hold-transition login-page" style="height: auto">
 
-    
-
-
-
 	<div class="login-box">
 	  <div class="login-logo">
 	    <a href="javascript:;"><b>分销后台</b>管理</a>
 	  </div>
-	  <!-- /.login-logo -->
 	  <div class="login-box-body">
 	    <p class="login-box-msg">用户登录</p>
 
@@ -78,36 +73,27 @@
 	        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
 	      </div>
 	      <span class="text-danger" id="password_txt"></span>
-	      <div class="form-group has-feedback clearfix">
-            <input type="text" name="captcha" class="form-control pull-left w50" id="captcha" placeholder="请输入验证码">
-            <a onclick="javascript:re_captcha();">
-                <img src="" class="verifi-code pull-right J_captcha" alt="验证码" title="刷新图片" width="100" height="40" id="verifi_code_image" border="0">
-            </a>
-          </div>
-          <span class="text-danger" id="captcha_txt"></span>
+	      <?php 
+	      		$system = App\System::find(1);
+	      		$verify = 1;
+	      		if (count($system)) $verify = $system->verify_state;
+	       ?>
+	    @if ($verify)
+		    <div class="form-group has-feedback clearfix">
+	            <input type="text" name="captcha" class="form-control pull-left w50" id="captcha" placeholder="请输入验证码">
+	            <a onclick="javascript:re_captcha();">
+	                <img src="" class="verifi-code pull-right J_captcha" alt="验证码" title="刷新图片" width="100" height="40" id="verifi_code_image" border="0">
+	            </a>
+	        </div>
+	        <span class="text-danger" id="captcha_txt"></span>
+        @endif
 	      <div class="row">
-<!-- 	        <div class="col-xs-8">
-	          <div class="checkbox icheck">
-	            <label>
-	              <input type="checkbox">记住我
-	            </label>
-	          </div>
-	        </div> -->
-	        <!-- /.col -->
 	        <div class="col-xs-12">
 	          <button type="submit" class="btn btn-primary btn-block btn-flat">登录</button>
 	        </div>
-	        <!-- /.col -->
 	      </div>
 	    </form>
-
-	    <div class="login_box">
-	      <!-- <a href="#" class="login_foget_pwd text-center" >忘记密码</a><br> -->
-	      <!-- <a href="register.html" class="login_register text-center">注册新账号</a> -->
-	    </div>
-
 	  </div>
-	  <!-- /.login-box-body -->
 	</div>
 	
 	<script src="{{url('/admin/build/vendor-bundle.js')}}"></script>
@@ -126,8 +112,12 @@
 	                    console.log(err)
 	                })
 	        }
-	        re_captcha();
+		    var vstate = "{{$verify}}";
 
+	        if (vstate > 0) {
+	       	    re_captcha();
+	        }
+	        
 	        var form = document.forms['loginForm']
 
 			$(form).on('submit', function () {

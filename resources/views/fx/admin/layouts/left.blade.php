@@ -43,14 +43,6 @@
           <li><a href="{{url('admin/goods/group')}}"><i class="fa fa-circle-o"></i>商品组</a></li>
           <li><a href="{{url('admin/goods/list')}}"><i class="fa fa-circle-o"></i>商品列表</a></li>
           <li><a href="{{url('admin/goods/comment')}}"><i class="fa fa-circle-o"></i>商品评论</a></li>
-
-<!--           <li><a href="/admin/goods/category"><i class="fa fa-circle-o"></i>商品分类</a></li>
-          <li><a href="/admin/goods/spec"><i class="fa fa-circle-o"></i>商品规格</a></li>
-          <li><a href="/admin/goods/brand"><i class="fa fa-circle-o"></i>商品品牌</a></li>
-          <li><a href="/admin/goods/group"><i class="fa fa-circle-o"></i>商品组</a></li>
-          <li><a href="/admin/goods/list"><i class="fa fa-circle-o"></i>商品列表</a></li>
-          <li><a href="/admin/goods/comment"><i class="fa fa-circle-o"></i>用户评论</a></li> -->
-
         </ul>
       </li>
       <li class="treeview">
@@ -112,7 +104,7 @@
           </span>
         </a>
         <ul class="treeview-menu">
-          <li><a href="/admin/system/pay"><i class="fa fa-circle-o"></i>支付设置</a></li>
+<!--           <li><a href="/admin/system/pay"><i class="fa fa-circle-o"></i>支付设置</a></li> -->
           <!-- <li><a href="/admin/system/send"><i class="fa fa-circle-o"></i>配送设置</a></li> -->
           <li><a href="/admin/system/ad"><i class="fa fa-circle-o"></i>广告管理</a></li>
           <li><a href="/admin/system/site"><i class="fa fa-circle-o"></i>站点设置</a></li>

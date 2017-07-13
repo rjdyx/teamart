@@ -9,6 +9,7 @@ use App\Order;
 use App\User;
 use App\Address;
 use App\Site;
+use App\Reply;
 use App\Cheap;
 use App\System;
 use App\Delivery;
@@ -328,7 +329,50 @@ class OrderController extends Controller
 	// 订单详情
 	public function orderDetail ($id) {
 		$title = "订单详情";
+		$order = Order::leftjoin('address','order.address_id','=','address.id')
+				->where('order.id','=',$id)
+				->select('order.*','address.name as aname',
+					'address.province as p1','address.city as p2',
+					'address.area as p3','address.detail as p4',
+					'address.phone','address.code'
+				)->first();
+
+		if (!count($order)) return Redirect::back();//订单无效
+		if ($order->user_id != Auth::user()->id) return Redirect::back();//订单无效
+
+		$goods = Product::join('order_product','product.id','=','order_product.product_id')
+				->leftjoin('comment','product.id','=','comment.product_id')
+				->where('order_product.order_id','=',$id)
+				->whereNull('product.deleted_at')
+				->whereNull('order_product.deleted_at')
+				->select('product.name','product.desc',
+					'product.thumb','product.id',
+					'product.price as raw_price','comment.id as cid',
+					'order_product.amount','order_product.price',
+					'comment.grade as cgrade','comment.content',
+					'comment.img as cimg','comment.thumb as cthumb'
+				)->get();
+
+		$datas = array();
+		foreach ($goods as $k=>$good) {
+			$datas[$k] = $good;
+			$datas[$k]['replys'] = $this->commentReply($good->cid);
+		}
+
 		return view(config('app.theme').'.home.order.detail')
-				->with(['title' => $title,'id'=>$id]);
+				->with(['title' => $title,'order'=>$order,'datas'=>$datas]);
+	}
+
+	public function commentReply($id)
+	{
+		if (empty($id)) return null;
+		$datas = Reply::join('user as ua','reply.auser_id','=','ua.id')
+				->join('user as ub','reply.buser_id','=','ub.id')
+				->whereNull('reply.deleted_at')
+				->where('reply.comment_id',$id)
+				->select('reply.*','ua.name as aname','ub.name as bname')
+				->orderBy('reply.created_at','asc')
+				->get();
+		return $datas;
 	}
 }

@@ -24,79 +24,125 @@
     @include("layouts.header-info")
     
     <div class="orderdetail">
-        <div class="orderdetail_warpper mb-20">
-            <div class="orderdetail_warpper_info">
-                <div class="orderdetail_warpper_info_img pull-left mr-20">
-                    <img src="{{url('fx/images/goods_avatar.png')}}">
-                </div>
-                <div class="orderdetail_warpper_info_detail pull-left mr-20">
-                    <h5 class="chayefont mb-10">菲律宾进口香蕉</h5>
-                    <p>新鲜梨酥雪梨发货供货的供货皇冠分隔符梨</p>
-                </div>
-                <div class="orderdetail_warpper_info_price pull-left txt-r">
-                    <span class="block price">&yen;212.00</span>
-                    <del class="block price_raw">&yen;299.00</del>
-                    <span class="block times">&times;2</span>
-                </div>
-            </div>
-            <div class="orderdetail_warpper_cheap">
-                <span class="pull-left chayefont fz-18">优惠券</span>
-                <span class="pull-right gray fz-14 J_show_roll">
-                    已使用优惠券1
-                </span>
-            </div>
-            <div class="orderdetail_warpper_cheap">
-                <span class="pull-left chayefont fz-18">积分抵扣</span>
-                <span class="pull-right price fz-14 user-grade">
-                    已使用100分
-                </span>
-            </div>
-            <div class="orderdetail_warpper_sum txt-r">
-                <span>总2件商品</span>
-                <span>合计：<i class="price">&yen;424.00</i>（包运费）</span>
-            </div>
+        <div class="orderdetail_state">
+            <span class="pull-left chayefont fz-18">订单号：</span>
+            <span class="pull-right">{{$order->serial}}</span>
         </div>
         <div class="orderdetail_state">
-            <span class="pull-left chayefont fz-18">订单当前状态：</span>
-            <span class="pull-right fz-14">未付款</span>
+            <span class="pull-left chayefont fz-18">订单状态：</span>
+            <span class="fz-14">
+                @if ($order->state == 'pading') 未付款 @endif
+                @if ($order->state == 'paid') 已付款 @endif
+                @if ($order->state == 'delivery') 已发货 @endif
+                @if ($order->state == 'take') 已收货 @endif
+                @if ($order->state == 'backn') 退货申请中 @endif
+                @if ($order->state == 'backy') 已退货 @endif
+                @if ($order->state == 'close') 已完成 @endif
+            </span>
+                @if ($order->state == 'pading') 
+                <a href="{{url('')}}/home/order/confirm?id={{$order->id}}" class="pull-right fz-14">去付款</a> 
+                @endif
+                @if ($order->state == 'delivery')
+                <span class="pull-right fz-14" >收货</span>
+                @endif
+                @if ($order->state == 'take')
+                <a href="{{url('')}}/home/order/comment/{{$order->id}}" class="pull-right fz-14">去评价</a> 
+                @endif
         </div>
-        <!-- 物流 -->
-        <div class="delivery mt-10 txt-c fz-16">
-            <a href="javascript:;">点击查看物流详情</a>
-        </div>
-        <!-- 评价 -->
-        <div class="comment mt-10">
-            <h5 class="chayefont fz-18 mb-10">您的评价：</h5>
-            <div class="comment_grade mb-10">
-                <span>满意度：</span>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
+        @if (!empty($order->delivery_serial))
+            <!-- 物流 -->
+            <div class="orderdetail_state">
+                <span class="pull-left">取货方式：</span>
+                <span class="pull-right">@if($order->method == 'self')站点自取 @else 快递 @endif</span>
             </div>
-            <p class="comment_content mb-10 active J_comment">评价内容评价内容评价内容评价内容评价内容评价内容评价内容,评价评价内容评价内容评价内容评价内容评价内容评价内容评价内容,评价内容评价内容评价内容评价内容评价内容评价内,容评价内容,评价内容评价内容评价内容评价内容评价内容评价内容评价内容,评价内容评价内容评价内容评价内容评价内容评价内容评价内容,评价内容评价内容评价内容评价内容评价内容评价内容评价内容,评价内容评价内容评价内容评价内容评价内容评价内容评价内容内容评价内容评价内容</p>
-            <ul class="comment_imgs clearfix">
-                <li class="pull-left mr-10">
-                    <img src="{{url('/fx/images/usercenter_avatar.png')}}" class="J_show_img" alt="">
-                </li>
-                <li class="pull-left mr-10">
-                    <img src="{{url('/fx/images/usercenter_avatar.png')}}" class="J_show_img" alt="">
-                </li>
-                <li class="pull-left mr-10">
-                    <img src="{{url('/fx/images/usercenter_avatar.png')}}" class="J_show_img" alt="">
-                </li>
-                <li class="pull-left mr-10">
-                    <img src="{{url('/fx/images/usercenter_avatar.png')}}" class="J_show_img" alt="">
-                </li>
-            </ul>
-        </div>
+            @if($order->method == 'delivery')
+                <div class="orderdetail_state">
+                    <span class="pull-left">收货地址：</span>
+                    <span class="pull-right">{{$order->p1.$order->p2.$order->p3.$order->p4}}</span>
+                </div>
+                <div class="orderdetail_state">
+                    <span class="pull-left">联系人：</span>
+                    <span class="pull-right">{{$order->aname}}</span>
+                </div>
+                <div class="orderdetail_state">
+                    <span class="pull-left">联系电话：</span>
+                    <span class="pull-right">{{$order->phone}}</span>
+                </div>
+                <div class="orderdetail_state">
+                    <span class="pull-left">{{$order->delivery_serial}}</span>
+                    <span><a href="javascript:;" class="pull-right">物流详情</a></span>
+                </div>
+            @endif
+        @endif
+
         <!-- 退货 -->
+        @if ($order->type == 'backy' || $order->type == 'backn')
         <div class="backn mt-10">
             <div class="backn_reason">
                 <span class="pull-left chayefont fz-18">退货理由：</span>
-                <span class="pull-right fz-14">理由111</span>
             </div>
-            <!-- 如果是其他理由的话需要 -->
-            <p class="hide">其他理由其他理由其他理由其他理由其他理由，其他理由其他理由其他理由，其他理由其他理由，其他理由其他理由其他理由，其他理由其他理由其他理由其他理由</p>
+            <p class="hide">{{$order->reason}}</p>
         </div>
+        @endif
+
+        <!-- 总计 -->
+        <div class="orderdetail_state">
+            <span class="pull-left">合计：</span>
+            <span class="pull-right"><i class="price">&yen;{{$order->price}}</i> </span>
+        </div>
+    
+        <!-- 商品 -->
+        @foreach($datas as $data)
+        <div class="orderdetail_warpper mb-20">
+            <div class="orderdetail_warpper_info">
+                <div class="orderdetail_warpper_info_img pull-left mr-20">
+                    <img src="{{url('')}}/{{$data->thumb}}">
+                </div>
+                <div class="orderdetail_warpper_info_detail pull-left mr-20">
+                    <h5 class="chayefont mb-10">{{$data->name}}</h5>
+                    <p>{{$data->desc}}</p>
+                </div>
+                <div class="orderdetail_warpper_info_price pull-left txt-r">
+                    <span class="block price">&yen;{{$data->raw_price * $data->amount}}</span>
+                    <del class="block price_raw">&yen;{{$data->price}}</del>
+                    <span class="block times">&times;{{$data->amount}}</span>
+                </div>
+            </div>
+            @if ($order->type!='close' || $order->type!='backn' || $order->type!='backy')
+            <div class="comment mt-10">
+                @if(!empty($data->cid))
+                    <!-- <h5 class="chayefont fz-18 mb-10">您的评价：</h5> -->
+                    <div class="comment_grade mb-10">
+                        <span>满意度：</span>
+                        @for($i=0;$i<$data->cgrade/20;$i++)
+                        <i class="fa fa-star"></i>
+                        @endfor
+                    </div>
+                    <p class="comment_content mb-10 active J_comment">{{$data->content}}</p>
+                    <ul class="comment_imgs clearfix">
+                    @if(!empty($data->cthumb))
+                        @foreach(explode(',',$data->cthumb) as $img)
+                        <li class="pull-left mr-10">
+                            <img src="{{url('')}}/{{$img}}" class="J_show_img" alt="">
+                        </li>
+                        @endforeach
+                    @endif
+                    </ul>
+                    <!-- 评论回复 -->
+                    @if (!empty($data['replys']))
+                        @foreach($data['replys'] as $reply)
+                    <div class="comment_grade mb-10">
+                        <span>{{$reply->aname}} 回复 {{$reply->bname}} :({{$reply->created_at}})</span>
+                    </div>
+                        <p>{{$reply->content}}</p>
+                        @endforeach
+                    @endif
+                @else
+                    <p>暂无评价</p>
+                @endif
+            </div>
+            @endif
+        </div>
+        @endforeach
     </div>
 @endsection
