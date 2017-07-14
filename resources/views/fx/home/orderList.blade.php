@@ -8,7 +8,7 @@
 @section('script')
     @parent
     <script src="{{url('/fx/js/qrcode.js')}}"></script>
-    <script type="text/javascript" src="{{ url('fx/common/dropload.js') }}"></script>
+    <script type="text/javascript" src="{{ url('fx/js/dropload.min.js') }}"></script>
     <script>
         $(function () {
             var page = 0;
@@ -63,7 +63,7 @@
                             $('.order_container').find('.order_nodata').remove()
                             $('.order_container').append(`
                             <div class="order_nodata txt-c">
-                                还没有订单，去<a href="{{url('')}}">下单</a>吧
+                                您还没有订单，去<a href="{{url('')}}">下单</a>吧
                             </div>`)
                         }
                     }

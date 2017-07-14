@@ -7,30 +7,54 @@
 
 @section('script')
 	@parent
+	<script src="{{ asset('fx/js/lrz.all.bundle.js') }}"></script>
 	<script>
 		$(function () {
+			var resizeFiles = {}
 			// 图片上传部分
 			function showImg () {
 				var $this = $(this)
 				var file = this.files[0]
+				var pid = $this.parents('.ordercomment_container').data('id')
 				var id = $this.attr('id')
 				var $box = $('label[for="' + id + '"]').parent()
-				if (file.size / 1024 > 200) {
-					prompt.message('图片太大')
-					return false
-				}
+				// if (file.size / 1024 > 200) {
+				// 	prompt.message('图片太大')
+				// 	return false
+				// }
 				if (file.type !== 'image/png' && file.type !== 'image/jpeg') {
 					prompt.message('图片格式只支持png和jpg')
 					return false
 				}
 				$box.find('img').remove()
-				var fr = new FileReader()
-				fr.onload = function(e) {
+				// var fr = new FileReader()
+				// fr.onload = function(e) {
+				// 	if ($box.find('img').length > 0) {
+				// 		return
+				// 	}
+				// 	var img = new Image()
+				// 	img.src = e.target.result
+				// 	if ($this.parents('.ordercomment_imgs_list').find('li').length < 4) {
+				// 		addFile($this)
+				// 	}
+				// 	$box.find('.ordercomment_imgs_list_img').append(img)
+				// 	$box.find('img').on('click tap', function () {
+				// 		prompt.image($(this).attr('src'))
+				// 	})
+				// 	$box.find('label').addClass('hide')
+				// 	$box.find('.ordercomment_imgs_list_img').removeClass('hide')
+				// }
+				// fr.readAsDataURL(file)
+				lrz(file, {
+					quality: 0.4,
+					fieldName: 'img'
+				})
+				.then(function (rst) {
 					if ($box.find('img').length > 0) {
 						return
 					}
 					var img = new Image()
-					img.src = e.target.result
+					img.src = rst.base64
 					if ($this.parents('.ordercomment_imgs_list').find('li').length < 4) {
 						addFile($this)
 					}
@@ -40,30 +64,37 @@
 					})
 					$box.find('label').addClass('hide')
 					$box.find('.ordercomment_imgs_list_img').removeClass('hide')
-				}
-				fr.readAsDataURL(file)
+					resizeFiles[pid][id] = rst.formData.get('img')
+				})
+				.catch(function (err) {
+					// 处理失败会执行
+				})
+				.always(function () {
+					// 不管是成功失败，都会执行
+				})
 			}
 			function addFile ($elem) {
+				var pid = $elem.parents('.ordercomment_container').data('id')
 				var nid = Date.now()
 				var template = `
 					<li class="pull-left mr-20 relative">
-						<label for="img${nid}">
+						<label for="img[${pid}]${nid}">
 							<i class="fa fa-camera"></i>
 						</label>
 						<div class="ordercomment_imgs_list_img hide">
 							<i class="fa fa-times-circle J_remove_img"></i>
 						</div>
-	                    <input type="file" name="${$elem.attr('name')}" id="img${nid}" class="invisibility J_imgs absolute" accept="image/jpeg,image/jpg,image/png" capture="camera">
+	                    <input type="file" name="${$elem.attr('name')}" id="img[${pid}]${nid}" class="invisibility J_imgs absolute" accept="image/jpeg,image/jpg,image/png" capture="camera">
 	                </li>
 				`
-				console.log($elem.parents('.ordercomment_imgs_list'))
 				$elem.parents('.ordercomment_imgs_list').append(template)
 				$elem.parents('.ordercomment_imgs_list').find('.J_imgs').off('change', showImg).on('change', showImg)
 				$elem.parents('.ordercomment_imgs_list').find('.J_remove_img').off('click tap', removeFile).on('click tap', removeFile)
 			}
 			function removeFile () {
+				var pid = $(this).parents('.ordercomment_container').data('id')
+				var id = $(this).parents('li').find('input').attr('id')
 				if ($(this).parents('.ordercomment_imgs_list').find('img').length == 4) {
-					var id = $(this).parents('li').find('input').attr('id')
 					var name = $(this).parents('li').find('input').attr('name')
 					$(this).parent().find('img').remove()
 					$(this).parent().addClass('hide').siblings('label').removeClass('hide')
@@ -74,6 +105,13 @@
 					$('.J_imgs').off('change', showImg).on('change', showImg)
 				}
 				$(this).parents('li').remove()
+				var files = {}
+				for(var i in resizeFiles[pid]) {
+					if (i != id) {
+						files[i] = resizeFiles[pid][i]
+					}
+				}
+				resizeFiles[pid] = files
 			}
 			// // 图片变化
 			// $('.J_imgs').on('change', showImg)
@@ -89,6 +127,9 @@
 					// 删除图片
 					$('.J_remove_img').on('click tap', removeFile)
 					$('.J_grade').on('click tap', grade)
+					$('.ordercomment_container').each(function () {
+						resizeFiles[$(this).data('id')] = {}
+					})
 				} else {
 					prompt.message('获取数据失败')
 				}
@@ -173,7 +214,7 @@
 				// 	prompt.message('请选择您的满意度')
 				// 	return
 				// }
-				
+
 				var params = {}, temp = true
 				$('.ordercomment_container').each(function () {
 					var id = $(this).data('id')
@@ -188,11 +229,9 @@
 						return
 					}
 					var files = []
-					$(this).find('.J_imgs').each(function () {
-						if ($(this)[0].files[0]) {
-							files.push($(this)[0].files[0])
-						}
-					})
+					for (var j in resizeFiles[id]) {
+						files.push(resizeFiles[id][j])
+					}
 					params['content' + id] = $('#content' + id).val()
 					params['grade' + id] = $('#grade' + id).val()
 					params['imgs' + id + '[]'] = files

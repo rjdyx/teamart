@@ -7,7 +7,7 @@
 
 @section('script')
     @parent
-    <script type="text/javascript" src="{{ url('fx/common/dropload.js') }}"></script>
+    <script type="text/javascript" src="{{ url('fx/js/dropload.min.js') }}"></script>
     <script>
         $(function () {
             var page = 0;
@@ -55,7 +55,7 @@
                             $('.promotion_container').find('.promotion_nodata').remove()
                             $('.promotion_container').append(`
                             <div class="promotion_nodata txt-c">
-                                你的购物车还没有商品，快去<a href="{{url('')}}">首页</a>看看吧
+                                这里暂时还没有商品，先去<a href="{{url('/home/product/list')}}">看看</a>别的商品吧
                             </div>`)
                         }
                     }

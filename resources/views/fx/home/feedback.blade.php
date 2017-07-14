@@ -7,31 +7,53 @@
 
 @section('script')
     @parent
+    <script src="{{ asset('fx/js/lrz.all.bundle.js') }}"></script>
 	<script>
 		$(function () {
+			var resizeFiles = {}
 			// 图片上传部分
 			function showImg () {
 				var $this = $(this)
 				var file = this.files[0]
-				var idx = parseInt($this.attr('id').substr(-1))
 				var id = $this.attr('id')
 				var $box = $('label[for="' + id + '"]').parent()
-				if (file.size / 1024 > 200) {
-					prompt.message('图片太大')
-					return false
-				}
+				// if (file.size / 1024 > 200) {
+				// 	prompt.message('图片太大')
+				// 	return false
+				// }
 				if (file.type !== 'image/png' && file.type !== 'image/jpeg') {
 					prompt.message('图片格式只支持png和jpg')
 					return false
 				}
 				$box.find('img').remove()
-				var fr = new FileReader()
-				fr.onload = function(e) {
+				// var fr = new FileReader()
+				// fr.onload = function(e) {
+				// 	if ($box.find('img').length > 0) {
+				// 		return
+				// 	}
+				// 	var img = new Image()
+				// 	img.src = e.target.result
+				// 	if ($('.feedback_imgs_list').find('li').length < 4) {
+				// 		addFile()
+				// 	}
+				// 	$box.find('.feedback_imgs_list_img').append(img)
+				// 	$box.find('img').on('click tap', function () {
+				// 		prompt.image($(this).attr('src'))
+				// 	})
+				// 	$box.find('label').addClass('hide')
+				// 	$box.find('.feedback_imgs_list_img').removeClass('hide')
+				// }
+				// fr.readAsDataURL(file)
+				lrz(file, {
+					quality: 0.4,
+					fieldName: 'img'
+				})
+				.then(function (rst) {
 					if ($box.find('img').length > 0) {
 						return
 					}
 					var img = new Image()
-					img.src = e.target.result
+					img.src = rst.base64
 					if ($('.feedback_imgs_list').find('li').length < 4) {
 						addFile()
 					}
@@ -41,8 +63,15 @@
 					})
 					$box.find('label').addClass('hide')
 					$box.find('.feedback_imgs_list_img').removeClass('hide')
-				}
-				fr.readAsDataURL(file)
+					// 处理成功会执行
+					resizeFiles[id] = rst.formData.get('img')
+				})
+				.catch(function (err) {
+					// 处理失败会执行
+				})
+				.always(function () {
+					// 不管是成功失败，都会执行
+				})
 			}
 			function addFile () {
 				var nid = Date.now()
@@ -62,8 +91,8 @@
 				$('.feedback_imgs_list').find('.J_remove_img').off('click tap', removeFile).on('click tap', removeFile)
 			}
 			function removeFile () {
+				var id = $(this).parents('li').find('input').attr('id')
 				if ($('.feedback_imgs_list').find('img').length == 4) {
-					var id = $(this).parents('li').find('input').attr('id')
 					$(this).parent().find('img').remove()
 					$(this).parent().addClass('hide').siblings('label').removeClass('hide')
 					$(this).parents('li').find('input').remove()
@@ -73,6 +102,13 @@
 					$('.J_imgs').off('change', showImg).on('change', showImg)
 				}
 				$(this).parents('li').remove()
+				var files = {}
+				for(var i in resizeFiles) {
+					if (i != id) {
+						files[i] = resizeFiles[i]
+					}
+				}
+				resizeFiles = files
 			}
 			// 图片变化
 			$('.J_imgs').on('change', showImg)
@@ -99,12 +135,9 @@
 					return
 				}
 				var imgs = []
-				$('.J_imgs').each(function () {
-					if ($(this)[0].files[0]) {
-						imgs.push($(this)[0].files[0])
-					}
-				})
-
+				for (var j in resizeFiles) {
+					imgs.push(resizeFiles[j])
+				}
 				var params = {
 					contact: contact,
 					content: content,

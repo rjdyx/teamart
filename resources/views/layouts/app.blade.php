@@ -7,7 +7,10 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="keywords" content="@if(count($data)){{$data->keywords}} @endif">
-    <meta name="viewport" content="initial-scale=1,maximum-scale=1, minimum-scale=1, user-scalable=0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
     <!-- 避免IE使用兼容模式 -->
     <!-- 针对手持设备优化，主要是针对一些老的不识别viewport的浏览器，比如黑莓 -->
     <meta name="HandheldFriendly" content="true">
@@ -38,8 +41,8 @@
     <title>@if(count($data)){{$data->name}} @endif - @yield('title')</title>
 
     <!-- Styles -->
-    <link rel="stylesheet" href="{{url('/fx/build/css/index.css')}}"> 
-    {{-- <link rel="stylesheet" href="http://localhost:8080/fx/build/css/index.css">--}}
+    {{-- <link rel="stylesheet" href="{{url('/fx/build/css/index.css')}}"> --}}
+    <link rel="stylesheet" href="http://localhost:8080/fx/build/css/index.css">
     @yield('css')
 
     <!-- Scripts -->
@@ -57,10 +60,20 @@
     {{-- <script src="http://localhost:8080/fx/build/vendor-bundle.js"></script>
     <script src="http://localhost:8080/fx/build/index.js"></script> --}}
     <script>
+        // !(function(doc, win) {
+        //     var docEle = doc.documentElement,
+        //         evt = "onorientationchange" in window ? "orientationchange" : "resize",
+        //         fn = function() {
+        //             var width = docEle.clientWidth;
+        //             width && (docEle.style.fontSize = 100 * (width / 750) + "px");
+        //         };
+        //     win.addEventListener(evt, fn, false);
+        //     doc.addEventListener("DOMContentLoaded", fn, false);
+        // }(document, window));
         var deviceWidth = document.documentElement.clientWidth;
         if(deviceWidth > 640) deviceWidth = 640;
         document.documentElement.style.fontSize = deviceWidth / 6.4 + 'px';
-
+        console.dir(window.navigator)
         // 返回按钮事件绑定
         $('.J_header_back').on('click tap', function () {
             history.go(-1)

@@ -7,7 +7,7 @@
 
 @section('script')
 	@parent
-	<script type="text/javascript" src="{{ url('fx/common/dropload.js') }}"></script>
+	<script type="text/javascript" src="{{ url('fx/js/dropload.min.js') }}"></script>
 	<script>
 		//定义全局对象
 		var params = {type:'', up:'', name:'', brand:'', category:'', min:'', max:'',page:1};

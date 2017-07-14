@@ -50,44 +50,47 @@
         //     'data': LAreaData //数据源
         // });
         // area1.value=[1,13,3];//控制初始位置，注意：该方法并不会影响到input的value
-        var areaSelector = new AreaSelector()
-        areaSelector.init({
-        	data: init_city_picker,
-        	trigger: '.addressadd_selection',
-        	txtTo: '#address',
-        	valueTo: '#addressValue'
+        $(function () {
+        	var areaSelector = new AreaSelector()
+	        areaSelector.init({
+	        	data: init_city_picker,
+	        	trigger: '.addressadd_selection',
+	        	txtTo: '#address',
+	        	valueTo: '#addressValue'
+	        })
+	        $('.J_defualtAddress').click(function(){
+				var v = $("input[name='state']").val();
+				if (v > 0) {
+					$(this).find('i').removeClass('active');
+					$("input[name='state']").val(0);
+				} else {
+					$(this).find('i').addClass('active');
+					$("input[name='state']").val(1);
+				}
+			});
+			_valid.bindEvent(['name', 'phone', 'code', 'detail', 'address'])
+			$('.J_submit').on('click tap', function () {
+				var params = {
+					name: $('#name').val(),
+					phone: $('#phone').val(),
+					code: $('#code').val(),
+					detail: $('#detail').val(),
+					address: $('#address').val(),
+					state: $('#state').val()
+				}
+				if (_valid.validForm(params)) {
+					ajax('post', '/home/address', params)
+						.then(function (resolve) {
+							if (resolve) {
+								prompt.message('新增成功', 'http://' + window.location.host + '/home/address')
+							} else {
+								prompt.message('新增失败')
+							}
+						})
+				}
+			})
         })
-        $('.J_defualtAddress').click(function(){
-			var v = $("input[name='state']").val();
-			if (v > 0) {
-				$(this).find('i').removeClass('active');
-				$("input[name='state']").val(0);
-			} else {
-				$(this).find('i').addClass('active');
-				$("input[name='state']").val(1);
-			}
-		});
-		_valid.bindEvent(['name', 'phone', 'code', 'detail', 'address'])
-		$('.J_submit').on('click tap', function () {
-			var params = {
-				name: $('#name').val(),
-				phone: $('#phone').val(),
-				code: $('#code').val(),
-				detail: $('#detail').val(),
-				address: $('#address').val(),
-				state: $('#state').val()
-			}
-			if (_valid.validForm(params)) {
-				ajax('post', '/home/address', params)
-					.then(function (resolve) {
-						if (resolve) {
-							prompt.message('新增成功', 'http://' + window.location.host + '/home/address')
-						} else {
-							prompt.message('新增失败')
-						}
-					})
-			}
-		})
+        
     </script>
 @endsection
 

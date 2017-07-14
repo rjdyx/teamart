@@ -7,7 +7,7 @@
 
 @section('script')
     @parent
-    <script type="text/javascript" src="{{ url('fx/common/dropload.js') }}"></script>
+    <script type="text/javascript" src="{{ url('fx/js/dropload.min.js') }}"></script>
     <script>
         $(function () {
             var page = 0

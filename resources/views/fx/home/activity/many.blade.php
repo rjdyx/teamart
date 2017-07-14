@@ -54,7 +54,7 @@
                             $('.many').find('.many_nodata').remove()
                             $('.many').append(`
                             <div class="many_nodata txt-c">
-                                你的购物车还没有商品，快去<a href="{{url('')}}">首页</a>看看吧
+                                暂时还没有活动商品，先去<a href="{{url('/home/product/list')}}">看看</a>别的商品吧
                             </div>`)
                         }
                     }

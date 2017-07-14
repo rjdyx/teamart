@@ -17,7 +17,6 @@ require('expose-loader?ajax!./js/ajax.js')
 require('expose-loader?prompt!./js/prompt.js')
 require('expose-loader?backTop!./js/backTop.js')
 require('expose-loader?AreaSelector!./js/areaSelector.js')
-// require('expose-loader?zdropload!./js/zdropload.js')
 
 const prompt = require('./js/prompt.js')
 
@@ -60,7 +59,9 @@ $(function () {
 	let mySwiper = new Swiper('.swiper-container', {
 		pagination: '.swiper-pagination',
 		paginationClickable: true,
-		loop: true
+		loop: true,
+		autoplay: 2500,
+		autoplayDisableOnInteraction: false
 	})
 
 	prompt.init()

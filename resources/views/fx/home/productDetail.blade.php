@@ -7,7 +7,7 @@
 
 @section('script')
     @parent
-    <script type="text/javascript" src="{{ url('fx/common/dropload.js') }}"></script>
+    <script type="text/javascript" src="{{ url('fx/js/dropload.min.js') }}"></script>
     <script>
     $(function(){
 		var page = 0;//分页
@@ -275,6 +275,7 @@
 
     	// 隐藏产品规格弹窗
     	$('.J_hide_productspec').on('click tap', function () {
+    		console.dir($('.productspec'))
     		jquery('.productspec').removeClass('top-0').animate({
 				'opacity': 0},
 				300,
@@ -371,7 +372,7 @@
 			<div class="productdetail_container_banner swiper-container">
 			    <div class="swiper-wrapper">
 			        @foreach($imgs as $img)
-			        <div class="swiper-slide">
+			        <div class="swiper-slide" data-swiper-autoplay="2000">
 			        	<img src="{{url('')}}/{{$img->img}}" alt="">
 			        </div>
 			        @endforeach
@@ -498,10 +499,17 @@
 			</div>
 		</div>
 		<div class="productdetail_bottom">
-			<div class="productdetail_bottom_icon pull-left kefu">
+			<?php 
+				$system = App\System::find(1);
+				$qq = '';
+				if (count($system)) {
+					$qq = $system->qq;
+				}
+			 ?>
+			<a class="productdetail_bottom_icon pull-left kefu" target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin={{$qq}}&site=qq&menu=yes">
 				<i class="fa fa-headphones mt-10"></i>
 				<p>客服</p>
-			</div>
+			</a>
 			<div class="productdetail_bottom_icon pull-left favo J_favo">
 				<i class="fa mt-10 @if(isset($collect->id)) fa-star @else fa-star-o @endif"></i>
 				<p>收藏</p>
@@ -545,10 +553,17 @@
 				<input type="hidden" id="price" value="0">
 			</div>
 			<div class="productspec_container_bottom">
-				<div class="productspec_container_bottom_icon pull-left kefu">
+				<?php 
+					$system = App\System::find(1);
+					$qq = '';
+					if (count($system)) {
+						$qq = $system->qq;
+					}
+				 ?>
+				<a class="productspec_container_bottom_icon pull-left kefu" target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin={{$qq}}&site=qq&menu=yes">
 					<i class="fa fa-headphones mt-10"></i>
 					<p>客服</p>
-				</div>
+				</a>
 				<div class="productspec_container_bottom_icon pull-left favo J_favo">
 					<i class="fa fa-star-o mt-10"></i>
 					<p>收藏</p>

@@ -66,7 +66,8 @@
 .login {
 	width: 100%;
 	height: 100%;
-	overflow: hidden;
+	border: 0.02rem solid transparent;
+	// overflow: hidden;
 	@include  backgroundImages("/fx/images/login_bg.png", cover);
 	.login_logo {
 		height: 3.5rem;
@@ -348,37 +349,39 @@
 .index {
 	.banner {
 		width: 100%;
+		height: 2.5rem;
 		img {
 			width: 100%;
 		}
 	}
 	.index_box {
 		width: 100%;
-		margin-bottom: 0.1rem;
-		h1, h5 {
+		h1 {
+			color: #333;
 			@extend %wrap;
+		}
+		p {
+			color: #787876;
+			@extend %wrap2;
 		}
 		span.price {
 			color: #FF4100;
 		}
 		.index_box_title{
-			height: 1.1rem;
-			margin-bottom: 0.05rem;
+			height: 1rem;
+			margin-bottom: 0.02rem;
 			width: 100%;
 			padding: 0 0.1rem;
 			@include  backgroundImages("/fx/images/index_box_title_bg.png", cover)
+			h1, a {
+				line-height: 1rem;
+				height: 1rem;
+			}
 			h1 {
 				width: 3rem;
-				height: 1.1rem;
-				line-height: 1.1rem;
 				color: #fff;
 				padding-left: 0.4rem;
 				@include  backgroundImages("/fx/images/index_box_title.png", 80% 80%, left 0.05rem);
-			}
-			a {
-				display: inline-block;
-				height: 1.1rem;
-				line-height: 1.1rem;
 			}
 			@media screen and (max-width:321px){
 				h1, a {
@@ -410,24 +413,22 @@
 				height: 100%;
 				padding: 0.1rem;
 				@media screen and (max-width:321px){
-					h5 {
+					h1 {
 						font-size: 14px;
 					}
 				}
 				@media screen and (min-width:321px) and (max-width:400px){
-					h5 {
+					h1 {
 						font-size: 16px;
 					}
 				}
 				@media screen and (min-width:400px){
-					h5 {
+					h1 {
 						font-size: 18px;
 					}
 				}
 				span {
 					display: block;
-					margin-top: 0.2rem;
-					margin-bottom: 0.2rem;
 				}
 				img {
 					display: block;
@@ -436,16 +437,14 @@
 				}
 			}
 			.ibc_multi {
-				width: calc(100% - 2.55rem);
+				width: calc(100% - 2.52rem);
 				height: 100%;
 				.ibc_multi_goods {
 					height: 50%;
 					padding: 0.1rem;
 					p {
-						color: #787876;
 						margin-top: 0.1rem;
 						margin-bottom: 0.1rem;
-						@extend %wrap2
 					}
 					img {
 						display: block;
@@ -461,10 +460,6 @@
 					a {
 						display: block;
 					}
-					h5 {
-						color: #787876;
-						@extend %wrap
-					}
 					img {
 						display: block;
 						width: 60%;
@@ -479,34 +474,34 @@
 				}
 				.ibc_multi_goods.top,
 				.ibc_multi_goods_cell.top {
-					border-bottom: 0.05rem solid #fff;
+					border-bottom: 0.02rem solid #fff;
 				}
 				@media screen and (max-width:321px){
-					h5 {
+					h1 {
 						font-size: 14px;
 					}
 					.ibc_multi_goods_cell {
-						h5 {
+						h1 {
 							font-size: 12px;
 						}
 					}
 				}
 				@media screen and (min-width:321px) and (max-width:400px){
-					h5 {
+					h1 {
 						font-size: 16px;
 					}
 					.ibc_multi_goods_cell {
-						h5 {
+						h1 {
 							font-size: 14px;
 						}
 					}
 				}
 				@media screen and (min-width:400px){
-					h5 {
+					h1 {
 						font-size: 18px;
 					}
 					.ibc_multi_goods_cell {
-						h5 {
+						h1 {
 							font-size: 14px;
 						}
 					}
@@ -537,17 +532,17 @@
 						@extend %wrap2;
 					}
 					@media screen and (max-width:321px){
-						h5 {
+						h1 {
 							font-size: 12px;
 						}
 					}
 					@media screen and (min-width:321px) and (max-width:400px){
-						h5 {
+						h1 {
 							font-size: 14px;
 						}
 					}
 					@media screen and (min-width:400px){
-						h5 {
+						h1 {
 							font-size: 16px;
 						}
 					}
@@ -1103,7 +1098,7 @@
 		}
 	}
 	.address_add {
-		position: absolute;
+		position: fixed;
 		bottom: 0;
 		left: 0;
 		display: block;
@@ -1994,7 +1989,8 @@
 				display: block;
 				width: 1.64rem;
 				height: 0.66rem;
-				padding-left: 0.4rem;
+				padding-left: 0.2rem;
+				text-align: center;
 				line-height: 0.66rem;
 				font-size: 14px;
 				color: #6F6F6F;

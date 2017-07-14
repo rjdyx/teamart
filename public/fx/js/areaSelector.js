@@ -39,7 +39,6 @@ AreaSelector.prototype = {
 	// 递归遍历节点
 	eachNode: function (data, level = 1) {
 		let template = ''
-		console.log(data)
 		data.forEach((v, i) => {
 			if (i === 0) {
 				template += `<li class="active J_region_select" data-id="${v.value}" data-name="${v.text}" data-level="${level}" data-idx="${i}">${v.text}</li>`
@@ -64,31 +63,11 @@ AreaSelector.prototype = {
 	},
 	// 现在事件
 	selectEv: function () {
-		// let lis = document.querySelectorAll('.J_select_region')
-		// console.log(lis)
-		// lis.forEach((v) => {
-		// 	v['isMove'] = false
-		// 	v['touchTime'] = false
-		// 	v.addEventListener('touchstart', function () {
-		// 		v['touchTime'] = Date.now()
-		// 	}, false)
-		// 	v.addEventListener('touchmove', function () {
-		// 		console.log('touchmove')
-		// 		v['isMove'] = true
-		// 	}, false)
-		// 	v.addEventListener('touchend', function () {
-		// 		console.log('touchend')
-		// 		if (v['isMove'] && (Date.now() - v['touchTime']) < 300) {
-		// 			// 触发
-		// 		}
-		// 		v['isMove'] = false
-		// 	}, false)
-		// })
 		let self = this
 		$('.J_region_select').off('click tap').on('click tap', function () {
 			let level = parseInt($(this).data('level'))
 			if (level === 1) {
-				$('.area_list.city').scrollTop(0)
+				$('.area_list.city').html('').scrollTop(0)
 				$('.area_list.area').html('').scrollTop(0)
 				self.eachNode(self.data[$(this).data('idx')].children, parseInt($(this).data('level')) + 1)
 			} else if (level === 2) {

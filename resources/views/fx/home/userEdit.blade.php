@@ -3,17 +3,19 @@
 @section('title') 个人资料 @endsection
 
 @section('css')
-    <link rel="stylesheet" type="text/css" href="{{ asset('fx/mui/mui.picker.css') }}">
-    <!-- <link rel="stylesheet" type="text/css" href="{{ asset('fx/mui/mui.css') }}"> -->
+	<link rel="stylesheet" type="text/css" href="{{ asset('fx/mui/mui.picker.css') }}">
+	<!-- <link rel="stylesheet" type="text/css" href="{{ asset('fx/mui/mui.css') }}"> -->
 @endsection
 
 @section('script')
-    @parent
+	@parent
 	<script src="{{ asset('fx/mui/js/mui.min.js') }}"></script>
 	<script src="{{ asset('fx/mui/js/mui.picker.min.js') }}"></script>
+	<script src="{{ asset('fx/js/lrz.all.bundle.js') }}"></script>
 	<!-- <script src="{{ asset('fx/mui/js/data.city.js') }}"></script> -->
 	<script>
 		$(function () {
+			var resizeFile = null // 压缩后的文件
 			//日期插件初始化
 			var myDate = new Date();
 			var start_time_picker = new mui.DtPicker({"type":"date","beginYear":1960,"endYear":myDate.getFullYear()});
@@ -34,19 +36,43 @@
 			// 上传图片改变时
 			$('#img').on('change', function () {
 				var file = $(this)[0].files[0]
-				if (file.size / 1024 > 200) {
-					prompt.message('图片太大')
-					return
-				}
+				// if (file.size / 1024 > 200) {
+				// 	prompt.message('图片太大')
+				// 	return
+				// }
 				if (file.type !== 'image/png' && file.type !== 'image/jpeg') {
 					prompt.message('图片格式只支持png和jpg')
 					return
 				}
-				var fr = new FileReader()
-				fr.onload = function (e) {
-					$('#avatar').attr('src', e.target.result)
-				}
-				fr.readAsDataURL(file)
+				// var fr = new FileReader()
+				// fr.onload = function (e) {
+				// 	$('#avatar').attr('src', e.target.result)
+				// }
+				// fr.readAsDataURL(file)
+				// {
+				// 	width
+				// 	height
+				// 	quality
+				// 	fieldName
+				// }
+				lrz(file, {
+					width: 512,
+					height: 512,
+					quality: 0.5,
+					fieldName: 'img'
+				})
+				.then(function (rst) {
+					// 处理成功会执行
+					console.dir(rst);
+					$('#avatar').attr('src', rst.base64)
+					resizeFile = rst.formData.get('img')
+				})
+				.catch(function (err) {
+					// 处理失败会执行
+				})
+				.always(function () {
+					// 不管是成功失败，都会执行
+				})
 			})
 
 			//表单提交
@@ -71,25 +97,25 @@
 			function submitForm(){
 				var form = document.forms['form'];
 				var url = $("form").attr('action');//当前编辑id
-	            var params = {
-	                realname: form['realname'].value,
-	                phone: form['phone'].value,
-	                gender: form['gender'].value,
-	                email: form['email'].value,
-	                birth_date: form['birth_date'].value,
-	                password: form['password'].value,
-	                img: form['img'].files[0]
-	            }
-	            if (_valid.validForm(params)) {
-	                ajax('post', url, params, true, true)
-		            	.then(function (resolve) {
-		            		if (resolve) {
-		            			// prompt.message('保存成功', 'http://' + window.location.host + '/home/userinfo')
-		            		} else {
-		            			prompt.message('保存失败')
-		            		}
-		            	})
-	            }
+				var params = {
+					realname: form['realname'].value,
+					phone: form['phone'].value,
+					gender: form['gender'].value,
+					email: form['email'].value,
+					birth_date: form['birth_date'].value,
+					password: form['password'].value,
+					img: resizeFile
+				}
+				if (_valid.validForm(params)) {
+					ajax('post', url, params, true, true)
+						.then(function (resolve) {
+							if (resolve) {
+								prompt.message('保存成功', 'http://' + window.location.host + '/home/userinfo')
+							} else {
+								prompt.message('保存失败')
+							}
+						})
+				}
 			}
 
 		})
@@ -98,7 +124,7 @@
 
 @section('content')
 
-    @include("layouts.header-info")
+	@include("layouts.header-info")
 
 	<div class="useredit">
 		<div class="useredit_info mb-10">
