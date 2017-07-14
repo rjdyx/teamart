@@ -7,6 +7,7 @@
 
 @section('script')
     @parent
+    {!! Geetest::render('bind') !!}
     <script>
         function validate() {
             if (!_valid.name('用户名', $('#name').val())) {
@@ -135,7 +136,6 @@
                     <input type="button" id="valid">
                 </label>
             </form>
-            {!! Geetest::render('bind') !!}
         </div>
     </div>
 @endsection

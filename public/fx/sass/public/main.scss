@@ -976,7 +976,8 @@
 			p {
 				margin-top: 0.2rem;
 				font-size: 15px;
-				color: #AAAAAA
+				color: #AAAAAA;
+				@extend %wrap2;
 			}
 		}
 		.address_warpper_opts {
@@ -1070,7 +1071,13 @@
 				border: 0;
 			}
 			.addressadd_selection {
+				display: block;
+				max-width: 60%;
 				color: #979797;
+				@extend %wrap;
+			}
+			.addressadd_selection.select {
+				color: #000;
 			}
 			.address_default {
 				display: block;
@@ -1080,9 +1087,6 @@
 			}
 			.address_default.active {
 				@include  backgroundImages("/fx/images/address_default_active.png", cover)
-			}
-			.form_error {
-				position: absolute;
 			}
 		}
 		.form_item.error {

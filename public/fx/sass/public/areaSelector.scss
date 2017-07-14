@@ -3,7 +3,7 @@
     -webkit-overflow-scrolling: touch;
     overflow-scrolling: touch;
     position: fixed;
-    top: 0;
+    top: 100%;
     right: 0;
     bottom: 0;
     left: 0;
@@ -17,9 +17,10 @@
     }
     .areaSelector_container {
     	position: absolute;
-    	bottom: 0;
+    	bottom: -4rem;
     	left: 0;
     	width: 100%;
+    	transition: all 0.5s ease;
     	.areaSelector_opts {
     		height: 1rem;
     		line-height: 1rem;
@@ -32,15 +33,21 @@
     	.areaSelector_area {
     		width: 100%;
     		background-color: #d5d8df;
+			overflow: hidden;
+			height: 3rem;
     		.area_list {
 				width: 33.3333%;
 				height: 3rem;
-				overflow: hidden;
+				overflow: auto;
 				li {
 					height: 0.6rem;
 					line-height: 0.6rem;
 					text-align: center;
 					font-size: 14px;
+					@extend %wrap;
+				}
+				li.active {
+					background-color: #b5b5b5;
 				}
     		}
     	}

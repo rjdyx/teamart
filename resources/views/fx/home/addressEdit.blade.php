@@ -3,7 +3,7 @@
 @section('title') 地址管理 @endsection
 
 @section('css')
-    <link rel="stylesheet" type="text/css" href="{{ asset('fx/larea/css/LArea.css') }}">
+    {{-- <link rel="stylesheet" type="text/css" href="{{ asset('fx/larea/css/LArea.css') }}">
     <style type="text/css">
         * {
             margin: 0;
@@ -29,26 +29,34 @@
             -webkit-overflow-scrolling: touch;
             overflow-scrolling: touch;
         }
-    </style>
+    </style> --}}
 @endsection
 
 @section('script')
     @parent
-    <script src="{{ asset('fx/larea/js/LAreaData1.js') }}"></script>
-    <script src="{{ asset('fx/larea/js/LArea.min.js') }}"></script>
+    <!-- <script src="{{ asset('fx/larea/js/LAreaData1.js') }}"></script> -->
+    <script src="{{ asset('fx/mui/js/data.city.js') }}"></script>
+    <!-- <script src="{{ asset('fx/larea/js/LArea.min.js') }}"></script> -->
     <script>
-        var area1 = new LArea();
-        area1.init({
-            'trigger': '#address', //触发选择控件的文本框，同时选择完毕后name属性输出到该位置
-            'valueTo': '#value1', //选择完毕后id属性输出到该位置
-            'keys': {
-                id: 'id',
-                name: 'name'
-            }, //绑定数据源相关字段 id对应valueTo的value属性输出 name对应trigger的value属性输出
-            'type': 1, //数据源类型
-            'data': LAreaData //数据源
-        });
-        area1.value=[1,13,3];//控制初始位置，注意：该方法并不会影响到input的value
+        // var area1 = new LArea();
+        // area1.init({
+        //     'trigger': '#address', //触发选择控件的文本框，同时选择完毕后name属性输出到该位置
+        //     'valueTo': '#value1', //选择完毕后id属性输出到该位置
+        //     'keys': {
+        //         id: 'id',
+        //         name: 'name'
+        //     }, //绑定数据源相关字段 id对应valueTo的value属性输出 name对应trigger的value属性输出
+        //     'type': 1, //数据源类型
+        //     'data': LAreaData //数据源
+        // });
+        // area1.value=[1,13,3];//控制初始位置，注意：该方法并不会影响到input的value
+        var areaSelector = new AreaSelector()
+        areaSelector.init({
+            data: init_city_picker,
+            trigger: '.addressadd_selection',
+            txtTo: '#address',
+            valueTo: '#addressValue'
+        })
         $('.J_defualtAddress').click(function(){
 			var v = $("input[name='state']").val();
 			if (v > 0) {
@@ -100,8 +108,9 @@
 			</div>
 			<div class="form_item chayefont">
 				<label for="region">所在地区</label>
-		        <input type="text" id="address" value="{{$data->province}},{{$data->city}},{{$data->area}}" name="address" readonly="" placeholder="选择地区"/>
-		        <input id="value1" type="hidden"/>
+                <span class="pull-right addressadd_selection select fz-12">{{$data->province}},{{$data->city}},{{$data->area}}</span>
+                <input id="address" name="address" data-required="true" value="{{$data->province}},{{$data->city}},{{$data->area}}" type="hidden"/>
+                <input id="addressValue" name="addressValue" type="hidden"/>
 			</div>
 			<div class="form_item chayefont">
 				<label for="code">邮编</label>
@@ -120,4 +129,18 @@
 		</form>
 		<div class="chayefont address_add J_submit">保存地址</div>
 	</div>
+    <div class="areaSelector">
+        <div class="areaSelector_bg"></div>
+        <div class="areaSelector_container">
+            <div class="areaSelector_opts clearfix">
+                <a href="javascript:;" class="pull-left fz-14 J_region_cancel">取消</a>
+                <a href="javascript:;" class="pull-right fz-14 J_region_submit">确定</a>
+            </div>
+            <div class="areaSelector_area clearfix">
+                <ul class="pull-left area_list province"></ul>
+                <ul class="pull-left area_list city"></ul>
+                <ul class="pull-left area_list area"></ul>
+            </div>
+        </div>
+    </div>
 @endsection
