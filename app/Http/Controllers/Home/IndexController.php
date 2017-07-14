@@ -11,12 +11,12 @@ use DB;
 class IndexController extends Controller
 {
     //首页更多列表页
-    public function promotion($type)
+    public function promotion(Request $request, $type)
     {	
     	$title = "活动商品";
     	if ($type=='new') $title = "最新商品";
-    	
-        return view(config('app.theme').'.home.promotion')->with(['title' => $title,'type'=>$type]);
+    	$id = empty($request->id)?'':$request->id;
+        return view(config('app.theme').'.home.promotion')->with(['title' => $title,'type'=>$type,'id'=>$id]);
     }
 
     //首页更多列表页数据接口

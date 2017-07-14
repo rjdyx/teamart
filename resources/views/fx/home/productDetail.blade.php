@@ -197,7 +197,7 @@
 							$('.productspec').removeClass('top-0')
 						})
     				} else {
-    					prompt.message('加入失败')
+    					prompt.message('加入购物车失败')
     				}
     			})
     	};

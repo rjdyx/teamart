@@ -40,9 +40,9 @@
                     page = 1
                     $('.dropload-down').show()
                 }
-                var type = $(".promotion").attr('type');
-                var id = "{{$_GET['id']}}"
-                ajax('get', '/home/index/more', {page: page,type:type,id:id}).then(function (res) {
+                var tp = $(".promotion").attr('type');
+                var id = {{$id}}
+                ajax('get', '/home/index/more', {page: page,type:tp,id:id}).then(function (res) {
                     var template = ''
                     var data = res.data
                     if (data.length > 0) {

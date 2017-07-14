@@ -40,7 +40,7 @@ class CartController extends Controller
 	public function store(Request $request)
 	{
 		$product_id = $request->id; // 商品id
-		$amount = $request->amount;//商品数量
+		$amount = empty($request->amount)?1:$request->amount;//商品数量
 		$result = $this->issetCart($product_id);//判断商品是否在购物车存在
 
 		if (empty($result->id)){
@@ -52,9 +52,9 @@ class CartController extends Controller
 			} else {
 				$newId = $order->id;
 			}
-			return $this->addOrderProduct($product_id, $newId);
+			return $this->addOrderProduct($product_id, $newId, $amount);
 		} else {
-			return $this->editOrderProduct($result->id);
+			return $this->editOrderProduct($result->id, $amount);
 		}
 	}
 
@@ -76,25 +76,25 @@ class CartController extends Controller
     }
 
     //添加 商品订单关联方法
-    public function addOrderProduct($id, $order_id)
+    public function addOrderProduct($id, $order_id, $amount)
     {   
         $order_product = new OrderProduct;
         $order_product->order_id = $order_id;
         $order_product->product_id = $id;
         $order_product->price = Product::find($id)->price;
-        $order_product->amount = 1;
+        $order_product->amount = $amount;
 
         if ($order_product->save()) return 1;
         return 0;
     }
 
     //编辑数量 商品订单关联方法
-    public function editOrderProduct($id)
+    public function editOrderProduct($id, $amount)
     {   
         $model = OrderProduct::find($id);
-        $amount = $model->amount + 1;
-        $model->amount = $amount;
-        $model->price = (Product::find($model->product_id)->price) * $amount;
+        $new_amount = $model->amount + $amount;
+        $model->amount = $new_amount;
+        $model->price = (Product::find($model->product_id)->price) * $new_amount;
         if ($model->save()) return 1;
         return 0;
     }
