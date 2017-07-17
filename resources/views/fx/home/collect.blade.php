@@ -135,17 +135,17 @@
 						if (res.data.length > 0) {
 							res.data.forEach(function (v) {
 								result += `
-									<div class="collect_warpper mb-20 clearfix">
-										<i class="collect_warpper_select J_select" data-id="${v.op_id}"></i>
-										<div class="collect_warpper_content_img pull-left mr-20">
+									<div class="warpper mb-20 clearfix">
+										<i class="warpper_select J_select" data-id="${v.op_id}"></i>
+										<div class="warpper_content_img pull-left mr-20">
 											<img src="http://${window.location.host}/${v.img}">
 										</div>
-										<div class="collect_warpper_content_info pull-right">
+										<div class="warpper_content_info pull-right">
 											<h5 class="chayefont mb-10">${v.name}</h5>
 											<p class="desc">${v.desc}</p>
-											<div class="collect_warpper_content_info_bottom">
+											<div class="warpper_content_info_bottom">
 												<span class="pull-left price">￥${v.price}</span>
-												<span class="pull-right sell">已售${v.sell_amount}</span>
+												<span class="pull-right color-8C8C8C">已售${v.sell_amount}</span>
 											</div>
 										</div>
 									</div>
@@ -156,10 +156,10 @@
                         	me.noData();
                         	if (page == 1) {
 								$('.dropload-down').hide()
-	                        	$('.collect_container').find('.collect_nodata').remove()
+	                        	$('.collect_container').find('.list_nodata').remove()
 								$('.collect_container').append(`
-								<div class="collect_nodata txt-c">
-									你还没有收藏，快去<a href="{{url('')}}">首页</a>看看吧
+								<div class="list_nodata txt-c">
+									你还没有收藏，快去<a class="price" href="{{url('')}}">首页</a>看看吧
 								</div>`)
                         	}
 						}
@@ -193,19 +193,19 @@
 
 	@include("layouts.backIndex")
 
-	<div class="container collect">
+	<div class="container relative collect">
 		<div class="collect_container">
 			<div class="collect_list">
 				<!-- 收藏商品结构 -->
 			</div>
 		</div>
 
-		<div class="collect_bottom">
-			<div class="block pull-left txt-l collect_bottom_selection J_select_all">
-				<span>全选</span>
+		<div class="bottom_btn white fz-18">
+			<div class="pull-left txt-l relative collect_bottom_selection J_select_all">
+				<span class="block">全选</span>
 			</div>
-			<div class="block pull-left txt-c fz-14 collect_bottom_cart J_join_cart">加入购物车</div>
-			<div class="block pull-left txt-c collect_bottom_del J_dels">删除</div>
+			<div class="pull-left txt-c fz-14 collect_bottom_cart J_join_cart">加入购物车</div>
+			<div class="pull-left txt-c collect_bottom_del J_dels">删除</div>
 		</div>
 	</div>
 @endsection

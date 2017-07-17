@@ -99,38 +99,38 @@
 
 @section('content')
 	@include("layouts.header-info")
-	<div class="addressadd">
+	<div class="container relative addressadd">
 		<form action="#" name="addressform">
-			<div class="form_item chayefont">
+			<div class="form_item chayefont fz-16">
 				<label for="name">收货人</label>
-				<input type="text" name="name" id="name" class="chayefont" data-required="true" autocomplete="off" placeholder="请输入收货人名称">
+				<input type="text" name="name" id="name" class="pull-right block txt-r chayefont" data-required="true" autocomplete="off" placeholder="请输入收货人名称">
 			</div>
-			<div class="form_item chayefont">
+			<div class="form_item chayefont fz-16">
 				<label for="phone">联系电话</label>
-				<input type="tel" name="phone" id="phone" class="chayefont" data-required="true" autocomplete="off" placeholder="请输入联系电话">
+				<input type="tel" name="phone" id="phone" class="pull-right block txt-r chayefont" data-required="true" autocomplete="off" placeholder="请输入联系电话">
 			</div>
-			<div class="form_item chayefont">
+			<div class="form_item chayefont fz-16">
 				<label for="region">所在地区</label>
-		        <span class="pull-right addressadd_selection">选择地区</span>
+		        <span class="pull-right block color-8C8C8C addressadd_selection">选择地区</span>
 		        <input id="address" name="address" data-required="true" type="hidden"/>
 		        <input id="addressValue" name="addressValue" type="hidden"/>
 			</div>
-			<div class="form_item chayefont">
+			<div class="form_item chayefont fz-16">
 				<label for="code">邮编</label>
-				<input type="number" name="code" id="code" class="chayefont" data-required="true" placeholder="请输入邮编">
+				<input type="number" name="code" id="code" class="pull-right block txt-r chayefont" data-required="true" placeholder="请输入邮编">
 			</div>
-			<div class="form_item">
+			<div class="form_item fz-16">
 				<textarea name="detail" id="detail" data-required="true" placeholder="请填写详细地址，不少于5个字"></textarea>
 			</div>
-			<div class="form_item mt-20 J_defualtAddress">
+			<div class="form_item fz-16 mt-20 J_defualtAddress">
 				<label for="state" class="block">
 					默认地址
-					<i class="pull-right address_default"></i>
+					<i class="pull-right block address_default"></i>
 				</label>
 				<input type="hidden" name="state" id="state" value="0">
 			</div>
 		</form>
-		<div class="chayefont address_add J_submit">保存地址</div>
+		<div class="chayefont block txt-c white fz-18 bottom_btn J_submit">保存地址</div>
 	</div>
 	<div class="areaSelector">
 		<div class="areaSelector_bg"></div>

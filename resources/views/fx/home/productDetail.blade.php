@@ -364,7 +364,7 @@
 	@include("layouts.header-info")
 
 	@include("layouts.backIndex")
-	<div class="container productdetail">
+	<div class="container productdetail relative">
 		<div class="productdetail_cart">
 			<a href="{{url('/home/cart')}}">
 				<i class="fa fa-shopping-cart"></i>

@@ -47,20 +47,20 @@
                         if (res.data.length > 0) {
                             res.data.forEach(function (v) {
                                 template += `
-                                    <div class="cart_warpper mb-20 clearfix">
-                                        <i class="cart_warpper_select J_select" data-opid="${v.opid}" data-pid="${v.id}" data-price="${v.price}"></i>
-                                        <div class="cart_warpper_content_img pull-left mr-20">
+                                    <div class="warpper mb-20 clearfix">
+                                        <i class="warpper_select J_select" data-opid="${v.opid}" data-pid="${v.id}" data-price="${v.price}"></i>
+                                        <div class="warpper_content_img pull-left mr-20">
                                             <img src="http://${window.location.host}/${v.img}">
                                         </div>
-                                        <div class="cart_warpper_content_info pull-right">
+                                        <div class="warpper_content_info pull-right">
                                             <h5 class="chayefont mb-10">${v.name}</h5>
                                             <p class="desc">${v.desc}</p>
-                                            <div class="cart_warpper_content_info_bottom">
+                                            <div class="warpper_content_info_bottom">
                                                 <span class="pull-left price">&yen;${parseInt(v.price).toFixed(2)}</span>
-                                                <div class="cwcib_number pull-right">
-                                                    <i class="fa fa-minus-circle J_minus"></i>
-                                                    <span class="sell" stock="${v.stock}">&times;<span class="amount" data-opid="${v.opid}" data-pid="${v.id}">${v.amount}</span></span>
-                                                    <i class="fa fa-plus-circle J_plus"></i>
+                                                <div class="pull-right">
+                                                    <i class="fa fa-minus-circle fz-18 color-d7d7d7 J_minus"></i>
+                                                    <span class="sell color-8C8C8C" stock="${v.stock}">&times;<span class="amount" data-opid="${v.opid}" data-pid="${v.id}">${v.amount}</span></span>
+                                                    <i class="fa fa-plus-circle fz-18 color-F78223 J_plus"></i>
                                                 </div>
                                             </div>
                                         </div>
@@ -72,10 +72,10 @@
                             me.noData();
                             if (page == 1) {
                                 $('.dropload-down').hide()
-                                $('.cart_container').find('.cart_nodata').remove()
+                                $('.cart_container').find('.list_nodata').remove()
                                 $('.cart_container').append(`
-                                <div class="cart_nodata txt-c">
-                                    你的购物车还没有商品，快去<a href="{{url('')}}">首页</a>看看吧
+                                <div class="list_nodata txt-c">
+                                    你的购物车还没有商品，快去<a class="price" href="{{url('')}}">首页</a>看看吧
                                 </div>`)
                             }
                         }
@@ -84,7 +84,7 @@
                         } else {
                             $('.cart_list').append(template);
                         }
-                        $('.cart_warpper').each(function () {
+                        $('.warpper').each(function () {
                             var cid = $(this).find('.J_select').data('pid')
                             var camount = parseInt($(this).find('.amount').text())
                             confirm_params[cid] = camount
@@ -192,7 +192,7 @@
             })
             // 减少商品数量
             function minus () {
-                var gid = $(this).parents('.cart_warpper').find('.J_select').data('pid')
+                var gid = $(this).parents('.warpper').find('.J_select').data('pid')
                 if (confirm_params[gid] > 1) {
                     confirm_params[gid] -= 1
                     $(this).siblings('.sell').find('.amount').text(confirm_params[gid])
@@ -206,7 +206,7 @@
             
             // 增加商品数量
             function plus () {
-                var gid = $(this).parents('.cart_warpper').find('.J_select').data('pid')
+                var gid = $(this).parents('.warpper').find('.J_select').data('pid')
                 var stock = $(this).siblings('.sell').attr('stock')
                 if (stock >= confirm_params[gid]){
                     confirm_params[gid] += 1
@@ -276,42 +276,16 @@
     <div class="cart">
         <div class="cart_container">
             <div class="cart_list">
-                <!-- {{-- @foreach($lists as $list)
-                <div class="cart_warpper mb-20">
-                    <div class="cart_warpper_tit J_select" data-id="{{$list->id}}">
-                        <a href="javascript:;" class="chayefont">
-                            <i class="fa fa-ban"></i>
-                            绿茶宝塔镇河妖
-                        </a>
-                    </div>
-                    <div class="cart_warpper_content clearfix">
-                        <div class="cart_warpper_content_img pull-left mr-20">
-                            <img src="{{url('')}}/{{ $list->img }}">
-                        </div>
-                        <div class="cart_warpper_content_info pull-right">
-                            <h5 class="chayefont mb-10">{{$list->name}}</h5>
-                            <p>{{$list->desc}}</p>
-                            <div class="cart_warpper_content_info_bottom">
-                                <span class="pull-left price">{{'￥'.number_format($list->price,2)}}</span>
-                                <div class="cwcib_number pull-right">
-                                    <i class="fa fa-minus-circle J_minus"></i>
-                                    <span class="sell">&times<span class="amount">{{$list->amount}}</span></span>
-                                    <i class="fa fa-plus-circle J_plus"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                @endforeach --}} -->
+                <!-- 收藏商品结构 -->
             </div>
         </div>
-        <div class="cart_bottom">
-            <div class="cart_bottom_selection pull-left J_select_all">
+        <div class="bottom_btn">
+            <div class="relative cart_bottom_selection txt-c pull-left J_select_all">
                 <span>全选</span>
             </div>
-            <div class="cart_bottom_info pull-left">合计：<span class="price">&yen;<span class="total">0.00</span></span></div>
-            <div class="cart_bottom_settle pull-right J_comfirm"><a href="javascript:;">结算</a></div>
-            <div class="cart_bottom_del pull-right J_dels"><a href="javascript:;">删除</a></div>
+            <div class="cart_bottom_info txt-c pull-left">合计：<span class="price">&yen;<span class="total">0.00</span></span></div>
+            <div class="cart_bottom_settle txt-c pull-right J_comfirm"><a class="white" href="javascript:;">结算</a></div>
+            <div class="cart_bottom_del txt-c pull-right J_dels"><a class="white" href="javascript:;">删除</a></div>
         </div>
     </div>
     @include("layouts.footer")

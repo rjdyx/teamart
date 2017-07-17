@@ -20,16 +20,16 @@
 .order,
 .useredit {
 	::-webkit-input-placeholder { /* WebKit browsers */  
-		color: #979797;
+		color: #8C8C8C;
 	}
 	:-moz-placeholder { /* Mozilla Firefox 4 to 18 */  
-		color: #979797;
+		color: #8C8C8C;
 	}
 	::-moz-placeholder { /* Mozilla Firefox 19+ */  
-		color: #979797;
+		color: #8C8C8C;
 	} 
 	:-ms-input-placeholder { /* Internet Explorer 10+ */  
-		color: #979797;
+		color: #8C8C8C;
 	}
 }
 
@@ -61,21 +61,14 @@
 	bottom: 1.5rem;
 }
 
-
-// 登录
-.login {
+.login, .register, .email, .reset {
 	width: 100%;
 	height: 100%;
 	border: 0.02rem solid transparent;
-	// overflow: hidden;
-	@include  backgroundImages("/fx/images/login_bg.png", cover);
-	.login_logo {
-		height: 3.5rem;
+	.login_logo, .register_logo {
 		width: 5rem;
-		margin: 0.5rem auto 0.2rem;
-		@include  backgroundImages("/fx/images/login_logo.png", cover, center 0);
 	}
-	.login_form {
+	.form_style {
 		padding: 0.1rem;
 		label {
 			display: block;
@@ -86,89 +79,18 @@
 			height: 0.7rem;
 			line-height: 0.7rem;
 			margin: 0 auto 0.3rem;
-			color: #fff;
-			@include  backgroundImages("/fx/images/login_field_bg.png", 100% 100%);
+			input, i {
+				font-size: 16px;
+			}
 			input {
 				padding-left: 0.7rem;
-				font-size: 16px;
 				background-color: transparent;
 				border: 0;
-				color: #fff;
 			}
 			i {
 				position: absolute;
 				left: 0.3rem;
 				top: 50%;
-				font-size: 16px;
-				transform: translateY(-50%);
-			}
-		}
-		label.submit {
-			width: 1.3rem;
-			height: 1.3rem;
-			margin: 0.2rem auto 0;
-			@include  backgroundImages("/fx/images/form_submit.png", cover);
-			input {
-				visibility: hidden;
-			}
-		}
-		.login_link {
-			width: 4.3rem;
-			height: 0.4rem;
-			margin: 0 auto 0.1rem;
-			font-size: 16px;
-			a {
-				display: block;
-				width: 50%;
-			}
-		}
-	}
-	.form_error {
-		min-height: 0.3rem;
-		width: 4.3rem;
-		font-size: 14px;
-		color: red;
-		margin: 0 auto;
-	}
-}
-
-// 注册
-.register {
-	width: 100%;
-	height: 100%;
-	overflow: auto;
-	@include  backgroundImages("/fx/images/register_bg.png", cover);
-	.register_logo {
-		height: 2.4rem;
-		width: 5rem;
-		margin: 0.5rem auto 0;
-		@include  backgroundImages("/fx/images/register_logo.png", cover, center 0);
-	}
-	.register_form {
-		padding: 0.1rem;
-		label {
-			display: block;
-		}
-		label.field {
-			position: relative;
-			width: 4.3rem;
-			height: 0.7rem;
-			line-height: 0.7rem;
-			margin: 0 auto 0.3rem;
-			color: #fff;
-			@include  backgroundImages("/fx/images/register_field_bg.png", 100% 100%);
-			input {
-				padding-left: 0.7rem;
-				font-size: 16px;
-				background-color: transparent;
-				border: 0;
-				color: #fff;
-			}
-			i {
-				position: absolute;
-				left: 0.3rem;
-				top: 50%;
-				font-size: 16px;
 				transform: translateY(-50%);
 			}
 		}
@@ -190,12 +112,9 @@
 				width: 2.1rem;
 			}
 		}
-		.register_link {
+		.login_link, .register_link {
 			width: 4.3rem;
 			height: 0.4rem;
-			margin: 0.1rem auto 0.1rem;
-			font-size: 16px;
-			text-align: center;
 			a {
 				display: block;
 				width: 50%;
@@ -205,81 +124,51 @@
 	.form_error {
 		min-height: 0.3rem;
 		width: 4.3rem;
-		font-size: 14px;
 		color: red;
 		margin: 0 auto;
+	}
+}
+// 登录
+.login {
+	@include  backgroundImages("/fx/images/login_bg.png", cover);
+	.login_logo {
+		height: 3.5rem;
+		margin: 0.5rem auto 0.2rem;
+		@include  backgroundImages("/fx/images/login_logo.png", cover, center 0);
+	}
+	.form_style {
+		label.field {
+			@include  backgroundImages("/fx/images/login_field_bg.png", 100% 100%);
+		}
+		.login_link {
+			margin: 0 auto 0.1rem;
+		}
+	}
+}
+
+// 注册
+.register {
+	@include  backgroundImages("/fx/images/register_bg.png", cover);
+	.register_logo {
+		height: 2.4rem;
+		margin: 0.5rem auto 0;
+		@include  backgroundImages("/fx/images/register_logo.png", cover, center 0);
+	}
+	.form_style {
+		label.field {
+			@include  backgroundImages("/fx/images/register_field_bg.png", 100% 100%);
+		}
+		.register_link {
+			margin: 0.1rem auto 0.1rem;
+		}
 	}
 }
 
 // 发送邮箱
-.email {
-	width: 100%;
-	height: 100%;
-	overflow: hidden;
-	@include  backgroundImages("/fx/images/login_bg.png", cover);
-	.email_step {
-		height: 3.5rem;
-		width: 5rem;
-		margin: 0.5rem auto 0.2rem;
-		h1 {
-			width: 100%;
-			height: 1.3rem;
-			line-height: 1.3rem;
-		}
-	}
-	.email_form {
-		padding: 0.1rem;
-		label {
-			display: block;
-		}
-		label.field {
-			position: relative;
-			width: 4.3rem;
-			height: 0.7rem;
-			line-height: 0.7rem;
-			margin: 0 auto 0.3rem;
-			color: #fff;
-			@include  backgroundImages("/fx/images/login_field_bg.png", 100% 100%);
-			input {
-				padding-left: 0.7rem;
-				font-size: 16px;
-				background-color: transparent;
-				border: 0;
-				color: #fff;
-			}
-			i {
-				position: absolute;
-				left: 0.3rem;
-				top: 50%;
-				font-size: 16px;
-				transform: translateY(-50%);
-			}
-		}
-		label.submit {
-			width: 1.3rem;
-			height: 1.3rem;
-			margin: 0.2rem auto 0;
-			@include  backgroundImages("/fx/images/form_submit.png", cover);
-			input {
-				visibility: hidden;
-			}
-		}
-	}
-	.form_error {
-		min-height: 0.3rem;
-		width: 4.3rem;
-		font-size: 14px;
-		color: red;
-		margin: 0 auto;
-	}
-}
 // 重置密码
-.reset {
-	width: 100%;
-	height: 100%;
-	overflow: hidden;
+.email, .reset {
 	@include  backgroundImages("/fx/images/login_bg.png", cover);
-	.reset_step {
+	.step {
 		height: 3.5rem;
 		width: 5rem;
 		margin: 0.5rem auto 0.2rem;
@@ -289,73 +178,130 @@
 			line-height: 1.3rem;
 		}
 	}
-	.reset_form {
-		padding: 0.1rem;
-		label {
-			display: block;
-		}
+	.form_style {
 		label.field {
-			position: relative;
-			width: 4.3rem;
-			height: 0.7rem;
-			line-height: 0.7rem;
-			margin: 0 auto 0.3rem;
-			color: #fff;
 			@include  backgroundImages("/fx/images/login_field_bg.png", 100% 100%);
-			input {
-				padding-left: 0.7rem;
-				font-size: 16px;
-				background-color: transparent;
-				border: 0;
-				color: #fff;
-			}
-			i {
-				position: absolute;
-				left: 0.3rem;
-				top: 50%;
-				font-size: 16px;
-				transform: translateY(-50%);
-			}
 		}
-		label.submit {
-			width: 1.3rem;
-			height: 1.3rem;
-			margin: 0.2rem auto 0;
-			@include  backgroundImages("/fx/images/form_submit.png", cover);
-			input {
-				visibility: hidden;
-			}
-		}
-	}
-	.form_error {
-		min-height: 0.3rem;
-		width: 4.3rem;
-		font-size: 14px;
-		color: red;
-		margin: 0 auto;
 	}
 }
 
 .container {
 	width: 100%;
-	// height: calc(100% - 2.2rem);
 	height: 100%;
 	padding-top: 1.2rem;
 	padding-bottom: 1rem;
 	overflow: auto;
-	// box-sizing: content-box;
+}
+// noData
+.userassets, .address, .collect, .order, .cart, .promotion {
+	.list_nodata {
+		width: 100%;
+		height: 3rem;
+		line-height: 3rem;
+		background-color: #fff;
+	}
+}
+// 商品结构样式
+.collect, .cart {
+	.warpper {
+		position: relative;
+		height: 2.2rem;
+		padding: 0.2rem 0.3rem 0.2rem 0.8rem;
+		background-color: #FFF;
+		.warpper_select {
+			position: absolute;
+			left: 0.2rem;
+			top: 0.4rem;
+			display: block;
+			width: 0.4rem;
+			height: 0.4rem;
+			margin-top: -0.2rem;
+			border-radius: 50%;
+			@include  backgroundImages("/fx/images/address_default.png", cover)
+		}
+		.warpper_select.active {
+			@include  backgroundImages("/fx/images/address_default_active.png", cover)
+		}
+		.warpper_content_img {
+			width: 28.75%;
+			height: 100%;
+			overflow: hidden;
+			img {
+				width: 100%;
+			}
+		}
+		.warpper_content_info {
+			position: relative;
+			width: calc(71.25% - 0.2rem);
+			height: 100%;
+			h5 {
+				@extend %wrap
+			}
+			p {
+				color: #7B7B7B;
+			}
+			p.desc {
+				@extend %wrap3
+			}
+			.warpper_content_info_bottom {
+				position: absolute;
+				left: 0;
+				bottom: 0;
+				width: 100%;
+			}
+			@media screen and (max-width:321px){
+				h5 {
+					font-size: 14px;
+				}
+				p {
+					font-size: 12px;
+				}
+			}
+			@media screen and (min-width:321px) and (max-width:400px){
+				h5 {
+					font-size: 16px;
+				}
+				p {
+					font-size: 14px;
+				}
+			}
+			@media screen and (min-width:400px){
+				h5 {
+					font-size: 18px;
+				}
+				p {
+					font-size: 16px;
+				}
+			}
+		}
+	}
+}
+// 页面底部按钮
+.useredit, .address, .addressadd, .collect, .cart {
+	.bottom_btn {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		height: 1rem;
+		width: 100%;
+		line-height: 1rem;
+		@include  backgroundImages("/fx/images/footer_bg.png", cover)
+	}
 }
 
 .index {
-	.banner {
+	.banner , .index_box, .banner_box {
 		width: 100%;
-		height: 2.5rem;
+	}
+	.banner, .banner_box {
 		img {
 			width: 100%;
 		}
 	}
+	.banner {
+		height: 2.5rem;
+	}
 	.index_box {
-		width: 100%;
 		h1 {
 			color: #333;
 			@extend %wrap;
@@ -364,13 +310,12 @@
 			color: #787876;
 			@extend %wrap2;
 		}
-		span.price {
-			color: #FF4100;
+		.index_box_title, .index_box_content, .index_box_list {
+			width: 100%;
 		}
-		.index_box_title{
+		.index_box_title {
 			height: 1rem;
 			margin-bottom: 0.02rem;
-			width: 100%;
 			padding: 0 0.1rem;
 			@include  backgroundImages("/fx/images/index_box_title_bg.png", cover)
 			h1, a {
@@ -379,7 +324,6 @@
 			}
 			h1 {
 				width: 3rem;
-				color: #fff;
 				padding-left: 0.4rem;
 				@include  backgroundImages("/fx/images/index_box_title.png", 80% 80%, left 0.05rem);
 			}
@@ -401,81 +345,9 @@
 		}
 		.index_box_content {
 			height: 4rem;
-			width: 100%;
 			.ibc_single, .ibc_multi{
+				height: 100%;
 				background-color: #DED8CC;
-				// a {
-				// 	display: block;
-				// }
-			}
-			.ibc_single {
-				width: 2.5rem;
-				height: 100%;
-				padding: 0.1rem;
-				@media screen and (max-width:321px){
-					h1 {
-						font-size: 14px;
-					}
-				}
-				@media screen and (min-width:321px) and (max-width:400px){
-					h1 {
-						font-size: 16px;
-					}
-				}
-				@media screen and (min-width:400px){
-					h1 {
-						font-size: 18px;
-					}
-				}
-				span {
-					display: block;
-				}
-				img {
-					display: block;
-					width: 90%;
-					margin: 0 auto;
-				}
-			}
-			.ibc_multi {
-				width: calc(100% - 2.52rem);
-				height: 100%;
-				.ibc_multi_goods {
-					height: 50%;
-					padding: 0.1rem;
-					p {
-						margin-top: 0.1rem;
-						margin-bottom: 0.1rem;
-					}
-					img {
-						display: block;
-						height: 100%;
-						max-width: 1.5rem;
-					}
-				}
-				.ibc_multi_goods_cell {
-					width: 50%;
-					height: 50%;
-					padding: 0.1rem;
-					text-align: center;
-					a {
-						display: block;
-					}
-					img {
-						display: block;
-						width: 60%;
-						margin: 0 auto;
-					}
-				}
-				.ibc_multi_goods_cell.left {
-					border-right: 0.025rem solid #fff;
-				}
-				.ibc_multi_goods_cell.right {
-					border-left: 0.025rem solid #fff;
-				}
-				.ibc_multi_goods.top,
-				.ibc_multi_goods_cell.top {
-					border-bottom: 0.02rem solid #fff;
-				}
 				@media screen and (max-width:321px){
 					h1 {
 						font-size: 14px;
@@ -507,20 +379,59 @@
 					}
 				}
 			}
+			.ibc_single {
+				width: 2.5rem;
+				padding: 0.1rem;
+				img {
+					width: 90%;
+					margin: 0 auto;
+				}
+			}
+			.ibc_multi {
+				width: calc(100% - 2.52rem);
+				.ibc_multi_goods, .ibc_multi_goods_cell {
+					height: 50%;
+					padding: 0.1rem;
+				}
+				.ibc_multi_goods {
+					p {
+						margin-top: 0.1rem;
+						margin-bottom: 0.1rem;
+					}
+					img {
+						height: 100%;
+						max-width: 1.5rem;
+					}
+				}
+				.ibc_multi_goods_cell {
+					width: 50%;
+					img {
+						width: 60%;
+						margin: 0 auto;
+					}
+				}
+				.ibc_multi_goods_cell.left {
+					border-right: 0.025rem solid #fff;
+				}
+				.ibc_multi_goods_cell.right {
+					border-left: 0.025rem solid #fff;
+				}
+				.ibc_multi_goods.top,
+				.ibc_multi_goods_cell.top {
+					border-bottom: 0.02rem solid #fff;
+				}
+			}
 		}
 		.index_box_list {
-			width: 100%;
 			overflow: hidden;
 			ul {
 				width: 105%;
 				li {
-					float: left;
 					width: 2.1rem;
 					margin-right: 0.05rem;
 					background-color: #DED8CC;
 					padding: 0.1rem;
 					img {
-						display: block;
 						margin: 0.1rem auto;
 						width: 90%;
 					}
@@ -551,7 +462,6 @@
 		}
 	}
 	.banner_box {
-		width: 100%;
 		padding: 0.1rem;
 		background-color: #DED8CC;
 		.banner_box_row {
@@ -559,10 +469,6 @@
 			width: 100%;
 			border-radius: 0.1rem;
 			overflow: hidden;
-			img {
-				width: 100%;
-				display: block;
-			}
 			p {
 				position: absolute;
 				bottom: 0;
@@ -579,15 +485,13 @@
 		}
 	}
 }
-
-.usercenter {
-	.usercenter_info {
-		position: relative;
+// 用户头像及名字
+.usercenter, .userassets, .useredit {
+	.usercenter_info, .userassets_info, .useredit_info {
 		width: 100%;
 		height: 3.6rem;
 		overflow: hidden;
-		@include  backgroundImages("/fx/images/user_info_bg.png", cover)
-		.usercenter_avatar {
+		.avatar {
 			width: 2rem;
 			height: 2rem;
 			margin: 0.2rem auto 0;
@@ -595,15 +499,15 @@
 			border-radius: 50%;
 			overflow: hidden;
 			img {
-				display: block;
 				width: 100%;
 			}
 		}
-		.usercenter_name {
-			text-align: center;
-			color: #fff;
-			font-size: 22px;
-		}
+	}
+}
+// 用户中心
+.usercenter {
+	.usercenter_info {
+		@include  backgroundImages("/fx/images/user_info_bg.png", cover)
 		.usercenter_list {
 			position: absolute;
 			bottom: 0;
@@ -612,14 +516,8 @@
 			width: 100%;
 			background-color: rgba(181, 156, 107, 0.6);
 			li {
-				position: relative;
-				float: left;
 				width: 33.333333%;
-				text-align: center;
 				line-height: 0.4rem;
-				a {
-					color: #fff;
-				}
 			}
 			li:nth-child(2)::before,
 			li:nth-child(2)::after {
@@ -641,8 +539,10 @@
 			}
 		}
 	}
-	.usercenter_assets {
+	.usercenter_assets, .usercenter_nav {
 		width: 100%;
+	}
+	.usercenter_assets {
 		margin-top: 0.2rem;
 		ol {
 			width: 100%;
@@ -651,63 +551,41 @@
 			background-color: #DED8CC;
 			margin-bottom: 0.02rem;
 			li {
-				float: left;
 				width: 33.3333%;
-				font-size: 14px;
 				padding-left: 0.4rem;
-				i {
-					font-size: 20px;
-				}
 				a.withdraw {
-					display: block;
 					width: 1.4rem;
 					height: 0.5rem;
 					margin-top: 0.1rem;
 					padding-left: 0.5rem;
 					line-height: 0.5rem;
-					font-size: 16px;
-					color: #fff;
 					@include  backgroundImages("/fx/images/btn_bg.png", cover)
 				}
 			}
-			li.gray {
-				color: #727071;
-			}
-			li.red {
-				color: #C30C20;
-			}
+			// li.red {
+			// 	color: #C30C20;
+			// }
 			li:last-child {
 				padding-right: 0.4rem;
 			}
 		}
 	}
 	.usercenter_nav {
-		width: 100%;
 		margin-top: 0.2rem;
 		li {
-			float: left;
 			height: 1.8rem;
 			width: 33.333%;
 			background-color: #DED8CC;
 			border-right: 0.02rem solid #fff;
 			margin-bottom: 0.02rem;
-			text-align: center;
 			a {
 				display: block;
 				.usercenter_nav_icon {
 					width: 1rem;
 					height: 1rem;
 					margin: 0.15rem auto;
-					text-align: center;
 					line-height: 1rem;
 					@include  backgroundImages("/fx/images/usercenter_nav_icon_bg.png", cover)
-					i {
-						color: #fff;
-						font-size: 20px;
-					}
-				}
-				p {
-					font-size: 14px;
 				}
 			}
 		}
@@ -720,87 +598,51 @@
 		height: 0.8rem;
 		margin: 0.2rem auto;
 		line-height: 0.8rem;
-		color: #fff;
-		text-align: center;
 		background-color: #DED8CC;
 		border-radius: 0.1rem;
-		font-size: 18px;
 	}
 }
 // 用户资产
 .userassets {
-	width: 100%;
-	height: 100%;
-	padding-top: 1.2rem;
+	padding-bottom: 0;
 	background-color: #EEEFF1;
 	.userassets_info {
-		position: relative;
-		width: 100%;
-		height: 3.6rem;
-		overflow: hidden;
 		@include  backgroundImages("/fx/images/userassets_bg.png", cover)
-		.userassets_avatar {
-			width: 2rem;
-			height: 2rem;
-			margin: 0.2rem auto 0;
-			border: 0.1rem solid #fff;
-			border-radius: 50%;
-			overflow: hidden;
-			img {
-				display: block;
-				width: 100%;
-			}
-		}
-		.userassets_name {
-			text-align: center;
-			color: #fff;
-			font-size: 22px;
-		}
 	}
 	.userassets_content {
 		width: 100%;
 		height: calc(100% - 3.8rem);
 		background-color: #FFF;
-		.userassets_content_row {
+		.userassets_content_row, .userassets_container {
 			width: 100%;
+			.userassets_nodata, .userassets_container_warpper {
+				width: 100%;
+			}
+		}
+		.userassets_content_row {
 			height: 1rem;
 			line-height: 1rem;
 			border-bottom: 0.01rem solid #EFEFF1;
 			padding: 0 0.4rem;
 			a {
-				display: block;
 				width: 1.36rem;
 				height: 0.55rem;
 				padding-left: 0.3rem;
 				margin-top: 0.225rem;
 				line-height: 0.55rem;
-				color: #fff;
-				text-align: center;
 				@include  backgroundImages("/fx/images/btn_bg.png", cover)
-			}
-			a.orange {
-				color: #EE7700;
 			}
 		}
 		.userassets_container {
-			width: 100%;
 			height: calc(100% - 2.2rem);
 			overflow: auto;
-			.userassets_nodata {
-				height: 3rem;
-				width: 100%;
-				line-height: 3rem;
-				background-color: #fff;
-			}
 			.userassets_container_warpper {
-				width: 100%;
 				padding: 0.1rem;
 				border-top: 0.01rem solid #d7d7d7;
 				ul {
 					width: 100%;
 					li {
 						width: 20%;
-						text-align: center;
 						line-height: 0.5rem;
 					}
 				}
@@ -809,33 +651,9 @@
 	}
 }
 .useredit {
-	position: relative;
-	height: 100%;
-	width: 100%;
-	padding-top: 1.2rem;
+	padding-bottom: 0;
 	.useredit_info {
-		position: relative;
-		width: 100%;
-		height: 3.6rem;
-		overflow: hidden;
 		@include  backgroundImages("/fx/images/user_info_bg.png", cover)
-		.useredit_avatar {
-			width: 2rem;
-			height: 2rem;
-			margin: 0.2rem auto 0;
-			border: 0.1rem solid #fff;
-			border-radius: 50%;
-			overflow: hidden;
-			img {
-				display: block;
-				width: 100%;
-			}
-		}
-		.useredit_name {
-			text-align: center;
-			color: #fff;
-			font-size: 22px;
-		}
 	}
 	form {
 		height: calc(100% - 4.6rem);
@@ -844,23 +662,13 @@
 			height: 0.84rem;
 			line-height: 0.84rem;
 			margin-top: 0.01rem;
-			font-size: 16px;
 			padding: 0 0.38rem;
 			border-top: 0.01rem solid #F6F7F9;
 			input {
-				float: right;
 				border: 0;
-				text-align: right;
-				display: block;
 				height: 0.84rem;
-				color: #8C8C8C;
-			}
-			.gray {
-				color: #8C8C8C;
 			}
 			label.gender {
-				position: relative;
-				display: block;
 				width: 0.7rem;
 			}
 			label.gender::after {
@@ -891,35 +699,19 @@
 			}
 		}
 	}
-	.useredit_save {
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		display: block;
-		height: 1rem;
-		width: 100%;
-		color: #fff;
-		text-align: center;
-		line-height: 1rem;
-		font-size: 18px;
-		@include  backgroundImages("/fx/images/footer_bg.png", cover)
-	}
 }
-
+// 帮助中心
 .helpcenter {
-	height: 100%;
-	width: 100%;
 	padding-top: 2.1rem;
+	padding-bottom: 0;
+	overflow: hidden;
 	@include  backgroundImages("/fx/images/helpcenter_bg.png", cover)
 	.helpcenter_list {
 		padding-left: 1.2rem;
-		font-size: 16px;
 		li {
-			position: relative;
 			height: 0.4rem;
 			line-height: 0.4rem;
 			padding-left: 0.5rem;
-			margin-bottom: 0.3rem;
 		}
 		li::before {
 			content: '';
@@ -934,20 +726,19 @@
 	}
 }
 .helpdetail {
-	height: calc(100% - 1rem);
 	overflow: auto;
+	padding: 1.4rem 0.1rem 0.1rem;
+	@include  backgroundImages("/fx/images/article_bg.png", cover)
 	img {
-		display: block;
 		width: 100%;
 	}
 }
+
 // 地址列表
 .address {
-	position: relative;
-	height: 100%;
-	width: 100%;
-	padding-top: 1.2rem;
+	padding-bottom: 0;
 	background-color: #EEEFF1;
+	overflow: hidden;
 	.address_container {
 		height: calc(100% - 1rem);
 		overflow: auto;
@@ -956,22 +747,12 @@
 		height: 2.61rem;
 		width: 100%;
 		background-color: #FFF;
-		margin-bottom: 0.2rem;
 		.address_warpper_info {
 			height: 1.7rem;
 			padding: 0.1rem;
 			border-bottom: 0.01rem solid #DADADA;
-			.address_warpper_info_tit {
-				font-size: 16px;
-				span.phone {
-					color: #AAAAAA;
-					font-size: 14px;
-				}
-			}
+			.address_warpper_info_tit {}
 			p {
-				margin-top: 0.2rem;
-				font-size: 15px;
-				color: #AAAAAA;
 				@extend %wrap2;
 			}
 		}
@@ -1003,46 +784,13 @@
 			}
 			ul {
 				padding: 0.26rem 0;
-				color: #8C8C8C;
-				font-size: 15px;
-				li {
-					float: left;
-					a {
-						color: #8C8C8C;
-					}
-				}
-				li:first-child {
-					margin-right: 0.2rem;
-				}
 			}
 		}
-	}
-	.address_nodata {
-		height: 3rem;
-		width: 100%;
-		line-height: 3rem;
-		background-color: #fff;
-	}
-	.address_add {
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		display: block;
-		height: 1rem;
-		width: 100%;
-		color: #fff;
-		text-align: center;
-		line-height: 1rem;
-		font-size: 18px;
-		@include  backgroundImages("/fx/images/footer_bg.png", cover)
 	}
 }
 // 新增编辑地址
 .addressadd {
-	position: relative;
-	height: 100%;
-	width: 100%;
-	padding-top: 1.2rem;
+	padding-bottom: 0;
 	background-color: #EEEFF1;
 	form {
 		.form_item {
@@ -1050,32 +798,26 @@
 			min-height: 0.96rem;
 			line-height: 0.66rem;
 			padding: 0.15rem 0.25rem;
-			border-bottom: 0.01rem solid #E3E3E3;
+			border-bottom: 0.02rem solid #E3E3E3;
 			background-color: #FFF;
-			font-size: 16px;
-			input {
-				float: right;
-				display: block;
-				height: 0.66rem;
+			input, textarea {
 				border: 0;
-				text-align: right;
+			}
+			input {
+				height: 0.66rem;
 			}
 			textarea {
 				width: 100%;
 				height: 1.9rem;
-				border: 0;
 			}
 			.addressadd_selection {
-				display: block;
 				max-width: 60%;
-				color: #979797;
 				@extend %wrap;
 			}
 			.addressadd_selection.select {
 				color: #000;
 			}
 			.address_default {
-				display: block;
 				width: 0.62rem;
 				height: 0.62rem;
 				@include  backgroundImages("/fx/images/address_default.png", cover)
@@ -1097,139 +839,24 @@
 			}
 		}
 	}
-	.address_add {
+	.bottom_btn {
 		position: fixed;
-		bottom: 0;
-		left: 0;
-		display: block;
-		height: 1rem;
-		width: 100%;
-		color: #fff;
-		text-align: center;
-		line-height: 1rem;
-		font-size: 18px;
-		@include  backgroundImages("/fx/images/footer_bg.png", cover)
 	}
 }
 
 // 收藏
-.collect{
+.collect {
 	position: relative;
-	// height: calc(100% - 1.2rem);
-	// padding-top: 1.2rem;
 	background-color: #EEEFF1;
 	.collect_container {
-		// height: calc(100% - 1rem);
 		height: 100%;
 		overflow: auto;
 	}
-	.collect_warpper {
-		position: relative;
-		height: 2.2rem;
-		padding: 0.2rem 0.3rem 0.2rem 0.8rem;
-		background-color: #FFF;
-		.collect_warpper_select {
-			position: absolute;
-			left: 0.2rem;
-			top: 0.4rem;
-			display: block;
-			width: 0.4rem;
-			height: 0.4rem;
-			margin-top: -0.2rem;
-			border-radius: 50%;
-			@include  backgroundImages("/fx/images/address_default.png", cover)
-		}
-		.collect_warpper_select.active {
-			@include  backgroundImages("/fx/images/address_default_active.png", cover)
-		}
-		.collect_warpper_content_img {
-			width: 28.75%;
-			height: 100%;
-			overflow: hidden;
-			img {
-				display: block;
-				width: 100%;
-			}
-		}
-		.collect_warpper_content_info {
-			position: relative;
-			width: calc(71.25% - 0.2rem);
-			height: 100%;
-			h5 {
-				@extend %wrap
-			}
-			p {
-				color: #7B7B7B;
-			}
-			p.desc {
-				@extend %wrap3
-			}
-			.collect_warpper_content_info_bottom {
-				position: absolute;
-				left: 0;
-				bottom: 0;
-				width: 100%;
-				span.price {
-					color: #FB6969;
-				}
-				span.sell {
-					color: #B5B5B5;
-				}
-			}
-			@media screen and (max-width:321px){
-				h5 {
-					font-size: 14px;
-				}
-				p {
-					font-size: 12px;
-				}
-			}
-			@media screen and (min-width:321px) and (max-width:400px){
-				h5 {
-					font-size: 16px;
-				}
-				p {
-					font-size: 14px;
-				}
-			}
-			@media screen and (min-width:400px){
-				h5 {
-					font-size: 18px;
-				}
-				p {
-					font-size: 16px;
-				}
-			}
-		}
-	}
-	.collect_nodata {
-		height: 3rem;
-		width: 100%;
-		line-height: 3rem;
-		background-color: #fff;
-		a {
-			color: #f78223;
-		}
-	}
-	.collect_bottom {
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		display: block;
-		height: 1rem;
-		width: 100%;
-		color: #fff;
-		line-height: 1rem;
-		font-size: 18px;
-		@include  backgroundImages("/fx/images/footer_bg.png", cover)
+	.bottom_btn {
 		.collect_bottom_selection {
-			position: relative;
 			width: calc(100% - 3rem);
 			background-color: rgba(181, 156, 107, 0.2);
 			padding-left: 0.8rem;
-			span {
-				display: block;
-			}
 			span::before {
 				content: '';
 				position: absolute;
@@ -1262,7 +889,6 @@
 // 订单列表
 .order {
 	.order_search {
-		position: relative;
 		height: 0.98rem;
 		background-color: #EEEFF1;
 		padding: 0.17rem 0.2rem;
@@ -1277,10 +903,8 @@
 		i {
 			position: absolute;
 			top: 50%;
-			display: block;
 			width: 0.3rem;
 			height: 0.3rem;
-			font-size: 14px;
 			margin-top: -0.15rem;
 		}
 		i.fa-search {
@@ -1297,10 +921,8 @@
 		ul {
 			width: 100%;
 			li {
-				float: left;
 				width: 16.6666%;
 				height: 0.8rem;
-				text-align: center;
 				color: #595758;
 				padding: 0.07rem;
 			}
@@ -1317,6 +939,39 @@
 		.order_warpper {
 			width: 100%;
 			background-color: #FFF;
+			@media screen and (max-width:321px){
+				h1, h5 {
+					font-size: 14px;
+					i {
+						font-size: 18px;
+					}
+				}
+				p, a {
+					font-size: 12px;
+				}
+			}
+			@media screen and (min-width:321px) and (max-width:400px){
+				h1, h5 {
+					font-size: 16px;
+					i {
+						font-size: 20px;
+					}
+				}
+				p, a {
+					font-size: 14px;
+				}
+			}
+			@media screen and (min-width:400px){
+				h1, h5 {
+					font-size: 18px;
+					i {
+						font-size: 22px;
+					}
+				}
+				p, a {
+					font-size: 16px;
+				}
+			}
 			.order_warpper_tit {
 				width: 100%;
 				height: 0.78rem;
@@ -1328,31 +983,6 @@
 						vertical-align: middle;
 					}
 				}
-				@media screen and (max-width:321px){
-					h1 {
-						font-size: 14px;
-						i {
-							font-size: 18px;
-						}	
-					}
-					
-				}
-				@media screen and (min-width:321px) and (max-width:400px){
-					h1 {
-						font-size: 16px;
-						i {
-							font-size: 20px;
-						}
-					}
-				}
-				@media screen and (min-width:400px){
-					h1 {
-						font-size: 18px;
-						i {
-							font-size: 22px;
-						}
-					}
-				}
 			}
 			.order_warpper_info {
 				height: 1.82rem;
@@ -1361,7 +991,6 @@
 				.order_warpper_info_img {
 					width: 1.52rem;
 					img {
-						display: block;
 						width: 100%;
 					}
 				}
@@ -1376,35 +1005,10 @@
 					p.desc {
 						@extend %wrap3
 					}
-					@media screen and (max-width:321px){
-						h5 {
-							font-size: 14px;
-						}
-						p {
-							font-size: 12px;
-						}
-					}
-					@media screen and (min-width:321px) and (max-width:400px){
-						h5 {
-							font-size: 16px;
-						}
-						p {
-							font-size: 14px;
-						}
-					}
-					@media screen and (min-width:400px){
-						h5 {
-							font-size: 18px;
-						}
-						p {
-							font-size: 16px;
-						}
-					}
 				}
 				.order_warpper_info_price {
 					width: calc(100% - 4.52rem);
 					.price{
-						color: #FF5C5D;
 						margin-bottom: 0.15rem;
 					}
 					.times, .price_raw {
@@ -1416,71 +1020,31 @@
 				}
 			}
 			.order_warpper_sum {
-				height: 0.8rem;
+				height: 1.2rem;
 				border-bottom: 0.02rem solid #EEEFF1;
-				line-height: 0.8rem;
+				line-height: 0.6rem;
 				padding-right: 0.22rem;
-				color: #848484;
-				.price {
-					font-style: normal;
-					color: #FF5C5D;
-				}
 			}
 			.order_warpper_opts {
 				height: 0.8rem;
 				padding-right: 0.25rem;
 				ul {
 					li {
-						float: left;
 						a {
-							display: block;
 							width: 1.64rem;
 							height: 0.65rem;
-							margin-top: 0.1rem;
 							padding-left: 0.3rem;
 							line-height: 0.65rem;
-							color: #888888;
-							text-align: center;
 							@include  backgroundImages("/fx/images/btn_bg.png", cover)
-						}
-						a.point {
-							color: #FF8001;
-						}
-						@media screen and (max-width:321px){
-							a {
-								font-size: 12px;
-							}
-							
-						}
-						@media screen and (min-width:321px) and (max-width:400px){
-							a {
-								font-size: 14px;
-								
-							}
-						}
-						@media screen and (min-width:400px){
-							a {
-								font-size: 16px;
-								
-							}
 						}
 					}
 				}
 			}
 		}
-		.order_nodata {
-			height: 3rem;
-			width: 100%;
-			line-height: 3rem;
-			background-color: #fff;
-			a {
-				color: #f78223;
-			}
-		}
 	}
 }
 // 购物车
-.cart{
+.cart {
 	position: relative;
 	height: calc(100% - 1rem);
 	padding-top: 1.2rem;
@@ -1489,120 +1053,26 @@
 		height: calc(100% - 1rem);
 		overflow: auto;
 	}
-	.cart_nodata {
-		height: 3rem;
-		width: 100%;
-		line-height: 3rem;
-		background-color: #fff;
-		a {
-			color: #f78223;
-		}
-	}
-	.cart_warpper {
-		position: relative;
-		height: 2.2rem;
-		padding: 0.2rem 0.3rem 0.2rem 0.8rem;
-		background-color: #FFF;
-		.cart_warpper_select {
-			position: absolute;
-			left: 0.2rem;
-			top: 0.4rem;
-			display: block;
-			width: 0.4rem;
-			height: 0.4rem;
-			margin-top: -0.2rem;
-			border-radius: 50%;
-			@include  backgroundImages("/fx/images/address_default.png", cover)
-		}
-		.cart_warpper_select.active {
-			@include  backgroundImages("/fx/images/address_default_active.png", cover)
-		}
-		.cart_warpper_content_img {
-			width: 28.75%;
-			height: 100%;
-			overflow: hidden;
-			img {
-				display: block;
-				width: 100%;
-			}
-		}
-		.cart_warpper_content_info {
-			position: relative;
-			width: calc(71.25% - 0.2rem);
-			height: 100%;
-			h5 {
-				@extend %wrap
-			}
-			p {
-				color: #7B7B7B;
-			}
-			p.desc {
-				@extend %wrap3
-			}
-			.cart_warpper_content_info_bottom {
-				position: absolute;
-				left: 0;
-				bottom: 0;
-				width: 100%;
+	.warpper {
+		.warpper_content_info {
+			.warpper_content_info_bottom {
 				span.price {
-					color: #FB6969;
-				}
-				span.sell {
-					color: #B5B5B5;
-				}
-				.cwcib_number {
-					i {
-						font-size: 18px;
-					}
-					i.fa-minus-circle {
-						color: #B5B5B7;
-					}
-					i.fa-plus-circle {
-						color: #FF8001;
-					}
-				}
-			}
-			@media screen and (max-width:321px){
-				h5 {
-					font-size: 14px;
-				}
-				p {
-					font-size: 12px;
-				}
-			}
-			@media screen and (min-width:321px) and (max-width:400px){
-				h5 {
-					font-size: 16px;
-				}
-				p {
-					font-size: 14px;
-				}
-			}
-			@media screen and (min-width:400px){
-				h5 {
-					font-size: 18px;
-				}
-				p {
-					font-size: 16px;
+					position: absolute;
+					bottom: 0;
+					left: 0;
 				}
 			}
 		}
 	}
-	.cart_bottom {
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		width: 100%;
-		height: 1rem;
+	.bottom_btn {
 		border-top: 0.01rem solid #DADADA;
-		background-color: #FFF;
-		.cart_bottom_selection {
-			position: relative;
-			display: block;
-			width: 1.36rem;
+		background: #FFF;
+		.cart_bottom_selection, .cart_bottom_info, .cart_bottom_del, .cart_bottom_settle {
 			height: 1rem;
+		}
+		.cart_bottom_selection {
+			width: 1.36rem;
 			padding-left: 0.8rem;
-			line-height: 1rem;
 			span::before {
 				content: '';
 				position: absolute;
@@ -1619,25 +1089,12 @@
 				@include  backgroundImages("/fx/images/address_default_active.png", cover)
 			}
 		}
-		
 		.cart_bottom_info {
 			width: 2.56rem;
-			height: 1rem;
-			line-height: 1rem;
-			text-align: center;
-			.price {
-				color: #FF7F00;
-			}
 		}
 		.cart_bottom_del,
 		.cart_bottom_settle {
 			width: 1.24rem;
-			height: 1rem;
-			text-align: center;
-			line-height: 1rem;
-			a {
-				color: #fff;
-			}
 		}
 		.cart_bottom_del {
 			background-color: #DED8CC;
@@ -1647,44 +1104,16 @@
 		}
 	}
 }
-// 产品列表
-.product {
+.product, .promotion {
 	overflow: hidden;
-	.product_nav {
-		position: absolute;
-		top: 1.2rem;
-		left: 0;
-		width: 100%;
-		height: 0.9rem;
-		background-color: #CFCBC0;
-		li {
-			position: relative;
-			float: left;
-			width: 25%;
-			text-align: center;
-			line-height: 0.8rem;
-			font-size: 14px;
-			z-index: 1;
-		}
-		li + li::before {
-			content: '';
-			position: absolute;
-			right: 99%;
-			top: 50%;
-			z-index: 100;
-			display: block;
-			height: 0.6rem;
-			width: 0.02rem;
-			background-color: #FFF;
-			margin-top: -0.3rem;
-		}
-	}
-	.product_container {
+	.lists_container {
 		width: 100%;
 		height: 100%;
-		padding-top: 0.9rem;
 		overflow: auto;
-		.product_warpper {
+		.lists_list {
+			border-top: 0.01rem solid #E3E3E3;
+		}
+		.lists_warpper {
 			width: 50%;
 			padding: 0.2rem 0.15rem;
 			border-bottom: 0.01rem solid #E3E3E3;
@@ -1695,27 +1124,14 @@
 				@extend %wrap2;
 			}
 			img {
-				display: block;
 				width: 2.83rem;
 				height: 2.76rem;
 				margin: 0 auto;
 			}
-			p {
-				color: #7A7A7A;
-			}
 			p.desc {
 				height: 0.8rem;
 				line-height: 0.4rem;
-				@extend %wrap2;
-			}
-			.price {
-				color: #FF4100;
-			}
-			.sell {
-				color: #7A7A7A;
-				i {
-					font-style: normal;
-				}
+				@extend %wrap2
 			}
 			@media screen and (max-width:321px){
 				h1 {
@@ -1742,9 +1158,40 @@
 				}
 			}
 		}
-		.product_warpper:nth-child(2n+1) {
+		.lists_warpper:nth-child(2n+1) {
 			border-right: 0.01rem solid #E3E3E3;
 		}
+	}
+}
+// 产品列表
+.product {
+	.product_nav {
+		position: absolute;
+		top: 1.2rem;
+		left: 0;
+		width: 100%;
+		height: 0.9rem;
+		background-color: #CFCBC0;
+		li {
+			width: 25%;
+			line-height: 0.8rem;
+			z-index: 1;
+		}
+		li + li::before {
+			content: '';
+			position: absolute;
+			right: 99%;
+			top: 50%;
+			z-index: 100;
+			display: block;
+			height: 0.6rem;
+			width: 0.02rem;
+			background-color: #FFF;
+			margin-top: -0.3rem;
+		}
+	}
+	.lists_container {
+		padding-top: 0.9rem;
 	}
 }
 // 筛选 only product页面
@@ -1775,7 +1222,6 @@
 				width: 100%;
 				line-height: 0.5rem;
 				input {
-					display: block;
 					width: 1.8rem;
 					height: 0.5rem;
 					border: 0;
@@ -1784,41 +1230,32 @@
 					padding-left: 0.2rem;
 				}
 				i {
-					display: block;
 					width: 0.5rem;
 					height: 0.5rem;
 					line-height: 0.5rem;
-					text-align: center;
 				}
 			}
 		}
-		.filter_category {
+		.filter_category, .filter_brand {
 			width: 100%;
-			.filter_category_top {
+			.filter_category_top, .filter_brand_top {
 				height: 0.5rem;
 				width: 100%;
 				line-height: 0.5rem;
-				a {
-					color: #888;
-				}
 				i.active {
 					transform: rotateZ(90deg);
 				}
 			}
-			.filter_category_list {
+			.filter_category_list, .filter_brand_list {
 				width: 100%;
 				li {
-					float: left;
 					width: 1.3rem;
 					height: 0.5rem;
 					line-height: 0.5rem;
 					background-color: #EEEFF1;
 					border-radius: 0.3rem;
-					text-align: center;
-					margin-bottom: 0.1rem;
+					border: 0.02rem solid transparent;
 					a {
-						display: block;
-						color: #7b7b7b;
 						@extend %wrap;
 					}
 				}
@@ -1827,51 +1264,9 @@
 					margin-left: 0.1rem;
 				}
 				li.active {
-					border: 0.01rem solid #FF4100;
+					border-color: #FF4100;
 					a {
-						color: #FF4100;
-					}
-				}
-			}
-		}
-		.filter_brand {
-			width: 100%;
-			.filter_brand_top {
-				height: 0.5rem;
-				width: 100%;
-				line-height: 0.5rem;
-				a {
-					color: #888;
-				}
-				i.active {
-					transform: rotateZ(90deg);
-				}
-			}
-			.filter_brand_list {
-				width: 100%;
-				li {
-					float: left;
-					width: 1.3rem;
-					height: 0.5rem;
-					line-height: 0.5rem;
-					background-color: #EEEFF1;
-					border-radius: 0.3rem;
-					text-align: center;
-					margin-bottom: 0.1rem;
-					a {
-						display: block;
-						color: #7b7b7b;
-						@extend %wrap;
-					}
-				}
-				li:nth-child(3n+2),
-				li:nth-child(3n+3) {
-					margin-left: 0.1rem;
-				}
-				li.active {
-					border: 0.01rem solid #FF4100;
-					a {
-						color: #FF4100;
+						color: #FF4100!important;
 					}
 				}
 			}
@@ -1883,27 +1278,23 @@
 			width: 100%;
 			height: 1rem;
 			.filter_opts_btn {
-				display: block;
 				width: 50%;
 				height: 1rem;
-				text-align: center;
 				line-height: 1rem;
 			}
 			.filter_opts_btn.reset {
 				background-color: #aaa;
-				color: #d7d7d7;
 			}
 			.filter_opts_btn.del {
-				color: #fff;
 				background-color: #ff5c5d;
 			}
 		}
 	}
 }
+// 活动商品、最新商品
+.promotion {}
 // 商品详细
 .productdetail {
-	position: relative;
-	// height: calc(100% - 1.2rem);
 	.productdetail_cart {
 		position: absolute;
 		right: 5%;
@@ -2148,7 +1539,197 @@
 		}
 	}
 }
-
+// 加入购物车之前规格选择
+.productspec {
+	position: fixed;
+	top: 100%;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 1005;
+	.productspec_bg {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0,0,0,0.5);
+	}
+	.productspec_container {
+		position: absolute;
+		left: 0;
+		bottom: -7rem;
+		width: 100%;
+		height: 7rem;
+		background-color: #FFF;
+		transition: all 0.1s ease;
+		.productspec_container_info {
+			width: 100%;
+			height: 2rem;
+			padding: 0.2rem;
+			.productspec_container_info_img {
+				width: 40%;
+				height: 100%;
+				overflow: hidden;
+				img {
+					display: block;
+					height: 100%;
+				}
+			}
+			.productspec_container_info_content {
+				width: calc(60% - 0.1rem);
+				p {
+					@extend %wrap3
+				}
+				@media screen and (max-width:321px){
+					h1 {
+						font-size: 14px;
+					}
+					p {
+						font-size: 12px;
+					}
+				}
+				@media screen and (min-width:321px) and (max-width:400px){
+					h1 {
+						font-size: 16px;
+					}
+					p {
+						font-size: 14px;
+					}
+				}
+				@media screen and (min-width:400px){
+					h1 {
+						font-size: 18px;
+					}
+					p {
+						font-size: 16px;
+					}
+				}
+			}
+		}
+		.productspec_container_spec {
+			width: 100%;
+			height: 2rem;
+			padding: 0 0.2rem;
+			p {
+				height: 0.5rem;
+				line-height: 0.5rem;
+			}
+			ul {
+				width: 100%;
+				height: 1.5rem;
+				overflow: auto;
+				li {
+					a {
+						display: block;
+						padding: 0.1rem;
+						background-color: #d7d7d7;
+						color: #3b3b3b;
+						border-radius: 0.05rem;
+						border: 0.01rem solid #d7d7d7;
+					}
+				}
+				li.active {
+					a {
+						border-color: #F78223;
+						color: #F78223;
+					}
+				}
+			}
+			@media screen and (max-width:321px){
+				p {
+					font-size: 12px;
+				}
+			}
+			@media screen and (min-width:321px) and (max-width:400px){
+				p {
+					font-size: 14px;
+				}
+			}
+			@media screen and (min-width:400px){
+				p {
+					font-size: 16px;
+				}
+			}
+		}
+		.productspec_container_amount {
+			width: 100%;
+			height: 1.3rem;
+			padding: 0.2rem 0.2rem 0;
+			text-align: center;
+			line-height: 1.1rem;
+			i {
+				display: inline-block;
+				width: 0.5rem;
+				height: 0.5rem;
+				vertical-align: middle;
+				line-height: 0.5rem;
+			}
+			input {
+				width: 0.8rem;
+				height: 0.5rem;
+				text-align: center;
+			}
+			@media screen and (max-width:321px){
+				i {
+					font-size: 16px;
+				}
+			}
+			@media screen and (min-width:321px) and (max-width:400px){
+				i {
+					font-size: 18px;
+				}
+			}
+			@media screen and (min-width:400px){
+				i {
+					font-size: 20px;
+				}
+			}
+		}
+		.productspec_container_price {
+			width: 100%;
+			height: 0.7rem;
+			padding: 0 0.2rem;
+			line-height: 0.5rem;
+		}
+		.productspec_container_bottom {
+			position: absolute;
+			bottom: 0;
+			left: 0; 
+			width: 100%;
+			height: 1rem;
+			text-align: center;
+			@include  backgroundImages("/fx/images/footer_bg.png", cover)
+			.productspec_container_bottom_icon {
+				width: 20%;
+				height: 1rem;
+				color: #717171;
+				line-height: 0.4rem;
+				font-size: 16px;
+			}
+			.productspec_container_bottom_btn {
+				width: 30%;
+				height: 1rem;
+				line-height: 1rem;
+				color: #fff;
+				font-size: 18px;
+			}
+			.kefu {
+				background-color: rgba(246,247,249,0.6);
+				border-right: 0.01rem solid #D4D3CE;
+			}
+			.favo {
+				background-color: rgba(246,247,249,0.6);
+			}
+			.add_cart {
+				background-color: rgba(222,216,204,0.7);
+			}
+			.cancel {
+				background-color: rgba(179,166,139,0.5);
+			}
+		}
+	}
+}
 // 确认订单
 .confirm{
 	position: relative;
@@ -2431,278 +2012,6 @@
 	}
 }
 
-// 加入购物车之前规格选择
-.productspec {
-	position: fixed;
-	top: 100%;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	z-index: 1005;
-	.productspec_bg {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		background-color: rgba(0,0,0,0.5);
-	}
-	.productspec_container {
-		position: absolute;
-		left: 0;
-		bottom: -7rem;
-		width: 100%;
-		height: 7rem;
-		background-color: #FFF;
-		transition: all 0.1s ease;
-		.productspec_container_info {
-			width: 100%;
-			height: 2rem;
-			padding: 0.2rem;
-			.productspec_container_info_img {
-				width: 40%;
-				height: 100%;
-				overflow: hidden;
-				img {
-					display: block;
-					height: 100%;
-				}
-			}
-			.productspec_container_info_content {
-				width: calc(60% - 0.1rem);
-				p {
-					@extend %wrap3
-				}
-				@media screen and (max-width:321px){
-					h1 {
-						font-size: 14px;
-					}
-					p {
-						font-size: 12px;
-					}
-				}
-				@media screen and (min-width:321px) and (max-width:400px){
-					h1 {
-						font-size: 16px;
-					}
-					p {
-						font-size: 14px;
-					}
-				}
-				@media screen and (min-width:400px){
-					h1 {
-						font-size: 18px;
-					}
-					p {
-						font-size: 16px;
-					}
-				}
-			}
-		}
-		.productspec_container_spec {
-			width: 100%;
-			height: 2rem;
-			padding: 0 0.2rem;
-			p {
-				height: 0.5rem;
-				line-height: 0.5rem;
-			}
-			ul {
-				width: 100%;
-				height: 1.5rem;
-				overflow: auto;
-				li {
-					a {
-						display: block;
-						padding: 0.1rem;
-						background-color: #d7d7d7;
-						color: #3b3b3b;
-						border-radius: 0.05rem;
-						border: 0.01rem solid #d7d7d7;
-					}
-				}
-				li.active {
-					a {
-						border-color: #F78223;
-						color: #F78223;
-					}
-				}
-			}
-			@media screen and (max-width:321px){
-				p {
-					font-size: 12px;
-				}
-			}
-			@media screen and (min-width:321px) and (max-width:400px){
-				p {
-					font-size: 14px;
-				}
-			}
-			@media screen and (min-width:400px){
-				p {
-					font-size: 16px;
-				}
-			}
-		}
-		.productspec_container_amount {
-			width: 100%;
-			height: 1.3rem;
-			padding: 0.2rem 0.2rem 0;
-			text-align: center;
-			line-height: 1.1rem;
-			i {
-				display: inline-block;
-				width: 0.5rem;
-				height: 0.5rem;
-				vertical-align: middle;
-				line-height: 0.5rem;
-			}
-			input {
-				width: 0.8rem;
-				height: 0.5rem;
-				text-align: center;
-			}
-			@media screen and (max-width:321px){
-				i {
-					font-size: 16px;
-				}
-			}
-			@media screen and (min-width:321px) and (max-width:400px){
-				i {
-					font-size: 18px;
-				}
-			}
-			@media screen and (min-width:400px){
-				i {
-					font-size: 20px;
-				}
-			}
-		}
-		.productspec_container_price {
-			width: 100%;
-			height: 0.7rem;
-			padding: 0 0.2rem;
-			line-height: 0.5rem;
-		}
-		.productspec_container_bottom {
-			position: absolute;
-			bottom: 0;
-			left: 0; 
-			width: 100%;
-			height: 1rem;
-			text-align: center;
-			@include  backgroundImages("/fx/images/footer_bg.png", cover)
-			.productspec_container_bottom_icon {
-				width: 20%;
-				height: 1rem;
-				color: #717171;
-				line-height: 0.4rem;
-				font-size: 16px;
-			}
-			.productspec_container_bottom_btn {
-				width: 30%;
-				height: 1rem;
-				line-height: 1rem;
-				color: #fff;
-				font-size: 18px;
-			}
-			.kefu {
-				background-color: rgba(246,247,249,0.6);
-				border-right: 0.01rem solid #D4D3CE;
-			}
-			.favo {
-				background-color: rgba(246,247,249,0.6);
-			}
-			.add_cart {
-				background-color: rgba(222,216,204,0.7);
-			}
-			.cancel {
-				background-color: rgba(179,166,139,0.5);
-			}
-		}
-	}
-}
-// 活动商品、最新商品
-.promotion {
-	width: 100%;
-	height: calc(100% - 1rem);
-	padding-top: 1.2rem;
-	.promotion_container {
-		width: 100%;
-		height: 100%;
-		overflow: auto;
-		.promotion_nodata {
-			height: 3rem;
-			width: 100%;
-			line-height: 3rem;
-			background-color: #fff;
-			a {
-				color: #f78223;
-			}
-		}
-		.promotion_list {
-			border-top: 0.01rem solid #E3E3E3;
-		}
-		.promotion_warpper {
-			width: 50%;
-			padding: 0.2rem 0.15rem;
-			border-bottom: 0.01rem solid #E3E3E3;
-			h1 {
-				@extend %wrap;
-			}
-			img {
-				display: block;
-				width: 2.83rem;
-				height: 2.76rem;
-				margin: 0 auto;
-			}
-			p {
-				color: #7A7A7A;
-			}
-			p.desc {
-				height: 0.8rem;
-				line-height: 0.4rem;
-				@extend %wrap2
-			}
-			.price {
-				color: #FF4100;
-			}
-			.sell {
-				color: #7A7A7A;
-				i {
-					font-style: normal;
-				}
-			}
-			@media screen and (max-width:321px){
-				h1 {
-					font-size: 16px;
-				}
-				p {
-					font-size: 12px;
-				}
-			}
-			@media screen and (min-width:321px) and (max-width:400px){
-				h1 {
-					font-size: 18px;
-				}
-				p {
-					font-size: 14px;
-				}
-			}
-			@media screen and (min-width:400px){
-				h1 {
-					font-size: 20px;
-				}
-				p {
-					font-size: 16px;
-				}
-			}
-		}
-		.promotion_warpper:nth-child(2n+1) {
-			border-right: 0.01rem solid #E3E3E3;
-		}
-	}
-}
 // 评论
 .ordercomment {
 	.ordercomment_header {

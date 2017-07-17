@@ -32,23 +32,23 @@
 							result += `
 								<div class="userassets_container_warpper">
 									<ul class="clearfix">
-										<li class="pull-left">
+										<li class="pull-left txt-c">
 											<p>总金额</p>
 											<p>&yen; ${v.count}</p>
 										</li>
-										<li class="pull-left">
+										<li class="pull-left txt-c">
 											<p>佣金比</p>
 											<p>${v.scale}</p>
 										</li>
-										<li class="pull-left">
+										<li class="pull-left txt-c">
 											<p>订单数量</p>
 											<p>${v.amount}</p>
 										</li>
-										<li class="pull-left">
+										<li class="pull-left txt-c">
 											<p>实际金额</p>
 											<p>&yen; ${v.price}</p>
 										</li>
-										<li class="pull-left">
+										<li class="pull-left txt-c">
 											<p>未结清余额</p>
 											<p>&yen; ${v.remain}</p>
 										</li>
@@ -62,9 +62,9 @@
                         me.noData();
                         if (page == 1) {
                             $('.dropload-down').hide()
-                            $('.userassets_container').find('.userassets_nodata').remove()
+                            $('.userassets_container').find('.list_nodata').remove()
                             $('.userassets_container').append(`
-                            <div class="userassets_nodata txt-c">
+                            <div class="list_nodata txt-c">
                                 暂无记录
                             </div>`)
                         }
@@ -85,21 +85,21 @@
     @include("layouts.header-info")
 
     @include("layouts.backIndex")
-    <div class="userassets">
-    	<div class="userassets_info">
-			<div class="userassets_avatar">
+    <div class="container userassets">
+    	<div class="userassets_info relative">
+			<div class="avatar">
 				<img src="{{url('')}}/@if(Auth::user()){{Auth::user()->img}} @endif" alt="">
 			</div>
-			<p class="userassets_name chayefont">@if(Auth::user()){{Auth::user()->name}} @endif</p>
+			<p class="userassets_name white fz-22 txt-c chayefont">@if(Auth::user()){{Auth::user()->name}} @endif</p>
 		</div>
 		<div class="userassets_content mt-20">
 			<div class="userassets_content_row">
 				<span class="pull-left chayefont">佣金累计：</span>
-				<a href="javascript:;" class="pull-right chayefont orange">&yen; {{$allprices}}</a>
+				<a href="javascript:;" class="pull-right block chayefont txt-c price">&yen; {{$allprices}}</a>
 			</div>
 			<div class="userassets_content_row">
 				<span class="pull-left chayefont">佣金余额：</span>
-				<a href="javascript:;" class="pull-right chayefont orange">&yen; {{$prices}}</a>
+				<a href="javascript:;" class="pull-right block chayefont txt-c price">&yen; {{$prices}}</a>
 			</div>
 			<div class="userassets_container mt-20">
 				<div class="userassets_list">

@@ -60,27 +60,27 @@
 	@include("layouts.header-info")
 
 	@include("layouts.backIndex")
-	<div class="address">
+	<div class="address relative container">
 		<div class="address_container">
 			@foreach($lists as $list)
-			<div class="address_warpper">
+			<div class="address_warpper mb-20">
 				<div class="address_warpper_info">
-					<div class="address_warpper_info_tit">
+					<div class="address_warpper_info_tit fz-16">
 						<span class="chayefont">{{$list->name}}</span>
-						<span class="pull-right phone">{{$list->phone}}</span>
+						<span class="pull-right fz-14 color-8C8C8C">{{$list->phone}}</span>
 					</div>
-					<p>{{$list->province}}@if($list->city == $list->area){{$list->city}}@else{{$list->city}}{{$list->area}} @endif{{$list->detail}}</p>
+					<p class="color-8C8C8C mt-20 fz-14">{{$list->province}}@if($list->city == $list->area){{$list->city}}@else{{$list->city}}{{$list->area}} @endif{{$list->detail}}</p>
 				</div>
 				<div class="address_warpper_opts">
 					<a href="javascript:;" class="address_default pull-left @if($list->state == 1) active @endif J_setdefault" data-id="{{$list->id}}">默认地址</a>		
-					<ul class="pull-right">
-						<li>
-							<a href="{{url('home/address')}}/{{$list->id}}/edit">
+					<ul class="pull-right color-8C8C8C fz-14">
+						<li class="pull-left mr-20">
+							<a class="color-8C8C8C" href="{{url('home/address')}}/{{$list->id}}/edit">
 								<i class="fa fa-edit" id="edit"></i>
 								编辑
 							</a>
 						</li>
-						<li class="J_del" data-id="{{$list->id}}">
+						<li class="pull-left J_del" data-id="{{$list->id}}">
 							<i class="fa fa-trash-o"></i>
 							删除
 						</li>
@@ -89,9 +89,9 @@
 			</div>
 			@endforeach
 			@if (!count($lists))
-			<div class="address_nodata txt-c fz-20">暂时还没有收货地址</div>
+			<div class="list_nodata txt-c fz-20">暂时还没有收货地址</div>
 			@endif
 		</div>
-		<a href="{{ url('/home/address/create') }}" class="chayefont address_add">添加新地址</a>
+		<a href="{{ url('/home/address/create') }}" class="chayefont block txt-c white fz-18 bottom_btn">添加新地址</a>
 	</div>
 @endsection

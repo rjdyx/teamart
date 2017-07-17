@@ -62,20 +62,20 @@
 	@include("layouts.header-info")
 	<!-- 内容 -->
 	<div class="container usercenter">
-		<div class="usercenter_info">
-			<div class="usercenter_avatar @if(Auth::user() && Auth::user()->type == 1) J_QRcode @else J_getQRcode @endif" uid="@if(Auth::user() && Auth::user()->type == 1) {{base64_encode(Auth::user()->id)}} @endif">
+		<div class="usercenter_info relative">
+			<div class="avatar @if(Auth::user() && Auth::user()->type == 1) J_QRcode @else J_getQRcode @endif" uid="@if(Auth::user() && Auth::user()->type == 1) {{base64_encode(Auth::user()->id)}} @endif">
 				<img src="{{url('')}}/@if(Auth::user()){{Auth::user()->img}} @endif" alt="">
 			</div>
-			<p class="usercenter_name chayefont">@if(Auth::user()){{Auth::user()->name}} @endif</p>
+			<p class="usercenter_name white fz-22 txt-c chayefont">@if(Auth::user()){{Auth::user()->name}} @endif</p>
 			<ul class="usercenter_list">
-				<li>
-					<a href="javascript:;">
+				<li class="relative pull-left txt-c">
+					<a href="javascript:;" class="white">
 						<p>积分</p>
 						<p>@if(Auth::user()) ({{Auth::user()->grade}}) @else (0) @endif</p>
 					</a>
 				</li>
-				<li>
-					<a href="javascript:;">
+				<li class="relative pull-left txt-c">
+					<a href="javascript:;" class="white">
 						<p>所属身份</p>
 						<p>
 						@if(Auth::user())
@@ -86,8 +86,8 @@
 						 </p>
 					</a>
 				</li>
-				<li>
-					<a href="javascript:;">
+				<li class="relative pull-left txt-c">
+					<a href="javascript:;" class="white">
 						<p>消费总额</p>
 						<p>({{$prices}})</p>
 					</a>
@@ -97,95 +97,95 @@
 		@if (isset(Auth::user()->type) && Auth::user()->type < 2)
 		<div class="usercenter_assets">
 			<ol>
-				<li class="chayefont">累计佣金：</li>
-				<li class="chayefont red">{{sprintf('%.2f', $sells)}}元</li>
-				<li class="chayefont">
-					<a href="{{url('/home/userasset')}}" class="pull-right withdraw">详细</a>
+				<li class="chayefont pull-left fz-14">累计佣金：</li>
+				<li class="chayefont pull-left fz-14 price">{{sprintf('%.2f', $sells)}}元</li>
+				<li class="chayefont pull-left fz-14">
+					<a href="{{url('/home/userasset')}}" class="pull-right block fz-16 white withdraw">详细</a>
 				</li>
 			</ol>
 		</div>
 		@endif
 		<ul class="usercenter_nav clearfix">
-			<li>
+			<li class="pull-left txt-c">
 				<a href="{{url('/home/useredit')}}">
-					<div class="usercenter_nav_icon">
-						<i class="fa fa-pencil"></i>
+					<div class="txt-c usercenter_nav_icon">
+						<i class="fa fa-pencil white fz-20"></i>
 					</div>
-					<p class="chayefont">我的账号</p>
+					<p class="chayefont fz-14">我的账号</p>
 				</a>
 			</li>
 			@if (isset(Auth::user()->type) && Auth::user()->type < 2)
-			<li>
+			<li class="pull-left txt-c">
 				<a href="{{url('/home/userasset')}}">
-					<div class="usercenter_nav_icon">
-						<i class="fa fa-users"></i>
+					<div class="txt-c usercenter_nav_icon">
+						<i class="fa fa-users white fz-20"></i>
 					</div>
-					<p class="chayefont">我的分销</p>
+					<p class="chayefont fz-14">我的分销</p>
 				</a>
 			</li>
 			@endif
-			<li>
+			<li class="pull-left txt-c">
 				<a href="{{url('/home/order/list')}}">
-					<div class="usercenter_nav_icon">
-						<i class="fa fa-credit-card"></i>
+					<div class="txt-c usercenter_nav_icon">
+						<i class="fa fa-credit-card white fz-20"></i>
 					</div>
-					<p class="chayefont">我的订单</p>
+					<p class="chayefont fz-14">我的订单</p>
 				</a>
 			</li>
-			<li>
+			<li class="pull-left txt-c">
 				<a href="{{url('/home/help/list')}}">
-					<div class="usercenter_nav_icon">
-						<i class="fa fa-info"></i>
+					<div class="txt-c usercenter_nav_icon">
+						<i class="fa fa-info white fz-20"></i>
 					</div>
-					<p class="chayefont">帮助中心</p>
+					<p class="chayefont fz-14">帮助中心</p>
 				</a>
 			</li>
-			<li>
+			<li class="pull-left txt-c">
 				<a href="{{url('/home/collect')}}">
-					<div class="usercenter_nav_icon">
-						<i class="fa fa-star"></i>
+					<div class="txt-c usercenter_nav_icon">
+						<i class="fa fa-star white fz-20"></i>
 					</div>
-					<p class="chayefont">我的收藏</p>
+					<p class="chayefont fz-14">我的收藏</p>
 				</a>
 			</li>
-			<li>
+			<li class="pull-left txt-c">
 				<a href="{{url('/home/address')}}">
-					<div class="usercenter_nav_icon">
-						<i class="fa fa-location-arrow"></i>
+					<div class="txt-c usercenter_nav_icon">
+						<i class="fa fa-location-arrow white fz-20"></i>
 					</div>
-					<p class="chayefont">收货地址</p>
+					<p class="chayefont fz-14">收货地址</p>
 				</a>
 			</li>
-			<li>
+			<li class="pull-left txt-c">
 				<a href="{{url('/home/site')}}">
-					<div class="usercenter_nav_icon">
-						<i class="fa fa-map-marker"></i>
+					<div class="txt-c usercenter_nav_icon">
+						<i class="fa fa-map-marker white fz-20"></i>
 					</div>
-					<p class="chayefont">查看站点</p>
+					<p class="chayefont fz-14">查看站点</p>
 				</a>
 			</li>
-			<li>
+			<li class="pull-left txt-c">
 				<a href="{{url('/home/activity/roll')}}">
-					<div class="usercenter_nav_icon">
-						<i class="fa fa-ticket"></i>
+					<div class="txt-c usercenter_nav_icon">
+						<i class="fa fa-ticket white fz-20"></i>
 					</div>
-					<p class="chayefont">优惠券</p>
+					<p class="chayefont fz-14">优惠券</p>
 				</a>
 			</li>
-			<li>
+			<li class="pull-left txt-c">
 				<a href="{{url('/home/feedback')}}">
-					<div class="usercenter_nav_icon">
-						<i class="fa fa-feed"></i>
+					<div class="txt-c usercenter_nav_icon">
+						<i class="fa fa-feed white fz-20"></i>
 					</div>
-					<p class="chayefont">意见反馈</p>
+					<p class="chayefont fz-14">意见反馈</p>
 				</a>
 			</li>
 		</ul>
 		@if (Auth::user())
-		<div class="usercenter_loginout chayefont J_loginout">退出</div>
+		<div class="usercenter_loginout txt-c fz-18 white chayefont J_loginout">退出</div>
 		@else
-		<a href="{{url('/login')}}"><div class="usercenter_loginout chayefont">登录</div></a>
-		<a href="{{url('/register')}}"><div class="usercenter_loginout chayefont">注册</div></a>
+		<a href="{{url('/login')}}"><div class="usercenter_loginout txt-c fz-18 white chayefont">登录</div></a>
+		<a href="{{url('/register')}}"><div class="usercenter_loginout txt-c fz-18 white chayefont">注册</div></a>
 		@endif
 	</div>
 	@include("layouts.footer")

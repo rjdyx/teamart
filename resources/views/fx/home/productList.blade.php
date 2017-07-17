@@ -21,7 +21,7 @@
 			// 返回顶部
 			backTop('product_container')
 			// 显示筛选
-			$('.J_show_filter').on('click', function () {
+			$('.J_show_filter').on('tap', function () {
 				getBrandOrCategory();
 				$('.filter').addClass('left-0')
 				$("input[name='min_price']").val(params['min']);
@@ -29,12 +29,12 @@
 			})
 
 			// 隐藏筛选
-			$('.J_hide_filter').on('click', function () {
+			$('.J_hide_filter').on('tap', function () {
 				$('.filter').removeClass('left-0');
 			});
 
-			var dropload = $('.product_container').dropload({
-				scrollArea : $('.product_container'),
+			var dropload = $('#product_container').dropload({
+				scrollArea : $('#product_container'),
 				domUp : {
 					domClass   : 'dropload-up',
 					domRefresh : '<div class="dropload-refresh">↓下拉刷新</div>',
@@ -64,14 +64,14 @@
 					if (res.data.length) {
 						res.data.forEach(function (v) {
 							result += `
-								<div class="product_warpper pull-left">
+								<div class="lists_warpper pull-left">
 									<a href='http://${window.location.host}/home/product/detail/${v.id}'>
 										<img src='http://${window.location.host}/${v.img}'>
 										<h1 class="mt-20 chayefont">${v.name}</h1>
-										<p class="mt-10 mb-10 desc">${v.desc}</p>
+										<p class="mt-10 mb-10 desc color-8C8C8C">${v.desc}</p>
 										<p class="clearfix">
 											<span class="pull-left price">&yen;${v.price}</span>
-											<span class="pull-right sell">销量：<i>${v.sell_amount}</i></span>
+											<span class="pull-right sell color-8C8C8C">销量：<i>${v.sell_amount}</i></span>
 										</p>
 									</a>
 								</div>
@@ -99,9 +99,9 @@
 				}
 				getLists(function (result) {
 					if (type == 'up') {
-						$('.product_list').html(result);// 插入数据到页面，放到最后面
+						$('.lists_list').html(result);// 插入数据到页面，放到最后面
 					} else {
-						$('.product_list').append(result);// 插入数据到页面，放到最后面
+						$('.lists_list').append(result);// 插入数据到页面，放到最后面
 					}
 					me.resetload();// 每次数据插入，必须重置
 					if (type == 'up') {
@@ -138,11 +138,14 @@
 					if (len>6 && !state) {len = 6;};
 					if (state) u = 6;
 					for(var i=u; i<len; i++){
-						result += '<li  sid='+ categorys[i]['id'];
-						if (categorys[i]['id'] == params['category']) {
-							result += ' class="active" ';
-						}
-						result += ' state=0>'+'<a href="javascript:;">'+categorys[i]['name']+'</a>'+'</li>';
+						result += `	<li  sid="${categorys[i]['id']}" class="pull-left txt-c mb-10 ${categorys[i]['id'] == params['category'] ? 'active' : ''}" state="0">
+										<a href="javascript:;" class="block color-8C8C8C">${categorys[i]['name']}</a>
+									</li>`
+						// result += '<li  sid='+ categorys[i]['id'];
+						// if (categorys[i]['id'] == params['category']) {
+						// 	result += ' class="active" ';
+						// }
+						// result += ' state=0>'+'<a href="javascript:;" class="block color-8C8C8C">'+categorys[i]['name']+'</a>'+'</li>';
 					}
 				}
 				if (state) {
@@ -161,11 +164,14 @@
 					if (len>6 && !state) {len = 6;};
 					if (state) u = 6;
 					for(var i=u; i<len; i++){
+						result += `	<li  sid="${brands[i]['id']}" class="pull-left txt-c mb-10 ${$.inArray(brands[i]['id'].toString(), params['brand']) != -1 ? 'active' : ''}" state="0">
+										<a href="javascript:;" class="block color-8C8C8C">${brands[i]['name']}</a>
+									</li>`
 						result += '<li sid='+ brands[i]['id'];
-						if ($.inArray(brands[i]['id'].toString(), params['brand']) != -1) {
-							result += ' class="active" ';
-						}
-						result += ' state=0 >'+'<a href="javascript:;">'+brands[i]['name']+'</a>'+'</li>';
+						// if ($.inArray(brands[i]['id'].toString(), params['brand']) != -1) {
+						// 	result += ' class="active" ';
+						// }
+						// result += ' state=0 >'+'<a href="javascript:;">'+brands[i]['name']+'</a>'+'</li>';
 					}
 				}
 				if (state) {
@@ -176,7 +182,7 @@
 			}
 
 			//分类展开全部
-			$(".category-show").click(function(){
+			$(".category-show").on('tap', function(){
 				if (cstate) {
 					$(this).children('i').removeClass('active');
 					cstate = false;
@@ -191,7 +197,7 @@
 			});
 
 			//品牌展开全部
-			$(".brand-show").click(function(){
+			$(".brand-show").on('tap', function(){
 				if (bstate) {
 					$(this).children('i').removeClass('active');
 					bstate = false;
@@ -206,7 +212,7 @@
 			});
 
 			//点击排序属性
-			$(".order").click(function(){
+			$(".order").on('tap', function(){
 				var fx = $(this).attr('order');
 				var a = 'up'; var b = 'down'; var order = 'desc';
 				$(".order").attr('order','up');
@@ -227,11 +233,11 @@
 			});
 
 			//筛选提交
-			$('#opts_submit').click(function(){
+			$('#opts_submit').on('tap', function(){
 				//设置分类、品牌、价格区间
-				var cid = $(".filter_category_list li[class='active']").attr('sid');
+				var cid = $(".filter_category_list").find('li.active').attr('sid');
 				var bids = [];
-				$('.filter_brand_list li[class="active"]').each(function(i){
+				$('.filter_brand_list').find('li.active').each(function(i){
 					bids[i] = $(this).attr('sid');
 				});
 				var min = $("input[name='min_price']").val();
@@ -257,7 +263,7 @@
 			}
 
 			//重置按钮
-			$("#reset").click(function(){
+			$("#reset").on('tap', function(){
 				reset();
 			});
 
@@ -265,14 +271,14 @@
 			function searchListData(){
 				params['page'] = page = 1
 				getLists(function (result) {
-					$('.product_list').html(result);
-					$('.product_container').scrollTop(0)
+					$('.lists_list').html(result);
+					$('#product_container').scrollTop(0)
 					dropload.resetload()
 				})
 			}
 
 			//单个分类点击事件
-			$('.filter_category_list').on('click','li', function () {
+			$('.filter_category_list').on('tap','li', function () {
 				$(".filter_category_list li").removeClass('active');
 				var state = $(this).attr('state');
 				if (state>0) {
@@ -286,7 +292,7 @@
 			});
 
 			//单个品牌点击事件
-			$('.filter_brand_list').on('click','li', function () {
+			$('.filter_brand_list').on('tap','li', function () {
 				var state = $(this).attr('state');
 				if (state>0) {
 					$(this).removeClass('active');
@@ -309,15 +315,15 @@
 			<div class="filter_price mb-20">
 				<span>价格区间</span>
 				<div class="filter_price_box mt-20 clearfix">
-					<input type="number" name="min_price" class="pull-left" placeholder="最低价">
-					<i class="fa fa-minus pull-left"></i>
-					<input type="number" name="max_price" class="pull-left" placeholder="最高价">
+					<input type="number" name="min_price" class="pull-left block" placeholder="最低价">
+					<i class="fa fa-minus pull-left block txt-c"></i>
+					<input type="number" name="max_price" class="pull-left block" placeholder="最高价">
 				</div>
 			</div>
 			<div class="filter_category mb-20">
 				<div class="filter_category_top">
 					<span class="pull-left">全部分类</span>
-					<a href="javascript:;" class="pull-right category-show">
+					<a href="javascript:;" class="pull-right category-show color-8C8C8C">
 						全部
 						<i class="fa fa-angle-right"></i>
 					</a>
@@ -329,7 +335,7 @@
 			<div class="filter_brand">
 				<div class="filter_brand_top">
 					<span class="pull-left">品牌</span>
-					<a href="javascript:;" class="pull-right brand-show">
+					<a href="javascript:;" class="pull-right brand-show color-8C8C8C">
 						全部
 						<i class="fa fa-angle-right"></i>
 					</a>
@@ -339,32 +345,32 @@
 				</ul>
 			</div>
 			<div class="filter_opts">
-				<span class="filter_opts_btn pull-left reset" id="reset">重置</span>
-				<span class="filter_opts_btn pull-left del" id="opts_submit">确定</span>
+				<span class="filter_opts_btn block txt-c pull-left color-d7d7d7 reset" id="reset">重置</span>
+				<span class="filter_opts_btn block txt-c pull-left white del" id="opts_submit">确定</span>
 			</div>
 		</div>
 	</div>
 	<div class="container product">
 		<ul class="product_nav">
-			<li class="order" order="up" type="all">
+			<li class="order pull-left txt-c relative fz-14" order="up" type="all">
 				综合
 				<i class="fa fa-caret-down"></i>
 			</li>
-			<li class="order" order="up" type="sell">
+			<li class="order pull-left txt-c relative fz-14" order="up" type="sell">
 				销量
 				<i class="fa fa-caret-down"></i>
 			</li>
-			<li class="order" order="up" type="price">
+			<li class="order pull-left txt-c relative fz-14" order="up" type="price">
 				价格
 				<i class="fa fa-caret-down"></i>
 			</li>
-			<li class="J_show_filter">
+			<li class="relative txt-c pull-left fz-14 J_show_filter">
 				筛选
 				<i class="fa fa-filter"></i>
 			</li>
 		</ul>
-		<div class="product_container" id="product_container">
-			<div class="product_list clearfix">
+		<div class="lists_container" id="product_container">
+			<div class="lists_list clearfix">
 				<!-- 数据放置处 -->
 			</div>
 		</div>
