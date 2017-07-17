@@ -274,7 +274,15 @@
 			//单个分类点击事件
 			$('.filter_category_list').on('click','li', function () {
 				$(".filter_category_list li").removeClass('active');
-				$(this).addClass('active');
+				var state = $(this).attr('state');
+				if (state>0) {
+					$(this).removeClass('active');
+					$(this).attr('state',0);
+				} else {
+					$(this).addClass('active');
+					$(".filter_category_list li").attr('state',0);
+					$(this).attr('state',1);
+				}
 			});
 
 			//单个品牌点击事件

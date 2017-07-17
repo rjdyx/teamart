@@ -6,6 +6,7 @@ use Germey\Geetest\GeetestCaptcha;
 class AuthController extends Controller
 { 
  	use GeetestCaptcha; 
+
 }	 	
 
 

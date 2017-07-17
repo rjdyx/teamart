@@ -22,6 +22,7 @@ Route::get('/admin/layout','Auth\LoginController@adminLayout');//后台退出
 Route::get('captcha', 'KitController@captcha'); //生成验证码
 Route::get('/bind/agent/{id}', 'Auth\LoginController@bindAgent'); //绑定分销商
 Route::post('/check','UtilsController@check');//字段验证 公共接口组
+Route::post('/password/resets','Auth\ResetPasswordController@passwordReset');//重置密码
 Route::auth();
 
 // Home - 无须登录模块
