@@ -9,11 +9,11 @@ AreaSelector.prototype = {
 		this.data = opts.data
 		this.eachNode(opts.data)
 		this.selectEv()
-		$('.J_region_cancel').on('click tap', function () {
+		$('.J_region_cancel').on('tap', function () {
 			$('.areaSelector').removeClass('top-0')
 			$('.areaSelector_container').removeClass('bottom-0')
 		})
-		$('.J_region_submit').on('click tap', function () {
+		$('.J_region_submit').on('tap', function () {
 			let txt = [], value = []
 			$('.areaSelector_area').find('.active').each(function () {
 				txt.push($(this).data('name'))
@@ -29,7 +29,7 @@ AreaSelector.prototype = {
 				$(opts.trigger).addClass('fz-12')
 			}
 		})
-		$(opts.trigger).on('click tap', function () {
+		$(opts.trigger).on('tap', function () {
 			$('.areaSelector').addClass('top-0')
 			setTimeout(function () {
 				$('.areaSelector_container').addClass('bottom-0')
@@ -64,7 +64,7 @@ AreaSelector.prototype = {
 	// 现在事件
 	selectEv: function () {
 		let self = this
-		$('.J_region_select').off('click tap').on('click tap', function () {
+		$('.J_region_select').off('tap').on('tap', function () {
 			let level = parseInt($(this).data('level'))
 			if (level === 1) {
 				$('.area_list.city').html('').scrollTop(0)

@@ -9,6 +9,7 @@
 
 @section('script')
 	@parent
+	<script src="{{url('/fx/build/valid.js')}}"></script>
 	<script src="{{ asset('fx/mui/js/mui.min.js') }}"></script>
 	<script src="{{ asset('fx/mui/js/mui.picker.min.js') }}"></script>
 	<script src="{{ asset('fx/js/lrz.all.bundle.js') }}"></script>
@@ -29,7 +30,7 @@
 			});
 
 			// 选择性别
-			$('.J_gender').on('click tap', function () {
+			$('.J_gender').on('tap', function () {
 				$(this).addClass('active').siblings().removeClass('active')
 			})
 

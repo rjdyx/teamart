@@ -15,15 +15,15 @@
     	$(function () {
 
     		// 显示选取配送方式弹窗
-    		$('.J_show_type').on('click tap', function () {
+    		$('.J_show_type').on('tap', function () {
     			$('.confirm_type').addClass('top-0')
     		})
     		// 隐藏选取配送方式弹窗
-    		$('.J_hide_type').on('click tap', function () {
+    		$('.J_hide_type').on('tap', function () {
     			$('.confirm_type').removeClass('top-0')
     		})
     		// 选取配送方式
-    		$('.J_choose_type').on('click tap', function () {
+    		$('.J_choose_type').on('tap', function () {
     			var v = $(this).data('delivery')
     			if (v == 'point') {
     				$(".price-change").html('&yen; 0.00');
@@ -46,14 +46,14 @@
     		})
 
     		// 显示选择优惠券
-    		$('.J_show_roll').on('click tap', function () {
+    		$('.J_show_roll').on('tap', function () {
     			$('.confirm_roll').addClass('top-0')
     		})
     		// 隐藏选择优惠券
-    		$('.J_hide_roll').on('click tap', function () {
+    		$('.J_hide_roll').on('tap', function () {
     			$('.confirm_roll').removeClass('top-0')
     		})
-    		$('.J_choose_roll').on('click tap', function () {
+    		$('.J_choose_roll').on('tap', function () {
     			var cut = $(this).data('cut')
     			var id = $(this).data('id')
     			$('#roll').val(id)
@@ -64,7 +64,7 @@
     		})
 
     		// 跳转到地址页
-    		$('.J_jump_address').on('click tap', function () {
+    		$('.J_jump_address').on('tap', function () {
     			if (sessionStorage) {
     				sessionStorage.setItem('chaye', window.location.href)
     			}
@@ -72,7 +72,7 @@
     		})
 
     		// 重置返回按钮
-    		$('.J_header_back').off('click tap').on('click tap', function () {
+    		$('.J_header_back').off('tap').on('tap', function () {
 				history.go(-1)
 			})
 

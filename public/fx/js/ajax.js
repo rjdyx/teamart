@@ -1,4 +1,3 @@
-import axios from 'axios'
 import prompt from './prompt.js'
 
 const ajax = (type, url, data = {}, isEdit = false, hasfile = false, errFn = true) => {

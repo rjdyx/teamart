@@ -10,6 +10,7 @@
 @section('script')
     @parent
     {!! Geetest::render('bind') !!}
+    <script src="{{url('/fx/build/valid.js')}}"></script>
     <script>
         function validate() {
             if (!_valid.ness('用户名', $('#name').val())) {
@@ -48,7 +49,6 @@
 @endsection
 
 @section('content')
-    @include("layouts.backIndex")
     <div class="login">
         <div class="login_logo"></div>
         <p class="form_error chayefont"></p>
@@ -80,4 +80,5 @@
             </form>
         </div>
     </div>
+    @include("layouts.backIndex")
 @endsection

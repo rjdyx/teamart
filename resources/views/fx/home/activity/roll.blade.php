@@ -64,7 +64,7 @@
                         $('.roll_list').append(template);
                     }
                     // 领取的事件
-                    $('.roll_get').off('click tap').on('click tap', getRoll)
+                    $('.roll_get').off('tap').on('tap', getRoll)
                     me.resetload();
                     if (type == 'up') {
                         me.unlock();

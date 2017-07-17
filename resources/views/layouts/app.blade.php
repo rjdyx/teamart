@@ -53,10 +53,16 @@
     </script>
 </head>
 <body class="base-fontsize">
+    @include("layouts.prompt")
+
     @yield('content')
     <!-- Scripts -->
     <script src="{{url('/fx/build/vendor-bundle.js')}}"></script>
     <script src="{{url('/fx/build/index.js')}}"></script>
+    <script src="{{url('/fx/zetop/fx.js')}}"></script>
+    <script src="{{url('/fx/zetop/stack.js')}}"></script>
+    <script src="{{url('/fx/zetop/touch.js')}}"></script>
+    <script src="{{url('/fx/build/prompt.js')}}"></script>
     {{-- <script src="http://localhost:8080/fx/build/vendor-bundle.js"></script>
     <script src="http://localhost:8080/fx/build/index.js"></script> --}}
     <script>
@@ -74,13 +80,58 @@
         if(deviceWidth > 640) deviceWidth = 640;
         document.documentElement.style.fontSize = deviceWidth / 6.4 + 'px';
         console.dir(window.navigator)
-        // 返回按钮事件绑定
-        $('.J_header_back').on('click tap', function () {
-            history.go(-1)
+        function backTop (container) {
+            $('.J_backTop').on('tap', function () {
+                console.log('b')
+                $('.' + container).animate({
+                    'scrollTop': 0
+                }, 100)
+            })
+        }
+        $(function () {
+            prompt.init()
+            // 返回按钮事件绑定
+            $('.J_header_back').on('tap', function () {
+                history.go(-1)
+            })
+            // 返回首页
+            $('.J_backIndex').on('tap', function () {
+                window.location.href = 'http://' + window.location.host
+            })
+            // 头部分类
+            $('.J_show_header_category').on('tap', function () {
+                $('.header_category').addClass('left-0').animate({
+                    'opacity': 1},
+                    300,
+                    function () {
+                        $('.header_category').find('ul').addClass('left-0')
+                    }
+                )
+            })
+            $('.J_hide_header_category').on('tap', function () {
+                $('.header_category').removeClass('left-0').animate({
+                    'opacity': 0},
+                    300,
+                    function () {
+                        $('.header_category').find('ul').removeClass('left-0')
+                    }
+                )
+            })
+            // 头部搜索
+            $('.J_header_search_inp').on('input', function () {
+                if ($.trim($(this).val()).length > 0) {
+                    $(this).siblings('.J_header_search').removeClass('hide')
+                } else {
+                    $(this).siblings('.J_header_search').addClass('hide')
+                }
+            })
+            $('.J_header_search').on('tap', function () {
+                let v = $(this).siblings('input').val()
+                window.location.href = 'http://' + window.location.host + '/home/product/list?name=' + v
+            })
         })
     </script>
     @yield('script')
-    @include("layouts.prompt")
     <!-- @include("layouts.service")  -->
 </body>
 </html>

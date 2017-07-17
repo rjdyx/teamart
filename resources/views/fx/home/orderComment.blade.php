@@ -38,7 +38,7 @@
 				// 		addFile($this)
 				// 	}
 				// 	$box.find('.ordercomment_imgs_list_img').append(img)
-				// 	$box.find('img').on('click tap', function () {
+				// 	$box.find('img').on('tap', function () {
 				// 		prompt.image($(this).attr('src'))
 				// 	})
 				// 	$box.find('label').addClass('hide')
@@ -59,7 +59,7 @@
 						addFile($this)
 					}
 					$box.find('.ordercomment_imgs_list_img').append(img)
-					$box.find('img').on('click tap', function () {
+					$box.find('img').on('tap', function () {
 						prompt.image($(this).attr('src'))
 					})
 					$box.find('label').addClass('hide')
@@ -89,7 +89,7 @@
 				`
 				$elem.parents('.ordercomment_imgs_list').append(template)
 				$elem.parents('.ordercomment_imgs_list').find('.J_imgs').off('change', showImg).on('change', showImg)
-				$elem.parents('.ordercomment_imgs_list').find('.J_remove_img').off('click tap', removeFile).on('click tap', removeFile)
+				$elem.parents('.ordercomment_imgs_list').find('.J_remove_img').off('tap', removeFile).on('tap', removeFile)
 			}
 			function removeFile () {
 				var pid = $(this).parents('.ordercomment_container').data('id')
@@ -116,7 +116,7 @@
 			// // 图片变化
 			// $('.J_imgs').on('change', showImg)
 			// // 删除图片
-			// $('.J_remove_img').on('click tap', removeFile)
+			// $('.J_remove_img').on('tap', removeFile)
 			
 			ajax('get', '/home/order/comment/product/' + "{{$id}}").then(function (res) {
 				var data = res
@@ -125,8 +125,8 @@
 					// 图片变化
 					$('.J_imgs').on('change', showImg)
 					// 删除图片
-					$('.J_remove_img').on('click tap', removeFile)
-					$('.J_grade').on('click tap', grade)
+					$('.J_remove_img').on('tap', removeFile)
+					$('.J_grade').on('tap', grade)
 					$('.ordercomment_container').each(function () {
 						resizeFiles[$(this).data('id')] = {}
 					})
@@ -204,7 +204,7 @@
 			}
 
 			// 提交
-			$('.J_comment').on('click tap', function () {
+			$('.J_comment').on('tap', function () {
 				// ajax提交
 				// if ($.trim($('#content').val()) == '' || $.trim($('#content').val()).length < 5) {
 				// 	prompt.message('评价至少要5个字')

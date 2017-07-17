@@ -34,6 +34,8 @@
 
 @section('script')
     @parent
+    <script src="{{url('/fx/build/valid.js')}}"></script>
+    <script src="{{url('/fx/build/areaSelector.js')}}"></script>
     <!-- <script src="{{ asset('fx/larea/js/LAreaData1.js') }}"></script> -->
     <script src="{{ asset('fx/mui/js/data.city.js') }}"></script>
     <!-- <script src="{{ asset('fx/larea/js/LArea.min.js') }}"></script> -->
@@ -68,7 +70,7 @@
 			}
 		});
         _valid.bindEvent(['name', 'phone', 'code', 'detail'])
-        $('.J_submit').on('click tap', function () {
+        $('.J_submit').on('tap', function () {
             var id = $('#id').val()
             var params = {
                 name: $('#name').val(),

@@ -9,11 +9,11 @@
     @parent
     <script>
         // 评论内容省略
-        $('.J_comment').on('click tap', function () {
+        $('.J_comment').on('tap', function () {
             $(this).toggleClass('active')
         })
         // 显示评论图片
-        $('.J_show_img').on('click tap', function () {
+        $('.J_show_img').on('tap', function () {
             prompt.image($(this).attr('src'))
         })
     </script>

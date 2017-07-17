@@ -36,7 +36,7 @@
 		}, 200)
 
 		// 账号退出
-		$(".J_loginout").on('click tap', function () {
+		$(".J_loginout").on('tap', function () {
 			prompt.question('是否退出', function () {
 				ajax('get', '/layout')
 					.then(function (resolve) {
@@ -45,12 +45,12 @@
 			})
 		})
 		// 显示二维码
-		$('.J_QRcode').on('click tap', function () {
+		$('.J_QRcode').on('tap', function () {
 			prompt.qrcode()
 		})
 
 		// 扫描二维码
-		$('.J_getQRcode').on('click tap', function () {
+		$('.J_getQRcode').on('tap', function () {
 			// prompt.qrcode()
 		})
 	})

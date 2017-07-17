@@ -7,6 +7,7 @@
 
 @section('script')
     @parent
+    <script src="{{url('/fx/build/swiper.js')}}"></script>
     <script type="text/javascript" src="{{ url('fx/js/dropload.min.js') }}"></script>
     <script>
     $(function(){
@@ -66,7 +67,7 @@
                     }
                     $('.comment_list').append(template);
                     me.resetload();
-                    $('.J_show_image').off('click tap').on('click tap', function () {
+                    $('.J_show_image').off('tap').on('tap', function () {
                     	prompt.image($(this).data('img'))
                     })
                 })
@@ -124,16 +125,17 @@
 
 		function searchComment() {
 			params['page'] = 1;
-			ajax('get', '/home/product/comment/'+params['id'], params, false, false, false)
+			ajax('get', '/home/product/comment/'+params['id'], params)
                 .then(function (res) {
                 	var template = ''
                     if (res.length > 0) {
                     	template = listData(res);
                     }
                     $('.comment_list').html(template);
-                }).catch(function (err) {
-                	console.log(err)
-                });
+                    $('.J_show_image').off('tap').on('tap', function () {
+                    	prompt.image($(this).data('img'))
+                    })
+                })
 		}
 
 		// 切换
@@ -149,7 +151,7 @@
     		});
     	});
     	// 收藏
-    	$('.J_favo').on('click tap', function () {
+    	$('.J_favo').on('tap', function () {
     		var $this = $(this)
     		if ($this.find('i').hasClass('fa-star-o')) {
     			ajax('post', '/home/collect', {id: params['id']})
@@ -175,7 +177,7 @@
     	});
 
     	// 弹窗确定
-    	$('.J_join_cart').on('click tap', function () {
+    	$('.J_join_cart').on('tap', function () {
     		if (poptype == 'cart') {
     			storeCart();
     		} else {
@@ -192,7 +194,7 @@
     				if (resolve) {
     					prompt.message('已经加入购物车')
     					$('.productspec_container').removeClass('bottom-0')
-    					jquery('.productspec').animate({
+    					$('.productspec').animate({
 							'opacity': 0},100,function () {
 							$('.productspec').removeClass('top-0')
 						})
@@ -221,13 +223,13 @@
     	};
 
     	//点击加入购物车
-    	$('.J_show_productspec').on('click tap', function () {
+    	$('.J_show_productspec').on('tap', function () {
     		poptype = 'cart';
 			cshPop();
     	});
 
     	//点击立即购买
-    	$('.buy_now').on('click tap', function () {
+    	$('.buy_now').on('tap', function () {
     		poptype = 'buy';
 			cshPop();
     	});
@@ -252,7 +254,7 @@
     					});	
 						$('.addcart-specs').html(template);
 						//打开加入购物车弹窗
-						jquery('.productspec').addClass('top-0').animate({
+						$('.productspec').addClass('top-0').animate({
 							'opacity': 1},100,function () {
 							$('.productspec_container').addClass('bottom-0')
 						})
@@ -274,9 +276,9 @@
     	}
 
     	// 隐藏产品规格弹窗
-    	$('.J_hide_productspec').on('click tap', function () {
+    	$('.J_hide_productspec').on('tap', function () {
     		console.dir($('.productspec'))
-    		jquery('.productspec').removeClass('top-0').animate({
+    		$('.productspec').removeClass('top-0').animate({
 				'opacity': 0},
 				300,
 				function () {
@@ -286,7 +288,7 @@
     	})
 
     	// 减少数量
-    	$('.J_minus_amount').on('click tap', function () {
+    	$('.J_minus_amount').on('tap', function () {
     		var amount = parseInt($(this).siblings('input[name="amount"]').val())
     		var price = parseInt($(this).parents('.productspec_container').find('#price').val())
     		if (amount == 1) return;
@@ -297,7 +299,7 @@
     		}
     	})
     	// 增加数量
-    	$('.J_plus_amount').on('click tap', function () {
+    	$('.J_plus_amount').on('tap', function () {
     		var amount = parseInt($(this).siblings('input[name="amount"]').val())
     		var price = parseFloat($(this).parents('.productspec_container').find('#price').val())
     		if (amount > 99) return; // ajax请求库存，如果库存不足返回并提示
@@ -319,7 +321,7 @@
     	})
 
     	// 选择规格
-    	$('.addcart-specs').on('click tap', '.J_choose_spec',function () {
+    	$('.addcart-specs').on('tap', '.J_choose_spec',function () {
     		// ajax 写法
     		var $this = $(this)
     		var id = $(this).attr('pid');
@@ -337,7 +339,7 @@
     	})
 
     	// 选择评论类型
-    	$('.J_choose_comment_type').on('click tap', function () {
+    	$('.J_choose_comment_type').on('tap', function () {
     		$(this).addClass('active').siblings().removeClass('active')
     		params['grade'] = $(this).attr('type');
     		searchComment();

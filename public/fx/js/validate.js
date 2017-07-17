@@ -1,4 +1,4 @@
-import ajax from './ajax.js'
+// import ajax from './ajax.js'
 /**
  * 必需字段
  *

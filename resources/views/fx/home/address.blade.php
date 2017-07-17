@@ -10,7 +10,7 @@
 	<script>
 		$(function () {
 			// 设置默认地址
-			$('.J_setdefault').on('click tap', function () {
+			$('.J_setdefault').on('tap', function () {
 				var id = $(this).data('id')
 				var $this = $(this)
 				ajax('get', '/home/address/default/' + id)
@@ -26,23 +26,25 @@
 			})
 			
 			// 删除地址
-			$('.J_del').on('click tap', function () {
+			$('.J_del').on('tap', function () {
 				var id = $(this).data('id')
 				var $this = $(this)
-				ajax('delete', '/home/address/' + id)
-					.then(function (res) {
-						if (res) {
-							prompt.message('删除成功')
-							$this.parents('.address_warpper').remove()
-						} else {
-							prompt.message('删除失败')
-						}
-					})
+				prompt.question('是否删除地址', function () {
+					ajax('delete', '/home/address/' + id)
+						.then(function (res) {
+							if (res) {
+								prompt.message('删除成功')
+								$this.parents('.address_warpper').remove()
+							} else {
+								prompt.message('删除失败')
+							}
+						})
+				})
 			})
 
 			// 结算页跳转过来时的操作
 			if (sessionStorage.getItem('chaye')){
-				$('.J_header_back').off('click tap').on('click tap', function () {
+				$('.J_header_back').off('tap').on('tap', function () {
 					var chaye = sessionStorage.getItem('chaye')
 					sessionStorage.removeItem('chaye')
 					window.location.href = chaye

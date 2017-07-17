@@ -65,7 +65,7 @@
 				map.addControl(navigationControl);
 
 				// 选择自提点
-				$('.J_choose_site').on('click tap', function () {
+				$('.J_choose_site').on('tap', function () {
 	    			$(this).addClass('active').siblings().removeClass('active')
 	    			var point = new BMap.Point($(this).data('lng'), $(this).data('lat'))
 	    			map.centerAndZoom(point, 15)

@@ -33,7 +33,7 @@
 				console.log(dels)
 			}
 			// 全选
-			$('.J_select_all').on('click tap', function () {
+			$('.J_select_all').on('tap', function () {
 				if (!$(this).find('span').hasClass('active')) {
 					dels = []
 					$('.J_select')
@@ -53,7 +53,7 @@
 				console.log(dels)
 			})
 			// 删除商品
-			$('.J_dels').on('click tap', function () {
+			$('.J_dels').on('tap', function () {
 				if (dels.length == 0) {
                     prompt.message('请选择要删除的商品')
                     return
@@ -81,7 +81,7 @@
                 }
 			})
 			// 加入购物车
-			$('.J_join_cart').on('click tap', function () {
+			$('.J_join_cart').on('tap', function () {
 				if (dels.length == 0) {
                     prompt.message('请选择要加入购物车')
                     return
@@ -166,11 +166,11 @@
 						if (type == 'up') {
                         	$('.collect_list').html(result);
                         	$('.J_select_all').find('span').removeClass('active')
-							$('.J_select').on('click tap', selectSingle)
+							$('.J_select').on('tap', selectSingle)
                         	dels = []
 						} else {
 							$('.collect_list').append(result);
-							$('.J_select').off('click tap').on('click tap', selectSingle)
+							$('.J_select').off('tap').on('tap', selectSingle)
 						}
                         me.resetload();
                         if (type == 'up') {
