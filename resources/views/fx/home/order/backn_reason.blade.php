@@ -32,13 +32,13 @@
                     }
                 })
             });
-            $('.J_show_select').on('click tap', function () {
+            $('.J_show_select').on('tap', function () {
                 $('.backnreason_select').addClass('top-0')
             })
-            $('.J_hide_select').on('click tap', function () {
+            $('.J_hide_select').on('tap', function () {
                 $('.backnreason_select').removeClass('top-0')
             })
-            $('.J_choose_select').on('click tap', function () {
+            $('.J_choose_select').on('tap', function () {
                 $('#reason').val($(this).data('value'))
                 if ($(this).data('value') == '1') {
                     $('#desc').removeAttr('disabled')

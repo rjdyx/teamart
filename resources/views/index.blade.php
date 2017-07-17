@@ -9,6 +9,7 @@
 
 @section('script')
     @parent
+    <script src="{{url('/fx/build/swiper.js')}}"></script>
 @endsection
 
 @section('content')

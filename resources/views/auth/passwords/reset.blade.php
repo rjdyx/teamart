@@ -9,6 +9,7 @@
 
 @section('script')
     @parent
+    <script src="{{url('/fx/build/valid.js')}}"></script>
     <script>
         console.log(prompt)
         function submitForm() {

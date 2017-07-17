@@ -8,6 +8,7 @@
 @section('script')
     @parent
     {!! Geetest::render('bind') !!}
+    <script src="{{url('/fx/build/valid.js')}}"></script>
     <script>
         function validate() {
             if (!_valid.name('用户名', $('#name').val())) {

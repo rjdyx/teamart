@@ -89,11 +89,11 @@
                             var camount = parseInt($(this).find('.amount').text())
                             confirm_params[cid] = camount
                         })
-                        $('.J_select').off('click tap').on('click tap', selectSingle)
+                        $('.J_select').off('tap').on('tap', selectSingle)
                         // 减少商品数量
-                        $('.J_minus').off('click tap').on('click tap', minus)
+                        $('.J_minus').off('tap').on('tap', minus)
                         // 增加商品数量
-                        $('.J_plus').off('click tap').on('click tap', plus)
+                        $('.J_plus').off('tap').on('tap', plus)
                         $('.J_select_all').find('span').removeClass('active')
                         me.resetload();
                         if (type == 'up') {
@@ -138,7 +138,7 @@
             }
 
             // 全选
-            $('.J_select_all').on('click tap', function () {
+            $('.J_select_all').on('tap', function () {
                 if (!$(this).find('span').hasClass('active')) {
                     dels = []
                     pids = []
@@ -162,7 +162,7 @@
                 console.log(dels)
             })
             // 删除
-            $('.J_dels').on('click tap', function () {
+            $('.J_dels').on('tap', function () {
                 if (dels.length == 0) {
                     prompt.message('请选择要删除的商品')
                     return
@@ -243,7 +243,7 @@
             }
 
             // 结算
-            $('.J_comfirm').on('click tap', function () {
+            $('.J_comfirm').on('tap', function () {
                 if (dels.length == 0) {
                     prompt.message('请选择要结算的商品')
                     return

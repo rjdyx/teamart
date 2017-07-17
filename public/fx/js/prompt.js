@@ -1,5 +1,5 @@
 exports.init = () => {
-	$('.J_hide_prompt').on('click tap', function () {
+	$('.J_hide_prompt').on('tap', function () {
 		$('.prompt').removeClass('active').find('.prompt_box_content').html('').end()
 			.find('.question').addClass('hide').end()
 			.find('.message').addClass('hide').end()
@@ -7,12 +7,12 @@ exports.init = () => {
 			.find('#qrcode').addClass('hide').end()
 	})
 	// 点击取消时
-	$('.J_prompt_no').on('click tap', function () {
+	$('.J_prompt_no').on('tap', function () {
 		$('.prompt').removeClass('active').find('.prompt_box_content').html('').end()
 			.find('.question').addClass('hide')
 	})
 	// 点击图片时
-	$('.J_prompt_img').on('click tap', function () {
+	$('.J_prompt_img').on('tap', function () {
 		$('.prompt').removeClass('active').find('.prompt_box_content').html('').end()
 			.find('.image').addClass('hide')
 	})
@@ -35,7 +35,7 @@ exports.message = (msg, url) => {
 exports.question = (msg, fn) => {
 	$('.prompt').addClass('active').find('.prompt_box_content').html(msg).end()
 		.find('.question').removeClass('hide')
-	$('.J_prompt_yes').off('click tap').on('click tap', function () {
+	$('.J_prompt_yes').off('tap').on('tap', function () {
 		fn()
 		$('.prompt').removeClass('active').find('.prompt_box_content').html('').end()
 			.find('.question').addClass('hide')
@@ -43,6 +43,7 @@ exports.question = (msg, fn) => {
 }
 // 大图
 exports.image = (src) => {
+	console.log(1)
 	$('.prompt').addClass('active').find('.image').removeClass('hide').attr('src', src)
 }
 

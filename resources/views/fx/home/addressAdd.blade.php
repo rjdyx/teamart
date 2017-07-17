@@ -34,9 +34,12 @@
 
 @section('script')
     @parent
+    <script src="{{url('/fx/build/valid.js')}}"></script>
+    <script src="{{url('/fx/build/areaSelector.js')}}"></script>
     <!-- <script src="{{ asset('fx/larea/js/LAreaData1.js') }}"></script> -->
     <script src="{{ asset('fx/mui/js/data.city.js') }}"></script>
     <!-- <script src="{{ asset('fx/larea/js/LArea.min.js') }}"></script> -->
+
     <script>
         // var area1 = new LArea();
         // area1.init({
@@ -69,7 +72,7 @@
 				}
 			});
 			_valid.bindEvent(['name', 'phone', 'code', 'detail', 'address'])
-			$('.J_submit').on('click tap', function () {
+			$('.J_submit').on('tap', function () {
 				var params = {
 					name: $('#name').val(),
 					phone: $('#phone').val(),

@@ -72,7 +72,7 @@
                     } else {
                         $('.order_list').append(result);// 插入数据到页面，放到最后面
                     }
-                    $(".J_opts").off('click tap').on('click tap', orderOpts)
+                    $(".J_opts").off('tap').on('tap', orderOpts)
                     me.resetload();// 每次数据插入，必须重置
                     if (type == 'up') {
                         page = 1;
@@ -278,7 +278,7 @@
             }
 
             //按钮点击(订单筛选)
-            $(".J_tabs").on('click tap', function(){
+            $(".J_tabs").on('tap', function(){
                 $(this).addClass('active').siblings().removeClass('active')
                 $('.order_container').scrollTop(0)
                 params['state'] = $(this).attr('state');
@@ -306,12 +306,12 @@
                     result = joint(data);
                     $('.order_list').html(result);// 插入数据到页面，放到最后面
                     dropload.resetload()
-                    $(".J_opts").off('click tap').on('click tap', orderOpts)
+                    $(".J_opts").off('tap').on('tap', orderOpts)
                 })
             }
 
             // 提交查询按钮
-            $('.J_serialSubmit').on('click tap', function(){
+            $('.J_serialSubmit').on('tap', function(){
                 params['serial'] = $('#orderSerial').val();
                 params['state'] = '';
                 $(".J_tabs[state='']").addClass('active').siblings().removeClass('active');

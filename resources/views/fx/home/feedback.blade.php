@@ -37,7 +37,7 @@
 				// 		addFile()
 				// 	}
 				// 	$box.find('.feedback_imgs_list_img').append(img)
-				// 	$box.find('img').on('click tap', function () {
+				// 	$box.find('img').on('tap', function () {
 				// 		prompt.image($(this).attr('src'))
 				// 	})
 				// 	$box.find('label').addClass('hide')
@@ -58,7 +58,7 @@
 						addFile()
 					}
 					$box.find('.feedback_imgs_list_img').append(img)
-					$box.find('img').on('click tap', function () {
+					$box.find('img').on('tap', function () {
 						prompt.image($(this).attr('src'))
 					})
 					$box.find('label').addClass('hide')
@@ -88,7 +88,7 @@
 				`
 				$('.feedback_imgs_list').append(template)
 				$('.feedback_imgs_list').find('.J_imgs').off('change', showImg).on('change', showImg)
-				$('.feedback_imgs_list').find('.J_remove_img').off('click tap', removeFile).on('click tap', removeFile)
+				$('.feedback_imgs_list').find('.J_remove_img').off('tap', removeFile).on('tap', removeFile)
 			}
 			function removeFile () {
 				var id = $(this).parents('li').find('input').attr('id')
@@ -113,9 +113,9 @@
 			// 图片变化
 			$('.J_imgs').on('change', showImg)
 			// 删除图片
-			$('.J_remove_img').on('click tap', removeFile)
+			$('.J_remove_img').on('tap', removeFile)
 
-			$('.J_submit').on('click tap', function () {
+			$('.J_submit').on('tap', function () {
 				var contact = $.trim($('#contact').val())
 				var content = $.trim($('#content').val())
 				if (!contact) {
