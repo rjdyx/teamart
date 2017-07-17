@@ -11,8 +11,8 @@
     <script>
         $(function () {
             var page = 0;
-            $('.promotion_container').dropload({
-                scrollArea : $('.promotion_container'),
+            $('.lists_container').dropload({
+                scrollArea : $('.lists_container'),
                 domUp : {
                     domClass   : 'dropload-up',
                     domRefresh : '<div class="dropload-refresh">↓下拉刷新</div>',
@@ -52,17 +52,17 @@
                         me.noData();
                         if (page == 1) {
                             $('.dropload-down').hide()
-                            $('.promotion_container').find('.promotion_nodata').remove()
-                            $('.promotion_container').append(`
-                            <div class="promotion_nodata txt-c">
-                                这里暂时还没有商品，先去<a href="{{url('/home/product/list')}}">看看</a>别的商品吧
+                            $('.lists_container').find('.list_nodata').remove()
+                            $('.lists_container').append(`
+                            <div class="list_nodata txt-c">
+                                这里暂时还没有商品，先去<a class="price" href="{{url('/home/product/list')}}">看看</a>别的商品吧
                             </div>`)
                         }
                     }
                     if (type == 'up') {
-                        $('.promotion_list').html(template);
+                        $('.lists_list').html(template);
                     } else {
-                        $('.promotion_list').append(template);
+                        $('.lists_list').append(template);
                     }
                     me.resetload();
                     if (type == 'up') {
@@ -81,14 +81,14 @@
             	var template = '';
             	data.forEach(function (v) {
                     template += `
-                        <div class="promotion_warpper pull-left">
+                        <div class="lists_warpper pull-left">
                             <a href="http://${window.location.host}/home/product/detail/${v.id}">
                                 <img src="http://${window.location.host}/${v.img}">
                                 <h1 class="mt-20 chayefont">${v.name}</h1>
-                                <p class="mt-10 mb-10 desc">${v.desc}</p>
+                                <p class="mt-10 mb-10 desc color-8C8C8C">${v.desc}</p>
                                 <p class="clearfix">
                                     <span class="pull-left price">&yen;${v.price}</span>
-                                    <span class="pull-right sell">销量：<i>${v.sell_amount}</i></span>
+                                    <span class="pull-right color-8C8C8C sell">销量：<i>${v.sell_amount}</i></span>
                                 </p>
                             </a>
                         </div>
@@ -102,9 +102,9 @@
 
 @section('content')
 	@include("layouts.header-info")
-	<div class="promotion" type="{{$type}}">
-		<div class="promotion_container">
-			<div class="promotion_list clearfix">
+	<div class="container promotion" type="{{$type}}">
+		<div class="lists_container">
+			<div class="lists_list clearfix">
 	
 			</div>
 		</div>

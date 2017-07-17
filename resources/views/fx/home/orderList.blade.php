@@ -60,10 +60,10 @@
                         me.noData();
                         if (params['page'] == 1) {
                             $('.dropload-down').hide()
-                            $('.order_container').find('.order_nodata').remove()
+                            $('.order_container').find('.list_nodata').remove()
                             $('.order_container').append(`
-                            <div class="order_nodata txt-c">
-                                您还没有订单，去<a href="{{url('')}}">下单</a>吧
+                            <div class="list_nodata txt-c">
+                                您还没有订单，去<a class="price" href="{{url('')}}">下单</a>吧
                             </div>`)
                         }
                     }
@@ -129,60 +129,62 @@
                                             <h1 class="pull-left chayefont">订单号：${serial}</h1>
                                             <a href="http://${window.location.host}/home/order/${oid}" class="pull-right">详情<i class="fa fa-angle-right ml-10"></i></a>
                                         </div>`
-                                c = `   <div class="order_warpper_sum txt-r">
-                                            <span>总${len}件商品</span>
-                                            <span>合计：<i class="price">&yen;${count}</i>（包运费）</span>
-                                        </div>
-                                        <div class="order_warpper_sum txt-r">
-                                            <span>下单时间：</span>
-                                            <span>${date}</span>
+                                c = `   <div class="order_warpper_sum color-8C8C8C txt-r">
+                                            <p>
+                                                <span>总${len}件商品</span>
+                                                <span>合计：<i class="price">&yen;${count}</i>（包运费）</span>
+                                            </p>
+                                            <p>
+                                                <span>下单时间：</span>
+                                                <span>${date}</span>
+                                            </p>
                                         </div>
                                         <div class="order_warpper_opts">
                                             <ul class="pull-right">`
                                     if (state != 'paid' && state != 'pading') {
-                                        c += `  <li class="J_opts" type="delivery" oid="${oid}">
-                                                <a href="javascript:;" class="chayefont point">查看物流</a>
+                                        c += `  <li class="pull-left J_opts" type="delivery" oid="${oid}">
+                                                <a href="javascript:;" class="block mt-10 txt-c chayefont point">查看物流</a>
                                             </li>`
                                     }
                                     if (state == 'cancell' && method != 'self') {
-                                        c += `  <li>
-                                                    <a href="javascript:;" class="chayefont">订单已取消</a>
+                                        c += `  <li class="pull-left">
+                                                    <a href="javascript:;" class="block mt-10 txt-c color-8C8C8C chayefont">订单已取消</a>
                                                 </li>`
                                     }
                                     if (state == 'pading' && method != 'self') {
-                                        c += `  <li class="J_opts" type="cancell" oid="${oid}">
-                                                    <a href="javascript:;" class="chayefont point">取消订单</a>
+                                        c += `  <li class="pull-left J_opts" type="cancell" oid="${oid}">
+                                                    <a href="javascript:;" class="block mt-10 txt-c chayefont point">取消订单</a>
                                                 </li>
-                                                <li class="J_opts" type="pay" oid="${oid}">
-                                                    <a href="javascript:;" class="chayefont point">付款</a>
+                                                <li class="pull-left J_opts" type="pay" oid="${oid}">
+                                                    <a href="javascript:;" class="block mt-10 txt-c chayefont point">付款</a>
                                                 </li>`
                                     }
                                     if (state == 'paid' && method != 'self') {
-                                        c += `  <li class="J_opts" type="back" oid="${oid}">
-                                                    <a href="javascript:;" class="chayefont point">申请退货</a>
+                                        c += `  <li class="pull-left J_opts" type="back" oid="${oid}">
+                                                    <a href="javascript:;" class="block mt-10 txt-c chayefont point">申请退货</a>
                                                 </li>`
                                     }
                                     if (state == 'delivery' && method != 'self') {
-                                        c += `  <li class="J_opts" type="take" oid="${oid}">
-                                                    <a href="javascript:;" class="chayefont  point">确定收货</a>
+                                        c += `  <li class="pull-left J_opts" type="take" oid="${oid}">
+                                                    <a href="javascript:;" class="block mt-10 txt-c chayefont  point">确定收货</a>
                                                 </li>`
                                     }
                                     if (state == 'take' && method != 'self') {
-                                        c += `  <li class="J_opts" type="comment" oid="${oid}">
-                                                    <a href="javascript:;" class="chayefont point">立即评价</a>
+                                        c += `  <li class="pull-left J_opts" type="comment" oid="${oid}">
+                                                    <a href="javascript:;" class="block mt-10 txt-c chayefont point">立即评价</a>
                                                 </li>`
                                     }
                                     if (state == 'backn' && method != 'self') {
-                                        c += `  <li class="J_opts" type="back" oid="${oid}">
-                                                    <a href="javascript:;" class="chayefont point">退货处理</a>
+                                        c += `  <li class="pull-left J_opts" type="back" oid="${oid}">
+                                                    <a href="javascript:;" class="block mt-10 txt-c chayefont point">退货处理</a>
                                                 </li>`
                                     }
                                     if (method == 'self') {
-                                        c += `  <li class="J_opts" type="back" oid="${oid}">
-                                                    <a href="javascript:;" class="chayefont point">申请退货</a>
+                                        c += `  <li class="pull-left J_opts" type="back" oid="${oid}">
+                                                    <a href="javascript:;" class="block mt-10 txt-c chayefont point">申请退货</a>
                                                 </li>
-                                                <li class="J_opts" type="code" oid="${oid}">
-                                                    <a href="javascript:;" class="chayefont  point">生成二维码</a>
+                                                <li class="pull-left J_opts" type="code" oid="${oid}">
+                                                    <a href="javascript:;" class="block mt-10 txt-c chayefont  point">生成二维码</a>
                                                 </li>`
                                     }
                             c += `          </ul>
@@ -294,13 +296,13 @@
                 var url = 'http://'+window.location.host + '/home/order/list/data';
                 ajax('get', url, params).then(function (data) {
                     console.log(1)
-                    $('.order_container').find('.order_nodata').remove()
+                    $('.order_container').find('.list_nodata').remove()
                     $('.dropload-down').show()
                     if (params['page'] == 1 && data.length == 0) {
                         $('.dropload-down').hide()
                         $('.order_container').append(`
-                        <div class="order_nodata txt-c">
-                            还没有订单，去<a href="{{url('')}}">下单</a>吧
+                        <div class="list_nodata txt-c">
+                            还没有订单，去<a class="price" href="{{url('')}}">下单</a>吧
                         </div>`)
                     }
                     result = joint(data);
@@ -326,35 +328,35 @@
     @include("layouts.header-info")
     
     <div class="container order">
-        <div class="order_search">
+        <div class="order_search relative">
             <input type="text" placeholder="商品名称／商品编号／订单号" id="orderSerial">
-            <i class="fa fa-search"></i>
-            <i class="fa fa-chevron-circle-right J_serialSubmit"></i>
+            <i class="block fz-14 fa fa-search"></i>
+            <i class="block fz-14 fa fa-chevron-circle-right J_serialSubmit"></i>
             <!-- <input type="submit" id="serialSubmit"> -->
         </div>
         <div class="order_tabs">
             <ul>
-                <li class="active J_tabs" state=''>
+                <li class="pull-left txt-c active J_tabs" state=''>
                     <i class="fa fa-align-justify"></i>
                     <p>全部</p>
                 </li>
-                <li class="J_tabs" state='pading'>
+                <li class="pull-left txt-c J_tabs" state='pading'>
                     <i class="fa fa-money"></i>
                     <p>待付款</p>
                 </li>
-                <li class="J_tabs" state='self'>
+                <li class="pull-left txt-c J_tabs" state='self'>
                     <i class="fa fa-map-marker"></i>
                     <p>待取货</p>
                 </li>
-                <li class="J_tabs" state='paid'>
+                <li class="pull-left txt-c J_tabs" state='paid'>
                     <i class="fa fa-feed"></i>
                     <p>待发货</p>
                 </li>
-                <li class="J_tabs" state='delivery'>
+                <li class="pull-left txt-c J_tabs" state='delivery'>
                     <i class="fa fa-car"></i>
                     <p>待收货</p>
                 </li>
-                <li class="J_tabs" state='take'>
+                <li class="pull-left txt-c J_tabs" state='take'>
                     <i class="fa fa-comment-o"></i>
                     <p>待评价</p>
                 </li>

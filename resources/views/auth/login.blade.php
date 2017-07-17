@@ -51,19 +51,19 @@
 @section('content')
     <div class="login">
         <div class="login_logo"></div>
-        <p class="form_error chayefont"></p>
-        <div class="login_form">
+        <p class="form_error chayefont fz-14"></p>
+        <div class="form_style">
             <form method="POST" id="form" name="form" action="{{ route('login') }}">
                 {{ csrf_field() }}
-                <label for="name" class="field">
+                <label for="name" class="field white">
                     <i class="fa fa-user-o"></i>
-                    <input type="text" id="name" class="chayefont" name="name" autocomplete="off" placeholder="请输入用户名">
+                    <input type="text" id="name" class="chayefont white" name="name" autocomplete="off" placeholder="请输入用户名">
                 </label>
-                <label for="password" class="field">
+                <label for="password" class="field white">
                     <i class="fa fa-lock"></i>
-                    <input type="password" id="password" class="chayefont" name="password" autocomplete="off" placeholder="请输入密码">
+                    <input type="password" id="password" class="chayefont white" name="password" autocomplete="off" placeholder="请输入密码">
                 </label>
-                <div class="login_link txt-c">
+                <div class="login_link txt-c fz-16">
                     <!-- 输入邮箱和更改密码的页面的跳转地址：/password/reset/{id} -->
                     <a class="pull-left chayefont" href="{{ url('/password/reset') }}">
                         <!-- <i class="fa fa-circle-thin"></i> -->

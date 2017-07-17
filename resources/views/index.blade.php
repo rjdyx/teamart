@@ -31,7 +31,7 @@
         </div>
         <div class="index_box mb-10">
             <div class="index_box_title">
-                <h1 class="pull-left chayefont">活动商品</h1>
+                <h1 class="pull-left chayefont white">活动商品</h1>
                 <a href="{{url('/home/activity/many')}}" class="pull-right inline-block">
                     <span class="chayefont">更多</span>
                     <i class="fa fa-angle-right"></i>
@@ -42,7 +42,7 @@
                     <a href="{{url('/home/product/detail')}}/@if(isset($activitys[0])){{$activitys[0]->id}}@endif">
                         <h1 class="chayefont">@if(isset($activitys[0])) {{$activitys[0]->name}} @endif</h1>
                         <p class="chayefont">@if(isset($activitys[0])) {{$activitys[0]->desc}} @endif</p>
-                        <span class="price mt-10 mb-10"> ￥ @if(isset($activitys[0])) {{sprintf('%.2f', $activitys[0]->price)}} @endif</span>
+                        <span class="block price mt-10 mb-10"> ￥ @if(isset($activitys[0])) {{sprintf('%.2f', $activitys[0]->price)}} @endif</span>
                         <img src="@if(isset($activitys[0])) {{$activitys[0]->thumb}} @endif" alt="图片">
                     </a>
                 </div>
@@ -81,7 +81,7 @@
 
         <div class="index_box mb-10">
             <div class="index_box_title">
-                <h1 class="pull-left chayefont">最新商品</h1>
+                <h1 class="pull-left chayefont white">最新商品</h1>
                 <a href="{{url('/home/promotion/new')}}" class="pull-right inline-block">
                     <span class="chayefont">更多</span>
                     <i class="fa fa-angle-right"></i>
@@ -92,7 +92,7 @@
                     <a href="{{url('/home/product/detail')}}/@if(isset($news[0])){{$news[0]->id}}@endif">
                         <h1 class="chayefont">@if(isset($news[0])) {{$news[0]->name}} @endif</h1>
                         <p class="chayefont">@if(isset($news[0])) {{$news[0]->desc}} @endif</p>
-                        <span class="price mt-10 mb-10">￥ @if(isset($news[0])) {{sprintf('%.2f', $news[0]->price)}} @endif</span>
+                        <span class="block price mt-10 mb-10">￥ @if(isset($news[0])) {{sprintf('%.2f', $news[0]->price)}} @endif</span>
                         <img src="@if(isset($news[0])) {{$news[0]->thumb}} @endif" alt="">
                     </a>
                 </div>
@@ -105,15 +105,15 @@
                             <span class="price">￥ @if(isset($news[1])) {{sprintf('%.2f', $news[1]->price)}} @endif</span>
                         </a>
                     </div>
-                    <div class="ibc_multi_goods_cell left pull-left">
-                        <a href="{{url('/home/product/detail')}}/@if(isset($news[2])){{$news[2]->id}}@endif">
+                    <div class="ibc_multi_goods_cell left pull-left txt-c">
+                        <a href="{{url('/home/product/detail')}}/@if(isset($news[2])){{$news[2]->id}}@endif" class="block">
                             <h1 class="chayefont">@if(isset($news[2])) {{$news[2]->name}} @endif</h1>
                             <span class="price">￥ @if(isset($news[2])) {{sprintf('%.2f', $news[2]->price)}} @endif</span>
                             <img src="@if(isset($news[2])) {{$news[2]->thumb}} @endif" alt="">
                         </a>
                     </div>
-                    <div class="ibc_multi_goods_cell right pull-left">
-                        <a href="{{url('/home/product/detail')}}/@if(isset($news[3])){{$news[3]->id}}@endif">
+                    <div class="ibc_multi_goods_cell right pull-left txt-c">
+                        <a href="{{url('/home/product/detail')}}/@if(isset($news[3])){{$news[3]->id}}@endif" class="block">
                             <h1 class="chayefont">@if(isset($news[3])) {{$news[3]->name}} @endif</h1>
                             <span class="price">￥ @if(isset($news[3])) {{sprintf('%.2f', $news[3]->price)}} @endif</span>
                             <img src="@if(isset($news[3])) {{$news[3]->thumb}} @endif" alt="">
@@ -126,7 +126,7 @@
         <div class="index_box mb-10">
             <div class="index_box_list">
                 <ul class="clearfix">
-                    <li>
+                    <!-- <li class="pull-left">
                         <a href="{{url('/home/product/detail')}}/@if(isset($sells[0])){{$sells[0]->id}}@endif">
                             <img src="@if(isset($sells[0])) {{$sells[0]->thumb}} @endif" alt="">
                             <h1 class="chayefont">@if(isset($sells[0])) {{$sells[0]->name}} @endif</h1>
@@ -134,7 +134,7 @@
                             <span class="price">￥ @if(isset($sells[0])) {{sprintf('%.2f', $sells[0]->price)}} @endif</span>
                         </a>
                     </li>
-                    <li>
+                    <li class="pull-left">
                         <a href="{{url('/home/product/detail')}}/@if(isset($sells[1])){{$sells[1]->id}}@endif">
                             <img src="@if(isset($sells[1])) {{$sells[1]->thumb}} @endif" alt="">
                             <h1 class="chayefont">@if(isset($sells[1])) {{$sells[1]->name}} @endif</h1>
@@ -142,14 +142,26 @@
                             <span class="price">￥ @if(isset($sells[1])) {{sprintf('%.2f', $sells[1]->price)}} @endif</span>
                         </a>
                     </li>
-                    <li>
+                    <li class="pull-left">
                         <a href="{{url('/home/product/detail')}}/@if(isset($sells[2])){{$sells[2]->id}}@endif">
                             <img src="@if(isset($sells[2])) {{$sells[2]->thumb}} @endif" alt="">
                             <h1 class="chayefont">@if(isset($sells[2])) {{$sells[2]->name}} @endif</h1>
                             <p class="chayefont">@if(isset($sells[2])) {{$sells[2]->desc}} @endif</p>
                             <span class="price">￥ @if(isset($sells[2])) {{sprintf('%.2f', $sells[2]->price)}} @endif</span>
                         </a>
-                    </li>
+                    </li> -->
+                    @foreach($sells as $sell)
+                        @if(isset($sell))
+                        <li class="pull-left">
+                            <a href="{{url('/home/product/detail')}}/{{$sell->id}}">
+                                <img src="{{$sell->thumb}}" alt="">
+                                <h1 class="chayefont">{{$sell->name}}</h1>
+                                <p class="chayefont">{{$sell->desc}}</p>
+                                <span class="price">&yen;{{sprintf('%.2f', $sell->price)}}</span>
+                            </a>
+                        </li>
+                        @endif
+                    @endforeach
                 </ul>
             </div>
         </div>

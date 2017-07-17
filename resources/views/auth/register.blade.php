@@ -88,30 +88,30 @@
     ?>
     <div class="register">
         <div class="register_logo"></div>
-        <p class="form_error chayefont"></p>
-        <div class="register_form">
+        <p class="form_error chayefont fz-14"></p>
+        <div class="form_style">
             <form method="POST" id="form" name="form" action="{{ route('register') }}">
                 {{ csrf_field() }}
                 <input type="hidden" value="{{$v}}" name="agent_id">
-                <label for="name" class="field">
+                <label for="name" class="field white">
                     <i class="fa fa-user-o"></i>
-                    <input type="text" id="name" class="chayefont" name="name" autocomplete="off" placeholder="请输入用户名">
+                    <input type="text" id="name" class="chayefont white" name="name" autocomplete="off" placeholder="请输入用户名">
                 </label>
-                <label for="password" class="field">
+                <label for="password" class="field white">
                     <i class="fa fa-lock"></i>
-                    <input type="password" id="password" class="chayefont" name="password" autocomplete="off" placeholder="请输入密码">
+                    <input type="password" id="password" class="chayefont white" name="password" autocomplete="off" placeholder="请输入密码">
                 </label>
-                <label for="repassword" class="field">
+                <label for="repassword" class="field white">
                     <i class="fa fa-lock"></i>
-                    <input type="password" id="repassword" class="chayefont" name="repassword" autocomplete="off" placeholder="请输入确认密码">
+                    <input type="password" id="repassword" class="chayefont white" name="repassword" autocomplete="off" placeholder="请输入确认密码">
                 </label>
-                <label for="email" class="field">
+                <label for="email" class="field white">
                     <i class="fa fa-envelope-o"></i>
-                    <input type="email" id="email" class="chayefont" name="email" autocomplete="off" placeholder="请输入邮箱">
+                    <input type="email" id="email" class="chayefont white" name="email" autocomplete="off" placeholder="请输入邮箱">
                 </label>
-                <label for="phone" class="field">
+                <label for="phone" class="field white">
                     <i class="fa fa-mobile fz-20"></i>
-                    <input type="phone" id="phone" class="chayefont" name="phone" autocomplete="off" placeholder="请输入手机">
+                    <input type="phone" id="phone" class="chayefont white" name="phone" autocomplete="off" placeholder="请输入手机">
                 </label>
                 <div class="register_gender clearfix">
                     <label for="gender_male" class="pull-left fa fa-circle-thin">
@@ -123,7 +123,7 @@
                         <input type="radio" id="gender_female" class="chayefont invisibility" name="gender" value="1">
                     </label>
                 </div>
-                <div class="register_link">
+                <div class="register_link txt-c fz-16">
                     <a class="pull-left chayefont" href="{{ url('/login') }}">
                         <!-- <i class="fa fa-circle-thin"></i> -->
                         已有账号

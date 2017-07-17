@@ -97,31 +97,31 @@
 @section('content')
 	@include("layouts.header-info")
 
-	<div class="addressadd">
+	<div class="container relative addressadd">
 		<form action="#" name="addressform">
             <input type="hidden" id="id" value="{{$data->id}}">
-			<div class="form_item chayefont">
+			<div class="form_item chayefont fz-16">
 				<label for="name">收货人</label>
-				<input type="text" name="name" id="name" class="chayefont" autocomplete="off" placeholder="请输入收货人名称" value="{{$data->name}}">
+				<input type="text" name="name" id="name" class="pull-right block txt-r chayefont" autocomplete="off" placeholder="请输入收货人名称" value="{{$data->name}}">
 			</div>
-			<div class="form_item chayefont">
+			<div class="form_item chayefont fz-16">
 				<label for="phone">联系电话</label>
-				<input type="tel" name="phone" value="{{$data->phone}}" id="phone" class="chayefont" autocomplete="off" placeholder="请输入联系电话">
+				<input type="tel" name="phone" value="{{$data->phone}}" id="phone" class="pull-right block txt-r chayefont" autocomplete="off" placeholder="请输入联系电话">
 			</div>
-			<div class="form_item chayefont">
+			<div class="form_item chayefont fz-16">
 				<label for="region">所在地区</label>
                 <span class="pull-right addressadd_selection select fz-12">{{$data->province}},{{$data->city}},{{$data->area}}</span>
                 <input id="address" name="address" data-required="true" value="{{$data->province}},{{$data->city}},{{$data->area}}" type="hidden"/>
                 <input id="addressValue" name="addressValue" type="hidden"/>
 			</div>
-			<div class="form_item chayefont">
+			<div class="form_item chayefont fz-16">
 				<label for="code">邮编</label>
-				<input type="number" value="{{$data->code}}" name="code" id="code" class="chayefont" placeholder="请输入邮编">
+				<input type="number" value="{{$data->code}}" name="code" id="code" class="pull-right block txt-r chayefont" placeholder="请输入邮编">
 			</div>
-			<div class="form_item">
+			<div class="form_item fz-16">
 				<textarea name="detail" id="detail" placeholder="请填写详细地址，不少于5个字">{{$data->detail}}</textarea>
 			</div>
-			<div class="form_item mt-20 J_defualtAddress">
+			<div class="form_item fz-16 mt-20 J_defualtAddress">
 				<label for="state" class="block">
 					默认地址
 					<i class="pull-right address_default @if($data->state) active @endif" ></i>
@@ -129,7 +129,7 @@
 				<input type="hidden" name="state" id="state" value="{{$data->state}}">
 			</div>
 		</form>
-		<div class="chayefont address_add J_submit">保存地址</div>
+		<div class="chayefont block txt-c white fz-18 bottom_btn J_submit">保存地址</div>
 	</div>
     <div class="areaSelector">
         <div class="areaSelector_bg"></div>

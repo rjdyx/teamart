@@ -14,10 +14,10 @@
 @include("layouts.header-info")
 
 @include("layouts.backIndex")
-<div class="helpcenter">
-	<ul class="helpcenter_list">
+<div class="container helpcenter">
+	<ul class="helpcenter_list fz-16">
 		@foreach($lists as $list)
-		<li>
+		<li class="relative mb-20">
 			<a href="{{ url('home/help/detail') }}/{{$list->id}}" class="chayefont">{{$list->name}}</a>
 		</li>
 		@endforeach
