@@ -85,10 +85,10 @@
     					if (res.data.length) {
     						res.data.forEach(function (v) {
     							template += `
-    								<div class="ordersite_warp clearfix J_choose_site" data-lat="${v.latitude}" data-lng="${v.longitude}">
-										<i class="fa fa-map-marker"></i>
+    								<div class="ordersite_warp color-717171 relative clearfix J_choose_site" data-lat="${v.latitude}" data-lng="${v.longitude}">
+										<i class="fa fa-map-marker block txt-c fz-24"></i>
 										<div class="ordersite_warp_info pull-right">
-											<h1 class="mb-10">${v.name}</h1>
+											<h1 class="mb-10 color-3B3B3B">${v.name}</h1>
 											<p class="clearfix">
 												<span class="pull-left">店长：${v.user}</span>
 												<span class="pull-right">联系电话：<a href="tel:${v.phone}">${v.phone}</a></span>
@@ -124,13 +124,13 @@
 @section('content')
 
     @include("layouts.header-info")
-	<div class="ordersite">
-		<div class="ordersite_map" id="allmap">加载中</div>
-		<div class="ordersite_message txt-c hide">
+	<div class="ordersite w-100 h-100">
+		<div class="ordersite_map w-100 txt-c" id="allmap">加载中</div>
+		<div class="ordersite_message w-100 txt-c hide">
 			<p>地址：<span id="address"></span></p>
 			<p>距离您的位置约<span id="distance"></span></p>
 		</div>
-		<div class="ordersite_list">
+		<div class="ordersite_list w-100">
 			<!-- <div class="txt-c mt-20 fz-20">暂无自提点</div> -->
 			<!-- <div class="ordersite_warp clearfix active J_choose_site">
 				<i class="fa fa-map-marker"></i>

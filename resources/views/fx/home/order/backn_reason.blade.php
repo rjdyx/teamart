@@ -56,45 +56,45 @@
 @section('content')
 
     @include("layouts.header-info")
-    <div class="backnreason">
-        <div class="backnreason_row">
+    <div class="backnreason relative w-100 h-100">
+        <div class="backnreason_row w-100">
             <span class="pull-left chayefont fz-18">退货理由</span>
-            <span class="pull-right gray fz-14 J_show_select">
+            <span class="pull-right gray color-d7d7d7 fz-14 J_show_select">
                 <s>请选择</s><i class="fa fa-angle-right ml-10"></i>
             </span>
             <input type="hidden" value="" id="reason">
         </div>
-        <div class="backnreason_row">
+        <div class="backnreason_row w-100">
             <span class="pull-left chayefont fz-18">其它理由：</span>
         </div>
-        <textarea class="backnreason_desc" id="desc" placeholder="（选填）其他退货的理由" disabled="true"></textarea>
-        <div class="backnreason_bottom">
+        <textarea class="backnreason_desc w-100" id="desc" placeholder="（选填）其他退货的理由" disabled="true"></textarea>
+        <div class="bottom_btn txt-c white">
             <div class="pull-left submit chayefont fz-16" id="submit">申请退货</div>
             <div class="pull-left cancel chayefont fz-16" onclick="history.go(-1);">取消退货</div>
         </div>
     </div>
-    <div class="backnreason_select">
-        <div class="backnreason_select_container">
-            <h5 class="chayefont fz-18">退货理由</h5>
-            <div class="backnreason_select_list">
-                <div class="backnreason_select_row J_choose_select" data-value="1">
+    <div class="backnreason_select w-100 h-100">
+        <div class="backnreason_select_container w-100 h-100">
+            <h5 class="chayefont fz-18 w-100 txt-c">退货理由</h5>
+            <div class="backnreason_select_list w-100">
+                <div class="backnreason_select_row w-100 J_choose_select" data-value="1">
                     <span class="pull-left chayefont fz-16">其他理由</span>
-                    <i class="pull-right"></i>
+                    <i class="pull-right block"></i>
                 </div>
-                <div class="backnreason_select_row J_choose_select" data-value="2">
+                <div class="backnreason_select_row w-100 J_choose_select" data-value="2">
                     <span class="pull-left chayefont fz-16">收到商品破损</span>
-                    <i class="pull-right"></i>
+                    <i class="pull-right block"></i>
                 </div>
-                <div class="backnreason_select_row J_choose_select" data-value="3">
+                <div class="backnreason_select_row w-100 J_choose_select" data-value="3">
                     <span class="pull-left chayefont fz-16">商品错发、漏发</span>
-                    <i class="pull-right"></i>
+                    <i class="pull-right block"></i>
                 </div>
-                <div class="backnreason_select_row J_choose_select" data-value="4">
+                <div class="backnreason_select_row w-100 J_choose_select" data-value="4">
                     <span class="pull-left chayefont fz-16">收到商品与描述不符</span>
-                    <i class="pull-right"></i>
+                    <i class="pull-right block"></i>
                 </div>
             </div>
-            <div class="backnreason_select_bottom chayefont fz-18 J_hide_select">关闭</div>
+            <div class="bottom_btn txt-c white chayefont fz-18 J_hide_select">关闭</div>
         </div>
     </div>
 @endsection

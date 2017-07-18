@@ -77,11 +77,11 @@
 				var nid = Date.now()
 				var template = `
 					<li class="pull-left mr-20 relative">
-						<label for="img${nid}">
+						<label class="block txt-c fz-20 color-717171" for="img${nid}">
 							<i class="fa fa-camera"></i>
 						</label>
-						<div class="feedback_imgs_list_img hide">
-							<i class="fa fa-times-circle J_remove_img"></i>
+						<div class="feedback_imgs_list_img relative hide">
+							<i class="fa fa-times-circle block J_remove_img"></i>
 						</div>
 	                    <input type="file" name="imgs[]" id="img${nid}" class="invisibility J_imgs absolute" accept="image/jpeg,image/jpg,image/png" capture="camera">
 	                </li>
@@ -162,30 +162,30 @@
 
 @section('content')
 	@include("layouts.header-info")
-	<div class="feedback">
-		<div class="feedback_row">
+	<div class="feedback relative h-100">
+		<div class="feedback_row w-100">
             <span class="pull-left chayefont fz-18">联系方式</span>
             <input type="text" name="contact" placeholder="QQ/邮箱/电话" id="contact" class="pull-right txt-r chayefont fz-16">
         </div>
-        <div class="feedback_row">
+        <div class="feedback_row w-100">
             <span class="pull-left chayefont fz-18">反馈内容：</span>
         </div>
-        <textarea class="feedback_content" name="content" id="content" placeholder="提出您的建议"></textarea>
+        <textarea class="feedback_content w-100" name="content" id="content" placeholder="提出您的建议"></textarea>
         <div class="feedback_imgs mt-20">
 			<span>图片：</span>
 			<ul class="feedback_imgs_list mt-20 mb-20 clearfix">
 				<li class="pull-left mr-20 relative">
-					<label for="img1">
+					<label class="block txt-c fz-20 color-717171" for="img1">
 						<i class="fa fa-camera"></i>
 					</label>
-					<div class="feedback_imgs_list_img hide">
-						<i class="fa fa-times-circle J_remove_img"></i>
+					<div class="feedback_imgs_list_img relative hide">
+						<i class="fa fa-times-circle block J_remove_img"></i>
 					</div>
 					<input type="file" name="imgs[]" id="img1" class="invisibility J_imgs absolute" accept="image/jpeg,image/jpg,image/png" capture="camera">
 				</li>
 			</ul>
 		</div>
-        <div class="feedback_bottom">
+        <div class="bottom_btn txt-c white">
             <div class="pull-left submit chayefont fz-16 J_submit">提交</div>
             <div class="pull-left cancel chayefont fz-16" onclick="history.go(-1);">取消</div>
         </div>

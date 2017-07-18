@@ -17,9 +17,7 @@
                 var res = data;
                 var tmp = '';
                 for(var i= res.length-1;i>=0;i--) {
-                    tmp += `<div class="orderdelivery_lists_process`;
-                    if (i == res.length-1) tmp += ` active`;
-                    tmp += `"><p class="mb-10">${res[i]['AcceptStation']}</p>
+                    tmp += `<div class="orderdelivery_lists_process relative ${i == res.length-1 ? 'active' : ''}"><p class="mb-10">${res[i]['AcceptStation']}</p>
                     <p class="fz-12 txt-r">${res[i]['AcceptTime']}</p></div>`; 
                 }
                 $(".orderdelivery_lists").html(tmp);
@@ -34,21 +32,21 @@
     @include("layouts.header-info")
 
     @include("layouts.backIndex")
-	<div class="orderdelivery">
+	<div class="orderdelivery w-100 h-100">
 		<div class="orderdelivery_order_lists">
         @foreach($lists as $list)
             <div class="orderdelivery_warpper">
-                <div class="orderdelivery_warpper_img pull-left mr-20">
-                    <img src="{{url('')}}/{{$list->thumb}}">
+                <div class="warpper_img pull-left mr-20">
+                    <img class="w-100" src="{{url('')}}/{{$list->thumb}}">
                 </div>
-                <div class="orderdelivery_warpper_detail pull-left mr-20">
+                <div class="warpper_detail pull-left mr-20">
                     <h5 class="chayefont mb-10">{{$list->name}}</h5>
-                    <p>{{$list->desc}}</p>
+                    <p class="color-8C8C8C">{{$list->desc}}</p>
                 </div>
-                <div class="orderdelivery_warpper_price pull-left txt-r">
+                <div class="warpper_price pull-left txt-r">
                     <span class="block price">&yen;{{$list->price}}</span>
-                    <del class="block price_raw">&yen;{{$list->raw_price * $list->amount}}</del>
-                    <span class="block times">&times;{{$list->amount}}</span>
+                    <del class="block price_raw color-8C8C8C">&yen;{{$list->raw_price * $list->amount}}</del>
+                    <span class="block times color-8C8C8C">&times;{{$list->amount}}</span>
                 </div>
             </div>
         @endforeach
@@ -57,7 +55,7 @@
 			由DD快递提供配送服务,xx配送员配送中
 			<a href="tel:88888" class="pull-right color-F78223"><i class="fa fa-mobile"></i></a>
 		</div> -->
-		<div class="orderdelivery_lists mt-20">
+		<div class="orderdelivery_lists w-100 mt-20">
 <!-- 			<div class="orderdelivery_lists_process active">
 				<p class="mb-10">sss</p>
 				<p class="fz-12 txt-r">0000年00月00日 00时00分00秒</p>

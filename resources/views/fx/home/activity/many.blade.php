@@ -51,10 +51,10 @@
                         me.noData();
                         if (page == 1) {
                             $('.dropload-down').hide()
-                            $('.many').find('.many_nodata').remove()
+                            $('.many').find('.list_nodata').remove()
                             $('.many').append(`
-                            <div class="many_nodata txt-c">
-                                暂时还没有活动商品，先去<a href="{{url('/home/product/list')}}">看看</a>别的商品吧
+                            <div class="list_nodata txt-c">
+                                暂时还没有活动商品，先去<a class="price" href="{{url('/home/product/list')}}">看看</a>别的商品吧
                             </div>`)
                         }
                     }
@@ -90,9 +90,9 @@
                     var manyStart = new Date(v.date_start).getTime()
                     var manyEnd = new Date(v.date_end).getTime()
                     if (now > manyEnd) {
-                        template += `<div class="many_wrapper mb-20 clearfix over">`
+                        template += `<div class="many_wrapper w-100 mb-20 clearfix over">`
                     } else {
-                        template += `<div class="many_wrapper mb-20 clearfix">`
+                        template += `<div class="many_wrapper w-100 mb-20 clearfix">`
                     }
                     // 判断活动的时间
                     if (now < manyStart) {
@@ -103,8 +103,8 @@
                         type = 'over'
                     }
                     template += `<div class="many_left pull-left">
-                                    <h1 class="fz-20 chayefont">${v.name}</h1>
-                                    <p class="${type} fz-14 mt-10" data-start="${manyStart}" data-end="${manyEnd}">`
+                                    <h1 class="fz-20 chayefont color-3B3B3B">${v.name}</h1>
+                                    <p class="${type} fz-14 mt-10 color-717171" data-start="${manyStart}" data-end="${manyEnd}">`
                     if (type == 'start') {
                         var times = countdown(manyEnd - now)
                         template += `距离活动结束还有<time class="hour fz-14 ml-10">${times.hour}</time><b class="ml-10 mr-10">:</b><time class="min fz-14">${times.min}</time><b class="ml-10 mr-10">:</b><time class="second fz-14">${times.second}</time>`
@@ -115,11 +115,11 @@
                     }
                     template +=     `</p>
                                 </div>
-                                <div class="many_right pull-right">
+                                <div class="many_right pull-right color-717171">
                                     <p class="chayefont">全场<span class="price">${v.price}</span>元</p>
-                                    <a href="http://${window.location.host}/home/promotion/activity?id=${v.id}" class="txt-c ${type} mt-10 mb-10 chayefont">${type == 'over' ? '活动已结束' : '去看看'}</a>
+                                    <a href="http://${window.location.host}/home/promotion/activity?id=${v.id}" class="txt-c block white ${type} mt-10 mb-10 chayefont">${type == 'over' ? '活动已结束' : '去看看'}</a>
                                 </div>`
-                    template += `<div class="many_desc pull-left">${v.desc}</div>
+                    template += `<div class="many_desc w-100 pull-left">${v.desc}</div>
                         </div>`
                 })
                 return template;
@@ -150,7 +150,7 @@
 @section('content')
 	@include("layouts.header-info")
 	<div class="many container">
-        <div class="many_list">
+        <div class="many_list w-100">
 <!--             <div class="many_wrapper mb-20 clearfix">
                 <div class="many_left pull-left">
                     <h1 class="fz-20 chayefont">活动名称</h1>

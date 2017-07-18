@@ -78,11 +78,11 @@
 				var nid = Date.now()
 				var template = `
 					<li class="pull-left mr-20 relative">
-						<label for="img[${pid}]${nid}">
+						<label class="block txt-c fz-20 color-717171" for="img[${pid}]${nid}">
 							<i class="fa fa-camera"></i>
 						</label>
-						<div class="ordercomment_imgs_list_img hide">
-							<i class="fa fa-times-circle J_remove_img"></i>
+						<div class="ordercomment_imgs_list_img relative hide">
+							<i class="fa fa-times-circle block J_remove_img"></i>
 						</div>
 	                    <input type="file" name="${$elem.attr('name')}" id="img[${pid}]${nid}" class="invisibility J_imgs absolute" accept="image/jpeg,image/jpg,image/png" capture="camera">
 	                </li>
@@ -143,23 +143,23 @@
 					template += `
 					<div class="ordercomment_container mb-10" data-id="${v.id}">
 						<div class="ordercomment_warpper">
-							<div class="ordercomment_warpper_img pull-left mr-20">
-								<img src="http://${window.location.host}/${v.thumb}">
+							<div class="warpper_img pull-left mr-20">
+								<img class="w-100" src="http://${window.location.host}/${v.thumb}">
 							</div>
-							<div class="ordercomment_warpper_detail pull-left mr-20">
+							<div class="warpper_detail pull-left mr-20">
 								<h5 class="chayefont mb-10">${v.name}</h5>
-								<p>${v.desc}</p>
+								<p class="color-8C8C8C">${v.desc}</p>
 							</div>
-							<div class="ordercomment_warpper_price pull-left txt-r">
+							<div class="warpper_price pull-left txt-r">
 								<span class="block price">&yen;${order_price}</span>
-								<del class="block price_raw">&yen;${price}</del>
-								<span class="block times">&times;${v.amount}</span>
+								<del class="block price_raw color-8C8C8C">&yen;${price}</del>
+								<span class="block times color-8C8C8C">&times;${v.amount}</span>
 							</div>
 						</div>
-						<div class="ordercomment_comment mt-20">
-							<textarea placeholder="评价" id ="content${v.id}"></textarea>
+						<div class="ordercomment_comment w-100 mt-20">
+							<textarea placeholder="评价" id ="content${v.id}" class="h-100 w-100"></textarea>
 						</div>
-						<div class="ordercomment_score mt-20 clearfix">
+						<div class="ordercomment_score w-100 fz-16 color-8C8C8C mt-20 clearfix">
 							<span class="pull-left">满意度：</span>
 							<div class="ordercomment_score_star pull-left">
 								<i class="fa fa-star-o J_grade" data-grade="1"></i>
@@ -174,11 +174,11 @@
 							<span>晒图：</span>
 							<ul class="ordercomment_imgs_list mt-20 clearfix">
 								<li class="pull-left mr-20 relative">
-									<label for="img[${v.id}]${Date.now()}">
+									<label class="block txt-c fz-20 color-717171" for="img[${v.id}]${Date.now()}">
 										<i class="fa fa-camera"></i>
 									</label>
-									<div class="ordercomment_imgs_list_img hide">
-										<i class="fa fa-times-circle J_remove_img"></i>
+									<div class="ordercomment_imgs_list_img relative hide">
+										<i class="fa fa-times-circle block J_remove_img"></i>
 									</div>
 									<input type="file" name="imgs${v.id}[]" id="img[${v.id}]${Date.now()}" class="invisibility J_imgs absolute" accept="image/jpeg,image/jpg,image/png" capture="camera">
 								</li>
@@ -257,9 +257,9 @@
 @section('content')
 	<div class="ordercomment">
 		<div class="ordercomment_header">
-			<div class="ordercomment_header_left pull-left header_back" onclick="javascript:history.go(-1);">返回</div>
-			<a href="javascript:;" class="ordercomment_header_right pull-right chayefont J_comment">发表</a>
-			<div class='ordercomment_header_center chayefont'><h2>发表评价</h2></div>
+			<div class="ordercomment_header_left white txt-c pull-left header_back" onclick="javascript:history.go(-1);">返回</div>
+			<a href="javascript:;" class="ordercomment_header_right white txt-c pull-right chayefont J_comment">发表</a>
+			<div class='ordercomment_header_center txt-c w-100 chayefont'><h2 class="white">发表评价</h2></div>
 		</div>
 		<div class="ordercomment_lists">
 

@@ -134,7 +134,7 @@
                     dels = arr
                     pids = brr
                 }
-                $('.cart_bottom').find('.total').text(totals())
+                $('.bottom_btn').find('.total').text(totals())
             }
 
             // 全选
@@ -158,7 +158,7 @@
                     })
                     $(this).find('span').removeClass('active')
                 }
-                $('.cart_bottom').find('.total').text(totals)
+                $('.bottom_btn').find('.total').text(totals)
                 console.log(dels)
             })
             // 删除
@@ -182,7 +182,7 @@
                                 })
                                 dels = []
                                 pids = []
-                                $('.cart_bottom').find('.total').text('0.00')
+                                $('.bottom_btn').find('.total').text('0.00')
                             } else {
                                 prompt.message('删除失败')
                             }
@@ -226,7 +226,7 @@
                     if (!res) {
                         prompt.message('服务器异常！请稍后再试！')
                     }
-                    $('.cart_bottom').find('.total').text(totals())
+                    $('.bottom_btn').find('.total').text(totals())
                 })  
             }
 

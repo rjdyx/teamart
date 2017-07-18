@@ -111,7 +111,7 @@
                 </label>
                 <label for="phone" class="field white">
                     <i class="fa fa-mobile fz-20"></i>
-                    <input type="phone" id="phone" class="chayefont white" name="phone" autocomplete="off" placeholder="请输入手机">
+                    <input type="tel" id="phone" class="chayefont white" name="phone" autocomplete="off" placeholder="请输入手机">
                 </label>
                 <div class="register_gender clearfix">
                     <label for="gender_male" class="pull-left fa fa-circle-thin">

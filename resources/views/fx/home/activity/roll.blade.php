@@ -51,9 +51,9 @@
                         me.noData();
                         if (page == 1) {
                             $('.dropload-down').hide()
-                            $('.roll').find('.roll_nodata').remove()
+                            $('.roll').find('.list_nodata').remove()
                             $('.roll').append(`
-                            <div class="roll_nodata txt-c">
+                            <div class="list_nodata txt-c">
                                 暂时还没有优惠券
                             </div>`)
                         }
@@ -104,16 +104,16 @@
                     }
                     // 缺少用户是否使用或者领取的状态判断
                     template += `
-                        <li class="clearfix mb-20 ${type == 'used' || type == 'over' ? 'used' : ''}">
+                        <li class="clearfix relative w-100 mb-20 ${type == 'used' || type == 'over' ? 'used' : ''}">
                             <div class="pull-left roll_info">
                                 <h1 class="chayefont">${v.name}</h1>
-                                <p class="roll_desc mt-10 mb-10">${v.desc}</p>
+                                <p class="roll_desc color-717171 mt-10 mb-10">${v.desc}</p>
                                 <p class="roll_time get txt-r">有效期至${v.indate.split(' ')[0]}</p>
                             </div>
                             <div class="pull-right roll_price">
                                 <p class="roll_cut txt-c fz-20"><i class="yen mr-10">&yen;</i><span class="cut">${v.cut}</span></p>
                                 <p class="roll_full txt-c mt-10 chayefont fz-14">满<span class="full">${v.full}</span>元可用</p>
-                                <a href="javascript:;" rid="${v.id}" class="roll_${type} block txt-c mt-10 chayefont">${typetxt}</a>
+                                <a href="javascript:;" rid="${v.id}" class="roll_${type} block white txt-c mt-10 chayefont">${typetxt}</a>
                             </div>
                         </li>
                     `
@@ -147,7 +147,7 @@
 @section('content')
 	@include("layouts.header-info")
 	<div class="roll container">
-        <ul class="roll_list">
+        <ul class="roll_list w-100">
         
 
         </ul>

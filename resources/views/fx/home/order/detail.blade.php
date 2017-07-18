@@ -23,12 +23,12 @@
 
     @include("layouts.header-info")
     
-    <div class="orderdetail">
-        <div class="orderdetail_state">
+    <div class="orderdetail w-100 h-100">
+        <div class="orderdetail_state w-100">
             <span class="pull-left chayefont fz-18">订单号：</span>
             <span class="pull-right">{{$order->serial}}</span>
         </div>
-        <div class="orderdetail_state">
+        <div class="orderdetail_state w-100">
             <span class="pull-left chayefont fz-18">订单状态：</span>
             <span class="fz-14">
                 @if ($order->state == 'pading') 未付款 @endif
@@ -51,24 +51,24 @@
         </div>
         @if (!empty($order->delivery_serial))
             <!-- 物流 -->
-            <div class="orderdetail_state">
+            <div class="orderdetail_state w-100">
                 <span class="pull-left">取货方式：</span>
                 <span class="pull-right">@if($order->method == 'self')站点自取 @else 快递 @endif</span>
             </div>
             @if($order->method == 'delivery')
-                <div class="orderdetail_state">
+                <div class="orderdetail_state w-100">
                     <span class="pull-left">收货地址：</span>
                     <span class="pull-right">{{$order->p1.$order->p2.$order->p3.$order->p4}}</span>
                 </div>
-                <div class="orderdetail_state">
+                <div class="orderdetail_state w-100">
                     <span class="pull-left">联系人：</span>
                     <span class="pull-right">{{$order->aname}}</span>
                 </div>
-                <div class="orderdetail_state">
+                <div class="orderdetail_state w-100">
                     <span class="pull-left">联系电话：</span>
                     <span class="pull-right">{{$order->phone}}</span>
                 </div>
-                <div class="orderdetail_state">
+                <div class="orderdetail_state w-100">
                     <span class="pull-left">{{$order->delivery_serial}}</span>
                     <span><a href="javascript:;" class="pull-right">物流详情</a></span>
                 </div>
@@ -78,7 +78,7 @@
         <!-- 退货 -->
         @if ($order->type == 'backy' || $order->type == 'backn')
         <div class="backn mt-10">
-            <div class="backn_reason">
+            <div class="backn_reason w-100">
                 <span class="pull-left chayefont fz-18">退货理由：</span>
             </div>
             <p class="hide">{{$order->reason}}</p>
@@ -86,44 +86,44 @@
         @endif
 
         <!-- 总计 -->
-        <div class="orderdetail_state">
+        <div class="orderdetail_state w-100">
             <span class="pull-left">合计：</span>
             <span class="pull-right"><i class="price">&yen;{{$order->price}}</i> </span>
         </div>
     
         <!-- 商品 -->
         @foreach($datas as $data)
-        <div class="orderdetail_warpper mb-20">
-            <div class="orderdetail_warpper_info">
-                <div class="orderdetail_warpper_info_img pull-left mr-20">
-                    <img src="{{url('')}}/{{$data->thumb}}">
+        <div class="orderdetail_container w-100 mb-20">
+            <div class="orderdetail_warpper">
+                <div class="warpper_img pull-left mr-20">
+                    <img class="w-100" src="{{url('')}}/{{$data->thumb}}">
                 </div>
-                <div class="orderdetail_warpper_info_detail pull-left mr-20">
+                <div class="warpper_detail pull-left mr-20">
                     <h5 class="chayefont mb-10">{{$data->name}}</h5>
-                    <p>{{$data->desc}}</p>
+                    <p class="color-8C8C8C">{{$data->desc}}</p>
                 </div>
-                <div class="orderdetail_warpper_info_price pull-left txt-r">
+                <div class="warpper_price pull-left txt-r">
                     <span class="block price">&yen;{{$data->raw_price * $data->amount}}</span>
-                    <del class="block price_raw">&yen;{{$data->price}}</del>
-                    <span class="block times">&times;{{$data->amount}}</span>
+                    <del class="block price_raw color-8C8C8C">&yen;{{$data->price}}</del>
+                    <span class="block times color-8C8C8C">&times;{{$data->amount}}</span>
                 </div>
             </div>
             @if ($order->type=='close' || $order->type=='backn' || $order->type=='backy')
             <div class="comment mt-10">
                 @if(!empty($data['comment']->id))
                     <!-- <h5 class="chayefont fz-18 mb-10">您的评价：</h5> -->
-                    <div class="comment_grade mb-10">
+                    <div class="comment_grade color-8C8C8C mb-10">
                         <span>满意度：</span>
                         @for($i=0;$i<$data['comment']->cgrade/20;$i++)
-                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star stars"></i>
                         @endfor
                     </div>
-                    <p class="comment_content mb-10 active J_comment">{{$data['comment']->content}}</p>
-                    <ul class="comment_imgs clearfix">
+                    <p class="comment_content w-100 mb-10 active J_comment">{{$data['comment']->content}}</p>
+                    <ul class="comment_imgs w-100 clearfix">
                     @if(!empty($data['comment']->cthumb))
                         @foreach(explode(',',$data['comment']->cthumb) as $img)
                         <li class="pull-left mr-10">
-                            <img src="{{url('')}}/{{$img}}" class="J_show_img" alt="">
+                            <img src="{{url('')}}/{{$img}}" class="w-100 J_show_img" alt="">
                         </li>
                         @endforeach
                     @endif

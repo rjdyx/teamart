@@ -94,7 +94,7 @@
 					}
 				})
 			});
-			_valid.bindEvent(['realname', 'phone', 'email', 'password'])
+			_valid.bindEvent(['realname', 'phone', 'email', 'password', 'repassword'])
 			function submitForm(){
 				var form = document.forms['form'];
 				var url = $("form").attr('action');//当前编辑id
@@ -105,6 +105,7 @@
 					email: form['email'].value,
 					birth_date: form['birth_date'].value,
 					password: form['password'].value,
+					repassword: form['repassword'].value,
 					img: resizeFile
 				}
 				if (_valid.validForm(params)) {
@@ -116,6 +117,12 @@
 								prompt.message('保存失败')
 							}
 						})
+				} else {
+					str = `请正确填写个人信息`
+					// $('.form_item.error').each(function() {
+					// 	str += $(this).find('label').text() + ','
+					// })
+					prompt.message(str)
 				}
 			}
 

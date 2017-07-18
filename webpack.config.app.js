@@ -38,7 +38,7 @@ if (env.isAdmin) {
 			prompt: resolve(rootPath, 'fx', 'prompt.js'),
 			areaSelector: resolve(rootPath, 'fx', 'areaSelector.js'),
 			vendors: ['axios']
-		}, 
+		},
 		output: {
 			path: path.join(rootPath, 'fx', 'build'),
 			publicPath: env.isServer ? path.join('public', 'fx', 'build/') : env.app_url + 'fx/build/'

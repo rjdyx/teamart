@@ -60,7 +60,7 @@
                             $('.dropload-down').hide()
                             $('.productdetail_container_comment').find('.comment_nodata').remove()
                             $('.productdetail_container_comment').append(`
-                            <div class="comment_nodata txt-c">
+                            <div class="list_nodata txt-c">
                                 暂无评价
                             </div>`)
                         }
@@ -83,7 +83,7 @@
             	template += `<li class="clearfix">
 								<div class="comment_list_avatar pull-left">
 									<img src="http://${window.location.host}/${v.user_img}">
-									<span>${v.user_name}</span>
+									<span class="block txt-c">${v.user_name}</span>
 								</div>
 								<div class="comment_list_content pull-right">
 									<p class="stars">`
@@ -108,8 +108,8 @@
 					template += '<div class="comment_reply">'
 					for(var j=0;j<v['replys'].length;j++) {
 						template += `
-							<div class="comment_reply_warpper">
-								${v.user_id == uid ? '<a href="javascript:;" class="comment_reply_btn J_reply_btn">回复</a>' : ''}
+							<div class="comment_reply_warpper relative">
+								${v.user_id == uid ? '<a href="javascript:;" class="comment_reply_btn block J_reply_btn">回复</a>' : ''}
 								<p class="fz-12">${v['replys'][j]['aname']} <b>回复</b> ${v['replys'][j]['bname']}：</p>
 								<p class="fz-12">${v['replys'][j]['content']}</p>
 								<p class="fz-12 txt-r">${v['replys'][j]['created_at']}</p>
@@ -250,7 +250,7 @@
     							template += 'active';
     							popid = v['id']
     						}
-    						template += '" pid='+data['id']+'><a href="javascript:;">'+data['name']+'</a></li>';
+    						template += '" pid='+data['id']+'><a href="javascript:;" class="block color-3B3B3B">'+data['name']+'</a></li>';
     					});	
 						$('.addcart-specs').html(template);
 						//打开加入购物车弹窗
@@ -318,6 +318,12 @@
     			$(this).val(1)
     			$(this).parents('.productspec_container').find('.sum_price').text((price * 1).toFixed(2))
     		}
+    	}).on('input', function () {
+    		var v = parseInt($(this).val())
+    		if (!/^[0-9]{0,}$/.test(v)) {
+    			$(this).val(1)
+    			return
+    		}
     	})
 
     	// 选择规格
@@ -365,8 +371,8 @@
 
 	@include("layouts.backIndex")
 	<div class="container productdetail relative">
-		<div class="productdetail_cart">
-			<a href="{{url('/home/cart')}}">
+		<div class="productdetail_cart txt-c fz-20">
+			<a href="{{url('/home/cart')}}" class="color-F78223">
 				<i class="fa fa-shopping-cart"></i>
 			</a>
 		</div>
@@ -382,33 +388,33 @@
 			    <div class="swiper-pagination"></div>
 			</div>
 			<div class="productdetail_container_info">
-				<h1 class="chayefont">{{$content->name}}</h1>
-				<p class="desc mt-10 mb-10">{{$content->desc}}</p>
-				<span class="price">&yen;{{sprintf('%.2f', $content->price)}}</span>
-				<p class="mt-10 mb-10">价格：<del>{{sprintf('%.2f', $content->raw_price)}}</del></p>
-				<p class="clearfix">
+				<h1 class="chayefont fz-18">{{$content->name}}</h1>
+				<p class="desc fz-16 color-8C8C8C mt-10 mb-10">{{$content->desc}}</p>
+				<span class="price fz-14">&yen;{{sprintf('%.2f', $content->price)}}</span>
+				<p class="mt-10 mb-10 color-8C8C8C fz-14">价格：<del>{{sprintf('%.2f', $content->raw_price)}}</del></p>
+				<p class="clearfix color-8C8C8C fz-14">
 					<span class="pull-left">快递：<i>{{sprintf('%.2f', $content->delivery_price)}}</i></span>
 					<span class="pull-right">销量：<i>{{$content->sell_amount}}</i>笔</span>
 				</p>
 				<div class="productdetail_container_info_spec">
-					<span>规格：</span>
+					<span class="fz-14 color-8C8C8C">规格：</span>
 					<ul class="clearfix">
 					@foreach($specs as $spec)
 						<li class="pull-left mr-10 mb-10 J_choose_spec" >
-							<a href="{{url('/home/product/detail')}}/{{$spec->id}}" @if($content->id == $spec->id)class="active"  @endif>{{$spec->name}}</a>
+							<a href="{{url('/home/product/detail')}}/{{$spec->id}}" class="block color-3B3B3B @if($content->id == $spec->id)active  @endif">{{$spec->name}}</a>
 						</li>
 					@endforeach
 					</ul>
 				</div>
 			</div>
 			<div class="productdetail_container_tabs">
-				<a href="javascript:;" class="J_tabs pull-left chayefont active" data-tag="detail">商品详情</a>
-				<a href="javascript:;" class="J_tabs pull-left chayefont" data-tag="comment">评价<span>{{$commentAmount}}</span></a>
+				<a href="javascript:;" class="J_tabs pull-left color-8C8C8C fz-14 block txt-c chayefont active" data-tag="detail">商品详情</a>
+				<a href="javascript:;" class="J_tabs pull-left color-8C8C8C fz-14 block txt-c chayefont" data-tag="comment">评价<span>{{$commentAmount}}</span></a>
 			</div>
 			<div class="hide productdetail_blank"></div>
 			<div class="productdetail_container_detail" data-tab="detail">
 				<div class="productdetail_container_detail_info clearfix">
-					<ol class="pull-left">
+					<ol class="pull-left fz-12 color-8C8C8C">
 						<li>生产日期: {{$content->date}}</li>
 						<li>产地: {{$content->origin}}</li>
 						<li>作用: {{$content->effect}}</li>
@@ -422,27 +428,27 @@
 				<!-- 评价区域 -->
 				<ol class="comment_filter clearfix">
 					<li class="pull-left mr-10 mb-10 J_choose_comment_type active" type="">
-						<a href="javascript:;">
+						<a href="javascript:;" class="block color-3B3B3B">
 							全部(<span>{{$commentAmount}}</span>)
 						</a>
 					</li>
 					<li class="pull-left mr-10 mb-10 J_choose_comment_type" type="A">
-						<a href="javascript:;">
+						<a href="javascript:;" class="block color-3B3B3B">
 							好评(<span>{{$commentA}}</span>)
 						</a>
 					</li>
 					<li class="pull-left mr-10 mb-10 J_choose_comment_type" type="B">
-						<a href="javascript:;">
+						<a href="javascript:;" class="block color-3B3B3B">
 							中评(<span>{{$commentB}}</span>)
 						</a>
 					</li>
 					<li class="pull-left mr-10 mb-10 J_choose_comment_type" type="C">
-						<a href="javascript:;">
+						<a href="javascript:;" class="block color-3B3B3B">
 							差评(<span>{{$commentC}}</span>)
 						</a>
 					</li>
 					<li class="pull-left mr-10 mb-10 J_choose_comment_type" type="Img">
-						<a href="javascript:;">
+						<a href="javascript:;" class="block color-3B3B3B">
 							有图片(<span>{{$commentImg}}</span>)
 						</a>
 					</li>
@@ -500,7 +506,7 @@
 				</ul>
 			</div>
 		</div>
-		<div class="productdetail_bottom">
+		<div class="bottom_btn txt-c">
 			<?php 
 				$system = App\System::find(1);
 				$qq = '';
@@ -508,18 +514,18 @@
 					$qq = $system->qq;
 				}
 			 ?>
-			<a class="productdetail_bottom_icon pull-left kefu" target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin={{$qq}}&site=qq&menu=yes">
+			<a class="bottom_btn_icon fz-16 pull-left fz-16 color-717171 kefu" target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin={{$qq}}&site=qq&menu=yes">
 				<i class="fa fa-headphones mt-10"></i>
 				<p>客服</p>
 			</a>
-			<div class="productdetail_bottom_icon pull-left favo J_favo">
+			<div class="bottom_btn_icon pull-left fz-16 color-717171 favo J_favo">
 				<i class="fa mt-10 @if(isset($collect->id)) fa-star @else fa-star-o @endif"></i>
 				<p>收藏</p>
 			</div>
-			<div class="productdetail_bottom_btn pull-left chayefont add_cart J_show_productspec">
+			<div class="bottom_btn_btn pull-left white fz-18 chayefont add_cart J_show_productspec">
 				加入购物车
 			</div>
-			<div class="productdetail_bottom_btn pull-left chayefont buy_now">
+			<div class="bottom_btn_btn pull-left white fz-18 chayefont buy_now">
 				立即购买
 			</div>
 		</div>
@@ -528,9 +534,9 @@
 	<div class="productspec">
 		<div class="productspec_bg J_hide_productspec"></div>
 		<div class="productspec_container">
-			<div class="productspec_container_info">
-				<div class="productspec_container_info_img pull-left mr-10">
-					<img src="" alt="">
+			<div class="productspec_container_info w-100">
+				<div class="productspec_container_info_img h-100 pull-left mr-10">
+					<img class="h-100" src="" alt="">
 				</div>
 				<div class="productspec_container_info_content pull-right">
 					<h1 class="mb-10">商品名称</h1>
@@ -538,23 +544,23 @@
 					<span class="pull-right color-F78223">&yen;<s class="price">价格</s></span>
 				</div>
 			</div>
-			<div class="productspec_container_spec">
+			<div class="productspec_container_spec w-100">
 				<p>规格：</p>
-				<ul class="clearfix mt-10 addcart-specs">
+				<ul class="clearfix mt-10 addcart-specs w-100">
 
 				</ul>
 			</div>
-			<div class="productspec_container_amount">
+			<div class="productspec_container_amount w-100 txt-c">
 				<i class="fa fa-minus-square mr-10 color-d7d7d7 J_minus_amount"></i>
-				<input type="number" autocomplete="off" id="amount" name="amount" value="1">
+				<input type="number" class="txt-c" autocomplete="off" id="amount" name="amount" value="1">
 				<i class="fa fa-plus-square ml-10 color-F78223 J_plus_amount"></i>
 			</div>
-			<div class="productspec_container_price">
+			<div class="productspec_container_price w-100">
 				<span class="pull-left color-d7d7d7">合计：</span>
 				<span class="pull-right color-F78223">&yen;<s class="sum_price"> 总价格 </s></span>
 				<input type="hidden" id="price" value="0">
 			</div>
-			<div class="productspec_container_bottom">
+			<div class="bottom_btn txt-c">
 				<?php 
 					$system = App\System::find(1);
 					$qq = '';
@@ -562,18 +568,18 @@
 						$qq = $system->qq;
 					}
 				 ?>
-				<a class="productspec_container_bottom_icon pull-left kefu" target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin={{$qq}}&site=qq&menu=yes">
+				<a class="bottom_btn_icon pull-left fz-16 color-717171 kefu" target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin={{$qq}}&site=qq&menu=yes">
 					<i class="fa fa-headphones mt-10"></i>
 					<p>客服</p>
 				</a>
-				<div class="productspec_container_bottom_icon pull-left favo J_favo">
-					<i class="fa fa-star-o mt-10"></i>
+				<div class="bottom_btn_icon pull-left fz-16 color-717171 favo J_favo">
+					<i class="fa  @if(isset($collect->id)) fa-star @else fa-star-o @endif mt-10"></i>
 					<p>收藏</p>
 				</div>
-				<div class="productspec_container_bottom_btn pull-left chayefont add_cart J_join_cart">
+				<div class="bottom_btn_btn pull-left white fz-18 chayefont add_cart J_join_cart">
 					确定
 				</div>
-				<div class="productspec_container_bottom_btn pull-left chayefont cancel J_hide_productspec">
+				<div class="bottom_btn_btn pull-left white fz-18 chayefont cancel J_hide_productspec">
 					取消
 				</div>
 			</div>

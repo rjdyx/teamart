@@ -82,10 +82,10 @@
         console.dir(window.navigator)
         function backTop (container) {
             $('.J_backTop').on('tap', function () {
-                console.log('b')
-                $('.' + container).animate({
-                    'scrollTop': 0
-                }, 100)
+                // $('#' + container).animate({
+                //     'scrollTop': 0
+                // }, 100)
+                $('#' + container).scrollTop(0)
             })
         }
         $(function () {

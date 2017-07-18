@@ -189,26 +189,26 @@
 	    //     //......
 	    // }
 	?>
-	<div class="confirm">
-		<div class="confirm_address mb-20 express">
-			<a href="javascript:;" class="clearfix J_jump_address">
-				<i class="fa fa-map-marker pull-left"></i>
-				<div class="confirm_address_info pull-left">
+	<div class="confirm relative h-100">
+		<div class="confirm_address relative w-100 mb-20 express">
+			<a href="javascript:;" class="clearfix J_jump_address block">
+				<i class="fa fa-map-marker pull-left block fz-20"></i>
+				<div class="confirm_address_info h-100 pull-left">
 					<p class="clearfix">
 						<span class="pull-left chayefont fz-20 address-name"> </span> <!-- 联系人 -->
-						<span class="pull-right gray fz-16 address-phone"> </span><!--  手机 -->
+						<span class="pull-right gray color-8C8C8C fz-16 address-phone"> </span><!--  手机 -->
 					</p>
-					<p class="gray fz-14 address-detail"> </p><!-- 地址 -->
+					<p class="gray fz-14 color-8C8C8C address-detail"> </p><!-- 地址 -->
 				</div>
-				<i class="fa fa-angle-right pull-right txt-r"></i>
+				<i class="fa fa-angle-right pull-right txt-r block fz-20"></i>
 			</a>
 		</div>
 		<div class="confirm_address mb-20 point hide">
 			<a href="{{url('/home/site')}}" class="clearfix">
 				<i class="fa fa-map-marker pull-left"></i>
-				<div class="confirm_address_info pull-left">
+				<div class="confirm_address_info h-100 pull-left">
 					<p>当前自提点</p>
-					<p class="gray fz-16 site-name"></p>
+					<p class="gray fz-16 color-8C8C8C site-name"></p>
 				</div>
 				<i class="fa fa-angle-right pull-right txt-r"></i>
 			</a>
@@ -216,13 +216,13 @@
 		<div class="confirm_container">
 		@foreach($lists as $list)
 			<div class="confirm_warpper clearfix mb-20">
-				<div class="confirm_warpper_content_img pull-left mr-20">
-					<img src="{{ url('') }}/{{$list->thumb}}">
+				<div class="confirm_warpper_content_img h-100 pull-left mr-20">
+					<img src="{{ url('') }}/{{$list->thumb}}" class="h-100">
 				</div>
-				<div class="confirm_warpper_content_info pull-right">
+				<div class="confirm_warpper_content_info relative h-100 pull-right">
 					<h5 class="chayefont mb-10">{{$list->name}}</h5>
-					<p class="desc">{{$list->desc}}</p>
-					<div class="confirm_warpper_content_info_bottom">
+					<p class="desc color-8C8C8C">{{$list->desc}}</p>
+					<div class="confirm_warpper_content_info_bottom w-100">
 						<span class="pull-left price">&yen; 
 						@if ($list->activity_price)
 							{{sprintf('%.2f',$list->activity_price * $list->amount)}}
@@ -230,99 +230,99 @@
 							{{sprintf('%.2f',$list->amount * $list->price)}}
 						@endif
 						</span>
-						<span class="pull-right sell">&times;{{$list->amount}}</span>
+						<span class="pull-right sell color-8C8C8C">&times;{{$list->amount}}</span>
 					</div>
 				</div>
 			</div>
 		@endforeach
-			<div class="confirm_container_sum">
-				<div class="confirm_container_sum_row">
-					<a href="javascript:;" class="clearfix J_show_type">
+			<div class="confirm_container_sum w-100">
+				<div class="confirm_container_sum_row w-100">
+					<a href="javascript:;" class="block clearfix J_show_type">
 						<span class="pull-left chayefont fz-18">配送方式</span>
-						<span class="pull-right gray fz-14"><s id="delivery">快递</s><i class="fa fa-angle-right ml-10"></i></span>
+						<span class="pull-right gray color-8C8C8C fz-14"><s id="delivery">快递</s><i class="fa fa-angle-right ml-10"></i></span>
 						<input type="hidden" value="express" name="delivery">
 					</a>
 				</div>
-				<div class="confirm_container_sum_row">
+				<div class="confirm_container_sum_row w-100">
 					<span class="pull-left chayefont fz-18">运费</span>
 					<span class="pull-right price fz-14 price-change" >&yen; {{sprintf('%.2f',$lists->max('delivery_price'))}}</span>
 				</div>
 
-				<div class="confirm_container_sum_row">
+				<div class="confirm_container_sum_row w-100">
 					<span class="pull-left chayefont fz-18">商品总额</span>
 					<span class="pull-right price fz-14 product-count" count="{{$count}}">&yen; {{sprintf('%.2f',$count)}} </span>
 				</div>
 				
-				<div class="confirm_container_sum_row">
+				<div class="confirm_container_sum_row w-100">
 					<span class="pull-left chayefont fz-18">积分抵扣</span>
 					<span class="pull-right price fz-14 user-grade" grade="{{Auth::user()->grade}}">
 						<input type="checkbox" id="gradeChange" class="invisibility" @if (!$grade) disabled="true"@endif>
 						@if ($grade) {{Auth::user()->grade}}分 @else 不可用 @endif
 					</span>
-					<label for="gradeChange" class="confirm_grade pull-right"></label>
+					<label for="gradeChange" class="confirm_grade block pull-right"></label>
 				</div>
 				
-				<div class="confirm_container_sum_row">
+				<div class="confirm_container_sum_row w-100">
 					<span class="pull-left chayefont fz-18">优惠券</span>
 					@if(count($cheaps))
-						<span class="pull-right gray fz-14 J_show_roll">
+						<span class="pull-right gray color-8C8C8C fz-14 J_show_roll">
 							<s>请选择</s><i class="fa fa-angle-right ml-10"></i>
 						</span>
 						<input type="hidden" value="0" id="roll">
 					@else 
-						<span class="pull-right gray fz-14">
+						<span class="pull-right gray color-8C8C8C fz-14">
 							<s>无优惠券</s>
 						</span>
 					@endif
 				</div>
 				
-				<div class="confirm_container_sum_row">
+				<div class="confirm_container_sum_row w-100">
 					<span class="pull-left chayefont fz-18">买家留言</span>
-					<span class="pull-right gray fz-14">选填</span>
+					<span class="pull-right gray color-8C8C8C fz-14">选填</span>
 				</div>
 
-				<textarea placeholder="请留言"></textarea>
+				<textarea class="w-100" placeholder="请留言"></textarea>
 			</div>
 		</div>
-		<div class="confirm_bottom">
-			<div class="confirm_bottom_sum pull-left txt-l">
+		<div class="bottom_btn txt-c">
+			<div class="confirm_bottom_sum color-FEF0EF pull-left txt-l">
 				合计总金额：<span class="price all-count">&yen;0.00</span>
 			</div>
 			<div class="confirm_bottom_submit pull-left">
-				<a href="javascript:;">提交订单</a>
+				<a href="javascript:;" class="white">提交订单</a>
 			</div>
 		</div>
 	</div>
-	<div class="confirm_type">
-		<div class="confirm_type_container">
-			<h5 class="chayefont fz-18">配送方式</h5>
-			<div class="confirm_type_row J_choose_type" data-delivery="point">
+	<div class="confirm_type w-100 h-100">
+		<div class="confirm_type_container w-100 h-100">
+			<h5 class="chayefont fz-18 w-100 txt-c">配送方式</h5>
+			<div class="confirm_type_row w-100 J_choose_type" data-delivery="point">
 				<span class="pull-left chayefont fz-16">自取</span>
-				<i class="pull-right"></i>
+				<i class="pull-right block"></i>
 			</div>
-			<div class="confirm_type_row J_choose_type" data-delivery="express">
+			<div class="confirm_type_row w-100 J_choose_type" data-delivery="express">
 				<span class="pull-left chayefont fz-16">快递</span>
-				<i class="pull-right active"></i>
+				<i class="pull-right block active"></i>
 			</div>
-			<div class="confirm_type_bottom chayefont fz-18 J_hide_type">关闭</div>
+			<div class="bottom_btn txt-c white chayefont fz-18 J_hide_type">关闭</div>
 		</div>
 	</div>
-	<div class="confirm_roll">
-		<div class="confirm_roll_container">
-			<h5 class="chayefont fz-18">优惠卷</h5>
-			<div class="confirm_roll_list">
+	<div class="confirm_roll w-100 h-100">
+		<div class="confirm_roll_container w-100 h-100">
+			<h5 class="chayefont fz-18 w-100 txt-c">优惠卷</h5>
+			<div class="confirm_roll_list w-100">
 				@foreach ($cheaps as $va)
-				<div class="confirm_roll_row J_choose_roll" data-cut="{{$va->cut}}" data-id="{{$va->id}}">
+				<div class="confirm_roll_row w-100 J_choose_roll" data-cut="{{$va->cut}}" data-id="{{$va->id}}">
 					<span class="pull-left chayefont fz-16">{{$va->name}}</span>
-					<i class="pull-right"></i>
+					<i class="pull-right block"></i>
 				</div>
 				@endforeach
-				<div class="confirm_roll_row J_choose_roll" data-cut="0" data-id="0">
+				<div class="confirm_roll_row w-100 J_choose_roll" data-cut="0" data-id="0">
 					<span class="pull-left chayefont fz-16">不使用</span>
-					<i class="pull-right active"></i>
+					<i class="pull-right block active"></i>
 				</div>
 			</div>
-			<div class="confirm_roll_bottom chayefont fz-18 J_hide_roll">关闭</div>
+			<div class="bottom_btn txt-c white chayefont fz-18 J_hide_roll">关闭</div>
 		</div>
 	</div>
 @endsection

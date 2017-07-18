@@ -223,21 +223,29 @@ const validate = {
 		}
 	},
 	password: ($inp, value) => {
-		if ($.trim(value).length < 6) {
-			$inp.parents('.form_item').addClass('error')
+		if ($.trim(value).length > 0) {
+			if ($.trim(value).length < 6) {
+				$inp.parents('.form_item').addClass('error')
+			} else {
+				$inp.parents('.form_item').removeClass('error')
+			}
 		} else {
 			$inp.parents('.form_item').removeClass('error')
 		}
 	},
 	repassword: ($inp, value) => {
-		if ($.trim(value).length < 6) {
-			$inp.parents('.form_item').addClass('error')
-		} else {
-			if ($('#password').val() !== value) {
+		if ($.trim(value).length > 0 || $.trim($('#password').val()).length > 0) {
+			if ($.trim(value).length < 6) {
 				$inp.parents('.form_item').addClass('error')
 			} else {
-				$inp.parents('.form_item').removeClass('error')
+				if ($('#password').val() !== value) {
+					$inp.parents('.form_item').addClass('error')
+				} else {
+					$inp.parents('.form_item').removeClass('error')
+				}
 			}
+		} else {
+			$inp.parents('.form_item').removeClass('error')
 		}
 	}
 }

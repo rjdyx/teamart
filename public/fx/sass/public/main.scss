@@ -193,7 +193,7 @@
 	overflow: auto;
 }
 // noData
-.userassets, .address, .collect, .order, .cart, .promotion {
+.userassets, .address, .collect, .order, .cart, .promotion, .productdetail, .roll, .many {
 	.list_nodata {
 		width: 100%;
 		height: 3rem;
@@ -277,7 +277,7 @@
 	}
 }
 // 页面底部按钮
-.useredit, .address, .addressadd, .collect, .cart {
+.useredit, .address, .addressadd, .collect, .cart, .productdetail, .productspec, .confirm, .confirm_type, .confirm_roll, .backnreason, .backnreason_select, .feedback {
 	.bottom_btn {
 		position: absolute;
 		bottom: 0;
@@ -1293,6 +1293,34 @@
 }
 // 活动商品、最新商品
 .promotion {}
+.productdetail, .productspec {
+	.bottom_btn {
+		.bottom_btn_icon, .bottom_btn_btn {
+			height: 1rem;
+		}
+		.bottom_btn_icon {
+			width: 20%;
+			line-height: 0.4rem;
+		}
+		.bottom_btn_btn {
+			width: 30%;
+			line-height: 1rem;
+		}
+		.kefu {
+			background-color: rgba(246,247,249,0.6);
+			border-right: 0.01rem solid #D4D3CE;
+		}
+		.favo {
+			background-color: rgba(246,247,249,0.6);
+		}
+		.add_cart {
+			background-color: rgba(222,216,204,0.7);
+		}
+		.buy_now, .cancel {
+			background-color: rgba(179,166,139,0.5);
+		}
+	}
+}
 // 商品详细
 .productdetail {
 	.productdetail_cart {
@@ -1304,91 +1332,57 @@
 		background-color: rgba(0,0,0,0.5);
 		border-radius: 50%;
 		z-index: 1004;
-		text-align: center;
 		line-height: 0.5rem;
-		font-size: 20px;
-		a {
-			color: #f78223;
-		}
 	}
 	.productdetail_container {
 		width: 100%;
-		// height: calc(100% - 1rem);
 		height: 100%;
 		overflow: auto;
-		.productdetail_container_banner {
+		.productdetail_container_banner, .productdetail_container_tabs, .productdetail_blank {
 			width: 100%;
+		}
+		.productdetail_container_banner {
 			height: 4.8rem;
 			overflow: hidden;
 			img {
-				display: block;
 				width: 100%;
 			}
 		}
 		.productdetail_container_info {
 			padding: 0.4rem 0.25rem;
-			h1 {
-				font-size: 18px;
-			}
-			p {
-				font-size: 14px;
-				color: #727071;
-				i {
-					font-style: normal;
-				}
-			}
-			p.desc {
-				color: #727272;
-				font-size: 16px;
-			}
-			.price {
-				color: #F78223;
-				font-size: 14px;
-			}
 			.productdetail_container_info_spec {
-				span {
-					font-size: 14px;
-					color: #727071;
-				}
 				ul {
 					width: 100%;
 					overflow: hidden;
 					li {
 						a {
-							display: block;
 							padding: 0.1rem;
 							background-color: #d7d7d7;
-							color: #3b3b3b;
 							border-radius: 0.05rem;
 							border: 0.02rem solid #d7d7d7;
 						}
 						a.active {
 							border-color: #F78223;
-							color: #F78223;
+							color: #F78223!important;
 						}
 					}
 				}
 			}
 		}
 		.productdetail_container_tabs {
-			width: 100%;
 			height: 0.8rem;
-			border-top: 0.01rem solid #DADADA;
-			border-bottom: 0.01rem solid #DADADA;
+			border-top: 0.02rem solid #DADADA;
+			border-bottom: 0.02rem solid #DADADA;
 			padding: 0.1rem;
 			a {
-				display: block;
 				width: 1.64rem;
 				height: 0.66rem;
 				padding-left: 0.2rem;
-				text-align: center;
 				line-height: 0.66rem;
-				font-size: 14px;
-				color: #6F6F6F;
 				@include backgroundImages("/fx/images/btn_bg.png", cover)
 			}
 			a.active {
-				color: #FF7D01;
+				color: #FF7D01!important;
 			}
 		}
 		.productdetail_container_tabs.fixed {
@@ -1399,7 +1393,6 @@
 			background-color: #FFF;
 		}
 		.productdetail_blank {
-			width: 100%;
 			height: 0.8rem;
 		}
 		.productdetail_container_detail {
@@ -1407,14 +1400,11 @@
 				padding: 0.15rem 0.2rem;
 				border-bottom: 0.02rem solid #DADADA;
 				ol {
-					font-size: 12px;
 					padding-right: 0.05rem;
-					color: #898989;
 				}
 			}
 			.productdetail_container_detail_img {
 				img {
-					display: block;
 					width: 100%;
 				}
 			}
@@ -1425,10 +1415,8 @@
 				padding: 0.2rem;
 				li {
 					a {
-						display: block;
 						padding: 0.1rem;
 						background-color: #d7d7d7;
-						color: #3b3b3b;
 						border-radius: 0.05rem;
 					}
 					a:active {
@@ -1438,7 +1426,7 @@
 				li.active {
 					a {
 						border: 0.02rem solid #F78223;
-						color: #F78223;
+						color: #F78223!important;
 						padding: 0.08rem;
 					}
 				}
@@ -1451,23 +1439,16 @@
 					.comment_list_avatar {
 						width: 1rem;
 						img {
-							display: block;
 							width: 98%;
 						}
 						span {
-							display: block;
-							text-align: center;
 							@extend %wrap;
 						}
 					}
 					.comment_list_content {
 						width: calc(100% - 1.5rem);
-						.stars {
-							color: #ffbe00;
-						}
 						.comment_list_content_img {
 							img {
-								display: block;
 								width: 1rem;
 								height: 1rem;
 							}
@@ -1476,14 +1457,12 @@
 							width: 100%;
 							background-color: #d7d7d7;
 							.comment_reply_warpper {
-								position: relative;
 								width: 100%;
 								padding: 0.1rem;
-								.comment_reply_btn {
+								.comment_reply_btn { // 待补充
 									position: absolute;
 									right: 0.1rem;
 									top: 0.1rem;
-									display: block;
 									color: #009fff;
 								}
 							}
@@ -1491,51 +1470,6 @@
 					}
 				}
 			}
-			.comment_nodata {
-				height: 1rem;
-				width: 100%;
-				line-height: 1rem;
-				background-color: #fff;
-				a {
-					color: #f78223;
-				}
-			}
-		}
-	}
-	.productdetail_bottom {
-		position: absolute;
-		bottom: 0;
-		left: 0; 
-		width: 100%;
-		height: 1rem;
-		text-align: center;
-		@include  backgroundImages("/fx/images/footer_bg.png", cover)
-		.productdetail_bottom_icon {
-			width: 20%;
-			height: 1rem;
-			color: #717171;
-			line-height: 0.4rem;
-			font-size: 16px;
-		}
-		.productdetail_bottom_btn {
-			width: 30%;
-			height: 1rem;
-			line-height: 1rem;
-			color: #fff;
-			font-size: 18px;
-		}
-		.kefu {
-			background-color: rgba(246,247,249,0.6);
-			border-right: 0.01rem solid #D4D3CE;
-		}
-		.favo {
-			background-color: rgba(246,247,249,0.6);
-		}
-		.add_cart {
-			background-color: rgba(222,216,204,0.7);
-		}
-		.buy_now {
-			background-color: rgba(179,166,139,0.5);
 		}
 	}
 }
@@ -1547,68 +1481,62 @@
 	width: 100%;
 	height: 100%;
 	z-index: 1005;
-	.productspec_bg {
+	.productspec_bg, .productspec_container {
 		position: absolute;
-		top: 0;
 		left: 0;
 		width: 100%;
+	}
+	.productspec_bg {
+		top: 0;
 		height: 100%;
 		background-color: rgba(0,0,0,0.5);
 	}
 	.productspec_container {
-		position: absolute;
-		left: 0;
 		bottom: -7rem;
-		width: 100%;
 		height: 7rem;
 		background-color: #FFF;
 		transition: all 0.1s ease;
+		.productspec_container_spec, .productspec_container_info_content {
+			@media screen and (max-width:321px){
+				h1 {
+					font-size: 14px;
+				}
+				p {
+					font-size: 12px;
+				}
+			}
+			@media screen and (min-width:321px) and (max-width:400px){
+				h1 {
+					font-size: 16px;
+				}
+				p {
+					font-size: 14px;
+				}
+			}
+			@media screen and (min-width:400px){
+				h1 {
+					font-size: 18px;
+				}
+				p {
+					font-size: 16px;
+				}
+			}
+		}
 		.productspec_container_info {
-			width: 100%;
 			height: 2rem;
 			padding: 0.2rem;
 			.productspec_container_info_img {
 				width: 40%;
-				height: 100%;
 				overflow: hidden;
-				img {
-					display: block;
-					height: 100%;
-				}
 			}
 			.productspec_container_info_content {
 				width: calc(60% - 0.1rem);
 				p {
 					@extend %wrap3
 				}
-				@media screen and (max-width:321px){
-					h1 {
-						font-size: 14px;
-					}
-					p {
-						font-size: 12px;
-					}
-				}
-				@media screen and (min-width:321px) and (max-width:400px){
-					h1 {
-						font-size: 16px;
-					}
-					p {
-						font-size: 14px;
-					}
-				}
-				@media screen and (min-width:400px){
-					h1 {
-						font-size: 18px;
-					}
-					p {
-						font-size: 16px;
-					}
-				}
 			}
 		}
 		.productspec_container_spec {
-			width: 100%;
 			height: 2rem;
 			padding: 0 0.2rem;
 			p {
@@ -1616,15 +1544,12 @@
 				line-height: 0.5rem;
 			}
 			ul {
-				width: 100%;
 				height: 1.5rem;
 				overflow: auto;
 				li {
 					a {
-						display: block;
 						padding: 0.1rem;
 						background-color: #d7d7d7;
-						color: #3b3b3b;
 						border-radius: 0.05rem;
 						border: 0.01rem solid #d7d7d7;
 					}
@@ -1632,31 +1557,14 @@
 				li.active {
 					a {
 						border-color: #F78223;
-						color: #F78223;
+						color: #F78223!important;
 					}
-				}
-			}
-			@media screen and (max-width:321px){
-				p {
-					font-size: 12px;
-				}
-			}
-			@media screen and (min-width:321px) and (max-width:400px){
-				p {
-					font-size: 14px;
-				}
-			}
-			@media screen and (min-width:400px){
-				p {
-					font-size: 16px;
 				}
 			}
 		}
 		.productspec_container_amount {
-			width: 100%;
 			height: 1.3rem;
 			padding: 0.2rem 0.2rem 0;
-			text-align: center;
 			line-height: 1.1rem;
 			i {
 				display: inline-block;
@@ -1668,7 +1576,6 @@
 			input {
 				width: 0.8rem;
 				height: 0.5rem;
-				text-align: center;
 			}
 			@media screen and (max-width:321px){
 				i {
@@ -1687,70 +1594,24 @@
 			}
 		}
 		.productspec_container_price {
-			width: 100%;
 			height: 0.7rem;
 			padding: 0 0.2rem;
 			line-height: 0.5rem;
 		}
-		.productspec_container_bottom {
-			position: absolute;
-			bottom: 0;
-			left: 0; 
-			width: 100%;
-			height: 1rem;
-			text-align: center;
-			@include  backgroundImages("/fx/images/footer_bg.png", cover)
-			.productspec_container_bottom_icon {
-				width: 20%;
-				height: 1rem;
-				color: #717171;
-				line-height: 0.4rem;
-				font-size: 16px;
-			}
-			.productspec_container_bottom_btn {
-				width: 30%;
-				height: 1rem;
-				line-height: 1rem;
-				color: #fff;
-				font-size: 18px;
-			}
-			.kefu {
-				background-color: rgba(246,247,249,0.6);
-				border-right: 0.01rem solid #D4D3CE;
-			}
-			.favo {
-				background-color: rgba(246,247,249,0.6);
-			}
-			.add_cart {
-				background-color: rgba(222,216,204,0.7);
-			}
-			.cancel {
-				background-color: rgba(179,166,139,0.5);
-			}
-		}
 	}
 }
 // 确认订单
-.confirm{
-	position: relative;
-	height: 100%;
+.confirm {
 	padding-top: 1.2rem;
 	background-color: #EEEFF1;
 	.confirm_address {
-		position: relative;
-		width: 100%;
 		height: 1.6rem;
 		padding: 0.25rem 0.3rem;
 		background-color: #FFF;
-		a {
-			display: block;
-		}
 		i { 
-			display: block;
 			height: 1.1rem;
 			width: 0.45rem;
 			line-height: 1.1rem;
-			font-size: 20px;
 		}
 		i.pull-left,
 		i.pull-right {
@@ -1758,11 +1619,9 @@
 		}
 		.confirm_address_info {
 			width: calc(100% - 0.9rem);
-			height: 100%;
 		}
-		.gray {
-			color: #AAAAAA;
-			font-size: 12px;
+		p.gray {
+			@extend %wrap2;
 		}
 	}
 	.confirm_container {
@@ -1775,22 +1634,12 @@
 		background-color: #FFF;
 		.confirm_warpper_content_img {
 			width: 28.75%;
-			height: 100%;
 			overflow: hidden;
-			img {
-				display: block;
-				width: 100%;
-			}
 		}
 		.confirm_warpper_content_info {
-			position: relative;
 			width: calc(71.25% - 0.2rem);
-			height: 100%;
 			h5 {
 				@extend %wrap
-			}
-			p {
-				color: #7B7B7B;
 			}
 			p.desc {
 				@extend %wrap3
@@ -1799,13 +1648,6 @@
 				position: absolute;
 				left: 0;
 				bottom: 0;
-				width: 100%;
-				span.price {
-					color: #FB6969;
-				}
-				span.sell {
-					color: #B5B5B5;
-				}
 			}
 			@media screen and (max-width:321px){
 				h5 {
@@ -1834,26 +1676,14 @@
 		}
 	}
 	.confirm_container_sum {
-		width: 100%;
 		background-color: #FFF;
 		border-top: 0.01rem solid #E3E3E3;
 		.confirm_container_sum_row {
 			height: 0.96rem;
-			width: 100%;
 			border-bottom: 0.01rem solid #E3E3E3;
 			padding: 0 0.2rem;
 			line-height: 0.96rem;
-			a {
-				display: block;
-			}
-			.gray {
-				color: #aaa;
-			}
-			.price {
-				color: #FF4F03;
-			}
 			.confirm_grade {
-				display: block;
 				width: 0.5rem;
 				height: 0.5rem;
 				margin-top: 0.23rem;
@@ -1864,154 +1694,198 @@
 			}
 		}
 		textarea {
-			width: 100%;
 			height: 1rem;
 			border: 0;
 			padding: 0.1rem;
 		}
 	}
-	.confirm_bottom {
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		width: 100%;
-		height: 1rem;
-		line-height: 1rem;
-		text-align: center;
-		@include  backgroundImages("/fx/images/footer_bg.png", cover)
+	.bottom_btn {
+		.confirm_bottom_sum, .confirm_bottom_submit {
+			height: 1rem;
+		}
 		.confirm_bottom_sum {
 			width: 4rem;
-			height: 1rem;
 			background-color: rgba(181, 181, 181, 0.5);
 			padding-left: 0.2rem;
-			color: #FEF0EF;
-			.price {
-				color: #FA580D;
-			}
 		}
 		.confirm_bottom_submit {
 			width: calc(100% - 4rem);
-			height: 1rem;
 			background-color: rgba(214, 195, 157, 0.5);
-			a {
-				color: #fff;
+		}
+	}
+}
+.confirm_type, .confirm_roll, .backnreason_select {
+	position: fixed;
+	top: 100%;
+	left: 0;
+	z-index: 1001;
+	transition: all .5s ease;
+	.confirm_type_container, .confirm_roll_container, .backnreason_select_container {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		background-color: #FFF;
+		h5 {
+			height: 1.2rem;
+			line-height: 1.2rem;
+			border-bottom: 0.01rem solid #DADADA;
+		}
+		.confirm_type_row, .confirm_roll_row {
+			height: 1rem;
+			line-height: 1rem;
+			border-bottom: 0.01rem solid #dadada;
+			padding: 0 0.2rem;
+			i {
+				width: 0.35rem;
+				height: 0.35rem;
+				margin-top: 0.325rem;
+				@include  backgroundImages("/fx/images/address_default.png", cover)
+			}
+			i.active {
+				@include  backgroundImages("/fx/images/address_default_active.png", cover)
 			}
 		}
 	}
 }
 // 确认订单快速或者自提
-.confirm_type {
-	position: fixed;
-	top: 100%;
-	left: 0;
-	z-index: 1001;
-	height: 100%;
-	width: 100%;
-	transition: all .5s ease;
-	.confirm_type_container {
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		height: 100%;
-		width: 100%;
-		background-color: #FFF;
-		h5 {
-			width: 100%;
-			height: 1.2rem;
-			text-align: center;
-			line-height: 1.2rem;
-			border-bottom: 0.01rem solid #DADADA;
-		}
-		.confirm_type_row {
-			width: 100%;
-			height: 1rem;
-			line-height: 1rem;
-			border-bottom: 0.01rem solid #dadada;
-			padding: 0 0.2rem;
-			i {
-				display: block;
-				width: 0.35rem;
-				height: 0.35rem;
-				margin-top: 0.325rem;
-				@include  backgroundImages("/fx/images/address_default.png", cover)
-			}
-			i.active {
-				@include  backgroundImages("/fx/images/address_default_active.png", cover)
-			}
-		}
-		.confirm_type_bottom {
-			position: absolute;
-			bottom: 0;
-			left: 0;
-			width: 100%;
-			height: 1rem;
-			line-height: 1rem;
-			text-align: center;
-			color: #fff;
-			@include  backgroundImages("/fx/images/footer_bg.png", cover)
-		}
-	}
-}
+.confirm_type {}
 // 确认订单优惠券
 .confirm_roll {
-	position: fixed;
-	top: 100%;
-	left: 0;
-	z-index: 1001;
-	height: 100%;
-	width: 100%;
 	background-color: rgba(0,0,0,0.8);
-	transition: all .5s ease;
 	.confirm_roll_container {
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		height: 100%;
-		width: 100%;
-		background-color: #FFF;
-		h5 {
-			width: 100%;
-			height: 1.2rem;
-			text-align: center;
-			line-height: 1.2rem;
-			border-bottom: 0.01rem solid #DADADA;
-		}
 		.confirm_roll_list {
 			height: calc(100% - 1.2rem);
-			width: 100%;
 			overflow: auto;
-		}
-		.confirm_roll_row {
-			width: 100%;
-			height: 1rem;
-			line-height: 1rem;
-			border-bottom: 0.01rem solid #dadada;
-			padding: 0 0.2rem;
-			i {
-				display: block;
-				width: 0.35rem;
-				height: 0.35rem;
-				margin-top: 0.325rem;
-				@include  backgroundImages("/fx/images/address_default.png", cover)
-			}
-			i.active {
-				@include  backgroundImages("/fx/images/address_default_active.png", cover)
-			}
-		}
-		.confirm_roll_bottom {
-			position: absolute;
-			bottom: 0;
-			left: 0;
-			width: 100%;
-			height: 1rem;
-			line-height: 1rem;
-			text-align: center;
-			color: #fff;
-			@include  backgroundImages("/fx/images/footer_bg.png", cover)
 		}
 	}
 }
-
+// 站点
+.ordersite {
+	padding-top: 1.2rem;
+	.ordersite_map {
+		height: 4rem;
+		line-height: 4rem;
+	}
+	.ordersite_message {
+		height: 1.2rem;
+		padding: 0.1rem 0.2rem;
+	}
+	.ordersite_list {
+		height: calc(100% - 5.2rem);
+		overflow: auto;
+		border-top: 0.01rem solid #dadada;
+		.ordersite_warp {
+			padding: 0.3rem 0.2rem;
+			border-bottom: 0.02rem solid #DADADA;
+			i {
+				position: absolute;
+				left: 0.3rem;
+				top: 50%;
+				width: 0.5rem;
+				height: 0.5rem;
+				margin-top: -0.25rem;
+				line-height: 0.5rem;
+			}
+			.ordersite_warp_info {
+				width: calc(100% - 0.7rem);
+				h1 {
+					font-weight: normal;
+				}
+				@media screen and (max-width:321px){
+					h1 {
+						font-size: 16px;
+					}
+					p {
+						font-size: 12px;
+					}
+				}
+				@media screen and (min-width:321px) and (max-width:400px){
+					h1 {
+						font-size: 18px;
+					}
+					p {
+						font-size: 14px;
+					}
+				}
+				@media screen and (min-width:400px){
+					h1 {
+						font-size: 20px;
+					}
+					p {
+						font-size: 16px;
+					}
+				}
+			}
+		}
+		.ordersite_warp.active {
+			color: #FBB601;
+			.ordersite_warp_info {
+				h1 {
+					color: #FBB601!important;
+				}
+				a {
+					color: #FBB601;
+				}
+			}
+		}
+	}
+}
+.ordercomment, .orderdelivery, .orderdetail {
+	.ordercomment_lists, .orderdelivery_order_lists {
+		border-top: 0.02rem solid #F6F6F6;
+	}
+	.ordercomment_warpper, .orderdelivery_warpper, .orderdetail_warpper {
+		height: 1.82rem;
+		padding: 0.14rem 0.21rem;
+		border-bottom: 0.01rem solid #F6F6F6;
+		.warpper_img {
+			width: 1.52rem;
+		}
+		.warpper_detail {
+			width: 2.6rem;
+			h5 {
+				@extend %wrap;
+			}
+			p {
+				@extend %wrap3;
+			}
+			@media screen and (max-width:321px){
+				h5 {
+					font-size: 14px;
+				}
+				p {
+					font-size: 12px;
+				}
+			}
+			@media screen and (min-width:321px) and (max-width:400px){
+				h5 {
+					font-size: 16px;
+				}
+				p {
+					font-size: 14px;
+				}
+			}
+			@media screen and (min-width:400px){
+				h5 {
+					font-size: 18px;
+				}
+				p {
+					font-size: 16px;
+				}
+			}
+		}
+		.warpper_price {
+			width: calc(100% - 4.52rem);
+			.price{
+				margin-bottom: 0.15rem;
+			}
+			.times, .price_raw {}
+			.times {
+				margin-top: 0.25rem;
+			}
+		}
+	}
+}
 // 评论
 .ordercomment {
 	.ordercomment_header {
@@ -2028,8 +1902,6 @@
 		}
 		.ordercomment_header_left, .ordercomment_header_right {
 			width: 1rem;
-			color: #fff;
-			text-align: center;
 			line-height: 1rem;
 		}
 		.ordercomment_header_left {
@@ -2039,12 +1911,7 @@
 			}
 		}
 		.ordercomment_header_center {
-			width: 100%;
 			line-height: 1rem;
-			text-align: center;
-			h2 {
-				color: #fff;
-			}
 		}
 		@media screen and (max-width:321px){
 			.ordercomment_header_left, .ordercomment_header_right {
@@ -2082,82 +1949,16 @@
 	}
 	.ordercomment_lists {
 		padding-top: 1.2rem;
-		border-top: 0.02rem solid #F6F6F6;
-	}
-	.ordercomment_warpper {
-		height: 1.82rem;
-		padding: 0.14rem 0.21rem;
-		border-bottom: 0.01rem solid #F6F6F6;
-		.ordercomment_warpper_img {
-			width: 1.52rem;
-			img {
-				display: block;
-				width: 100%;
-			}
-		}
-		.ordercomment_warpper_detail {
-			width: 2.6rem;
-			h5 {
-				@extend %wrap;
-			}
-			p {
-				color: #959595;
-				@extend %wrap3;
-			}
-			@media screen and (max-width:321px){
-				h5 {
-					font-size: 14px;
-				}
-				p {
-					font-size: 12px;
-				}
-			}
-			@media screen and (min-width:321px) and (max-width:400px){
-				h5 {
-					font-size: 16px;
-				}
-				p {
-					font-size: 14px;
-				}
-			}
-			@media screen and (min-width:400px){
-				h5 {
-					font-size: 18px;
-				}
-				p {
-					font-size: 16px;
-				}
-			}
-		}
-		.ordercomment_warpper_price {
-			width: calc(100% - 4.52rem);
-			.price{
-				color: #FF5C5D;
-				margin-bottom: 0.15rem;
-			}
-			.times, .price_raw {
-				color: #B5B5B5;
-			}
-			.times {
-				margin-top: 0.25rem;
-			}
-		}
 	}
 	.ordercomment_comment {
-		width: 100%;
 		height: 2rem;
 		padding: 0 0.21rem;
 		textarea {
-			width: 100%;
-			height: 100%;
 			padding: 0.1rem;
 		}
 	}
 	.ordercomment_score {
-		width: 100%;
 		padding: 0 0.21rem;
-		font-size: 16px;
-		color: #747474;
 		.ordercomment_score_star {
 			width: 50%;
 			i.active {
@@ -2169,22 +1970,18 @@
 		padding: 0 0.21rem;
 		.ordercomment_imgs_list {
 			li {
-				label {
-					display: block;
+				label, input, .ordercomment_imgs_list_img {
 					width: 1rem;
+				}
+				label, .ordercomment_imgs_list_img {
 					height: 1rem;
-					text-align: center;
+				}
+				label {
 					line-height: 1rem;
 					border: 0.02rem solid #C9C9C9;
-					font-size: 20px;
-					color: #717171;
 				}
 				.ordercomment_imgs_list_img {
-					position: relative;
-					width: 1rem;
-					height: 1rem;
 					img {
-						display: block;
 						width: 1rem;
 						height: 1rem;
 					}
@@ -2192,98 +1989,11 @@
 						position: absolute;
 						top: -0.1rem;
 						right: -0.1rem;
-						display: block;
 						width: 0.2rem;
 						height: 0.2rem;
 						color: red;
 						background-color: #FFF;
 					}
-				}
-				input {
-					width: 1rem;
-				}
-			}
-		}
-	}
-}
-// 站点
-.ordersite {
-	width: 100%;
-	height: 100%;
-	padding-top: 1.2rem;
-	.ordersite_map {
-		width: 100%;
-		height: 4rem;
-		text-align: center;
-		line-height: 4rem;
-	}
-	.ordersite_message {
-		width: 100%;
-		height: 1.2rem;
-		padding: 0.1rem 0.2rem;
-	}
-	.ordersite_list {
-		width: 100%;
-		height: calc(100% - 5.2rem);
-		overflow: auto;
-		border-top: 0.01rem solid #dadada;
-		.ordersite_warp {
-			position: relative;
-			padding: 0.3rem 0.2rem;
-			border-bottom: 0.02rem solid #DADADA;
-			color: #989898;
-			i {
-				position: absolute;
-				left: 0.3rem;
-				top: 50%;
-				display: block;
-				width: 0.5rem;
-				height: 0.5rem;
-				margin-top: -0.25rem;
-				text-align: center;
-				line-height: 0.5rem;
-				font-size: 24px;
-			}
-			.ordersite_warp_info {
-				width: calc(100% - 0.7rem);
-				h1 {
-					font-weight: normal;
-					color: #5D5D5D;
-				}
-				@media screen and (max-width:321px){
-					h1 {
-						font-size: 16px;
-					}
-					p {
-						font-size: 12px;
-					}
-				}
-				@media screen and (min-width:321px) and (max-width:400px){
-					h1 {
-						font-size: 18px;
-					}
-					p {
-						font-size: 14px;
-					}
-				}
-				@media screen and (min-width:400px){
-					h1 {
-						font-size: 20px;
-					}
-					p {
-						font-size: 16px;
-					}
-				}
-			}
-		}
-		.ordersite_warp.active {
-			color: #FBB601;
-			.ordersite_warp_info {
-				h1 {
-					color: #FBB601;
-				}
-				a {
-					color: #FBB601;
 				}
 			}
 		}
@@ -2291,91 +2001,31 @@
 }
 // 物流页
 .orderdelivery {
-	width: 100%;
-	height: 100%;
 	padding-top: 1.2rem;
 	background-color: #EFEFF1;
 	.orderdelivery_order_lists {
-		border-top: 0.02rem solid #F6F6F6;
 		background-color: #FFF;
 	}
-	.orderdelivery_warpper {
-		height: 1.82rem;
-		padding: 0.14rem 0.21rem;
-		border-bottom: 0.01rem solid #F6F6F6;
-		.orderdelivery_warpper_img {
-			width: 1.52rem;
-			img {
-				display: block;
-				width: 100%;
-			}
-		}
-		.orderdelivery_warpper_detail {
-			width: 2.6rem;
-			p {
-				color: #959595;
-				@extend %wrap3;
-			}
-			@media screen and (max-width:321px){
-				h5 {
-					font-size: 14px;
-				}
-				p {
-					font-size: 12px;
-				}
-			}
-			@media screen and (min-width:321px) and (max-width:400px){
-				h5 {
-					font-size: 16px;
-				}
-				p {
-					font-size: 14px;
-				}
-			}
-			@media screen and (min-width:400px){
-				h5 {
-					font-size: 18px;
-				}
-				p {
-					font-size: 16px;
-				}
-			}
-		}
-		.orderdelivery_warpper_price {
-			width: calc(100% - 4.52rem);
-			.price{
-				color: #FF5C5D;
-				margin-bottom: 0.15rem;
-			}
-			.times, .price_raw {
-				color: #B5B5B5;
-			}
-			.times {
-				margin-top: 0.25rem;
-			}
-		}
-	}
-	.orderdelivery_sender {
-		width: 100%;
-		height: 1rem;
-		line-height: 0.98rem;
-		padding: 0 0.21rem;
-		border-bottom: 0.02rem solid #dadada;
-		background-color: #FFF;
-		a {
-			display: block;
-			width: .8rem;
-			height: 0.98rem;
-			line-height: 0.98rem;
-			text-align: center;
-			i {
-				font-size: 24px;
-				vertical-align: middle;
-			}
-		}
-	}
+	// .orderdelivery_sender {
+	// 	width: 100%;
+	// 	height: 1rem;
+	// 	line-height: 0.98rem;
+	// 	padding: 0 0.21rem;
+	// 	border-bottom: 0.02rem solid #dadada;
+	// 	background-color: #FFF;
+	// 	a {
+	// 		display: block;
+	// 		width: .8rem;
+	// 		height: 0.98rem;
+	// 		line-height: 0.98rem;
+	// 		text-align: center;
+	// 		i {
+	// 			font-size: 24px;
+	// 			vertical-align: middle;
+	// 		}
+	// 	}
+	// }
 	.orderdelivery_lists {
-		width: 100%;
 		background-color: #FFF;
 		.orderdelivery_lists_process {
 			position: relative;
@@ -2418,10 +2068,7 @@
 .roll {
 	background-color: #EFEFF1;
 	.roll_list {
-		width: 100%;
 		li {
-			position: relative;
-			width: 100%;
 			height: 2rem;
 			padding: 0.15rem 0;
 			background-color: #EBE2D1;
@@ -2445,7 +2092,6 @@
 				}
 				.roll_desc {
 					line-height: 0.3rem;
-					color: #707068;
 					@extend %wrap2
 				}
 				.roll_time.get {
@@ -2461,20 +2107,13 @@
 				.roll_full {
 					color: #CC2714;
 				}
-				.roll_cut {
-					i {
-						font-style: normal;
-					}
-				}
 				.roll_get,
 				.roll_take,
 				.roll_used,
 				.roll_over {
-					display: block;
 					width: 1.2rem;
 					height: 0.4rem;
 					line-height: 0.4rem;
-					color: #fff;
 					@extend %marginLR;
 				}
 				.roll_get {
@@ -2507,16 +2146,6 @@
 			height: 2rem;
 			@include backgroundImages('/fx/images/roll_border.png', 50% 100%)
 		}
-
-	}
-	.roll_nodata {
-		height: 3rem;
-		width: 100%;
-		line-height: 3rem;
-		background-color: #fff;
-		a {
-			color: #f78223;
-		}
 	}
 }
 
@@ -2524,18 +2153,10 @@
 .many {
 	background-color: #EFEFF1;
 	.many_list {
-		width: 100%;
 		.many_wrapper {
-			width: 100%;
 			padding: 0.1rem;
 			background-color: #FFF;
 			.many_left {
-				h1 {
-					color: #535353;
-				}
-				p {
-					color: #7d7d7d;
-				}
 				p.before,
 				p.start {
 					time {
@@ -2553,13 +2174,8 @@
 			}
 			.many_right {
 				color: #535353;
-				.price {
-					color: #EE7700;
-				}
 				a {
-					display: block;
 					height: 0.6rem;
-					color: #fff;
 					line-height: 0.6rem;
 					border-radius: 0.3rem;
 					padding-left: 0.2rem;
@@ -2567,16 +2183,14 @@
 				}
 				a.before,
 				a.start {
-					color: #E87F14;
+					color: #E87F14!important;
 				}
 				a.over {
-					color: #7d7d7d;
+					color: #7d7d7d!important;
 				}
 			}
 			.many_desc {
-				width: 100%;
 				img {
-					display: block;
 					width: 100%;
 				}
 			}
@@ -2584,53 +2198,27 @@
 		.many_wrapper.over {
 			color: #7a7a7a!important;
 			.price {
-				color: #7a7a7a;
+				color: #7a7a7a!important;
 			}
 		}
 	}
-	.many_nodata {
-		height: 3rem;
-		width: 100%;
-		line-height: 3rem;
-		background-color: #fff;
-		a {
-			color: #f78223;
-		}
-	}
 }
-// 退货理由
-.backnreason {
-	position: relative;
-	height: 100%;
+.backnreason, .feedback {
 	padding-top: 1.2rem;
 	background-color: #EEEFF1;
-	.backnreason_row {
-		width: 100%;
+	.backnreason_row, .feedback_row {
 		background-color: #FFF;
 		height: 0.96rem;
 		border-bottom: 0.01rem solid #E3E3E3;
 		padding: 0 0.2rem;
 		line-height: 0.96rem;
-		.gray {
-			color: #aaa;
-		}
 	}
-	.backnreason_desc {
-		width: 100%;
+	.backnreason_desc, .feedback_content {
 		height: 3rem;
 		border: 0;
 		padding: 0.2rem;
 	}
-	.backnreason_bottom {
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		width: 100%;
-		height: 1rem;
-		line-height: 1rem;
-		text-align: center;
-		color: #fff;
-		@include  backgroundImages("/fx/images/footer_bg.png", cover)
+	.bottom_btn {
 		.submit {
 			width: 50%;
 			background-color: rgba(214, 195, 157, 0.5);
@@ -2641,89 +2229,26 @@
 		}
 	}
 }
+// 退货理由
+.backnreason {}
 .backnreason_select {
-	position: fixed;
-	top: 100%;
-	left: 0;
-	z-index: 1001;
-	height: 100%;
-	width: 100%;
 	background-color: rgba(0,0,0,0.8);
-	transition: all .5s ease;
 	.backnreason_select_container {
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		height: 100%;
-		width: 100%;
-		background-color: #FFF;
-		h5 {
-			width: 100%;
-			height: 1.2rem;
-			text-align: center;
-			line-height: 1.2rem;
-			border-bottom: 0.01rem solid #DADADA;
-		}
 		.backnreason_select_list {
 			height: calc(100% - 1.2rem);
-			width: 100%;
 			overflow: auto;
-		}
-		.backnreason_select_row {
-			width: 100%;
-			height: 1rem;
-			line-height: 1rem;
-			border-bottom: 0.01rem solid #dadada;
-			padding: 0 0.2rem;
-			i {
-				display: block;
-				width: 0.35rem;
-				height: 0.35rem;
-				margin-top: 0.325rem;
-				@include  backgroundImages("/fx/images/address_default.png", cover)
-			}
-			i.active {
-				@include  backgroundImages("/fx/images/address_default_active.png", cover)
-			}
-		}
-		.backnreason_select_bottom {
-			position: absolute;
-			bottom: 0;
-			left: 0;
-			width: 100%;
-			height: 1rem;
-			line-height: 1rem;
-			text-align: center;
-			color: #fff;
-			@include  backgroundImages("/fx/images/footer_bg.png", cover)
 		}
 	}
 }
 
 // 意见反馈
 .feedback {
-	position: relative;
-	height: 100%;
-	padding-top: 1.2rem;
-	background-color: #EEEFF1;
 	.feedback_row {
-		width: 100%;
-		background-color: #FFF;
-		height: 0.96rem;
-		border-bottom: 0.01rem solid #E3E3E3;
-		padding: 0 0.2rem;
-		line-height: 0.96rem;
 		input {
 			height: 0.94rem;
 			line-height: 0.94rem;
 			border: 0;
 		}
-	}
-	.feedback_content {
-		width: 100%;
-		height: 3rem;
-		border: 0;
-		padding: 0.2rem;
 	}
 	.feedback_imgs {
 		padding: 0 0.21rem;
@@ -2731,22 +2256,18 @@
 		overflow: hidden;
 		.feedback_imgs_list {
 			li {
-				label {
-					display: block;
+				label, input, .feedback_imgs_list_img {
 					width: 1rem;
+				}
+				label, .feedback_imgs_list_img {
 					height: 1rem;
-					text-align: center;
+				}
+				label {
 					line-height: 1rem;
 					border: 0.02rem solid #C9C9C9;
-					font-size: 20px;
-					color: #717171;
 				}
 				.feedback_imgs_list_img {
-					position: relative;
-					width: 1rem;
-					height: 1rem;
 					img {
-						display: block;
 						width: 1rem;
 						height: 1rem;
 					}
@@ -2754,168 +2275,39 @@
 						position: absolute;
 						top: -0.1rem;
 						right: -0.1rem;
-						display: block;
 						width: 0.2rem;
 						height: 0.2rem;
 						color: red;
 						background-color: #FFF;
 					}
 				}
-				input {
-					width: 1rem;
-				}
 			}
-		}
-	}
-	.feedback_bottom {
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		width: 100%;
-		height: 1rem;
-		line-height: 1rem;
-		text-align: center;
-		color: #fff;
-		@include  backgroundImages("/fx/images/footer_bg.png", cover)
-		.submit {
-			width: 50%;
-			background-color: rgba(214, 195, 157, 0.5);
-		}
-		.cancel {
-			width: 50%;
-			background-color: rgba(181, 181, 181, 0.5);
 		}
 	}
 }
 
 // 订单详情
 .orderdetail {
-	width: 100%;
-	height: 100%;
 	padding-top: 1.2rem;
 	background-color: #EFEFF1;
-	.orderdetail_warpper {
-		width: 100%;
+	.orderdetail_container {
 		background-color: #FFF;
-		.orderdetail_warpper_info {
-			height: 1.82rem;
-			padding: 0.14rem 0.21rem;
+		.orderdetail_warpper {
 			background-color: #F6F6F6;
-			.orderdetail_warpper_info_img {
-				width: 1.52rem;
-				img {
-					display: block;
-					width: 100%;
-				}
-			}
-			.orderdetail_warpper_info_detail {
-				width: 2.6rem;
-				h5 {
-					@extend %wrap
-				}
-				p {
-					color: #959595;
-				}
-				p.desc {
-					@extend %wrap3
-				}
-				@media screen and (max-width:321px){
-					h5 {
-						font-size: 14px;
-					}
-					p {
-						font-size: 12px;
-					}
-				}
-				@media screen and (min-width:321px) and (max-width:400px){
-					h5 {
-						font-size: 16px;
-					}
-					p {
-						font-size: 14px;
-					}
-				}
-				@media screen and (min-width:400px){
-					h5 {
-						font-size: 18px;
-					}
-					p {
-						font-size: 16px;
-					}
-				}
-			}
-			.orderdetail_warpper_info_price {
-				width: calc(100% - 4.52rem);
-				.price{
-					color: #FF5C5D;
-					margin-bottom: 0.15rem;
-				}
-				.times, .price_raw {
-					color: #B5B5B5;
-				}
-				.times {
-					margin-top: 0.25rem;
-				}
-			}
-		}
-		.orderdetail_warpper_cheap {
-			height: 0.96rem;
-			width: 100%;
-			border-bottom: 0.01rem solid #E3E3E3;
-			padding: 0 0.2rem;
-			line-height: 0.96rem;
-			a {
-				display: block;
-			}
-			.gray {
-				color: #aaa;
-			}
-			.price {
-				color: #FF4F03;
-			}
-		}
-		.orderdetail_warpper_sum {
-			height: 0.8rem;
-			border-bottom: 0.01rem solid #EEEFF1;
-			line-height: 0.8rem;
-			padding-right: 0.22rem;
-			color: #848484;
-			.price {
-				font-style: normal;
-				color: #FF5C5D;
-			}
 		}
 	}
 	.orderdetail_state {
 		height: 0.96rem;
-		width: 100%;
 		border-bottom: 0.01rem solid #E3E3E3;
 		padding: 0 0.2rem;
 		line-height: 0.96rem;
 		background-color: #FFF;
-	}
-	.delivery {
-		height: 0.96rem;
-		width: 100%;
-		border-bottom: 0.01rem solid #E3E3E3;
-		padding: 0 0.2rem;
-		line-height: 0.96rem;
-		background-color: #FFF;
-		a {
-			display: block;
-		}
 	}
 	.comment {
 		padding: 0.2rem;
 		background-color: #FFF;
-		.comment_grade {
-			color: #7d7d7d;
-			i {
-				color: #FCBF26;
-			}
-		}
+		.comment_grade {}
 		.comment_content {
-			width: 100%;
 			height: auto;
 		}
 		.comment_content.active {
@@ -2923,14 +2315,9 @@
 			@extend %wrap3;
 		}
 		.comment_imgs {
-			width: 100%;
 			li {
 				width: 1rem;
 				height: 1rem;
-				img {
-					display: block;
-					width: 100%;
-				}
 			}
 		}
 	}
@@ -2938,7 +2325,6 @@
 		background-color: #FFF;
 		.backn_reason {
 			height: 0.96rem;
-			width: 100%;
 			border-bottom: 0.01rem solid #E3E3E3;
 			padding: 0 0.2rem;
 			line-height: 0.96rem;
