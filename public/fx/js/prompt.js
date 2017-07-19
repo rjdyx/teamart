@@ -43,7 +43,6 @@ exports.question = (msg, fn) => {
 }
 // 大图
 exports.image = (src) => {
-	console.log(1)
 	$('.prompt').addClass('active').find('.image').removeClass('hide').attr('src', src)
 }
 

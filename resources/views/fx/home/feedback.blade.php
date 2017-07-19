@@ -162,7 +162,7 @@
 
 @section('content')
 	@include("layouts.header-info")
-	<div class="feedback relative h-100">
+	<div class="container feedback relative">
 		<div class="feedback_row w-100">
             <span class="pull-left chayefont fz-18">联系方式</span>
             <input type="text" name="contact" placeholder="QQ/邮箱/电话" id="contact" class="pull-right txt-r chayefont fz-16">

@@ -56,7 +56,7 @@
 @section('content')
 
     @include("layouts.header-info")
-    <div class="backnreason relative w-100 h-100">
+    <div class="container backnreason relative">
         <div class="backnreason_row w-100">
             <span class="pull-left chayefont fz-18">退货理由</span>
             <span class="pull-right gray color-d7d7d7 fz-14 J_show_select">

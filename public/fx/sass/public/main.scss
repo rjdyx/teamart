@@ -191,6 +191,7 @@
 	padding-top: 1.2rem;
 	padding-bottom: 1rem;
 	overflow: auto;
+	-webkit-overflow-scrolling : touch;
 }
 // noData
 .userassets, .address, .collect, .order, .cart, .promotion, .productdetail, .roll, .many {
@@ -1602,7 +1603,7 @@
 }
 // 确认订单
 .confirm {
-	padding-top: 1.2rem;
+	padding-bottom: 0;
 	background-color: #EEEFF1;
 	.confirm_address {
 		height: 1.6rem;
@@ -1730,7 +1731,7 @@
 			line-height: 1.2rem;
 			border-bottom: 0.01rem solid #DADADA;
 		}
-		.confirm_type_row, .confirm_roll_row {
+		.confirm_type_row, .confirm_roll_row, .backnreason_select_row {
 			height: 1rem;
 			line-height: 1rem;
 			border-bottom: 0.01rem solid #dadada;
@@ -1761,7 +1762,7 @@
 }
 // 站点
 .ordersite {
-	padding-top: 1.2rem;
+	padding-bottom: 0;
 	.ordersite_map {
 		height: 4rem;
 		line-height: 4rem;
@@ -2001,7 +2002,7 @@
 }
 // 物流页
 .orderdelivery {
-	padding-top: 1.2rem;
+	padding-bottom: 0;
 	background-color: #EFEFF1;
 	.orderdelivery_order_lists {
 		background-color: #FFF;
@@ -2204,7 +2205,7 @@
 	}
 }
 .backnreason, .feedback {
-	padding-top: 1.2rem;
+	padding-bottom: 0;
 	background-color: #EEEFF1;
 	.backnreason_row, .feedback_row {
 		background-color: #FFF;
@@ -2288,7 +2289,7 @@
 
 // 订单详情
 .orderdetail {
-	padding-top: 1.2rem;
+	padding-bottom: 0;
 	background-color: #EFEFF1;
 	.orderdetail_container {
 		background-color: #FFF;

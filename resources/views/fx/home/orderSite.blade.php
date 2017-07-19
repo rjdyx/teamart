@@ -27,7 +27,7 @@
 								var npoint = new BMap.Point(r.point.lng, r.point.lat)
 								var distance = map.getDistance(point,npoint)
 								if (distance < 1000) {
-									$('#distance').text(distance + '米')
+									$('#distance').text(distance.toFixed(2) + '米')
 								} else {
 									$('#distance').text((distance/1000).toFixed(2) + '公里')
 								}
@@ -124,7 +124,7 @@
 @section('content')
 
     @include("layouts.header-info")
-	<div class="ordersite w-100 h-100">
+	<div class="container ordersite">
 		<div class="ordersite_map w-100 txt-c" id="allmap">加载中</div>
 		<div class="ordersite_message w-100 txt-c hide">
 			<p>地址：<span id="address"></span></p>

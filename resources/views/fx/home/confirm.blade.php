@@ -189,7 +189,7 @@
 	    //     //......
 	    // }
 	?>
-	<div class="confirm relative h-100">
+	<div class="container confirm relative">
 		<div class="confirm_address relative w-100 mb-20 express">
 			<a href="javascript:;" class="clearfix J_jump_address block">
 				<i class="fa fa-map-marker pull-left block fz-20"></i>

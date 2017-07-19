@@ -23,7 +23,7 @@
 
     @include("layouts.header-info")
     
-    <div class="orderdetail w-100 h-100">
+    <div class="container orderdetail">
         <div class="orderdetail_state w-100">
             <span class="pull-left chayefont fz-18">订单号：</span>
             <span class="pull-right">{{$order->serial}}</span>

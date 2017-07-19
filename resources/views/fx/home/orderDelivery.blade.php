@@ -32,7 +32,7 @@
     @include("layouts.header-info")
 
     @include("layouts.backIndex")
-	<div class="orderdelivery w-100 h-100">
+	<div class="container orderdelivery">
 		<div class="orderdelivery_order_lists">
         @foreach($lists as $list)
             <div class="orderdelivery_warpper">
