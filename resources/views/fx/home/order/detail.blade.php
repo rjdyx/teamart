@@ -40,13 +40,13 @@
                 @if ($order->state == 'close') 已完成 @endif
             </span>
             @if ($order->state == 'pading') 
-            <a href="{{url('')}}/home/order/confirm?id={{$order->id}}" class="pull-right fz-14 state_btn price">去付款</a> 
+            <a href="{{url('')}}/home/order/confirm?id={{$order->id}}" class="pull-right fz-14 state_btn txt-c price">去付款</a> 
             @endif
             @if ($order->state == 'delivery')
-            <span class="pull-right fz-14 state_btn">收货</span>
+            <span class="pull-right fz-14 state_btn txt-c price">收货</span>
             @endif
             @if ($order->state == 'take')
-            <a href="{{url('')}}/home/order/comment/{{$order->id}}" class="pull-right fz-14 state_btn price">去评价</a> 
+            <a href="{{url('')}}/home/order/comment/{{$order->id}}" class="pull-right fz-14 state_btn txt-c price">去评价</a> 
             @endif
         </div>
         @if (!empty($order->delivery_serial))

@@ -12,7 +12,7 @@
 	<script src="{{url('/fx/build/valid.js')}}"></script>
 	<script src="{{ asset('fx/mui/js/mui.min.js') }}"></script>
 	<script src="{{ asset('fx/mui/js/mui.picker.min.js') }}"></script>
-	<script src="{{ asset('fx/js/lrz.all.bundle.js') }}"></script>
+	<!-- <script src="{{ asset('fx/js/lrz.all.bundle.js') }}"></script> -->
 	<!-- <script src="{{ asset('fx/mui/js/data.city.js') }}"></script> -->
 	<script>
 		$(function () {
@@ -103,31 +103,9 @@
 					email: form['email'].value,
 					birth_date: form['birth_date'].value,
 					password: form['password'].value,
-					repassword: form['repassword'].value
+					repassword: form['repassword'].value,
+					img: form['img'].files[0]
 				}
-				if (form['img'].files[0]) {
-					lrz(form['img'].files[0], {
-						width: 512,
-						height: 512,
-						quality: 0.5,
-						fieldName: 'img'
-					})
-					.then(function (rst) {
-						// 处理成功会执行
-						params['img'] = rst.formData.get('img')
-						submitAjax(params)
-					})
-					.catch(function (err) {
-						// 处理失败会执行
-					})
-					.always(function () {
-						// 不管是成功失败，都会执行
-					})
-				} else {
-					submitAjax(params)
-				}
-			}
-			function submitAjax(params) {
 				var url = $("form").attr('action');//当前编辑id
 				if (_valid.validForm(params)) {
 					ajax('post', url, params, true, true)
@@ -146,6 +124,28 @@
 					// })
 					prompt.message(str)
 				}
+				// if (form['img'].files[0]) {
+				// 	lrz(form['img'].files[0], {
+				// 		width: 512,
+				// 		height: 512,
+				// 		quality: 0.5,
+				// 		fieldName: 'img'
+				// 	})
+				// 	.then(function (rst) {
+
+				// 		// 处理成功会执行
+				// 		params['img'] = rst.formData.get('img')
+				// 		submitAjax(params)
+				// 	})
+				// 	.catch(function (err) {
+				// 		// 处理失败会执行
+				// 	})
+				// 	.always(function () {
+				// 		// 不管是成功失败，都会执行
+				// 	})
+				// } else {
+				// 	submitAjax(params)
+				// }
 			}
 		})
 	</script>
