@@ -239,7 +239,6 @@
 				if (!temp) return
 				ajax('post', '/home/order/comment/store/'+"{{$id}}", params, false, true)
 				.then(function (res) {
-					console.dir(res)
 					if (res) {
 						prompt.message('评论成功！')
 						setTimeout(function(){
