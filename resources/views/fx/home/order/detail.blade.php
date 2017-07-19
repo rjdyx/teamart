@@ -39,15 +39,15 @@
                 @if ($order->state == 'backy') 已退货 @endif
                 @if ($order->state == 'close') 已完成 @endif
             </span>
-                @if ($order->state == 'pading') 
-                <a href="{{url('')}}/home/order/confirm?id={{$order->id}}" class="pull-right fz-14">去付款</a> 
-                @endif
-                @if ($order->state == 'delivery')
-                <span class="pull-right fz-14" >收货</span>
-                @endif
-                @if ($order->state == 'take')
-                <a href="{{url('')}}/home/order/comment/{{$order->id}}" class="pull-right fz-14">去评价</a> 
-                @endif
+            @if ($order->state == 'pading') 
+            <a href="{{url('')}}/home/order/confirm?id={{$order->id}}" class="pull-right fz-14 state_btn price">去付款</a> 
+            @endif
+            @if ($order->state == 'delivery')
+            <span class="pull-right fz-14 state_btn">收货</span>
+            @endif
+            @if ($order->state == 'take')
+            <a href="{{url('')}}/home/order/comment/{{$order->id}}" class="pull-right fz-14 state_btn price">去评价</a> 
+            @endif
         </div>
         @if (!empty($order->delivery_serial))
             <!-- 物流 -->
@@ -96,10 +96,14 @@
         <div class="orderdetail_container w-100 mb-20">
             <div class="orderdetail_warpper">
                 <div class="warpper_img pull-left mr-20">
-                    <img class="w-100" src="{{url('')}}/{{$data->thumb}}">
+                    <a href="{{url('')}}/home/product/detail/{{$data->id}}" class="block w-100 h-100">
+                        <img class="w-100" src="{{url('')}}/{{$data->thumb}}">
+                    </a>
                 </div>
                 <div class="warpper_detail pull-left mr-20">
-                    <h5 class="chayefont mb-10">{{$data->name}}</h5>
+                    <h5 class="chayefont mb-10">
+                        <a href="{{url('')}}/home/product/detail/{{$data->id}}">{{$data->name}}</a>
+                    </h5>
                     <p class="color-8C8C8C">{{$data->desc}}</p>
                 </div>
                 <div class="warpper_price pull-left txt-r">

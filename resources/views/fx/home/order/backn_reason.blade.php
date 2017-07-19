@@ -25,7 +25,8 @@
                 var params = {reason:data[$('#reason').val() - 1],desc:$("#desc").val(),id:"{{$id}}"};
                 ajax('post', url, params).then(function (data) {
                     if (data == 200) {
-                        prompt.message('申请成功', `http://${window.location.host}/home/order/{{$id}}`);
+                        prompt.message('申请成功', `history`);
+                        // prompt.message('申请成功', `http://${window.location.host}/home/order/{{$id}}`);
                         //跳转到申请处理页 待补充...
                     } else {
                         prompt.message('申请失败！请稍后再试！');

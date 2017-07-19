@@ -106,12 +106,12 @@
                     template += `
                         <li class="clearfix relative w-100 mb-20 ${type == 'used' || type == 'over' ? 'used' : ''}">
                             <div class="pull-left roll_info">
-                                <h1 class="chayefont">${v.name}</h1>
+                                <h1 class="chayefont mt-10">${v.name}</h1>
                                 <p class="roll_desc color-717171 mt-10 mb-10">${v.desc}</p>
                                 <p class="roll_time get txt-r">有效期至${v.indate.split(' ')[0]}</p>
                             </div>
                             <div class="pull-right roll_price">
-                                <p class="roll_cut txt-c fz-20"><i class="yen mr-10">&yen;</i><span class="cut">${v.cut}</span></p>
+                                <p class="roll_cut txt-c fz-20 mt-10"><i class="yen mr-10">&yen;</i><span class="cut">${v.cut}</span></p>
                                 <p class="roll_full txt-c mt-10 chayefont fz-14">满<span class="full">${v.full}</span>元可用</p>
                                 <a href="javascript:;" rid="${v.id}" class="roll_${type} block white txt-c mt-10 chayefont">${typetxt}</a>
                             </div>

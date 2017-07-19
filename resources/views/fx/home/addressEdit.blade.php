@@ -84,7 +84,8 @@
                 ajax('post', '/home/address/' + id, params, true)
                     .then(function (resolve) {
                         if (resolve) {
-                            prompt.message('保存成功', 'http://' + window.location.host + '/home/address')
+                            prompt.message('保存成功', 'history')
+                            // prompt.message('保存成功', 'http://' + window.location.host + '/home/address')
                         } else {
                             prompt.message('保存失败')
                         }

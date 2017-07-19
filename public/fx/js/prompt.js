@@ -23,7 +23,7 @@ exports.message = (msg, url) => {
 		.find('.message').removeClass('hide')
 	setTimeout(() => {
 		if (url) {
-			window.location.href = url
+			url === 'history' ? history.go(-1) : window.location.href = url
 		}
 		$('.prompt').removeClass('active').find('.prompt_box_content').html('')
 			.find('.message').addClass('hide')

@@ -85,7 +85,8 @@
 					ajax('post', '/home/address', params)
 						.then(function (resolve) {
 							if (resolve) {
-								prompt.message('新增成功', 'http://' + window.location.host + '/home/address')
+								prompt.message('新增成功', 'history')
+								// prompt.message('新增成功', 'http://' + window.location.host + '/home/address')
 							} else {
 								prompt.message('新增失败')
 							}

@@ -152,12 +152,11 @@
     	});
     	// 收藏
     	$('.J_favo').on('tap', function () {
-    		var $this = $(this)
-    		if ($this.find('i').hasClass('fa-star-o')) {
+    		if ($(this).find('i').hasClass('fa-star-o')) {
     			ajax('post', '/home/collect', {id: params['id']})
 	    			.then(function (resolve) {
 	    				if (resolve) {
-	    					$this.find('i').removeClass('fa-star-o').addClass('fa-star')
+	    					$('.J_favo').find('i').removeClass('fa-star-o').addClass('fa-star')
 	    					prompt.message('收藏成功')
 	    				} else {
 	    					prompt.message('收藏失败')
@@ -167,7 +166,7 @@
     			ajax('delete', '/home/collect/' + params['id'])
 	    			.then(function (resolve) {
 	    				if (resolve) {
-	    					$this.find('i').addClass('fa-star-o').removeClass('fa-star')
+	    					$('.J_favo').find('i').addClass('fa-star-o').removeClass('fa-star')
 	    					prompt.message('取消收藏成功')
 	    				} else {
 	    					prompt.message('取消收藏失败')

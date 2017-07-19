@@ -241,10 +241,8 @@
 				.then(function (res) {
 					console.dir(res)
 					if (res) {
-						prompt.message('评论成功！')
-						setTimeout(function(){
-							window.location.href = 'http://'+window.location.host+'/home/order/list';
-						},1000)
+						prompt.message('评论成功！', 'history')
+						// prompt.message('评论成功！', 'http://'+window.location.host+'/home/order/list')
 					} else {
 						prompt.message('服务器繁忙,请稍后再试！')
 					}

@@ -16,7 +16,7 @@
 	<!-- <script src="{{ asset('fx/mui/js/data.city.js') }}"></script> -->
 	<script>
 		$(function () {
-			var resizeFile = null // 压缩后的文件
+			// var resizeFile = null // 压缩后的文件
 			//日期插件初始化
 			var myDate = new Date();
 			var start_time_picker = new mui.DtPicker({"type":"date","beginYear":1960,"endYear":myDate.getFullYear()});
@@ -45,35 +45,34 @@
 					prompt.message('图片格式只支持png和jpg')
 					return
 				}
-				// var fr = new FileReader()
-				// fr.onload = function (e) {
-				// 	$('#avatar').attr('src', e.target.result)
-				// }
-				// fr.readAsDataURL(file)
+				var fr = new FileReader()
+				fr.onload = function (e) {
+					$('#avatar').attr('src', e.target.result)
+				}
+				fr.readAsDataURL(file)
 				// {
 				// 	width
 				// 	height
 				// 	quality
 				// 	fieldName
 				// }
-				lrz(file, {
-					width: 512,
-					height: 512,
-					quality: 0.5,
-					fieldName: 'img'
-				})
-				.then(function (rst) {
-					// 处理成功会执行
-					console.dir(rst);
-					$('#avatar').attr('src', rst.base64)
-					resizeFile = rst.formData.get('img')
-				})
-				.catch(function (err) {
-					// 处理失败会执行
-				})
-				.always(function () {
-					// 不管是成功失败，都会执行
-				})
+				// lrz(file, {
+				// 	width: 512,
+				// 	height: 512,
+				// 	quality: 0.5,
+				// 	fieldName: 'img'
+				// })
+				// .then(function (rst) {
+				// 	// 处理成功会执行
+				// 	$('#avatar').attr('src', rst.base64)
+				// 	resizeFile = rst.formData.get('img')
+				// })
+				// .catch(function (err) {
+				// 	// 处理失败会执行
+				// })
+				// .always(function () {
+				// 	// 不管是成功失败，都会执行
+				// })
 			})
 
 			//表单提交
@@ -97,7 +96,6 @@
 			_valid.bindEvent(['realname', 'phone', 'email', 'password', 'repassword'])
 			function submitForm(){
 				var form = document.forms['form'];
-				var url = $("form").attr('action');//当前编辑id
 				var params = {
 					realname: form['realname'].value,
 					phone: form['phone'].value,
@@ -105,14 +103,38 @@
 					email: form['email'].value,
 					birth_date: form['birth_date'].value,
 					password: form['password'].value,
-					repassword: form['repassword'].value,
-					img: resizeFile
+					repassword: form['repassword'].value
 				}
+				if (form['img'].files[0]) {
+					lrz(form['img'].files[0], {
+						width: 512,
+						height: 512,
+						quality: 0.5,
+						fieldName: 'img'
+					})
+					.then(function (rst) {
+						// 处理成功会执行
+						params['img'] = rst.formData.get('img')
+						submitAjax(params)
+					})
+					.catch(function (err) {
+						// 处理失败会执行
+					})
+					.always(function () {
+						// 不管是成功失败，都会执行
+					})
+				} else {
+					submitAjax(params)
+				}
+			}
+			function submitAjax(params) {
+				var url = $("form").attr('action');//当前编辑id
 				if (_valid.validForm(params)) {
 					ajax('post', url, params, true, true)
 						.then(function (resolve) {
 							if (resolve) {
-								prompt.message('保存成功', 'http://' + window.location.host + '/home/userinfo')
+								prompt.message('保存成功', 'history')
+								// prompt.message('保存成功', 'http://' + window.location.host + '/home/userinfo')
 							} else {
 								prompt.message('保存失败')
 							}
@@ -125,7 +147,6 @@
 					prompt.message(str)
 				}
 			}
-
 		})
 	</script>
 @endsection

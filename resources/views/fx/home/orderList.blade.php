@@ -111,10 +111,14 @@
                         var serial = value2['serial'];
                         b = `   <div class="order_warpper_info">
                                     <div class="order_warpper_info_img pull-left mr-20">
-                                        <img src="http://${window.location.host}/${img}">
+                                        <a href="http://${window.location.host}/home/order/${oid}" class="block w-100 h-100">
+                                            <img src="http://${window.location.host}/${img}">
+                                        </a>
                                     </div>
                                     <div class="order_warpper_info_detail pull-left mr-20">
-                                        <h5 class="chayefont mb-10">${name}</h5>
+                                        <h5 class="chayefont mb-10">
+                                            <a href="http://${window.location.host}/home/order/${oid}">${name}</a>
+                                        </h5>
                                         <p class="desc">${desc}</p>
                                     </div>
                                     <div class="order_warpper_info_price pull-left txt-r">

@@ -58,9 +58,9 @@
                                             <div class="warpper_content_info_bottom">
                                                 <span class="pull-left price">&yen;${parseInt(v.price).toFixed(2)}</span>
                                                 <div class="pull-right">
-                                                    <i class="fa fa-minus-circle fz-18 color-d7d7d7 J_minus"></i>
+                                                    <i class="fa fa-minus-circle fz-20 color-d7d7d7 J_minus"></i>
                                                     <span class="sell color-8C8C8C" stock="${v.stock}">&times;<span class="amount" data-opid="${v.opid}" data-pid="${v.id}">${v.amount}</span></span>
-                                                    <i class="fa fa-plus-circle fz-18 color-F78223 J_plus"></i>
+                                                    <i class="fa fa-plus-circle fz-20 color-F78223 J_plus"></i>
                                                 </div>
                                             </div>
                                         </div>
