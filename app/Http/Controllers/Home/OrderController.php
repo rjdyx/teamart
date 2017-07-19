@@ -298,7 +298,7 @@ class OrderController extends Controller
 	}
 
 	public function imgComment ($request, $id) {
-		$datas = array();
+		$datas = array('img'=>'','thumb'=>'');
 		$imgs = $thumbs = array();
 		//资源、上传图片名称、是否生成缩略图
         $pics = IQuery::uploads($request, 'imgs'.$id, true);
