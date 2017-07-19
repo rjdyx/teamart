@@ -44,7 +44,11 @@
     <link rel="stylesheet" href="{{url('/fx/build/css/index.css')}}">
     {{-- <link rel="stylesheet" href="http://localhost:8080/fx/build/css/index.css"> --}}
     @yield('css')
-
+<!--     <script type="text/javascript" src="http://cdn.webfont.youziku.com/wwwroot/js/wf/youziku.api.min.js"></script>
+    <script type="text/javascript">
+       $youziku.load("body", "b4da953a9d2d4dd09db49d0b68b5e297", "yuweij");
+       $youziku.draw();
+    </script> -->
     <!-- Scripts -->
     <script>
         window.Laravel = {!! json_encode([
@@ -79,7 +83,6 @@
         var deviceWidth = document.documentElement.clientWidth;
         if(deviceWidth > 640) deviceWidth = 640;
         document.documentElement.style.fontSize = deviceWidth / 6.4 + 'px';
-        console.dir(window.navigator)
         function backTop (container) {
             $('.J_backTop').on('tap', function () {
                 // $('#' + container).animate({

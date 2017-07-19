@@ -165,6 +165,7 @@ const necessary = ($inp, value) => {
 	}
 }
 
+// 地址验证和用户个人信息验证
 const validate = {
 	name: ($inp, value) => {
 		if ($.trim(value).length < 2) {
