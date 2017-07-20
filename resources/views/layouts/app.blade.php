@@ -134,6 +134,11 @@
                 let v = $(this).siblings('input').val()
                 window.location.href = 'http://' + window.location.host + '/home/product/list?name=' + v
             })
+            // $('input textarea').on('focus', function () {
+            //     $('body').find('.bottom_btn').addClass('fixed')
+            // }).on('blur', function () {
+            //     $('body').find('.bottom_btn').removeClass('fixed')
+            // })
         })
     </script>
     @yield('script')

@@ -142,7 +142,7 @@
 									<div class="ordercomment_imgs_list_img relative hide">
 										<i class="fa fa-times-circle block J_remove_img"></i>
 									</div>
-									<input type="file" name="imgs${v.id}[]" id="img[${v.id}]${Date.now()}" class="invisibility J_imgs absolute" accept="image/jpeg,image/jpg,image/png" capture="camera">
+									<input type="file" name="imgs${v.id}[]" id="img[${v.id}]${Date.now()}" class="invisibility J_imgs absolute" accept="image/jpeg,image/jpg,image/png">
 								</li>
 							</ul>
 						</div>

@@ -89,7 +89,7 @@
 						submitAjax(params)
 					} else {
 						resizeImg(form['img'].files[0])
-						.then(blob => {
+						.then(function (blob) {
 							params['img'] = blob
 							submitAjax(params)
 						})
@@ -132,7 +132,7 @@
 				<img id="avatar" src="{{url('')}}/{{Auth::user()->img}}">
 			</label>
 			<p class="useredit_name white fz-22 txt-c chayefont">{{Auth::user()->name}}</p>
-			@if(Auth::user()->type==2)<p class="useredit_name chayefont fz-18">推荐人：@if($data->pname){{$data->pname}}@else 无 @endif</p>@endif
+			@if(Auth::user()->type==2)<p class="useredit_name chayefont white txt-c fz-18">推荐人：@if($data->pname){{$data->pname}}@else 无 @endif</p>@endif
 		</div>
 		<form action="{{url('home/user')}}/{{$data->id}}" id="form" enctype="multipart/form-data">
 			<div class="form_item fz-16 chayefont">

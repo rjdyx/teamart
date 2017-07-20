@@ -171,7 +171,8 @@
 					<div class="feedback_imgs_list_img relative hide">
 						<i class="fa fa-times-circle block J_remove_img"></i>
 					</div>
-					<input type="file" name="imgs[]" id="img1" class="invisibility J_imgs absolute" accept="image/jpeg,image/jpg,image/png" capture="camera">
+					<input type="file" name="imgs[]" id="img1" class="invisibility J_imgs absolute" accept="image/jpeg,image/jpg,image/png">
+					<!--  capture="camera" -->
 				</li>
 			</ul>
 		</div>

@@ -78,7 +78,7 @@
 			width: 4.3rem;
 			height: 0.7rem;
 			line-height: 0.7rem;
-			margin: 0 auto 0.3rem;
+			margin: 0 auto 0.2rem;
 			input, i {
 				font-size: 16px;
 			}
@@ -151,7 +151,7 @@
 	@include  backgroundImages("/fx/images/register_bg.png", cover);
 	.register_logo {
 		height: 2.4rem;
-		margin: 0.5rem auto 0;
+		margin: 0.2rem auto 0;
 		@include  backgroundImages("/fx/images/register_logo.png", cover, center 0);
 	}
 	.form_style {
@@ -171,7 +171,7 @@
 	.step {
 		height: 3.5rem;
 		width: 5rem;
-		margin: 0.5rem auto 0.2rem;
+		margin: 0.2rem auto 0.2rem;
 		h1 {
 			width: 100%;
 			height: 1.3rem;
@@ -578,7 +578,8 @@
 			width: 33.333%;
 			background-color: #DED8CC;
 			border-right: 0.02rem solid #fff;
-			margin-bottom: 0.02rem;
+			border-bottom: 0.02rem solid #fff;
+			// margin-bottom: 0.02rem;
 			a {
 				display: block;
 				.usercenter_nav_icon {
@@ -840,9 +841,9 @@
 			}
 		}
 	}
-	.bottom_btn {
-		position: fixed;
-	}
+	// .bottom_btn {
+	// 	position: fixed;
+	// }
 }
 
 // 收藏
