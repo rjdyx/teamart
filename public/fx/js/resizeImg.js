@@ -226,11 +226,11 @@ function getImgData (base64, dir) {
 
 function resizeImage (file) {
 	return new Promise((resolve, reject) => {
-		let orientation
+		let orientation = 0
 		// EXIF js 可以读取图片的元信息 https://github.com/exif-js/exif-js
-		EXIF.getData(file, function () {
-			orientation = EXIF.getTag(this, 'Orientation')
-		})
+		// EXIF.getData(file, function () {
+		// 	orientation = EXIF.getTag(this, 'Orientation')
+		// })
 		let fr = new FileReader()
 		fr.onload = function (e) {
 			getImgData(e.target.result, orientation)

@@ -175,16 +175,16 @@ if (process.env.NODE_ENV === 'development') {
 		}
 	})
 } else {
-	configs = merge(configs, {
-		plugins: [
-			// minify JS
-			new webpack.optimize.UglifyJsPlugin({
-				compress: {
-					warnings: false
-				}
-			})
-		]
-	})
+	// configs = merge(configs, {
+	// 	plugins: [
+	// 		// minify JS
+	// 		new webpack.optimize.UglifyJsPlugin({
+	// 			compress: {
+	// 				warnings: false
+	// 			}
+	// 		})
+	// 	]
+	// })
 }
 
 module.exports = configs
