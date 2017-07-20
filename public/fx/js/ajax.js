@@ -65,7 +65,9 @@ const ajax = (type, url, data = {}, isEdit = false, hasfile = false, errFn = tru
 						prompt.message('请先登录', 'http://' + window.location.host + '/login')
 					} else {
 						// prompt.message('请求错误')
-						prompt.test(err.stack)
+						alert(err.stack)
+						alert(err.message)
+						prompt.message(err.stack)
 					}
 				} else {
 					reject(err)
