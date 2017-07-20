@@ -7,10 +7,8 @@
 
 @section('script')
     @parent
-    <script src="{{ asset('fx/js/lrz.all.bundle.js') }}"></script>
 	<script>
 		$(function () {
-			var resizeFiles = {}
 			// 图片上传部分
 			function showImg () {
 				var $this = $(this)
@@ -26,34 +24,13 @@
 					return false
 				}
 				$box.find('img').remove()
-				// var fr = new FileReader()
-				// fr.onload = function(e) {
-				// 	if ($box.find('img').length > 0) {
-				// 		return
-				// 	}
-				// 	var img = new Image()
-				// 	img.src = e.target.result
-				// 	if ($('.feedback_imgs_list').find('li').length < 4) {
-				// 		addFile()
-				// 	}
-				// 	$box.find('.feedback_imgs_list_img').append(img)
-				// 	$box.find('img').on('tap', function () {
-				// 		prompt.image($(this).attr('src'))
-				// 	})
-				// 	$box.find('label').addClass('hide')
-				// 	$box.find('.feedback_imgs_list_img').removeClass('hide')
-				// }
-				// fr.readAsDataURL(file)
-				lrz(file, {
-					quality: 0.4,
-					fieldName: 'img'
-				})
-				.then(function (rst) {
+				var fr = new FileReader()
+				fr.onload = function(e) {
 					if ($box.find('img').length > 0) {
 						return
 					}
 					var img = new Image()
-					img.src = rst.base64
+					img.src = e.target.result
 					if ($('.feedback_imgs_list').find('li').length < 4) {
 						addFile()
 					}
@@ -63,15 +40,8 @@
 					})
 					$box.find('label').addClass('hide')
 					$box.find('.feedback_imgs_list_img').removeClass('hide')
-					// 处理成功会执行
-					resizeFiles[id] = rst.formData.get('img')
-				})
-				.catch(function (err) {
-					// 处理失败会执行
-				})
-				.always(function () {
-					// 不管是成功失败，都会执行
-				})
+				}
+				fr.readAsDataURL(file)
 			}
 			function addFile () {
 				var nid = Date.now()
@@ -102,13 +72,6 @@
 					$('.J_imgs').off('change', showImg).on('change', showImg)
 				}
 				$(this).parents('li').remove()
-				var files = {}
-				for(var i in resizeFiles) {
-					if (i != id) {
-						files[i] = resizeFiles[i]
-					}
-				}
-				resizeFiles = files
 			}
 			// 图片变化
 			$('.J_imgs').on('change', showImg)
@@ -135,9 +98,11 @@
 					return
 				}
 				var imgs = []
-				for (var j in resizeFiles) {
-					imgs.push(resizeFiles[j])
-				}
+				$('.J_imgs').each(function () {
+					if (this.files[0]) {
+						imgs.push(this.files[0])
+					}
+				})
 				var params = {
 					contact: contact,
 					content: content,

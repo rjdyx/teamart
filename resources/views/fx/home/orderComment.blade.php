@@ -7,10 +7,8 @@
 
 @section('script')
 	@parent
-	<script src="{{ asset('fx/js/lrz.all.bundle.js') }}"></script>
 	<script>
 		$(function () {
-			var resizeFiles = {}
 			// 图片上传部分
 			function showImg () {
 				var $this = $(this)
@@ -27,34 +25,13 @@
 					return false
 				}
 				$box.find('img').remove()
-				// var fr = new FileReader()
-				// fr.onload = function(e) {
-				// 	if ($box.find('img').length > 0) {
-				// 		return
-				// 	}
-				// 	var img = new Image()
-				// 	img.src = e.target.result
-				// 	if ($this.parents('.ordercomment_imgs_list').find('li').length < 4) {
-				// 		addFile($this)
-				// 	}
-				// 	$box.find('.ordercomment_imgs_list_img').append(img)
-				// 	$box.find('img').on('tap', function () {
-				// 		prompt.image($(this).attr('src'))
-				// 	})
-				// 	$box.find('label').addClass('hide')
-				// 	$box.find('.ordercomment_imgs_list_img').removeClass('hide')
-				// }
-				// fr.readAsDataURL(file)
-				lrz(file, {
-					quality: 0.4,
-					fieldName: 'img'
-				})
-				.then(function (rst) {
+				var fr = new FileReader()
+				fr.onload = function(e) {
 					if ($box.find('img').length > 0) {
 						return
 					}
 					var img = new Image()
-					img.src = rst.base64
+					img.src = e.target.result
 					if ($this.parents('.ordercomment_imgs_list').find('li').length < 4) {
 						addFile($this)
 					}
@@ -64,14 +41,8 @@
 					})
 					$box.find('label').addClass('hide')
 					$box.find('.ordercomment_imgs_list_img').removeClass('hide')
-					resizeFiles[pid][id] = rst.formData.get('img')
-				})
-				.catch(function (err) {
-					// 处理失败会执行
-				})
-				.always(function () {
-					// 不管是成功失败，都会执行
-				})
+				}
+				fr.readAsDataURL(file)
 			}
 			function addFile ($elem) {
 				var pid = $elem.parents('.ordercomment_container').data('id')
@@ -105,13 +76,6 @@
 					$('.J_imgs').off('change', showImg).on('change', showImg)
 				}
 				$(this).parents('li').remove()
-				var files = {}
-				for(var i in resizeFiles[pid]) {
-					if (i != id) {
-						files[i] = resizeFiles[pid][i]
-					}
-				}
-				resizeFiles[pid] = files
 			}
 			// // 图片变化
 			// $('.J_imgs').on('change', showImg)
@@ -127,9 +91,6 @@
 					// 删除图片
 					$('.J_remove_img').on('tap', removeFile)
 					$('.J_grade').on('tap', grade)
-					$('.ordercomment_container').each(function () {
-						resizeFiles[$(this).data('id')] = {}
-					})
 				} else {
 					prompt.message('获取数据失败')
 				}
@@ -229,9 +190,11 @@
 						return
 					}
 					var files = []
-					for (var j in resizeFiles[id]) {
-						files.push(resizeFiles[id][j])
-					}
+					$(this).find('J_imgs').each(function () {
+						if (this.files[0]) {
+							files.push(this.files[0])
+						}
+					})
 					params['content' + id] = $('#content' + id).val()
 					params['grade' + id] = $('#grade' + id).val()
 					params['imgs' + id + '[]'] = files
@@ -240,8 +203,8 @@
 				ajax('post', '/home/order/comment/store/'+"{{$id}}", params, false, true)
 				.then(function (res) {
 					if (res) {
-						prompt.message('评论成功！', 'history')
-						// prompt.message('评论成功！', 'http://'+window.location.host+'/home/order/list')
+						// prompt.message('评论成功！', 'history')
+						prompt.message('评论成功！', 'http://'+window.location.host+'/home/order/list')
 					} else {
 						prompt.message('服务器繁忙,请稍后再试！')
 					}

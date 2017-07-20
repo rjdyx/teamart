@@ -16,7 +16,7 @@ if (env.isAdmin) {
 		},
 		output: {
 			path: path.join(rootPath, 'admin', 'build'),
-			publicPath: env.isServer ? path.join('public', 'admin', 'build/') : env.app_url + 'admin/build/'
+			publicPath: env.app_url + 'admin/build/'
 		},
 		plugins: [
 			new webpack.ProvidePlugin({
@@ -37,11 +37,12 @@ if (env.isAdmin) {
 			swiper: resolve(rootPath, 'fx', 'swiper.js'),
 			prompt: resolve(rootPath, 'fx', 'prompt.js'),
 			areaSelector: resolve(rootPath, 'fx', 'areaSelector.js'),
+			resizeImg: resolve(rootPath, 'fx', 'resizeImg.js'),
 			vendors: ['axios']
 		},
 		output: {
 			path: path.join(rootPath, 'fx', 'build'),
-			publicPath: env.isServer ? path.join('public', 'fx', 'build/') : env.app_url + 'fx/build/'
+			publicPath: env.app_url + 'fx/build/'
 		},
 		plugins: [
 			new webpack.ProvidePlugin({

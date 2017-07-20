@@ -25,7 +25,11 @@ const ajax = (type, url, data = {}, isEdit = false, hasfile = false, errFn = tru
 						fd.append(i, v)
 					})
 				} else {
-					fd.append(i, data[i])
+					if (data[i] instanceof Blob) {
+						fd.append(i, data[i], 'img')
+					} else {
+						fd.append(i, data[i])
+					}
 				}
 			}
 			datas = fd
