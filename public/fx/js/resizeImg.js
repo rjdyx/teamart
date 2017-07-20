@@ -153,8 +153,8 @@ function toBlob (canvas, mimeType, quality) {
 		resolve(new Blob([asBuffer], { type: mimeType }))
 	})
 }
-
-function getImgData (base64, dir) {
+// ext IOS jpg文件大于1m时会压缩大小不生效
+function getImgData (base64, dir, ext) {
 	return new Promise(resolve => {
 		let img = new Image()
 		img.src = base64
@@ -214,7 +214,13 @@ function getImgData (base64, dir) {
 			}
 			// 使用canvas旋转校正
 			context.rotate(degree * Math.PI / 180)
-			context.drawImage(this, 0, 0, drawWidth, drawHeight)
+			if (ext) {
+				canvas.width = canvas.width / 2
+				canvas.height = canvas.height / 2
+				context.drawImage(this, 0, 0, canvas.width, canvas.height)
+			} else {
+				context.drawImage(this, 0, 0, drawWidth, drawHeight)
+			}
 			// 返回校正图片
 			toBlob(canvas, 'image/jpeg', 10)
 			.then(blob => {
@@ -226,14 +232,17 @@ function getImgData (base64, dir) {
 
 function resizeImage (file) {
 	return new Promise((resolve, reject) => {
-		let orientation = 0
+		let orientation = 0, ext = false
 		// EXIF js 可以读取图片的元信息 https://github.com/exif-js/exif-js
 		EXIF.getData(file, function () {
 			orientation = EXIF.getTag(this, 'Orientation')
 		})
+		if (file.size / 1024 > 1024 && file.type === 'image/jpeg') {
+			ext = true
+		}
 		let fr = new FileReader()
 		fr.onload = function (e) {
-			getImgData(e.target.result, orientation)
+			getImgData(e.target.result, orientation, ext)
 			.then(blob => {
 				resolve(blob)
 			})

@@ -54,7 +54,7 @@
 						<div class="feedback_imgs_list_img relative hide">
 							<i class="fa fa-times-circle block J_remove_img"></i>
 						</div>
-	                    <input type="file" name="imgs[]" id="img${nid}" class="invisibility J_imgs absolute" accept="image/jpeg,image/jpg,image/png" capture="camera">
+	                    <input type="file" name="imgs[]" id="img${nid}" class="invisibility J_imgs absolute" accept="image/jpeg,image/jpg,image/png"">
 	                </li>
 				`
 				$('.feedback_imgs_list').append(template)
@@ -67,7 +67,7 @@
 					$(this).parent().find('img').remove()
 					$(this).parent().addClass('hide').siblings('label').removeClass('hide')
 					$(this).parents('li').find('input').remove()
-					$(this).parents('li').append(`<input type="file" name="imgs[]" id="${id}" class="invisibility J_imgs absolute" accept="image/jpeg,image/jpg,image/png" capture="camera">`)
+					$(this).parents('li').append(`<input type="file" name="imgs[]" id="${id}" class="invisibility J_imgs absolute" accept="image/jpeg,image/jpg,image/png"">`)
 					var cl = $(this).parents('li').clone()
 					$('.feedback_imgs_list').append(cl)
 					$('.J_imgs').off('change', showImg).on('change', showImg)
@@ -112,7 +112,7 @@
 					var pms = []
 					imgs.forEach(function (v) {
 						pms.push(new Promise(function (resolve) {
-							if (v.size / 1024 / 1024 > 2) {
+							if (v.size / 1024 > 200) {
 								resizeImg(v)
 								.then(function (blob) {
 									resolve(blob)
