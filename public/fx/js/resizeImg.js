@@ -1,4 +1,4 @@
-const pica = require('pica')()
+// const pica = require('pica')()
 
 /**
  * 图片压缩，默认同比例压缩
@@ -56,6 +56,30 @@ const pica = require('pica')()
 // 		})
 // }
 
+function toBlob (canvas, mimeType, quality) {
+	mimeType = mimeType || 'image/png'
+
+	return new Promise(function (resolve) {
+		if (canvas.toBlob) {
+			canvas.toBlob(function (blob) {
+				return resolve(blob)
+			}, mimeType, quality)
+			return
+		}
+
+		// Fallback for old browsers
+		var asString = atob(canvas.toDataURL(mimeType, quality).split(',')[1])
+		var len = asString.length
+		var asBuffer = new Uint8Array(len)
+
+		for (var i = 0; i < len; i++) {
+			asBuffer[i] = asString.charCodeAt(i)
+		}
+
+		resolve(new Blob([asBuffer], { type: mimeType }))
+	})
+}
+
 function resizeImage (file, scale = 2) {
 	return new Promise((resolve, reject) => {
 		let fr = new FileReader()
@@ -68,7 +92,7 @@ function resizeImage (file, scale = 2) {
 				canvas.width = that.width / scale
 				canvas.height = that.height * that.width / that.width / scale
 				canvas.getContext('2d').drawImage(that, 0, 0, canvas.width, canvas.height)
-				pica.toBlob(canvas, 'image/jpeg', 50)
+				toBlob(canvas, 'image/jpeg', 50)
 				.then(blob => {
 					if (blob) {
 						resolve(blob)
