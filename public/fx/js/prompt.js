@@ -50,3 +50,8 @@ exports.image = (src) => {
 exports.qrcode = () => {
 	$('.prompt').addClass('active').find('#qrcode').removeClass('hide')
 }
+
+exports.test = () => {
+	$('.prompt').addClass('active').find('.prompt_box_content').html(msg).end()
+		.find('.message').removeClass('hide')
+}
