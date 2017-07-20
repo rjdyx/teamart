@@ -41,8 +41,8 @@
     <title>@if(count($data)){{$data->name}} @endif - @yield('title')</title>
 
     <!-- Styles -->
-    {{-- <link rel="stylesheet" href="{{url('/fx/build/css/index.css')}}"> --}}
-    <link rel="stylesheet" href="http://localhost:8080/fx/build/css/index.css">
+    <link rel="stylesheet" href="{{url('/fx/build/css/index.css')}}">
+    {{-- <link rel="stylesheet" href="http://localhost:8080/fx/build/css/index.css"> --}}
     @yield('css')
 <!--     <script type="text/javascript" src="http://cdn.webfont.youziku.com/wwwroot/js/wf/youziku.api.min.js"></script>
     <script type="text/javascript">
@@ -61,12 +61,12 @@
 
     @yield('content')
     <!-- Scripts -->
-    {{-- <script src="{{url('/fx/build/vendor-bundle.js')}}"></script>
-    <script src="{{url('/fx/build/index.js')}}"></script> --}}
-    <script src="http://localhost:8080/fx/build/vendor-bundle.js"></script>
+    <script src="{{url('/fx/build/vendor-bundle.js')}}"></script>
+    <script src="{{url('/fx/build/index.js')}}"></script>
+    {{-- <script src="http://localhost:8080/fx/build/vendor-bundle.js"></script>
     <script src="http://localhost:8080/fx/build/index.js"></script>
     <script src="http://localhost:8080/fx/build/prompt.js"></script>
-    <script src="http://localhost:8080/fx/build/valid.js"></script>
+    <script src="http://localhost:8080/fx/build/valid.js"></script> --}}
     <script src="{{url('/fx/zetop/fx.js')}}"></script>
     <script src="{{url('/fx/zetop/stack.js')}}"></script>
     <script src="{{url('/fx/zetop/touch.js')}}"></script>
