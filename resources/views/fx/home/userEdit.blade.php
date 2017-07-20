@@ -9,10 +9,11 @@
 
 @section('script')
 	@parent
+	<!-- <script src="http://localhost:8080/fx/build/resizeImg.js"></script> -->
 	<script src="{{url('/fx/build/valid.js')}}"></script>
+	<script src="{{url('/fx/build/resizeImg.js')}}"></script>
 	<script src="{{ asset('fx/mui/js/mui.min.js') }}"></script>
 	<script src="{{ asset('fx/mui/js/mui.picker.min.js') }}"></script>
-	<script src="http://localhost:8080/fx/build/resizeImg.js"></script>
 	<!-- <script src="{{ asset('fx/mui/js/data.city.js') }}"></script> -->
 	<script>
 		$(function () {
