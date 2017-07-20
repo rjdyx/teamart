@@ -22,10 +22,12 @@ const ajax = (type, url, data = {}, isEdit = false, hasfile = false, errFn = tru
 				// if (i === 'imgs[]') {
 				if (data[i] instanceof Array) { // 如果是数组就需要添加数据
 					data[i].forEach((v) => {
+						console.dir(v)
 						fd.append(i, v)
 					})
 				} else {
 					if (data[i] instanceof Blob) {
+						console.dir(data[i])
 						fd.append(i, data[i], 'img')
 					} else {
 						fd.append(i, data[i])

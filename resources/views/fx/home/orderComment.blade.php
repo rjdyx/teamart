@@ -7,6 +7,7 @@
 
 @section('script')
 	@parent
+	<script src="{{url('/fx/build/resizeImg.js')}}"></script>
 	<script>
 		$(function () {
 			// 图片上传部分
@@ -176,7 +177,8 @@
 				// 	return
 				// }
 
-				var params = {}, temp = true
+				var params = {}, temp = true,
+					hasImg = false, cacheFiles = {} // 判断是否有文件 缓存文件进行判断是否压缩
 				$('.ordercomment_container').each(function () {
 					var id = $(this).data('id')
 					if ($.trim($('#content' + id).val()) == '' || $.trim($('#content' + id).val()).length < 5) {
@@ -190,16 +192,66 @@
 						return
 					}
 					var files = []
-					$(this).find('J_imgs').each(function () {
+					$(this).find('.J_imgs').each(function () {
 						if (this.files[0]) {
+							hasImg = true
 							files.push(this.files[0])
 						}
 					})
 					params['content' + id] = $('#content' + id).val()
 					params['grade' + id] = $('#grade' + id).val()
-					params['imgs' + id + '[]'] = files
+					// params['imgs' + id + '[]'] = files
+					cacheFiles[id] = files
 				})
 				if (!temp) return
+				if (hasImg) {
+					console.dir(cacheFiles)
+					var all = []
+					for (var i in cacheFiles) {
+						all.push(new Promise(function (reso) {
+							var pms = []
+							pms.idx = i
+							cacheFiles[i].forEach(function (v) {
+								pms.push(new Promise(function (resolve) {
+									if (v.size / 1024 > 200) {
+										resizeImg(v)
+										.then(function (blob) {
+											resolve({
+												id: pms.idx,
+												b: blob
+											})
+										})
+									} else {
+										resolve({
+											id: pms.idx,
+											b: v
+										})
+									}
+								}))
+							})
+							Promise.all(pms)
+							.then(function (images) {
+								reso(images)
+							})
+						}))
+					}
+					Promise.all(all)
+					.then(function (all) {
+						all.forEach(function (v) {
+							var barr = []
+							v.forEach(function (vl) {
+								barr.push(vl.b)
+								params['imgs' + vl.id + '[]'] = barr
+							})
+						})
+						submitAjax(params)
+					})
+				} else {
+					submitAjax(params)
+				}
+			})
+
+			function submitAjax (params) {
 				ajax('post', '/home/order/comment/store/'+"{{$id}}", params, false, true)
 				.then(function (res) {
 					if (res) {
@@ -209,7 +261,7 @@
 						prompt.message('服务器繁忙,请稍后再试！')
 					}
 				})
-			})
+			}
 		})
 	</script>
 @endsection

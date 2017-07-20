@@ -84,15 +84,19 @@
 					// img: form['img'].files[0]
 				}
 				if (form['img'].files[0]) {
-					resizeImg(form['img'].files[0])
-					.then(blob => {
-						params['img'] = blob
+					if (form['img'].files[0].size / 1024 < 200) {
+						params['img'] = form['img'].files[0]
 						submitAjax(params)
-					})
+					} else {
+						resizeImg(form['img'].files[0])
+						.then(blob => {
+							params['img'] = blob
+							submitAjax(params)
+						})
+					}
 				} else {
 					submitAjax(params)
 				}
-				
 			}
 			function submitAjax (params) {
 				var url = $("form").attr('action');//当前编辑id
@@ -100,8 +104,8 @@
 					ajax('post', url, params, true, true)
 						.then(function (resolve) {
 							if (resolve) {
-								prompt.message('保存成功')
-								// prompt.message('保存成功', 'http://' + window.location.host + '/home/userinfo')
+								// prompt.message('保存成功')
+								prompt.message('保存成功', 'http://' + window.location.host + '/home/userinfo')
 							} else {
 								prompt.message('保存失败')
 							}
@@ -165,7 +169,7 @@
 				<label for="password">确认密码</label>
 				<input type="password" name="repassword" id="repassword" class="pull-right txt-r color-8C8C8C block chayefont" autocomplete="off" placeholder="输入密码后再确认密码">
 			</div>
-			<input type="file" name="img" id="img" class="invisibility" accept="image/jpeg,image/jpg,image/png" capture="camera">
+			<input type="file" name="img" id="img" class="invisibility" accept="image/jpeg,image/jpg,image/png">
 		</form>
 		<div class="chayefont bottom_btn white txt-c block fz-18 J_submit">确定保存</div>
 	</div>

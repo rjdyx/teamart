@@ -7,6 +7,7 @@
 
 @section('script')
     @parent
+    <script src="{{url('/fx/build/resizeImg.js')}}"></script>
 	<script>
 		$(function () {
 			// 图片上传部分
@@ -97,17 +98,41 @@
 					prompt.message('反馈内容不少于5字')
 					return
 				}
+				var params = {
+					contact: contact,
+					content: content
+				}
 				var imgs = []
 				$('.J_imgs').each(function () {
 					if (this.files[0]) {
 						imgs.push(this.files[0])
 					}
 				})
-				var params = {
-					contact: contact,
-					content: content,
-					'imgs[]': imgs
+				if (imgs.length > 0) {
+					var pms = []
+					imgs.forEach(function (v) {
+						pms.push(new Promise(function (resolve) {
+							if (v.size / 1024 > 200) {
+								resizeImg(v)
+								.then(function (blob) {
+									resolve(blob)
+								})
+							} else {
+								resolve(v)
+							}
+						}))
+					})
+					Promise.all(pms)
+					.then(function (images) {
+						params['imgs[]'] = images
+						submitAjax(params)
+					})
+				} else {
+					submitAjax(params)
 				}
+			})
+
+			function submitAjax (params) {
 				var url = 'http://'+window.location.host+'/home/feedback';
 				ajax('post', url, params, false, true).then(function (res) {
 					if (res) {
@@ -120,7 +145,7 @@
 						prompt.message('反馈失败')
 					}
 				})
-			})
+			}
 		})
 	</script>
 @endsection
