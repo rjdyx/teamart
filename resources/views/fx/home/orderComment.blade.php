@@ -142,7 +142,7 @@
 									<div class="ordercomment_imgs_list_img relative hide">
 										<i class="fa fa-times-circle block J_remove_img"></i>
 									</div>
-									<input type="file" name="imgs${v.id}[]" id="img[${v.id}]${Date.now()}" class="invisibility J_imgs absolute" accept="image/jpeg,image/jpg,image/png">
+									<input type="file" name="imgs${v.id}[]" id="img[${v.id}]${Date.now()}" class="invisibility J_imgs absolute" accept="image/jpeg,image/jpg,image/png" capture="camera">
 								</li>
 							</ul>
 						</div>
@@ -213,7 +213,7 @@
 							pms.idx = i
 							cacheFiles[i].forEach(function (v) {
 								pms.push(new Promise(function (resolve) {
-									if (v.size / 1024 > 200) {
+									if (v.size / 1024 /1024 > 2) {
 										resizeImg(v)
 										.then(function (blob) {
 											resolve({

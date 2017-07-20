@@ -112,7 +112,7 @@
 					var pms = []
 					imgs.forEach(function (v) {
 						pms.push(new Promise(function (resolve) {
-							if (v.size / 1024 > 200) {
+							if (v.size / 1024 / 1024 > 2) {
 								resizeImg(v)
 								.then(function (blob) {
 									resolve(blob)

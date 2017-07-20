@@ -84,7 +84,7 @@
 					// img: form['img'].files[0]
 				}
 				if (form['img'].files[0]) {
-					if (form['img'].files[0].size / 1024 < 200) {
+					if (form['img'].files[0].size / 1024 / 1024 < 2) {
 						params['img'] = form['img'].files[0]
 						submitAjax(params)
 					} else {

@@ -216,7 +216,7 @@ function getImgData (base64, dir) {
 			context.rotate(degree * Math.PI / 180)
 			context.drawImage(this, 0, 0, drawWidth, drawHeight)
 			// 返回校正图片
-			toBlob(canvas, 'image/jpeg', 50)
+			toBlob(canvas, 'image/jpeg', 10)
 			.then(blob => {
 				resolve(blob)
 			})
@@ -228,9 +228,9 @@ function resizeImage (file) {
 	return new Promise((resolve, reject) => {
 		let orientation = 0
 		// EXIF js 可以读取图片的元信息 https://github.com/exif-js/exif-js
-		// EXIF.getData(file, function () {
-		// 	orientation = EXIF.getTag(this, 'Orientation')
-		// })
+		EXIF.getData(file, function () {
+			orientation = EXIF.getTag(this, 'Orientation')
+		})
 		let fr = new FileReader()
 		fr.onload = function (e) {
 			getImgData(e.target.result, orientation)
