@@ -30,6 +30,8 @@ AreaSelector.prototype = {
 			}
 		})
 		$(opts.trigger).on('tap', function () {
+			document.querySelectorAll('input').onblur()
+			document.querySelectorAll('textarea').onblur()
 			$('.areaSelector').addClass('top-0')
 			setTimeout(function () {
 				$('.areaSelector_container').addClass('bottom-0')

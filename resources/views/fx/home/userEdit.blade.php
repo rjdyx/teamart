@@ -12,6 +12,7 @@
 	<!-- <script src="http://localhost:8080/fx/build/resizeImg.js"></script> -->
 	<script src="{{url('/fx/build/valid.js')}}"></script>
 	<script src="{{url('/fx/build/resizeImg.js')}}"></script>
+	<script src="{{ asset('fx/js/fixInput.js') }}"></script>
 	<script src="{{ asset('fx/mui/js/mui.min.js') }}"></script>
 	<script src="{{ asset('fx/mui/js/mui.picker.min.js') }}"></script>
 	<!-- <script src="{{ asset('fx/mui/js/data.city.js') }}"></script> -->
@@ -101,6 +102,7 @@
 			function submitAjax (params) {
 				var url = $("form").attr('action');//当前编辑id
 				if (_valid.validForm(params)) {
+					prompt.loading('保存中')
 					ajax('post', url, params, true, true)
 						.then(function (resolve) {
 							if (resolve) {

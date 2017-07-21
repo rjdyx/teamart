@@ -82,6 +82,7 @@
 					state: $('#state').val()
 				}
 				if (_valid.validForm(params)) {
+					prompt.loading('保存中')
 					ajax('post', '/home/address', params)
 						.then(function (resolve) {
 							if (resolve) {

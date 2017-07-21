@@ -45,6 +45,7 @@ const ajax = (type, url, data = {}, isEdit = false, hasfile = false, errFn = tru
 		axios[type](url, datas, config)
 			.then(res => {
 				if (res.status === 200) {
+					prompt.loadingEnd()
 					resolve(res.data)
 				}
 			})
@@ -71,6 +72,7 @@ const ajax = (type, url, data = {}, isEdit = false, hasfile = false, errFn = tru
 				} else {
 					reject(err)
 				}
+				prompt.loadingEnd()
 				return false
 			})
 	})

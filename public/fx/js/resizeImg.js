@@ -153,8 +153,7 @@ function toBlob (canvas, mimeType, quality) {
 		resolve(new Blob([asBuffer], { type: mimeType }))
 	})
 }
-// ext IOS jpg文件大于1m时会压缩大小不生效
-function getImgData (base64, dir, ext) {
+function getImgData (base64, dir) {
 	return new Promise(resolve => {
 		let img = new Image()
 		img.src = base64
@@ -163,30 +162,26 @@ function getImgData (base64, dir, ext) {
 				drawWidth, drawHeight, width, height
 			drawWidth = this.naturalWidth
 			drawHeight = this.naturalHeight
-			// let windowWidth = 640
-			// // 以下改变一下图片大小
-			// let maxSide = Math.max(drawWidth, drawHeight)
-			// if (maxSide > windowWidth) {
-			// 	let minSide = Math.min(drawWidth, drawHeight)
-			// 	minSide = minSide / maxSide * windowWidth
-			// 	maxSide = windowWidth
-			// 	if (drawWidth > drawHeight) {
-			// 		drawWidth = maxSide
-			// 		drawHeight = minSide
-			// 	} else {
-			// 		drawWidth = minSide
-			// 		drawHeight = maxSide
-			// 	}
-			// }
-			// if (drawWidth > drawHeight) {
-			// 	let temp = drawWidth
-			// 	drawWidth = drawHeight
-			// 	drawHeight = temp
-			// }
+			let windowWidth = 1200
+			// 以下改变一下图片大小
+			let maxSide = Math.max(drawWidth, drawHeight)
+			if (maxSide > windowWidth) {
+				let minSide = Math.min(drawWidth, drawHeight)
+				minSide = minSide / maxSide * windowWidth
+				maxSide = windowWidth
+				if (drawWidth > drawHeight) {
+					drawWidth = maxSide
+					drawHeight = minSide
+				} else {
+					drawWidth = minSide
+					drawHeight = maxSide
+				}
+			}
 			var canvas = document.createElement('canvas')
 			canvas.width = width = drawWidth
 			canvas.height = height = drawHeight
 			var context = canvas.getContext('2d')
+			alert('dir' + dir)
 			// 判断图片方向，重置canvas大小，确定旋转角度，iphone默认的是home键在右方的横屏拍摄方式
 			switch (dir) {
 				// iphone横屏拍摄，此时home键在左侧
@@ -214,16 +209,18 @@ function getImgData (base64, dir, ext) {
 			}
 			// 使用canvas旋转校正
 			context.rotate(degree * Math.PI / 180)
-			if (ext) {
-				canvas.width = canvas.width / 2
-				canvas.height = canvas.height / 2
-				context.drawImage(this, 0, 0, canvas.width, canvas.height)
-			} else {
-				context.drawImage(this, 0, 0, drawWidth, drawHeight)
-			}
+			// if (ext) {
+			// 	canvas.width = canvas.width / 2
+			// 	canvas.height = canvas.height / 2
+			// 	context.drawImage(this, 0, 0, canvas.width, canvas.height)
+			// } else {
+			context.drawImage(this, 0, 0, drawWidth, drawHeight)
+			// }
 			// 返回校正图片
 			toBlob(canvas, 'image/jpeg', 10)
 			.then(blob => {
+				alert(blob.size)
+				alert(blob.type)
 				resolve(blob)
 			})
 		}
@@ -232,17 +229,19 @@ function getImgData (base64, dir, ext) {
 
 function resizeImage (file) {
 	return new Promise((resolve, reject) => {
-		let orientation = 0, ext = false
+		let orientation = 0// , ext = false
 		// EXIF js 可以读取图片的元信息 https://github.com/exif-js/exif-js
 		EXIF.getData(file, function () {
+			EXIF.getAllTags(this)
 			orientation = EXIF.getTag(this, 'Orientation')
+			alert('Orientation' + orientation)
 		})
-		if (file.size / 1024 > 1024 && file.type === 'image/jpeg') {
-			ext = true
-		}
+		// if (file.size / 1024 > 1024 && file.type === 'image/jpeg') {
+		// 	ext = true
+		// }
 		let fr = new FileReader()
 		fr.onload = function (e) {
-			getImgData(e.target.result, orientation, ext)
+			getImgData(e.target.result, orientation)// , ext
 			.then(blob => {
 				resolve(blob)
 			})

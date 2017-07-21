@@ -1,4 +1,10 @@
 exports.init = () => {
+	$('.prompt').removeClass('active').find('.prompt_box_content').html('').end()
+			.find('.question').addClass('hide').end()
+			.find('.message').addClass('hide').end()
+			.find('.image').addClass('hide').end()
+			.find('#qrcode').addClass('hide').end()
+			.find('.prompt_loading').addClass('hide').find('.prompt_loading_text').text('加载中').end()
 	$('.J_hide_prompt').on('tap', function () {
 		$('.prompt').removeClass('active').find('.prompt_box_content').html('').end()
 			.find('.question').addClass('hide').end()
@@ -12,10 +18,10 @@ exports.init = () => {
 			.find('.question').addClass('hide')
 	})
 	// 点击图片时
-	$('.J_prompt_img').on('tap', function () {
-		$('.prompt').removeClass('active').find('.prompt_box_content').html('').end()
-			.find('.image').addClass('hide')
-	})
+	// $('.J_prompt_img').on('tap', function () {
+	// 	$('.prompt').removeClass('active').find('.prompt_box_content').html('').end()
+	// 		.find('.image').addClass('hide')
+	// })
 }
 
 exports.message = (msg, url) => {
@@ -33,6 +39,7 @@ exports.message = (msg, url) => {
 // 参数1 信息
 // 参数2 确定后的回调函数
 exports.question = (msg, fn) => {
+	alert('测试')
 	$('.prompt').addClass('active').find('.prompt_box_content').html(msg).end()
 		.find('.question').removeClass('hide')
 	$('.J_prompt_yes').off('tap').on('tap', function () {
@@ -49,4 +56,16 @@ exports.image = (src) => {
 // 二维码
 exports.qrcode = () => {
 	$('.prompt').addClass('active').find('#qrcode').removeClass('hide')
+}
+
+// 读取
+exports.loading = (text) => {
+	$('.prompt').addClass('active').find('.prompt_loading').removeClass('hide')
+	if (text) {
+		$('.prompt').find('.prompt_loading_text').text(text)
+	}
+}
+
+exports.loadingEnd = () => {
+	$('.prompt').removeClass('active').find('.prompt_loading').addClass('hide').find('.prompt_loading_text').text('加载中')
 }
