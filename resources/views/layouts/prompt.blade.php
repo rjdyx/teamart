@@ -13,7 +13,7 @@
 	<img class="J_prompt_img hide image w-100 block" src="" alt="">
 	<div id="qrcode" class="prompt_qrcode hide"></div>
 	<div class="prompt_loading txt-c hide">
-		<i class="fa fa-spinner mt-20" aria-hidden="true"></i>
+		<i class="fa fa-spinner mt-20"></i>
 		<p class="prompt_loading_text fz-16 w-100"></p>
 	</div>
 </div>

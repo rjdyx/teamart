@@ -181,7 +181,6 @@ function getImgData (base64, dir) {
 			canvas.width = width = drawWidth
 			canvas.height = height = drawHeight
 			var context = canvas.getContext('2d')
-			alert('dir' + dir)
 			// 判断图片方向，重置canvas大小，确定旋转角度，iphone默认的是home键在右方的横屏拍摄方式
 			switch (dir) {
 				// iphone横屏拍摄，此时home键在左侧
@@ -219,7 +218,6 @@ function getImgData (base64, dir) {
 			// 返回校正图片
 			toBlob(canvas, 'image/jpeg', 10)
 			.then(blob => {
-				alert(blob.size)
 				resolve(blob)
 			})
 		}
@@ -233,33 +231,32 @@ function resizeImage (file) {
 		EXIF.getData(file, function () {
 			EXIF.getAllTags(this)
 			orientation = EXIF.getTag(this, 'Orientation')
-			alert('Orientation' + orientation)
-			let fr = new FileReader()
-			fr.onload = function (e) {
-				getImgData(e.target.result, orientation)// , ext
-				.then(blob => {
-					resolve(blob)
-				})
-				// let img = new Image()
-				// img.src = e.target.result
-				// img.onload = function () {
-				// 	let that = this
-				// 	let canvas = document.createElement('canvas')
-				// 	canvas.width = that.width / scale
-				// 	canvas.height = that.height * that.width / that.width / scale
-				// 	canvas.getContext('2d').drawImage(that, 0, 0, canvas.width, canvas.height)
-				// 	toBlob(canvas, 'image/jpeg', 50)
-				// 	.then(blob => {
-				// 		if (blob) {
-				// 			resolve(blob)
-				// 		} else {
-				// 			reject(blob)
-				// 		}
-				// 	})
-				// }
-			}
-			fr.readAsDataURL(file)
 		})
+		let fr = new FileReader()
+		fr.onload = function (e) {
+			getImgData(e.target.result, orientation)// , ext
+			.then(blob => {
+				resolve(blob)
+			})
+			// let img = new Image()
+			// img.src = e.target.result
+			// img.onload = function () {
+			// 	let that = this
+			// 	let canvas = document.createElement('canvas')
+			// 	canvas.width = that.width / scale
+			// 	canvas.height = that.height * that.width / that.width / scale
+			// 	canvas.getContext('2d').drawImage(that, 0, 0, canvas.width, canvas.height)
+			// 	toBlob(canvas, 'image/jpeg', 50)
+			// 	.then(blob => {
+			// 		if (blob) {
+			// 			resolve(blob)
+			// 		} else {
+			// 			reject(blob)
+			// 		}
+			// 	})
+			// }
+		}
+		fr.readAsDataURL(file)
 	})
 }
 

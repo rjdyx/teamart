@@ -57,9 +57,9 @@
     </script>
 </head>
 <body class="base-fontsize">
-    @include("layouts.prompt")
-
     @yield('content')
+    
+    @include("layouts.prompt")
     <!-- Scripts -->
     <script src="{{url('/fx/build/vendor-bundle.js')}}"></script>
     <script src="{{url('/fx/build/index.js')}}"></script>
@@ -123,13 +123,13 @@
                 )
             })
             // 头部搜索
-            // $('.J_header_search_inp').on('input', function () {
-            //     if ($.trim($(this).val()).length > 0) {
-            //         $(this).siblings('.J_header_search').removeClass('hide')
-            //     } else {
-            //         $(this).siblings('.J_header_search').addClass('hide')
-            //     }
-            // })
+            $('.J_header_search_inp').on('input', function () {
+                if ($.trim($(this).val()).length > 0) {
+                    $(this).siblings('.J_header_search').removeClass('hide')
+                } else {
+                    $(this).siblings('.J_header_search').addClass('hide')
+                }
+            })
             $('.J_header_search').on('tap', function () {
                 let v = $(this).siblings('input').val()
                 if ($.trim(v)) {

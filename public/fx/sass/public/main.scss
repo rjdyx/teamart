@@ -855,7 +855,6 @@
 		overflow: auto;
 	}
 	.bottom_btn {
-		position: fixed;
 		.collect_bottom_selection {
 			width: calc(100% - 3rem);
 			background-color: rgba(181, 156, 107, 0.2);
@@ -1068,7 +1067,6 @@
 		}
 	}
 	.bottom_btn {
-		position: fixed;
 		border-top: 0.01rem solid #DADADA;
 		background: #FFF;
 		.cart_bottom_selection, .cart_bottom_info, .cart_bottom_del, .cart_bottom_settle {
