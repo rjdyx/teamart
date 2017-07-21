@@ -162,7 +162,7 @@ function getImgData (base64, dir) {
 				drawWidth, drawHeight, width, height
 			drawWidth = this.naturalWidth
 			drawHeight = this.naturalHeight
-			let windowWidth = 1200
+			let windowWidth = 800
 			// 以下改变一下图片大小
 			let maxSide = Math.max(drawWidth, drawHeight)
 			if (maxSide > windowWidth) {
@@ -220,7 +220,6 @@ function getImgData (base64, dir) {
 			toBlob(canvas, 'image/jpeg', 10)
 			.then(blob => {
 				alert(blob.size)
-				alert(blob.type)
 				resolve(blob)
 			})
 		}
@@ -235,35 +234,32 @@ function resizeImage (file) {
 			EXIF.getAllTags(this)
 			orientation = EXIF.getTag(this, 'Orientation')
 			alert('Orientation' + orientation)
+			let fr = new FileReader()
+			fr.onload = function (e) {
+				getImgData(e.target.result, orientation)// , ext
+				.then(blob => {
+					resolve(blob)
+				})
+				// let img = new Image()
+				// img.src = e.target.result
+				// img.onload = function () {
+				// 	let that = this
+				// 	let canvas = document.createElement('canvas')
+				// 	canvas.width = that.width / scale
+				// 	canvas.height = that.height * that.width / that.width / scale
+				// 	canvas.getContext('2d').drawImage(that, 0, 0, canvas.width, canvas.height)
+				// 	toBlob(canvas, 'image/jpeg', 50)
+				// 	.then(blob => {
+				// 		if (blob) {
+				// 			resolve(blob)
+				// 		} else {
+				// 			reject(blob)
+				// 		}
+				// 	})
+				// }
+			}
+			fr.readAsDataURL(file)
 		})
-		// if (file.size / 1024 > 1024 && file.type === 'image/jpeg') {
-		// 	ext = true
-		// }
-		let fr = new FileReader()
-		fr.onload = function (e) {
-			getImgData(e.target.result, orientation)// , ext
-			.then(blob => {
-				resolve(blob)
-			})
-			// let img = new Image()
-			// img.src = e.target.result
-			// img.onload = function () {
-			// 	let that = this
-			// 	let canvas = document.createElement('canvas')
-			// 	canvas.width = that.width / scale
-			// 	canvas.height = that.height * that.width / that.width / scale
-			// 	canvas.getContext('2d').drawImage(that, 0, 0, canvas.width, canvas.height)
-			// 	toBlob(canvas, 'image/jpeg', 50)
-			// 	.then(blob => {
-			// 		if (blob) {
-			// 			resolve(blob)
-			// 		} else {
-			// 			reject(blob)
-			// 		}
-			// 	})
-			// }
-		}
-		fr.readAsDataURL(file)
 	})
 }
 
