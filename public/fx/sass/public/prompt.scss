@@ -17,33 +17,43 @@
 		width: 100%;
 		height: 100%;
 		background-color: rgba(0,0,0,0.4);
+		z-index: -1
 	}
-	.prompt_box, .image, .prompt_qrcode, .prompt_loading {
+	.prompt_message , .prompt_question, .prompt_loading, .prompt_qrcode, .prompt_image {
 		position: absolute;
-		top: 50%;
+		top: 150%;
 		left: 50%;
 		transform: translate(-50%, -50%);
 	}
-	.prompt_box, .prompt_qrcode, .prompt_loading {
-		width: 4rem;
-		height: 4rem;
-		background-color: #FFF;
+	.prompt_message.atc, .prompt_question.atc, .prompt_loading.atc, .prompt_qrcode.atc, .prompt_image.atc {
+		top: 50%;
 	}
-	.prompt_box {
+	.prompt_message, .prompt_question, .prompt_loading {
+		background-color: #FFF;
 		border-radius: 0.1rem;
 		overflow: hidden;
-		.prompt_box_content {
+	}
+	.prompt_message, .prompt_question, .prompt_loading, .prompt_qrcode {
+		width: 4rem;
+	}
+	.prompt_message {
+		height: 2rem;
+		.prompt_message_content {
+			height: 2rem;
+			line-height: 1.8rem;
+		}
+	}
+	.prompt_question {
+		height: 4rem;
+		.prompt_question_content {
 			height: 3rem;
-			padding: 0.1rem;
 			line-height: 2.8rem;
 		}
-		.prompt_box_btns {
+		.prompt_question_btns {
 			border-top: 0.01rem solid #dadada;
 			.prompt_box_btn {
-				display: block;
 				width: 50%;
 				height: 1rem;
-				text-align: center;
 				line-height: 1rem;
 			}
 			.prompt_box_btn:last-child {
@@ -54,31 +64,15 @@
 			}
 		}
 	}
-	.prompt_box.message {
-		height: 2rem;
-		.prompt_box_content {
-			height: 2rem;
-			line-height: 1.8rem;
-		}
-	}
-	.image {
-		height: 60%;
-	}
-	.prompt_qrcode {
-		z-index: 1006;
-		img {
-			width: 100%; // 二维码是生成的
-		}
-	}
 	.prompt_loading {
 		height: 2rem;
-		padding: 0.1rem;
+		z-index: 1006;
 		i {
 			font-size: 32px;
 			@include rooo(rooo)
 			animation: rooo 0.8s infinite ease-in;
 		}
-		.prompt_loading_text {
+		.prompt_loading_content {
 			position: absolute;
 			left: 0;
 			bottom: 0;
@@ -86,9 +80,37 @@
 			line-height: 1rem;
 		}
 	}
+	.prompt_qrcode {
+		height: 4rem;
+		background-color: #FFF;
+		z-index: 1006;
+		img {
+			width: 100%; // 二维码是生成的
+		}
+	}
+	.prompt_image {
+		height: 60%;
+		z-index: 1006;
+		i {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			font-size: 32px;
+			@include rooo(rooo)
+			animation: rooo 0.8s infinite ease-in;
+		}
+		img {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+		}
+	}
 }
 .prompt.active {
-	top: 0;
 	// opacity: 1;
 	// z-index: 9999;
+	top: 0;
 }
