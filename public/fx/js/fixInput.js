@@ -6,6 +6,8 @@ $(function () {
             var tempH = window.innerHeight
             if (windowH > tempH) {
                 // 软键盘出来了
+                alert('窗口高度'+windowH)
+                alert('当前高度'+tempH)
             } else {
                 // 没有软键盘
             }

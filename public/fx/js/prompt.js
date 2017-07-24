@@ -1,4 +1,7 @@
+const FastClick = require('fastclick')
+
 exports.init = () => {
+	FastClick.attach($('.J_prompt_no')[0])
 	$('.J_hide_prompt').on('tap', function () {
 		$('.prompt').removeClass('active')
 			.find('.prompt_image, .prompt_qrcode, .prompt_message, .prompt_question, .prompt_loading').removeClass('atc').end()
@@ -7,7 +10,7 @@ exports.init = () => {
 			.find('.prompt_image').find('img').remove()
 	})
 	// 点击取消时
-	$('.J_prompt_no').on('tap', function () {
+	$('.J_prompt_no').on('click', function () {
 		$('.prompt').removeClass('active').find('.prompt_question_content').html('').end()
 			.find('.prompt_question').removeClass('atc')
 	})
@@ -33,9 +36,10 @@ exports.message = (msg, url) => {
 // 参数1 信息
 // 参数2 确定后的回调函数
 exports.question = (msg, fn) => {
+	FastClick.attach($('.J_prompt_yes')[0])
 	$('.prompt').addClass('active').find('.prompt_question_content').html(msg).end()
 		.find('.prompt_question').addClass('atc')
-	$('.J_prompt_yes').off('tap').on('tap', function () {
+	$('.J_prompt_yes').off('click').on('click', function () {
 		fn()
 		$('.prompt').removeClass('active').find('.prompt_question_content').html('').end()
 			.find('.prompt_question').removeClass('atc')
