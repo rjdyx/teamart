@@ -23,15 +23,12 @@ $('input, textarea').on('focus', function () {
     }
     var elementTop = getElementPosition(this).top, // 元素顶部位置
         elementBottom = elementTop + $(this).height() // 元素底部位置
-    console.log(elementTop)
-    console.log(elementBottom)
-    $('#form').scrollTop(elementTop)
-    // if (bodyh < curTop) {
-    //     $('body').scrollTop(curTop)
-    // }
+    // console.log(elementTop)
+    // console.log(elementBottom)
+    $('.login, .register, .reset, .email, .container').css('overflow', 'auto').scrollTop(elementTop)
 }).on('blur', function () {
     if (!navigator.userAgent.match(/Android/i)) {// 修复android
         return
     }
-    $('body').scrollTop(0)
+    $('.login, .register, .reset, .email, .container').removeAttr('style' )
 })

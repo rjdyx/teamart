@@ -39,6 +39,7 @@
     <!-- <script src="{{ asset('fx/larea/js/LAreaData1.js') }}"></script> -->
     <script src="{{ asset('fx/mui/js/data.city.js') }}"></script>
     <!-- <script src="{{ asset('fx/larea/js/LArea.min.js') }}"></script> -->
+    <script src="{{url('/fx/js/fixInput.js')}}"></script>
     <script>
         // var area1 = new LArea();
         // area1.init({
@@ -85,8 +86,8 @@
                 ajax('post', '/home/address/' + id, params, true)
                     .then(function (resolve) {
                         if (resolve) {
-                            prompt.message('保存成功', 'history')
-                            // prompt.message('保存成功', 'http://' + window.location.host + '/home/address')
+                            // prompt.message('保存成功', 'history')
+                            prompt.message('保存成功', 'http://' + window.location.host + '/home/address')
                         } else {
                             prompt.message('保存失败')
                         }

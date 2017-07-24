@@ -10,6 +10,7 @@
 @section('script')
     @parent
     <script src="{{url('/fx/build/valid.js')}}"></script>
+    <script src="{{url('/fx/js/fixInput.js')}}"></script>
     <script>
         //判断邮箱是否存在
         function checkEmail() {

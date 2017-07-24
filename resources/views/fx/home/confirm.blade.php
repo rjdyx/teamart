@@ -65,16 +65,16 @@
 
 			// 跳转到地址页
 			$('.J_jump_address').on('tap', function () {
-				// if (sessionStorage) {
-				// 	sessionStorage.setItem('chaye', window.location.href)
-				// }
+				if (sessionStorage) {
+					sessionStorage.setItem('chaye', window.location.href)
+				}
 				window.location.href = 'http://' + window.location.host + '/home/address'
 			})
 
-			// // 重置返回按钮
-			// $('.J_header_back').off('tap').on('tap', function () {
-			// 	history.go(-1)
-			// })
+			// 重置返回按钮
+			$('.J_header_back').off('tap').on('tap', function () {
+				history.go(-1)
+			})
 
 		});
 

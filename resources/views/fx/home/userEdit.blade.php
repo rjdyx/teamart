@@ -16,6 +16,7 @@
 	<script src="{{ asset('fx/mui/js/mui.min.js') }}"></script>
 	<script src="{{ asset('fx/mui/js/mui.picker.min.js') }}"></script>
 	<!-- <script src="{{ asset('fx/mui/js/data.city.js') }}"></script> -->
+	<script src="{{url('/fx/js/fixInput.js')}}"></script>
 	<script>
 		$(function () {
 			//日期插件初始化

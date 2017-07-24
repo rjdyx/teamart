@@ -11,6 +11,7 @@
     @parent
     {!! Geetest::render('bind') !!}
     <script src="{{url('/fx/build/valid.js')}}"></script>
+    <script src="{{url('/fx/js/fixInput.js')}}"></script>
     <script>
         function validate() {
             if (!_valid.ness('用户名', $('#name').val())) {

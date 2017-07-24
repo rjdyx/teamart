@@ -10,6 +10,7 @@
 @section('script')
     @parent
     <script src="{{url('/fx/build/valid.js')}}"></script>
+    <script src="{{url('/fx/js/fixInput.js')}}"></script>
     <script>
         function submitForm() {
             var form = document.forms['form']
