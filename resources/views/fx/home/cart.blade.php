@@ -273,7 +273,7 @@
 
     @include("layouts.header-info")
     
-    <div class="cart">
+    <div class="cart relative container">
         <div class="cart_container">
             <div class="cart_list">
                 <!-- 收藏商品结构 -->

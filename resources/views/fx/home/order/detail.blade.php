@@ -50,28 +50,31 @@
             @endif
         </div>
         @if (!empty($order->delivery_serial))
-            <!-- 物流 -->
-            <div class="orderdetail_state w-100">
-                <span class="pull-left">取货方式：</span>
-                <span class="pull-right">@if($order->method == 'self')站点自取 @else 快递 @endif</span>
-            </div>
+        <!-- 物流 -->
+        <div class="orderdetail_state w-100">
+            <span class="pull-left">取货方式：</span>
+            <span class="pull-right">@if($order->method == 'self')站点自取 @else 快递 @endif</span>
+        </div>
             @if($order->method == 'delivery')
-                <div class="orderdetail_state w-100">
-                    <span class="pull-left">收货地址：</span>
-                    <span class="pull-right">{{$order->p1.$order->p2.$order->p3.$order->p4}}</span>
-                </div>
-                <div class="orderdetail_state w-100">
-                    <span class="pull-left">联系人：</span>
-                    <span class="pull-right">{{$order->aname}}</span>
-                </div>
-                <div class="orderdetail_state w-100">
-                    <span class="pull-left">联系电话：</span>
-                    <span class="pull-right">{{$order->phone}}</span>
-                </div>
-                <div class="orderdetail_state w-100">
-                    <span class="pull-left">{{$order->delivery_serial}}</span>
-                    <span><a href="javascript:;" class="pull-right">物流详情</a></span>
-                </div>
+            <div class="orderdetail_address clearfix w-100">
+                <span class="pull-left block">收货地址：</span>
+                <span class="pull-right block txt-r">{{$order->p1.$order->p2.$order->p3.$order->p4}}</span>
+            </div>
+            <div class="orderdetail_state w-100">
+                <span class="pull-left">联系人：</span>
+                <span class="pull-right">{{$order->aname}}</span>
+            </div>
+            <div class="orderdetail_state w-100">
+                <span class="pull-left">联系电话：</span>
+                <span class="pull-right">{{$order->phone}}</span>
+            </div>
+            <div class="orderdetail_state w-100">
+                <span class="pull-left">物流单号：</span>
+                <span class="pull-right">{{$order->delivery_serial}}</span>
+            </div>
+            <div class="orderdetail_state w-100">
+                <a href="javascript:;" class="pull-right state_btn price txt-c">物流详情</a>
+            </div>
             @endif
         @endif
 
