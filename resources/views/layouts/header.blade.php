@@ -1,7 +1,7 @@
 <header>
     <div class="header_left pull-left J_show_header_category">
         <i></i>
-        <span>分类</span>
+        <span class="block">分类</span>
     </div>
     @if(Auth::user())
     <!-- <div class="header_right pull-right">
@@ -9,12 +9,12 @@
             <i class="fa fa-headphones fz-20"></i>
             <s>8</s>
         </div>
-        <span>客服</span>
+        <span class="block">客服</span>
     </div> -->
     @endif
     <div class="header_center">
         <i class="fa fa-search header_search"></i>
-        <input type="text" class="header_search_inp J_header_search_inp" placeholder="请输入你搜索的商品" style="opacity: 0.6;" value="{{isset($_GET['name'])?$_GET['name']:''}}">
+        <input type="text" class="header_search_inp J_header_search_inp" placeholder="请输入你搜索的商品" value="{{isset($_GET['name'])?$_GET['name']:''}}">
         <i class="fa fa-arrow-circle-right hide header_close J_header_search"></i>
     </div>
     <?php 

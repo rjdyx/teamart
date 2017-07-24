@@ -132,10 +132,10 @@
 	<div class="container useredit relative">
 		<div class="useredit_info mb-10 relative">
 			<label for="img" class="block avatar">
-				<img id="avatar" src="{{url('')}}/{{Auth::user()->img}}">
+				<img class="w-100" id="avatar" src="{{url('')}}/{{Auth::user()->img}}">
 			</label>
-			<p class="useredit_name white fz-22 txt-c chayefont">{{Auth::user()->name}}</p>
-			@if(Auth::user()->type==2)<p class="useredit_name chayefont white txt-c fz-18">推荐人：@if($data->pname){{$data->pname}}@else 无 @endif</p>@endif
+			<p class="useredit_name white fz-20 txt-c chayefont">{{Auth::user()->name}}</p>
+			@if(Auth::user()->type==2)<p class="useredit_name chayefont white txt-c fz-16">推荐人：@if($data->pname){{$data->pname}}@else 无 @endif</p>@endif
 		</div>
 		<form action="{{url('home/user')}}/{{$data->id}}" id="form" enctype="multipart/form-data">
 			<div class="form_item fz-16 chayefont">
@@ -172,7 +172,9 @@
 				<label for="password">确认密码</label>
 				<input type="password" name="repassword" id="repassword" class="pull-right txt-r color-8C8C8C block chayefont" autocomplete="off" placeholder="输入密码后再确认密码">
 			</div>
-			<input type="file" name="img" id="img" class="invisibility" accept="image/jpeg,image/jpg,image/png">
+			<div class="filling">
+				<input type="file" name="img" id="img" class="invisibility" accept="image/jpeg,image/jpg,image/png">
+			</div>
 		</form>
 		<div class="chayefont bottom_btn white txt-c block fz-18 J_submit">确定保存</div>
 	</div>

@@ -1,8 +1,9 @@
 const FastClick = require('fastclick')
 
 exports.init = () => {
+	FastClick.attach($('.J_hide_prompt')[0])
 	FastClick.attach($('.J_prompt_no')[0])
-	$('.J_hide_prompt').on('tap', function () {
+	$('.J_hide_prompt').on('click', function () {
 		$('.prompt').removeClass('active')
 			.find('.prompt_image, .prompt_qrcode, .prompt_message, .prompt_question, .prompt_loading').removeClass('atc').end()
 			.find('.prompt_message_content, .prompt_question_content').html('').end()
@@ -63,6 +64,7 @@ exports.qrcode = () => {
 
 // 读取
 exports.loading = (text) => {
+	$('.J_hide_prompt').off('click')
 	$('.prompt').addClass('active').find('.prompt_loading').addClass('atc')
 	if (text) {
 		$('.prompt').find('.prompt_loading_content').text(text)
@@ -70,5 +72,13 @@ exports.loading = (text) => {
 }
 
 exports.loadingEnd = () => {
+	FastClick.attach($('.J_hide_prompt')[0])
 	$('.prompt').removeClass('active').find('.prompt_loading').removeClass('atc').find('.prompt_loading_content').text('加载中')
+	$('.J_hide_prompt').off('click').on('click', function () {
+		$('.prompt').removeClass('active')
+			.find('.prompt_image, .prompt_qrcode, .prompt_message, .prompt_question, .prompt_loading').removeClass('atc').end()
+			.find('.prompt_message_content, .prompt_question_content').html('').end()
+			.find('.prompt_loading_content').text('加载中').end()
+			.find('.prompt_image').find('img').remove()
+	})
 }

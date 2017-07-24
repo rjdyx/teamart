@@ -8,7 +8,6 @@
 @section('script')
 	@parent
 	<script src="{{url('/fx/build/resizeImg.js')}}"></script>
-	<script src="{{url('/fx/js/fixInput.js')}}"></script>
 	<script>
 		$(function () {
 			// 图片上传部分
@@ -253,6 +252,7 @@
 			})
 
 			function submitAjax (params) {
+				prompt.loading('提交中')
 				ajax('post', '/home/order/comment/store/'+"{{$id}}", params, false, true)
 				.then(function (res) {
 					if (res) {

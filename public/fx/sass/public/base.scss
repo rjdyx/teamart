@@ -206,6 +206,12 @@ img {
   color: #717171;
 }
 
+// 填充物激活
+.filling.active {
+  width: 100%;
+  height: 3rem;
+}
+
 @media screen and (max-width:321px){
   .base-fontsize{font-size:12px}
 }

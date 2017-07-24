@@ -64,9 +64,9 @@
 	<div class="container usercenter">
 		<div class="usercenter_info relative">
 			<div class="avatar @if(Auth::user() && Auth::user()->type == 1) J_QRcode @else J_getQRcode @endif" uid="@if(Auth::user() && Auth::user()->type == 1) {{base64_encode(Auth::user()->id)}} @endif">
-				<img src="{{url('')}}/@if(Auth::user()){{Auth::user()->img}} @endif" alt="">
+				<img class="w-100" src="{{url('')}}/@if(Auth::user()){{Auth::user()->img}} @endif" alt="">
 			</div>
-			<p class="usercenter_name white fz-22 txt-c chayefont">@if(Auth::user()){{Auth::user()->name}} @endif</p>
+			<p class="usercenter_name white fz-20 txt-c chayefont">@if(Auth::user()){{Auth::user()->name}} @endif</p>
 			<ul class="usercenter_list">
 				<li class="relative pull-left txt-c">
 					<a href="javascript:;" class="white">
@@ -95,7 +95,7 @@
 			</ul>
 		</div>
 		@if (isset(Auth::user()->type) && Auth::user()->type < 2)
-		<div class="usercenter_assets">
+		<div class="usercenter_assets w-100 mt-10">
 			<ol>
 				<li class="chayefont pull-left fz-14">累计佣金：</li>
 				<li class="chayefont pull-left fz-14 price">{{sprintf('%.2f', $sells)}}元</li>
@@ -105,7 +105,7 @@
 			</ol>
 		</div>
 		@endif
-		<ul class="usercenter_nav clearfix">
+		<ul class="usercenter_nav clearfix w-100 mt-10">
 			<li class="pull-left txt-c">
 				<a href="{{url('/home/useredit')}}">
 					<div class="txt-c usercenter_nav_icon">
