@@ -112,7 +112,7 @@
                         b = `   <div class="order_warpper_info">
                                     <div class="order_warpper_info_img pull-left mr-20">
                                         <a href="http://${window.location.host}/home/order/${oid}" class="block w-100 h-100">
-                                            <img src="http://${window.location.host}/${img}">
+                                            <img class="w-100" src="http://${window.location.host}/${img}">
                                         </a>
                                     </div>
                                     <div class="order_warpper_info_detail pull-left mr-20">
@@ -128,8 +128,8 @@
                                     </div>
                                 </div>`
                         if (index2 < 1) {    
-                            a = `   <div class="order_warpper mb-20">
-                                        <div class="order_warpper_tit">
+                            a = `   <div class="order_warpper w-100 mb-20">
+                                        <div class="order_warpper_tit w-100">
                                             <h1 class="pull-left chayefont">订单号：${serial}</h1>
                                             <a href="http://${window.location.host}/home/order/${oid}" class="pull-right">详情<i class="fa fa-angle-right ml-10"></i></a>
                                         </div>`
@@ -338,8 +338,8 @@
             <i class="block fz-14 fa fa-chevron-circle-right J_serialSubmit"></i>
             <!-- <input type="submit" id="serialSubmit"> -->
         </div>
-        <div class="order_tabs">
-            <ul>
+        <div class="order_tabs w-100">
+            <ul class="w-100">
                 <li class="pull-left txt-c active J_tabs" state=''>
                     <i class="fa fa-align-justify"></i>
                     <p>全部</p>
@@ -366,7 +366,7 @@
                 </li>
             </ul>
         </div>
-        <div class="order_container">
+        <div class="order_container w-100">
             <div class="order_list">
         <!--    <div class="order_warpper mb-20">
                     <div class="order_warpper_tit">

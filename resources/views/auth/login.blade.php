@@ -50,33 +50,33 @@
 @endsection
 
 @section('content')
-    <div class="login">
+    <div class="login w-100 h-100">
         <div class="login_logo"></div>
         <p class="form_error chayefont fz-14"></p>
-        <div class="form_style">
+        <div class="form_style p-10">
             <form method="POST" id="form" name="form" action="{{ route('login') }}">
                 {{ csrf_field() }}
-                <label for="name" class="field white">
-                    <i class="fa fa-user-o"></i>
-                    <input type="text" id="name" class="chayefont white" name="name" autocomplete="off" placeholder="请输入用户名">
+                <label for="name" class="field white block">
+                    <i class="fa fa-user-o fz-16"></i>
+                    <input type="text" id="name" class="chayefont white fz-16" name="name" autocomplete="off" placeholder="请输入用户名">
                 </label>
-                <label for="password" class="field white">
-                    <i class="fa fa-lock"></i>
-                    <input type="password" id="password" class="chayefont white" name="password" autocomplete="off" placeholder="请输入密码">
+                <label for="password" class="field white block">
+                    <i class="fa fa-lock fz-16"></i>
+                    <input type="password" id="password" class="chayefont white fz-16" name="password" autocomplete="off" placeholder="请输入密码">
                 </label>
                 <div class="login_link txt-c fz-16">
                     <!-- 输入邮箱和更改密码的页面的跳转地址：/password/reset/{id} -->
-                    <a class="pull-left chayefont" href="{{ url('/password/reset') }}">
+                    <a class="pull-left block chayefont" href="{{ url('/password/reset') }}">
                         <!-- <i class="fa fa-circle-thin"></i> -->
                         忘记密码
                     </a>
-                    <a class="pull-left chayefont" href="{{ url('/register') }}">
+                    <a class="pull-left block chayefont" href="{{ url('/register') }}">
                         <!-- <i class="fa fa-circle"></i> -->
                         注册账号
                     </a>
                 </div>
-                <label for="valid" class="submit">
-                    <input type="button" id="valid">
+                <label for="valid" class="submit block">
+                    <input type="button" id="valid" class="invisibility">
                 </label>
                 <div class="filling"></div>
             </form>

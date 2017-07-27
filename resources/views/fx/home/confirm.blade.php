@@ -281,7 +281,7 @@
 					<span class="pull-right gray color-8C8C8C fz-14">选填</span>
 				</div>
 
-				<textarea class="w-100" placeholder="请留言"></textarea>
+				<textarea class="w-100 p-10" placeholder="请留言"></textarea>
 				<div class="filling"></div>
 			</div>
 		</div>

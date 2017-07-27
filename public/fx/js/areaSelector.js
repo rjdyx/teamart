@@ -41,12 +41,12 @@ AreaSelector.prototype = {
 		let template = ''
 		data.forEach((v, i) => {
 			if (i === 0) {
-				template += `<li class="active J_region_select" data-id="${v.value}" data-name="${v.text}" data-level="${level}" data-idx="${i}">${v.text}</li>`
+				template += `<li class="active txt-c fz-14 J_region_select" data-id="${v.value}" data-name="${v.text}" data-level="${level}" data-idx="${i}">${v.text}</li>`
 				if (v.children) {
 					this.eachNode(v.children, level + 1)
 				}
 			} else {
-				template += `<li class="J_region_select" data-id="${v.value}" data-name="${v.text}" data-level="${level}" data-idx="${i}">${v.text}</li>`
+				template += `<li class="J_region_select txt-c fz-14" data-id="${v.value}" data-name="${v.text}" data-level="${level}" data-idx="${i}">${v.text}</li>`
 			}
 		})
 		switch (level) {

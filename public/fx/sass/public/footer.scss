@@ -3,23 +3,14 @@ footer {
 	bottom: 0;
 	left: 0;
 	z-index: 1000;
-	width: 100%;
 	height: 1rem;
 	@include  backgroundImages("/fx/images/footer_bg.png", cover);
 	.footer_container {
-		width: 100%;
 		overflow: hidden;
 		height: 1rem;
-		padding: 0.1rem 0;
 		li {
-			float: left;
 			width: 25%;
-			text-align: center;
 			a {
-				display: block;
-				i, p {
-					color: #fff;
-				}
 				@media screen and (max-width:321px){
 					i {
 						font-size: 26px;

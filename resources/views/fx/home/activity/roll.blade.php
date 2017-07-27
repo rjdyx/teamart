@@ -105,7 +105,7 @@
                     // 缺少用户是否使用或者领取的状态判断
                     template += `
                         <li class="clearfix relative w-100 mb-20 ${type == 'used' || type == 'over' ? 'used' : ''}">
-                            <div class="pull-left roll_info">
+                            <div class="pull-left roll_info pl-10">
                                 <h1 class="chayefont mt-10">${v.name}</h1>
                                 <p class="roll_desc color-717171 mt-10 mb-10">${v.desc}</p>
                                 <p class="roll_time get txt-r">有效期至${v.indate.split(' ')[0]}</p>

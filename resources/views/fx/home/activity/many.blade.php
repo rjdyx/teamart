@@ -63,6 +63,8 @@
                     } else {
                         $('.many_list').append(template);
                     }
+                    // 转义成html
+                    $('.many_desc').html($('.many_desc').text())
                     // 设置倒计时
                     $('p.start').each(function () {
                         var $this = $(this)
@@ -90,9 +92,9 @@
                     var manyStart = new Date(v.date_start).getTime()
                     var manyEnd = new Date(v.date_end).getTime()
                     if (now > manyEnd) {
-                        template += `<div class="many_wrapper w-100 mb-20 clearfix over">`
+                        template += `<div class="many_wrapper p-10 w-100 mb-20 clearfix over">`
                     } else {
-                        template += `<div class="many_wrapper w-100 mb-20 clearfix">`
+                        template += `<div class="many_wrapper p-10 w-100 mb-20 clearfix">`
                     }
                     // 判断活动的时间
                     if (now < manyStart) {

@@ -105,10 +105,10 @@
 				}
 				template += `</div><p class="txt-r mt-10">${v.created_at}</p>`
 				if (v['replys']) {
-					template += '<div class="comment_reply">'
+					template += '<div class="comment_reply w-100">'
 					for(var j=0;j<v['replys'].length;j++) {
 						template += `
-							<div class="comment_reply_warpper relative">
+							<div class="comment_reply_warpper w-100 p-10 relative">
 								${v.user_id == uid ? '<a href="javascript:;" class="comment_reply_btn block J_reply_btn">回复</a>' : ''}
 								<p class="fz-12">${v['replys'][j]['aname']} <b>回复</b> ${v['replys'][j]['bname']}：</p>
 								<p class="fz-12">${v['replys'][j]['content']}</p>
@@ -249,7 +249,7 @@
     							template += 'active';
     							popid = v['id']
     						}
-    						template += '" pid='+data['id']+'><a href="javascript:;" class="block color-3B3B3B">'+data['name']+'</a></li>';
+    						template += '" pid='+data['id']+'><a href="javascript:;" class="block p-10 color-3B3B3B">'+data['name']+'</a></li>';
     					});	
 						$('.addcart-specs').html(template);
 						//打开加入购物车弹窗
@@ -375,12 +375,12 @@
 				<i class="fa fa-shopping-cart"></i>
 			</a>
 		</div>
-		<div class="productdetail_container J_scroll">
-			<div class="productdetail_container_banner swiper-container">
+		<div class="productdetail_container w-100 h-100 J_scroll">
+			<div class="productdetail_container_banner w-100 swiper-container">
 			    <div class="swiper-wrapper">
 			        @foreach($imgs as $img)
 			        <div class="swiper-slide" data-swiper-autoplay="2000">
-			        	<img src="{{url('')}}/{{$img->img}}" alt="">
+			        	<img class="w-100" src="{{url('')}}/{{$img->img}}" alt="">
 			        </div>
 			        @endforeach
 			    </div>
@@ -397,20 +397,20 @@
 				</p>
 				<div class="productdetail_container_info_spec">
 					<span class="fz-14 color-8C8C8C">规格：</span>
-					<ul class="clearfix">
+					<ul class="clearfix w-100">
 					@foreach($specs as $spec)
 						<li class="pull-left mr-10 mb-10 J_choose_spec" >
-							<a href="{{url('/home/product/detail')}}/{{$spec->id}}" class="block color-3B3B3B @if($content->id == $spec->id)active  @endif">{{$spec->name}}</a>
+							<a href="{{url('/home/product/detail')}}/{{$spec->id}}" class="block p-10 color-3B3B3B @if($content->id == $spec->id)active  @endif">{{$spec->name}}</a>
 						</li>
 					@endforeach
 					</ul>
 				</div>
 			</div>
-			<div class="productdetail_container_tabs">
+			<div class="productdetail_container_tabs p-10 w-100">
 				<a href="javascript:;" class="J_tabs pull-left color-8C8C8C fz-14 block txt-c chayefont active" data-tag="detail">商品详情</a>
 				<a href="javascript:;" class="J_tabs pull-left color-8C8C8C fz-14 block txt-c chayefont" data-tag="comment">评价<span>{{$commentAmount}}</span></a>
 			</div>
-			<div class="hide productdetail_blank"></div>
+			<div class="hide productdetail_blank w-100"></div>
 			<div class="productdetail_container_detail" data-tab="detail">
 				<div class="productdetail_container_detail_info clearfix">
 					<ol class="pull-left fz-12 color-8C8C8C">
@@ -425,29 +425,29 @@
 			</div>
 			<div class="productdetail_container_comment hide" data-tab="comment">
 				<!-- 评价区域 -->
-				<ol class="comment_filter clearfix">
+				<ol class="comment_filter w-100 clearfix">
 					<li class="pull-left mr-10 mb-10 J_choose_comment_type active" type="">
-						<a href="javascript:;" class="block color-3B3B3B">
+						<a href="javascript:;" class="block color-3B3B3B p-10">
 							全部(<span>{{$commentAmount}}</span>)
 						</a>
 					</li>
 					<li class="pull-left mr-10 mb-10 J_choose_comment_type" type="A">
-						<a href="javascript:;" class="block color-3B3B3B">
+						<a href="javascript:;" class="block color-3B3B3B p-10">
 							好评(<span>{{$commentA}}</span>)
 						</a>
 					</li>
 					<li class="pull-left mr-10 mb-10 J_choose_comment_type" type="B">
-						<a href="javascript:;" class="block color-3B3B3B">
+						<a href="javascript:;" class="block color-3B3B3B p-10">
 							中评(<span>{{$commentB}}</span>)
 						</a>
 					</li>
 					<li class="pull-left mr-10 mb-10 J_choose_comment_type" type="C">
-						<a href="javascript:;" class="block color-3B3B3B">
+						<a href="javascript:;" class="block color-3B3B3B p-10">
 							差评(<span>{{$commentC}}</span>)
 						</a>
 					</li>
 					<li class="pull-left mr-10 mb-10 J_choose_comment_type" type="Img">
-						<a href="javascript:;" class="block color-3B3B3B">
+						<a href="javascript:;" class="block color-3B3B3B p-10">
 							有图片(<span>{{$commentImg}}</span>)
 						</a>
 					</li>
@@ -530,9 +530,9 @@
 		</div>
 	</div>
 
-	<div class="productspec">
-		<div class="productspec_bg J_hide_productspec"></div>
-		<div class="productspec_container">
+	<div class="productspec w-100 h-100">
+		<div class="productspec_bg w-100 h-100 J_hide_productspec"></div>
+		<div class="productspec_container w-100">
 			<div class="productspec_container_info w-100">
 				<div class="productspec_container_info_img h-100 pull-left mr-10">
 					<img class="h-100" src="" alt="">
@@ -550,9 +550,9 @@
 				</ul>
 			</div>
 			<div class="productspec_container_amount w-100 txt-c">
-				<i class="fa fa-minus-square mr-10 color-d7d7d7 J_minus_amount"></i>
+				<i class="fa fa-minus-square inline-block mr-10 color-d7d7d7 J_minus_amount"></i>
 				<input type="number" class="txt-c" autocomplete="off" id="amount" name="amount" value="1">
-				<i class="fa fa-plus-square ml-10 color-F78223 J_plus_amount"></i>
+				<i class="fa fa-plus-square inline-block ml-10 color-F78223 J_plus_amount"></i>
 			</div>
 			<div class="productspec_container_price w-100">
 				<span class="pull-left color-d7d7d7">合计：</span>

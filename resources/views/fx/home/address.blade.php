@@ -66,8 +66,8 @@
 	<div class="address relative container">
 		<div class="address_container">
 			@foreach($lists as $list)
-			<div class="address_warpper mb-20">
-				<div class="address_warpper_info">
+			<div class="address_warpper w-100 mb-20">
+				<div class="address_warpper_info p-10">
 					<div class="address_warpper_info_tit fz-16">
 						<span class="chayefont">{{$list->name}}</span>
 						<span class="pull-right fz-14 color-8C8C8C">{{$list->phone}}</span>
@@ -75,7 +75,7 @@
 					<p class="color-8C8C8C mt-20 fz-14">{{$list->province}}@if($list->city == $list->area){{$list->city}}@else{{$list->city}}{{$list->area}} @endif{{$list->detail}}</p>
 				</div>
 				<div class="address_warpper_opts">
-					<a href="javascript:;" class="address_default pull-left @if($list->state == 1) active @endif J_setdefault" data-id="{{$list->id}}">默认地址</a>		
+					<a href="javascript:;" class="address_default block pull-left @if($list->state == 1) active @endif J_setdefault" data-id="{{$list->id}}">默认地址</a>		
 					<ul class="pull-right color-8C8C8C fz-14">
 						<li class="pull-left mr-20">
 							<a class="color-8C8C8C" href="{{url('home/address')}}/{{$list->id}}/edit">

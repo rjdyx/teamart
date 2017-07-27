@@ -309,49 +309,49 @@
 
 @section('content')
 	@include("layouts.header")
-	<div class="filter">
-		<div class="filter_bg J_hide_filter"></div>
-		<div class="filter_container">
+	<div class="filter w-100 h-100">
+		<div class="filter_bg w-100 h-100 J_hide_filter"></div>
+		<div class="filter_container h-100">
 			<div class="filter_price mb-20">
 				<span>价格区间</span>
-				<div class="filter_price_box mt-20 clearfix">
+				<div class="filter_price_box w-100 mt-20 clearfix">
 					<input type="number" name="min_price" class="pull-left block" placeholder="最低价">
 					<i class="fa fa-minus pull-left block txt-c"></i>
 					<input type="number" name="max_price" class="pull-left block" placeholder="最高价">
 				</div>
 			</div>
-			<div class="filter_category mb-20">
-				<div class="filter_category_top">
+			<div class="filter_category w-100 mb-20">
+				<div class="filter_category_top w-100">
 					<span class="pull-left">全部分类</span>
 					<a href="javascript:;" class="pull-right category-show color-8C8C8C">
 						全部
 						<i class="fa fa-angle-right"></i>
 					</a>
 				</div>
-				<ul class="filter_category_list clearfix">
+				<ul class="filter_category_list w-100 clearfix">
 
 				</ul>
 			</div>
-			<div class="filter_brand">
-				<div class="filter_brand_top">
+			<div class="filter_brand w-100">
+				<div class="filter_brand_top w-100">
 					<span class="pull-left">品牌</span>
 					<a href="javascript:;" class="pull-right brand-show color-8C8C8C">
 						全部
 						<i class="fa fa-angle-right"></i>
 					</a>
 				</div>
-				<ul class="filter_brand_list clearfix">
+				<ul class="filter_brand_list w-100 clearfix">
 
 				</ul>
 			</div>
-			<div class="filter_opts">
+			<div class="filter_opts w-100">
 				<span class="filter_opts_btn block txt-c pull-left color-d7d7d7 reset" id="reset">重置</span>
 				<span class="filter_opts_btn block txt-c pull-left white del" id="opts_submit">确定</span>
 			</div>
 		</div>
 	</div>
 	<div class="container product">
-		<ul class="product_nav">
+		<ul class="product_nav w-100">
 			<li class="order pull-left txt-c relative fz-14" order="up" type="all">
 				综合
 				<i class="fa fa-caret-down"></i>
@@ -369,7 +369,7 @@
 				<i class="fa fa-filter"></i>
 			</li>
 		</ul>
-		<div class="lists_container" id="product_container">
+		<div class="lists_container w-100 h-100" id="product_container">
 			<div class="lists_list clearfix">
 				<!-- 数据放置处 -->
 			</div>
