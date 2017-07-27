@@ -7,15 +7,15 @@ class WxPayConf_pub
 {
 	//=======【基本信息设置】=====================================
 	//微信公众号身份的唯一标识。审核通过后，在微信发送的邮件中查看
-	const APPID = 'wx51196f271bc7480b';//服务商的
+	const APPID = 'wx51196f271bc7480b';
 	//受理商ID，身份标识
-	const MCHID = '1436923502';//服务商的
+	const MCHID = '1436923502';
 	//商户支付密钥Key。审核通过后，在微信发送的邮件中查看
-	const KEY = '18523976023wojiacaishi1436923502';//服务商的
+	const KEY = '18523976023wojiacaishi1436923502';
     const APPSECRET = 'd51412dfc8029f44b1ac00d284d43a02';
-//	const SUB_APPID = 'wxc7fff49b8014b010';//子商户的
-//	//JSAPI接口中获取openid，审核后在公众平台开启开发模式后可查看
-//	const SUB_APPSECRET = '67d151eb043e364b6806bc70a4061bce';//子商户的
+	//	const SUB_APPID = 'wxc7fff49b8014b010';//子商户的
+	//	//JSAPI接口中获取openid，审核后在公众平台开启开发模式后可查看
+	//	const SUB_APPSECRET = '67d151eb043e364b6806bc70a4061bce';//子商户的
 	
 	//=======【JSAPI路径设置】===================================
 	//获取access_token过程中的跳转uri，通过跳转将code传入jsapi支付页面
@@ -33,6 +33,10 @@ class WxPayConf_pub
 	//=======【curl超时设置】===================================
 	//本例程通过curl使用HTTP POST方法，此处可修改其超时时间，默认为30秒
 	const CURL_TIMEOUT = 30;
+
+	//=========【场景信息】======================================
+	const SCENE_INFO = "{'h5_info': {'type': 'Wap', 'wap_url': ".$_SERVER['HTTP_HOST'].", 'wap_name': '茶沁轩'}}";
+
 }
 	
 ?>

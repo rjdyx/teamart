@@ -25,6 +25,8 @@ Route::post('/check','UtilsController@check');//字段验证 公共接口组
 Route::post('/password/resets','Auth\ResetPasswordController@passwordReset');//重置密码
 Route::auth();
 
+Route::get('/home/payOrder','Home\OrderController@payOrder');
+
 // Home - 无须登录模块
 Route::group(['namespace'=>'Home','prefix'=>'home'],function(){
 
