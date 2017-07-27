@@ -341,6 +341,8 @@ class UnifiedOrder_pub extends Wxpay_client_pub
 				throw new SDKRuntimeException("缺少统一支付接口必填参数notify_url！"."<br>");
 			}elseif ($this->parameters["trade_type"] == null) {
 				throw new SDKRuntimeException("缺少统一支付接口必填参数trade_type！"."<br>");
+			}elseif ($this->parameters["scene_info"] == null) {
+				throw new SDKRuntimeException("缺少统一支付接口必填参数scene_info！"."<br>");
 			}
 			/*elseif ($this->parameters["trade_type"] == "JSAPI" &&
 				$this->parameters["openid"] == NULL){
@@ -348,6 +350,7 @@ class UnifiedOrder_pub extends Wxpay_client_pub
 			}*/
 		   	$this->parameters["appid"] = WxPayConf_pub::APPID;//公众账号ID
 		   	$this->parameters["mch_id"] = WxPayConf_pub::MCHID;//商户号
+		   	$this->parameters["scene_info"] = WxPayConf_pub::SCENE_INFO;//场景信息
 
 		   	$this->parameters["spbill_create_ip"] = $_SERVER['REMOTE_ADDR'];//终端ip	    
 		    $this->parameters["nonce_str"] = $this->createNoncestr();//随机字符串
@@ -404,6 +407,7 @@ class OrderQuery_pub extends Wxpay_client_pub
 		   	$this->parameters["mch_id"] = WxPayConf_pub::MCHID;//商户号
 		    $this->parameters["nonce_str"] = $this->createNoncestr();//随机字符串
 		    $this->parameters["sign"] = $this->getSign($this->parameters);//签名
+		   	$this->parameters["scene_info"] = WxPayConf_pub::SCENE_INFO;//场景信息
 		    return  $this->arrayToXml($this->parameters);
 		}catch (SDKRuntimeException $e)
 		{
@@ -447,6 +451,7 @@ class Refund_pub extends Wxpay_client_pub
 			}
 		   	$this->parameters["appid"] = WxPayConf_pub::APPID;//公众账号ID
 		   	$this->parameters["mch_id"] = WxPayConf_pub::MCHID;//商户号
+		   	$this->parameters["scene_info"] = WxPayConf_pub::SCENE_INFO;//场景信息
 		    $this->parameters["nonce_str"] = $this->createNoncestr();//随机字符串
 		    $this->parameters["sign"] = $this->getSign($this->parameters);//签名
 		    return  $this->arrayToXml($this->parameters);
@@ -497,6 +502,7 @@ class RefundQuery_pub extends Wxpay_client_pub
 			}
 		   	$this->parameters["appid"] = WxPayConf_pub::APPID;//公众账号ID
 		   	$this->parameters["mch_id"] = WxPayConf_pub::MCHID;//商户号
+		   	$this->parameters["scene_info"] = WxPayConf_pub::SCENE_INFO;//场景信息
 		    $this->parameters["nonce_str"] = $this->createNoncestr();//随机字符串
 		    $this->parameters["sign"] = $this->getSign($this->parameters);//签名
 		    return  $this->arrayToXml($this->parameters);
@@ -546,6 +552,7 @@ class DownloadBill_pub extends Wxpay_client_pub
 		   	$this->parameters["appid"] = WxPayConf_pub::APPID;//公众账号ID
 		   	$this->parameters["mch_id"] = WxPayConf_pub::MCHID;//商户号
 		    $this->parameters["nonce_str"] = $this->createNoncestr();//随机字符串
+		   	$this->parameters["scene_info"] = WxPayConf_pub::SCENE_INFO;//场景信息
 		    $this->parameters["sign"] = $this->getSign($this->parameters);//签名
 		    return  $this->arrayToXml($this->parameters);
 		}catch (SDKRuntimeException $e)
@@ -596,6 +603,7 @@ class ShortUrl_pub extends Wxpay_client_pub
 		   	$this->parameters["mch_id"] = WxPayConf_pub::MCHID;//商户号
 		    $this->parameters["nonce_str"] = $this->createNoncestr();//随机字符串
 		    $this->parameters["sign"] = $this->getSign($this->parameters);//签名
+		   	$this->parameters["scene_info"] = WxPayConf_pub::SCENE_INFO;//场景信息
 		    return  $this->arrayToXml($this->parameters);
 		}catch (SDKRuntimeException $e)
 		{
@@ -703,6 +711,7 @@ class NativeCall_pub extends Wxpay_server_pub
 		   	$this->returnParameters["mch_id"] = WxPayConf_pub::MCHID;//商户号
 		    $this->returnParameters["nonce_str"] = $this->createNoncestr();//随机字符串
 		    $this->returnParameters["sign"] = $this->getSign($this->returnParameters);//签名
+		   	$this->returnparameters["scene_info"] = WxPayConf_pub::SCENE_INFO;//场景信息
 		}
 		return $this->arrayToXml($this->returnParameters);
 	}
@@ -754,7 +763,8 @@ class NativeLink_pub  extends Common_util_pub
 		   	$time_stamp = time();
 		   	$this->parameters["time_stamp"] = "$time_stamp";//时间戳
 		    $this->parameters["nonce_str"] = $this->createNoncestr();//随机字符串
-		    $this->parameters["sign"] = $this->getSign($this->parameters);//签名    		
+		    $this->parameters["sign"] = $this->getSign($this->parameters);//签名
+		   	$this->parameters["scene_info"] = WxPayConf_pub::SCENE_INFO;//场景信息	
 			$bizString = $this->formatBizQueryParaMap($this->parameters, false);
 		    $this->url = "weixin://wxpay/bizpayurl?".$bizString;
 		}catch (SDKRuntimeException $e)
