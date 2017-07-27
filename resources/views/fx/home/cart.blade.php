@@ -48,14 +48,14 @@
                             res.data.forEach(function (v) {
                                 template += `
                                     <div class="warpper mb-20 clearfix">
-                                        <i class="warpper_select J_select" data-opid="${v.opid}" data-pid="${v.id}" data-price="${v.price}"></i>
-                                        <div class="warpper_content_img pull-left mr-20">
-                                            <img src="http://${window.location.host}/${v.img}">
+                                        <i class="warpper_select block J_select" data-opid="${v.opid}" data-pid="${v.id}" data-price="${v.price}"></i>
+                                        <div class="warpper_content_img h-100 pull-left mr-20">
+                                            <img class="w-100" src="http://${window.location.host}/${v.img}">
                                         </div>
-                                        <div class="warpper_content_info pull-right">
+                                        <div class="warpper_content_info h-100 pull-right">
                                             <h5 class="chayefont mb-10">${v.name}</h5>
-                                            <p class="desc">${v.desc}</p>
-                                            <div class="warpper_content_info_bottom">
+                                            <p class="desc color-717171">${v.desc}</p>
+                                            <div class="warpper_content_info_bottom w-100">
                                                 <span class="pull-left price">&yen;${parseInt(v.price).toFixed(2)}</span>
                                                 <div class="pull-right">
                                                     <i class="fa fa-minus-circle fz-20 color-d7d7d7 J_minus"></i>

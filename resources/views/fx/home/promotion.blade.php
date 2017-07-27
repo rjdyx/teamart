@@ -103,7 +103,7 @@
 @section('content')
 	@include("layouts.header-info")
 	<div class="container promotion" type="{{$type}}">
-		<div class="lists_container">
+		<div class="lists_container w-100 h-100">
 			<div class="lists_list clearfix">
 	
 			</div>

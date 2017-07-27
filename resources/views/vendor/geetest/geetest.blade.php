@@ -31,7 +31,13 @@
             type: "get",
             dataType: "json",
             success: function(data) {
-                console.dir(data)
+                console.dir({
+                    gt: data.gt,
+                    challenge: data.challenge,
+                    product: "{{ $product }}",
+                    offline: !data.success,
+                    lang: '{{ Config::get('geetest.lang', 'zh-cn') }}'
+                })
                 initGeetest({
                     gt: data.gt,
                     challenge: data.challenge,

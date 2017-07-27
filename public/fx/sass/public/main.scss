@@ -39,13 +39,9 @@
 	position: fixed;
 	right: 5%;
 	z-index: 1004;
-	display: block;
 	width: 0.5rem;
 	height: 0.5rem;
 	background-color: rgba(0,0,0,0.5);
-	color: #fff;
-	text-align: center;
-	font-size: 16px;
 	border-radius: 50%;
 	i {
 		width: 0.5rem;
@@ -62,26 +58,17 @@
 }
 
 .login, .register, .email, .reset {
-	width: 100%;
-	height: 100%;
 	border: 0.02rem solid transparent;
 	.login_logo, .register_logo {
 		width: 5rem;
 	}
 	.form_style {
-		padding: 0.1rem;
-		label {
-			display: block;
-		}
 		label.field {
 			position: relative;
 			width: 4.3rem;
 			height: 0.7rem;
 			line-height: 0.7rem;
 			margin: 0 auto 0.2rem;
-			input, i {
-				font-size: 16px;
-			}
 			input {
 				padding-left: 0.7rem;
 				background-color: transparent;
@@ -99,15 +86,10 @@
 			height: 1.3rem;
 			margin: 0.2rem auto 0;
 			@include  backgroundImages("/fx/images/form_submit.png", cover);
-			input {
-				visibility: hidden;
-			}
 		}
 		.register_gender {
 			width: 4.4rem;
 			margin: 0 auto;
-			font-size: 16px;
-			text-align: center;
 			label {
 				width: 2.1rem;
 			}
@@ -116,7 +98,6 @@
 			width: 4.3rem;
 			height: 0.4rem;
 			a {
-				display: block;
 				width: 50%;
 			}
 		}
@@ -174,7 +155,6 @@
 		width: 5rem;
 		margin: 0.2rem auto 0.2rem;
 		h1 {
-			width: 100%;
 			height: 1.3rem;
 			line-height: 1.3rem;
 		}
@@ -214,7 +194,6 @@
 			position: absolute;
 			left: 0.2rem;
 			top: 0.4rem;
-			display: block;
 			width: 0.4rem;
 			height: 0.4rem;
 			margin-top: -0.2rem;
@@ -226,21 +205,13 @@
 		}
 		.warpper_content_img {
 			width: 28.75%;
-			height: 100%;
 			overflow: hidden;
-			img {
-				width: 100%;
-			}
 		}
 		.warpper_content_info {
 			position: relative;
 			width: calc(71.25% - 0.2rem);
-			height: 100%;
 			h5 {
 				@extend %wrap
-			}
-			p {
-				color: #7B7B7B;
 			}
 			p.desc {
 				@extend %wrap3
@@ -249,7 +220,6 @@
 				position: absolute;
 				left: 0;
 				bottom: 0;
-				width: 100%;
 			}
 			@media screen and (max-width:321px){
 				h5 {
@@ -292,14 +262,6 @@
 }
 
 .index {
-	.banner , .index_box, .banner_box {
-		width: 100%;
-	}
-	.banner, .banner_box {
-		img {
-			width: 100%;
-		}
-	}
 	.banner {
 		height: 2.5rem;
 	}
@@ -311,9 +273,6 @@
 		p {
 			color: #787876;
 			@extend %wrap2;
-		}
-		.index_box_title, .index_box_content, .index_box_list {
-			width: 100%;
 		}
 		.index_box_title {
 			height: 1rem;
@@ -383,7 +342,6 @@
 			}
 			.ibc_single {
 				width: 2.5rem;
-				padding: 0.1rem;
 				img {
 					width: 90%;
 					margin: 0 auto;
@@ -393,15 +351,9 @@
 				width: calc(100% - 2.52rem);
 				.ibc_multi_goods, .ibc_multi_goods_cell {
 					height: 50%;
-					padding: 0.1rem;
 				}
 				.ibc_multi_goods {
-					p {
-						margin-top: 0.1rem;
-						margin-bottom: 0.1rem;
-					}
 					img {
-						height: 100%;
 						max-width: 1.5rem;
 					}
 				}
@@ -424,65 +376,59 @@
 				}
 			}
 		}
-		.index_box_list {
-			overflow: hidden;
-			ul {
-				width: 105%;
-				li {
-					width: 2.1rem;
-					margin-right: 0.05rem;
-					background-color: #DED8CC;
-					padding: 0.1rem;
-					img {
-						margin: 0.1rem auto;
-						width: 90%;
-					}
-					p {
-						font-size: 12px;
-						margin-top: 0.05rem;
-						margin-bottom: 0.05rem;
-						height: 0.64rem;
-						@extend %wrap2;
-					}
-					@media screen and (max-width:321px){
-						h1 {
-							font-size: 12px;
-						}
-					}
-					@media screen and (min-width:321px) and (max-width:400px){
-						h1 {
-							font-size: 14px;
-						}
-					}
-					@media screen and (min-width:400px){
-						h1 {
-							font-size: 16px;
-						}
-					}
-				}
-			}
-		}
 	}
 	.banner_box {
-		padding: 0.1rem;
 		background-color: #DED8CC;
 		.banner_box_row {
 			position: relative;
-			width: 100%;
 			border-radius: 0.1rem;
 			overflow: hidden;
 			p {
 				position: absolute;
 				bottom: 0;
 				left: 0;
-				width: 100%;
 				height: 0.6rem;
 				line-height: 0.6rem;
 				background-color: rgba(0, 0, 0, 0.3);
 				color: #DFDCCD;
 				padding: 0 0.2rem;
-				font-size: 16px;
 				@extend %wrap;
+			}
+		}
+	}
+	.index_list {
+		overflow: hidden;
+		ul {
+			width: 105%;
+			li {
+				width: 2.1rem;
+				margin-right: 0.05rem;
+				background-color: #DED8CC;
+				img {
+					margin: 0.1rem auto;
+					width: 90%;
+				}
+				p {
+					margin-top: 0.05rem;
+					margin-bottom: 0.05rem;
+					height: 0.64rem;
+					@extend %wrap2;
+				}
+				@media screen and (max-width:321px){
+					h1 {
+						font-size: 12px;
+					}
+				}
+				@media screen and (min-width:321px) and (max-width:400px){
+					h1 {
+						font-size: 14px;
+					}
+				}
+				@media screen and (min-width:400px){
+					h1 {
+						font-size: 16px;
+					}
+				}
 			}
 		}
 	}
@@ -512,7 +458,6 @@
 			bottom: 0;
 			left: 0;
 			height: 0.62rem;
-			width: 100%;
 			padding: 0.02rem;
 			background-color: rgba(181, 156, 107, 0.6);
 			li {
@@ -541,7 +486,6 @@
 	}
 	.usercenter_assets {
 		ol {
-			width: 100%;
 			height: 0.7rem;
 			line-height: 0.7rem;
 			background-color: #DED8CC;
@@ -552,7 +496,6 @@
 				a.withdraw {
 					width: 1.4rem;
 					height: 0.5rem;
-					margin-top: 0.1rem;
 					padding-left: 0.5rem;
 					line-height: 0.5rem;
 					@include  backgroundImages("/fx/images/btn_bg.png", cover)
@@ -606,15 +549,8 @@
 		@include  backgroundImages("/fx/images/userassets_bg.png", cover)
 	}
 	.userassets_content {
-		width: 100%;
 		height: calc(100% - 3.8rem);
 		background-color: #FFF;
-		.userassets_content_row, .userassets_container {
-			width: 100%;
-			.userassets_nodata, .userassets_container_warpper {
-				width: 100%;
-			}
-		}
 		.userassets_content_row {
 			height: 1rem;
 			line-height: 1rem;
@@ -633,10 +569,8 @@
 			height: calc(100% - 2.2rem);
 			overflow: auto;
 			.userassets_container_warpper {
-				padding: 0.1rem;
 				border-top: 0.01rem solid #d7d7d7;
 				ul {
-					width: 100%;
 					li {
 						width: 20%;
 						line-height: 0.5rem;
@@ -721,7 +655,7 @@
 		}
 	}
 }
-.helpdetail {
+.helpcontent {
 	overflow: auto;
 	padding: 1.4rem 0.1rem 0.1rem;
 	@include  backgroundImages("/fx/images/article_bg.png", cover)
@@ -741,11 +675,9 @@
 	}
 	.address_warpper {
 		height: 2.61rem;
-		width: 100%;
 		background-color: #FFF;
 		.address_warpper_info {
 			height: 1.7rem;
-			padding: 0.1rem;
 			border-bottom: 0.01rem solid #DADADA;
 			.address_warpper_info_tit {}
 			p {
@@ -757,7 +689,6 @@
 			padding: 0 0.25rem;
 			.address_default {
 				position: relative;
-				display: block;
 				line-height: 0.9rem;
 				padding-left: 0.4rem;
 			}
@@ -803,7 +734,6 @@
 				height: 0.66rem;
 			}
 			textarea {
-				width: 100%;
 				height: 1.9rem;
 			}
 			.addressadd_selection {
@@ -842,10 +772,8 @@
 
 // 收藏
 .collect {
-	position: relative;
 	background-color: #EEEFF1;
 	.collect_container {
-		height: 100%;
 		overflow: auto;
 	}
 	.bottom_btn {
@@ -872,7 +800,6 @@
 		.collect_bottom_cart,
 		.collect_bottom_del {
 			width: 1.5rem;
-			font-style: normal;
 		}
 		.collect_bottom_cart {
 			background-color: rgba(165, 125, 49, 0.6);
@@ -911,11 +838,9 @@
 		}
 	}
 	.order_tabs {
-		width: 100%;
 		height: 0.8rem;
 		border-bottom: 0.01rem solid #EFEFF1;
 		ul {
-			width: 100%;
 			li {
 				width: 16.6666%;
 				height: 0.8rem;
@@ -928,12 +853,10 @@
 		}
 	}
 	.order_container {
-		width: 100%;
 		height: calc(100% - 1.8rem);
 		overflow: auto;
 		background-color: #EEEFF1;
 		.order_warpper {
-			width: 100%;
 			background-color: #FFF;
 			@media screen and (max-width:321px){
 				h1, h5 {
@@ -969,7 +892,6 @@
 				}
 			}
 			.order_warpper_tit {
-				width: 100%;
 				height: 0.78rem;
 				padding: 0.25rem;
 				line-height: 0.28rem;
@@ -986,9 +908,6 @@
 				background-color: #F6F6F6;
 				.order_warpper_info_img {
 					width: 1.52rem;
-					img {
-						width: 100%;
-					}
 				}
 				.order_warpper_info_detail {
 					width: 2.6rem;
@@ -1101,8 +1020,6 @@
 .product, .promotion {
 	overflow: hidden;
 	.lists_container {
-		width: 100%;
-		height: 100%;
 		overflow: auto;
 		.lists_list {
 			border-top: 0.01rem solid #E3E3E3;
@@ -1163,7 +1080,6 @@
 		position: absolute;
 		top: 1rem;
 		left: 0;
-		width: 100%;
 		height: 0.8rem;
 		background-color: #CFCBC0;
 		z-index: 1;
@@ -1195,12 +1111,8 @@
 	top: 0;
 	left: 100%;
 	z-index: 1001;
-	width: 100%;
-	height: 100%;
 	transition: all .5s ease;
 	.filter_bg {
-		width: 100%;
-		height: 100%;
 		background-color: rgba(0, 0, 0, 0.6);
 	}
 	.filter_container {
@@ -1208,13 +1120,11 @@
 		right: 0;
 		top: 0;
 		width: 4.8rem;
-		height: 100%;
 		overflow: auto;
 		background-color: #FFF;
 		padding: 0.3rem;
 		.filter_price {
 			.filter_price_box {
-				width: 100%;
 				line-height: 0.5rem;
 				input {
 					width: 1.8rem;
@@ -1232,17 +1142,14 @@
 			}
 		}
 		.filter_category, .filter_brand {
-			width: 100%;
 			.filter_category_top, .filter_brand_top {
 				height: 0.5rem;
-				width: 100%;
 				line-height: 0.5rem;
 				i.active {
 					transform: rotateZ(90deg);
 				}
 			}
 			.filter_category_list, .filter_brand_list {
-				width: 100%;
 				li {
 					width: 1.3rem;
 					height: 0.5rem;
@@ -1270,7 +1177,6 @@
 			position: absolute;
 			bottom: 0;
 			left: 0;
-			width: 100%;
 			height: 1rem;
 			.filter_opts_btn {
 				width: 50%;
@@ -1330,28 +1236,18 @@
 		line-height: 0.5rem;
 	}
 	.productdetail_container {
-		width: 100%;
-		height: 100%;
 		overflow: auto;
-		.productdetail_container_banner, .productdetail_container_tabs, .productdetail_blank {
-			width: 100%;
-		}
 		.productdetail_container_banner {
 			height: 3.6rem;
 			overflow: hidden;
-			img {
-				width: 100%;
-			}
 		}
 		.productdetail_container_info {
 			padding: 0.4rem 0.25rem;
 			.productdetail_container_info_spec {
 				ul {
-					width: 100%;
 					overflow: hidden;
 					li {
 						a {
-							padding: 0.1rem;
 							background-color: #d7d7d7;
 							border-radius: 0.05rem;
 							border: 0.02rem solid #d7d7d7;
@@ -1368,7 +1264,6 @@
 			height: 0.8rem;
 			border-top: 0.02rem solid #DADADA;
 			border-bottom: 0.02rem solid #DADADA;
-			padding: 0.1rem;
 			a {
 				width: 1.64rem;
 				height: 0.66rem;
@@ -1406,11 +1301,9 @@
 		}
 		.productdetail_container_comment {
 			.comment_filter {
-				width: 100%;
 				padding: 0.2rem;
 				li {
 					a {
-						padding: 0.1rem;
 						background-color: #d7d7d7;
 						border-radius: 0.05rem;
 					}
@@ -1449,11 +1342,8 @@
 							}
 						}
 						.comment_reply {
-							width: 100%;
 							background-color: #d7d7d7;
 							.comment_reply_warpper {
-								width: 100%;
-								padding: 0.1rem;
 								.comment_reply_btn { // 待补充
 									position: absolute;
 									right: 0.1rem;
@@ -1473,17 +1363,13 @@
 	position: fixed;
 	top: 100%;
 	left: 0;
-	width: 100%;
-	height: 100%;
 	z-index: 1005;
 	.productspec_bg, .productspec_container {
 		position: absolute;
 		left: 0;
-		width: 100%;
 	}
 	.productspec_bg {
 		top: 0;
-		height: 100%;
 		background-color: rgba(0,0,0,0.5);
 	}
 	.productspec_container {
@@ -1543,7 +1429,6 @@
 				overflow: auto;
 				li {
 					a {
-						padding: 0.1rem;
 						background-color: #d7d7d7;
 						border-radius: 0.05rem;
 						border: 0.01rem solid #d7d7d7;
@@ -1562,7 +1447,6 @@
 			padding: 0.2rem 0.2rem 0;
 			line-height: 1.1rem;
 			i {
-				display: inline-block;
 				width: 0.5rem;
 				height: 0.5rem;
 				vertical-align: middle;
@@ -1691,7 +1575,6 @@
 		textarea {
 			height: 1rem;
 			border: 0;
-			padding: 0.1rem;
 		}
 	}
 	.bottom_btn {
@@ -1889,7 +1772,6 @@
 		left: 0;
 		z-index: 1001;
 		height: 1.2rem;
-		width: 100%;
 		@include  backgroundImages("/fx/images/header_bg.png", cover);
 		.ordercomment_header_left, .ordercomment_header_center, .ordercomment_header_right {
 			height: 1.2rem;
@@ -2069,7 +1951,6 @@
 			background-color: #EBE2D1;
 			.roll_info {
 				width: 65%;
-				padding-left: 0.1rem;
 				@media screen and (max-width:321px){
 					h1 {
 						font-size: 16px;
@@ -2150,7 +2031,6 @@
 	background-color: #EFEFF1;
 	.many_list {
 		.many_wrapper {
-			padding: 0.1rem;
 			background-color: #FFF;
 			.many_left {
 				p.before,

@@ -136,14 +136,14 @@
 							res.data.forEach(function (v) {
 								result += `
 									<div class="warpper mb-20 clearfix">
-										<i class="warpper_select J_select" data-id="${v.op_id}"></i>
-										<div class="warpper_content_img pull-left mr-20">
-											<img src="http://${window.location.host}/${v.img}">
+										<i class="warpper_select block J_select" data-id="${v.op_id}"></i>
+										<div class="warpper_content_img h-100 pull-left mr-20">
+											<img class="w-100" src="http://${window.location.host}/${v.img}">
 										</div>
-										<div class="warpper_content_info pull-right">
+										<div class="warpper_content_info h-100 pull-right">
 											<h5 class="chayefont mb-10">${v.name}</h5>
-											<p class="desc">${v.desc}</p>
-											<div class="warpper_content_info_bottom">
+											<p class="desc color-717171">${v.desc}</p>
+											<div class="warpper_content_info_bottom w-100">
 												<span class="pull-left price">￥${v.price}</span>
 												<span class="pull-right color-8C8C8C">已售${v.sell_amount}</span>
 											</div>
@@ -194,7 +194,7 @@
 	@include("layouts.backIndex")
 
 	<div class="container relative collect">
-		<div class="collect_container">
+		<div class="collect_container h-100">
 			<div class="collect_list">
 				<!-- 收藏商品结构 -->
 			</div>

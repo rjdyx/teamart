@@ -269,7 +269,7 @@
 
 @section('content')
 	<div class="ordercomment">
-		<div class="ordercomment_header">
+		<div class="ordercomment_header w-100">
 			<div class="ordercomment_header_left white txt-c pull-left header_back" onclick="javascript:history.go(-1);">返回</div>
 			<a href="javascript:;" class="ordercomment_header_right white txt-c pull-right chayefont J_comment">发表</a>
 			<div class='ordercomment_header_center txt-c w-100 chayefont'><h2 class="white">发表评价</h2></div>

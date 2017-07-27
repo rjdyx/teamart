@@ -67,7 +67,7 @@
 				<img class="w-100" src="{{url('')}}/@if(Auth::user()){{Auth::user()->img}} @endif" alt="">
 			</div>
 			<p class="usercenter_name white fz-20 txt-c chayefont">@if(Auth::user()){{Auth::user()->name}} @endif</p>
-			<ul class="usercenter_list">
+			<ul class="usercenter_list w-100">
 				<li class="relative pull-left txt-c">
 					<a href="javascript:;" class="white">
 						<p>积分</p>
@@ -96,11 +96,11 @@
 		</div>
 		@if (isset(Auth::user()->type) && Auth::user()->type < 2)
 		<div class="usercenter_assets w-100 mt-10">
-			<ol>
+			<ol class="w-100">
 				<li class="chayefont pull-left fz-14">累计佣金：</li>
 				<li class="chayefont pull-left fz-14 price">{{sprintf('%.2f', $sells)}}元</li>
 				<li class="chayefont pull-left fz-14">
-					<a href="{{url('/home/userasset')}}" class="pull-right block fz-16 white withdraw">详细</a>
+					<a href="{{url('/home/userasset')}}" class="pull-right block fz-16 mt-10 white withdraw">详细</a>
 				</li>
 			</ol>
 		</div>

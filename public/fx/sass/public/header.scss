@@ -4,16 +4,13 @@ header {
 	left: 0;
 	z-index: 1001;
 	height: 1rem;
-	width: 100%;
+	box-sizing: border-box;
 	@include  backgroundImages("/fx/images/header_bg.png", cover);
 	.header_left, .header_center, .header_right {
-		height: 1rem;
-		padding: 0.1rem 0;
+		height: 0.8rem;
 	}
 	.header_left, .header_right {
 		width: 1rem;
-		color: #fff;
-		text-align: center;
 		i {
 			display: inline-block;
 			margin: 0 auto;
@@ -31,9 +28,7 @@ header {
 		line-height: 0.8rem;
 	}
 	.header_center {
-		width: 100%;
 		line-height: 0.8rem;
-		text-align: center;
 		.header_search_inp {
 			width: 4.3rem;
 			height: 0.64rem;
@@ -43,24 +38,16 @@ header {
 			background-color: rgba(255,255,255,0.6);
 		}
 		.header_search {
-			position: relative;
-			font-size: 16px;
 			margin-right: -0.5rem;
 		}
 		.header_close {
 			position: absolute;
 			left: 4.7rem;
 			top: 50%;
-			display: inline-block;
 			width: 0.5rem;
 			height: 0.5rem;
 			margin-top: -0.25rem;
-			text-align: center;
 			line-height: 0.5rem;
-			font-size: 16px;
-		}
-		h2 {
-			color: #fff;
 		}
 	}
 	@media screen and (max-width:321px){
@@ -96,7 +83,6 @@ header {
 	.header_right {
 		margin-left: -1rem;
 		.header_kefu {
-			position: relative;
 			width: 0.5rem;
 			height: 0.5rem;
 			@extend %marginLR;
@@ -107,13 +93,11 @@ header {
 				position: absolute;
 				top: -0.1rem;
 				right: -0.15rem;
-				display: block;
 				width: 0.3rem;
 				height: 0.3rem;
 				border: 0.02rem solid #BBAD92;
 				font-style: normal;
 				background-color: #F87973;
-				color: #fff;
 				border-radius: 50%;
 			}
 		}
@@ -123,25 +107,21 @@ header {
 		position: fixed;
 		top: 0;
 		right: 100%;
-		width: 100%;
-		height: 100%;
 		background-color: rgba(0,0,0,0.5);
 		ul {
 			position: absolute;
 			left: -3.5rem;
-			top: 1.2rem;
+			top: 1rem;
 			width: 3.5rem;
-			height: calc(100% - 1.2rem);
+			height: calc(100% - 1rem);
 			overflow: auto;
 			transition: all .3s ease;
 			background-color: rgba(199, 193, 180, 0.9);
 			li {
-				width: 100%;
 				height: 1rem;
 				border-bottom: 0.02rem solid #d7d7d7;
 				line-height: 0.98rem;
 				a {
-					display: block;
 					color: #252525;
 					font-weight: bold;
 					@extend %wrap;

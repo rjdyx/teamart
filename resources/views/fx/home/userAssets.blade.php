@@ -30,8 +30,8 @@
 					if (res.data.length > 0) {
 						res.data.forEach(function (v) {
 							result += `
-								<div class="userassets_container_warpper">
-									<ul class="clearfix">
+								<div class="userassets_container_warpper w-100 p-10">
+									<ul class="clearfix w-100">
 										<li class="pull-left txt-c">
 											<p>总金额</p>
 											<p>&yen; ${v.count}</p>
@@ -92,16 +92,16 @@
 			</div>
 			<p class="userassets_name white fz-20 txt-c chayefont">@if(Auth::user()){{Auth::user()->name}} @endif</p>
 		</div>
-		<div class="userassets_content mt-20">
-			<div class="userassets_content_row">
+		<div class="userassets_content mt-20 w-100">
+			<div class="userassets_content_row w-100">
 				<span class="pull-left chayefont">佣金累计：</span>
 				<a href="javascript:;" class="pull-right block chayefont txt-c price">&yen; {{$allprices}}</a>
 			</div>
-			<div class="userassets_content_row">
+			<div class="userassets_content_row w-100">
 				<span class="pull-left chayefont">佣金余额：</span>
 				<a href="javascript:;" class="pull-right block chayefont txt-c price">&yen; {{$prices}}</a>
 			</div>
-			<div class="userassets_container mt-20">
+			<div class="userassets_container mt-20 w-100">
 				<div class="userassets_list">
 
 				</div>

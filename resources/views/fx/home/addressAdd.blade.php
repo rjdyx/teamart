@@ -122,7 +122,7 @@
 				<input type="number" name="code" id="code" class="pull-right block txt-r chayefont" data-required="true" placeholder="请输入邮编">
 			</div>
 			<div class="form_item fz-16">
-				<textarea name="detail" id="detail" data-required="true" placeholder="请填写详细地址，不少于5个字"></textarea>
+				<textarea class="w-100" name="detail" id="detail" data-required="true" placeholder="请填写详细地址，不少于5个字"></textarea>
 			</div>
 			<div class="form_item fz-16 mt-20 J_defualtAddress">
 				<label for="state" class="block">
@@ -135,14 +135,14 @@
 		</form>
 		<div class="chayefont block txt-c white fz-18 bottom_btn J_submit">保存地址</div>
 	</div>
-	<div class="areaSelector">
-		<div class="areaSelector_bg"></div>
-		<div class="areaSelector_container">
+	<div class="areaSelector w-100 h-100">
+		<div class="areaSelector_bg w-100 h-100"></div>
+		<div class="areaSelector_container w-100">
 			<div class="areaSelector_opts clearfix">
 				<a href="javascript:;" class="pull-left fz-14 J_region_cancel">取消</a>
 				<a href="javascript:;" class="pull-right fz-14 J_region_submit">确定</a>
 			</div>
-			<div class="areaSelector_area clearfix">
+			<div class="areaSelector_area w-100 clearfix">
 				<ul class="pull-left area_list province"></ul>
 				<ul class="pull-left area_list city"></ul>
 				<ul class="pull-left area_list area"></ul>

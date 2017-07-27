@@ -1,5 +1,5 @@
-<div class="prompt">
-	<div class="prompt_bg J_hide_prompt"></div>
+<div class="prompt w-100 h-100">
+	<div class="prompt_bg w-100 h-100 J_hide_prompt"></div>
 	<div class="prompt_message">
 		<div class="prompt_message_content w-100 txt-c p-10"></div>
 	</div>
