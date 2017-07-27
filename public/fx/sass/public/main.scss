@@ -397,6 +397,10 @@
 		}
 	}
 	.index_list {
+		p {
+			color: #787876;
+			@extend %wrap2;
+		}
 		overflow: hidden;
 		ul {
 			width: 105%;
