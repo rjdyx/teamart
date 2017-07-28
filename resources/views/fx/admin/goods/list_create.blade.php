@@ -283,21 +283,21 @@
                 </div>
                 <div class="form-group">
                   <label class="col-sm-3 control-label"><i style="color:red;">*</i>商品状态</label>
-                  <div class="col-sm-2">
-                    <input type="radio" name="state" checked  value="1">开启(有货)
-                  </div>
-                  <div class="col-sm-2">
-                    <input type="radio" name="state" value="0">关闭(缺货)
+                  <div class="col-sm-4">
+                    <select name="state" class="form-control" id="state">
+                      <option value="1" selected>开启(有货)</option>
+                      <option value="0">关闭(缺货)</option>
+                    </select>
                   </div>
                   <span class="col-sm-4 text-danger form_error" id="state_txt"></span>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-3 control-label"><i style="color:red;">*</i>商品积分兑换</label>
-                  <div class="col-sm-2">
-                    <input type="radio" name="grade" checked  value="1">是
-                  </div>
-                  <div class="col-sm-2">
-                    <input type="radio" name="grade" value="0">否
+                  <div class="col-sm-4">
+                    <select name="grade" class="form-control" id="grade">
+                      <option value="1" selected>是</option>
+                      <option value="0">否</option>
+                    </select>
                   </div>
                   <span class="col-sm-4 text-danger form_error" id="grade_txt"></span>
                 </div>
