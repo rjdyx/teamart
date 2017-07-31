@@ -439,6 +439,7 @@ class OrderController extends Controller
 		$arr['timeStamp'] = time();
 		$arr['package'] = "Sign=WXPay";
 		$arr['sign'] = $this->getSign($arr, $key);
+		$arr['prepay_id'] = $data['prepay_id'];
 		return $arr;
 	}
 

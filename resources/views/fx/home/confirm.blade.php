@@ -28,7 +28,7 @@
 	           "appId" :res.appid,  //公众号appid       
 	           "timeStamp":res.timeStamp, //时间戳       
 	           "nonceStr":res.nonceStr, //随机串       
-	           "package":res.package,       
+	           "package":'prepay_id='+res.prepayId,       
 	           "signType":"MD5",//微信签名方式：       
 	           "paySign":res.sign //微信签名   
        		}
