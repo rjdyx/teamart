@@ -390,19 +390,18 @@ class OrderController extends Controller
 	}
 
 	const APPID = 'wxdaa4107ed552fdcb';
-	const APPSECRET = '449a412c0ac4bc8c8fc275f816c6c794';
+	const APPSECRET = '449a412c0ac4bc8c8fc275f816c6c794';//微信公众号key
 
 	public function payOrder() 
 	{	
 
 		$unifiedOrder = Array();
 		$url = 'https://api.mch.weixin.qq.com/pay/unifiedorder';//统一下单地址
-		// $key = '449a412c0ac4bc8c8fc275f816c6c794';//微信公众号key
-		$key = 'guosenlinmishishenqing1363221448';//商户密匙key
+		$key = 'guosenlinmishishenqing13632214480';//商户密匙key
 		$appid = 'wxdaa4107ed552fdcb';//微信公众号id
 		$unifiedOrder["appid"] = $appid;//微信公众号id
 		$unifiedOrder["mch_id"] = 1387257002;//商户号
-		$unifiedOrder["body"] = 'miaoshu'; //商品描述
+		$unifiedOrder["body"] = 's'; //商品描述
 		// $unifiedOrder["device_info"] = 1000; //设备号（非必填）
 		$unifiedOrder["nonce_str"] = $this->createNoncestr();//随机字符串
 	    $unifiedOrder["sign"] = $this->getSign($unifiedOrder, $key);//签名
@@ -413,9 +412,8 @@ class OrderController extends Controller
 		// $unifiedOrder["trade_type"] = "MWEB";//交易类型(H5)
 		// $unifiedOrder["trade_type"] = "NATIVE";//交易类型(扫码)
 		$unifiedOrder["trade_type"] = "JSAPI";//交易类型(微信内)
-		return $unifiedOrder["openid"] = $this->GetOpenid($appid, $url);//微信openid
+		$unifiedOrder["openid"] = $this->GetOpenid($appid, $url);//微信openid
 
-				// print_r($unifiedOrder);die;
 		$xml = $this->arrayToXml($unifiedOrder);
 		$returnXml = $this->postXmlCurl($xml,$url);
 		$arr = json_decode(json_encode(simplexml_load_string($returnXml,'SimpleXMLElement', LIBXML_NOCDATA)),true);
