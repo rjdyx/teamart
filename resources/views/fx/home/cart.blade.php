@@ -274,7 +274,7 @@
     @include("layouts.header-info")
     
     <div class="cart relative container">
-        <div class="cart_container">
+        <div class="cart_container w-100 h-100">
             <div class="cart_list">
                 <!-- 收藏商品结构 -->
             </div>
