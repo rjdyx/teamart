@@ -155,46 +155,45 @@
 	@include("layouts.backIndex")
 	
 	<?php
-		include_once str_replace("\\","/",public_path())."/WPay/WxPayPubHelper/WxPayPubHelper.php";
-		//使用统一支付接口
-		$unifiedOrder = new UnifiedOrder_pub();
-		//自定义订单号，此处仅作举例
-		$timeStamp = time();
-		$out_trade_no = WxPayConf_pub::APPID."$timeStamp"; 
-		$unifiedOrder->setParameter("appid",'gh_745075ef89da');//微信公众号id
-		$unifiedOrder->setParameter("mch_id",1387257002);//商户号
-		$unifiedOrder->setParameter("out_trade_no",'FX201702012336');//商品订单号 
-		$unifiedOrder->setParameter("total_fee",0.01);//总金额
-		$unifiedOrder->setParameter("notify_url",WxPayConf_pub::NOTIFY_URL);//通知地址 
-		$unifiedOrder->setParameter("trade_type","MWEB");//交易类型
-		$unifiedOrder->setParameter("body",'微信购买'); //商品描述
+		// require_once str_replace("\\","/",public_path())."/wxPay/lib/WxPay.Api.php";
+		// require_once str_replace("\\","/",public_path())."/wxPay/example/WxPay.JsApiPay.php";
+		// require_once str_replace("\\","/",public_path()).'/wxPay/example/log.php';
 
-		$scene_info = "{'h5_info': {'type': 'Wap', 'wap_url': ".$_SERVER['HTTP_HOST'].", 'wap_name': '茶沁轩'}}";
-		$unifiedOrder->setParameter("scene_info",$scene_info);//场景信息
+		// //初始化日志
+		// $logHandler= new CLogFileHandler("../logs/".date('Y-m-d').'.log');
+		// $log = Log::Init($logHandler, 15);
 
-		// $unifiedOrder->setParameter("sub_mch_id","1444913102");//交易类型
+		// //打印输出数组信息
+		// function printf_info($data)
+		// {
+		//     foreach($data as $key=>$value){
+		//         echo "<font color='#00ff55;'>$key</font> : $value <br/>";
+		//     }
+		// }
 
-		//获取统一支付接口结果
-		$unifiedOrderResult = $unifiedOrder->getResult();
-		//商户根据实际情况设置相应的处理流程
-		if ($unifiedOrderResult["return_code"] == "FAIL") 
-		{
-		    //商户自行增加处理流程
-		    echo "通信出错：".$unifiedOrderResult['return_msg']."<br>";
-		}
-		elseif($unifiedOrderResult["result_code"] == "FAIL")
-		{
-		    //商户自行增加处理流程
-		    echo "错误代码：".$unifiedOrderResult['err_code']."<br>";
-		    echo "错误代码描述：".$unifiedOrderResult['err_code_des']."<br>";
-		}
-		elseif($unifiedOrderResult["code_url"] != NULL)
-		{
-		    //从统一支付接口获取到code_url
-		    $code_url = $unifiedOrderResult["code_url"];
-		    //商户自行增加处理流程
-		    //......
-		}
+		// //①、获取用户openid
+		// $tools = new JsApiPay();
+		// $openId = $tools->GetOpenid();
+
+		// //②、统一下单
+		// $input = new WxPayUnifiedOrder();
+		// $input->SetBody("test");
+		// $input->SetAttach("test");
+		// $input->SetOut_trade_no(WxPayConfig::MCHID.date("YmdHis"));
+		// $input->SetTotal_fee("1");
+		// $input->SetTime_start(date("YmdHis"));
+		// $input->SetTime_expire(date("YmdHis", time() + 600));
+		// $input->SetGoods_tag("test");
+		// $input->SetNotify_url("http://paysdk.weixin.qq.com/example/notify.php");
+		// $input->SetTrade_type("JSAPI");
+		// $input->SetOpenid($openId);
+		// $order = WxPayApi::unifiedOrder($input);
+		// echo '<font color="#f00"><b>统一下单支付单信息</b></font><br/>';
+		// printf_info($order);
+		// $jsApiParameters = $tools->GetJsApiParameters($order);
+
+		// //获取共享收货地址js函数参数
+		// $editAddress = $tools->GetEditAddressParameters();
 	?>
 	<div class="container confirm relative">
 		<div class="confirm_address relative w-100 mb-20 express">
@@ -297,7 +296,7 @@
 				合计总金额：<span class="price all-count">&yen;0.00</span>
 			</div>
 			<div class="confirm_bottom_submit pull-left">
-				<a href="javascript:;" class="white">提交订单</a>
+				<a href="{{url('')}}/home/payOrder" class="white">提交订单</a>
 			</div>
 		</div>
 	</div>

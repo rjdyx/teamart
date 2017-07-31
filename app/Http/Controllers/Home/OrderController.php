@@ -389,20 +389,32 @@ class OrderController extends Controller
 		return $datas;
 	}
 
+	const APPID = 'wxdaa4107ed552fdcb';
+	const APPSECRET = '449a412c0ac4bc8c8fc275f816c6c794';
+
 	public function payOrder() 
 	{		
 		$unifiedOrder = Array();
-		$key = '449a412c0ac4bc8c8fc275f816c6c794';
-		$url = 'https://api.mch.weixin.qq.com/pay/unifiedorder';
-		$unifiedOrder["appid"] = 'wxdaa4107ed552fdcb';//微信公众号id
+		$url = 'https://api.mch.weixin.qq.com/pay/unifiedorder';//统一下单地址
+		// $key = '449a412c0ac4bc8c8fc275f816c6c794';//微信公众号key
+		$key = 'guosenlinmishishenqing1363221448';//商户密匙key
+		$appid = 'wxdaa4107ed552fdcb';//微信公众号id
+		$unifiedOrder["appid"] = $appid;//微信公众号id
 		$unifiedOrder["mch_id"] = 1387257002;//商户号
-		$unifiedOrder["body"] = '微信购买'; //商品描述
+		$unifiedOrder["body"] = 'miaoshu'; //商品描述
+		// $unifiedOrder["device_info"] = 1000; //设备号（非必填）
 		$unifiedOrder["nonce_str"] = $this->createNoncestr();//随机字符串
 	    $unifiedOrder["sign"] = $this->getSign($unifiedOrder, $key);//签名
 		$unifiedOrder["out_trade_no"] ='FX201702012336';//商品订单号 
-		$unifiedOrder["total_fee"] = 0.01;//总金额
-		$unifiedOrder["notify_url"] = 'www.fx.com';//通知地址 
-		$unifiedOrder["trade_type"] = "MWEB";//交易类型
+		$unifiedOrder["total_fee"] = 1;//总金额(单位分)
+		$unifiedOrder["notify_url"] = 'fx.caishi360.com';//通知地址 
+		$unifiedOrder["spbill_create_ip"] = '192.168.136.10';//设备ip 
+		// $unifiedOrder["trade_type"] = "MWEB";//交易类型(H5)
+		// $unifiedOrder["trade_type"] = "NATIVE";//交易类型(扫码)
+		$unifiedOrder["trade_type"] = "JSAPI";//交易类型(微信内)
+		$unifiedOrder["openid"] = $this->GetOpenid($appid, $url);//微信openid
+
+				// print_r($unifiedOrder);die;
 		$xml = $this->arrayToXml($unifiedOrder);
 		$returnXml = $this->postXmlCurl($xml,$url);
 		$arr = json_decode(json_encode(simplexml_load_string($returnXml,'SimpleXMLElement', LIBXML_NOCDATA)),true);
@@ -426,11 +438,11 @@ class OrderController extends Controller
     {
         $xml = "<xml>";
         foreach ($arr as $key=>$val) {
-        	if (is_numeric($val)) {
-        	 	$xml.="<".$key.">".$val."</".$key.">"; 
-        	}else{
+        	// if (is_numeric($val)) {
+        	 	// $xml.="<".$key.">".$val."</".$key.">"; 
+        	// }else{
 				$xml.="<".$key."><![CDATA[".$val."]]></".$key.">";
-			}  
+			// }  
         }
         $xml.="</xml>";
         return $xml;
@@ -442,16 +454,13 @@ class OrderController extends Controller
 		foreach ($Obj as $k => $v) {
 			$Parameters[$k] = $v;
 		}
-		//签名步骤一：按字典序排序参数
 		ksort($Parameters);
-		$String = $this->formatBizQueryParaMap($Parameters, false);
-		//签名步骤二：在string后加入KEY
-		$String = $String."&key=".$key;
-		//签名步骤三：MD5加密
-		$String = md5($String);
-		//签名步骤四：所有字符转为大写
-		$result_ = strtoupper($String);
-		return $result_;
+		$String = $this->formatBizQueryParaMap($Parameters, false);//签名步骤一：按字典序排序参数
+		$String = $String."&key=".$key;//签名步骤二：在string后加入KEY
+		$String = MD5($String);//签名步骤三：MD5加密
+		$result = strtoupper($String);//签名步骤四：所有字符转为大写
+		// $result = hash_hmac("sha256", $String, $key); //注：HMAC-SHA256签名方式
+		return $result;
 	}
 
 	//格式化参数，签名过程需要使用
@@ -510,5 +519,119 @@ class OrderController extends Controller
 			curl_close($ch);
 			return false;
 		}
+	}
+
+	/**
+	 * 
+	 * 通过跳转获取用户的openid，跳转流程如下：
+	 * 1、设置自己需要调回的url及其其他参数，跳转到微信服务器https://open.weixin.qq.com/connect/oauth2/authorize
+	 * 2、微信服务处理完成之后会跳转回用户redirect_uri地址，此时会带上一些参数，如：code
+	 * 
+	 * @return 用户的openid
+	 */
+	public function GetOpenid()
+	{
+		//通过code获得openid
+		if (!isset($_GET['code'])){
+			//触发微信返回code码
+			$baseUrl = urlencode('http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].$_SERVER['QUERY_STRING']);
+			$url = $this->__CreateOauthUrlForCode($baseUrl);
+			Header("Location: $url");
+			exit();
+		} else {
+			//获取code码，以获取openid
+		    $code = $_GET['code'];
+			$openid = $this->getOpenidFromMp($code);
+			return $openid;
+		}
+	}
+
+	/**
+	 * 
+	 * 构造获取code的url连接
+	 * @param string $redirectUrl 微信服务器回跳的url，需要url编码
+	 * 
+	 * @return 返回构造好的url
+	 */
+	private function __CreateOauthUrlForCode($redirectUrl)
+	{
+		$urlObj["appid"] = $this::APPID;
+		$urlObj["redirect_uri"] = "$redirectUrl";
+		$urlObj["response_type"] = "code";
+		$urlObj["scope"] = "snsapi_base";
+		$urlObj["state"] = "STATE"."#wechat_redirect";
+		$bizString = $this->ToUrlParams($urlObj);
+		return "https://open.weixin.qq.com/connect/oauth2/authorize?".$bizString;
+	}
+
+	/**
+	 * 
+	 * 拼接签名字符串
+	 * @param array $urlObj
+	 * 
+	 * @return 返回已经拼接好的字符串
+	 */
+	private function ToUrlParams($urlObj)
+	{
+		$buff = "";
+		foreach ($urlObj as $k => $v)
+		{
+			if($k != "sign"){
+				$buff .= $k . "=" . $v . "&";
+			}
+		}
+		
+		$buff = trim($buff, "&");
+		return $buff;
+	}
+
+	/**
+	 * 
+	 * 通过code从工作平台获取openid机器access_token
+	 * @param string $code 微信跳转回来带上的code
+	 * 
+	 * @return openid
+	 */
+	public function GetOpenidFromMp($code, $host="0.0.0.0", $port=0)
+	{
+		$url = $this->__CreateOauthUrlForOpenid($code);
+		//初始化curl
+		$ch = curl_init();
+		//设置超时
+		curl_setopt($ch, CURLOPT_TIMEOUT, $this->curl_timeout);
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER,FALSE);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST,FALSE);
+		curl_setopt($ch, CURLOPT_HEADER, FALSE);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+		if($host != "0.0.0.0" && $port!= 0) {
+			curl_setopt($ch,CURLOPT_PROXY, $host);
+			curl_setopt($ch,CURLOPT_PROXYPORT, $port);
+		}
+		//运行curl，结果以jason形式返回
+		$res = curl_exec($ch);
+		curl_close($ch);
+		//取出openid
+		$data = json_decode($res,true);
+		$this->data = $data;
+		$openid = $data['openid'];
+		return $openid;
+	}
+
+	/**
+	 * 
+	 * 构造获取open和access_toke的url地址
+	 * @param string $code，微信跳转带回的code
+	 * 
+	 * @return 请求的url
+	 */
+	private function __CreateOauthUrlForOpenid($code)
+	{
+		$urlObj["appid"] = $this::APPID;
+		$urlObj["secret"] = $this::APPSECRET;
+		$urlObj["code"] = $code;
+		$urlObj["grant_type"] = "authorization_code";
+		$bizString = $this->ToUrlParams($urlObj);
+		return "https://api.weixin.qq.com/sns/oauth2/access_token?".$bizString;
 	}
 }
