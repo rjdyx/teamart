@@ -12,6 +12,7 @@
 		//提交订单
 		$('.confirm_bottom_submit').click(function(){
 			ajax('get', '/home/payOrder').then(function (res) {
+				// console.log(res)
 				if(res.return_code == 'SUCCESS') {
 					jsApiCall(res)
 				} else {
@@ -31,6 +32,7 @@
 	           "signType":"MD5",//微信签名方式：       
 	           "paySign":res.sign //微信签名   
        		}
+       		// console.log(data)
 			WeixinJSBridge.invoke(
 				'getBrandWCPayRequest',data,
 				function(res){
