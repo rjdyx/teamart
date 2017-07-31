@@ -394,7 +394,7 @@ class OrderController extends Controller
 
 	public function payOrder() 
 	{	
-	
+
 		$unifiedOrder = Array();
 		$url = 'https://api.mch.weixin.qq.com/pay/unifiedorder';//统一下单地址
 		// $key = '449a412c0ac4bc8c8fc275f816c6c794';//微信公众号key
@@ -599,7 +599,7 @@ class OrderController extends Controller
 		//初始化curl
 		$ch = curl_init();
 		//设置超时
-		curl_setopt($ch, CURLOPT_TIMEOUT, $this->curl_timeout);
+		curl_setopt($ch, CURLOPT_TIMEOUT, 10);
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER,FALSE);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST,FALSE);
