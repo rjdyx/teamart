@@ -24,20 +24,21 @@
 		{
 			var time = Date.parse(new Date());
 			var data = {  
-	           "appId" :res.id,  //公众号appid       
+	           "appId" :res.appid,  //公众号appid       
 	           "timeStamp":time,         //时间戳，自1970年以来的秒数       
 	           "nonceStr":res.nonce_str, //随机串       
 	           "package":"prepay_id="+res.prepay_id,       
 	           "signType":"MD5",//微信签名方式：       
 	           "paySign":res.sign //微信签名   
        		}
-			WeixinJSBridge.invoke(
-				'getBrandWCPayRequest',data,
-				function(res){
-					WeixinJSBridge.log(res.err_msg);
-					alert(res.err_code+res.err_desc+res.err_msg);
-				}
-			);
+       		console.log(data)
+			// WeixinJSBridge.invoke(
+			// 	'getBrandWCPayRequest',data,
+			// 	function(res){
+			// 		WeixinJSBridge.log(res.err_msg);
+			// 		alert(res.err_code+res.err_desc+res.err_msg);
+			// 	}
+			// );
 		}
 		var delivery_price = {{$lists->max('delivery_price')}}
 		var grade_price = 0;
@@ -280,7 +281,7 @@
 				合计总金额：<span class="price all-count">&yen;0.00</span>
 			</div>
 			<div class="confirm_bottom_submit pull-left">
-				<a href="javascript:void();" class="white">提交订单</a>
+				<a href="javascript:;" class="white">提交订单</a>
 			</div>
 		</div>
 	</div>
