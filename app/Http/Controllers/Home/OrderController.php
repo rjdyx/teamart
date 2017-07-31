@@ -391,7 +391,7 @@ class OrderController extends Controller
 
 	const APPID = 'wxdaa4107ed552fdcb';
 	const APPSECRET = '449a412c0ac4bc8c8fc275f816c6c794';//微信公众号key
-
+	const MCHID = "1387257002";
 	public function payOrder() 
 	{	
 
@@ -418,11 +418,28 @@ class OrderController extends Controller
 
 		$xml = $this->arrayToXml($unifiedOrder);
 		$returnXml = $this->postXmlCurl($xml,$url);
-		$arr = json_decode(json_encode(simplexml_load_string($returnXml,'SimpleXMLElement', LIBXML_NOCDATA)),true);
-		$arr['rand'] = $this->createNoncestr();//再次生成随机字符串
-		return $arr;
+		$data = json_decode(json_encode(simplexml_load_string($returnXml,'SimpleXMLElement', LIBXML_NOCDATA)),true);
+		if ($data['return_code'] != 'SUCCESS') return 'false';
+		$data = $this->zycgetSign($data, $key);
+
+		return $data;
 		echo "<pre>";
-		print_r($arr);die;	
+		print_r($data);die;	
+	}
+
+	//二次签名
+	public function zycgetSign($data, $key)
+	{
+		$arr = array();
+		$rand = $this->createNoncestr();//再次生成随机字符串
+		$arr['appid'] = $this::APPID;
+		$arr['partnerId'] = $this::MCHID;
+		$arr['prepayId'] = $data['prepay_id'];
+		$arr['nonceStr'] = $rand;
+		$arr['timeStamp'] = time();
+		$arr['package'] = "Sign=WXPay";
+		$arr['sign'] = $this->getSign($arr, $key);
+		return $arr;
 	}
 
 	//产生随机字符串，不长于32位

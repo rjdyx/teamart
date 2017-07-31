@@ -13,7 +13,7 @@
 		$('.confirm_bottom_submit').click(function(){
 			ajax('get', '/home/payOrder').then(function (res) {
 				// console.log(res)
-				if(res.return_code == 'SUCCESS') {
+				if(res.return_code != 'false') {
 					jsApiCall(res)
 				} else {
 					prompt.message('服务器忙，稍后再试！')
@@ -26,9 +26,9 @@
 			var time = Date.parse(new Date());
 			var data = {  
 	           "appId" :res.appid,  //公众号appid       
-	           "timeStamp":time,         //时间戳，自1970年以来的秒数       
-	           "nonceStr":res.rand, //随机串       
-	           "package":"prepay_id="+res.prepay_id,       
+	           "timeStamp":res.timeStamp, //时间戳       
+	           "nonceStr":res.nonceStr, //随机串       
+	           "package":res.package,       
 	           "signType":"MD5",//微信签名方式：       
 	           "paySign":res.sign //微信签名   
        		}
