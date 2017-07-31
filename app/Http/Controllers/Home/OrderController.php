@@ -437,7 +437,7 @@ class OrderController extends Controller
 		$arr['nonceStr'] = $this->createNoncestr();//再次生成随机字符串
 		$arr['timeStamp'] = time();//当前时间戳
 		// $arr['package'] = "Sign=WXPay";
-		$arr['package'] = 'prepay_id='.$data['prepayId'];//订单详情扩展字符串
+		$arr['package'] = 'prepay_id='.$data['prepay_id'];//订单详情扩展字符串
 		$arr['sign'] = $this->getSign($arr, $key);//生成签名
 		return $arr;
 	}
