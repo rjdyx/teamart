@@ -9,11 +9,27 @@
 	@parent
 
 	<script>
-
-		ajax('get', '/home/payOrder').then(function (res) {
-			console.log(res)
+		//提交订单
+		$('.confirm_bottom_submit').click(function(){
+			ajax('get', '/home/payOrder').then(function (res) {
+				if(res.return_code == 'SUCCESS') {
+					jsApiCall(res)
+				} else {
+					prompt.message('服务器忙，稍后再试！')
+				}
+			});
 		});
 
+		function jsApiCall(data)
+		{
+			WeixinJSBridge.invoke(
+				'getBrandWCPayRequest',data,
+				function(res){
+					WeixinJSBridge.log(res.err_msg);
+					alert(res.err_code+res.err_desc+res.err_msg);
+				}
+			);
+		}
 		var delivery_price = {{$lists->max('delivery_price')}}
 		var grade_price = 0;
 		$(function () {
@@ -132,11 +148,6 @@
 				}
 			});
 		}
-
-		//提交订单
-		$('.confirm_bottom_submit').click(function(){
-			prompt.message('提交订单！')
-		});
 
 		//积分抵扣金额
 		$("#gradeChange").on('change', function(){

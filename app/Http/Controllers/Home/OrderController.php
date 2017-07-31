@@ -402,24 +402,24 @@ class OrderController extends Controller
 		$unifiedOrder["appid"] = $appid;//微信公众号id
 		$unifiedOrder["mch_id"] = "1387257002";//商户号
 		$unifiedOrder["body"] = "s"; //商品描述
-		$unifiedOrder["device_info"] = "WEB"; //设备号（非必填）
 		$unifiedOrder["nonce_str"] = $this->createNoncestr();//随机字符串
-	    $unifiedOrder["sign"] = $this->getSign($unifiedOrder, $key);//签名
-	    $unifiedOrder["sign_type"] = "MD5";//签名
-		$unifiedOrder["out_trade_no"] ="FX201702012336";//商品订单号 
+		$unifiedOrder["out_trade_no"] ="FX20170".rand(100,1000);//商品订单号 
 		$unifiedOrder["total_fee"] = 1;//总金额(单位分)
 		$baseUrl = "http://".$_SERVER["HTTP_HOST"].$_SERVER["REQUEST_URI"].$_SERVER["QUERY_STRING"];
 		$unifiedOrder["notify_url"] = $baseUrl;//通知地址 
-		// $unifiedOrder["spbill_create_ip"] = $_SERVER["REMOTE_ADDR"];//设备ip
-		$unifiedOrder["spbill_create_ip"] = '119.29.34.160';//设备ip
+		$unifiedOrder["spbill_create_ip"] = $_SERVER["REMOTE_ADDR"];//设备ip
+		// $unifiedOrder["spbill_create_ip"] = '119.29.34.160';//设备ip
 		$unifiedOrder["trade_type"] = "JSAPI";//交易类型(微信内)
 		// $unifiedOrder["trade_type"] = "MWEB";//交易类型(H5)
 		// $unifiedOrder["trade_type"] = "NATIVE";//交易类型(扫码)
-		return $unifiedOrder["openid"] = $this->GetOpenid($appid, $url);//微信openid
+		// $unifiedOrder["openid"] = $this->GetOpenid($appid, $url);//微信openid
+		$unifiedOrder["openid"] = 'o7t83wmZOMLxMQuG-eSMOZnePSIE';//微信openid
+	    $unifiedOrder["sign"] = $this->getSign($unifiedOrder, $key);//签名
 
-		return $xml = $this->arrayToXml($unifiedOrder);
+		$xml = $this->arrayToXml($unifiedOrder);
 		$returnXml = $this->postXmlCurl($xml,$url);
 		$arr = json_decode(json_encode(simplexml_load_string($returnXml,'SimpleXMLElement', LIBXML_NOCDATA)),true);
+		return $arr;
 		echo "<pre>";
 		print_r($arr);die;	
 	}
@@ -438,6 +438,7 @@ class OrderController extends Controller
 	//array转xml
 	public function arrayToXml($arr)
     {
+    	ksort($arr);
         $xml = "<xml>";
         foreach ($arr as $key=>$val) {
         	if (is_numeric($val)) {
@@ -453,12 +454,10 @@ class OrderController extends Controller
 	//生成签名
 	public function getSign($Obj, $key)
 	{
-		foreach ($Obj as $k => $v) {
-			$Parameters[$k] = $v;
-		}
-		ksort($Parameters);
-		$String = $this->formatBizQueryParaMap($Parameters, false);//签名步骤一：按字典序排序参数
-		return $String = $String."&key=".$key;//签名步骤二：在string后加入KEY
+		ksort($Obj);
+		$String = $this->ToUrlParams($Obj);//签名步骤一：按字典序排序参数
+		// $String = $this->formatBizQueryParaMap($Parameters, false);//签名步骤一：按字典序排序参数
+		$String = $String."&key=".$key;//签名步骤二：在string后加入KEY
 		$String = MD5($String);//签名步骤三：MD5加密
 		$result = strtoupper($String);//签名步骤四：所有字符转为大写
 		// $result = hash_hmac("sha256", $String, $key); //注：HMAC-SHA256签名方式
@@ -636,4 +635,34 @@ class OrderController extends Controller
 		$bizString = $this->ToUrlParams($urlObj);
 		return "https://api.weixin.qq.com/sns/oauth2/access_token?".$bizString;
 	}
+
+	/**
+	 * 错误代码
+	 * @param  $code 服务器输出的错误代码
+	 * return string
+	*/
+    public function error_code( $code )
+    {
+        $errList = array(
+            'NOAUTH'                =>  '商户未开通此接口权限',
+            'NOTENOUGH'             =>  '用户帐号余额不足',
+            'ORDERNOTEXIST'         =>  '订单号不存在',
+            'ORDERPAID'             =>  '商户订单已支付，无需重复操作',
+            'ORDERCLOSED'           =>  '当前订单已关闭，无法支付',
+            'SYSTEMERROR'           =>  '系统错误!系统超时',
+            'APPID_NOT_EXIST'       =>  '参数中缺少APPID',
+            'MCHID_NOT_EXIST'       =>  '参数中缺少MCHID',
+            'APPID_MCHID_NOT_MATCH' =>  'appid和mch_id不匹配',
+            'LACK_PARAMS'           =>  '缺少必要的请求参数',
+            'OUT_TRADE_NO_USED'     =>  '同一笔交易不能多次提交',
+            'SIGNERROR'             =>  '参数签名结果不正确',
+            'XML_FORMAT_ERROR'      =>  'XML格式错误',
+            'REQUIRE_POST_METHOD'   =>  '未使用post传递参数 ',
+            'POST_DATA_EMPTY'       =>  'post数据不能为空',
+            'NOT_UTF8'              =>  '未使用指定编码格式'
+        ); 
+        if( array_key_exists( $code , $errList ) ){
+            return $errList[$code];
+        }
+    }
 }
