@@ -393,7 +393,8 @@ class OrderController extends Controller
 	const APPSECRET = '449a412c0ac4bc8c8fc275f816c6c794';
 
 	public function payOrder() 
-	{		
+	{	
+	return $baseUrl = urlencode('http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].$_SERVER['QUERY_STRING']);	
 		$unifiedOrder = Array();
 		$url = 'https://api.mch.weixin.qq.com/pay/unifiedorder';//统一下单地址
 		// $key = '449a412c0ac4bc8c8fc275f816c6c794';//微信公众号key
