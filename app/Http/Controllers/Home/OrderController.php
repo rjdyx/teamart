@@ -400,21 +400,24 @@ class OrderController extends Controller
 		$key = 'GuoSenLinMiSiShenQing13632214480';//商户密匙key
 		$appid = 'wxdaa4107ed552fdcb';//微信公众号id
 		$unifiedOrder["appid"] = $appid;//微信公众号id
-		$unifiedOrder["mch_id"] = 1387257002;//商户号
-		$unifiedOrder["body"] = 's'; //商品描述
-		$unifiedOrder["device_info"] = 1000; //设备号（非必填）
+		$unifiedOrder["mch_id"] = "1387257002";//商户号
+		$unifiedOrder["body"] = "s"; //商品描述
+		$unifiedOrder["device_info"] = "WEB"; //设备号（非必填）
 		$unifiedOrder["nonce_str"] = $this->createNoncestr();//随机字符串
 	    $unifiedOrder["sign"] = $this->getSign($unifiedOrder, $key);//签名
-		$unifiedOrder["out_trade_no"] ='FX201702012336';//商品订单号 
+	    $unifiedOrder["sign_type"] = "MD5";//签名
+		$unifiedOrder["out_trade_no"] ="FX201702012336";//商品订单号 
 		$unifiedOrder["total_fee"] = 1;//总金额(单位分)
-		$unifiedOrder["notify_url"] = 'fx.caishi360.com';//通知地址 
-		$unifiedOrder["spbill_create_ip"] = '192.168.136.10';//设备ip 
+		$baseUrl = "http://".$_SERVER["HTTP_HOST"].$_SERVER["REQUEST_URI"].$_SERVER["QUERY_STRING"];
+		$unifiedOrder["notify_url"] = $baseUrl;//通知地址 
+		// $unifiedOrder["spbill_create_ip"] = $_SERVER["REMOTE_ADDR"];//设备ip
+		$unifiedOrder["spbill_create_ip"] = '119.29.34.160';//设备ip
+		$unifiedOrder["trade_type"] = "JSAPI";//交易类型(微信内)
 		// $unifiedOrder["trade_type"] = "MWEB";//交易类型(H5)
 		// $unifiedOrder["trade_type"] = "NATIVE";//交易类型(扫码)
-		$unifiedOrder["trade_type"] = "JSAPI";//交易类型(微信内)
-		$unifiedOrder["openid"] = $this->GetOpenid($appid, $url);//微信openid
+		return $unifiedOrder["openid"] = $this->GetOpenid($appid, $url);//微信openid
 
-		$xml = $this->arrayToXml($unifiedOrder);
+		return $xml = $this->arrayToXml($unifiedOrder);
 		$returnXml = $this->postXmlCurl($xml,$url);
 		$arr = json_decode(json_encode(simplexml_load_string($returnXml,'SimpleXMLElement', LIBXML_NOCDATA)),true);
 		echo "<pre>";
@@ -455,7 +458,7 @@ class OrderController extends Controller
 		}
 		ksort($Parameters);
 		$String = $this->formatBizQueryParaMap($Parameters, false);//签名步骤一：按字典序排序参数
-		$String = $String."&key=".$key;//签名步骤二：在string后加入KEY
+		return $String = $String."&key=".$key;//签名步骤二：在string后加入KEY
 		$String = MD5($String);//签名步骤三：MD5加密
 		$result = strtoupper($String);//签名步骤四：所有字符转为大写
 		// $result = hash_hmac("sha256", $String, $key); //注：HMAC-SHA256签名方式
@@ -485,18 +488,18 @@ class OrderController extends Controller
 	}
 
 	//以post方式提交xml到对应的接口url
-	public function postXmlCurl($xml, $url, $second=30)
+	public function postXmlCurl($xml, $url)
 	{	
         //初始化curl        
        	$ch = curl_init();
 		//设置超时
-		curl_setopt($ch, CURLOPT_TIMEOUT, $second);
+		curl_setopt($ch, CURLOPT_TIMEOUT, 30);
         //这里设置代理，如果有的话
         //curl_setopt($ch,CURLOPT_PROXY, '8.8.8.8');
         //curl_setopt($ch,CURLOPT_PROXYPORT, 8080);
-        curl_setopt($ch,CURLOPT_URL, $url);
-        curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,FALSE);
-        curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,FALSE);
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
 		//设置header
 		curl_setopt($ch, CURLOPT_HEADER, FALSE);
 		//要求结果为字符串且输出到屏幕上

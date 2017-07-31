@@ -10,6 +10,10 @@
 
 	<script>
 
+		ajax('get', '/home/payOrder').then(function (res) {
+			console.log(res)
+		});
+
 		var delivery_price = {{$lists->max('delivery_price')}}
 		var grade_price = 0;
 		$(function () {
