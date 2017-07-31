@@ -413,7 +413,7 @@ class OrderController extends Controller
 		// $unifiedOrder["trade_type"] = "MWEB";//交易类型(H5)
 		// $unifiedOrder["trade_type"] = "NATIVE";//交易类型(扫码)
 		$unifiedOrder["trade_type"] = "JSAPI";//交易类型(微信内)
-		$unifiedOrder["openid"] = $this->GetOpenid($appid, $url);//微信openid
+		return $unifiedOrder["openid"] = $this->GetOpenid($appid, $url);//微信openid
 
 				// print_r($unifiedOrder);die;
 		$xml = $this->arrayToXml($unifiedOrder);
