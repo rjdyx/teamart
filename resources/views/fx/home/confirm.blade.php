@@ -311,7 +311,7 @@
 				合计总金额：<span class="price all-count">&yen;0.00</span>
 			</div>
 			<div class="confirm_bottom_submit pull-left">
-				<a href="{{url('')}}/home/payOrder" class="white">提交订单</a>
+				<a href="javascript:void();" class="white">提交订单</a>
 			</div>
 		</div>
 	</div>
