@@ -26,7 +26,7 @@
 			var data = {  
 	           "appId" :res.appid,  //公众号appid       
 	           "timeStamp":time,         //时间戳，自1970年以来的秒数       
-	           "nonceStr":res.nonce_str, //随机串       
+	           "nonceStr":res.rand, //随机串       
 	           "package":"prepay_id="+res.prepay_id,       
 	           "signType":"MD5",//微信签名方式：       
 	           "paySign":res.sign //微信签名   

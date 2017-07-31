@@ -412,13 +412,14 @@ class OrderController extends Controller
 		$unifiedOrder["trade_type"] = "JSAPI";//交易类型(微信内)
 		// $unifiedOrder["trade_type"] = "MWEB";//交易类型(H5)
 		// $unifiedOrder["trade_type"] = "NATIVE";//交易类型(扫码)
-		// $unifiedOrder["openid"] = $this->GetOpenid($appid, $url);//微信openid
-		$unifiedOrder["openid"] = 'o7t83wmZOMLxMQuG-eSMOZnePSIE';//微信openid
+		$unifiedOrder["openid"] = $this->GetOpenid($appid, $url);//微信openid
+		// $unifiedOrder["openid"] = 'o7t83wmZOMLxMQuG-eSMOZnePSIE';//微信openid
 	    $unifiedOrder["sign"] = $this->getSign($unifiedOrder, $key);//签名
 
 		$xml = $this->arrayToXml($unifiedOrder);
 		$returnXml = $this->postXmlCurl($xml,$url);
 		$arr = json_decode(json_encode(simplexml_load_string($returnXml,'SimpleXMLElement', LIBXML_NOCDATA)),true);
+		$arr['rand'] = $this->createNoncestr();//再次生成随机字符串
 		return $arr;
 		echo "<pre>";
 		print_r($arr);die;	
