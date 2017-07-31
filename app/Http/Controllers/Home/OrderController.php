@@ -397,7 +397,7 @@ class OrderController extends Controller
 
 		$unifiedOrder = Array();
 		$url = 'https://api.mch.weixin.qq.com/pay/unifiedorder';//统一下单地址
-		$key = 'guosenlinmisishenqing13632214480';//商户密匙key
+		$key = 'GuoSenLinMiSiShenQing13632214480';//商户密匙key
 		$appid = 'wxdaa4107ed552fdcb';//微信公众号id
 		$unifiedOrder["appid"] = $appid;//微信公众号id
 		$unifiedOrder["mch_id"] = 1387257002;//商户号
@@ -437,11 +437,11 @@ class OrderController extends Controller
     {
         $xml = "<xml>";
         foreach ($arr as $key=>$val) {
-        	// if (is_numeric($val)) {
-        	 	// $xml.="<".$key.">".$val."</".$key.">"; 
-        	// }else{
+        	if (is_numeric($val)) {
+        	 	$xml.="<".$key.">".$val."</".$key.">"; 
+        	}else{
 				$xml.="<".$key."><![CDATA[".$val."]]></".$key.">";
-			// }  
+			}  
         }
         $xml.="</xml>";
         return $xml;
