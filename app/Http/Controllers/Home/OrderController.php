@@ -431,15 +431,14 @@ class OrderController extends Controller
 	public function zycgetSign($data, $key)
 	{
 		$arr = array();
-		$rand = $this->createNoncestr();//再次生成随机字符串
-		$arr['appid'] = $this::APPID;
-		$arr['partnerId'] = $this::MCHID;
-		$arr['prepayId'] = $data['prepay_id'];
-		$arr['nonceStr'] = $rand;
-		$arr['timeStamp'] = time();
-		$arr['package'] = "Sign=WXPay";
-		$arr['sign'] = $this->getSign($arr, $key);
-		$arr['prepay_id'] = $data['prepay_id'];
+		$arr['appid'] = $this::APPID;//微信公众号id
+		$arr['partnerId'] = $this::MCHID;//商户号
+		$arr['prepayId'] = $data['prepay_id'];//预支付id
+		$arr['nonceStr'] = $this->createNoncestr();//再次生成随机字符串
+		$arr['timeStamp'] = time();//当前时间戳
+		// $arr['package'] = "Sign=WXPay";
+		$arr['package'] = 'prepay_id='.$data['prepayId'];//订单详情扩展字符串
+		$arr['sign'] = $this->getSign($arr, $key);//生成签名
 		return $arr;
 	}
 
