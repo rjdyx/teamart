@@ -397,12 +397,12 @@ class OrderController extends Controller
 
 		$unifiedOrder = Array();
 		$url = 'https://api.mch.weixin.qq.com/pay/unifiedorder';//统一下单地址
-		$key = 'guosenlinmishishenqing13632214480';//商户密匙key
+		$key = 'guosenlinmisishenqing13632214480';//商户密匙key
 		$appid = 'wxdaa4107ed552fdcb';//微信公众号id
 		$unifiedOrder["appid"] = $appid;//微信公众号id
 		$unifiedOrder["mch_id"] = 1387257002;//商户号
 		$unifiedOrder["body"] = 's'; //商品描述
-		// $unifiedOrder["device_info"] = 1000; //设备号（非必填）
+		$unifiedOrder["device_info"] = 1000; //设备号（非必填）
 		$unifiedOrder["nonce_str"] = $this->createNoncestr();//随机字符串
 	    $unifiedOrder["sign"] = $this->getSign($unifiedOrder, $key);//签名
 		$unifiedOrder["out_trade_no"] ='FX201702012336';//商品订单号 
