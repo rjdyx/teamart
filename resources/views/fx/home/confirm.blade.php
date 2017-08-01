@@ -22,7 +22,8 @@
 
 		function jsApiCall(data)
 		{
-       		console.log(data)
+       		alert(data)
+       		// console.log(data)
 			WeixinJSBridge.invoke('getBrandWCPayRequest', data, function(res){
 				WeixinJSBridge.log(res.err_msg);
 				alert(res.err_code+res.err_desc+res.err_msg);
