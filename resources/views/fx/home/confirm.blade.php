@@ -12,12 +12,16 @@
 		//提交订单
 		$('.confirm_bottom_submit').click(function(){
 			ajax('get', '/home/payOrder').then(function (res) {
+				// $("#Err").html(res)
 				if(res != 'false') {
 					jsApiCall(res)
 				} else {
 					prompt.message('服务器忙，稍后再试！')
 				}
-			});
+			}).catch(function (err) {
+				// $("#Err").html(err)
+                console.log(err)
+            });
 		});
 
 		function jsApiCall(data)
@@ -25,7 +29,8 @@
        		console.log(data)
 			WeixinJSBridge.invoke('getBrandWCPayRequest', data, function(res){
 				WeixinJSBridge.log(res.err_msg);
-				alert(res.err_code+res.err_desc+res.err_msg);
+				// alert(res.err_code+res.err_desc+res.err_msg);
+				alert(res);
 			});
 		}
 		var delivery_price = {{$lists->max('delivery_price')}}
@@ -215,6 +220,7 @@
 			</div>
 		@endforeach
 			<div class="confirm_container_sum w-100">
+				<!-- <div class="confirm_container_sum_row w-100" id="Err"></div> -->
 				<div class="confirm_container_sum_row w-100">
 					<a href="javascript:;" class="block clearfix J_show_type">
 						<span class="pull-left chayefont fz-18">配送方式</span>
