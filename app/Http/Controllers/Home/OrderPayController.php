@@ -30,7 +30,7 @@ class OrderPayController extends Controller
 
 	public function payOrder() 
 	{	
-		// return $this->GetOpenid();//微信openid
+		return $this->GetOpenid();//微信openid
 		/***** 1.初始化 *****/
 		$this->setSpce();
 
