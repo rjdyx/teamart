@@ -24,10 +24,10 @@
 		{
        		alert(data)
        		// console.log(data)
-			WeixinJSBridge.invoke('getBrandWCPayRequest', data, function(res){
-				WeixinJSBridge.log(res.err_msg);
-				alert(res.err_code+res.err_desc+res.err_msg);
-			});
+			// WeixinJSBridge.invoke('getBrandWCPayRequest', data, function(res){
+			// 	WeixinJSBridge.log(res.err_msg);
+			// 	alert(res.err_code+res.err_desc+res.err_msg);
+			// });
 		}
 		var delivery_price = {{$lists->max('delivery_price')}}
 		var grade_price = 0;
