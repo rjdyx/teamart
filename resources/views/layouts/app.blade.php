@@ -117,6 +117,7 @@
             })
         }
         $(function () {
+            FastClick.attach(document.body);
             prompt.init()
             // 返回按钮事件绑定
             $('.J_header_back').on('tap', function () {

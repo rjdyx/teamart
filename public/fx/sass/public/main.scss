@@ -397,6 +397,10 @@
 		}
 	}
 	.index_list {
+		h1 {
+			color: #333;
+			@extend %wrap;
+		}
 		p {
 			color: #787876;
 			@extend %wrap2;
@@ -967,7 +971,6 @@
 	height: calc(100% - 1rem);
 	background-color: #EEEFF1;
 	.cart_container {
-		height: calc(100% - 1rem);
 		overflow: auto;
 	}
 	.warpper {
@@ -983,6 +986,7 @@
 	}
 	.bottom_btn {
 		border-top: 0.01rem solid #DADADA;
+		height: 0.99rem;
 		background: #FFF;
 		.cart_bottom_selection, .cart_bottom_info, .cart_bottom_del, .cart_bottom_settle {
 			height: 1rem;
