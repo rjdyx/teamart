@@ -25,34 +25,46 @@ class OrderPayController extends Controller
 	const APPSECRET = '449a412c0ac4bc8c8fc275f816c6c794';//微信公众号key
 	const MCHID = "1387257002";//商户号
 	const KEY = "GuoSenLinMiSiShenQing13632214480";//商户密匙key
+	const URL = "https://api.mch.weixin.qq.com/pay/unifiedorder";//统一下单地址
 	protected $Datas = array();
 
 	public function payOrder() 
 	{	
-		$unifiedOrder = Array();
-		$url = 'https://api.mch.weixin.qq.com/pay/unifiedorder';//统一下单地址
-		$key = 'GuoSenLinMiSiShenQing13632214480';//商户密匙key
-		$appid = 'wxdaa4107ed552fdcb';//微信公众号id
-		$this->Datas["appid"] = $appid;//微信公众号id
-		$this->Datas["mch_id"] = "1387257002";//商户号
+		/***** 1.初始化 *****/
+		$this->setSpce();
+
+		/***** 2.签名 *****/
+	    $this->Datas["sign"] = $this->getSign();
+
+	    /***** 3.转换格式 (数组->XML) *****/
+		$xml = $this->arrayToXml($this->Datas);
+
+		/***** 4.统一下单请求 *****/
+		$returnXml = $this->postXmlCurl($xml, $this::URL);
+
+		/***** 5.返回结果处理 *****/
+		$res = json_decode(json_encode(simplexml_load_string($returnXml,'SimpleXMLElement', LIBXML_NOCDATA)),true);
+		if ($res['return_code'] != 'SUCCESS') return 'false';
+
+		/***** 6.再次签名 *****/
+		return $this->zycgetSign($res);
+	}
+
+	//初始化参数设置
+	public function setSpce()
+	{
+		$notify = "http://".$_SERVER["HTTP_HOST"].$_SERVER["REQUEST_URI"].$_SERVER["QUERY_STRING"];
+		$this->Datas["appid"] = $this::APPID;//微信公众号id
+		$this->Datas["mch_id"] = $this::MCHID;//商户号
 		$this->Datas["body"] = "s"; //商品描述
 		$this->Datas["nonce_str"] = $this->createNoncestr();//随机字符串
 		$this->Datas["out_trade_no"] ="FX20170".rand(100,1000);//商品订单号 
-		$this->Datas["total_fee"] = 1;//总金额(单位分)
-		$baseUrl = "http://".$_SERVER["HTTP_HOST"].$_SERVER["REQUEST_URI"].$_SERVER["QUERY_STRING"];
-		$this->Datas["notify_url"] = $baseUrl;//通知地址 
+		$this->Datas["total_fee"] = 1;//总金额(分)
+		$this->Datas["notify_url"] = $notify;//通知地址 
 		$this->Datas["spbill_create_ip"] = $_SERVER["REMOTE_ADDR"];//设备ip
-		$this->Datas["trade_type"] = "JSAPI";//交易类型(微信内)
-		// $this->Datas["trade_type"] = "MWEB";//交易类型(H5)
+		$this->Datas["trade_type"] = "JSAPI";//交易类型(H5:'MWEB')
 		// $this->Datas["openid"] = $this->GetOpenid();//微信openid
 		$this->Datas["openid"] = 'o7t83wmZOMLxMQuG-eSMOZnePSIE';//微信openid
-	    $this->Datas["sign"] = $this->getSign();//签名
-
-		$xml = $this->arrayToXml($this->Datas);
-		$returnXml = $this->postXmlCurl($xml,$url);
-		$res = json_decode(json_encode(simplexml_load_string($returnXml,'SimpleXMLElement', LIBXML_NOCDATA)),true);
-		if ($res['return_code'] != 'SUCCESS') return 'false';
-		return $this->zycgetSign($res);
 	}
 
 	//二次签名
@@ -65,7 +77,7 @@ class OrderPayController extends Controller
 		// $this->Datas['package'] = 'prepay_id='.$res['prepay_id'];//订单详情扩展字符串
 		// $this->Datas['paySign'] = $this->getSign();//生成签名	
 		// return json_encode($this->Datas);
-		// 
+
 		$arr = array();	
 		$arr['appid'] = $this::APPID;//商户号
 		$arr['partnerid'] = $this::MCHID;//商户号
@@ -74,7 +86,6 @@ class OrderPayController extends Controller
 		$arr['noncestr'] = $this->createNoncestr();//随机字符串
 		$arr['timestamp'] = time();//当前时间戳
 		$arr['sign'] = $this->getSign($arr);//生成签名	
-		// return $arr;
 		return json_encode($arr);
 	}
 
