@@ -29,8 +29,8 @@
        		console.log(data)
 			WeixinJSBridge.invoke('getBrandWCPayRequest', data, function(res){
 				WeixinJSBridge.log(res.err_msg);
-				// alert(res.err_code+res.err_desc+res.err_msg);
-				alert(res);
+				alert(res.err_code+'|--|'+res.err_desc+'|--|'+res.err_msg);
+				// alert(res);
 			});
 		}
 		var delivery_price = {{$lists->max('delivery_price')}}
