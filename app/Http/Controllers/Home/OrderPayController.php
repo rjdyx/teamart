@@ -58,15 +58,24 @@ class OrderPayController extends Controller
 	//二次签名
 	public function zycgetSign($res)
 	{
-		$this->Datas['appId'] = $this::APPID;//微信公众号id
-		// $this->Datas['partnerId'] = $this::MCHID;//商户号
-		// $this->Datas['prepayId'] = $res['prepay_id'];//预支付id
-		$this->Datas['nonceStr'] = $this->createNoncestr();//再次生成随机字符串
-		$this->Datas['timeStamp'] = time();//当前时间戳
-		$this->Datas['signType'] = "MD5";
-		$this->Datas['package'] = 'prepay_id='.$res['prepay_id'];//订单详情扩展字符串
-		$this->Datas['paySign'] = $this->getSign();//生成签名
-		return json_encode($this->Datas);
+		// $this->Datas['appId'] = $this::APPID;//微信公众号id
+		// $this->Datas['nonceStr'] = $this->createNoncestr();//随机字符串
+		// $this->Datas['timeStamp'] = time();//当前时间戳
+		// $this->Datas['signType'] = "MD5";
+		// $this->Datas['package'] = 'prepay_id='.$res['prepay_id'];//订单详情扩展字符串
+		// $this->Datas['paySign'] = $this->getSign();//生成签名	
+		// return json_encode($this->Datas);
+		// 
+		$arr = array();	
+		$arr['appid'] = $this::APPID;//商户号
+		$arr['partnerid'] = $this::MCHID;//商户号
+		$arr['prepayid'] = $res['prepay_id'];//预支付id
+		$arr['package'] = 'Sign=WXPay';//扩展字段
+		$arr['noncestr'] = $this->createNoncestr();//随机字符串
+		$arr['timestamp'] = time();//当前时间戳
+		$arr['sign'] = $this->getSign($arr);//生成签名	
+		// return $arr;
+		return json_encode($arr);
 	}
 
 	//产生随机字符串，不长于32位
@@ -97,9 +106,9 @@ class OrderPayController extends Controller
     }
 
 	//生成签名
-	public function getSign()
+	public function getSign($Obj = null)
 	{	
-		$Obj = $this->Datas;
+		if ($Obj == null) $Obj = $this->Datas;
 		ksort($Obj);
 		$String = $this->ToUrlParams($Obj);//签名步骤一：按字典序排序参数
 		$String = $String."&key=".$this::KEY;//签名步骤二：在string后加入KEY
