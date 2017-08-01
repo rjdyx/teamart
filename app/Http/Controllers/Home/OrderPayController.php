@@ -73,22 +73,23 @@ class OrderPayController extends Controller
 		$time = time();//当前时间戳
 		$rand = $this->createNoncestr();//随机字符串
 
-		$arr['appId'] = $this::APPID;//微信公众号id
-		$arr['nonceStr'] = $rand;
-		$arr['timeStamp'] = $time;
-		// $arr['signType'] = "MD5";
-		$arr['partnerId'] = $this::MCHID;//商户号
-		$arr['prepayId'] = $res['prepay_id'];//预支付id
-		// $arr['package'] = "prepay_id=".$res['prepay_id'];//订单详情扩展字符串	
-		$arr['package'] = "Sign=WXPay";//扩展字段
-		$arr['paySign'] = $this->getSign();//生成签名
+		$arr["appId"] = $this::APPID;//微信公众号id
+		$arr["nonceStr"] = $rand;
+		$arr["timeStamp"] = $time;
+		// $arr["signType"] = "MD5";
+		$arr["partnerId"] = $this::MCHID;//商户号
+		$arr["prepayId"] = $res["prepay_id"];//预支付id
+		// $arr["package"] = "prepay_id=".$res["prepay_id"];//订单详情扩展字符串	
+		$arr["package"] = "Sign=WXPay";//扩展字段
+		$arr["paySign"] = $this->getSign();//生成签名
 
-		$arr['appid'] = $this::APPID;//微信公众号id
-		$arr['noncestr'] = $rand;
-		$arr['timestamp'] = $time;
-		$arr['partnerid'] = $this::MCHID;//商户号	
-		$arr['prepayid'] = $res['prepay_id'];//预支付id
-		$arr['sign'] = $arr['paySign'];//生成签名
+		$arr["appid"] = $this::APPID;//微信公众号id
+		$arr["noncestr"] = $rand;
+		$arr["timestamp"] = $time;
+		$arr["partnerid"] = $this::MCHID;//商户号	
+		$arr["prepayid"] = $res["prepay_id"];//预支付id
+		$arr["sign"] = $arr["paySign"];//生成签名
+		$arr["total_fee"] = 1;//金额
 
 		return json_encode($arr);
 
