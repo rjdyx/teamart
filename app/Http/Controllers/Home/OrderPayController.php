@@ -43,7 +43,7 @@ class OrderPayController extends Controller
 		$returnXml = $this->postXmlCurl($xml, $this::URL);
 
 		/***** 5.返回结果处理 *****/
-		return $res = json_decode(json_encode(simplexml_load_string($returnXml,'SimpleXMLElement', LIBXML_NOCDATA)),true);
+		$res = json_decode(json_encode(simplexml_load_string($returnXml,'SimpleXMLElement', LIBXML_NOCDATA)),true);
 		if ($res['return_code'] != 'SUCCESS') return 'false';
 
 		/***** 6.再次签名 *****/
