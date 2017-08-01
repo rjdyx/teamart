@@ -9,12 +9,11 @@
 	@parent
 
 	<script>
-	alert(<?php echo isset($_GET['code'])?$_GET['code']:'false'; ?>);
 		//提交订单
 		$('.confirm_bottom_submit').click(function(){
 			ajax('get', '/home/payOrder').then(function (res) {
 				if(res != 'false') {
-					// alert(res)
+					alert(res)
 					// jsApiCall(res)
 				} else {
 					prompt.message('服务器忙，稍后再试！')
