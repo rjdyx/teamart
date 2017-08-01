@@ -58,14 +58,14 @@ class OrderPayController extends Controller
 	//二次签名
 	public function zycgetSign($res)
 	{
-		$this->Datas['appid'] = $this::APPID;//微信公众号id
+		$this->Datas['appId'] = $this::APPID;//微信公众号id
 		// $this->Datas['partnerId'] = $this::MCHID;//商户号
 		// $this->Datas['prepayId'] = $res['prepay_id'];//预支付id
 		$this->Datas['nonceStr'] = $this->createNoncestr();//再次生成随机字符串
 		$this->Datas['timeStamp'] = time();//当前时间戳
-		// $this->Datas['package'] = "Sign=WXPay";
+		$this->Datas['signType'] = "MD5";
 		$this->Datas['package'] = 'prepay_id='.$res['prepay_id'];//订单详情扩展字符串
-		$this->Datas['sign'] = $this->getSign();//生成签名
+		$this->Datas['paySign'] = $this->getSign();//生成签名
 		return json_encode($this->Datas);
 	}
 
