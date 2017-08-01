@@ -158,6 +158,8 @@
 			class GetOpenIdNumber
 			{
 				const APPID = 'wxdaa4107ed552fdcb';//微信公众号id
+				const APPSECRET = '449a412c0ac4bc8c8fc275f816c6c794';//微信公众号key
+
 				public function GetOpenid()
 				{
 					//通过code获得openid
@@ -174,7 +176,40 @@
 						return $openid;
 					}
 				}
+				public function GetOpenidFromMp($code, $host="0.0.0.0", $port=0)
+				{
+					$url = $this->CreateOauthUrlForOpenid($code);
+					//初始化curl
+					$ch = curl_init();
+					//设置超时
+					curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+					curl_setopt($ch, CURLOPT_URL, $url);
+					curl_setopt($ch, CURLOPT_SSL_VERIFYPEER,FALSE);
+					curl_setopt($ch, CURLOPT_SSL_VERIFYHOST,FALSE);
+					curl_setopt($ch, CURLOPT_HEADER, FALSE);
+					curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+					if($host != "0.0.0.0" && $port!= 0) {
+						curl_setopt($ch,CURLOPT_PROXY, $host);
+						curl_setopt($ch,CURLOPT_PROXYPORT, $port);
+					}
+					//运行curl，结果以jason形式返回
+					$res = curl_exec($ch);
+					curl_close($ch);
+					//取出openid
+					$data = json_decode($res, true);
+					// $this->data = $data;
+					return $data['openid'];
+				}
 
+				private function CreateOauthUrlForOpenid($code)
+				{
+					$urlObj["appid"] = $this::APPID;
+					$urlObj["secret"] = $this::APPSECRET;
+					$urlObj["code"] = $code;
+					$urlObj["grant_type"] = "authorization_code";
+					$bizString = $this->ToUrlParams($urlObj);
+					return "https://api.weixin.qq.com/sns/oauth2/access_token?".$bizString;
+				}
 				private function CreateOauthUrlForCode($redirectUrl)
 				{
 					$urlObj["appid"] = $this::APPID;
