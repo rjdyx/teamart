@@ -10,6 +10,9 @@
 @section('script')
     @parent
     <script src="{{url('/fx/build/swiper.js')}}"></script>
+    <script>
+        alert(<?php echo isset($_GET['code'])?$_GET['code']:'false'; ?>);
+    </script>
 @endsection
 
 @section('content')
