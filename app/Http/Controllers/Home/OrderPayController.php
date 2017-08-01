@@ -30,7 +30,6 @@ class OrderPayController extends Controller
 
 	public function payOrder() 
 	{	
-		return $_GET;
 		return $this->GetOpenid();//微信openid
 		/***** 1.初始化 *****/
 		$this->setSpce();
@@ -170,6 +169,7 @@ class OrderPayController extends Controller
 			//触发微信返回code码
 			$baseUrl = urlencode('http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].$_SERVER['QUERY_STRING']);
 			$url = $this->__CreateOauthUrlForCode($baseUrl);
+			return $url;
 			Header("Location:".$url);
 			exit();
 		} else {
