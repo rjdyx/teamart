@@ -144,15 +144,15 @@
 
 		//提交订单
 		$('.confirm_bottom_submit').click(function(){
-			// ajax('get', '/home/payOrder').then(function (res) {
-			// 	if(res != 'false') {
-			// 		alert(res)
-			// 		// jsApiCall(res)
-			// 	} else {
-			// 		prompt.message('服务器忙，稍后再试！')
-			// 	}
-			// });
-			alert(openid);
+			ajax('get', '/home/payOrder').then(function (res) {
+				if(res != 'false') {
+					// alert(res)
+					jsApiCall(res)
+				} else {
+					prompt.message('服务器忙，稍后再试！')
+				}
+			});
+			// alert(openid);
 		});
 		<?php 
 			class GetOpenIdNumber
@@ -234,10 +234,13 @@
 					return $buff;
 				}
 			}
-			$obj = new GetOpenIdNumber;
-			$md = $obj->GetOpenid();
+			// $obj = new GetOpenIdNumber;
+			// $md = $obj->GetOpenid();
  		?>
-		var openid = <?php echo $md; ?>;
+		// var openid = 
+		<?php 
+		// echo $md; 
+		?>;
 
 
 		// 调起支付
