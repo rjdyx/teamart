@@ -168,11 +168,10 @@ class OrderPayController extends Controller
 		if (!isset($_GET['code'])){
 			//触发微信返回code码
 			$baseUrl = urlencode('http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].$_SERVER['QUERY_STRING']);
-			$url = $this->__CreateOauthUrlForCode($baseUrl);
+			return $url = $this->__CreateOauthUrlForCode($baseUrl);
 			Header("Location:".$url);
 			exit();
 		} else {
-			return $_GET['code'];
 			//获取code码，以获取openid
 		    $code = $_GET['code'];
 			$openid = $this->getOpenidFromMp($code);
