@@ -397,6 +397,10 @@
 		}
 	}
 	.index_list {
+		h1 {
+			color: #333;
+			@extend %wrap;
+		}
 		p {
 			color: #787876;
 			@extend %wrap2;
