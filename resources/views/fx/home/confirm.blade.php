@@ -27,10 +27,17 @@
 		function jsApiCall(data)
 		{
        		console.log(data)
-			WeixinJSBridge.invoke('getBrandWCPayRequest', data, function(res){
+			WeixinJSBridge.invoke('getBrandWCPayRequest',
+			{
+                "appId": data.appId, //公众号名称，由商户传入
+                "timeStamp": data.timeStamp, //时间戳
+                "nonceStr": data.nonceStr, //随机串
+                "package":  data.package, //扩展包
+                "signType": "MD5", //签名方式
+                "paySign":  data.paySign//微信签名
+			},function(res){
 				WeixinJSBridge.log(res.err_msg);
-				alert(res.err_code+'|--|'+res.err_desc+'|--|'+res.err_msg);
-				// alert(res);
+				alert(res.err_code + res.err_desc + res.err_msg);
 			});
 		}
 		var delivery_price = {{$lists->max('delivery_price')}}
