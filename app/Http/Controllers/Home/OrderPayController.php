@@ -54,6 +54,8 @@ class OrderPayController extends Controller
 	public function setSpce()
 	{
 		$notify = "http://".$_SERVER["HTTP_HOST"].$_SERVER["REQUEST_URI"].$_SERVER["QUERY_STRING"];
+		$this->Datas["openid"] = $this->GetOpenid();//微信openid
+		// $this->Datas["openid"] = 'o7t83wmZOMLxMQuG-eSMOZnePSIE';//微信openid
 		$this->Datas["appid"] = $this::APPID;//微信公众号id
 		$this->Datas["mch_id"] = $this::MCHID;//商户号
 		$this->Datas["body"] = "s"; //商品描述
@@ -63,8 +65,6 @@ class OrderPayController extends Controller
 		$this->Datas["notify_url"] = $notify;//通知地址 
 		$this->Datas["spbill_create_ip"] = $_SERVER["REMOTE_ADDR"];//设备ip
 		$this->Datas["trade_type"] = "JSAPI";//交易类型(H5:'MWEB')
-		$this->Datas["openid"] = $this->GetOpenid();//微信openid
-		// $this->Datas["openid"] = 'o7t83wmZOMLxMQuG-eSMOZnePSIE';//微信openid
 	}
 
 	//二次签名
