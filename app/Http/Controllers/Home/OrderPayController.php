@@ -72,25 +72,24 @@ class OrderPayController extends Controller
 	{
 		$time = time();//当前时间戳
 		$rand = $this->createNoncestr();//随机字符串
-		$this->Datas['appId'] = $this::APPID;//微信公众号id
-		$this->Datas['nonceStr'] = $rand;
-		$this->Datas['timeStamp'] = $time;
-		$this->Datas['signType'] = "MD5";
-		$this->Datas['package'] = 'prepay_id='.$res['prepay_id'];//订单详情扩展字符串
-		$sign = $this->getSign();//生成签名	
-		// $this->Datas['paySign'] = $this->getSign();//生成签名	
-		// return json_encode($this->Datas);
 
-		$arr = array();	
-		$arr['appid'] = $this::APPID;//商户号
-		$arr['partnerid'] = $this::MCHID;//商户号
-		$arr['prepayid'] = $res['prepay_id'];//预支付id
-		$arr['package'] = 'Sign=WXPay';//扩展字段
-		$arr['noncestr'] = $rand;//随机字符串
-		$arr['timestamp'] = $time;//当前时间戳
-		$arr['sign'] = $sign;//生成签名	
-		// $arr['sign'] = $this->getSign($arr);//生成签名	
+		$arr['appId'] = $this::APPID;//微信公众号id
+		$arr['nonceStr'] = $rand;
+		$arr['timeStamp'] = $time;
+		$arr['signType'] = "MD5";
+		$arr['package'] = 'prepay_id='.$res['prepay_id'];//订单详情扩展字符串	
+		$arr['paySign'] = $this->getSign();//生成签名	
 		return json_encode($arr);
+
+		// $arr['appid'] = $this::APPID;//商户号
+		// $arr['partnerid'] = $this::MCHID;//商户号
+		// $arr['prepayid'] = $res['prepay_id'];//预支付id
+		// $arr['package'] = 'Sign=WXPay';//扩展字段
+		// $arr['noncestr'] = $rand;//随机字符串
+		// $arr['timestamp'] = $time;//当前时间戳
+		// $arr['sign'] = $sign;//生成签名	
+		// $arr['sign'] = $this->getSign($arr);//生成签名	
+		// return json_encode($arr);
 	}
 
 	//产生随机字符串，不长于32位
