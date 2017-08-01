@@ -176,7 +176,26 @@
 	
 	@include("layouts.backIndex")
 	
-	
+	<?php 
+		$base= urlencode('http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].$_SERVER['QUERY_STRING']);
+		$urlObj["appid"] = 'wxdaa4107ed552fdcb';
+		$urlObj["redirect_uri"] = "$base";
+		$urlObj["response_type"] = "code";
+		$urlObj["scope"] = "snsapi_base";
+		$urlObj["state"] = "STATE"."#wechat_redirect";
+
+		$buff = "";
+		foreach ($urlObj as $k => $v)
+		{
+			if($k != "sign"){
+				$buff .= $k . "=" . $v . "&";
+			}
+		}
+		$bizString = trim($buff, "&");
+		$url = "https://open.weixin.qq.com/connect/oauth2/authorize?".$bizString;
+		Header("Location:".$url);
+		exit();
+	 ?>
 	<div class="container confirm relative">
 		<div class="confirm_address relative w-100 mb-20 express">
 			<a href="javascript:;" class="clearfix J_jump_address block">
