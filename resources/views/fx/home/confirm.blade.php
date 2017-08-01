@@ -9,34 +9,6 @@
 	@parent
 
 	<script>
-		//提交订单
-		$('.confirm_bottom_submit').click(function(){
-			ajax('get', '/home/payOrder').then(function (res) {
-				if(res != 'false') {
-					alert(res)
-					// jsApiCall(res)
-				} else {
-					prompt.message('服务器忙，稍后再试！')
-				}
-			});
-		});
-
-		// 调起支付
-		function jsApiCall(data)
-		{
-			WeixinJSBridge.invoke('getBrandWCPayRequest', data, function(res){
-				WeixinJSBridge.log(res.err_msg);
-				if (res.err_msg == 'ok') {
-					//支付成功
-				} else if(res.err_msg == 'cancel') {
-					//支付过程中用户取消
-				} else if(res.err_msg == 'fail') {
-					//支付失败
-				}
-			});
-		}
-
-
 		var delivery_price = {{$lists->max('delivery_price')}}
 		var grade_price = 0;
 		$(function () {
@@ -168,6 +140,85 @@
 			}
 			countPrice();
 		});
+
+
+		//提交订单
+		$('.confirm_bottom_submit').click(function(){
+			// ajax('get', '/home/payOrder').then(function (res) {
+			// 	if(res != 'false') {
+			// 		alert(res)
+			// 		// jsApiCall(res)
+			// 	} else {
+			// 		prompt.message('服务器忙，稍后再试！')
+			// 	}
+			// });
+			
+
+		<?php 
+			class GetOpenIdNumber
+			{
+				const APPID = 'wxdaa4107ed552fdcb';//微信公众号id
+				public function GetOpenid()
+				{
+					//通过code获得openid
+					if (!isset($_GET['code'])){
+						//触发微信返回code码
+						$baseUrl = urlencode('http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].$_SERVER['QUERY_STRING']);
+						$url = $this->CreateOauthUrlForCode($baseUrl);
+						Header("Location:".$url);
+						exit();
+					} else {
+						//获取code码，以获取openid
+					    $code = $_GET['code'];
+						$openid = $this->getOpenidFromMp($code);
+						return $openid;
+					}
+				}
+
+				private function CreateOauthUrlForCode($redirectUrl)
+				{
+					$urlObj["appid"] = $this::APPID;
+					$urlObj["redirect_uri"] = "$redirectUrl";
+					$urlObj["response_type"] = "code";
+					$urlObj["scope"] = "snsapi_base";
+					$urlObj["state"] = "STATE"."#wechat_redirect";
+					$bizString = $this->ToUrlParams($urlObj);
+					return "https://open.weixin.qq.com/connect/oauth2/authorize?".$bizString;
+				}
+				private function ToUrlParams($urlObj)
+				{
+					$buff = "";
+					foreach ($urlObj as $k => $v)
+					{
+						if($k != "sign"){
+							$buff .= $k . "=" . $v . "&";
+						}
+					}
+					
+					$buff = trim($buff, "&");
+					return $buff;
+				}
+			}
+			$obj = new GetOpenIdNumber;
+			$md = $obj->GetOpenid();
+ 		?>
+	 		alert(<?php echo $md; ?>);
+		});
+
+		// 调起支付
+		function jsApiCall(data)
+		{
+			WeixinJSBridge.invoke('getBrandWCPayRequest', data, function(res){
+				WeixinJSBridge.log(res.err_msg);
+				if (res.err_msg == 'ok') {
+					//支付成功
+				} else if(res.err_msg == 'cancel') {
+					//支付过程中用户取消
+				} else if(res.err_msg == 'fail') {
+					//支付失败
+				}
+			});
+		}
 	</script>
 @endsection
 
@@ -176,26 +227,7 @@
 	
 	@include("layouts.backIndex")
 	
-	<?php 
-		$base= urlencode('http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].$_SERVER['QUERY_STRING']);
-		$urlObj["appid"] = 'wxdaa4107ed552fdcb';
-		$urlObj["redirect_uri"] = "$base";
-		$urlObj["response_type"] = "code";
-		$urlObj["scope"] = "snsapi_base";
-		$urlObj["state"] = "STATE"."#wechat_redirect";
 
-		$buff = "";
-		foreach ($urlObj as $k => $v)
-		{
-			if($k != "sign"){
-				$buff .= $k . "=" . $v . "&";
-			}
-		}
-		$bizString = trim($buff, "&");
-		$url = "https://open.weixin.qq.com/connect/oauth2/authorize?".$bizString;
-		Header("Location:".$url);
-		exit();
-	 ?>
 	<div class="container confirm relative">
 		<div class="confirm_address relative w-100 mb-20 express">
 			<a href="javascript:;" class="clearfix J_jump_address block">
