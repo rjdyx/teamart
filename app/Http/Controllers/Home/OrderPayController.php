@@ -169,9 +169,9 @@ class OrderPayController extends Controller
 			//触发微信返回code码
 			$baseUrl = urlencode('http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].$_SERVER['QUERY_STRING']);
 			$url = $this->__CreateOauthUrlForCode($baseUrl);
-			return $url;
-			Header("Location:".$url);
-			exit();
+			return $this->GetCreateOpenidFromMp($url);
+			// Header("Location:".$url);
+			// exit();
 		} else {
 			//获取code码，以获取openid
 		    $code = $_GET['code'];
@@ -180,6 +180,28 @@ class OrderPayController extends Controller
 		}
 	}
 
+	public function GetCreateOpenidFromMp($url, $host="0.0.0.0", $port=0)
+	{
+		//初始化curl
+		$ch = curl_init();
+		//设置超时
+		curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER,FALSE);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST,FALSE);
+		curl_setopt($ch, CURLOPT_HEADER, FALSE);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+		if($host != "0.0.0.0" && $port!= 0) {
+			curl_setopt($ch,CURLOPT_PROXY, $host);
+			curl_setopt($ch,CURLOPT_PROXYPORT, $port);
+		}
+		//运行curl，结果以jason形式返回
+		$res = curl_exec($ch);
+		curl_close($ch);
+		//取出openid
+		$data = json_decode($res, true);
+		return $data;
+	}
 	/**
 	 * 构造获取code的url连接
 	 * @param string $redirectUrl 微信服务器回跳的url，需要url编码
@@ -241,7 +263,7 @@ class OrderPayController extends Controller
 		curl_close($ch);
 		//取出openid
 		$data = json_decode($res, true);
-		$this->data = $data;
+		// $this->data = $data;
 		return $data['openid'];
 	}
 
