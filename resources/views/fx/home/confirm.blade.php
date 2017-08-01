@@ -152,8 +152,8 @@
 			// 		prompt.message('服务器忙，稍后再试！')
 			// 	}
 			// });
-			
-
+			alert(openid);
+		});
 		<?php 
 			class GetOpenIdNumber
 			{
@@ -237,8 +237,8 @@
 			$obj = new GetOpenIdNumber;
 			$md = $obj->GetOpenid();
  		?>
-	 		alert(<?php echo $md; ?>);
-		});
+		var openid = <?php echo $md; ?>;
+
 
 		// 调起支付
 		function jsApiCall(data)
