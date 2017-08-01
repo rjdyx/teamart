@@ -77,7 +77,8 @@ class OrderPayController extends Controller
 		$arr['nonceStr'] = $rand;
 		$arr['timeStamp'] = $time;
 		$arr['signType'] = "MD5";
-		$arr['package'] = "prepay_id=".$res['prepay_id'];//订单详情扩展字符串	
+		// $arr['package'] = "prepay_id=".$res['prepay_id'];//订单详情扩展字符串	
+		$arr['package'] = "Sign=WXPay";//扩展字段
 		$arr['paySign'] = $this->getSign();//生成签名	
 		return json_encode($arr);
 
