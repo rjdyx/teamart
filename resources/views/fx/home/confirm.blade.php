@@ -9,7 +9,28 @@
 	@parent
 
 	<script>
+		//提交订单
+		$('.confirm_bottom_submit').click(function(){
+			ajax('get', '/home/payOrder').then(function (res) {
+				if(res != 'false') {
+					jsApiCall(res)
+				} else {
+					prompt.message('服务器忙，稍后再试！')
+				}
+			});
+		});
 
+		function jsApiCall(data)
+		{
+       		console.log(data)
+			WeixinJSBridge.invoke(
+				'getBrandWCPayRequest',data,
+				function(res){
+					WeixinJSBridge.log(res.err_msg);
+					alert(res.err_code+res.err_desc+res.err_msg);
+				}
+			);
+		}
 		var delivery_price = {{$lists->max('delivery_price')}}
 		var grade_price = 0;
 		$(function () {
@@ -129,11 +150,6 @@
 			});
 		}
 
-		//提交订单
-		$('.confirm_bottom_submit').click(function(){
-			prompt.message('提交订单！')
-		});
-
 		//积分抵扣金额
 		$("#gradeChange").on('change', function(){
 			var grade = $(".user-grade").attr('grade');
@@ -154,48 +170,7 @@
 	
 	@include("layouts.backIndex")
 	
-	<?php
-		include_once str_replace("\\","/",public_path())."/WPay/WxPayPubHelper/WxPayPubHelper.php";
-		//使用统一支付接口
-		$unifiedOrder = new UnifiedOrder_pub();
-		//自定义订单号，此处仅作举例
-		$timeStamp = time();
-		$out_trade_no = WxPayConf_pub::APPID."$timeStamp"; 
-		$unifiedOrder->setParameter("appid",'gh_745075ef89da');//微信公众号id
-		$unifiedOrder->setParameter("mch_id",1387257002);//商户号
-		$unifiedOrder->setParameter("out_trade_no",'FX201702012336');//商品订单号 
-		$unifiedOrder->setParameter("total_fee",0.01);//总金额
-		$unifiedOrder->setParameter("notify_url",WxPayConf_pub::NOTIFY_URL);//通知地址 
-		$unifiedOrder->setParameter("trade_type","MWEB");//交易类型
-		$unifiedOrder->setParameter("body",'微信购买'); //商品描述
 
-		$scene_info = "{'h5_info': {'type': 'Wap', 'wap_url': ".$_SERVER['HTTP_HOST'].", 'wap_name': '茶沁轩'}}";
-		$unifiedOrder->setParameter("scene_info",$scene_info);//场景信息
-
-		// $unifiedOrder->setParameter("sub_mch_id","1444913102");//交易类型
-
-		//获取统一支付接口结果
-		$unifiedOrderResult = $unifiedOrder->getResult();
-		//商户根据实际情况设置相应的处理流程
-		if ($unifiedOrderResult["return_code"] == "FAIL") 
-		{
-		    //商户自行增加处理流程
-		    echo "通信出错：".$unifiedOrderResult['return_msg']."<br>";
-		}
-		elseif($unifiedOrderResult["result_code"] == "FAIL")
-		{
-		    //商户自行增加处理流程
-		    echo "错误代码：".$unifiedOrderResult['err_code']."<br>";
-		    echo "错误代码描述：".$unifiedOrderResult['err_code_des']."<br>";
-		}
-		elseif($unifiedOrderResult["code_url"] != NULL)
-		{
-		    //从统一支付接口获取到code_url
-		    $code_url = $unifiedOrderResult["code_url"];
-		    //商户自行增加处理流程
-		    //......
-		}
-	?>
 	<div class="container confirm relative">
 		<div class="confirm_address relative w-100 mb-20 express">
 			<a href="javascript:;" class="clearfix J_jump_address block">
