@@ -83,6 +83,7 @@ class OrderController extends Controller
         return $data;
     }
 
+    
 	//待支付 选择参数
 	public function confirm (Request $request) 
 	{
@@ -140,7 +141,9 @@ class OrderController extends Controller
 		        ->get();
 
 		$title = '确认订单';
-		return view(config('app.theme').'.home.confirm')->with(['title'=>$title,'lists'=>$lists,'count'=>$count,'grade'=>$grade,'cheaps'=>$cheaps,'id'=>$id]);
+		$openid = IQuery::GetOpenid();
+
+		return view(config('app.theme').'.home.confirm')->with(['title'=>$title,'lists'=>$lists,'count'=>$count,'grade'=>$grade,'cheaps'=>$cheaps,'id'=>$id,'openid'=>$openid]);
 	}
 
 	//检测订单状态

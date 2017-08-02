@@ -7,13 +7,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Order;
 use App\User;
-use App\Address;
-use App\Site;
-use App\Reply;
-use App\Cheap;
-use App\System;
-use App\Delivery;
-use App\Comment;
 use App\OrderProduct;
 use Illuminate\Support\Facades\Auth;
 use Redirect;
@@ -28,7 +21,7 @@ class OrderPayController extends Controller
 	const URL = "https://api.mch.weixin.qq.com/pay/unifiedorder";//统一下单地址
 	protected $Datas = array();
 
-	public function payOrder() 
+	public static function payOrder() 
 	{	
 		/***** 1.初始化 *****/
 		$this->setSpce();
@@ -155,136 +148,4 @@ class OrderPayController extends Controller
 		}
 	}
 
-	/**
-	 * 通过跳转获取用户的openid，跳转流程如下：
-	 * 1、设置自己需要调回的url及其其他参数，跳转到微信服务器https://open.weixin.qq.com/connect/oauth2/authorize
-	 * 2、微信服务处理完成之后会跳转回用户redirect_uri地址，此时会带上一些参数，如：code
-	 * @return 用户的openid
-	 */
-	public function GetOpenid()
-	{
-		//通过code获得openid
-		if (!isset($_GET['code'])){
-			//触发微信返回code码
-			$baseUrl = urlencode('http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].$_SERVER['QUERY_STRING']);
-			$url = $this->__CreateOauthUrlForCode($baseUrl);
-			Header("Location:".$url);
-			exit();
-		} else {
-			//获取code码，以获取openid
-		    $code = $_GET['code'];
-			$openid = $this->getOpenidFromMp($code);
-			return $openid;
-		}
-	}
-
-	/**
-	 * 构造获取code的url连接
-	 * @param string $redirectUrl 微信服务器回跳的url，需要url编码
-	 * @return 返回构造好的url
-	 */
-	private function __CreateOauthUrlForCode($redirectUrl)
-	{
-		$urlObj["appid"] = $this::APPID;
-		$urlObj["redirect_uri"] = "$redirectUrl";
-		$urlObj["response_type"] = "code";
-		$urlObj["scope"] = "snsapi_base";
-		$urlObj["state"] = "STATE"."#wechat_redirect";
-		$bizString = $this->ToUrlParams($urlObj);
-		return "https://open.weixin.qq.com/connect/oauth2/authorize?".$bizString;
-	}
-
-	/**
-	 * 拼接签名字符串
-	 * @param array $urlObj
-	 * @return 返回已经拼接好的字符串
-	 */
-	private function ToUrlParams($urlObj)
-	{
-		$buff = "";
-		foreach ($urlObj as $k => $v)
-		{
-			if($k != "sign"){
-				$buff .= $k . "=" . $v . "&";
-			}
-		}
-		
-		$buff = trim($buff, "&");
-		return $buff;
-	}
-
-	/**
-	 * 通过code从工作平台获取openid机器access_token
-	 * @param string $code 微信跳转回来带上的code
-	 * @return openid
-	 */
-	public function GetOpenidFromMp($code, $host="0.0.0.0", $port=0)
-	{
-		$url = $this->__CreateOauthUrlForOpenid($code);
-		//初始化curl
-		$ch = curl_init();
-		//设置超时
-		curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-		curl_setopt($ch, CURLOPT_URL, $url);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER,FALSE);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST,FALSE);
-		curl_setopt($ch, CURLOPT_HEADER, FALSE);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-		if($host != "0.0.0.0" && $port!= 0) {
-			curl_setopt($ch,CURLOPT_PROXY, $host);
-			curl_setopt($ch,CURLOPT_PROXYPORT, $port);
-		}
-		//运行curl，结果以jason形式返回
-		$res = curl_exec($ch);
-		curl_close($ch);
-		//取出openid
-		$data = json_decode($res, true);
-		// $this->data = $data;
-		return $data['openid'];
-	}
-
-	/**
-	 * 构造获取open和access_toke的url地址
-	 * @param string $code，微信跳转带回的code
-	 * @return 请求的url
-	 */
-	private function __CreateOauthUrlForOpenid($code)
-	{
-		$urlObj["appid"] = $this::APPID;
-		$urlObj["secret"] = $this::APPSECRET;
-		$urlObj["code"] = $code;
-		$urlObj["grant_type"] = "authorization_code";
-		$bizString = $this->ToUrlParams($urlObj);
-		return "https://api.weixin.qq.com/sns/oauth2/access_token?".$bizString;
-	}
-
-	/**
-	 * 错误代码
-	 * @param  $code 服务器输出的错误代码
-	 * return string
-	*/
-    public function error_code( $code )
-    {
-        $errList = array(
-            'NOAUTH'                =>  '商户未开通此接口权限',
-            'NOTENOUGH'             =>  '用户帐号余额不足',
-            'ORDERNOTEXIST'         =>  '订单号不存在',
-            'ORDERPAID'             =>  '商户订单已支付，无需重复操作',
-            'ORDERCLOSED'           =>  '当前订单已关闭，无法支付',
-            'SYSTEMERROR'           =>  '系统错误!系统超时',
-            'APPID_NOT_EXIST'       =>  '参数中缺少APPID',
-            'MCHID_NOT_EXIST'       =>  '参数中缺少MCHID',
-            'APPID_MCHID_NOT_MATCH' =>  'appid和mch_id不匹配',
-            'LACK_PARAMS'           =>  '缺少必要的请求参数',
-            'OUT_TRADE_NO_USED'     =>  '同一笔交易不能多次提交',
-            'SIGNERROR'             =>  '参数签名结果不正确',
-            'XML_FORMAT_ERROR'      =>  'XML格式错误',
-            'REQUIRE_POST_METHOD'   =>  '未使用post传递参数 ',
-            'POST_DATA_EMPTY'       =>  'post数据不能为空',
-            'NOT_UTF8'              =>  '未使用指定编码格式'
-        ); 
-        if( array_key_exists( $code , $errList ) ){
-            return $errList[$code];
-        }
-    }
 }

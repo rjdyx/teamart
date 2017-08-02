@@ -316,7 +316,7 @@
 				<!-- <div class="confirm_container_sum_row w-100" id="Err"></div> -->
 				<div class="confirm_container_sum_row w-100">
 					<a href="javascript:;" class="block clearfix J_show_type">
-						<span class="pull-left chayefont fz-18">配送方式</span>
+						<span class="pull-left chayefont fz-18">配送方式{{$openid}}</span>
 						<span class="pull-right gray color-8C8C8C fz-14"><s id="delivery">快递</s><i class="fa fa-angle-right ml-10"></i></span>
 						<input type="hidden" value="express" name="delivery">
 					</a>
