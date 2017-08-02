@@ -40,7 +40,7 @@ class OrderPayController extends Controller
 
 		/***** 5.返回结果处理 *****/
 		$res = json_decode(json_encode(simplexml_load_string($returnXml,'SimpleXMLElement', LIBXML_NOCDATA)),true);
-		return $res;
+		return json_encode($res);
 		if ($res['return_code'] != 'SUCCESS') {
 			return ['state'=>1,'data'=> $res['return_msg']];
 		}
