@@ -36,12 +36,28 @@
         $('#record').on('blur input', function () {
           _valid.desc('record', '备案号', $(this).val(), 20, false)
         })
+        $('#wx_appid').on('blur input', function () {
+          _valid.desc('wx_appid', '公众号Appid', $(this).val(), 32, false)
+        })
+        $('#wx_appsecret').on('blur input', function () {
+          _valid.desc('wx_appsecret', '公众号密匙', $(this).val(), 32, false)
+        })
+        $('#wx_mchid').on('blur input', function () {
+          _valid.desc('wx_mchid', '商户号', $(this).val(), 32, false)
+        })
+        $('#wx_key').on('blur input', function () {
+          _valid.desc('wx_key', '商户密匙', $(this).val(), 32, false)
+        })
         function submitForm() {
           var name = form['name']
           var email = form['email']
           var phone = form['phone']
           var free = form['free']
           var record = form['record']
+          var wx_appid = form['wx_appid']
+          var wx_appsecret = form['wx_appsecret']
+          var wx_mchid = form['wx_mchid']
+          var wx_key = form['wx_key']
           if (!_valid.title('name', '网站名称', name.value, 2, false)) {
             return false
           }
@@ -55,6 +71,18 @@
             return false
           }
           if (!_valid.desc('record', '备案号', record.value, 20, false)) {
+            return false
+          }
+          if (!_valid.desc('wx_appid', '公众号Appid', wx_appid.value, 32, false)) {
+            return false
+          }
+          if (!_valid.desc('wx_appsecret', '公众号密匙', wx_appsecret.value, 32, false)) {
+            return false
+          }
+          if (!_valid.desc('wx_mchid', '商户号', wx_mchid.value, 32, false)) {
+            return false
+          }
+          if (!_valid.desc('wx_key', '商户密匙', wx_key.value, 32, false)) {
             return false
           }
           return true
@@ -135,12 +163,42 @@
                     <span class="col-sm-4 text-danger form_error" id="delivery_id_txt"></span>
                   </div>
                   <div class="form-group">
-                    <label for="delivery_id" class="col-sm-2 control-label">物流密匙Key</label>
+                    <label for="delivery_key" class="col-sm-2 control-label">物流密匙Key</label>
                     <div class="col-sm-6">
                       <input type="text" class="form-control" id="delivery_key" placeholder="请输入密匙" name="delivery_key" value="{{$shop->delivery_key}}">
                     </div>
                     <span class="col-sm-4 text-danger form_error" id="delivery_key_txt"></span>
                   </div>
+
+                  <div class="form-group">
+                    <label for="wx_appid" class="col-sm-2 control-label">公众号Appid</label>
+                    <div class="col-sm-6">
+                      <input type="text" class="form-control" id="wx_appid" placeholder="请输入appid" name="wx_appid" value="{{$shop->wx_appid}}">
+                    </div>
+                    <span class="col-sm-4 text-danger form_error" id="wx_appid_txt"></span>
+                  </div>
+                 <div class="form-group">
+                    <label for="wx_appsecret" class="col-sm-2 control-label">公众号密匙</label>
+                    <div class="col-sm-6">
+                      <input type="text" class="form-control" id="wx_appsecret" placeholder="请输入密匙" name="wx_appsecret" value="{{$shop->wx_appsecret}}">
+                    </div>
+                    <span class="col-sm-4 text-danger form_error" id="wx_appsecret_txt"></span>
+                  </div>
+                  <div class="form-group">
+                    <label for="wx_mchid" class="col-sm-2 control-label">微信商户号</label>
+                    <div class="col-sm-6">
+                      <input type="text" class="form-control" id="wx_mchid" placeholder="请输入商户号" name="wx_mchid" value="{{$shop->wx_mchid}}">
+                    </div>
+                    <span class="col-sm-4 text-danger form_error" id="wx_mchid_txt"></span>
+                  </div>
+                  <div class="form-group">
+                    <label for="wx_key" class="col-sm-2 control-label">微信商户密匙</label>
+                    <div class="col-sm-6">
+                      <input type="text" class="form-control" id="wx_key" placeholder="请输入密匙" name="wx_key" value="{{$shop->wx_key}}">
+                    </div>
+                    <span class="col-sm-4 text-danger form_error" id="wx_key_txt"></span>
+                  </div>
+
                   <div class="form-group">
                     <label for="delivery_id" class="col-sm-2 control-label">客服QQ</label>
                     <div class="col-sm-6">

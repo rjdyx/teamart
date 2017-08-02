@@ -25,7 +25,6 @@ Route::post('/check','UtilsController@check');//字段验证 公共接口组
 Route::post('/password/resets','Auth\ResetPasswordController@passwordReset');//重置密码
 Route::auth();
 
-Route::get('/home/payOrder','Home\OrderPayController@payOrder');
 
 // Home - 无须登录模块
 Route::group(['namespace'=>'Home','prefix'=>'home'],function(){
@@ -78,7 +77,8 @@ Route::group(['namespace'=>'Home','prefix'=>'home','middleware'=>['auth','userRo
     	Route::get('/comment/{order_id}','OrderController@orderComment');//评论
     	Route::get('/comment/product/{id}','OrderController@getOrderProduct');//获取订单商品
     	Route::post('/comment/store/{id}','OrderController@commentStore');//订单评论处理（保存）
-    	Route::get('/pay/{order_id}','OrderController@orderPay');//付款
+		Route::post('/payOrder','OrderPayController@payOrder'); //付款预处理
+    	Route::post('/pay/{order_id}','OrderController@pay');//付款成功后操作
     	Route::get('/backn/reason/{id}','OrderController@backnReason');//退货理由
     	Route::post('/operate/{type}','OrderController@orderOperate');//订单state改变
     	Route::get('/{id}','OrderController@orderDetail');//订单详情

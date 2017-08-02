@@ -11,7 +11,7 @@
 	<script>
 		var delivery_price = {{$lists->max('delivery_price')}}
 		var grade_price = 0;
-		var counts = 0;
+		var counts = 0;//总支付金额
 		$(function () {
 
 			// 显示选取配送方式弹窗
@@ -143,15 +143,16 @@
 			countPrice();
 		});
 
-
 		//提交订单
 		$('.confirm_bottom_submit').click(function(){
-			var data = 'op='+"{{$openid}}" + '&my=' + counts + '&id='+"{{$id}}"
-			ajax('get', '/home/payOrder?'+ data).then(function (res) {
-				if(res != 'false') {
-					jsApiCall(res)
+			var openid = "{{$openid}}"
+			var data = {'openid':openid, 'price':counts, 'id':"{{$id}}"}
+			ajax('post', '/home/order/payOrder', data).then(function (res) {
+				// alert(res.data)
+				if(res.state) {
+					jsApiCall(res.data)
 				} else {
-					prompt.message(' 服务器忙，稍后再试！')
+					prompt.message(res.data)
 				}
 			});
 		});
@@ -159,17 +160,39 @@
 		// 调起支付
 		function jsApiCall(data)
 		{
+			var id = "{{$id}}";
 			WeixinJSBridge.invoke('getBrandWCPayRequest', data, function(res){
 				WeixinJSBridge.log(res.err_msg);
 				if (res.err_msg == 'ok') {
-					//支付成功
-				} else if(res.err_msg == 'cancel') {
-					//支付过程中用户取消
-				} else if(res.err_msg == 'fail') {
-					//支付失败
+					paySucceed();
+				} 
+				if(res.err_msg == 'cancel' || res.err_msg == 'fail') {
+					//支付过程中用户取消 /支付失败
+					window.location.href = 'http://' + window.location.host + '/home/order/' + id
 				}
 			});
 		}
+
+		//付款成功
+		function paySucceed() {
+			var id = "{{$id}}";
+			var desc = $("#orderPayDesc").text();
+			var method = $(this).data('delivery');
+			if (method == 'point') {
+				method = 'self'
+			} else {
+				method = 'delivery'
+			}
+			var data = {'price':counts, 'desc':desc, 'method':method}
+			ajax('post', '/home/order/pay/'+id, data).then(function (res) {
+				if(!res) {
+					prompt.message('失败，服务器崩溃，请联系商家！')
+				} else {
+					window.location.href = 'http://' + window.location.host + '/home/order/' + id
+				}
+			});
+		}
+
 	</script>
 @endsection
 
@@ -272,7 +295,7 @@
 					<span class="pull-right gray color-8C8C8C fz-14">选填</span>
 				</div>
 
-				<textarea class="w-100 p-10" placeholder="请留言"></textarea>
+				<textarea class="w-100 p-10" placeholder="请留言" id="orderPayDesc"></textarea>
 				<div class="filling"></div>
 			</div>
 		</div>

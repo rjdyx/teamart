@@ -76,34 +76,38 @@ class ShopController extends Controller
         ]);
 
         if($id === -1){
-            $shop = new System;
+            $model = new System;
         }else{
-            $shop = System::find($id);
+            $model = System::find($id);
         }
 
-        $shop->name = $request->name;//网站名称
-        $shop->email = $request->email;//联系邮箱
-        $shop->phone = $request->phone;//联系电话
-        $shop->verify_state = $request->verify_state;//验证码状态
-        $shop->free = $request->free;//免邮金额
-        $shop->record = $request->record;//备案号
-        $shop->keywords = $request->keywords;//关键字
-        $shop->qq = $request->qq;//qq
-        $shop->delivery_id = $request->delivery_id;//物流商户id
-        $shop->delivery_key = $request->delivery_key;//物流密匙key
+        $model->name = $request->name;//网站名称
+        $model->email = $request->email;//联系邮箱
+        $model->phone = $request->phone;//联系电话
+        $model->verify_state = $request->verify_state;//验证码状态
+        $model->free = $request->free;//免邮金额
+        $model->record = $request->record;//备案号
+        $model->keywords = $request->keywords;//关键字
+        $model->qq = $request->qq;//qq
+        $model->delivery_id = $request->delivery_id;//物流商户id
+        $model->delivery_key = $request->delivery_key;//物流密匙key
+        $model->wx_appid = trim($request->wx_appid);//公众号appid
+        $model->wx_mchid = trim($request->wx_mchid);//商户号
+        $model->wx_appsecret = trim($request->wx_appsecret);//公众号密匙
+        $model->wx_key = trim($request->wx_key);//商户密匙
 
         //logo
         $img = IQuery::upload($request,'img',false);
         if ($img !== 'false') {
             IQuery::destroyPic(new System,$id);
-            $shop->logo = $img['pic'];
+            $model->logo = $img['pic'];
         }
 
         //轮播图
-        if($shop->slider ==null || $shop->slider=='' ){
+        if($model->slider ==null || $model->slider=='' ){
             $sliders =  array();;
         }else{
-            $sliders =explode(",",$shop->slider) ;
+            $sliders =explode(",",$model->slider) ;
         }
         if ($id != -1 && isset($request->dels)) 
         {
@@ -129,9 +133,9 @@ class ShopController extends Controller
             $slider .= $temp.',';
         }
         $slider = rtrim($slider, ",");
-        $shop->slider = $slider;
+        $model->slider = $slider;
 
-        if($shop->save()){
+        if($model->save()){
             return Redirect::to('admin/index')->with('status', '保存成功');
         }else{
             return Redirect::back()->withErrors('保存失败');

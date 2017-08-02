@@ -19,8 +19,13 @@ class OrderPayController extends Controller
 	protected $Datas = array();
 	protected $Inits = array();
 
+	//预支付
 	public function payOrder(Request $request) 
 	{	
+		/***** 0.判断订单正确 *****/
+		$ck = $this->checkOrder ($request);
+		if (!$ck['state']) return $ck;
+
 		/***** 1.初始化 *****/
 		$this->setInit($request);
 
@@ -35,10 +40,22 @@ class OrderPayController extends Controller
 
 		/***** 5.返回结果处理 *****/
 		$res = json_decode(json_encode(simplexml_load_string($returnXml,'SimpleXMLElement', LIBXML_NOCDATA)),true);
-		if ($res['return_code'] != 'SUCCESS') return 'false';
+		if ($res['return_code'] != 'SUCCESS') {
+			return ['state'=>1,'data'=> $res['return_msg']];
+		}
 
 		/***** 6.再次签名 *****/
-		return $this->zycgetSign($res);
+		$res = $this->zycgetSign($res);
+		return ['state'=>1,'data'=>$res];
+	}
+
+	//判断订单状态
+	public function checkOrder ($request) {
+		$order = Order::find($request->id);
+		if (!isset($order->state)) return ['state'=>0,'data'=>'订单不存在!'];
+		if ($order->state == 'paid') return ['state'=>0,'data'=>'该订单已支付!'];
+		if ($order->state != 'pading') return ['state'=>0,'data'=>'该订单不能支付!'];
+		return ['state'=>1];
 	}
 
 	//查询数据 设置数组 Inits
@@ -54,8 +71,8 @@ class OrderPayController extends Controller
 		$this->Inits['app_secret'] = empty($system->wx_appsecret)? config('app.wx_appsecret'): $system->wx_appsecret;
 		$this->Inits['key'] = empty($system->wx_key)? config('app.wx_key'): $system->wx_key;
 		$this->Inits['notify_url'] = "http://".$_SERVER["HTTP_HOST"].$_SERVER["REQUEST_URI"].$_SERVER["QUERY_STRING"];
-		$this->Inits['openid'] = $request->op;
-		$this->Inits['total_fee'] = $request->my * 100;
+		$this->Inits['openid'] = $request->openid;
+		$this->Inits['total_fee'] = $request->price * 100;
 		$this->Inits['spbill_create_ip'] = $_SERVER["REMOTE_ADDR"];
 		$this->Inits['body'] = "广州茶沁轩出售";
 		$this->Inits['out_trade_no'] = $order->serial;

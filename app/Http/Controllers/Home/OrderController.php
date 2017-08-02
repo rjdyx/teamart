@@ -142,7 +142,7 @@ class OrderController extends Controller
 
 		$title = '确认订单';
 		$openid = IQuery::GetOpenid();
-		// $openid = '';
+		// $openid = 1;
 
 		return view(config('app.theme').'.home.confirm')->with(['title'=>$title,'lists'=>$lists,'count'=>$count,'grade'=>$grade,'cheaps'=>$cheaps,'id'=>$id,'openid'=>$openid]);
 	}
@@ -156,15 +156,18 @@ class OrderController extends Controller
 		return 0;
 	}
 
-	//支付接口
-	public function pay (Request $request) 
+	//支付成功接口
+	public function pay (Request $request, $id) 
 	{
-		$model = Order::find($request->id);
+		$model = Order::find($id);
+		$address = Address::where('user_id',Auth::user()->id)->where('state',1)->first();
 		$model->date = date('Y-m-d H:i:s');
 		$model->price = $request->price;
 		$model->state = 'paid';
 		$model->method = $request->method;
-		$model->address_id = $request->address_id;
+		if (!empty($address->id) && $request->method != 'self') {
+			$model->address_id = $address->id;
+		}
 		$model->memo = $request->memo;
 		if ($model->save()) return 1;
 		return 0;
