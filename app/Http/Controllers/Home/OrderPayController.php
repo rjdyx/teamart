@@ -123,7 +123,7 @@ class OrderPayController extends Controller
 	{	
 		if ($Obj == null) $Obj = $this->Datas;
 		ksort($Obj);
-		$String = $this->ToUrlParams($Obj);//签名步骤一：按字典序排序参数
+		$String = IQuery::ToUrlParams($Obj);//签名步骤一：按字典序排序参数
 		$String = $String."&key=".$this->Inits['key'];//签名步骤二：在string后加入KEY
 		$String = MD5($String);//签名步骤三：MD5加密
 		$result = strtoupper($String);//签名步骤四：所有字符转为大写

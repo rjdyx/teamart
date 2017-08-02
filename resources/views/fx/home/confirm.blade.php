@@ -146,7 +146,6 @@
 
 		//提交订单
 		$('.confirm_bottom_submit').click(function(){
-			console.log(counts);
 			var data = 'op='+"{{$openid}}" + '&my=' + counts + '&id='+"{{$id}}"
 			ajax('get', '/home/payOrder?'+ data).then(function (res) {
 				if(res != 'false') {
