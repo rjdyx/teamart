@@ -156,9 +156,24 @@
 				}
 			});
 		});
-
+		
 		// 调起支付
 		function jsApiCall(data)
+		{
+			if (typeof WeixinJSBridge == "undefined"){
+			   if( document.addEventListener ){
+			       document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+			   }else if (document.attachEvent){
+			       document.attachEvent('WeixinJSBridgeReady', onBridgeReady); 
+			       document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+			   }
+			}else{
+			   onBridgeReady(data);
+			} 
+		}
+
+		// 调起支付
+		function onBridgeReady(data)
 		{
 			var id = "{{$id}}";
 			WeixinJSBridge.invoke('getBrandWCPayRequest', data, function(res){
