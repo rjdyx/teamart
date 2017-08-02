@@ -148,10 +148,8 @@
 			var openid = "{{$openid}}"
 			var data = {'openid':openid, 'price':counts, 'id':"{{$id}}"}
 			ajax('post', '/home/order/payOrder', data).then(function (res) {
-				// alert(res)
-				if(res.state == undefined) {
-					var json_data = res
-					jsApiCall(json_data)
+				if(res.appId != undefined) {
+					jsApiCall(res)
 				} else {
 					prompt.message(res.data)
 				}
