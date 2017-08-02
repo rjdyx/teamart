@@ -22,8 +22,10 @@
         $('#name').on('blur input', function () {
           _valid.name('name', '用户名', $(this).val(), 'parter')
         })
-        $('#scale').on('blur input', function () {
+        $('#scale').on('input', function () {
           _valid.scale('scale', $(this).val())
+        }).on('blur', function () {
+          $(this).val(parseFloat($(this).val()).toFixed(2))
         })
         $('#desc').on('blur input', function () {
           _valid.desc('desc', '角色描述', $(this).val())
@@ -75,7 +77,7 @@
                 <label for="scale" class="col-sm-3 control-label"><i style="color:red;">*</i>分销比例</label>
 
                 <div class="col-sm-4">
-                  <input type="number" class="form-control" id="scale" placeholder="请输入范围在0 ~ 1的数，保留两位小数" name='scale' value="{{$data->scale}}">
+                  <input type="text" class="form-control" id="scale" placeholder="请输入范围在0 ~ 1的数，保留两位小数" name='scale' value="{{$data->scale}}">
                 </div>
                 <span class="col-sm-4 text-danger form_error" id="scale_txt"></span>
               </div>
