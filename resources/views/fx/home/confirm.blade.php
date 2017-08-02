@@ -151,7 +151,7 @@
 				if(res != 'false') {
 					jsApiCall(res)
 				} else {
-					prompt.message('服务器忙，稍后再试！')
+					prompt.message(' 服务器忙，稍后再试！')
 				}
 			});
 		});
