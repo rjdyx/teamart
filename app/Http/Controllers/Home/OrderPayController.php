@@ -40,14 +40,14 @@ class OrderPayController extends Controller
 
 		/***** 5.返回结果处理 *****/
 		$res = json_decode(json_encode(simplexml_load_string($returnXml,'SimpleXMLElement', LIBXML_NOCDATA)),true);
-		return json_encode($res['return_code'].'|'.$res['return_msg']);
 		if ($res['return_code'] != 'SUCCESS') {
 			return ['state'=>1,'data'=> $res['return_msg']];
 		}
 
 		/***** 6.再次签名 *****/
 		$res = $this->zycgetSign($res);
-		return ['state'=>1,'data'=>$res];
+		// return ['state'=>1,'data'=>$res];
+		return $res;
 	}
 
 	//判断订单状态

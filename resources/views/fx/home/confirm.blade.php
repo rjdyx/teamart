@@ -148,13 +148,13 @@
 			var openid = "{{$openid}}"
 			var data = {'openid':openid, 'price':counts, 'id':"{{$id}}"}
 			ajax('post', '/home/order/payOrder', data).then(function (res) {
-				alert(res)
-				// if(res.state) {
-				// 	var json_data = res.data
-				// 	jsApiCall(json_data)
-				// } else {
-				// 	prompt.message(res.data)
-				// }
+				// alert(res)
+				if(res.state == undefined) {
+					var json_data = res
+					jsApiCall(json_data)
+				} else {
+					prompt.message(res.data)
+				}
 			});
 		});
 
