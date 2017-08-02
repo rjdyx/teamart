@@ -177,7 +177,7 @@
 			var id = "{{$id}}";
 			WeixinJSBridge.invoke('getBrandWCPayRequest', json_data, function(res){
 				WeixinJSBridge.log(res.err_msg);
-				if (res.err_msg == 'ok') {
+				if (res.err_msg == "get_brand_wcpay_request:ok") {
 					paySucceed();
 				} 
 				if(res.err_msg == 'cancel' || res.err_msg == 'fail') {
