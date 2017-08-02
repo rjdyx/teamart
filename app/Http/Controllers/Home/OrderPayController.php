@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Order;
 use App\User;
+use App\System;
 use App\OrderProduct;
 use Illuminate\Support\Facades\Auth;
 use Redirect;
@@ -17,14 +18,21 @@ class OrderPayController extends Controller
 	const APPID = 'wxdaa4107ed552fdcb';//微信公众号id
 	const APPSECRET = '449a412c0ac4bc8c8fc275f816c6c794';//微信公众号key
 	const MCHID = "1387257002";//商户号
-	const KEY = "GuoSenLinMiSiShenQing13632214480";//商户密匙key
-	const URL = "https://api.mch.weixin.qq.com/pay/unifiedorder";//统一下单地址
+	const KEY = "GuoSenLinMiSiShenQing13632214480"; //商户密匙key
+	const URL = "https://api.mch.weixin.qq.com/pay/unifiedorder"; //统一下单地址
+	const NOTIFY_URL = "http://fx.caishi360.com/home/payOrder"; //通知地址
+	const OPENID = "Xoe55srek3155dsDsw"; //微信openid
+	const BOYD = "商品描述"; //商品描述
+	const TRADE = "FX20170802"; //商品订单号
+	const TOTAL = 0; //总金额(分)
+	const SPBILL_IP = '127.0.0.1'; //设备ip
+	const TRADE_TYPE = "JSAPI"; //交易类型(H5:'MWEB')
 	protected $Datas = array();
 
-	public static function payOrder() 
+	public function payOrder(Request $request) 
 	{	
 		/***** 1.初始化 *****/
-		$this->setSpce();
+		$this->dataInit($request);
 
 		/***** 2.签名 *****/
 	    $this->Datas["sign"] = $this->getSign();
@@ -46,18 +54,38 @@ class OrderPayController extends Controller
 	//初始化参数设置
 	public function setSpce()
 	{
-		$notify = "http://".$_SERVER["HTTP_HOST"].$_SERVER["REQUEST_URI"].$_SERVER["QUERY_STRING"];
-		// $this->Datas["openid"] = $this->GetOpenid();//微信openid
-		$this->Datas["openid"] = 'o7t83wmZOMLxMQuG-eSMOZnePSIE';//微信openid
-		$this->Datas["appid"] = $this::APPID;//微信公众号id
-		$this->Datas["mch_id"] = $this::MCHID;//商户号
-		$this->Datas["body"] = "s"; //商品描述
-		$this->Datas["nonce_str"] = $this->createNoncestr();//随机字符串
-		$this->Datas["out_trade_no"] ="FX20170".rand(100,1000);//商品订单号 
-		$this->Datas["total_fee"] = 1;//总金额(分)
-		$this->Datas["notify_url"] = $notify;//通知地址 
-		$this->Datas["spbill_create_ip"] = $_SERVER["REMOTE_ADDR"];//设备ip
-		$this->Datas["trade_type"] = "JSAPI";//交易类型(H5:'MWEB')
+		$this->Datas["openid"] = $this::OPENID; //微信openid
+		$this->Datas["appid"] = $this::APPID; //微信公众号id
+		$this->Datas["mch_id"] = $this::MCHID; //商户号
+		$this->Datas["body"] = $this::BODY; //商品描述
+		$this->Datas["out_trade_no"] = $this::TRADE; //商品订单号 
+		$this->Datas["total_fee"] = $this::TOTAL;//总金额(分)
+		$this->Datas["notify_url"] = $this::NOTIFY_URL;//通知地址 
+		$this->Datas["spbill_create_ip"] = $this::SPBILL_IP;//设备ip
+		$this->Datas["trade_type"] = $this::TRADE_TYPE;//交易类型(H5:'MWEB')
+		$this->Datas["nonce_str"] = $this->Noncestr(); //随机字符串
+	}
+
+	//查询数据
+	public function dataInit($request)
+	{
+		//查询系统参数
+		$system = System::find(1);
+		//查询订单
+		$order = Order::select('serial')->find($request->id);
+		//设置常量
+		$this::APPID = empty($system->wx_appid)? $this::APPID: $system->wx_appid;
+		$this::MCHID = empty($system->wx_mchid)? $this::MCHID: $system->wx_mchid;
+		$this::APPSECRET = empty($system->wx_appsecret)? $this::APPSECRET: $system->wx_appsecret;
+		$this::KEY = empty($system->wx_key)? $this::KEY: $system->wx_key;
+		$this::NOTIFY_URL = "http://".$_SERVER["HTTP_HOST"].$_SERVER["REQUEST_URI"].$_SERVER["QUERY_STRING"];
+		$this::OPENID = $request->op;
+		$this::TOTAL = $request->my * 100;
+		$this::SPBILL_IP = $_SERVER["REMOTE_ADDR"];
+		$this::BODY = "广州茶沁轩出售";
+		$this::TRADE = $order->serial;
+		$this::TRADE_TYPE = "JSAPI";
+		$this->setSpce();
 	}
 
 	//二次签名
@@ -65,7 +93,7 @@ class OrderPayController extends Controller
 	{
 		$time = time();//当前时间戳
 		$arr["appId"] = $this::APPID;//微信公众号id
-		$arr["nonceStr"] = $this->createNoncestr();//随机字符串
+		$arr["nonceStr"] = $this->Noncestr();//随机字符串
 		$arr["timeStamp"] = "$time";
 		$arr["signType"] = "MD5";
 		$arr["package"] = "prepay_id=".$res["prepay_id"];//订单详情扩展字符串	
@@ -74,7 +102,7 @@ class OrderPayController extends Controller
 	}
 
 	//产生随机字符串，不长于32位
-	public function createNoncestr( $length = 32 ) 
+	public function Noncestr( $length = 32 ) 
 	{
 		$chars = "abcdefghijklmnopqrstuvwxyz0123456789";  
 		$str ="";

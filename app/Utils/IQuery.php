@@ -203,15 +203,10 @@ class IQuery{
     const APPSECRET = '449a412c0ac4bc8c8fc275f816c6c794';//微信公众号key
     const MCHID = "1387257002";//商户号
     const KEY = "GuoSenLinMiSiShenQing13632214480";//商户密匙key
-    const URL = "https://api.mch.weixin.qq.com/pay/unifiedorder";//统一下单地址
-    /**
-     * 通过跳转获取用户的openid，跳转流程如下：
-     * 1、设置自己需要调回的url及其其他参数，跳转到微信服务器https://open.weixin.qq.com/connect/oauth2/authorize
-     * 2、微信服务处理完成之后会跳转回用户redirect_uri地址，此时会带上一些参数，如：code
-     * @return 用户的openid
-     */
+
     public function GetOpenid()
     {
+        $this->setInit();
         //通过code获得openid
         if (!isset($_GET['code'])){
             //触发微信返回code码
@@ -227,6 +222,17 @@ class IQuery{
         }
     }
 
+    //查询数据 设置常量
+    public function setInit()
+    {
+        //查询系统参数
+        $system = System::find(1);
+        $this::APPID = empty($system->wx_appid)? $this::APPID: $system->wx_appid;
+        $this::MCHID = empty($system->wx_mchid)? $this::MCHID: $system->wx_mchid;
+        $this::APPSECRET = empty($system->wx_appsecret)? $this::APPSECRET: $system->wx_appsecret;
+        $this::KEY = empty($system->wx_key)? $this::KEY: $system->wx_key;
+    }
+    
     /**
      * 构造获取code的url连接
      * @param string $redirectUrl 微信服务器回跳的url，需要url编码
@@ -306,5 +312,5 @@ class IQuery{
         $bizString = $this->ToUrlParams($urlObj);
         return "https://api.weixin.qq.com/sns/oauth2/access_token?".$bizString;
     }
-    
+
 }

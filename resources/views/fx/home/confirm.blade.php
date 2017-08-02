@@ -11,6 +11,7 @@
 	<script>
 		var delivery_price = {{$lists->max('delivery_price')}}
 		var grade_price = 0;
+		var counts = 0;
 		$(function () {
 
 			// 显示选取配送方式弹窗
@@ -112,6 +113,7 @@
 			var product_price = $(".product-count").attr('count');
 			cut = cut == undefined ? 0 : cut
 			var count = parseFloat(product_price) + parseFloat(delivery_price) - parseFloat(grade_price) - parseFloat(cut);
+			counts = count
 			$(".all-count").html('&yen;'+count.toFixed(2));
 		}
 
@@ -144,104 +146,16 @@
 
 		//提交订单
 		$('.confirm_bottom_submit').click(function(){
-			ajax('get', '/home/payOrder').then(function (res) {
+			console.log(counts);
+			var data = 'op='+"{{$openid}}" + '&my=' + counts + '&id='+"{{$id}}"
+			ajax('get', '/home/payOrder?'+ data).then(function (res) {
 				if(res != 'false') {
-					// alert(res)
 					jsApiCall(res)
 				} else {
 					prompt.message('服务器忙，稍后再试！')
 				}
 			});
-			// alert(openid);
 		});
-		<?php 
-			class GetOpenIdNumber
-			{
-				const APPID = 'wxdaa4107ed552fdcb';//微信公众号id
-				const APPSECRET = '449a412c0ac4bc8c8fc275f816c6c794';//微信公众号key
-
-				public function GetOpenid()
-				{
-					//通过code获得openid
-					if (!isset($_GET['code'])){
-						//触发微信返回code码
-						$baseUrl = urlencode('http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].$_SERVER['QUERY_STRING']);
-						$url = $this->CreateOauthUrlForCode($baseUrl);
-						Header("Location:".$url);
-						exit();
-					} else {
-						//获取code码，以获取openid
-					    $code = $_GET['code'];
-						$openid = $this->getOpenidFromMp($code);
-						return $openid;
-					}
-				}
-				public function GetOpenidFromMp($code, $host="0.0.0.0", $port=0)
-				{
-					$url = $this->CreateOauthUrlForOpenid($code);
-					//初始化curl
-					$ch = curl_init();
-					//设置超时
-					curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-					curl_setopt($ch, CURLOPT_URL, $url);
-					curl_setopt($ch, CURLOPT_SSL_VERIFYPEER,FALSE);
-					curl_setopt($ch, CURLOPT_SSL_VERIFYHOST,FALSE);
-					curl_setopt($ch, CURLOPT_HEADER, FALSE);
-					curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-					if($host != "0.0.0.0" && $port!= 0) {
-						curl_setopt($ch,CURLOPT_PROXY, $host);
-						curl_setopt($ch,CURLOPT_PROXYPORT, $port);
-					}
-					//运行curl，结果以jason形式返回
-					$res = curl_exec($ch);
-					curl_close($ch);
-					//取出openid
-					$data = json_decode($res, true);
-					// $this->data = $data;
-					return $data['openid'];
-				}
-
-				private function CreateOauthUrlForOpenid($code)
-				{
-					$urlObj["appid"] = $this::APPID;
-					$urlObj["secret"] = $this::APPSECRET;
-					$urlObj["code"] = $code;
-					$urlObj["grant_type"] = "authorization_code";
-					$bizString = $this->ToUrlParams($urlObj);
-					return "https://api.weixin.qq.com/sns/oauth2/access_token?".$bizString;
-				}
-				private function CreateOauthUrlForCode($redirectUrl)
-				{
-					$urlObj["appid"] = $this::APPID;
-					$urlObj["redirect_uri"] = "$redirectUrl";
-					$urlObj["response_type"] = "code";
-					$urlObj["scope"] = "snsapi_base";
-					$urlObj["state"] = "STATE"."#wechat_redirect";
-					$bizString = $this->ToUrlParams($urlObj);
-					return "https://open.weixin.qq.com/connect/oauth2/authorize?".$bizString;
-				}
-				private function ToUrlParams($urlObj)
-				{
-					$buff = "";
-					foreach ($urlObj as $k => $v)
-					{
-						if($k != "sign"){
-							$buff .= $k . "=" . $v . "&";
-						}
-					}
-					
-					$buff = trim($buff, "&");
-					return $buff;
-				}
-			}
-			// $obj = new GetOpenIdNumber;
-			// $md = $obj->GetOpenid();
- 		?>
-		// var openid = 
-		<?php 
-		// echo $md; 
-		?>;
-
 
 		// 调起支付
 		function jsApiCall(data)
@@ -316,7 +230,7 @@
 				<!-- <div class="confirm_container_sum_row w-100" id="Err"></div> -->
 				<div class="confirm_container_sum_row w-100">
 					<a href="javascript:;" class="block clearfix J_show_type">
-						<span class="pull-left chayefont fz-18">配送方式{{$openid}}</span>
+						<span class="pull-left chayefont fz-18">配送方式</span>
 						<span class="pull-right gray color-8C8C8C fz-14"><s id="delivery">快递</s><i class="fa fa-angle-right ml-10"></i></span>
 						<input type="hidden" value="express" name="delivery">
 					</a>
