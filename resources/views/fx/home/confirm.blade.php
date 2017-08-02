@@ -150,15 +150,24 @@
 			ajax('post', '/home/order/payOrder', data).then(function (res) {
 				alert(res.data)
 				if(res.state) {
-					jsApiCall(res.data)
+					var re = res.data
+					var json_data = {
+						"appId":re.appId,
+						"nonceStr":re.nonceStr,
+						"timeStamp":re.timeStamp,
+						"signType":re.signType,
+						"package":re.package,
+						"paySign":re.paySign
+					}
+					jsApiCall(json_data)
 				} else {
 					prompt.message(res.data)
 				}
 			});
 		});
-		
+
 		// 调起支付
-		function jsApiCall(data)
+		function jsApiCall(json_data)
 		{
 			if (typeof WeixinJSBridge == "undefined"){
 			   if( document.addEventListener ){
@@ -168,15 +177,15 @@
 			       document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
 			   }
 			}else{
-			   onBridgeReady(data);
+			   onBridgeReady(json_data);
 			} 
 		}
 
 		// 调起支付
-		function onBridgeReady(data)
+		function onBridgeReady(json_data)
 		{
 			var id = "{{$id}}";
-			WeixinJSBridge.invoke('getBrandWCPayRequest', data, function(res){
+			WeixinJSBridge.invoke('getBrandWCPayRequest', json_data, function(res){
 				WeixinJSBridge.log(res.err_msg);
 				if (res.err_msg == 'ok') {
 					paySucceed();
