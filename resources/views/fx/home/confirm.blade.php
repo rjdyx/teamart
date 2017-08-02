@@ -148,7 +148,7 @@
 			var openid = "{{$openid}}"
 			var data = {'openid':openid, 'price':counts, 'id':"{{$id}}"}
 			ajax('post', '/home/order/payOrder', data).then(function (res) {
-				// alert(res.data)
+				alert(res.data)
 				if(res.state) {
 					jsApiCall(res.data)
 				} else {
