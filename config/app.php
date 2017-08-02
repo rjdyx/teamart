@@ -19,6 +19,10 @@ return [
     'thumb_width' => 200,
     'thumb_height' => 200,
     'image_path' => 'upload/',
+    'wx_appid' => 'wxdaa4107ed552fdcb',
+    'wx_appsecret' => '449a412c0ac4bc8c8fc275f816c6c794',
+    'wx_key' => "GuoSenLinMiSiShenQing13632214480",
+    'wx_mchid' => "1387257002",
     /*
     |--------------------------------------------------------------------------
     | Application Environment

@@ -16,6 +16,8 @@ use ReflectionClass;
 
 class IQuery{
 
+    protected $Inits = array();//存放公众号相关数据
+
     //图片异步上传
     public function upload($request, $file_pic='img', $minState=true)
     {
@@ -197,13 +199,7 @@ class IQuery{
         return $gets;
     }
 
-
-
-    const APPID = 'wxdaa4107ed552fdcb';//微信公众号id
-    const APPSECRET = '449a412c0ac4bc8c8fc275f816c6c794';//微信公众号key
-    const MCHID = "1387257002";//商户号
-    const KEY = "GuoSenLinMiSiShenQing13632214480";//商户密匙key
-
+    //获取微信 openid
     public function GetOpenid()
     {
         $this->setInit();
@@ -222,17 +218,15 @@ class IQuery{
         }
     }
 
-    //查询数据 设置常量
+    //设置参数
     public function setInit()
     {
-        //查询系统参数
+        //查询参数
         $system = System::find(1);
-        $this::APPID = empty($system->wx_appid)? $this::APPID: $system->wx_appid;
-        $this::MCHID = empty($system->wx_mchid)? $this::MCHID: $system->wx_mchid;
-        $this::APPSECRET = empty($system->wx_appsecret)? $this::APPSECRET: $system->wx_appsecret;
-        $this::KEY = empty($system->wx_key)? $this::KEY: $system->wx_key;
+        $this->Inits['appid'] = empty($system->wx_appid)? config('app.wx_appid'): $system->wx_appid;
+        $this->Inits['appsecret'] = empty($system->wx_appsecret)? config('app.wx_appsecret'):$system->wx_appsecret;
     }
-    
+
     /**
      * 构造获取code的url连接
      * @param string $redirectUrl 微信服务器回跳的url，需要url编码
@@ -240,7 +234,7 @@ class IQuery{
      */
     private function __CreateOauthUrlForCode($redirectUrl)
     {
-        $urlObj["appid"] = $this::APPID;
+        $urlObj["appid"] = $this->Inits['appid'];
         $urlObj["redirect_uri"] = "$redirectUrl";
         $urlObj["response_type"] = "code";
         $urlObj["scope"] = "snsapi_base";
@@ -294,7 +288,6 @@ class IQuery{
         curl_close($ch);
         //取出openid
         $data = json_decode($res, true);
-        // $this->data = $data;
         return $data['openid'];
     }
 
@@ -305,8 +298,8 @@ class IQuery{
      */
     private function __CreateOauthUrlForOpenid($code)
     {
-        $urlObj["appid"] = $this::APPID;
-        $urlObj["secret"] = $this::APPSECRET;
+        $urlObj["appid"] = $this->Inits['appid'];
+        $urlObj["secret"] = $this->Inits['appsecret'];
         $urlObj["code"] = $code;
         $urlObj["grant_type"] = "authorization_code";
         $bizString = $this->ToUrlParams($urlObj);
