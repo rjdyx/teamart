@@ -155,7 +155,7 @@
                 }
             })
             $('.J_header_search').on('tap', function () {
-                let v = $(this).siblings('input').val()
+                var v = $(this).siblings('input').val()
                 if ($.trim(v)) {
                     window.location.href = 'http://' + window.location.host + '/home/product/list?name=' + v
                 }
