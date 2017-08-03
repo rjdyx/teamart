@@ -15,10 +15,11 @@ class HomeController extends Controller
     public function isWeixin() { 
         if (strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false) { 
             $res = IQuery::GetwxInfo();
-            // $url = 'https://api.weixin.qq.com/sns/userinfo?access_token='.$res['access_token'].'&openid='.$res['openid'].'&lang=zh_CN';
+
             $token = $res['access_token'];
             $openid = $res['openid'];
-            $url =  "https://api.weixin.qq.com/cgi-bin/user/info?access_token=".$token.'&openid='.$openid.'&lang=zh_CN';
+            $url = 'https://api.weixin.qq.com/sns/userinfo?access_token='.$token.'&openid='.$openid.'&lang=zh_CN';
+            // $url =  "https://api.weixin.qq.com/cgi-bin/user/info?access_token=".$token.'&openid='.$openid.'&lang=zh_CN';
             $info = $this->getJson($url);
             $data = array($res,$url,$info);
             // $data['name'] = $info->nickname;
