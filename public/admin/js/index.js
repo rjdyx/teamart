@@ -1,20 +1,45 @@
 exports.nav = () => {
 	let curpath = window.location.pathname
-	let origin = window.location.origin
 	$('.sidebar-menu')
 	.find('.active').removeClass('active').end()
 	.find('a').each(function (idx, elem) {
 		let href = $(this).attr('href')
-		let sublength = href.indexOf('admin')
-		if (sublength > 0) {
-			href = '/' + href.substr(sublength)
+		let hreflength = href.indexOf('admin')
+		let curlength = curpath.indexOf('admin')
+		if (hreflength > 0) {
+			href = href.substr(hreflength + 6)
 		}
-		if (curpath.indexOf(href) > -1) {
+		if (curlength > 0) {
+			curpath = curpath.substr(curlength + 6)
+			let curarr = curpath.split('/')
+			if (curarr.length > 2) {
+				curarr.length = 2
+			}
+			curpath = curarr.join('/')
+		}
+		console.dir(curpath)
+		if (curpath === href || (href === 'activity/group' && curpath === 'activity/activityproduct')) {
 			$(this)
 				.parent().addClass('active').end()
 				.parents('.treeview').addClass('active')
 		}
 	})
+	// let curpath = window.location.pathname
+	// $('.sidebar-menu')
+	// .find('.active').removeClass('active').end()
+	// .find('a').each(function (idx, elem) {
+	// 	let href = $(this).attr('href')
+	// 	let sublength = curpath.indexOf('admin')
+	// 	if (sublength > 0) {
+	// 		curpath = curpath.substr(sublength + 6)
+	// 	}
+	// 	console.dir(curpath)
+	// 	if (href.indexOf(curpath) > -1) {
+	// 		$(this)
+	// 			.parent().addClass('active').end()
+	// 			.parents('.treeview').addClass('active')
+	// 	}
+	// })
 }
 exports.adduserClick = () => {
 	$('#addUser,#cancel_addUser').click(function () {
