@@ -288,7 +288,8 @@ class IQuery{
         curl_close($ch);
         //取出openid
         $data = json_decode($res, true);
-        return $data['openid'];
+        return $data;
+        // return $data['openid'];
     }
 
     /**

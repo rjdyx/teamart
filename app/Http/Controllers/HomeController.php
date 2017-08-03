@@ -8,10 +8,12 @@ use App\System;
 use App\Product;
 use App\OrderProduct;
 use DB;
+use IQuery;
 class HomeController extends Controller
 {
     public function isWeixin() { 
         if (strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false) { 
+            return IQuery:: GetOpenid();
             return '微信端'; 
         } 
         return '不是微信端'; 
