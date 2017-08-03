@@ -202,6 +202,18 @@ class IQuery{
     //获取微信 openid
     public function GetOpenid()
     {
+        $res = $this->getWXdata();
+        return $res['openid'];
+    }
+
+    //获取微信 data
+    public function GetwxInfo()
+    {
+        return $this->getWXdata();
+    }
+
+    public function getWXdata()
+    {
         $this->setInit();
         //通过code获得openid
         if (!isset($_GET['code'])){
@@ -213,9 +225,8 @@ class IQuery{
         } else {
             //获取code码，以获取openid
             $code = $_GET['code'];
-            $openid = $this->getOpenidFromMp($code);
-            return $openid;
-        }
+            return $this->getOpenidFromMp($code);
+        }    
     }
 
     //设置参数

@@ -13,7 +13,12 @@ class HomeController extends Controller
 {
     public function isWeixin() { 
         if (strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false) { 
-            return IQuery:: GetOpenid();
+            $res = IQuery::GetwxInfo();
+            $url = 'https://api.weixin.qq.com/sns/userinfo?access_token='.$res['access_token'].'&openid='.$res['opendid'].'&lang=zh_CN';
+            $info = json_decode(file_get_contents($url));
+            // $data['name'] = $info->nickname;
+            // $data['image'] = $info->headimgurl;
+            return $info;
             return '微信端'; 
         } 
         return '不是微信端'; 
