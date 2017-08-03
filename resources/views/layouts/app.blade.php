@@ -73,27 +73,7 @@
     <script src="{{url('/fx/zetop/touch.js')}}"></script>
     <script src="{{url('/fx/build/prompt.js')}}"></script>
     <script>
-        // (function (doc, win) {
-        //     var docEl = doc.documentElement,
-        //         resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
-        //         recalc = function () {
-        //             var clientWidth = docEl.clientWidth;
-        //             if (!clientWidth) return;
-        //             var style;
-        //             if(style=document.getElementById("hackUcRem")){
-        //                 style.parentNode.removeChild(style);
-        //             }
-        //             style = document.createElement("style");
-        //             style.id="hackUcRem";
-        //             document.head.appendChild(style);
-        //             style.appendChild(document.createTextNode("html{font-size:" + 100 * (clientWidth / 320) + "px !important;}"));
-        //             docEl.style.fontSize = 100 * (clientWidth / 320) + 'px';
-        //         };
-        //     recalc();
-        //     if (!doc.addEventListener) return;
-        //     win.addEventListener(resizeEvt, recalc, false);
-        //     doc.addEventListener('DOMContentLoaded', recalc, false);
-        // })(document, window);
+        // 'use strict';
         (function(doc, win) {
             var docEle = doc.documentElement,
                 evt = "onorientationchange" in window ? "orientationchange" : "resize",
@@ -105,20 +85,27 @@
             win.addEventListener(evt, fn, false);
             doc.addEventListener("DOMContentLoaded", fn, false);
         }(document, window));
-        // var deviceWidth = document.documentElement.clientWidth;
-        // if(deviceWidth > 640) deviceWidth = 640;
-        // document.documentElement.style.fontSize = deviceWidth / 6.4 + 'px';
         function backTop (container) {
             $('.J_backTop').on('tap', function () {
-                // $('#' + container).animate({
-                //     'scrollTop': 0
-                // }, 100)
                 $('#' + container).scrollTop(0)
             })
         }
         $(function () {
-            FastClick.attach(document.body);
-            prompt.init()
+            if ($('.header_category')[0]) {
+                FastClick.attach($('.header_category')[0]);
+            }
+            $('.J_hide_prompt').on('click', function () {
+                $('.prompt').removeClass('active')
+                    .find('.prompt_image, .prompt_qrcode, .prompt_message, .prompt_question, .prompt_loading').removeClass('atc').end()
+                    .find('.prompt_message_content, .prompt_question_content').html('').end()
+                    .find('.prompt_loading_content').text('加载中').end()
+                    .find('.prompt_image').find('img').remove()
+            })
+            // 点击取消时
+            $('.J_prompt_no').on('click', function () {
+                $('.prompt').removeClass('active').find('.prompt_question_content').html('').end()
+                    .find('.prompt_question').removeClass('atc')
+            })
             // 返回按钮事件绑定
             $('.J_header_back').on('tap', function () {
                 history.go(-1)

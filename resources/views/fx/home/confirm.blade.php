@@ -72,13 +72,15 @@
 			})
 
 			// 重置返回按钮
-			$('.J_header_back').off('tap').on('tap', function () {
-				history.go(-1)
-			})
+			// $('.J_header_back').off('tap').on('tap', function () {
+			// 	history.go(-1)
+			// })
 
 		});
 
-		addressData();
+		window.onload = function () {
+			addressData();
+		}
 		siteData();
 		countPrice();
 		//获取默认地址
