@@ -14,9 +14,9 @@ class HomeController extends Controller
     public function isWeixin() { 
         if (strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false) { 
             $res = IQuery::GetwxInfo();
-            echo "<pre>"; var_dump($res);die;
+            // echo "<pre>"; var_dump($res);die;
             $url = 'https://api.weixin.qq.com/sns/userinfo?access_token='.$res['access_token'].'&openid='.$res['openid'].'&lang=zh_CN';
-            $info = json_decode(file_get_contents($url));
+            $info = $this->getJson($url);
             // $data['name'] = $info->nickname;
             // $data['image'] = $info->headimgurl;
             return $info;
@@ -25,6 +25,16 @@ class HomeController extends Controller
         return '不是微信端'; 
     }
 
+    public function getJson($url){
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE); 
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE); 
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $output = curl_exec($ch);
+        curl_close($ch);
+        return json_decode($output, true);
+    }
     //首页
     public function index()
     {
