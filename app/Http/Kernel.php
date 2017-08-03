@@ -57,5 +57,6 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'userRole' => \App\Http\Middleware\UserRole::class,
+        'isWeixin' => \App\Http\Middleware\IsWeixin::class,
     ];
 }

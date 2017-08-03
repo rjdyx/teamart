@@ -150,6 +150,6 @@
         })
     </script>
     @yield('script')
-    <!-- @include("layouts.service")  -->
+    {{-- @include("layouts.service") --}}
 </body>
 </html>
