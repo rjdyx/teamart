@@ -14,6 +14,7 @@ class HomeController extends Controller
     public function isWeixin() { 
         if (strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false) { 
             $res = IQuery::GetwxInfo();
+            echo "<pre>"; var_dump($res);die;
             $url = 'https://api.weixin.qq.com/sns/userinfo?access_token='.$res['access_token'].'&openid='.$res['openid'].'&lang=zh_CN';
             $info = json_decode(file_get_contents($url));
             // $data['name'] = $info->nickname;
