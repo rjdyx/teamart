@@ -248,7 +248,8 @@ class IQuery{
         $urlObj["appid"] = $this->Inits['appid'];
         $urlObj["redirect_uri"] = "$redirectUrl";
         $urlObj["response_type"] = "code";
-        $urlObj["scope"] = "snsapi_base";
+        // $urlObj["scope"] = "snsapi_base";
+        $urlObj["scope"] = "snsapi_userinfo";
         $urlObj["state"] = "STATE"."#wechat_redirect";
         $bizString = $this->ToUrlParams($urlObj);
         return "https://open.weixin.qq.com/connect/oauth2/authorize?".$bizString;
