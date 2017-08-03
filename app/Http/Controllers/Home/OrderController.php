@@ -142,6 +142,7 @@ class OrderController extends Controller
 
 		$title = '确认订单';
 		$openid = IQuery::GetOpenid();
+		// $request->session()->put('openid',$openid);
 
 		return view(config('app.theme').'.home.confirm')->with(['title'=>$title,'lists'=>$lists,'count'=>$count,'grade'=>$grade,'cheaps'=>$cheaps,'id'=>$id,'openid'=>$openid]);
 	}
