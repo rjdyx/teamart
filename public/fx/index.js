@@ -3,7 +3,7 @@ require('expose-loader?$!zepto-webpack')
 require('expose-loader?axios!axios')
 // require('expose-loader?_!lodash')
 require('expose-loader?FastClick!fastclick')
-require('babel-polyfill')
+// require('babel-polyfill')
 
 require('swiper/dist/css/swiper.css')
 require('font-awesome/css/font-awesome.css')

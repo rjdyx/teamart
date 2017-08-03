@@ -173,6 +173,7 @@
 				<input type="password" name="repassword" id="repassword" class="pull-right txt-r color-8C8C8C block chayefont" autocomplete="off" placeholder="输入密码后再确认密码">
 			</div>
 			<div class="filling">
+				<input type="file" name="imgs[]" id="img1" class="invisibility J_imgs absolute" accept="image/jpeg,image/jpg,image/png">
 				<input type="file" name="img" id="img" class="invisibility" accept="image/jpeg,image/jpg,image/png">
 			</div>
 		</form>
