@@ -17,7 +17,6 @@ exports.nav = () => {
 			}
 			curpath = curarr.join('/')
 		}
-		console.dir(curpath)
 		if (curpath === href || (href === 'activity/group' && curpath === 'activity/activityproduct')) {
 			$(this)
 				.parent().addClass('active').end()
