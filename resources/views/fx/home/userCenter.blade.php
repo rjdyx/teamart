@@ -180,6 +180,14 @@
 					<p class="chayefont fz-14">意见反馈</p>
 				</a>
 			</li>
+			<li class="pull-left txt-c">
+				<a href="{{url('/isweixin')}}">
+					<div class="txt-c usercenter_nav_icon">
+						<i class="fa fa-feed white fz-20"></i>
+					</div>
+					<p class="chayefont fz-14">检测微信端</p>
+				</a>
+			</li>
 		</ul>
 		@if (Auth::user())
 		<div class="usercenter_loginout txt-c fz-18 white chayefont J_loginout">退出</div>

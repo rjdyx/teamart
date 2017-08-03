@@ -11,6 +11,7 @@
 |
 */
 
+Route::get('/isweixin','HomeController@isWeixin');//首页
 Route::get('/','HomeController@index');//首页
 Route::get('/auth/geetest', 'Auth\AuthController@getGeetest');//极验
 Route::get('/check/email', 'Auth\RegisterController@checkEmail');//判断邮箱是否存在

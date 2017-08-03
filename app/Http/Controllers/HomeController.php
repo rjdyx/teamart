@@ -10,6 +10,13 @@ use App\OrderProduct;
 use DB;
 class HomeController extends Controller
 {
+    public function isWeixin() { 
+        if (strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false) { 
+            return '微信端'; 
+        } 
+        return '不是微信端'; 
+    }
+
     //首页
     public function index()
     {
