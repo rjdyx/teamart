@@ -23,9 +23,9 @@
           </span>
         </a>
         <ul class="treeview-menu">
-          <li><a href="/admin/user/agentrole"><i class="fa fa-circle-o"></i> 代理商角色</a></li>
-          <li><a href="/admin/user/agent"><i class="fa fa-circle-o"></i>代理商</a></li>
-          <li><a href="/admin/user/list"><i class="fa fa-circle-o"></i>用户列表</a></li>
+          <li><a href="{{url('admin/user/agentrole')}}"><i class="fa fa-circle-o"></i> 代理商角色</a></li>
+          <li><a href="{{url('admin/user/agent')}}"><i class="fa fa-circle-o"></i>代理商</a></li>
+          <li><a href="{{url('admin/user/list')}}"><i class="fa fa-circle-o"></i>用户列表</a></li>
         </ul>
       </li>
       <li class="treeview">
@@ -53,9 +53,9 @@
           </span>
         </a>
         <ul class="treeview-menu">
-          <li><a href="/admin/order/list"><i class="fa fa-circle-o"></i>订单列表</a></li>
-          <li><a href="/admin/order/fade"><i class="fa fa-circle-o"></i>退货订单</a></li>
-          <li><a href="/admin/order/close"><i class="fa fa-circle-o"></i>已完成订单</a></li>
+          <li><a href="{{url('admin/order/list')}}"><i class="fa fa-circle-o"></i>订单列表</a></li>
+          <li><a href="{{url('admin/order/fade')}}"><i class="fa fa-circle-o"></i>退货订单</a></li>
+          <li><a href="{{url('admin/order/close')}}"><i class="fa fa-circle-o"></i>已完成订单</a></li>
         </ul>
       </li>
       <li class="treeview">
@@ -66,9 +66,9 @@
           </span>
         </a>
         <ul class="treeview-menu">
-          <li><a href="/admin/count/client"><i class="fa fa-circle-o"></i>客户分析</a></li>
-          <li><a href="/admin/count/product"><i class="fa fa-circle-o"></i>商品订单</a></li>
-          <li><a href="/admin/count/agency"><i class="fa fa-circle-o"></i>代理商销售</a></li>
+          <li><a href="{{url('admin/count/client')}}"><i class="fa fa-circle-o"></i>客户分析</a></li>
+          <li><a href="{{url('admin/count/product')}}"><i class="fa fa-circle-o"></i>商品订单</a></li>
+          <li><a href="{{url('admin/count/agency')}}"><i class="fa fa-circle-o"></i>代理商销售</a></li>
         </ul>
       </li>
       <li class="treeview">
@@ -79,8 +79,8 @@
           </span>
         </a>
         <ul class="treeview-menu">
-          <li><a href="/admin/article/category"><i class="fa fa-circle-o"></i>文章分类</a></li>
-          <li><a href="/admin/article/list"><i class="fa fa-circle-o"></i>文章列表</a></li>
+          <li><a href="{{url('admin/article/category')}}"><i class="fa fa-circle-o"></i>文章分类</a></li>
+          <li><a href="{{url('admin/article/list')}}"><i class="fa fa-circle-o"></i>文章列表</a></li>
         </ul>
       </li>
       <li class="treeview">
@@ -91,9 +91,9 @@
           </span>
         </a>
         <ul class="treeview-menu">
-          <li><a href="/admin/activity/group"><i class="fa fa-circle-o"></i>团购活动</a></li>
-          <li><a href="/admin/activity/mark"><i class="fa fa-circle-o"></i>积分商品</a></li>
-          <li><a href="/admin/activity/roll"><i class="fa fa-circle-o"></i>优惠券</a></li>
+          <li><a href="{{url('admin/activity/group')}}"><i class="fa fa-circle-o"></i>团购活动</a></li>
+          <li><a href="{{url('admin/activity/mark')}}"><i class="fa fa-circle-o"></i>积分商品</a></li>
+          <li><a href="{{url('admin/activity/roll')}}"><i class="fa fa-circle-o"></i>优惠券</a></li>
         </ul>
       </li>
       <li class="treeview">
@@ -106,10 +106,10 @@
         <ul class="treeview-menu">
 <!--           <li><a href="/admin/system/pay"><i class="fa fa-circle-o"></i>支付设置</a></li> -->
           <!-- <li><a href="/admin/system/send"><i class="fa fa-circle-o"></i>配送设置</a></li> -->
-          <li><a href="/admin/system/ad"><i class="fa fa-circle-o"></i>广告管理</a></li>
-          <li><a href="/admin/system/site"><i class="fa fa-circle-o"></i>站点设置</a></li>
-          <li><a href="/admin/system/feedback"><i class="fa fa-circle-o"></i>意见反馈</a></li>
-          <li><a href="/admin/system/log"><i class="fa fa-circle-o"></i>操作日志</a></li>
+          <li><a href="{{url('admin/system/ad')}}"><i class="fa fa-circle-o"></i>广告管理</a></li>
+          <li><a href="{{url('admin/system/site')}}"><i class="fa fa-circle-o"></i>站点设置</a></li>
+          <li><a href="{{url('admin/system/feedback')}}"><i class="fa fa-circle-o"></i>意见反馈</a></li>
+          <li><a href="{{url('admin/system/log')}}"><i class="fa fa-circle-o"></i>操作日志</a></li>
         </ul>
       </li>
     </ul>
