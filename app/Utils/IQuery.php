@@ -202,24 +202,24 @@ class IQuery{
     //获取微信 openid
     public function GetOpenid()
     {
-        $res = $this->getWXdata();
+        $res = $this->getWXdata("snsapi_base");
         return $res['openid'];
     }
 
     //获取微信 data
     public function GetwxInfo()
     {
-        return $this->getWXdata();
+        return $this->getWXdata("snsapi_userinfo");
     }
 
-    public function getWXdata()
+    public function getWXdata($scope)
     {
         $this->setInit();
         //通过code获得openid
         if (!isset($_GET['code'])){
             //触发微信返回code码
             $baseUrl = urlencode('http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].$_SERVER['QUERY_STRING']);
-            $url = $this->__CreateOauthUrlForCode($baseUrl);
+            $url = $this->__CreateOauthUrlForCode($baseUrl, $scope);
             Header("Location:".$url);
             exit();
         } else {
@@ -243,13 +243,13 @@ class IQuery{
      * @param string $redirectUrl 微信服务器回跳的url，需要url编码
      * @return 返回构造好的url
      */
-    private function __CreateOauthUrlForCode($redirectUrl)
+    private function __CreateOauthUrlForCode($redirectUrl, $scope)
     {
         $urlObj["appid"] = $this->Inits['appid'];
         $urlObj["redirect_uri"] = "$redirectUrl";
         $urlObj["response_type"] = "code";
         // $urlObj["scope"] = "snsapi_base";
-        $urlObj["scope"] = "snsapi_userinfo";
+        $urlObj["scope"] = $scope;
         $urlObj["state"] = "STATE"."#wechat_redirect";
         $bizString = $this->ToUrlParams($urlObj);
         return "https://open.weixin.qq.com/connect/oauth2/authorize?".$bizString;
