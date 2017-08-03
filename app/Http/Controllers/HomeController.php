@@ -9,6 +9,7 @@ use App\Product;
 use App\OrderProduct;
 use DB;
 use IQuery;
+
 class HomeController extends Controller
 {
     public function isWeixin() { 
@@ -17,8 +18,10 @@ class HomeController extends Controller
             // $url = 'https://api.weixin.qq.com/sns/userinfo?access_token='.$res['access_token'].'&openid='.$res['openid'].'&lang=zh_CN';
             $url = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=".$res['access_token'].'&openid='.$res['openid'].'&lang=zh_CN';
             $info = $this->getJson($url);
+            $data = array($res,$url,$info);
             // $data['name'] = $info->nickname;
             // $data['image'] = $info->headimgurl;
+            echo "<pre>"; var_dump($data);die;
             return $info;
             return '微信端'; 
         } 
