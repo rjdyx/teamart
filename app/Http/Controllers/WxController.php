@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
 use App\User;
-use DB;
 use IQuery;
 use Redirect;
 use Session;
 
 class WxController extends Controller
 {
+	use AuthenticatesUsers;
+
     //微信绑定页面加载
     public function bindWeiXin(Request $request)
     {
@@ -40,8 +41,8 @@ class WxController extends Controller
     //密码验证 及绑定微信账户
     public function bindWeiXinPassCheck(Request $request)
     {
-        $agent = strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger');
-        if (Auth::user() || $agent === false) return 'false';
+        // $agent = strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger');
+        // if (Auth::user() || $agent === false) return 0;
 
         $data = $this->credentials($request);
         $isUser = $this->bindWeiXinCheck($request);
@@ -113,7 +114,7 @@ class WxController extends Controller
 			$wx = session('wx'); // 获取微信用户信息
 			$user->openid = $wx['openid'];
 			if ($user->save()) {
-		  	    auth()->login($result);
+		  	    auth()->login($user);
 		        return 1;
 			}
 		}
