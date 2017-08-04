@@ -136,7 +136,7 @@
                                 c = `   <div class="order_warpper_sum color-8C8C8C txt-r">
                                             <p>
                                                 <span>总${len}件商品</span>
-                                                <span>合计：<i class="price">&yen;${count}</i>（包运费）</span>
+                                                <span>合计：<i class="price">&yen;${count}</i>（不含运费）</span>
                                             </p>
                                             <p>
                                                 <span>下单时间：</span>

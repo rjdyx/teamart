@@ -53,12 +53,22 @@ class OrderController extends Controller
 			$orderProduct = new OrderProduct;
 			$orderProduct->product_id = $id;
 			$orderProduct->amount = $amount;
-			$orderProduct->price = Product::find($id)->price;
+			$orderProduct->price = Product::find($id)->price * $amount;
 			$orderProduct->order_id = $order->id;
 			if (!$orderProduct->save()) return 0;
 			$this->delCartProduct($id);
 		}
+		$this->countPrice($order->id);
 		return $order->id;
+	}
+
+	//保存订单总价格
+	public function countPrice($order_id)
+	{
+		$count = OrderProduct::where('order_id',$order_id)->sum('price');
+		$order = Order::find($order_id);
+		$order->price = $count;
+		$order->save();
 	}
 
 	//删除购物车商品方法
@@ -110,10 +120,8 @@ class OrderController extends Controller
 				)
 				->distinct('product.id')
 				->get();
-
 		
 		$delivery_price = System::find(1)->free; //查询包邮金额
-
 		$count = 0; $grade = 1; $d_price = 0;
 
 		foreach ($lists as $list) {
@@ -193,13 +201,13 @@ class OrderController extends Controller
 		}
 		if ($serial) $datas = $datas->where('order.serial','like','%'.$serial.'%');
 
-		$datas = $datas->select('id')->paginate(10);
+		$datas = $datas->orderBy('updated_at','desc')->select('id')->paginate(10);
 
 		$arrs = array();
 		foreach ($datas as $data) {
 			$res = $this->orderListProducts($data->id);
 			if (count($res)) {
-				$arrs[$data->id] = $res;
+				$arrs["'".$data->id."'"] = $res;
 			}
 		}
 		return $arrs;
@@ -216,11 +224,12 @@ class OrderController extends Controller
 				->whereNull('order_product.deleted_at')
 				->whereNull('order.deleted_at')
 				->select(
+					'product.*',
 					'order_product.amount as order_amount',
 					'order_product.price as order_product_price',
-					'order.serial','order.id as order_id','order.updated_at as order_date','order.price as order_price',
-					'order.state as order_state','order.method as order_method','order.type as order_type',
-					'product.*'
+					'order.serial','order.id as order_id','order.updated_at as order_date',
+					'order.price as order_price','order.state as order_state',
+					'order.method as order_method','order.type as order_type'
 					)
 				->distinct('order_product.id')
 				->get();
