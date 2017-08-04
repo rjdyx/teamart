@@ -69,7 +69,7 @@ class WxController extends Controller
     }
 
     //微信号注册
-    public function bindWeiXinUserRegister($request, $list)
+    public function bindWeiXinUserRegister(Request $request, $list)
     {
         foreach ($list as $k => $v) {
         	if ($k!='password') $file = $k;
@@ -155,10 +155,9 @@ class WxController extends Controller
     //验证手机
     public function isMobile($mobile) 
     {
-        if(preg_match("/^1[34578]\d{9}$/", $mobile)){
+        if(preg_match("/^1[34578]\d{9}$/", $mobile) && strlen($mobile)== 11){
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }

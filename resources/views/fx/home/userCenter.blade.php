@@ -46,7 +46,7 @@
 
 		// 解除绑定退出
 		$(".J_loginout_wx").on('tap', function () {
-			if(window.confirm('是否解除绑定？')) {
+			prompt.question('是否解除绑定？', function () {
 				ajax('get', '/bind/weixin/relieve').then(function (res) {
 					if (res) {
 						prompt.message('解除绑定成功', 'http://' + window.location.host)
@@ -54,7 +54,7 @@
 						prompt.message('解除绑定失败')
 					}
 				})
-			}
+			})
 		})
 
 		// 显示二维码
@@ -214,7 +214,7 @@
 			<a href="{{url('/login')}}"><div class="usercenter_loginout txt-c fz-18 white chayefont">登录</div></a>
 			<a href="{{url('/register')}}"><div class="usercenter_loginout txt-c fz-18 white chayefont">注册</div></a>
 		@endif
-
+		
 	</div>
 	@include("layouts.footer")
 @endsection
