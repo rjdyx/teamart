@@ -99,7 +99,10 @@ class WxController extends Controller
         $data['parter_id'] = $request->parter_id;
         $result = User::create($data);
         //注册成功 自动登录
-        if ($result) return auth()->login($result);//自动登录;
+        if ($result){
+        	auth()->login($result);//自动登录;
+        	return 1;
+        }
         return 0;
     }	
 
