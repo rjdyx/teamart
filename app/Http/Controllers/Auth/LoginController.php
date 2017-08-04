@@ -197,8 +197,7 @@ class LoginController extends Controller
     //登出
     public function layout()
     {
-        $this->guard()->logout();
-        return redirect('/login');
+        return $this->guard()->logout();
     }
 
     //后台登出

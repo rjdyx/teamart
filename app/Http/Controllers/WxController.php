@@ -36,7 +36,7 @@ class WxController extends Controller
     		$this->guard()->logout();
     		return 1;
     	}
-        return 0
+        return 0;
     }
 
     //账号验证

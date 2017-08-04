@@ -209,10 +209,12 @@
 			@if (session('webType') < 1)
 				<div class="usercenter_loginout txt-c fz-18 white chayefont J_loginout">退出</div>
 			@endif
+
 		@else
 			<a href="{{url('/login')}}"><div class="usercenter_loginout txt-c fz-18 white chayefont">登录</div></a>
 			<a href="{{url('/register')}}"><div class="usercenter_loginout txt-c fz-18 white chayefont">注册</div></a>
 		@endif
+
 	</div>
 	@include("layouts.footer")
 @endsection
