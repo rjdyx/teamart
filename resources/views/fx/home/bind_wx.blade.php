@@ -158,6 +158,7 @@
 @endsection
 
 @section('content')
+
 <div class="login w-100 h-100 default-info">
 	<div class="desc-title">绑定须知</div>
 	<div class="desc">

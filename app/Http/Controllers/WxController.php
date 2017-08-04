@@ -54,9 +54,7 @@ class WxController extends Controller
     //密码验证 及绑定微信账户
     public function bindWeiXinPassCheck(Request $request)
     {
-        $agent = strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger');
-        if (Auth::user() || $agent === false) return 0;
-
+        if (Auth::user()) return 0;
         $data = $this->credentials($request);
         $isUser = $this->bindWeiXinCheck($request);
         //未注册 绑定
@@ -77,12 +75,13 @@ class WxController extends Controller
         foreach ($list as $k => $v) {
         	if ($k!='password') $file = $k;
         }
-		$res = session('wx'); // 获取微信用户信息
-		$data['phone'] = '';
-		$data['realname'] = $res['nickname'];
-		$data['img'] = $res['headimgurl'];
-		$data['thumb'] = $res['headimgurl'];
-		$data['gender'] = $res['sex']>1? 0: 1;
+		$wx = session('wx'); // 获取微信用户信息
+		if (isset($wx['sex'])) {
+			$data['realname'] = $wx['nickname'];
+			$data['img'] = $wx['headimgurl'];
+			$data['thumb'] = $wx['headimgurl'];
+			$data['gender'] = $wx['sex']>1? 0: 1;
+		}
 		if ($file == 'name') {
 			$data['name'] = $list['name'];
 			$data['email'] = $list['name'].'@qq.com';
