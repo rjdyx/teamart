@@ -90,42 +90,53 @@
     <script src="{{url('/fx/build/valid.js')}}"></script>
     <script src="{{url('/fx/js/fixInput.js')}}"></script>
     <script>
-        function validate() {
-            if (!_valid.ness('该字段', $('#name').val())) {
-                return false;
-            }
-            if (!_valid.ness('密码', $('#password').val())) {
-                return false;
-            }
-            return true;
-        }
-
+    	//字段验证
+    	function fieldCheck(val){
+    		if (!val) {
+        		alert('请输入信息再绑定')
+        		return false
+        	}else if (val.length<6) {
+        		alert('小于6个字符')
+        		return false
+        	} else {
+        		return true
+        	}
+    	}
         //验证账号事件
         $(".sub-bind").click(function(){
         	var form = document.forms['form']
-        	var params = {user: form['user'].value}
-        	var $this = $(this)
+        	var val = form['user'].value
+        	if (fieldCheck(val)) {
+        		userCheck ($(this), val)
+        	}
+        })
+
+        function userCheck (tis, val) {
+        	var params = {user: val}
         	ajax('get','/bind/user/check', params).then(function (res) {
         		var res = res.data
                 if(res < 0){
                 	alert('已被使用')
                 } else {
                 	$("form input[name='password']").val('');
-                	$this.hide();
+                	tis.hide();
                 	$("#userMd").hide();
                 	$("#passMd").css('display','block');
                     $(".sub-per").css('display','block');
                     $(".sub-next").css('display','block');
                 }
             })
-        })
+        }
 
         //验证密码 及绑定
         $(".sub-next").click(function(){
         	var form = document.forms['form']
-        	var params = {user: form['user'].value, pass: form['password'].value, parter_id: form['parter_id'].value}
-        	var url = '/bind/pass/check'
-        	bindUser(url, params)
+        	var val = form['password'].value
+        	if (fieldCheck(val)) {
+        	    var params = {user: form['user'].value, pass: val, parter_id: form['parter_id'].value}
+        		var url = '/bind/pass/check'	
+        		bindUser(url, params)
+        	}
         })
 
         // 上一步返回
