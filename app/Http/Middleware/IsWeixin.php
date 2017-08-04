@@ -8,6 +8,7 @@ use Closure;
 use IQuery;
 use App\User;
 use Redirect;
+use Session;
 
 class IsWeixin
 {
