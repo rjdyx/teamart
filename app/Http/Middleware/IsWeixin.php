@@ -29,7 +29,7 @@ class IsWeixin
             if (strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false) { 
                 $wx = IQuery::getWeixin(); // 获取微信用户信息
                 $request->session()->put('wx', $wx);
-                $user = $this->userState($res['openid']); //判断该微信用户是否绑定账号
+                $user = $this->userState($wx['openid']); //判断该微信用户是否绑定账号
                 if (isset($user->id)) {
                     auth()->login($user);//自动登录
                 } else {
