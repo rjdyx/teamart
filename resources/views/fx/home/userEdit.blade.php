@@ -128,11 +128,15 @@
 @section('content')
 
 	@include("layouts.header-info")
-
+	
+	<?php 
+		$img = Auth::user()->img;
+		if (!strpos($img,'http')) $img = url('').'/'.$img;
+	?>
 	<div class="container useredit relative">
 		<div class="useredit_info mb-10 relative">
 			<label for="img" class="block avatar">
-				<img class="w-100" id="avatar" src="{{url('')}}/{{Auth::user()->img}}">
+				<img class="w-100" id="avatar" src="{{$img}}">
 			</label>
 			<p class="useredit_name white fz-20 txt-c chayefont">{{Auth::user()->name}}</p>
 			@if(Auth::user()->type==2)<p class="useredit_name chayefont white txt-c fz-16">推荐人：@if($data->pname){{$data->pname}}@else 无 @endif</p>@endif

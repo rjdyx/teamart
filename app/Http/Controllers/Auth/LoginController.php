@@ -43,46 +43,6 @@ class LoginController extends Controller
         $this->middleware('guest', ['except' => ['layout','adminLayout','loginCheck','bindAgent']]);
     }
 
-    //微信绑定页面加载
-    public function bindWeiXin()
-    {
-        if (Auth::user()) return redirect::back();
-        return view(config('app.theme').'.home.bind_wx');
-    }
-
-    //微信号注册
-    public function autoRegister($user)
-    {
-        $data['name'] = $this->Noncestr();
-        $data['password'] = $this->Noncestr();
-        $data['email'] = $this->Noncestr();
-        $data['phone'] = $this->Noncestr();
-        $this->createUser($data);
-    }
-
-    protected function createUser(array $data)
-    {
-        return User::create([
-            'email'       => $data['email'],
-            'name'    => $data['name'],
-            'password'    => bcrypt($data['password']),
-            'phone'        => $data['phone'],
-            'gender'        => $data['gender'],
-            'parter_id'        => $data['agent_id']
-        ]);
-    }
-
-    //产生随机字符串，不长于10位
-    public function Noncestr( $length = 10 ) 
-    {
-        $chars = "abcdefghijklmnopqrstuvwxyz0123456789";  
-        $str ="";
-        for ( $i = 0; $i < $length; $i++ )  {  
-            $str.= substr($chars, mt_rand(0, strlen($chars)-1), 1);  
-        }  
-        return $str;
-    }
-
     //会员扫码绑定分销商
     public function bindAgent($id)
     {
@@ -92,9 +52,12 @@ class LoginController extends Controller
             if (Auth::user()->type != 2) return redirect('/admin/login');
             $bind = $this->bind($id);
             return redirect('/');
-        } else {
-            return redirect('/register?'.base64_encode('agentid').'='.base64_encode($id));
         }
+        $url = '/register?'.base64_encode('agentid').'='.base64_encode($id);
+        if (strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false){
+            $url = '/bind/weixin?pid='.base64_encode($id);
+        }
+        return redirect($url);
     }
 
     //绑定分销商方法

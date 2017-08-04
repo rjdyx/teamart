@@ -319,4 +319,27 @@ class IQuery{
         return "https://api.weixin.qq.com/sns/oauth2/access_token?".$bizString;
     }
 
+
+    //获取微信用户信息
+    public function getWeixin() 
+    { 
+        $res = $this->GetwxInfo();
+        $token = $res['access_token'];
+        $openid = $res['openid'];
+        $url = 'https://api.weixin.qq.com/sns/userinfo?access_token='.$token.'&openid='.$openid.'&lang=zh_CN';
+        return $this->getJson($url);
+    }
+
+    //获取信息 发送请求
+    public function getJson($url)
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE); 
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE); 
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $output = curl_exec($ch);
+        curl_close($ch);
+        return json_decode($output, true);
+    }
 }

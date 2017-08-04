@@ -60,11 +60,19 @@
 @section('content')
 
 	@include("layouts.header-info")
+	<?php 
+		$img = '';
+		if (Auth::user()) {
+			$img = Auth::user()->img;
+			if (!strpos($img,'http') && !empty($img)) $img = url('').'/'.$img;
+		}
+	?>
 	<!-- 内容 -->
 	<div class="container usercenter">
 		<div class="usercenter_info relative">
 			<div class="avatar @if(Auth::user() && Auth::user()->type == 1) J_QRcode @else J_getQRcode @endif" uid="@if(Auth::user() && Auth::user()->type == 1) {{base64_encode(Auth::user()->id)}} @endif">
-				<img class="w-100" src="{{url('')}}/@if(Auth::user()){{Auth::user()->img}} @endif" alt="">
+			
+				<img class="w-100" src="{{$img}}" alt="">
 			</div>
 			<p class="usercenter_name white fz-20 txt-c chayefont">@if(Auth::user()){{Auth::user()->name}} @endif</p>
 			<ul class="usercenter_list w-100">
@@ -180,20 +188,17 @@
 					<p class="chayefont fz-14">意见反馈</p>
 				</a>
 			</li>
-<!-- 			<li class="pull-left txt-c">
-				<a href="{{url('/isweixin')}}">
-					<div class="txt-c usercenter_nav_icon">
-						<i class="fa fa-feed white fz-20"></i>
-					</div>
-					<p class="chayefont fz-14">检测微信端 {{session('webType')}}</p>
-				</a>
-			</li> -->
 		</ul>
 		@if (Auth::user())
-		<div class="usercenter_loginout txt-c fz-18 white chayefont J_loginout">退出</div>
+			@if (session('webType') == 1)
+				<div class="usercenter_loginout txt-c fz-18 white chayefont">解除绑定</div>
+			@endif
+			@if (session('webType') < 1)
+				<div class="usercenter_loginout txt-c fz-18 white chayefont J_loginout">退出</div>
+			@endif
 		@else
-		<a href="{{url('/login')}}"><div class="usercenter_loginout txt-c fz-18 white chayefont">登录</div></a>
-		<a href="{{url('/register')}}"><div class="usercenter_loginout txt-c fz-18 white chayefont">注册</div></a>
+			<a href="{{url('/login')}}"><div class="usercenter_loginout txt-c fz-18 white chayefont">登录</div></a>
+			<a href="{{url('/register')}}"><div class="usercenter_loginout txt-c fz-18 white chayefont">注册</div></a>
 		@endif
 	</div>
 	@include("layouts.footer")

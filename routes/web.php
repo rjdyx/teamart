@@ -10,13 +10,13 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-	// Route::get('/isweixin','HomeController@isWeixin');//
-	Route::get('/bind/weixin','AuthController@bindWeiXin');//微信绑定页面
-	Route::post('/bind/weixin','AuthController@bindWeiXinPost');//微信绑定处理
+	Route::get('/bind/weixin','WxController@bindWeiXin');//微信绑定页面
+	Route::get('/bind/user/check','WxController@bindWeiXinCheck');//判断绑定账户
+	Route::post('/bind/pass/check','WxController@bindWeiXinPassCheck');//判断绑定账户
 
 
 //判断微信端中间件
-// Route::group(['middleware'=>['isWeixin']],function(){
+Route::group(['middleware'=>['isWeixin']],function(){
 	Route::auth();
 	Route::get('/','HomeController@index');//首页
 	Route::get('/auth/geetest', 'Auth\AuthController@getGeetest');//极验
@@ -126,7 +126,7 @@
 		Route::get('/userasset','UserController@userAsset');
 		Route::get('/userasset/brokerage/data','UserController@brokerageList');
 	});
-// });
+});
  
 /********************** Admin - 管理员 ***************************/
 Route::group(['namespace'=>'Admin','prefix'=>'admin','middleware'=>['auth','userRole:admin']],function(){

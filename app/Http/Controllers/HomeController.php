@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Ad;
 use App\System;
 use App\Product;
@@ -12,37 +13,9 @@ use IQuery;
 
 class HomeController extends Controller
 {
-    public function isWeixin() { 
-        if (strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false) { 
-            $res = IQuery::GetwxInfo();
-            $token = $res['access_token'];
-            $openid = $res['openid'];
-            $url = 'https://api.weixin.qq.com/sns/userinfo?access_token='.$token.'&openid='.$openid.'&lang=zh_CN';
-            $info = $this->getJson($url);
-            $data = array($res,$url,$info);
-            // $data['name'] = $info->nickname;
-            // $data['image'] = $info->headimgurl;
-            echo "<pre>"; var_dump($data);die;
-            return $info;
-            return '微信端'; 
-        } 
-        return '不是微信端'; 
-    }
-
-    public function getJson($url){
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE); 
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE); 
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        $output = curl_exec($ch);
-        curl_close($ch);
-        return json_decode($output, true);
-    }
     //首页
     public function index()
     {
-
         //新品推荐
         $news = $this->newProduct();
 
