@@ -33,7 +33,7 @@ class IsWeixin
                 if (isset($user->id)) {
                     auth()->login($user);//自动登录
                 } else {
-                    return Redirect::to('/bind/winxin');
+                    return Redirect::to('/bind/weixin');
                 }
                 $request->session()->put('webType',1);//加入微信端标识
             }
