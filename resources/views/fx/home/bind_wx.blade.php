@@ -138,19 +138,18 @@
 
         function bindUser(url, params){
         	axios.post(url, params).then(function (res) {
-        		var res = res.data
+        		// var res = res.data
                 if (res == 1) {
                 	$(".default-info").hide();
                 	$(".success").show();
-                }
-                if(res == -1){
+                }else if(res == -1){
                 	alert('账号已被使用')
-                } 
-                if (res == 'false' || res == 0) {
+                } else if (res == 'false' || res == 0) {
                 	alert('绑定失败，请重试！')
-                }
-                if (res == -2) {
+                }else if (res == -2) {
                 	alert('密码错误')
+                } else {
+                	alert(res+ '未知错误')
                 }
             })
         }
