@@ -76,12 +76,12 @@ class WxController extends Controller
         	if ($k!='password') $file = $k;
         }
 		$wx = session('wx'); // 获取微信用户信息
-		if (isset($wx['sex'])) {
-			$data['realname'] = $wx['nickname'];
-			$data['img'] = $wx['headimgurl'];
-			$data['thumb'] = $wx['headimgurl'];
-			$data['gender'] = $wx['sex']>1? 0: 1;
-		}
+		$data['openid'] = $wx['openid'];
+		$data['realname'] = $wx['nickname'];
+		$data['img'] = $wx['headimgurl'];
+		$data['thumb'] = $wx['headimgurl'];
+		$data['gender'] = $wx['sex']>1? 0: 1;
+
 		if ($file == 'name') {
 			$data['name'] = $list['name'];
 			$data['email'] = $list['name'].'@qq.com';
