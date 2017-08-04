@@ -31,7 +31,7 @@ class WxController extends Controller
     {
     	if (!Auth::user()) return redirect::back(); 
     	$user = User::find(Auth::user()->id);
-    	$user->openid = '';
+    	$user->openid = null;
     	if ($user->save()) {
     		$this->guard()->logout();
     		return 1;
@@ -54,8 +54,8 @@ class WxController extends Controller
     //密码验证 及绑定微信账户
     public function bindWeiXinPassCheck(Request $request)
     {
-        // $agent = strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger');
-        // if (Auth::user() || $agent === false) return 0;
+        $agent = strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger');
+        if (Auth::user() || $agent === false) return 0;
 
         $data = $this->credentials($request);
         $isUser = $this->bindWeiXinCheck($request);
