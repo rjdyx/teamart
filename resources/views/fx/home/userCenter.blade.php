@@ -204,7 +204,7 @@
 		</ul>
 		@if (Auth::user())
 			@if (session('webType') == 1)
-				<a href="{{url('/bind/weixin/relieve')}}"><div class="usercenter_loginout txt-c fz-18 white chayefont J_loginout_wx">解除绑定</div></a>
+				<div class="usercenter_loginout txt-c fz-18 white chayefont J_loginout_wx">解除绑定</div>
 			@endif
 			@if (session('webType') < 1)
 				<div class="usercenter_loginout txt-c fz-18 white chayefont J_loginout">退出</div>
