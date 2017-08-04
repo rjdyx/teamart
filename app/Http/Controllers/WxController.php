@@ -54,7 +54,7 @@ class WxController extends Controller
     //密码验证 及绑定微信账户
     public function bindWeiXinPassCheck(Request $request)
     {
-    	return session('wx');
+    	return session('wx')['openid'];
         if (Auth::user()) return 0;
         $data = $this->credentials($request);
         $isUser = $this->bindWeiXinCheck($request);
