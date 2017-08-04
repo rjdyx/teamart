@@ -103,7 +103,8 @@ class LoginController extends Controller
 
     public function role($request)
     {
-        $user = User::where('name',$request->name)->first();
+        $name = $request->name;
+        $user = User::where('name',$name)->orwhere('email',$name)->orWhere('phone',$name)->first();
         if ($user) return $user->type;
         return -1;
     }

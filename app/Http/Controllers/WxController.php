@@ -79,7 +79,7 @@ class WxController extends Controller
 		$data['realname'] = $wx['nickname'];
 		$data['img'] = $wx['headimgurl'];
 		$data['thumb'] = $wx['headimgurl'];
-		$data['gender'] = $wx['sex']>1? 0: 1;
+		$data['gender'] = $wx['sex']>1? 1: 0;
 
 		if ($file == 'name') {
 			$data['name'] = $list['name'];

@@ -131,7 +131,7 @@
 	
 	<?php 
 		$img = Auth::user()->img;
-		if (!strpos($img,'http')) $img = url('').'/'.$img;
+		if (!strstr($img,'http') && !empty($img)) $img = url('').'/'.$img;
 	?>
 	<div class="container useredit relative">
 		<div class="useredit_info mb-10 relative">

@@ -77,7 +77,7 @@
 		$img = '';
 		if (Auth::user()) {
 			$img = Auth::user()->img;
-			if (!strpos($img,'http') && !empty($img)) $img = url('').'/'.$img;
+			if (!strstr($img,'http') && !empty($img)) $img = url('').'/'.$img;
 		}
 	?>
 	<!-- 内容 -->
@@ -214,7 +214,7 @@
 			<a href="{{url('/login')}}"><div class="usercenter_loginout txt-c fz-18 white chayefont">登录</div></a>
 			<a href="{{url('/register')}}"><div class="usercenter_loginout txt-c fz-18 white chayefont">注册</div></a>
 		@endif
-		
+
 	</div>
 	@include("layouts.footer")
 @endsection
