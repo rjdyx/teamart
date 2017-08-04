@@ -46,7 +46,7 @@
 
 		// 解除绑定退出
 		$(".J_loginout_wx").on('tap', function () {
-			prompt.question('是否解除绑定？', function () {
+			if(window.confirm('是否解除绑定？')) {
 				ajax('get', '/bind/weixin/relieve').then(function (res) {
 					if (res) {
 						prompt.message('解除绑定成功', 'http://' + window.location.host)
@@ -54,7 +54,7 @@
 						prompt.message('解除绑定失败')
 					}
 				})
-			})
+			}
 		})
 
 		// 显示二维码
