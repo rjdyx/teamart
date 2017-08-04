@@ -30,7 +30,7 @@
 			margin-top:30px;
 		}
 		.sub{
-			width:100%;
+			width:50%;
 			height: 50px;
 			text-align: center;
 			margin-top:40px;
@@ -45,8 +45,11 @@
 			line-height: 30px;
 			color:#D5AA7A;
 			font-size:14px;
+			background:none;
 		}
-		.sub-next{display: none;}
+		.sub-next{display: none;float: left;}
+		.sub-per{display: none;float: left;}
+		.sub-bind{width:100%;}
 		#passMd{display: none;}
 		.success1{
 			width:60%;
@@ -110,6 +113,7 @@
                 	$this.hide();
                 	$("#userMd").hide();
                 	$("#passMd").css('display','block');
+                    $(".sub-per").css('display','block');
                     $(".sub-next").css('display','block');
                 }
             })
@@ -123,17 +127,30 @@
         	bindUser(url, params)
         })
 
+        // 上一步返回
+        $(".sub-per").click(function(){
+        	$("#passMd").hide();
+            $(".sub-per").hide();
+            $(".sub-next").hide();
+        	$("#userMd").css('display','block');
+        	$(".sub-bind").css('display','block');
+        })
+
         function bindUser(url, params){
         	axios.post(url, params).then(function (res) {
         		var res = res.data
-                if (res > 0) {
+                if (res == 1) {
                 	$(".default-info").hide();
-
                 	$(".success").show();
-                } else if(res < 0){
-                	alert('已被使用')
-                } else {
+                }
+                if(res == -1){
+                	alert('账号已被使用')
+                } 
+                if (res == 'false' || res == 0) {
                 	alert('绑定失败，请重试！')
+                }
+                if (res == -2) {
+                	alert('密码错误')
                 }
             })
         }
@@ -162,6 +179,7 @@
             <input type="password" id="password" class="chayefont white fz-16" name="password" autocomplete="off" placeholder="输入密码">
         </label>
         <div class="sub sub-bind"><input type="button" value="绑 定"></div>
+        <div class="sub sub-per"><input type="button" value="上一步"></div>
         <div class="sub sub-next"><input type="button" value="下一步"></div>
 	</form>
 	</div>

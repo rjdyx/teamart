@@ -117,7 +117,7 @@ class WxController extends Controller
 		        return 1;
 			}
 		}
-		return 0;
+		return -2;
     }
 
     //获取登录字段
