@@ -13,6 +13,7 @@
 	Route::get('/bind/weixin','WxController@bindWeiXin');//微信绑定页面
 	Route::get('/bind/user/check','WxController@bindWeiXinCheck');//判断绑定账户
 	Route::post('/bind/pass/check','WxController@bindWeiXinPassCheck');//判断绑定账户
+	Route::get('/bind/weixin/relieve','WxController@bindWeiXinRelieve');//微信解除绑定
 
 
 //判断微信端中间件

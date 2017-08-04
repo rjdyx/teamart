@@ -110,6 +110,7 @@
                 if(res < 0){
                 	alert('已被使用')
                 } else {
+                	$("form[name='password']").val('');
                 	$this.hide();
                 	$("#userMd").hide();
                 	$("#passMd").css('display','block');

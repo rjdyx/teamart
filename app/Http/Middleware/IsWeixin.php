@@ -23,30 +23,29 @@ class IsWeixin
     {
         $request->session()->forget('webType');//清除
         $request->session()->put('webType',0);//加入
-
-        // 判断登录状态
-        if (!Auth::user()) {
-            //判断是否微信端
-            if (strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false) { 
-                $wx = IQuery::getWeixin(); // 获取微信用户信息
-                $request->session()->put('wx', $wx);
-                $user = $this->userState($wx['openid']); //判断该微信用户是否绑定账号
+        $micro = strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger');
+        //判断是否微信端
+        if ($micro !== false) {
+            // 判断登录状态
+            if (!Auth::user()) {
+                $user = $this->userState($request); //判断该微信用户是否绑定账号
                 if (isset($user->id)) {
                     auth()->login($user);//自动登录
                 } else {
                     return Redirect::to('/bind/weixin');
                 }
-                $request->session()->put('webType',1);//加入微信端标识
             }
+            $request->session()->put('webType',1);//加入微信端标识
         }
         return $next($request);
     }
 
-
     //判断是否绑定账号
-    public function userState($openid) 
+    public function userState($request) 
     {
-        return User::where('openid',$openid)->first();
+        $wx = IQuery::getWeixin(); // 获取微信用户信息
+        $request->session()->put('wx', $wx);
+        return User::where('openid',$wx['openid'])->first();
     }
 
 

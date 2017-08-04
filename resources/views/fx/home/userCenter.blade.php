@@ -37,13 +37,26 @@
 
 		// 账号退出
 		$(".J_loginout").on('tap', function () {
-			prompt.question('是否退出', function () {
-				ajax('get', '/layout')
-					.then(function (resolve) {
-						prompt.message('退出成功', 'http://' + window.location.host)
-					})
+			prompt.question('是否退出？', function () {
+				ajax('get', '/layout').then(function (resolve) {
+					prompt.message('退出成功', 'http://' + window.location.host)
+				})
 			})
 		})
+
+		// 解除绑定退出
+		$(".J_loginout_wx").on('tap', function () {
+			prompt.question('是否解除绑定？', function () {
+				ajax('get', '/bind/weixin/relieve').then(function (res) {
+					if (res) {
+						prompt.message('解除绑定成功', 'http://' + window.location.host)
+					} else {
+						prompt.message('解除绑定失败')
+					}
+				})
+			})
+		})
+
 		// 显示二维码
 		$('.J_QRcode').on('tap', function () {
 			prompt.qrcode()
@@ -191,7 +204,7 @@
 		</ul>
 		@if (Auth::user())
 			@if (session('webType') == 1)
-				<div class="usercenter_loginout txt-c fz-18 white chayefont">解除绑定</div>
+				<a href="{{url('/bind/weixin/relieve')}}"><div class="usercenter_loginout txt-c fz-18 white chayefont J_loginout_wx">解除绑定</div></a>
 			@endif
 			@if (session('webType') < 1)
 				<div class="usercenter_loginout txt-c fz-18 white chayefont J_loginout">退出</div>

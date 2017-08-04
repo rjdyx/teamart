@@ -26,6 +26,19 @@ class WxController extends Controller
         return view(config('app.theme').'.home.bind_wx')->with(['parter_id'=>$parter_id]);
     }
 
+    //微信解除绑定
+    public function bindWeiXinRelieve()
+    {
+    	if (!Auth::user()) return redirect::back(); 
+    	$user = User::find(Auth::user()->id);
+    	$user->openid = '';
+    	if ($user->save()) {
+    		$this->guard()->logout();
+    		return 1;
+    	}
+        return 0
+    }
+
     //账号验证
     public function bindWeiXinCheck(Request $request)
     {
