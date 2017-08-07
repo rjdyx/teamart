@@ -51,50 +51,61 @@ class WxController extends Controller
         return 0;
     }
 
-    //密码验证 及绑定微信账户
+    //用户名验证
+    public function nameCheck($name)
+    {
+        $res = User::where('name',$name)->first();
+        if (isset($res->id)) return 1;
+        return 0;
+    }
+
+    //邮箱验证
+    public function emailCheck($email)
+    {
+        $res = User::where('email',$email)->first();
+        if (isset($res->id)) return 1;
+        return 0;
+    }
+
+    //手机号验证
+    public function phoneCheck($phone)
+    {
+        $res = User::where('phone',$phone)->first();
+        if (isset($res->id)) return 1;
+        return 0;
+    }
+
+    //绑定微信账户
     public function bindWeiXinPassCheck(Request $request)
     {
         if (Auth::user()) return 0;
-        $data = $this->credentials($request);
-        $isUser = $this->bindWeiXinCheck($request);
-        //未注册 绑定
-        if ($isUser == 0) {
-        	return $this->bindWeiXinUserRegister($request, $data);
+        $id = $this->bindWeiXinCheck($request);
+        //是否有账号绑定
+        if ($request->type && !empty($request->user)) {
+            $data = $this->credentials($request);
+            if ($id<1) return $id; //账号不存在
+            return $this->login($request, $data, $id);
+        } else {
+            if ($this->nameCheck($request->name)) return -2;//账号已存在
+            if ($this->emailCheck($request->email)) return -3;//邮箱已存在
+            if ($this->phoneCheck($request->phone)) return -4;//手机已存在
+            return $this->bindWeiXinUserRegister($request);
         }
-        //已注册 绑定
-        if ($isUser > 0) {
-        	return $this->login($request, $data, $isUser);
-        }
-		return -1;//被占用
     }
 
     //微信号注册
-    public function bindWeiXinUserRegister(Request $request, $list)
+    public function bindWeiXinUserRegister(Request $request)
     {
-        foreach ($list as $k => $v) {
-        	if ($k!='password') $file = $k;
-        }
 		$wx = session('wx'); // 获取微信用户信息
 		$data['openid'] = $wx['openid'];
 		$data['realname'] = $wx['nickname'];
 		$data['img'] = $wx['headimgurl'];
 		$data['thumb'] = $wx['headimgurl'];
 		$data['gender'] = $wx['sex']>1? 1: 0;
-
-		if ($file == 'name') {
-			$data['name'] = $list['name'];
-			$data['email'] = $list['name'].'@qq.com';
-		} 
-		if ($file == 'phone') {
-			$data['name'] = $this->randOnly();
-			$data['email'] = $data['name'].'@qq.com';
-			$data['phone'] = $list['phone'];
-		}
-		if ($file == 'email') {
-			$data['name'] = $this->randOnly();
-			$data['name'] = $list['name'];
-		}
-        $data['password'] = bcrypt($list['password']);
+		$data['name'] = $request->name;
+        $data['phone'] = $request->phone;
+		$data['email'] = $request->email;
+        $data['password'] = bcrypt($request->password);
         $data['parter_id'] = $request->parter_id;
         $result = User::create($data);
         //注册成功 自动登录
@@ -102,7 +113,7 @@ class WxController extends Controller
         	auth()->login($result);//自动登录;
         	return 1;
         }
-        return 0;
+        return 3;
     }	
 
     // 唯一随机字符串
@@ -132,7 +143,7 @@ class WxController extends Controller
 		        return 1;
 			}
 		}
-		return -2;
+		return 2;
     }
 
     //获取登录字段

@@ -13,8 +13,7 @@
 
 Route::get('/ispc','HomeController@isPc');//访问设备错误
 Route::get('/bind/weixin','WxController@bindWeiXin');//微信绑定页面
-Route::get('/bind/user/check','WxController@bindWeiXinCheck');//判断绑定账户
-Route::post('/bind/pass/check','WxController@bindWeiXinPassCheck');//判断绑定账户
+Route::post('/bind/weixin','WxController@bindWeiXinPassCheck');//绑定账户
 Route::get('/bind/weixin/relieve','WxController@bindWeiXinRelieve');//微信解除绑定
 
 Route::post('/check','UtilsController@check');//字段验证 公共接口组
