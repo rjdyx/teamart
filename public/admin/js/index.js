@@ -23,22 +23,6 @@ exports.nav = () => {
 				.parents('.treeview').addClass('active')
 		}
 	})
-	// let curpath = window.location.pathname
-	// $('.sidebar-menu')
-	// .find('.active').removeClass('active').end()
-	// .find('a').each(function (idx, elem) {
-	// 	let href = $(this).attr('href')
-	// 	let sublength = curpath.indexOf('admin')
-	// 	if (sublength > 0) {
-	// 		curpath = curpath.substr(sublength + 6)
-	// 	}
-	// 	console.dir(curpath)
-	// 	if (href.indexOf(curpath) > -1) {
-	// 		$(this)
-	// 			.parent().addClass('active').end()
-	// 			.parents('.treeview').addClass('active')
-	// 	}
-	// })
 }
 exports.adduserClick = () => {
 	$('#addUser,#cancel_addUser').click(function () {

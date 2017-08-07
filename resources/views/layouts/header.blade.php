@@ -14,7 +14,7 @@
     @endif
     <div class="header_center w-100 txt-c">
         <i class="fa fa-search header_search fz-16 relative"></i>
-        <input type="text" class="header_search_inp J_header_search_inp" placeholder="请输入你搜索的商品" value="{{isset($_GET['name'])?$_GET['name']:''}}">
+        <input type="search" class="header_search_inp J_header_search_inp" placeholder="请输入你搜索的商品" value="{{isset($_GET['name'])?$_GET['name']:''}}">
         <i class="fa fa-arrow-circle-right hide header_close inline-block txt-c fz-16 J_header_search"></i>
     </div>
     <?php 
