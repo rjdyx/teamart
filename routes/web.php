@@ -10,27 +10,33 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-	Route::get('/bind/weixin','WxController@bindWeiXin');//微信绑定页面
-	Route::get('/bind/user/check','WxController@bindWeiXinCheck');//判断绑定账户
-	Route::post('/bind/pass/check','WxController@bindWeiXinPassCheck');//判断绑定账户
-	Route::get('/bind/weixin/relieve','WxController@bindWeiXinRelieve');//微信解除绑定
 
+Route::get('/ispc','HomeController@isPc');//访问设备错误
+Route::get('/bind/weixin','WxController@bindWeiXin');//微信绑定页面
+Route::get('/bind/user/check','WxController@bindWeiXinCheck');//判断绑定账户
+Route::post('/bind/pass/check','WxController@bindWeiXinPassCheck');//判断绑定账户
+Route::get('/bind/weixin/relieve','WxController@bindWeiXinRelieve');//微信解除绑定
+
+Route::post('/check','UtilsController@check');//字段验证 公共接口组
+Route::get('captcha', 'KitController@captcha'); //生成验证码
 
 //判断微信端中间件
 Route::group(['middleware'=>['isWeixin']],function(){
 	Route::auth();
 	Route::get('/','HomeController@index');//首页
-	Route::get('/auth/geetest', 'Auth\AuthController@getGeetest');//极验
-	Route::get('/check/email', 'Auth\RegisterController@checkEmail');//判断邮箱是否存在
-	Route::get('admin/login', 'Auth\LoginController@adminLoginCreate');
-	Route::post('admin/login', 'Auth\LoginController@adminLogin');
-	Route::post('/login/check','Auth\LoginController@loginCheck');//前台登录验证
-	Route::get('/layout','Auth\LoginController@layout');//前台退出
-	Route::get('/admin/layout','Auth\LoginController@adminLayout');//后台退出
-	Route::get('captcha', 'KitController@captcha'); //生成验证码
-	Route::get('/bind/agent/{id}', 'Auth\LoginController@bindAgent'); //绑定分销商
-	Route::post('/check','UtilsController@check');//字段验证 公共接口组
-	Route::post('/password/resets','Auth\ResetPasswordController@passwordReset');//重置密码
+	
+	// Auth
+	Route::group(['namespace'=>'Auth'],function(){
+		Route::get('/auth/geetest', 'AuthController@getGeetest');//极验
+		Route::get('/check/email', 'RegisterController@checkEmail');//判断邮箱是否存在
+		Route::post('/login/check','LoginController@loginCheck');//前台登录验证
+		Route::get('/layout','LoginController@layout');//前台退出
+		Route::get('/bind/agent/{id}', 'LoginController@bindAgent'); //绑定分销商
+		Route::post('/password/resets','ResetPasswordController@passwordReset');//重置密码
+		Route::get('admin/login', 'LoginController@adminLoginCreate');//后台登录
+		Route::post('admin/login', 'LoginController@adminLogin');//后台登录提交
+		Route::get('/admin/layout','LoginController@adminLayout');//后台退出
+	});
 
 	// Home - 无须登录模块
 	Route::group(['namespace'=>'Home','prefix'=>'home'],function(){

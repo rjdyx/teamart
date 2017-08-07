@@ -12,15 +12,21 @@ use Session;
 
 class IsWeixin
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @return mixed
-     */
+    // 前端中间件
     public function handle($request, Closure $next)
     {
+        // 访问设备判断
+        $url = '/ispc?'.base64_encode('err').'=';
+        if (strpos($request->url(),'admin')) {
+            if (IQuery::isMobile()) {
+                return Redirect::to($url.base64_encode('pc'));
+            }
+        } else {
+            if (!IQuery::isMobile()) {
+                return Redirect::to($url.base64_encode('phone'));
+            }
+        }
+
         $request->session()->forget('webType');//清除
         $request->session()->put('webType',0);//加入
         $micro = strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger');
@@ -47,6 +53,5 @@ class IsWeixin
         $request->session()->put('wx', $wx);
         return User::where('openid',$wx['openid'])->first();
     }
-
 
 }

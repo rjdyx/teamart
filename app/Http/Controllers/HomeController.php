@@ -90,4 +90,16 @@ class HomeController extends Controller
         $products = Product::paginate(16);
         return view(config('app.theme').'.home.shopping')->with('products',$products);
     }
+
+    //访问设备错误
+    public function isPc(Request $request)
+    {
+        $err = $request->all();
+        if (!empty($err)) {
+            foreach ($err as $k => $v) {
+               $err = base64_decode($v);
+            }
+        }
+        return view('/layouts/is_pc')->with('err', $err);
+    }
 }
