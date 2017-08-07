@@ -271,7 +271,7 @@
 						@if ($list->activity_price)
 							{{sprintf('%.2f',$list->activity_price)}}
 						@else
-							{{sprintf('%.2f',$list->amount)}}
+							{{sprintf('%.2f',$list->price)}}
 						@endif
 						</span>
 						<span class="pull-right sell color-8C8C8C">&times;{{$list->amount}}</span>
