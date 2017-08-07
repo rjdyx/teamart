@@ -268,8 +268,8 @@
     		$(".productspec_container_info_img img").attr('src','http://'+window.location.host+'/'+v['thumb']);
     		$(".productspec_container_info_content h1").html(v['name']);
     		$(".productspec_container_info_content p").html(v['desc']);
-    		$(".productspec_container_info_content span").html('&yen;'+parseInt(v['price']).toFixed(2));
-    		$(".sum_price").html(parseInt(v['price']).toFixed(2));
+    		$(".productspec_container_info_content span").html('&yen;'+parseFloat(v['price']).toFixed(2));
+    		$(".sum_price").html(parseFloat(v['price']).toFixed(2));
     		$("#price").val(v['price']);
     		$("#amount").val(1)
     	}

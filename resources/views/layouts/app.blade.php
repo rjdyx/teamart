@@ -136,6 +136,12 @@
                 )
             })
             // 头部搜索
+            $('.J_header_search_inp').on('search', function () {
+                var v = $(this).val()
+                if ($.trim(v)) {
+                    window.location.href = 'http://' + window.location.host + '/home/product/list?name=' + v
+                }
+            })
             $('.J_header_search_inp').on('input', function () {
                 if ($.trim($(this).val()).length > 0) {
                     $(this).siblings('.J_header_search').removeClass('hide')

@@ -122,8 +122,8 @@
                                         <p class="desc">${desc}</p>
                                     </div>
                                     <div class="order_warpper_info_price pull-left txt-r">
-                                        <span class="block price">&yen;${price}</span>
-                                        <del class="block price_raw">&yen;${price_raw}</del>
+                                        <span class="block price">&yen;${parseFloat(price).toFixed(2)}</span>
+                                        <del class="block price_raw">&yen;${parseFloat(price_raw).toFixed(2)}</del>
                                         <span class="block times">&times;${amount}</span>
                                     </div>
                                 </div>`
