@@ -164,7 +164,7 @@ if (process.env.NODE_ENV === 'development') {
 		devServer: {
 			historyApiFallback: true,
 			inline: true,
-			port: 8080,
+			port: env.port,
 			proxy: {
 				'/**': {
 					changeOrigin: true,

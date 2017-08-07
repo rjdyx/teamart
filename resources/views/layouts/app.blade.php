@@ -91,6 +91,7 @@
             })
         }
         $(function () {
+            console.dir(window.history)
             if ($('.header_category')[0]) {
                 FastClick.attach($('.header_category')[0]);
             }
@@ -107,8 +108,9 @@
                     .find('.prompt_question').removeClass('atc')
             })
             // 返回按钮事件绑定
-            $('.J_header_back').on('tap', function () {
+            $('.J_header_back').on('click', function () {
                 history.go(-1)
+                // history.back()
             })
             // 返回首页
             $('.J_backIndex').on('tap', function () {
@@ -134,6 +136,12 @@
                 )
             })
             // 头部搜索
+            $('.J_header_search_inp').on('search', function () {
+                var v = $(this).val()
+                if ($.trim(v)) {
+                    window.location.href = 'http://' + window.location.host + '/home/product/list?name=' + v
+                }
+            })
             $('.J_header_search_inp').on('input', function () {
                 if ($.trim($(this).val()).length > 0) {
                     $(this).siblings('.J_header_search').removeClass('hide')

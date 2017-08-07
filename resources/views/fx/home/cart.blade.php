@@ -56,7 +56,7 @@
                                             <h5 class="chayefont mb-10">${v.name}</h5>
                                             <p class="desc color-717171">${v.desc}</p>
                                             <div class="warpper_content_info_bottom w-100">
-                                                <span class="pull-left price">&yen;${parseInt(v.price).toFixed(2)}</span>
+                                                <span class="pull-left price">&yen;${parseFloat(v.price).toFixed(2)}</span>
                                                 <div class="pull-right">
                                                     <i class="fa fa-minus-circle fz-20 color-d7d7d7 J_minus"></i>
                                                     <span class="sell color-8C8C8C" stock="${v.stock}">&times;<span class="amount" data-opid="${v.opid}" data-pid="${v.id}">${v.amount}</span></span>
@@ -254,7 +254,6 @@
                 pids.forEach(function (v) {
                     params['data'][v] = $('.amount[data-pid="'+ v +'"]').html()
                 })
-                console.log(params)
                 var url = 'http://' + window.location.host + '/home/order/confirm?id=';
                 ajax('post', '/home/order/confirm', params)
                     .then(function (resolve) {

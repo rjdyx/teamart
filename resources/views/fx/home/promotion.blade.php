@@ -87,7 +87,7 @@
                                 <h1 class="mt-20 chayefont">${v.name}</h1>
                                 <p class="mt-10 mb-10 desc color-8C8C8C">${v.desc}</p>
                                 <p class="clearfix">
-                                    <span class="pull-left price">&yen;${v.price}</span>
+                                    <span class="pull-left price">&yen;${parseFloat(v.price).toFixed(2)}</span>
                                     <span class="pull-right color-8C8C8C sell">销量：<i>${v.sell_amount}</i></span>
                                 </p>
                             </a>

@@ -75,10 +75,64 @@
     <script src="{{url('/admin/build/index.js')}}"></script>
     {{-- <script src="http://localhost:8080/admin/build/vendor-bundle.js"></script>
     <script src="http://localhost:8080/admin/build/index.js"></script> --}}
-    @yield('script')
     <script>
         console.log(_valid)
+        $(function () {
+            var curpath = window.location.pathname
+            $('.sidebar-menu')
+            .find('.active').removeClass('active').end()
+            .find('a').each(function (idx, elem) {
+                var href = $(this).attr('href')
+                var hreflength = href.indexOf('admin')
+                var curlength = curpath.indexOf('admin')
+                if (hreflength > 0) {
+                    href = href.substr(hreflength + 6)
+                }
+                if (curlength > 0) {
+                    curpath = curpath.substr(curlength + 6)
+                    var curarr = curpath.split('/')
+                    if (curarr.length > 2) {
+                        curarr.length = 2
+                    }
+                    curpath = curarr.join('/')
+                }
+                if (curpath == href || (href == 'activity/group' && curpath == 'activity/activityproduct')) {
+                    $(this)
+                        .parent().addClass('active').end()
+                        .parents('.treeview').addClass('active')
+                }
+            })
+
+            $('#addUser,#cancel_addUser').click(function () {
+                $('#agentRole').toggle()
+                $('#addAgent').toggle()
+            })
+
+            $('.checkbox-toggle').click(function () {
+                var clicks = $(this).data('clicks')
+                if (clicks) {
+                    // Uncheck all checkboxes
+                    $(".table td input[type='checkbox']").prop('checked', false)
+                    $('.fa', this).removeClass('fa-check-square-o').addClass('fa-square-o')
+                } else {
+                    // Check all checkboxes
+                    $(".table td input[type='checkbox']").prop('checked', true)
+                    $('.fa', this).removeClass('fa-square-o').addClass('fa-check-square-o')
+                }
+                $(this).data('clicks', !clicks)
+            })
+
+            $('.J_FloatNum').on('blur', function () {
+                $(this).val(parseFloat($(this).val()).toFixed(2))
+            })
+            $('.J_IntNum').on('blur', function () {
+                $(this).val(parseFloat($(this).val()).toFixed(0))
+            })
+        })
+       
     </script>
+    @yield('script')
+
     @include("fx.admin.layouts.alert")
 </body>
 </html>

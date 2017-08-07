@@ -90,7 +90,7 @@
 						ajax('get', '/home/collect/cart', {ids: dels})
 							.then(function (res) {
 								if (res) {
-									prompt.message('添加成功')
+									prompt.message('添加成功', `//${window.location.host}/home/cart`)
 								} else {
 									prompt.message('添加失败')
 								}
