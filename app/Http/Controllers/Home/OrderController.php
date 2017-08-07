@@ -120,7 +120,7 @@ class OrderController extends Controller
 				)
 				->distinct('product.id')
 				->get();
-		
+
 		$delivery_price = System::find(1)->free; //查询包邮金额
 		$count = 0; $grade = 1; $d_price = 0;
 
@@ -150,7 +150,7 @@ class OrderController extends Controller
 
 		$title = '确认订单';
 		$openid = IQuery::GetOpenid();
-		// $request->session()->put('openid',$openid);
+		// $openid = 1;
 
 		return view(config('app.theme').'.home.confirm')->with(['title'=>$title,'lists'=>$lists,'count'=>$count,'grade'=>$grade,'cheaps'=>$cheaps,'id'=>$id,'openid'=>$openid]);
 	}

@@ -12,6 +12,8 @@
 		var delivery_price = {{$lists->max('delivery_price')}}
 		var grade_price = 0;
 		var counts = 0;//总支付金额
+		var address = false
+		var method = 'delivery'
 		$(function () {
 
 			// 显示选取配送方式弹窗
@@ -26,9 +28,11 @@
 			$('.J_choose_type').on('tap', function () {
 				var v = $(this).data('delivery')
 				if (v == 'point') {
+					method = 'self'
 					$(".price-change").html('&yen; 0.00');
 					delivery_price = 0;
 				} else {
+					method = 'delivery'
 					$(".price-change").html('&yen; ' + delivery_price);
 					delivery_price = {{$lists->max('delivery_price')}};
 				}
@@ -81,12 +85,14 @@
 		window.onload = function () {
 			addressData();
 		}
+
 		siteData();
 		countPrice();
 		//获取默认地址
 		function addressData() {
 			ajax('get', '/home/address/state').then(function (resolve) {
 				if (resolve) {
+					address = true
 					$(".address-name").text(resolve['name']);	
 					$(".address-phone").text(resolve['phone']);
 					if (resolve['city'] == resolve['area']) {
@@ -95,6 +101,7 @@
 						$(".address-detail").text(resolve['province'] + resolve['city'] + resolve['area'] + resolve['detail']);
 					}
 				} else {
+					address = false
 					$(".address-name").text('创建新地址');
 				}
 			});
@@ -147,6 +154,14 @@
 
 		//提交订单
 		$('.confirm_bottom_submit').click(function(){
+			if (method == 'delivery' && address) {
+				submitOrder();
+			} else {
+				prompt.message("请选择收货地址")
+			}
+		});
+
+		function submitOrder(){
 			var openid = "{{$openid}}"
 			var data = {'openid':openid, 'price':counts, 'id':"{{$id}}"}
 			ajax('post', '/home/order/payOrder', data).then(function (res) {
@@ -156,7 +171,7 @@
 					prompt.message(res.data)
 				}
 			});
-		});
+		}
 
 		// 调起支付
 		function jsApiCall(json_data)
@@ -254,9 +269,9 @@
 					<div class="confirm_warpper_content_info_bottom w-100">
 						<span class="pull-left price">&yen; 
 						@if ($list->activity_price)
-							{{sprintf('%.2f',$list->activity_price * $list->amount)}}
+							{{sprintf('%.2f',$list->activity_price)}}
 						@else
-							{{sprintf('%.2f',$list->amount * $list->price)}}
+							{{sprintf('%.2f',$list->amount)}}
 						@endif
 						</span>
 						<span class="pull-right sell color-8C8C8C">&times;{{$list->amount}}</span>
@@ -273,16 +288,17 @@
 						<input type="hidden" value="express" name="delivery">
 					</a>
 				</div>
-				<div class="confirm_container_sum_row w-100">
-					<span class="pull-left chayefont fz-18">运费</span>
-					<span class="pull-right price fz-14 price-change" >&yen; {{sprintf('%.2f',$lists->max('delivery_price'))}}</span>
-				</div>
 
 				<div class="confirm_container_sum_row w-100">
 					<span class="pull-left chayefont fz-18">商品总额</span>
 					<span class="pull-right price fz-14 product-count" count="{{$count}}">&yen; {{sprintf('%.2f',$count)}} </span>
 				</div>
-				
+
+				<div class="confirm_container_sum_row w-100">
+					<span class="pull-left chayefont fz-18">运费</span>
+					<span class="pull-right price fz-14 price-change" >&yen; {{sprintf('%.2f',$lists->max('delivery_price'))}}</span>
+				</div>
+
 				<div class="confirm_container_sum_row w-100">
 					<span class="pull-left chayefont fz-18">积分抵扣</span>
 					<span class="pull-right price fz-14 user-grade" grade="{{Auth::user()->grade}}">
