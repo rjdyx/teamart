@@ -3,8 +3,8 @@
 <meta charset="utf-8">
 </head>
 <body>
-  <p onclick="wxa();">分享朋友圈</p>
-  <p onclick="wxb();">分享朋友</p>
+  <h1 onclick="wxa();">分享朋友圈</h1>
+  <h1 onclick="wxb();">分享朋友</h1>
 </body>
 </html>
 <script>
@@ -27,7 +27,9 @@
      "link": dataForWeixin.url,
      "desc": dataForWeixin.desc,
      "title": dataForWeixin.title
-     }, function (res) { (dataForWeixin.callback)(); });
+     }, function (res) { 
+        alert(res)
+      });
   }
   function wxb(){
     WeixinJSBridge.invoke('shareTimeline', {
@@ -37,7 +39,9 @@
      "link": dataForWeixin.url,
      "desc": dataForWeixin.desc,
      "title": dataForWeixin.title
-     }, function (res) { });
+     }, function (res) { 
+        alert(res)
+     });
   }
 
 </script>
