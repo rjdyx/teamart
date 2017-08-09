@@ -2,9 +2,18 @@
 @section('title')编辑用户@endsection
 @section('t1')用户管理@endsection
 @section('css')
+<style>
+	.agent_cl{
+		width:100px;height: 40px;font-size:22px;color:#999;
+		background: #ccc;line-height: 40px;text-align: center;
+		cursor: pointer;border:1px solid #AAA;border-radius: 18px;
+	}
+	#parterMd{display:none;}
+</style>
 @endsection
 @section('script')
 	@parent
+	<script src="{{url('/admin/js/jquery-1.8.3.min.js')}}"></script>	
 	<script>
 		$(function () {
 			datepicker()
@@ -69,10 +78,36 @@
 				if (!_valid.birth_date('birth_date', '出生日期', birth_date.value)) {
 					return false
 				}
+				var state = $(".agent_cl").attr('state')
+				if (state != 'off') {
+					var parter_id = form['parter_id']
+					if (!_valid.ness('parter_id', '代理商角色', parter_id.value)) {
+						return false
+					}
+				}
 				return true
 			}
 		})
+
+		$(".agent_cl").click(function(){
+			var state = $(this).attr('state');
+			if (state == 'off') {
+				$(this).css('background','#00a65a');
+				$(this).css('color','white');
+				$(this).attr('state','on');
+				$(this).html('ON');
+				$("#parterMd").show();
+			}else{
+				$(this).css('background','#ccc');
+				$(this).css('color','#999');
+				$(this).attr('state','off');
+				$(this).html('OFF');
+				$("#parterMd").hide();
+			}
+		})	
 	</script>
+
+
 @endsection
 @section('content')
 	<section class="content">
@@ -155,6 +190,27 @@
 									<input type="password" class="form-control" id="repassword" placeholder="若登录密码未输入，则确认密码无效">
 								</div>
 								<span class="col-sm-4 text-danger form_error" id="repassword_txt"></span>
+							</div>
+							<div class="form-group">
+								<label for="repassword" class="col-sm-3 control-label">升级成为代理商</label>
+								<div class="col-sm-4">
+									<div class="agent_cl" state="off">OFF</div>
+								</div>
+								<span class="col-sm-4 text-danger form_error" id="repassword_txt"></span>
+							</div>
+							<div class="form-group" id="parterMd">
+								<label for="parter_id" class="col-sm-3 control-label"><i style="color:red;">*</i>代理商角色</label>
+								<div class="col-sm-4">
+									<select name="parter_id" id="parter_id" class="form-control">
+										<option value="">-- 请选择代理商角色 --</option>
+				                    @foreach($selects as $select)
+				                        <option value="{{$select->id}}">
+				                        	{{$select->name}} ({{$select->scale}})
+				                        </option>
+				                    @endforeach
+									</select>
+								</div>
+								<span class="col-sm-4 text-danger form_error" id="parter_id_txt"></span>
 							</div>
 							<div class="form-group">
 								<div class="col-sm-offset-3 col-sm-10">

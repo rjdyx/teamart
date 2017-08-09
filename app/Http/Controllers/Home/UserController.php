@@ -69,7 +69,7 @@ class UserController extends Controller
 
 	//编辑 用户信息
 	public function edit () {
-		$data = User::leftjoin('user as auser','user.parter_id','=','auser.id')
+		$data = User::leftjoin('user as auser','user.pid','=','auser.id')
 			->where('user.id','=',Auth::user()->id)
 			->select('user.*','auser.name as pname')
 			->first();

@@ -64,7 +64,9 @@ class ProductController extends Controller
 					'product.sell_amount',
 					'product.price',
 					'product.img',
-					'product.thumb'
+					'product.thumb',
+					'product.state',
+					'product.stock'
 					)
 				->orderBy($orField, $order)
 				->distinct('product.id')

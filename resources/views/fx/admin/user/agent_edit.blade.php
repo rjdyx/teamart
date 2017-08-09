@@ -152,6 +152,19 @@
                   </div>
                   <span class="col-sm-4 text-danger form_error" id="repassword_txt"></span>
                 </div>
+
+                <div class="form-group">
+                <label class="col-sm-3 control-label">降为普通会员</label>
+                <div class="col-sm-4">
+                  <label class="col-sm-2 gender_label control-label">
+                    <input type="radio" name="user" id="user_male" value="1" checked="checked">否
+                  </label>
+                  <label class="col-sm-2 gender_label control-label">
+                    <input type="radio" name="user" id="user_female" value="2">是
+                  </label>
+                </div>
+                <span class="col-sm-4 text-danger form_error" id="user_txt"></span>
+              </div>
                 <div class="form-group">
                   <div class="col-sm-offset-3 col-sm-10">
                     <button type="submit" class="btn btn-success btn-100">确认</button>

@@ -93,7 +93,7 @@ class RollController extends Controller
             $cheap = Cheap::find($id);
         }
 
-        $cheap->setRawAttributes($request->only(['name','full','cut','amount','indate','desc']));
+        $cheap->setRawAttributes($request->only(['name','full','cut','amount','indate','desc','range']));
 
         if($cheap->save()){
             return Redirect::to('admin/activity/roll')->with('status', '保存成功');

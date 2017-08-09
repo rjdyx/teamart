@@ -64,7 +64,7 @@ class LoginController extends Controller
     public function bind($id)
     {
         $user = User::find(Auth::user()->id);
-        $user->parter_id = $id;
+        $user->pid = $id;
         return $user->save();
     }
 

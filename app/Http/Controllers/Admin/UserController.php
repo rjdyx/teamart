@@ -43,8 +43,9 @@ class UserController extends Controller
     public function edit($id)
     {
         $data = User::find($id);
+        $selects = Parter::select('id','name','scale')->get();
         return view(config('app.theme').'.admin.user.list_edit')
-        ->with(['data'=>$data]);
+        ->with(['data'=>$data,'selects'=>$selects]);
     }
 
     //查看
@@ -124,6 +125,10 @@ class UserController extends Controller
         } else {
             if (!empty($request->password)) {
                 $model->password = bcrypt($request->password);
+            }
+            if (!empty($request->parter_id)) {
+                $model->type = 1;
+                $model->parter_id = $request->parter_id;
             }
         }
 

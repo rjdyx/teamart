@@ -25,6 +25,8 @@ class ActivityController extends Controller
 	{
 		$lists = Cheap::leftjoin('cheap_user','cheap.id','=','cheap_user.cheap_id')
 				->orderBy('cheap.indate','desc')
+				->where('cheap.range','<',1)
+				->orwhere('cheap.range','=',Auth::user()->type)
 				->select('cheap.*','cheap_user.user_id','cheap_user.state as ustate')
 				->paginate(10);
 		return $lists;

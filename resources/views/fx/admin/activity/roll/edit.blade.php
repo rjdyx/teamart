@@ -115,6 +115,17 @@
                     <span class="col-sm-4 text-danger form_error" id="indate_txt"></span>
                   </div>
                 </div>
+                <div class="form-group">
+                  <label for="datepicker" class="col-sm-3 control-label">使用群体</label>
+                  <div class="col-sm-4">
+                    <select name="range" class="form-control">
+                        <option value="0" @if($cheap->range == 0) selected @endif>-- 全部 --</option>
+                        <option value="1" @if($cheap->range == 1) selected @endif>-- 代理商 --</option>
+                        <option value="2" @if($cheap->range == 2) selected @endif>-- 普通会员 --</option>
+                    </select>
+                    <span class="col-sm-4 text-danger form_error" id="indate_txt"></span>
+                  </div>
+                </div>
 <!--                 <div class="form-group">
                   <label for="inputEmail3" class="col-sm-3 control-label">发放状态</label>
                   <div class="col-sm-4">

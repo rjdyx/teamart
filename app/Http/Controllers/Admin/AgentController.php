@@ -179,6 +179,7 @@ class AgentController extends Controller
             if (!empty($request->password)) {
                 $model->password = bcrypt($request->password);
             }
+            $model->type = $request->user;
         }
 
         if ($model->save()) {

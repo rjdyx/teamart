@@ -72,10 +72,10 @@
                   <td>￥{{sprintf('%.2f',$list->sell_count)}}</td>
                   <td>
                   <div style="color: #dd4b39">
-                  <a href="{{url('admin/user/agent')}}/{{$list->id}}">详情 </a>&nbsp;
+                  <a href="{{url('admin/user/agent')}}/{{$list->id}}" style="margin-right: 10px;cursor: pointer;">详情 </a>&nbsp;
                   <a href="{{url('admin/user/agent')}}/{{$list->id}}/edit">
-                  <i class="fa fa-edit" style="margin-right: 5px;cursor: pointer;"></i></a>
-                  <i class="fa fa-trash-o" onclick="del({{$list->id}});" style="margin-right: 5px;cursor: pointer;"></i>&nbsp;
+                  <i class="fa fa-edit" style="margin-right:10px;cursor: pointer;"></i></a>
+                  <i class="fa fa-trash-o" onclick="del({{$list->id}});" style="margin-right: 10px;cursor: pointer;"></i>&nbsp;
                   <a href="{{url('admin/user/agent/record')}}/{{$list->id}}">佣金</a>
 
                   </div>
