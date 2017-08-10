@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 use App\User;
+use App\System;
 use IQuery;
 use Redirect;
 use Session;
@@ -20,14 +21,12 @@ class WxController extends Controller
     {   
         // 获取access_token
         // if (empty(session('access_token')) || (time() - session('token_time') >= 7200)) {
-            // IQuery::getWeixin($request);
-            $res = IQuery::getWXdata("snsapi_base");       
-            // $res = IQuery::getWXdata("snsapi_userinfo");       
+            $access_token = $this->getToken();       
             //缓存token
-            $request->session()->put('access_token', $res['access_token']);
+            $request->session()->put('access_token', $access_token);
             $request->session()->put('token_time', time());
         // }
-
+return $access_token;
         // 获取jsapi_ticket
         if (empty(session('jsapi_ticket')) || (time() - session('ticket_time') >= 7200)) {
             $res = $this->getTicket($request);
@@ -40,6 +39,18 @@ class WxController extends Controller
         return view('fx/home/sns')->with(['data'=>$data]);
     }
 
+    //获取token
+    public function getToken()
+    {
+        //查询参数
+        $system = System::find(1);
+        $appid = empty($system->wx_appid)? config('app.wx_appid'): $system->wx_appid;
+        $appsecret = empty($system->wx_appsecret)? config('app.wx_appsecret'):$system->wx_appsecret;
+        $url = "https://api.weixin.qq.com/cgi-bin/token";
+        $url .= "?grant_type=client_credential&appid=".$appid."&secret=".$appsecret;
+        $res = IQuery::getJson($url);
+        return $res['access_token'];
+    }
     // 获取jsapi_ticket (有效期7200秒) 
     public function getTicket($request)
     {
