@@ -25,7 +25,7 @@ class WxController extends Controller
 
         // 获取jsapi_ticket
         if (empty(session('jsapi_ticket')) || (time() - session('ticket_time') >= 7200)) {
-            $res = IQuery::getTicket($request);
+            return $res = IQuery::getTicket($request);
             if ($res == 'false') return '获取jsapi_ticket失败';
         }
 

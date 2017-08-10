@@ -341,7 +341,7 @@ class IQuery{
     public function getTicket($request)
     {
         $url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=".session('access_token')."&type=jsapi";
-        $res = $this->getJson($url);
+        return $res = $this->getJson($url);
         if ($res['errmsg'] != 'ok') return 'false'; //返回失败
         //缓存token
         if (empty(session('jsapi_ticket')) || time() - session('ticket_time') >= 7200) {
