@@ -7,17 +7,33 @@
   <h1 onclick="shareFriend();">分享朋友</h1>
   <h1 onclick="shareTimeline();">分享朋友圈</h1>
   <h1 onclick="shareWeibo();">分享微博</h1>
+  <br/>
+  <h1 onclick="fd();">分享朋友圈</h1>
 </center>
 </body>
 </html>
 <script>
 
     var imgUrl = "https://www.huceo.com/logo.jpg";  //注意必须是绝对路径
-    var lineLink = "https://www.huceo.com/wdt.html";   //同样，必须是绝对路径
+    var lineLink = "http://fx.caishi360.com";   //同样，必须是绝对路径
     var descContent = '我都这里等着你。'; //分享给朋友或朋友圈时的文字简介
     var shareTitle = '微信电台精选';  //分享title
     var appid = ''; //apiID，可留空
-        
+     
+    function fd(){
+      wx.onMenuShareTimeline({
+          title: shareTitle, // 分享标题
+          link: lineLink, // 分享链接
+          imgUrl: imgUrl, // 分享图标
+          success: function () { 
+              // 用户确认分享后执行的回调函数
+          },
+          cancel: function () { 
+              // 用户取消分享后执行的回调函数
+          }
+      });
+    }
+
     function shareFriend() {
         WeixinJSBridge.invoke('sendAppMessage',{
             "appid": appid,
