@@ -30,7 +30,7 @@ class WxController extends Controller
 
         // 获取jsapi_ticket
         if (empty(session('jsapi_ticket')) || (time() - session('ticket_time') >= 7200)) {
-            return $res = $this->getTicket($request);
+            $res = $this->getTicket($request);
             if ($res == 'false') return '获取jsapi_ticket失败';
             $request->session()->put('jsapi_ticket', $res['ticket']);
             $request->session()->put('ticket_time', time());
@@ -44,11 +44,16 @@ class WxController extends Controller
     public function getTicket($request)
     {
         $url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket";
-        // $url .= "?access_token=".session('access_token')."&type=jsapi";
-        // $res = IQuery::getJson($url);
-        $data['access_token'] = session('access_token');
-        $data['type'] = 'jsapi';
-        return $res = IQuery::sendPost($url, $data);
+        $url .= "?access_token=".session('access_token')."&type=jsapi";
+        $res = IQuery::getJson($url);
+        echo "<pre>";
+        print_r($res);
+        echo "<br/>";
+        print_r($url);
+        die;
+        // $data['access_token'] = session('access_token');
+        // $data['type'] = 'jsapi';
+        // return $res = IQuery::sendPost($url, $data);
         if ($res['errmsg'] != 'ok') return 'false'; //返回失败
         return $res;
     }
