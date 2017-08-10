@@ -63,8 +63,15 @@
 					var result = ''
 					if (res.data.length) {
 						res.data.forEach(function (v) {
+							var temp = ``
+							if (v.state == 0) {
+								temp = `<i class="absolute block txt-c tag">已下架</i>`
+							} else if (v.stock <= 0) {
+								temp = `<i class="absolute block txt-c tag">缺货中</i>`
+							}
 							result += `
-								<div class="lists_warpper pull-left">
+								<div class="lists_warpper relative pull-left">
+									${temp}
 									<a href='http://${window.location.host}/home/product/detail/${v.id}'>
 										<img src='http://${window.location.host}/${v.img}'>
 										<h1 class="mt-20 chayefont">${v.name}</h1>
