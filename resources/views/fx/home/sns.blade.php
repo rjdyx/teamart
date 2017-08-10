@@ -3,45 +3,67 @@
 <meta charset="utf-8">
 </head>
 <body>
-  <h1 onclick="wxa();">分享朋友圈</h1>
-  <h1 onclick="wxb();">分享朋友</h1>
+<center>  
+  <h1 onclick="shareFriend();">分享朋友</h1>
+  <h1 onclick="shareTimeline();">分享朋友圈</h1>
+  <h1 onclick="shareWeibo();">分享微博</h1>
+</center>
 </body>
 </html>
 <script>
 
- var dataForWeixin = {
-  appId: "wxdaa4107ed552fdcb",
-  MsgImg: "",//显示图片
-  TLImg: "",//显示图片
-  url: "http://fx.caishi360.com",//跳转地址
-  title: "自定义标题",//标题内容
-  desc: "自定义描述"//描述内容
- };
-
-  function wxa() {
-     WeixinJSBridge.invoke('sendAppMessage', {
-     "appid": dataForWeixin.appId,
-     "img_url": dataForWeixin.MsgImg,
-     "img_width": "120",
-     "img_height": "120",
-     "link": dataForWeixin.url,
-     "desc": dataForWeixin.desc,
-     "title": dataForWeixin.title
-     }, function (res) { 
-        alert(res)
-      });
-  }
-  function wxb(){
-    WeixinJSBridge.invoke('shareTimeline', {
-     "img_url": dataForWeixin.TLImg,
-     "img_width": "120",
-     "img_height": "120",
-     "link": dataForWeixin.url,
-     "desc": dataForWeixin.desc,
-     "title": dataForWeixin.title
-     }, function (res) { 
-        alert(res)
-     });
-  }
-
+    var imgUrl = "https://www.huceo.com/logo.jpg";  //注意必须是绝对路径
+    var lineLink = "https://www.huceo.com/wdt.html";   //同样，必须是绝对路径
+    var descContent = '我都这里等着你。'; //分享给朋友或朋友圈时的文字简介
+    var shareTitle = '微信电台精选';  //分享title
+    var appid = ''; //apiID，可留空
+        
+    function shareFriend() {
+        WeixinJSBridge.invoke('sendAppMessage',{
+            "appid": appid,
+            "img_url": imgUrl,
+            "img_width": "200",
+            "img_height": "200",
+            "link": lineLink,
+            "desc": descContent,
+            "title": shareTitle
+        }, function(res) {
+            //_report('send_msg', res.err_msg);
+        })
+    }
+    function shareTimeline() {
+        WeixinJSBridge.invoke('shareTimeline',{
+             "img_url": imgUrl,
+             "img_width": "200",
+             "img_height": "200",
+             "link": lineLink,
+             "desc": descContent,
+             "title": shareTitle
+         }, function(res) {
+                //_report('timeline', res.err_msg);
+         });
+    }
+    function shareWeibo() {
+         WeixinJSBridge.invoke('shareWeibo',{
+             "content": descContent,
+             "url": lineLink,
+         }, function(res) {
+             //_report('weibo', res.err_msg);
+         });
+    }
+    // 当微信内置浏览器完成内部初始化后会触发WeixinJSBridgeReady事件。
+    document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+        // 发送给好友
+        WeixinJSBridge.on('menu:share:appmessage', function(argv){
+            shareFriend();
+        });
+        // 分享到朋友圈
+        WeixinJSBridge.on('menu:share:timeline', function(argv){
+            shareTimeline();
+        });
+        // 分享到微博
+        WeixinJSBridge.on('menu:share:weibo', function(argv){
+            shareWeibo();
+        });
+    }, false);
 </script>
