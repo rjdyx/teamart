@@ -10,7 +10,6 @@
   <h1 onclick="shareWeibo();">分享微博</h1>
   <br/>
   <h1 onclick="fd();">分享朋友圈</h1>
-  <h4>{{$list}}</h4>
 </center>
 </body>
 </html>
@@ -20,20 +19,24 @@
     var _imgUrl = '';   //同样，必须是绝对路径
     var _title = '测试标题';  //分享title
 
-    // var data = "{{$list}}";
+    var data = [];
+    data['appid'] = "{{$appid}}";
+    data['timestamp'] = "{{$timestamp}}";
+    data['noncestr'] = "{{$noncestr}}";
+    data['sign'] = "{{$sign}}";
     var jsApiList = ["onMenuShareTimeline","onMenuShareAppMessage","onMenuShareQQ","onMenuShareWeibo","onMenuShareQZone"];
-    // if (data['sign'] !== undefined) {
-    //   wx.config({
-    //       debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-    //       appId: data['appid'], // 必填，公众号的唯一标识
-    //       timestamp: data['timestamp'], // 必填，生成签名的时间戳
-    //       nonceStr: data['noncestr'], // 必填，生成签名的随机串
-    //       signature: data['sign'],// 必填，签名，见附录1
-    //       jsApiList: jsApiList // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
-    //   });
-    // } else {
-    //   alert('未获取到数据')
-    // }
+    if (data['sign'] !== undefined) {
+      wx.config({
+          debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+          appId: data['appid'], // 必填，公众号的唯一标识
+          timestamp: data['timestamp'], // 必填，生成签名的时间戳
+          nonceStr: data['noncestr'], // 必填，生成签名的随机串
+          signature: data['sign'],// 必填，签名，见附录1
+          jsApiList: jsApiList // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+      });
+    } else {
+      alert('未获取到数据')
+    }
 
 
     function shareFriend(){
