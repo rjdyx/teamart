@@ -35,7 +35,7 @@ class WxController extends Controller
             $request->session()->put('ticket_time', time());
         }
 
-        $data = $this->wxJsapiSign();
+        return $data = $this->wxJsapiSign();
         return view('fx/home/sns')->with(['data'=>$data]);
     }
 
