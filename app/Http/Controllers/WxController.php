@@ -34,7 +34,7 @@ class WxController extends Controller
             $request->session()->put('jsapi_ticket', $ticket);
             $request->session()->put('ticket_time', time());
         }
-
+        var_dump($data);
         return $data = $this->wxJsapiSign();
         return view('fx/home/sns')->with(['data'=>$data]);
     }
@@ -75,7 +75,7 @@ class WxController extends Controller
         //查询参数
         $system = System::find(1);
         $data['appid'] = empty($system->wx_appid)? config('app.wx_appid'): $system->wx_appid;
-        return $data;
+        return json_decode($data);
     }
 
     //微信绑定页面加载
