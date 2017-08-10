@@ -323,7 +323,7 @@ class IQuery{
 
 
     //获取微信用户信息
-    public function getWeixin($request) 
+    public function getWeixin() 
     { 
         $res = $this->GetwxInfo();
         $token = $res['access_token'];
