@@ -26,15 +26,15 @@ class WxController extends Controller
             $request->session()->put('access_token', $access_token);
             $request->session()->put('token_time', time());
         // }
-return $access_token;
+
         // 获取jsapi_ticket
         if (empty(session('jsapi_ticket')) || (time() - session('ticket_time') >= 7200)) {
-            $res = $this->getTicket($request);
-            if ($res == 'false') return '获取jsapi_ticket失败';
-            $request->session()->put('jsapi_ticket', $res['ticket']);
+            $ticket = $this->getTicket($request);
+            if ($ticket == 'false') return '获取jsapi_ticket失败';
+            $request->session()->put('jsapi_ticket', $ticket);
             $request->session()->put('ticket_time', time());
         }
-
+        return $ticket;
         return $data = $this->wxJsapiSign();
         return view('fx/home/sns')->with(['data'=>$data]);
     }
@@ -57,16 +57,16 @@ return $access_token;
         $url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket";
         $url .= "?access_token=".session('access_token')."&type=jsapi";
         $res = IQuery::getJson($url);
-        echo "<pre>";
-        print_r($res);
-        echo "<br/>";
-        print_r($url);
-        die;
+        // echo "<pre>";
+        // print_r($res);
+        // echo "<br/>";
+        // print_r($url);
+        // die;
         // $data['access_token'] = session('access_token');
         // $data['type'] = 'jsapi';
         // return $res = IQuery::sendPost($url, $data);
         if ($res['errmsg'] != 'ok') return 'false'; //返回失败
-        return $res;
+        return $res['ticket'];
     }
 
     //签名
