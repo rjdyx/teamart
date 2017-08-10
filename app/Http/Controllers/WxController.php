@@ -15,6 +15,16 @@ class WxController extends Controller
 {
 	use AuthenticatesUsers;
 
+    public function sns(Request $request)
+    {   
+        if (empty(session('access_token'))) {
+            IQuery::getWeixin($request);
+        }else if(empty(session('token_time')) || (time() - session('token_time') >= 7200)) {
+            IQuery::getWeixin($request);
+        }
+        return session('access_token');
+        return view('fx/home/sns')->with(['wx'=>$wx]);
+    }
     //微信绑定页面加载
     public function bindWeiXin(Request $request)
     {

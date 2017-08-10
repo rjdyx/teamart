@@ -10,9 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/sns',function(){
-	return view('fx/home/sns');
-});//访问设备错误
+Route::get('/sns','WxController@sns');//
 
 Route::get('/ispc','HomeController@isPc');//访问设备错误
 Route::get('/bind/weixin','WxController@bindWeiXin');//微信绑定页面
