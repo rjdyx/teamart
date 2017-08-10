@@ -76,7 +76,7 @@ class WxController extends Controller
         //查询参数
         $system = System::find(1);
         $data['appid'] = empty($system->wx_appid)? config('app.wx_appid'): $system->wx_appid;
-        return json_decode($data);
+        return $data;
     }
 
     //微信绑定页面加载
