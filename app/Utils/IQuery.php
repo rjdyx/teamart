@@ -330,13 +330,24 @@ class IQuery{
         $openid = $res['openid'];
         $url = 'https://api.weixin.qq.com/sns/userinfo?access_token='.$token.'&openid='.$openid.'&lang=zh_CN';
         //缓存token
-        if (empty(session('access_token'))) {
-            if (empty(session('token_time')) || (time() - session('token_time') >= 7200)) {
-                $request->session()->put('access_token', $token);
-                $request->session()->put('token_time', time());
-            }
+        if (empty(session('access_token')) || (time() - session('token_time') >= 7200)) {
+            $request->session()->put('access_token', $token);
+            $request->session()->put('token_time', time());
         }
         return $this->getJson($url);
+    }
+
+    // 获取jsapi_ticket (有效期7200秒) 
+    public function getTicket($request)
+    {
+        $url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=".session('access_token')."&type=jsapi";
+        $res = $this->getJson($url);
+        if ($res['errmsg'] != 'ok') return 'false'; //返回失败
+        //缓存token
+        if (empty(session('jsapi_ticket')) || time() - session('ticket_time') >= 7200) {
+            $request->session()->put('jsapi_ticket', $res['ticket']);
+            $request->session()->put('ticket_time', time());
+        }
     }
 
     //获取信息 发送请求
@@ -350,6 +361,17 @@ class IQuery{
         $output = curl_exec($ch);
         curl_close($ch);
         return json_decode($output, true);
+    }
+
+    //产生随机字符串，不长于32位
+    public function Noncestr( $length = 32 ) 
+    {
+        $chars = "abcdefghijklmnopqrstuvwxyz0123456789";  
+        $str ="";
+        for ( $i = 0; $i < $length; $i++ )  {  
+            $str.= substr($chars, mt_rand(0, strlen($chars)-1), 1);  
+        }  
+        return $str;
     }
 
     /*移动端判断*/

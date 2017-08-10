@@ -15,16 +15,37 @@ class WxController extends Controller
 {
 	use AuthenticatesUsers;
 
+    //分享
     public function sns(Request $request)
     {   
-        if (empty(session('access_token'))) {
-            IQuery::getWeixin($request);
-        }else if(empty(session('token_time')) || (time() - session('token_time') >= 7200)) {
+        // 获取access_token
+        if (empty(session('access_token')) || (time() - session('token_time') >= 7200)) {
             IQuery::getWeixin($request);
         }
-        return session('access_token');
-        return view('fx/home/sns')->with(['wx'=>$wx]);
+
+        // 获取jsapi_ticket
+        if (empty(session('jsapi_ticket')) || (time() - session('ticket_time') >= 7200)) {
+            $res = IQuery::getTicket($request);
+            if ($res == 'false') return '获取jsapi_ticket失败';
+        }
+
+        return $data = $this->wxJsapiSign();
+        return view('fx/home/sns')->with(['data'=>$data]);
     }
+
+    //签名
+    public function wxJsapiSign()
+    {
+        $data['noncestr'] = IQuery::Noncestr(); //随机字符串   
+        $data['jsapi_ticket'] = session('jsapi_ticket'); //有效的jsapi_ticket
+        $data['timestamp'] = time(); //当前时间戳
+        $data['url'] = "http://".$_SERVER["HTTP_HOST"].$_SERVER["REQUEST_URI"].$_SERVER["QUERY_STRING"]; //当前url
+        ksort($data);
+        $str = IQuery::ToUrlParams($data);
+        $data['sign'] = sha1($str);
+        return $data;
+    }
+
     //微信绑定页面加载
     public function bindWeiXin(Request $request)
     {
