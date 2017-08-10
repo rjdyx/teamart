@@ -329,11 +329,6 @@ class IQuery{
         $token = $res['access_token'];
         $openid = $res['openid'];
         $url = 'https://api.weixin.qq.com/sns/userinfo?access_token='.$token.'&openid='.$openid.'&lang=zh_CN';
-        //缓存token
-        if (empty(session('access_token')) || (time() - session('token_time') >= 7200)) {
-            $request->session()->put('access_token', $token);
-            $request->session()->put('token_time', time());
-        }
         return $this->getJson($url);
     }
 

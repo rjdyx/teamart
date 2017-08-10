@@ -21,9 +21,12 @@ class WxController extends Controller
         // 获取access_token
         if (empty(session('access_token')) || (time() - session('token_time') >= 7200)) {
             // IQuery::getWeixin($request);
+            $res = IQuery::getWXdata("snsapi_base");       
+            //缓存token
+            $request->session()->put('access_token', $res['access_token']);
+            $request->session()->put('token_time', time());
         }
 
-        return IQuery::getWXdata("snsapi_base");
         // 获取jsapi_ticket
         if (empty(session('jsapi_ticket')) || (time() - session('ticket_time') >= 7200)) {
             return $res = IQuery::getTicket($request);
