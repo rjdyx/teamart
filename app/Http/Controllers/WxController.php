@@ -41,7 +41,7 @@ class WxController extends Controller
         $list['noncestr'] = $data['noncestr'];
         $list['sign'] = $data['sign'];
         $list['timestamp'] = $data['timestamp'];
-        return view('fx/home/sns')->with(['list'=>$list]);
+        return view('fx/home/sns');
     }
 
     //获取token
