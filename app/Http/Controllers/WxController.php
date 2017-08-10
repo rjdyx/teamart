@@ -43,8 +43,11 @@ class WxController extends Controller
     public function getTicket($request)
     {
         $url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket";
-        return $url .= "?access_token=".session('access_token')."&type=jsapi";
-        $res = IQuery::getJson($url);
+        // $url .= "?access_token=".session('access_token')."&type=jsapi";
+        // $res = IQuery::getJson($url);
+        $data['access_token'] = ession('access_token');
+        $data['type'] = 'jsapi';
+        return $res = IQuery::sendPost($url, $data);
         if ($res['errmsg'] != 'ok') return 'false'; //返回失败
         return $res;
     }
