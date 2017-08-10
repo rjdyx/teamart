@@ -20,12 +20,12 @@ class WxController extends Controller
     public function sns(Request $request)
     {   
         // 获取access_token
-        // if (empty(session('access_token')) || (time() - session('token_time') >= 7200)) {
+        if (empty(session('access_token')) || (time() - session('token_time') >= 7200)) {
             $access_token = $this->getToken();       
             //缓存token
             $request->session()->put('access_token', $access_token);
             $request->session()->put('token_time', time());
-        // }
+        }
 
         // 获取jsapi_ticket
         if (empty(session('jsapi_ticket')) || (time() - session('ticket_time') >= 7200)) {
@@ -34,8 +34,8 @@ class WxController extends Controller
             $request->session()->put('jsapi_ticket', $ticket);
             $request->session()->put('ticket_time', time());
         }
-        return $ticket;
-        return $data = $this->wxJsapiSign();
+
+        $data = $this->wxJsapiSign();
         return view('fx/home/sns')->with(['data'=>$data]);
     }
 
@@ -51,20 +51,13 @@ class WxController extends Controller
         $res = IQuery::getJson($url);
         return $res['access_token'];
     }
+
     // 获取jsapi_ticket (有效期7200秒) 
     public function getTicket($request)
     {
         $url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket";
         $url .= "?access_token=".session('access_token')."&type=jsapi";
         $res = IQuery::getJson($url);
-        // echo "<pre>";
-        // print_r($res);
-        // echo "<br/>";
-        // print_r($url);
-        // die;
-        // $data['access_token'] = session('access_token');
-        // $data['type'] = 'jsapi';
-        // return $res = IQuery::sendPost($url, $data);
         if ($res['errmsg'] != 'ok') return 'false'; //返回失败
         return $res['ticket'];
     }
@@ -79,6 +72,9 @@ class WxController extends Controller
         ksort($data);
         $str = IQuery::ToUrlParams($data);
         $data['sign'] = sha1($str);
+        //查询参数
+        $system = System::find(1);
+        $data['appid'] = empty($system->wx_appid)? config('app.wx_appid'): $system->wx_appid;
         return $data;
     }
 

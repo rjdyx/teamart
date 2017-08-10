@@ -15,72 +15,34 @@
 </html>
 <script>
 
-    var imgUrl = "https://www.huceo.com/logo.jpg";  //注意必须是绝对路径
-    var lineLink = "http://fx.caishi360.com";   //同样，必须是绝对路径
-    var descContent = '我都这里等着你。'; //分享给朋友或朋友圈时的文字简介
-    var shareTitle = '微信电台精选';  //分享title
-    var appid = ''; //apiID，可留空
-     
-    function fd(){
-      wx.onMenuShareTimeline({
-          title: shareTitle, // 分享标题
-          link: lineLink, // 分享链接
-          imgUrl: imgUrl, // 分享图标
-          success: function () { 
-              // 用户确认分享后执行的回调函数
-          },
-          cancel: function () { 
-              // 用户取消分享后执行的回调函数
-          }
-      });
+    var _link = 'fx.caishi360.com';  //注意必须是绝对路径
+    var _imgUrl = '';   //同样，必须是绝对路径
+    var _title = '测试标题';  //分享title
+
+    var data = "{{$data}}";
+    var jsApiList = ["onMenuShareTimeline","onMenuShareAppMessage","onMenuShareQQ","onMenuShareWeibo","onMenuShareQZone"];
+    wx.config({
+        debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+        appId: data.appid, // 必填，公众号的唯一标识
+        timestamp: data.timestamp, // 必填，生成签名的时间戳
+        nonceStr: data.nonceStr, // 必填，生成签名的随机串
+        signature: data.sign,// 必填，签名，见附录1
+        jsApiList: jsApiList // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+    });
+
+    function shareFriend(){
+          //获取“分享到朋友圈”按钮点击状态及自定义分享内容接口
+        wx.onMenuShareTimeline({
+            title: _title, // 分享标题
+            link: _link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+            imgUrl: _imgUrl, // 分享图标
+            success: function () { 
+                // 用户确认分享后执行的回调函数
+            },
+            cancel: function () { 
+                // 用户取消分享后执行的回调函数
+            }
+        });
     }
 
-    function shareFriend() {
-        WeixinJSBridge.invoke('sendAppMessage',{
-            "appid": appid,
-            "img_url": imgUrl,
-            "img_width": "200",
-            "img_height": "200",
-            "link": lineLink,
-            "desc": descContent,
-            "title": shareTitle
-        }, function(res) {
-            //_report('send_msg', res.err_msg);
-        })
-    }
-    function shareTimeline() {
-        WeixinJSBridge.invoke('shareTimeline',{
-             "img_url": imgUrl,
-             "img_width": "200",
-             "img_height": "200",
-             "link": lineLink,
-             "desc": descContent,
-             "title": shareTitle
-         }, function(res) {
-                //_report('timeline', res.err_msg);
-         });
-    }
-    function shareWeibo() {
-         WeixinJSBridge.invoke('shareWeibo',{
-             "content": descContent,
-             "url": lineLink,
-         }, function(res) {
-             //_report('weibo', res.err_msg);
-         });
-    }
-    // 当微信内置浏览器完成内部初始化后会触发WeixinJSBridgeReady事件。
-    document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
-        // 发送给好友
-        WeixinJSBridge.on('menu:share:appmessage', function(argv){
-            shareFriend();
-        });
-        // 分享到朋友圈
-        WeixinJSBridge.on('menu:share:timeline', function(argv){
-            shareTimeline();
-        });
-        // 分享到微博
-        WeixinJSBridge.on('menu:share:weibo', function(argv){
-            shareWeibo();
-        });
-    }, false);
 </script>
