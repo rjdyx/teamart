@@ -36,6 +36,8 @@ class WxController extends Controller
         }
 
         $data = $this->wxJsapiSign();
+        echo "<pre>";
+        print_r($data);die;
         return view('fx/home/sns')->with(['data'=>$data]);
     }
 
