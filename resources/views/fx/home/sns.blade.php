@@ -39,7 +39,6 @@
     });
 
     function shareFriend(){
-      alert('分享')
         //获取“分享到朋友圈”按钮点击状态及自定义分享内容接口
         wx.onMenuShareTimeline({
             title: _title, // 分享标题
@@ -53,5 +52,22 @@
             }
         });
     }
-
+  window.share_config = {
+     "share": {
+        "imgUrl": "http://www.yourwebsite.com/share.png",//分享图，默认当相对路径处理，所以使用绝对路径的的话，“http://”协议前缀必须在。
+        "desc" : "你对页面的描述",//摘要,如果分享到朋友圈的话，不显示摘要。
+        "title" : '分享卡片的标题',//分享卡片标题
+        "link": window.location.host,//分享出去后的链接，这里可以将链接设置为另一个页面。
+        "success":function(){//分享成功后的回调函数
+        },
+        'cancel': function () { 
+            // 用户取消分享后执行的回调函数
+        }
+    }
+  };
+  wx.ready(function () {
+    wx.onMenuShareAppMessage(share_config.share);//分享给好友
+    wx.onMenuShareTimeline(share_config.share);//分享到朋友圈
+    wx.onMenuShareQQ(share_config.share);//分享给手机QQ
+  });
 </script>
