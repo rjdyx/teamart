@@ -35,9 +35,13 @@ class WxController extends Controller
             $request->session()->put('ticket_time', time());
         }
         $data = $this->wxJsapiSign();
-        var_dump($data);
-        die;
-        return view('fx/home/sns')->with(['data'=>$data]);
+        //查询参数
+        $system = System::find(1);
+        $list['appid'] = empty($system->wx_appid)? config('app.wx_appid'): $system->wx_appid;
+        $list['noncestr'] = $data['noncestr'];
+        $list['sign'] = $data['sign'];
+        $list['timestamp'] = $data['timestamp'];
+        return view('fx/home/sns')->with(['list'=>$list]);
     }
 
     //获取token
@@ -73,9 +77,6 @@ class WxController extends Controller
         ksort($data);
         $str = IQuery::ToUrlParams($data);
         $data['sign'] = sha1($str);
-        //查询参数
-        $system = System::find(1);
-        $data['appid'] = empty($system->wx_appid)? config('app.wx_appid'): $system->wx_appid;
         return $data;
     }
 

@@ -10,7 +10,7 @@
   <h1 onclick="shareWeibo();">分享微博</h1>
   <br/>
   <h1 onclick="fd();">分享朋友圈</h1>
-  <h4>{{$data}}</h4>
+  <h4>{{$list}}</h4>
 </center>
 </body>
 </html>
@@ -20,7 +20,7 @@
     var _imgUrl = '';   //同样，必须是绝对路径
     var _title = '测试标题';  //分享title
 
-    var data = "{{$data}}";
+    // var data = "{{$list}}";
     var jsApiList = ["onMenuShareTimeline","onMenuShareAppMessage","onMenuShareQQ","onMenuShareWeibo","onMenuShareQZone"];
     // if (data['sign'] !== undefined) {
     //   wx.config({
