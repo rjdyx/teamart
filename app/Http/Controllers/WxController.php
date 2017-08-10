@@ -34,8 +34,9 @@ class WxController extends Controller
             $request->session()->put('jsapi_ticket', $ticket);
             $request->session()->put('ticket_time', time());
         }
+        $data = $this->wxJsapiSign();
         var_dump($data);
-        return $data = $this->wxJsapiSign();
+        die;
         return view('fx/home/sns')->with(['data'=>$data]);
     }
 
