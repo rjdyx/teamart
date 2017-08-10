@@ -5,20 +5,13 @@
 </head>
 <body>
 <center>  
-  <h1 onclick="shareFriend();">分享朋友</h1>
-  <h1 onclick="shareTimeline();">分享朋友圈</h1>
-  <h1 onclick="shareWeibo();">分享微博</h1>
-  <br/>
-  <h1 onclick="fd();">分享朋友圈</h1>
+  <h1>点击右上角菜单</h1>
 </center>
 </body>
 </html>
 <script>
 
-    var _link = 'fx.caishi360.com';  //注意必须是绝对路径
-    var _imgUrl = '';   //同样，必须是绝对路径
-    var _title = '测试标题';  //分享title
-
+    var uid = "{{Auth::user()->id}}";
     var data = [];
     data['appid'] = "{{$appid}}";
     data['timestamp'] = "{{$timestamp}}";
@@ -38,26 +31,12 @@
         alert(res)
     });
 
-    function shareFriend(){
-        //获取“分享到朋友圈”按钮点击状态及自定义分享内容接口
-        wx.onMenuShareTimeline({
-            title: _title, // 分享标题
-            link: _link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-            imgUrl: _imgUrl, // 分享图标
-            success: function () { 
-                // 用户确认分享后执行的回调函数
-            },
-            cancel: function () { 
-                // 用户取消分享后执行的回调函数
-            }
-        });
-    }
   window.share_config = {
      "share": {
-        "imgUrl": "http://www.yourwebsite.com/share.png",//分享图，默认当相对路径处理，所以使用绝对路径的的话，“http://”协议前缀必须在。
-        "desc" : "你对页面的描述",//摘要,如果分享到朋友圈的话，不显示摘要。
-        "title" : '分享卡片的标题',//分享卡片标题
-        "link": window.location.host,//分享出去后的链接，这里可以将链接设置为另一个页面。
+        "imgUrl": "http://"+window.location.host+"/fx/images/index_banner.png",//分享图，默认当相对路径处理，所以使用绝对路径的的话，“http://”协议前缀必须在。
+        "desc" : "代理商分享",//摘要,如果分享到朋友圈的话，不显示摘要。
+        "title" : '茶叶水果商城',//分享标题
+        "link": "http://"+window.location.host+'/bind/agent/'+ uid,//分享出去后的链接，这里可以将链接设置为另一个页面。
         "success":function(){//分享成功后的回调函数
         },
         'cancel': function () { 
@@ -69,5 +48,6 @@
     wx.onMenuShareAppMessage(share_config.share);//分享给好友
     wx.onMenuShareTimeline(share_config.share);//分享到朋友圈
     wx.onMenuShareQQ(share_config.share);//分享给手机QQ
+    wx.onMenuShareQZone(share_config.share);//分享给QQ空间
   });
 </script>
