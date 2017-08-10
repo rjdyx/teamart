@@ -11,7 +11,7 @@
 </html>
 <script>
 
-    var uid = "{{Auth::user()->id}}";
+    var uid = "{{base64_encode(Auth::user()->id)}}";
     var data = [];
     data['appid'] = "{{$appid}}";
     data['timestamp'] = "{{$timestamp}}";
