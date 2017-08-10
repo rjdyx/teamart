@@ -1,6 +1,7 @@
 <html>
 <head>
 <meta charset="utf-8">
+<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 </head>
 <body>
 <center>  
