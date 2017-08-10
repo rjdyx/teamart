@@ -29,12 +29,24 @@ class WxController extends Controller
 
         // 获取jsapi_ticket
         if (empty(session('jsapi_ticket')) || (time() - session('ticket_time') >= 7200)) {
-            return $res = IQuery::getTicket($request);
+            return $res = $this->getTicket($request);
             if ($res == 'false') return '获取jsapi_ticket失败';
+            $request->session()->put('jsapi_ticket', $res['ticket']);
+            $request->session()->put('ticket_time', time());
         }
 
         return $data = $this->wxJsapiSign();
         return view('fx/home/sns')->with(['data'=>$data]);
+    }
+
+    // 获取jsapi_ticket (有效期7200秒) 
+    public function getTicket($request)
+    {
+        $url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket";
+        return $url .= "?access_token=".session('access_token')."&type=jsapi";
+        $res = IQuery::getJson($url);
+        if ($res['errmsg'] != 'ok') return 'false'; //返回失败
+        return $res;
     }
 
     //签名

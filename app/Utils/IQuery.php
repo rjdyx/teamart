@@ -332,19 +332,6 @@ class IQuery{
         return $this->getJson($url);
     }
 
-    // 获取jsapi_ticket (有效期7200秒) 
-    public function getTicket($request)
-    {
-        $url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=".session('access_token')."&type=jsapi";
-        return $res = $this->getJson($url);
-        if ($res['errmsg'] != 'ok') return 'false'; //返回失败
-        //缓存token
-        if (empty(session('jsapi_ticket')) || time() - session('ticket_time') >= 7200) {
-            $request->session()->put('jsapi_ticket', $res['ticket']);
-            $request->session()->put('ticket_time', time());
-        }
-    }
-
     //获取信息 发送请求
     public function getJson($url)
     {
