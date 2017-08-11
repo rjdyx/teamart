@@ -27,6 +27,7 @@ class WxController extends Controller
         if (!is_int($pid) && !empty($pid)){
             $pid = explode('pid', $pid)[0];
         }
+        return $pid;
         return view(config('app.theme').'.home.bind_wx')->with(['parter_id'=>$pid]);
     }
 
