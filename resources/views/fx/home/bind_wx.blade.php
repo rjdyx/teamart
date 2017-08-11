@@ -256,7 +256,6 @@
                 }
             })
         }
-        alert("{{$parter_id}}");
     </script>
 @endsection
 
