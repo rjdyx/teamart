@@ -57,7 +57,7 @@ class LoginController extends Controller
         }
         $url = '/register?'.base64_encode('agentid').'='.base64_encode($id);
         if (strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false){
-            $url = '/bind/weixin?pid='.base64_encode($id);
+            $url = '/bind/weixin?pid='.$id;
         }
         return redirect($url);
     }
