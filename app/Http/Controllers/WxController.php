@@ -23,7 +23,11 @@ class WxController extends Controller
         if (Auth::user()) return redirect::back();
         $wx = IQuery::getWeixin(); // 获取微信用户信息
         $request->session()->put('wx', $wx);
-        return view(config('app.theme').'.home.bind_wx')->with(['parter_id'=>$request->pid]);
+        $pid = $request->pid;
+        if (!is_int($pid) && !empty($pid)){
+            $pid = explode('pid', $pid)[0];
+        }
+        return view(config('app.theme').'.home.bind_wx')->with(['parter_id'=>$pid]);
     }
 
     //微信解除绑定
