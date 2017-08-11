@@ -46,7 +46,7 @@ class LoginController extends Controller
     //会员扫码绑定分销商
     public function bindAgent($id)
     {
-        return $id = base64_decode($id);// id解码
+        $id = base64_decode($id);// id解码
         //判断登录情况
         if (Auth::user()) {
             if (Auth::user()->type < 1) return redirect('/admin/login');
