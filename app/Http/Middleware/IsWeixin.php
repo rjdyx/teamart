@@ -17,12 +17,13 @@ class IsWeixin
     {
         // 访问设备判断
         $url = '/ispc?'.base64_encode('err').'=';
+        $isMobile = IQuery::isMobile();
         if (strpos($request->url(),'admin')) {
-            if (IQuery::isMobile()) {
+            if ($isMobile) {
                 return Redirect::to($url.base64_encode('pc'));
             }
         } else {
-            if (!IQuery::isMobile()) {
+            if (!$isMobile ) {
                 return Redirect::to($url.base64_encode('phone'));
             }
         }

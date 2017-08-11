@@ -49,8 +49,10 @@ class LoginController extends Controller
         $id = base64_decode($id);// id解码
         //判断登录情况
         if (Auth::user()) {
-            if (Auth::user()->type != 2) return redirect('/admin/login');
-            $bind = $this->bind($id);
+            if (Auth::user()->type < 1) return redirect('/admin/login');
+            if (is_int($id)){
+                $this->bind($id);
+            }
             return redirect('/');
         }
         $url = '/register?'.base64_encode('agentid').'='.base64_encode($id);
@@ -63,9 +65,12 @@ class LoginController extends Controller
     //绑定分销商方法
     public function bind($id)
     {
-        $user = User::find(Auth::user()->id);
-        $user->pid = $id;
-        return $user->save();
+        $puser = User::find($id);
+        if (isset($puser->id)) {
+            $user = User::find(Auth::user()->id);
+            $user->pid = $id;
+            $user->save();
+        }
     }
 
     //登录方法
