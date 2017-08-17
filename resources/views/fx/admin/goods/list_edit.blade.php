@@ -219,7 +219,7 @@
           '<div class="col-sm-3">'+
           '<input type="text" class="spec-name" sid="" state="0" placeholder=" 商品规格名称" style="width:280px;height:30px;">'+
           '<span>&nbsp;-&nbsp;</span>'+
-          '<input type="number" placeholder=" 价格(元)" style="width:75px;height:30px;text-align: center;">'+
+          '<input type="text" onInput="clearNoNum(this)" placeholder=" 价格(元)" style="width:75px;height:30px;text-align: center;">'+
           '</div><div class="col-sm-1">'+
           '<span style="color:#F04858;cursor: pointer;" state="del" class="spec-click">删除</span>'+
           '<span style="color:#5F9DFF;cursor: pointer;margin-left: 10px;" state="add" class="spec-click">添加</span>'+
@@ -227,6 +227,18 @@
           return tmp;
         }
       })
+      function clearNoNum(obj){
+        //先把非数字的都替换掉，除了数字和.
+        obj.value = obj.value.replace(/[^\d.]/g,"");
+        //必须保证第一个为数字而不是.
+        obj.value = obj.value.replace(/^\./g,"");
+        //保证只有出现一个.而没有多个.
+        obj.value = obj.value.replace(/\.{2,}/g,".");
+        //保证.只出现一次，而不能出现两次以上
+        obj.value = obj.value.replace(".","$#$").replace(/\./g,"").replace("$#$",".");
+        //保证 数字整数位不大于10位
+        if(10000000000 <= parseFloat(obj.value)) obj.value = "";
+      }
     </script>
 @endsection
 @section('content')
@@ -287,7 +299,7 @@
                 <div class="form-group form-specs">
                   <label class="col-sm-3 control-label"><i style="color:red;">*</i>商品规格</label>
                   <div class="col-sm-3">
-                    <input type="text" value="" id="spec" sid="" name="spec" state="1" class="spec-name" placeholder=" 商品规格名称 (如50g装)" style="width:280px;height:30px;"><span>&nbsp;-&nbsp;</span><input type="number" value="" placeholder=" 价格(元)" style="width:75px;height:30px;text-align: center;">
+                    <input type="text" value="" id="spec" sid="" name="spec" state="1" class="spec-name" placeholder=" 商品规格名称 (如50g装)" style="width:280px;height:30px;"><span>&nbsp;-&nbsp;</span><input type="text" onInput="clearNoNum(this)" value="" placeholder=" 价格(元)" style="width:75px;height:30px;text-align: center;">
                   </div>
                   <div class="col-sm-1">
                     <span style="color:#5F9DFF;cursor: pointer;" state="add" class="spec-click">添加</span>
@@ -301,7 +313,7 @@
                 <div class="form-group form-specs">
                   <label class="col-sm-3 control-label"><i style="color:red;">*</i>商品规格</label>
                   <div class="col-sm-3">
-                    <input type="text" value="{{$v->name}}" id="spec" sid="{{$v->id}}" name="spec" state="1" class="spec-name" placeholder=" 商品规格名称 (如50g装)" style="width:280px;height:30px;"><span>&nbsp;-&nbsp;</span><input type="number" value="{{$v->price}}" placeholder=" 价格(元)" style="width:75px;height:30px;text-align: center;">
+                    <input type="text" value="{{$v->name}}" id="spec" sid="{{$v->id}}" name="spec" state="1" class="spec-name" placeholder=" 商品规格名称 (如50g装)" style="width:280px;height:30px;"><span>&nbsp;-&nbsp;</span><input type="text" onInput="clearNoNum(this)" value="{{$v->price}}" placeholder=" 价格(元)" style="width:75px;height:30px;text-align: center;">
                   </div>
                   <div class="col-sm-1">
                     <span style="color:#5F9DFF;cursor: pointer;" state="add" class="spec-click">添加</span>
@@ -316,7 +328,7 @@
                 <div class="form-group form-specs">
                   <label class="col-sm-3 control-label"></label>
                   <div class="col-sm-3">
-                    <input type="text" value="{{$v->name}}" id="spec" sid="{{$v->id}}" name="spec" state="0" class="spec-name" placeholder=" 商品规格名称" style="width:280px;height:30px;"><span>&nbsp;-&nbsp;</span><input type="number" value="{{$v->price}}" placeholder=" 价格(元)" style="width:75px;height:30px;text-align: center;">
+                    <input type="text" value="{{$v->name}}" id="spec" sid="{{$v->id}}" name="spec" state="0" class="spec-name" placeholder=" 商品规格名称" style="width:280px;height:30px;"><span>&nbsp;-&nbsp;</span><input type="text" onInput="clearNoNum(this)" value="{{$v->price}}" placeholder=" 价格(元)" style="width:75px;height:30px;text-align: center;">
                   </div>
                   <div class="col-sm-1">
                     <span style="color:#F04858;cursor: pointer;" state="del" class="spec-click">删除</span>
