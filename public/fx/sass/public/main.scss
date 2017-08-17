@@ -1037,6 +1037,8 @@
 			padding: 0.2rem 0.15rem;
 			border-bottom: 0.01rem solid #E3E3E3;
 			i.tag {
+				top: 3rem;
+			    right: 0.1rem;
 				width: 0.8rem;
 				height: 0.8rem;
 				line-height: 0.8rem;
@@ -1429,6 +1431,9 @@
 			}
 			.productspec_container_info_content {
 				width: calc(60% - 0.1rem);
+				h1 {
+					@extend %wrap2
+				}
 				p {
 					@extend %wrap3
 				}

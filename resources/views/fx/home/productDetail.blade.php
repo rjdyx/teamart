@@ -6,11 +6,11 @@
 @endsection
 
 @section('script')
-    @parent
-    <script src="{{url('/fx/build/swiper.js')}}"></script>
-    <script type="text/javascript" src="{{ url('fx/js/dropload.min.js') }}"></script>
-    <script>
-    $(function(){
+	@parent
+	<script src="{{url('/fx/build/swiper.js')}}"></script>
+	<script type="text/javascript" src="{{ url('fx/js/dropload.min.js') }}"></script>
+	<script>
+	$(function(){
 		var page = 0;//分页
 		var params = {id:'', page:0, grade:''};//定义全局对象
     	var popid = '';
@@ -18,7 +18,9 @@
         var spec_id = '';
     	var uid = {{Auth::user() ? Auth::user()->id : 0}} //用户id
 		params['id'] = {{ $content->id }};
-
+		var state = {{ $content->state }}
+		var stock = {{ $content->stock }}
+				
 		$('.productdetail_container_comment').dropload({
 			scrollArea : $('.productdetail_container_comment'),
 			domUp : {
@@ -50,38 +52,38 @@
 				params['page'] = page;
 			}
 			ajax('get', '/home/product/comment/'+params['id'], {page: page}, false, false, false)
-                .then(function (res) {
-                	var template = '';
-                    if (res.length > 0) {
-                    	template = listData(res);
-                    } else {
-                        me.lock();
-                        me.noData();
-                        if (page == 1) {
-                            $('.dropload-down').hide()
-                            $('.productdetail_container_comment').find('.comment_nodata').remove()
-                            $('.productdetail_container_comment').append(`
-                            <div class="list_nodata txt-c">
-                                暂无评价
-                            </div>`)
-                        }
-                    }
-                    $('.comment_list').append(template);
-                    me.resetload();
-                    $('.J_show_image').off('tap').on('tap', function () {
-                    	prompt.image($(this).data('img'))
-                    })
-                })
-                .catch(function (err) {
-                	console.dir(err)
-                    prompt.message('请求错误')
-                });
+				.then(function (res) {
+					var template = '';
+					if (res.length > 0) {
+						template = listData(res);
+					} else {
+						me.lock();
+						me.noData();
+						if (page == 1) {
+							$('.dropload-down').hide()
+							$('.productdetail_container_comment').find('.comment_nodata').remove()
+							$('.productdetail_container_comment').append(`
+							<div class="list_nodata txt-c">
+								暂无评价
+							</div>`)
+						}
+					}
+					$('.comment_list').append(template);
+					me.resetload();
+					$('.J_show_image').off('tap').on('tap', function () {
+						prompt.image($(this).data('img'))
+					})
+				})
+				.catch(function (err) {
+					console.dir(err)
+					prompt.message('请求错误')
+				});
 		}
 
 		function listData(res){
 			var template = '';
-            res.forEach(function (v) {
-            	template += `<li class="clearfix">
+			res.forEach(function (v) {
+				template += `<li class="clearfix">
 								<div class="comment_list_avatar pull-left">
 									<img src="http://${window.location.host}/${v.user_img}">
 									<span class="block txt-c">${v.user_name}</span>
@@ -120,61 +122,61 @@
 					template += '</div>'
 				}	
 				template += `</div></li>`
-            })
-            return template;
+			})
+			return template;
 		}
 
 		function searchComment() {
 			params['page'] = 1;
 			ajax('get', '/home/product/comment/'+params['id'], params)
-                .then(function (res) {
-                	var template = ''
-                    if (res.length > 0) {
-                    	template = listData(res);
-                    }
-                    $('.comment_list').html(template);
-                    $('.J_show_image').off('tap').on('tap', function () {
-                    	prompt.image($(this).data('img'))
-                    })
-                })
+				.then(function (res) {
+					var template = ''
+					if (res.length > 0) {
+						template = listData(res);
+					}
+					$('.comment_list').html(template);
+					$('.J_show_image').off('tap').on('tap', function () {
+						prompt.image($(this).data('img'))
+					})
+				})
 		}
 
 		// 切换
 		$('.J_tabs').on('click', function () {
-    		$(this).addClass('active')
-    		.siblings().removeClass('active')
-    		var tag = $(this).data('tag')
-    		$('[data-tab]').addClass('hide')
-    		.each(function () {
-    			if ($(this).data('tab') == tag) {
-    				$(this).removeClass('hide')
-    			}
-    		});
-    	});
-    	// 收藏
-    	$('.J_favo').on('tap', function () {
-    		if ($(this).find('i').hasClass('fa-star-o')) {
-    			ajax('post', '/home/collect', {id: params['id']})
-	    			.then(function (resolve) {
-	    				if (resolve) {
-	    					$('.J_favo').find('i').removeClass('fa-star-o').addClass('fa-star')
-	    					prompt.message('收藏成功')
-	    				} else {
-	    					prompt.message('收藏失败')
-	    				}
-	    			})
-    		} else {
-    			ajax('delete', '/home/collect/' + params['id'])
-	    			.then(function (resolve) {
-	    				if (resolve) {
-	    					$('.J_favo').find('i').addClass('fa-star-o').removeClass('fa-star')
-	    					prompt.message('取消收藏成功')
-	    				} else {
-	    					prompt.message('取消收藏失败')
-	    				}
-	    			})
-    		}
-    	});
+			$(this).addClass('active')
+			.siblings().removeClass('active')
+			var tag = $(this).data('tag')
+			$('[data-tab]').addClass('hide')
+			.each(function () {
+				if ($(this).data('tab') == tag) {
+					$(this).removeClass('hide')
+				}
+			});
+		});
+		// 收藏
+		$('.J_favo').on('tap', function () {
+			if ($(this).find('i').hasClass('fa-star-o')) {
+				ajax('post', '/home/collect', {id: params['id']})
+					.then(function (resolve) {
+						if (resolve) {
+							$('.J_favo').find('i').removeClass('fa-star-o').addClass('fa-star')
+							prompt.message('收藏成功')
+						} else {
+							prompt.message('收藏失败')
+						}
+					})
+			} else {
+				ajax('delete', '/home/collect/' + params['id'])
+					.then(function (resolve) {
+						if (resolve) {
+							$('.J_favo').find('i').addClass('fa-star-o').removeClass('fa-star')
+							prompt.message('取消收藏成功')
+						} else {
+							prompt.message('取消收藏失败')
+						}
+					})
+			}
+		});
 
     	// 弹窗确定
     	$('.J_join_cart').on('tap', function () {
@@ -217,17 +219,30 @@
 			})
     	};
 
-    	//点击加入购物车
-    	$('.J_show_productspec').on('tap', function () {
-    		poptype = 'cart';
-			cshPop();
-    	});
 
-    	//点击立即购买
-    	$('.buy_now').on('tap', function () {
-    		poptype = 'buy';
-			cshPop();
-    	});
+		//点击加入购物车
+		$('.J_show_productspec').on('tap', function () {
+			if (state == 0) {
+				prompt.message('该商品已下架')
+			} else if (stock <= 0) {
+				prompt.message('该商品缺货中')
+			} else {
+				poptype = 'cart';
+				cshPop();
+			}
+		});
+
+		//点击立即购买
+		$('.buy_now').on('tap', function () {
+			if (state == 0) {
+				prompt.message('该商品已下架')
+			} else if (stock <= 0) {
+				prompt.message('该商品缺货中')
+			} else {
+				poptype = 'buy';
+				cshPop();
+			}
+		});
 
     	//初始化弹窗
     	function cshPop() {
@@ -259,28 +274,28 @@
 			})
     	}
 
-    	//加入购物车 设置商品参数
-    	function addCartProductData(v) {
-    		$(".productspec_container_info_img img").attr('src','http://'+window.location.host+'/'+v['thumb']);
-    		$(".productspec_container_info_content h1").html(v['name']);
-    		$(".productspec_container_info_content p").html(v['desc']);
-    		$(".productspec_container_info_content span").html('&yen;'+parseFloat(v['price']).toFixed(2));
-    		$(".sum_price").html(parseFloat(v['price']).toFixed(2));
-    		$("#price").val(v['price']);
-    		$("#amount").val(1)
-    	}
+		//加入购物车 设置商品参数
+		function addCartProductData(v) {
+			$(".productspec_container_info_img img").attr('src','http://'+window.location.host+'/'+v['thumb']);
+			$(".productspec_container_info_content h1").html(v['name']);
+			$(".productspec_container_info_content p").html(v['desc']);
+			$(".productspec_container_info_content span").html('&yen;'+parseFloat(v['price']).toFixed(2));
+			$(".sum_price").html(parseFloat(v['price']).toFixed(2));
+			$("#price").val(v['price']);
+			$("#amount").val(1)
+		}
 
-    	// 隐藏产品规格弹窗
-    	$('.J_hide_productspec').on('tap', function () {
-    		console.dir($('.productspec'))
-    		$('.productspec').removeClass('top-0').animate({
+		// 隐藏产品规格弹窗
+		$('.J_hide_productspec').on('tap', function () {
+			console.dir($('.productspec'))
+			$('.productspec').removeClass('top-0').animate({
 				'opacity': 0},
 				300,
 				function () {
 					$('.productspec_container').removeClass('bottom-0')
 				}
 			)
-    	})
+		})
 
     	// 减少数量
     	$('.J_minus_amount').on('tap', function () {
@@ -331,12 +346,17 @@
     		$(this).addClass('active').siblings().removeClass('active');
     	})
 
-    	// 选择评论类型
-    	$('.J_choose_comment_type').on('tap', function () {
-    		$(this).addClass('active').siblings().removeClass('active')
-    		params['grade'] = $(this).attr('type');
-    		searchComment();
-    	})
+		// 选择评论类型
+		$('.J_choose_comment_type').on('tap', function () {
+			$(this).addClass('active').siblings().removeClass('active')
+			params['grade'] = $(this).attr('type');
+			searchComment();
+		})
+
+		// 商品下架后执行的
+		$('.J_xiajia').on('tap', function () {
+			prompt.message('商品已下架')
+		})
 
     	var tab_offset_top = $('.productdetail_container_tabs').offset().top
     	// 页面滚动
@@ -357,7 +377,7 @@
             $(".price").html('&yen'+$(this).attr('price'));
         })
 	})
-    </script>
+	</script>
 @endsection
 
 @section('content')
@@ -372,14 +392,14 @@
 		</div>
 		<div class="productdetail_container w-100 h-100 J_scroll">
 			<div class="productdetail_container_banner w-100 swiper-container">
-			    <div class="swiper-wrapper">
-			        @foreach($imgs as $img)
-			        <div class="swiper-slide" data-swiper-autoplay="2000">
-			        	<img class="w-100" src="{{url('')}}/{{$img->img}}" alt="">
-			        </div>
-			        @endforeach
-			    </div>
-			    <div class="swiper-pagination"></div>
+				<div class="swiper-wrapper">
+					@foreach($imgs as $img)
+					<div class="swiper-slide" data-swiper-autoplay="2000">
+						<img class="w-100" src="{{url('')}}/{{$img->img}}" alt="">
+					</div>
+					@endforeach
+				</div>
+				<div class="swiper-pagination"></div>
 			</div>
 			<div class="productdetail_container_info">
 				<h1 class="chayefont fz-18">{{$content->name}}</h1>
