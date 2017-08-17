@@ -22,6 +22,8 @@ class CollectController extends Controller
     public function searchList(){
         $data = Order::join('order_product','order.id','=','order_product.order_id')
                 ->join('product','order_product.product_id','=','product.id')
+                ->join('spec','product.id','=','spec.product_id')
+                ->where('spec.state','=',1)
                 ->where('type','collect')
                 ->where('order.user_id',Auth::user()->id)
                 ->whereNull('order.deleted_at')
@@ -31,9 +33,9 @@ class CollectController extends Controller
                     'order_product.id as op_id',
                     'product.desc as p_desc',
                     'product.img as p_img',
-                    'product.price as p_price',
                     'product.sell_amount as p_sell_amount',
-                    'product.name as p_name'
+                    'product.name as p_name',
+                    'spec.price'
                 )->paginate(5);
         return $data;
     }
@@ -110,13 +112,16 @@ class CollectController extends Controller
     {
         $ids = $request->ids;
         $neworder = true;
-        $issetOrder = Order::where('type','cart')->where('user_id',Auth::user()->id)->first();//查询是否有购物车订单
+        //查询是否有购物车订单
+        $issetOrder = Order::where('type','cart')
+            ->where('user_id',Auth::user()->id)
+            ->first();
 
         foreach ($ids as $id) {   
             $product = OrderProduct::find($id);
             $cart = $this->issetCart($product->product_id);
             if (empty($cart->id)) {
-                if ($neworder && !empty($issetOrder->id)) {
+                if ($neworder && empty($issetOrder->id)) {
                     $order = $this->createCollect('cart'); //新建购物车订单
                     if ($order) {
                         $neworder = false;
@@ -140,7 +145,9 @@ class CollectController extends Controller
         $order_product = new OrderProduct;
         $order_product->order_id = $order_id;
         $order_product->product_id = $id;
-        $order_product->price = Product::find($id)->price;
+        $data = $this->productPrice($id);
+        $order_product->price = $data->price;
+        $order_product->spec_id = $data->id;
         $order_product->amount = 1;
 
         if ($order_product->save()) return 1;
@@ -153,8 +160,8 @@ class CollectController extends Controller
         $order_product = OrderProduct::find($id);
         $amount = $order_product->amount + 1;
         $order_product->amount = $amount;
-        $order_product->price = (Product::find($order_product->product_id)->price) * $amount;
-
+        $data = $this->productPrice($order_product->product_id);
+        $order_product->price = $data->price * $amount;
         if ($order_product->save()) return 1;
         return 0;
     }
@@ -171,4 +178,19 @@ class CollectController extends Controller
             ->first();
         return $data;
     }
+
+    //查询商品价格
+    public function productPrice($id,$sid=-1)
+    {
+        $data = Product::join('spec','product.id','=','spec.product_id')
+            ->where('product.id',$id);
+        if ($sid != -1) {
+            $data = $data->where('spec.id',$sid);
+        }else {
+            $data = $data->where('spec.state',1);
+        }
+        $data = $data->select('spec.price','spec.id')->first(); 
+        return $data;
+    }
+
 }

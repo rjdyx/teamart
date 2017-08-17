@@ -5,14 +5,21 @@
 @endsection
 @section('script')
     @parent
+    <script src="{{url('ueditor/ueditor.config.js')}}"></script>
+    <script src="{{url('ueditor/ueditor.all.min.js')}}"></script>
+    <script src="{{url('ueditor/lang/zh-cn/zh-cn.js')}}"></script>
     <script src="{{url('admin/js/upload.js')}}"></script>
+    <script src="{{url('admin/js/uploads.js')}}"></script>
+    <script src="{{url('admin/js/jquery-1.8.3.min.js')}}"></script>
     <script>
       //实例化编辑器
       //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
       $(function () {
+        var ue = UE.getEditor('editor');
         imagePathFormat='/upload/descs/'; 
         datepicker()
         var form = document.forms['listForm']
+
         $(form).on('submit', function () {
           return submitForm()
         })
@@ -25,26 +32,14 @@
         $('#category_id').on('change', function () {
           _valid.ness('category_id', '商品分类', $(this).val())
         })
-        $('#group_id').on('change', function () {
-          _valid.ness('group_id', '商品组', $(this).val())
-        })
         $('#brand_id').on('change', function () {
           _valid.ness('brand_id', '商品品牌', $(this).val())
-        })
-        $('#spec_id').on('change', function () {
-          _valid.ness('spec_id', '商品规格', $(this).val())
         })
         $('#name').on('blur input', function () {
           _valid.name('name', '商品名称', $(this).val(), 'product')
         })
         $('#desc').on('blur input', function () {
           _valid.desc('desc', '商品描述', $(this).val(), 50, true)
-        })
-        $('#price_raw').on('blur input', function () {
-          _valid.number('price_raw', '原价', $(this).val())
-        })
-        $('#price').on('blur input', function () {
-          _valid.number('price', '现价', $(this).val())
         })
         $('#delivery_price').on('blur input', function () {
           _valid.number('delivery_price', '邮费', $(this).val())
@@ -72,13 +67,9 @@
         })
         function submitForm() {
           var category_id = form['category_id']
-          var group_id = form['group_id']
           var brand_id = form['brand_id']
-          var spec_id = form['spec_id']
           var name = form['name']
           var desc = form['desc']
-          var price_raw = form['price_raw']
-          var price = form['price']
           var delivery_price = form['delivery_price']
           var stock = form['stock']
           var low_stock = form['low_stock']
@@ -88,16 +79,13 @@
           var state = form['state']
           var grade = form['grade']
           var imgs = form['imgs[]']
+          var pic = form['pic']
+          var spec = specData();
+
           if (!_valid.ness('category_id', '商品分类', category_id.value)) {
             return false
           }
-          if (!_valid.ness('group_id', '商品组', group_id.value)) {
-            return false
-          }
           if (!_valid.ness('brand_id', '商品品牌', brand_id.value)) {
-            return false
-          }
-          if (!_valid.ness('spec_id', '商品规格', spec_id.value)) {
             return false
           }
           if (!_valid.name('name', '商品名称', name.value, 'product')) {
@@ -106,10 +94,7 @@
           if (!_valid.desc('desc', '商品描述', desc.value, 50, true)) {
             return false
           }
-          if (!_valid.number('price_raw', '原价', price_raw.value)) {
-            return false
-          }
-          if (!_valid.number('price', '现价', price.value)) {
+          if (!_valid.desc('spec', '商品规格', spec, 30, true)) {
             return false
           }
           if (!_valid.number('delivery_price', '邮费', delivery_price.value)) {
@@ -136,13 +121,103 @@
           if (!_valid.ness('grade', '商品积分兑换', grade.value)) {
             return false
           }
-          if (img.files.length > 0) {
-            if (!_valid.img('img', img.files[0])) {
+          if (imgs.length) {
+            var arr = []
+            for (var i = 0; i < imgs.length; i++) {
+              if (imgs[i].files[0]) {
+                if (!_valid.img('imgs', imgs[i].files[0])) {
+                  return false
+                }
+                arr.push(imgs[i].files[0])
+              }
+            }
+            if (arr.length == 0) {
+              $('#imgs_txt').text('至少要上传一张商品图片')
+              return false
+            }
+          } else {
+            if (imgs.files.length == 0) {
+              $('#imgs_txt').text('至少要上传一张商品图片')
+              return false
+            }
+          }
+          if (pic.files.length > 0) {
+            if (!_valid.img('pic', pic.files[0])) {
               return false
             }
           }
           return true
         } 
+
+        $(".box-body").on('click','.spec-click',function(){
+            var state = $(this).attr('state');
+            if (state == 'add') {
+              var inp = $(this).parent('div').siblings('div').children('.spec-name');
+              var name = inp.val();
+              var price = inp.siblings('input').val();
+              if (countNumber() < 12) {
+                if (name != '' && price!= '') {
+                  specAdd($(this));
+                } else {
+                  if (name == '') {
+                    inp.focus();
+                  } else {
+                    inp.siblings('input').focus();
+                  }
+                }
+              } else {
+                alert('不能超过12个规格')
+              }
+            } else {
+              specDel($(this));
+            }
+        })
+        //添加规格节点方法
+        function specAdd(th) {
+          var tmp = specTmp();
+          th.parents('.form-specs').after(tmp);
+        }
+        //删除规格节点方法
+        function specDel(th) {
+          th.parents('.form-specs').remove();
+        }
+        //统计规格数量方法
+        function countNumber() {
+          return $(".spec-click[state='del']").length
+        }
+        // 操作规格参数
+        function specData(){
+          var data = []
+          var res = true;
+          $('.spec-name').each(function(i){
+            var list = {name:'', price:0};
+            list['name'] = $(this).val();
+            list['state'] = $(this).attr('state');
+            list['id'] = $(this).attr('sid');
+            list['price'] = $(this).siblings('input').val();
+            if (i == 0 ) {
+              if (list['name']=='' || list['price']=='') res = false;
+            }
+            data[i] = list
+          })
+          $("input[name='specs']").val(JSON.stringify(data))
+          return res;
+        }
+        //节点模版方法
+        function specTmp(){
+          var tmp = 
+          '<div class="form-group form-specs">'+
+          '<label class="col-sm-3 control-label"></label>'+
+          '<div class="col-sm-3">'+
+          '<input type="text" class="spec-name" sid="" state="0" placeholder=" 商品规格名称" style="width:280px;height:30px;">'+
+          '<span>&nbsp;-&nbsp;</span>'+
+          '<input type="number" placeholder=" 价格(元)" style="width:75px;height:30px;text-align: center;">'+
+          '</div><div class="col-sm-1">'+
+          '<span style="color:#F04858;cursor: pointer;" state="del" class="spec-click">删除</span>'+
+          '<span style="color:#5F9DFF;cursor: pointer;margin-left: 10px;" state="add" class="spec-click">添加</span>'+
+          '</div></div>';
+          return tmp;
+        }
       })
     </script>
 @endsection
@@ -156,6 +231,7 @@
               <h3 class="box-title">新增商品</h3>
             </div>
             <form class="form-horizontal" action="{{url('admin/goods/list')}}" method="POST" name="listForm" enctype="multipart/form-data">
+              <input type="hidden" value="" name="specs">
               {{ csrf_field() }}
               <div class="box-body">
                 <div class="form-group">
@@ -171,18 +247,6 @@
                   <span class="col-sm-4 text-danger form_error" id="category_id_txt"></span>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-3 control-label"><i style="color:red;">*</i>商品组</label>
-                  <div class="col-sm-4">
-                    <select name="group_id" class="form-control" id="group_id">
-                      <option value="">-请选择商品组-</option>
-                      @foreach($groups as $group)
-                        <option value="{{$group->id}}">{{$group->name}}</option>
-                      @endforeach
-                    </select>
-                  </div>
-                  <span class="col-sm-4 text-danger form_error" id="group_id_txt"></span>
-                </div>
-                <div class="form-group">
                   <label class="col-sm-3 control-label"><i style="color:red;">*</i>商品品牌</label>
                   <div class="col-sm-4">
                     <select name="brand_id" class="form-control" id="brand_id">
@@ -193,18 +257,6 @@
                     </select>
                   </div>
                   <span class="col-sm-4 text-danger form_error" id="brand_id_txt"></span>
-                </div>
-               <div class="form-group">
-                  <label class="col-sm-3 control-label"><i style="color:red;">*</i>商品规格</label>
-                  <div class="col-sm-4">
-                    <select name="spec_id" class="form-control" id="spec_id">
-                      <option value="">-请选择商品规格-</option>
-                      @foreach($specs as $spec)
-                        <option value="{{$spec->id}}">{{$spec->name}}</option>
-                      @endforeach
-                    </select>
-                  </div>
-                  <span class="col-sm-4 text-danger form_error" id="spec_id_txt"></span>
                 </div>
                 <div class="form-group">
                   <label for="name" class="col-sm-3 control-label"><i style="color:red;">*</i>商品名称</label>
@@ -220,24 +272,22 @@
                   </div>
                   <span class="col-sm-4 text-danger form_error" id="desc_txt"></span>
                 </div>
-                <div class="form-group">
-                  <label for="price_raw" class="col-sm-3 control-label"><i style="color:red;">*</i>原价</label>
-                  <div class="col-sm-4">
-                    <input type="number" name="price_raw" class="form-control J_FloatNum" id="price_raw" placeholder="请输入商品原价">
+
+                <div class="form-group form-specs">
+                  <label class="col-sm-3 control-label"><i style="color:red;">*</i>商品规格</label>
+                  <div class="col-sm-3">
+                    <input type="text" id="spec" sid="" name="spec" state="1" class="spec-name" placeholder=" 商品规格名称 (如50g装)" style="width:280px;height:30px;"><span>&nbsp;-&nbsp;</span><input type="number" placeholder=" 价格(元)" style="width:75px;height:30px;text-align: center;">
                   </div>
-                  <span class="col-sm-4 text-danger form_error" id="price_raw_txt"></span>
-                </div>
-                <div class="form-group">
-                  <label for="price" class="col-sm-3 control-label"><i style="color:red;">*</i>现价</label>
-                  <div class="col-sm-4">
-                    <input type="number" name="price" class="form-control J_FloatNum" id="price" placeholder="请输入商品现价">
+                  <div class="col-sm-1">
+                    <span style="color:#5F9DFF;cursor: pointer;" state="add" class="spec-click">添加</span>
                   </div>
-                  <span class="col-sm-4 text-danger form_error" id="price_txt"></span>
+                  <span class="col-sm-3 text-danger form_error" id="spec_txt"></span>
                 </div>
+
                 <div class="form-group">
-                  <label for="delivery_price" class="col-sm-3 control-label"><i style="color:red;">*</i>邮费(0免邮)</label>
+                  <label for="delivery_price" class="col-sm-3 control-label"><i style="color:red;">*</i>邮费</label>
                   <div class="col-sm-4">
-                    <input type="number" name="delivery_price" class="form-control J_FloatNum" id="delivery_price" placeholder="请输入商品快递邮费">
+                    <input type="number" name="delivery_price" class="form-control J_FloatNum" id="delivery_price" placeholder="请输入商品快递邮费 (0免邮)">
                   </div>
                   <span class="col-sm-4 text-danger form_error" id="delivery_price_txt"></span>
                 </div>
@@ -285,8 +335,8 @@
                   <label class="col-sm-3 control-label"><i style="color:red;">*</i>商品状态</label>
                   <div class="col-sm-4">
                     <select name="state" class="form-control" id="state">
-                      <option value="1" selected>开启(有货)</option>
-                      <option value="0">关闭(缺货)</option>
+                      <option value="1" selected>上架</option>
+                      <option value="0">下架</option>
                     </select>
                   </div>
                   <span class="col-sm-4 text-danger form_error" id="state_txt"></span>
@@ -301,23 +351,46 @@
                   </div>
                   <span class="col-sm-4 text-danger form_error" id="grade_txt"></span>
                 </div>
-                <!-- 此处图片上传. -->
+
                 <div class="form-group">
-                  <label class="col-sm-3 control-label">图片</label>
+                  <label class="col-sm-3 control-label"><i style="color:red;">*</i>商品主图</label>
                   <div class="col-sm-4">
                     <div class="upload_single">
-                      <label for="img" class="upload pull-left">
+                        <label for="pic" class="upload pull-left">
+                          <i class="glyphicon glyphicon-plus"></i>
+                        </label>
+                        <label class="btn btn-primary pull-left ml-10 invisible" for="pic">修改</label>
+                        <div class="btn btn-danger pull-left ml-10 invisible J_remove">删除</div>
+                        <input type="file" name="pic" id="pic" class="invisible form-control J_img" accept="image/jpeg,image/jpg,image/png">
+                    </div>
+                  </div>
+                  <span class="col-sm-4 text-danger form_error" id="pic_txt"></span>
+                </div>
+
+                <!-- 此处4张图片上传 -->
+                <div class="form-group">
+                  <label class="col-sm-3 control-label"><i style="color:red;">*</i>商品附图</label>
+                  <div class="col-sm-4 upload_list">
+                    <div class="upload_box pull-left ml-10 mt-10">
+                      <label for="img1" class="upload pull-left">
                         <i class="glyphicon glyphicon-plus"></i>
                       </label>
                       <!-- <img class="pull-left upload_img" src="{{url('/admin/images/photo1.png')}}"> -->
-                      <label class="btn btn-primary pull-left ml-10 invisible" for="img">修改</label>
-                      <div class="btn btn-danger pull-left ml-10 invisible J_remove">删除</div>
-                      <input type="file" name="img" id="img" class="form-control invisible J_img" accept="image/jpeg,image/jpg,image/png">
+                      <label class="btn btn-primary pull-left invisible ml-10" for="img1">修改</label>
+                      <div class="btn btn-danger pull-left invisible ml-10 mt-10 J_removes">删除</div>
+                      <input type="file" name="imgs[]" id="img1" class="form-control invisible J_imgs" accept="image/jpeg,image/jpg,image/png">
                     </div>
                   </div>
-                  <span class="col-sm-4 text-danger form_error" id="img_txt"></span>
+                  <span class="col-sm-4 text-danger form_error" id="imgs_txt"></span>
                 </div>
-
+                <!-- 商品详情 -->
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">详情图描述</label>
+                  <div class="col-sm-5">
+                    <script id="editor" type="text/plain"  name="details" 
+                    style="width:1024px;height:400px;border:1px solid #3DCDB4;"></script>
+                  </div>
+                </div>
                 <div class="form-group">
                   <div class="col-sm-offset-3 col-sm-10">
                     <button type="submit" class="btn btn-success btn-100">确认</button>

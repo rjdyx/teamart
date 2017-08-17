@@ -20,13 +20,11 @@ class RollController extends Controller
     public function index(Request $request)
     {
         $lists = Cheap::whereRaw('1=1');
-        $state = $request->state;
-        if($request->state!=''||$request->state!=null){
-            $lists = $lists->where('state','=',$state);
+        if (isset($request->range)) {
+            $lists = $lists->where('range','=',$request->range);
         }
-        $name = $request->name;
-        if($name!=''||$name!=null){
-            $lists = $lists->where('name','like','%'.$name.'%');
+        if(isset($request->name)){
+            $lists = $lists->where('name','like','%'.$request->name.'%');
         }
         $lists = $lists->orderBy('id','desc')->paginate(config('app.paginate10'));
         return view(config('app.theme').'.admin.activity.roll.index')->with('lists',$lists);

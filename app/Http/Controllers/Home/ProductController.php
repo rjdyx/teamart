@@ -11,6 +11,9 @@ use App\Brand;
 use App\Comment;
 use App\Reply;
 use App\Order;
+use App\OrderProduct;
+use App\Spec;
+use App\Address;
 use Illuminate\Support\Facades\Auth;
 use IQuery;
 
@@ -47,6 +50,9 @@ class ProductController extends Controller
 
 		$lists = Product::join('product_category','product.category_id','=','product_category.id')
 				->join('brand','product.brand_id','=','brand.id')
+				->join('spec','product.id','=','spec.product_id')
+            	->where('spec.state','=',1)
+				->whereNull('spec.deleted_at')
 				->whereNull('product.deleted_at')
 				->whereNull('brand.deleted_at')
 				->whereNull('product_category.deleted_at')
@@ -62,11 +68,11 @@ class ProductController extends Controller
 					'product.name',
 					'product.desc',
 					'product.sell_amount',
-					'product.price',
 					'product.img',
 					'product.thumb',
 					'product.state',
-					'product.stock'
+					'product.stock',
+					'spec.price'
 					)
 				->orderBy($orField, $order)
 				->distinct('product.id')
@@ -88,8 +94,8 @@ class ProductController extends Controller
 	//商品详情页
 	public function detail (Request $request, $id) {
 		$content = $this->productContent($id);
-		$specs = $this->productSpecs($content->group_id);
-		$imgs = ProductImg::where('group_id',$content->group_id)->get();
+		$specs = $this->productSpecs($id);
+		$imgs = ProductImg::where('product_id',$id)->get();
 		$title = '商品详情';
 
 		$commentA = Comment::where('product_id',$id)->where('grade','>','60')->count();
@@ -113,28 +119,26 @@ class ProductController extends Controller
 	public function productAddCartData($id)
 	{
 		$content = $this->productContent($id);
-		$specs = $this->productSpecs($content->group_id);
+		$specs = $this->productSpecs($id);
 		return ['specs'=>$specs, 'content'=>$content];
 	}
 
 	//查询规格
 	public function productSpecs($id)
 	{
-		$specs = Product::join('spec','product.spec_id','=','spec.id')
-					->where('product.group_id','=',$id)
-					->distinct('spec.id')
-					->select('product.id','spec.name')
-					->get();
-		return $specs;
+		return Spec::where('product_id',$id)->get();
 	}
 
 	//查询商品详情
 	public function productContent($id)
 	{
-		$data = Product::join('product_group','product.group_id','=','product_group.id')
-					->where('product.id','=',$id)
-					->select('product.*','product_group.desc as gdesc')
-					->first();
+		$data = Product::join('spec','product.id','=','spec.product_id')
+            	->where('spec.state','=',1)
+				->where('product.id','=',$id)
+				->whereNull('product.deleted_at')
+				->whereNull('spec.deleted_at')
+				->select('product.*','spec.price')
+				->first();
 		return $data;
 	}
 
@@ -173,5 +177,97 @@ class ProductController extends Controller
 			$datas[$k]['replys'] = $replys;
 		}
 		return $datas;
+	}
+
+	//加入购物车
+	public function addCart(Request $request)
+	{
+		$id = $request->id;
+		$spec_id = $request->spec_id;
+		$amount = $request->amount;
+		$data = $this->isCartProduct($id,$spec_id);//是否存在购物车中
+		if(isset($data->id)) {
+			$md = OrderProduct::find($data->id);
+			$md->amount = $md->amount + $amount;
+			$md->price = $this->specPrice($spec_id) * $md->amount;
+			if(!$md->save()) return 0;
+		} else {
+			$model = new OrderProduct;
+			$model->spec_id = $spec_id;
+			$model->price = $this->specPrice($spec_id) * $amount;
+			$model->product_id = $id;
+			$model->amount = $amount;
+			$isCart = $this->isCartOrder(); //是否有购物车订单
+			if (!isset($isCart->id)){
+				$res = $this->newCartOrder();
+				$model->order_id = $res->id;
+			} else {
+				$model->order_id = $isCart->id;
+			}
+			if(!$model->save()) return 0;
+		}
+		return 1;
+	}
+
+	//查询是否存在购物车订单
+	public function isCartOrder()
+	{
+		return Order::where('user_id',Auth::user()->id)->where('type','cart')->first();
+	}
+
+	//查询规格价格
+	public function specPrice($id)
+	{
+		return Spec::find($id)->price;
+	}
+
+	//查询购物车是否存在此商品
+	public function isCartProduct($id,$sid)
+	{
+		$data = OrderProduct::join('order','order_product.order_id','=','order.id')
+			->where('order_product.product_id',$id)
+			->where('order.type','cart')
+			->where('order_product.spec_id',$sid)
+			->where('order_product.id')
+			->first();
+		return $data;
+	}
+
+	//新建购物车订单
+	public function newCartOrder($type='cart')
+	{
+		$order = new Order;
+		$order->user_id = Auth::user()->id;
+		$order->serial = IQuery::orderSerial();
+		$order->type = $type;
+		$order->date = date('Y-m-d');
+		$address = Address::where('state',1)->select('id')->first();
+		$address_id = 0;
+		if (isset($address->id)) $address_id = $address->id;
+		$order->address_id = $address_id;
+		$order->pid = Auth::user()->pater_id;
+		if ($type=='order') $order->state = 'pading';
+		if (!$order->save()) return 500;
+		return $order->id;
+	}
+
+	//立即购买 预支付
+	public function addOrder(Request $request)
+	{
+		$id = $request->id;
+		$spec_id = $request->spec_id;
+		$amount = $request->amount;
+		$order_id = $this->newCartOrder('order');
+		$md = new OrderProduct;
+		$md->product_id = $id;
+		$md->spec_id = $spec_id;
+		$md->order_id = $order_id;
+		$md->price = $this->specPrice($spec_id) * $amount;
+		$md->amount = $amount;
+		if (!$md->save()) return 0;
+		$order = Order::find($order_id);
+		$order->price = $md->price;
+		if (!$order->save()) return 0;
+		return $order_id;
 	}
 }

@@ -3,6 +3,11 @@
 @section('title') 团购活动 @endsection
 
 @section('css')
+<style>
+.many_descs{height:120px;}
+.many_descs img{width:100%;height:100%;}
+
+</style>
 @endsection
 
 @section('script')
@@ -121,7 +126,7 @@
                                     <p class="chayefont">全场<span class="price">${v.price}</span>元</p>
                                     <a href="http://${window.location.host}/home/promotion/activity?id=${v.id}" class="txt-c block white ${type} mt-10 mb-10 chayefont">${type == 'over' ? '活动已结束' : '去看看'}</a>
                                 </div>`
-                    template += `<div class="many_desc w-100 pull-left">${v.desc}</div>
+                    template += `<div class="many_descs w-100 pull-left"><img src="http://${window.location.host}/${v.desc}"></div>
                         </div>`
                 })
                 return template;

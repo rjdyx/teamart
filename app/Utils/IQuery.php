@@ -9,26 +9,23 @@
  */
 namespace app\Utils;
 use Illuminate\Support\Facades\Auth;
-use DB;
 use Illuminate\Http\Request;
 use App\Log;
 use App\System;
 use ReflectionClass;
 use Session;
+use DB;
 
 class IQuery{
 
     protected $Inits = array();//存放公众号相关数据
 
     //图片异步上传
-    public function upload($request, $file_pic='img', $minState=true)
+    public function upload($request, $file_pic='img', $minState=true, $obj, $delId=-1)
     {
-        $file = $request->file($file_pic);
-        if ($request->hasFile($file_pic)) {
-            return $this->uploadOrs($file, $minState);
-        }else{
-            return 'false';
-        }
+        if (!$request->hasFile($file_pic)) return ['pic'=>null,'thumb'=>null];
+        if ($delId != -1) $this::destroyPic($obj, $delId, $file_pic);
+        return $this->uploadOrs($request->file($file_pic), $minState);
     }
 
     //多图片异步上传
@@ -45,23 +42,22 @@ class IQuery{
         return 'false';
     }
 
-    //单图上传方法
+    //图片上传方法
     public function uploadOrs($file, $minState)
     {
-        $pics = array();
+        $res = ['pic'=>null,'thumb'=>null];
         $path = config('app.image_path');
         $Extension = $file->getClientOriginalExtension();
         $filename = 'FX_'.time().rand(1,9999).'.'. $Extension;
         $check = $file->move($path, $filename);
         $filePath = $path.$filename; //原图路径加名称
-        $pics['pic']= $filePath;//原图
-
+        $res['pic']= $filePath;//原图
         if($minState) {
             $newfilePath = $path.'FX_S_'.time().rand(1,9999).'.'. $Extension;//缩略图路径名称
             $this->img_create_small($filePath,config('app.thumb_width'),config('app.thumb_height'),$newfilePath);  //生成缩略图
-            $pics['thumb']= $newfilePath;//缩略图
+            $res['thumb'] = $newfilePath;//缩略图
         }
-        return $pics;//返回原图 缩略图 的路径 数组
+        return $res;//返回原图 缩略图 的路径 数组
     }
 
     //生成缩略图
@@ -124,7 +120,7 @@ class IQuery{
         $date = date('Ymd');
         $rand = rand(99999,999999);
         $per = 'Fx';
-        return $per.$rand.$date;
+        return $per.$date.$rand;
     }
 
 

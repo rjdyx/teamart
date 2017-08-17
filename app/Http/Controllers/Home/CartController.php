@@ -25,13 +25,14 @@ class CartController extends Controller
 	{
 		$data = Order::join('order_product','order.id','=','order_product.order_id')
 			->join('product','order_product.product_id','=','product.id')
+			->join('spec','order_product.spec_id','=','spec.id')
 			->where('type','cart')
 			->where('order.user_id',Auth::user()->id)
 			->whereNull('order_product.deleted_at')
 			->whereNull('product.deleted_at')
 			->whereNull('order.deleted_at')
 			->distinct('product.id')
-			->select('product.*','order_product.id as opid','order_product.amount','order.id as order_id')
+			->select('product.*','spec.price','spec.name as spec_name','order_product.id as opid','order_product.amount','order.id as order_id')
 			->paginate(5);
 		return $data;
 	}

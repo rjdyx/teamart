@@ -232,8 +232,6 @@
 
             // 计算总价
             function totals () {
-                console.log(dels)
-                console.log(pids)
                 var total = 0
                 pids.forEach(function (v) {
                     var price = parseFloat($(`[data-pid="${v}"]`).data('price'))
@@ -249,20 +247,21 @@
                     return
                 }
                 var params = {
-                    data:{}
+                    'ids':[]
                 }
-                pids.forEach(function (v) {
-                    params['data'][v] = $('.amount[data-pid="'+ v +'"]').html()
-                })
+                for (var k in dels) {
+                    params['ids'][k] = dels[k]
+                }
+                console.log(params)
+                var urls =  '/home/order/confirm';
                 var url = 'http://' + window.location.host + '/home/order/confirm?id=';
-                ajax('post', '/home/order/confirm', params)
-                    .then(function (resolve) {
-                        if (resolve) {
-                            window.location.href = url + resolve;  
-                        } else {
-                            prompt.message('服务器异常！请稍后再试！')
-                        }
-                    })
+                ajax('post', urls, params).then(function (resolve) {
+                    if (resolve) {
+                        window.location.href = url + resolve;  
+                    } else {
+                        prompt.message('服务器异常！请稍后再试！')
+                    }
+                })
             })
         })
     </script>

@@ -41,8 +41,11 @@ class HomeController extends Controller
     public function randProduct($num = 3)
     {
         if (!Product::first()) return null;
-        $rands = Product::where('state','=',1)
+        $rands = Product::where('product.state','=',1)
+            ->join('spec','product.id','=','spec.product_id')
+            ->where('spec.state','=',1)
             ->inRandomOrder()
+            ->select('product.*','spec.price')
             ->paginate($num);
         return $rands;
     }
@@ -51,7 +54,11 @@ class HomeController extends Controller
     public function newProduct()
     {
         if (!Product::first()) return null;
-        $news = Product::orderBy('product.id','desc')->paginate(4);
+        $news = Product::orderBy('product.id','desc')
+            ->join('spec','product.id','=','spec.product_id')
+            ->where('spec.state','=',1)
+            ->select('product.*','spec.price')
+            ->paginate(4);
         return $news;
     }
 
@@ -59,7 +66,10 @@ class HomeController extends Controller
     public function activityProduct() 
     {
         $activitys = Product::join('activity_product','product.id','=','activity_product.id')
-            ->select('product.*')
+            ->join('spec','product.id','=','spec.product_id')
+            ->where('spec.state','=',1)
+            ->whereNull('product.deleted_at')
+            ->select('product.*','spec.price')
             ->distinct('product.id')
             ->orderBy('product.id','desc')
             ->paginate(3);
@@ -82,7 +92,13 @@ class HomeController extends Controller
         foreach ($sells as $sell) {
             $ids[] = $sell->id;
         }
-        return Product::whereIn('id',$ids)->paginate(3);
+        $data = Product::join('spec','product.id','=','spec.product_id')
+            ->where('spec.state','=',1)
+            ->whereIn('product.id',$ids)
+            ->whereNull('product.deleted_at')
+            ->select('product.*','spec.price')
+            ->paginate(3);
+        return $data;
     }
 
     public function shopping()

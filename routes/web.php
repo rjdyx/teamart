@@ -47,6 +47,8 @@ Route::group(['middleware'=>['isWeixin']],function(){
 			Route::get('/brand','ProductController@productBrand');//商品品牌数据接口
 			Route::get('/category','ProductController@productCategory');//商品分类数据接口
 			Route::get('/detail/{id}','ProductController@detail');
+			Route::post('/detail/addcart','ProductController@addCart');//加入购物车
+			Route::post('/detail/addorder','ProductController@addOrder');//立即购买
 			Route::get('/comment/{product_id}','ProductController@productComment');
 			Route::get('/detail/addcart/{product_id}','ProductController@productAddCartData');
 		});
@@ -161,12 +163,8 @@ Route::group(['namespace'=>'Admin','prefix'=>'admin','middleware'=>['auth','user
 	Route::group(['prefix'=>'goods'],function(){
 		Route::post('/category/dels', 'CategoryController@dels');
 		Route::resource('/category', 'CategoryController');
-		Route::post('/spec/dels', 'SpecController@dels');
-		Route::resource('/spec', 'SpecController');
 		Route::post('/brand/dels', 'BrandController@dels');
 		Route::resource('/brand', 'BrandController');
-		Route::post('/group/dels', 'GoodsGroupController@dels');
-		Route::resource('/group', 'GoodsGroupController');
 		Route::post('/list/dels', 'GoodsController@dels');
 		Route::resource('/list', 'GoodsController');
 		Route::post('/comment/dels', 'GoodsCommentController@dels');

@@ -24,8 +24,8 @@ class OrderController extends Controller
 	//订单列表页
 	public function index (Request $request) {
 		$lists = Order::where('type','order')
-		->where('user_id',Auth::user()->id)
-		->paginate(config('app.paginate10'));
+			->where('user_id',Auth::user()->id)
+			->paginate(config('app.paginate10'));
 		$title = '订单管理';
 		return view(config('app.theme').'.home.orderList')->with(['footer'=>'order','lists'=>$lists,'title'=>$title]);
 	}
@@ -33,8 +33,22 @@ class OrderController extends Controller
 	//订单预处理 (未支付)
 	public function confirmData (Request $request) 
 	{
-		$datas = $request->data;
-		if (!count($datas)) return 0;
+		$ids = $request->ids; //获取订单商品id集
+		if (!count($ids)) return 0;
+		$order_id = $this->newOrder();//新建订单
+
+		foreach($ids as $id) {
+			$model = OrderProduct::find($id);
+			$model->order_id = $order_id;
+			if (!$model->save()) return 0;
+		}
+		$this->countPrice($order_id);//统计订单总价格
+		return $order_id;
+	}
+
+	//新建订单
+	public function newOrder()
+	{
 		$order = new Order;
 		$order->user_id = Auth::user()->id;
 		$order->serial = IQuery::orderSerial();
@@ -45,20 +59,8 @@ class OrderController extends Controller
 		$address_id = 0;
 		if (isset($address->id)) $address_id = $address->id;
 		$order->address_id = $address_id;
-
 		$order->pid = Auth::user()->pater_id;
 		if (!$order->save()) return 500;
-
-		foreach($datas as $id => $amount) {
-			$orderProduct = new OrderProduct;
-			$orderProduct->product_id = $id;
-			$orderProduct->amount = $amount;
-			$orderProduct->price = Product::find($id)->price * $amount;
-			$orderProduct->order_id = $order->id;
-			if (!$orderProduct->save()) return 0;
-			$this->delCartProduct($id);
-		}
-		$this->countPrice($order->id);
 		return $order->id;
 	}
 
@@ -70,35 +72,13 @@ class OrderController extends Controller
 		$order->price = $count;
 		$order->save();
 	}
-
-	//删除购物车商品方法
-	public function delCartProduct($product_id)
-	{
-		$cart = $this->issetCart($product_id);
-		if (empty($cart->id)) return 0;
-		if (OrderProduct::destroy($cart->id)) return 1;
-		return 0;
-	}
-
-    //判断购物车商品是否存在
-    public function issetCart($product_id)
-    {
-        $data = OrderProduct::join('order','order_product.order_id','=','order.id')
-            ->where('order_product.product_id','=',$product_id)
-            ->where('order.type','=','cart')
-            ->whereNull('order.deleted_at')
-			->whereNull('order_product.deleted_at')
-            ->select('order_product.id')
-            ->first();
-        return $data;
-    }
-
     
 	//待支付 选择参数
 	public function confirm (Request $request) 
 	{
 		$id = $request->id;
 		$lists = OrderProduct::join('product','order_product.product_id','=','product.id')
+				->join("spec",'order_product.spec_id','=','spec.id')
 				->leftjoin('activity_product',function($join){
 					$join->on('product.id','=','activity_product.product_id')
 					->whereNull('activity_product.deleted_at');	
@@ -114,7 +94,7 @@ class OrderController extends Controller
 				->whereNull('order_product.deleted_at')
 				->select(
 					'product.id','product.name',
-					'product.desc','product.thumb','product.price',
+					'product.desc','product.thumb','spec.price',
 					'product.delivery_price','order_product.amount',
 					'product.grade','product.state','activity.price as activity_price'
 				)
@@ -364,13 +344,14 @@ class OrderController extends Controller
 		if ($order->user_id != Auth::user()->id) return Redirect::back();//订单无效
 
 		$goods = Product::join('order_product','product.id','=','order_product.product_id')
+				->join('spec','order_product.spec_id','=','spec.id')
 				->where('order_product.order_id','=',$id)
 				->whereNull('product.deleted_at')
 				->whereNull('order_product.deleted_at')
 				->distinct('product.id')
 				->select('product.name','product.desc',
 					'product.thumb','product.id',
-					'product.price as raw_price',
+					'spec.price as raw_price',
 					'order_product.amount','order_product.price'
 				)->get();
 

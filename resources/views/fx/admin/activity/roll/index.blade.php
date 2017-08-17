@@ -8,10 +8,9 @@
     @parent
 @endsection
 @section('content')
-      <!-- Main content of agentRole-->
+
       <section class="content">
         <div class="row">
-          <!-- 代理商角色列表 -->
           <div class="col-xs-12">
             <div class="box box-success">
               <div class="box-header">
@@ -19,24 +18,17 @@
                   <div class="input-group input-group-sm" style="width: 470px;">
                       <div class="row">
                         <div class="col-sm-4">
-                          <select name="state" id="searchState" class="form-control input-sm">
-                            <option value="">状态</option>
-                            @foreach(App\Cheap::STATE as $key=>$state)
-                              <option value="{{$key}}"
-                                @if(isset($_GET['state'])) 
-                                  @if($_GET['state'] == $key) 
-                                    selected 
-                                  @endif 
-                                @endif > 
-                                {{$state}}
-                              </option>
-                            @endforeach
+                          <select class="form-control input-sm" id="searchRange" name="range">
+                            <option value="">-使用群体-</option>
+                            <option value="0" @if(isset($_GET['range']) && $_GET['range']==0) selected @endif>所有</option>
+                            <option value="1" @if(isset($_GET['range']) && $_GET['range']==1) selected @endif>代理商</option>
+                            <option value="2" @if(isset($_GET['range']) && $_GET['range']==2) selected @endif>普通会员</option>
                           </select>
                         </div>
                         <div class="col-sm-8"><input type="text" name="name" id="searchName" class="form-control pull-right input-sm" placeholder="请输入搜索内容" value="{{isset($_GET['name'])? $_GET['name']:'' }}"></div>
                       </div>
                       <div class="input-group-btn">
-                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                        <button type="button" onclick="search({{$lists->currentPage()}},['searchName','searchRange']);" class="btn btn-default"><i class="fa fa-search"></i></button>
                       </div>
                   </div>
                 </form>
@@ -44,18 +36,17 @@
                   <a href="{{ url('admin/activity/roll/create') }}"><button type="button" class="btn btn-block btn-success btn-sm" id="addUser">新建优惠</button></a>
                 </div>
               </div>
-              <!-- /.box-header -->
               <div class="box-body table-responsive no-padding">
                 <table class="table table-hover">
                   <tbody><tr>
-                    <th><!-- <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i></button> --></th>
+                    <th>复选框</th>
                     <th>编号</th>
                     <th>优惠券名称</th>
                     <th>满金额</th>
                     <th>减金额</th>
                     <th>数量</th>
                     <th>有效期</th>
-                    <th>发放状态</th>
+                    <th>使用群体</th>
                     <th>描述</th>
                     <th>操作</th>
                   </tr>
@@ -68,7 +59,11 @@
                     <td>{{$list->cut}}</td>
                     <td>{{$list->amount}}</td>
                     <td>{{$list->indate}}</td>
-                    <td>{{App\Cheap::STATE[$list->state]}}</td>
+                    <td>
+                    @if(!$list->range) 所有 @endif
+                    @if($list->range == 1) 代理商 @endif
+                    @if($list->range == 2) 普通会员 @endif
+                    </td>
                     <td>{{$list->desc}}</td>
                     <td>
                       <div style="color: #dd4b39">

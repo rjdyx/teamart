@@ -15,6 +15,7 @@
 		var params = {id:'', page:0, grade:''};//定义全局对象
     	var popid = '';
     	var poptype = 'cart';
+        var spec_id = '';
     	var uid = {{Auth::user() ? Auth::user()->id : 0}} //用户id
 		params['id'] = {{ $content->id }};
 
@@ -177,48 +178,43 @@
 
     	// 弹窗确定
     	$('.J_join_cart').on('tap', function () {
+            var num = $('.productspec_container_amount input').val();
+            var params = {id:popid, amount:num, spec_id:spec_id};
     		if (poptype == 'cart') {
-    			storeCart();
+    			storeCart(params);
     		} else {
-				storeBuy();
+				storeBuy(params);
     		}
     	});
 
     	// 加入购物车
-    	function storeCart() {
-    		var num = $('.productspec_container_amount input').val();
-    		var params = {id:popid, amount:num};
-    		ajax('post', '/home/cart', params)
-    			.then(function (resolve) {
-    				if (resolve) {
-    					prompt.message('已经加入购物车')
-    					$('.productspec_container').removeClass('bottom-0')
-    					$('.productspec').animate({
-							'opacity': 0},100,function () {
-							$('.productspec').removeClass('top-0')
-						})
-    				} else {
-    					prompt.message('加入购物车失败')
-    				}
-    			})
+    	function storeCart(params) {
+            var url = '/home/product/detail/addcart';
+    		ajax('post', url, params).then(function (resolve) {
+				if (resolve) {
+					prompt.message('已经加入购物车')
+					$('.productspec_container').removeClass('bottom-0')
+					$('.productspec').animate({
+						'opacity': 0},100,function () {
+						$('.productspec').removeClass('top-0')
+					})
+				} else {
+					prompt.message('加入购物车失败')
+				}
+			})
     	};
 
     	// 立即购买（待支付）
-    	function storeBuy() {
-    		var num = $('.productspec_container_amount input').val();
-    		var params = {data:{}};
-    		params['data'][popid] = num;
-
-    		var url = 'http://' + window.location.host + '/home/order/confirm?id=';
-    		ajax('post', '/home/order/confirm', params)
-    			.then(function (resolve) {
-    				console.log(resolve)
-    				if (resolve) {
-    					window.location.href = url + resolve;	
-    				} else {
-    					prompt.message('服务器异常！请稍后再试！')
-    				}
-    			})
+    	function storeBuy(params) {
+            var url = '/home/product/detail/addorder';
+    		var url_a = 'http://' + window.location.host + '/home/order/confirm?id=';
+    		ajax('post', url, params).then(function (resolve) {
+				if (resolve) {
+					window.location.href = url_a + resolve;	
+				} else {
+					prompt.message('服务器异常！请稍后再试！')
+				}
+			})
     	};
 
     	//点击加入购物车
@@ -235,32 +231,32 @@
 
     	//初始化弹窗
     	function cshPop() {
-    		ajax('get', '/home/product/detail/addcart/' + params['id'])
-    			.then(function (resolve) {
-    				console.log(resolve)
-    				if (resolve) {
-    					var v = resolve['content'];
-    					var specs = resolve['specs'];
-    					var template = '';
-    					addCartProductData(v);
-						specs.forEach(function (data) {
-    						template += '<li class="pull-left mr-10 mb-10 J_choose_spec ';  
-    						if (v['id'] == data['id']) {
-    							template += 'active';
-    							popid = v['id']
-    						}
-    						template += '" pid='+data['id']+'><a href="javascript:;" class="block p-10 color-3B3B3B">'+data['name']+'</a></li>';
-    					});	
-						$('.addcart-specs').html(template);
-						//打开加入购物车弹窗
-						$('.productspec').addClass('top-0').animate({
-							'opacity': 1},100,function () {
-							$('.productspec_container').addClass('bottom-0')
-						})
-    				} else {
-    					prompt.message('服务器繁忙！稍后再试！')
-    				}
-    			})
+            var url = '/home/product/detail/addcart/' + params['id'];
+    		ajax('get', url).then(function (resolve) {
+				if (resolve) {
+					var v = resolve['content'];
+					var specs = resolve['specs'];
+					var template = '';
+					addCartProductData(v);
+					specs.forEach(function (data) {
+						template += '<li class="pull-left mr-10 mb-10 J_choose_spec ';  
+						if (data['state']) {
+							template += 'active';
+							popid = v['id']
+                            spec_id = data['id']
+						}
+						template += '" pid='+data['id']+' price='+data['price']+'><a href="javascript:;" class="block p-10 color-3B3B3B">'+data['name']+'</a></li>';
+					});	
+					$('.addcart-specs').html(template);
+					//打开加入购物车弹窗
+					$('.productspec').addClass('top-0').animate({
+						'opacity': 1},100,function () {
+						$('.productspec_container').addClass('bottom-0')
+					})
+				} else {
+					prompt.message('服务器繁忙！稍后再试！')
+				}
+			})
     	}
 
     	//加入购物车 设置商品参数
@@ -308,6 +304,7 @@
     			$(this).parents('.productspec_container').find('.sum_price').text((price * amount).toFixed(2))
     		}
     	})
+        //输入数量
     	$('input[name="amount"]').on('blur', function () {
     		var amount = parseInt($(this).val())
     		var price = parseFloat($(this).parents('.productspec_container').find('#price').val())
@@ -325,22 +322,13 @@
     		}
     	})
 
-    	// 选择规格
+    	// 弹窗选择规格
     	$('.addcart-specs').on('tap', '.J_choose_spec',function () {
-    		// ajax 写法
-    		var $this = $(this)
-    		var id = $(this).attr('pid');
-    		ajax('get', '/home/product/detail/addcart/'+ id)
-    			.then(function (res) {
-    				if (res){
-    					var v = res['content'];
-    					addCartProductData(v);
-    					$this.addClass('active').siblings().removeClass('active');
-    					popid = $this.attr('pid');
-    				} else {
-    					prompt.message('服务器繁忙！稍后再试！')
-    				}
-    			})
+            spec_id = $(this).attr('pid');
+    		var price = $(this).attr('price');
+            $("#price").val(price);
+            $(".productspec_container_info_content span").html('&yen'+parseFloat(price).toFixed(2));
+    		$(this).addClass('active').siblings().removeClass('active');
     	})
 
     	// 选择评论类型
@@ -361,6 +349,13 @@
     			$('.productdetail_blank').addClass('hide')
     		}
     	})
+
+        //规格点击事件
+        $(".spec-click").on('tap',function(){
+            $(".spec-click").removeClass('active');
+            $(this).addClass('active');
+            $(".price").html('&yen'+$(this).attr('price'));
+        })
 	})
     </script>
 @endsection
@@ -390,7 +385,6 @@
 				<h1 class="chayefont fz-18">{{$content->name}}</h1>
 				<p class="desc fz-16 color-8C8C8C mt-10 mb-10">{{$content->desc}}</p>
 				<span class="price fz-14">&yen;{{sprintf('%.2f', $content->price)}}</span>
-				<p class="mt-10 mb-10 color-8C8C8C fz-14">价格：<del>{{sprintf('%.2f', $content->raw_price)}}</del></p>
 				<p class="clearfix color-8C8C8C fz-14">
 					<span class="pull-left">快递：<i>{{sprintf('%.2f', $content->delivery_price)}}</i></span>
 					<span class="pull-right">销量：<i>{{$content->sell_amount}}</i>笔</span>
@@ -400,7 +394,7 @@
 					<ul class="clearfix w-100">
 					@foreach($specs as $spec)
 						<li class="pull-left mr-10 mb-10 J_choose_spec" >
-							<a href="{{url('/home/product/detail')}}/{{$spec->id}}" class="block p-10 color-3B3B3B @if($content->id == $spec->id)active  @endif">{{$spec->name}}</a>
+							<a href="javascript:;" class="spec-click block p-10 color-3B3B3B @if($spec->state)active  @endif" price="{{$spec->price}}" sid="{{$spec->id}}">{{$spec->name}}</a>
 						</li>
 					@endforeach
 					</ul>
@@ -420,7 +414,7 @@
 					</ol>
 				</div>
 				<div class="productdetail_container_detail_img">
-					{!! html_entity_decode($content->gdesc) !!}
+					{!! html_entity_decode($content->details) !!}
 				</div>
 			</div>
 			<div class="productdetail_container_comment hide" data-tab="comment">
@@ -540,7 +534,7 @@
 				<div class="productspec_container_info_content pull-right">
 					<h1 class="mb-10">商品名称</h1>
 					<p>商品描述</p>
-					<span class="pull-right color-F78223">&yen;<s class="price">价格</s></span>
+					<span class="pull-right color-F78223">&yen;<s class="pop-price">价格</s></span>
 				</div>
 			</div>
 			<div class="productspec_container_spec w-100">

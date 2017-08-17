@@ -7,6 +7,7 @@
   @parent
 @endsection
 @section('content')
+
   <section class="content">
     <div class="row">
       <div class="col-xs-12">
@@ -21,21 +22,6 @@
                         <option value="{{$select->id}}" 
                         @if(isset($_GET['category'])) 
                           @if($_GET['category'] == $select->id) 
-                            selected 
-                          @endif 
-                        @endif >
-                        {{$select->name}}
-                        </option>
-                        @endforeach
-                      </select>
-                    </div>
-                    <div class="col-sm-2">
-                      <select class="form-control input-sm" id="searchGroup" name="group">
-                        <option value="">-商品组-</option>
-                        @foreach ($groupSelects as $select)
-                        <option value="{{$select->id}}" 
-                        @if(isset($_GET['group'])) 
-                          @if($_GET['group'] == $select->id) 
                             selected 
                           @endif 
                         @endif >
@@ -80,10 +66,8 @@
                 <th>复选框</th>
                 <th>编号</th>
                 <th>商品分类</th>
-                <th>商品组</th>
                 <th>商品品牌</th>
                 <th>商品名称</th>
-                <th>商品参数</th>
                 <th>价格</th>
                 <th>运费</th>
                 <th>库存</th>
@@ -98,17 +82,15 @@
                 <td><input type="checkbox" class="check" value="{{$list->id}}"></td>
                 <td>{{$k + 1}}</td>
                 <td>{{$list->category_name}}</td>
-                <td>{{$list->group_name}}</td>
                 <td>{{$list->brand_name}}</td>
                 <td>{{$list->name}}</td>
-                <td>{{$list->spec_name}}</td>
                 <td>{{sprintf('%.2f', $list->price)}}</td>
                 <td>{{sprintf('%.2f', $list->delivery_price)}}</td>
                 <td>{{$list->stock}}</td>
                 <td>{{$list->origin}}</td>
                 <td>{{$list->effect}}</td>
                 <td>@if($list->grade) 是 @else 否 @endif</td>
-                <td>@if($list->state) 有货 @else 无货 @endif</td>
+                <td>@if($list->state) 上架 @else 已下架 @endif</td>
                 <td>
                   <div style="color: #dd4b39">
                   <a href="{{url('admin/goods/list')}}/{{$list->id}}/edit">

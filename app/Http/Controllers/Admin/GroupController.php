@@ -120,16 +120,9 @@ class GroupController extends Controller
         //接收数据 加入model
         $model->setRawAttributes($request->only(['name','date_start','date_end','price']));
         
-        if ($id != -1 && $request->del) {
-            $model->desc = null;
-            IQuery::destroyPic(new Group, $id, 'img');
-        }
-
         //资源、上传图片名称、是否生成缩略图
-        $imgs = IQuery::upload($request,'img',false);
-        if ($imgs != 'false') {
-            $model->desc = $imgs['pic'];
-        }
+        $imgs = IQuery::upload($request,'img',false,new Group, $id);
+        $model->desc = $imgs['pic'];
 
         if ($model->save()) {
             return Redirect::to('admin/activity/group')->with('status', '保存成功');

@@ -29,7 +29,11 @@ class IndexController extends Controller
     //最新商品
     public function newProduct()
     {
-        $news = Product::orderBy('product.id','desc')->paginate(10);
+        $news = Product::orderBy('product.id','desc')
+            ->join('spec','product.id','=','spec.product_id')
+            ->where('spec.state','=',1)
+            ->select('product.*','spec.price')
+            ->paginate(10);
         return $news;
     }
 
@@ -39,24 +43,15 @@ class IndexController extends Controller
         $id = $request->id;
         $data = Activity::join('activity_product','activity.id','=','activity_product.activity_id')
                 ->join('product','activity_product.product_id','=','product.id')
+                ->join('spec','product.id','=','spec.product_id')
+                ->where('spec.state','=',1)
                 ->where('activity.id','=',$id)
-                ->select('product.*')
+                ->whereNull('activity_product.deleted_at')
+                ->whereNull('activity.deleted_at')
+                ->distinct('product.id')
+                ->select('product.*','spec.price')
                 ->paginate(10);
         return $data;
     }
 
-    //热卖商品方法
-    // public function sellProduct() 
-    // {
-    //     $sells = DB::table('product')
-    //         ->join('order_product','product.id','=','order_product.product_id')
-    //         ->join('order','order_product.order_id','=','order.id')
-    //         ->where('order.type','=','order')
-    //         ->where('order.state','=','close')
-    //         ->select(DB::raw('sum(amount) as nums','product.*'))
-    //         ->groupBy('order_product.product_id')
-    //         ->orderBy('nums','desc')
-    //         ->paginate(10); 
-    //     return $sells;
-    // }
 }

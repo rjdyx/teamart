@@ -97,11 +97,8 @@ class ShopController extends Controller
         $model->wx_key = trim($request->wx_key);//商户密匙
 
         //logo
-        $img = IQuery::upload($request,'img',false);
-        if ($img !== 'false') {
-            IQuery::destroyPic(new System,$id);
-            $model->logo = $img['pic'];
-        }
+        $img = IQuery::upload($request, 'img', false, new System, $id);
+        $model->logo = $img['pic'];
 
         //轮播图
         if($model->slider ==null || $model->slider=='' ){

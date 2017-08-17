@@ -118,12 +118,9 @@ class ArticleController extends Controller
         $model->setRawAttributes($request->only(['name','category_id','content']));
 
         //资源、上传图片名称、是否生成缩略图
-        $imgs = IQuery::upload($request,'img',true);
-        if ($imgs != 'false') {
-            $model->img = $imgs['pic'];
-            $model->thumb = $imgs['thumb'];
-            if ($id == -1 ) IQuery::destroyPic(new Article, $id, 'img');
-        }
+        $imgs = IQuery::upload($request,'img',true,new Article, $id);
+        $model->img = $imgs['pic'];
+        $model->thumb = $imgs['thumb'];
 
         if ($model->save()) {
             return Redirect::to('admin/article/list')->with('status', '保存成功');
