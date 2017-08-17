@@ -85,12 +85,10 @@ class PersonalController extends Controller
         $user->gender = $gender;
         if($password != null && $password != '') $user->password = bcrypt($password);
 
-        $imgs = IQuery::upload($request,'img',true);
-        if ($imgs !== 'false') {
-            IQuery::destroyPic(new User,$id,'img');
-            $user->img = $imgs['pic'];
-            $user->thumb = $imgs['thumb'];
-        }
+        $imgs = IQuery::upload($request,'img',true,new User,$id);
+        $user->img = $imgs['pic'];
+        $user->thumb = $imgs['thumb'];
+
         if($user->save()){
             return Redirect::to('admin/index')->with('status', '保存成功');
         }else{
