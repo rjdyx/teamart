@@ -42,7 +42,7 @@
 			$('#realname').on('blur input', function () {
 				_valid.realname('realname', $(this).val())
 			})
-			$('#birth_date').on('blur', function () {
+			$('#datepicker').on('change', function () {
 				_valid.birth_date('birth_date', '出生日期', $(this).val())
 			})
 			function submitForm() {
