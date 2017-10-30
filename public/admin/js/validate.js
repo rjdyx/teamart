@@ -224,6 +224,7 @@ exports.birth_date = (field, fieldtxt, value, isRequired = false) => {
 	if (isRequired) {
 		temp = ness(field, fieldtxt, value)
 	}
+	console.dir(value)
 	if (temp) {
 		console.dir('birth_date验证：' + value)
 		// if (!/^([1-9]{4})+-([0-1][1-9])+-([0-3][0-9])$/.test(value)) {
