@@ -20,9 +20,11 @@ Route::post('/check','UtilsController@check');//字段验证 公共接口组
 Route::get('captcha', 'KitController@captcha'); //生成验证码
 Route::get('/bind/agent/{id}', 'Auth\LoginController@bindAgent'); //绑定分销商
 
+Route::get('/bind/agent/{id}', 'Auth\LoginController@bindAgent'); //绑定分销商
+
+Route::auth();
 //判断微信端中间件
 Route::group(['middleware'=>['isWeixin']],function(){
-	Route::auth();
 	Route::get('/','HomeController@index');//首页
 	
 	// Auth
