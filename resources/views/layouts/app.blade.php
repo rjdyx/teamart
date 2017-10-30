@@ -92,6 +92,9 @@
         }
         $(function () {
             console.dir(window.history)
+            prompt.question('测试弹窗', function () {
+                alert('你点击确定了')
+            })
             if ($('.header_category')[0]) {
                 FastClick.attach($('.header_category')[0]);
             }
