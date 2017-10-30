@@ -92,6 +92,7 @@
         }
         $(function () {
             console.dir(window.history)
+            prompt.test()
             prompt.question('测试弹窗', function () {
                 alert('你点击确定了')
             })

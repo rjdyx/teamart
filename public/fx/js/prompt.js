@@ -1,7 +1,10 @@
 const FastClick = require('fastclick')
 
+exports.test = () => {
+	alert('prompt')
+}
+
 exports.init = () => {
-	alert('prompt');
 	FastClick.attach($('.J_hide_prompt')[0])
 	FastClick.attach($('.J_prompt_no')[0])
 	$('.J_hide_prompt').on('click', function () {
