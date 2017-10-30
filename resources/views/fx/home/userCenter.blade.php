@@ -46,7 +46,6 @@
 
 		// 解除绑定退出
 		$(".J_loginout_wx").on('tap', function () {
-			alert(fxPrompt)
 			fxPrompt.question('是否解除绑定？', function () {
 				ajax('get', '/bind/weixin/relieve').then(function (res) {
 					if (res) {
