@@ -81,6 +81,14 @@
 		.success{
 			display: none;
 		}
+        .resetMD {
+            position: relative;
+            width: 4.3rem;
+            height: 0.7rem;
+            line-height: 0.7rem;
+            margin: 0 auto 0.2rem;
+
+        }
 	</style>
 @endsection
 
@@ -117,6 +125,7 @@
             	$("#phoneMd").css('display','block');
             } else {
             	$("#userMd").css('display','block');
+                $("#resetPS").removeClass('hide')
             }
         }
 
@@ -136,6 +145,7 @@
             $(".sub-bind").hide();
         	$(".sub-n").css('display','block');
         	$(".sub-y").css('display','block');
+            $("#resetPS").addClass('hide')
         })
 
         //绑定
@@ -293,6 +303,9 @@
             <i class="fa fa-lock fz-16"></i>
             <input type="password" id="pass" class="chayefont white fz-16" name="password" autocomplete="off" placeholder="输入密码">
         </label>
+        <div class="resetMD hide" id="resetPS">
+            <a href="{{ url('/password/reset') }}">忘记密码</a>
+        </div>
         <div class="sub sub-y"><input type="button" value="有账号，直接绑定"></div>
         <div class="sub sub-n"><input type="button" value="无账号，注册绑定"></div>
         <div class="sub sub-per"><input type="button" value="上一步"></div>

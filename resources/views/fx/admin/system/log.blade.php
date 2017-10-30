@@ -6,6 +6,7 @@
 @endsection
 @section('script')
   @parent
+    <script src="{{url('admin/js/jquery-1.8.3.min.js')}}"></script>
     <script src="{{url('admin/js/datepicker/bootstrap-datepicker.js')}}"></script>
     <script src="{{url('admin/js/datepicker/locales/bootstrap-datepicker.zh-CN.js')}}"></script>
     <script>
