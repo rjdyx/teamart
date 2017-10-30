@@ -14,7 +14,7 @@
         })
         // 显示评论图片
         $('.J_show_img').on('tap', function () {
-            prompt.image($(this).attr('src'))
+            fxPrompt.image($(this).attr('src'))
         })
     </script>
 @endsection

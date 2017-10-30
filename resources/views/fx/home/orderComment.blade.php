@@ -18,11 +18,11 @@
 				var id = $this.attr('id')
 				var $box = $('label[for="' + id + '"]').parent()
 				// if (file.size / 1024 > 200) {
-				// 	prompt.message('图片太大')
+				// 	fxPrompt.message('图片太大')
 				// 	return false
 				// }
 				if (file.type !== 'image/png' && file.type !== 'image/jpeg') {
-					prompt.message('图片格式只支持png和jpg')
+					fxPrompt.message('图片格式只支持png和jpg')
 					return false
 				}
 				$box.find('img').remove()
@@ -38,7 +38,7 @@
 					}
 					$box.find('.ordercomment_imgs_list_img').append(img)
 					$box.find('img').on('tap', function () {
-						prompt.image($(this).attr('src'))
+						fxPrompt.image($(this).attr('src'))
 					})
 					$box.find('label').addClass('hide')
 					$box.find('.ordercomment_imgs_list_img').removeClass('hide')
@@ -93,7 +93,7 @@
 					$('.J_remove_img').on('tap', removeFile)
 					$('.J_grade').on('tap', grade)
 				} else {
-					prompt.message('获取数据失败')
+					fxPrompt.message('获取数据失败')
 				}
 			})
 
@@ -169,11 +169,11 @@
 			$('.J_comment').on('tap', function () {
 				// ajax提交
 				// if ($.trim($('#content').val()) == '' || $.trim($('#content').val()).length < 5) {
-				// 	prompt.message('评价至少要5个字')
+				// 	fxPrompt.message('评价至少要5个字')
 				// 	return
 				// }
 				// if ($('#grade').val() <= 0) {
-				// 	prompt.message('请选择您的满意度')
+				// 	fxPrompt.message('请选择您的满意度')
 				// 	return
 				// }
 
@@ -182,12 +182,12 @@
 				$('.ordercomment_container').each(function () {
 					var id = $(this).data('id')
 					if ($.trim($('#content' + id).val()) == '' || $.trim($('#content' + id).val()).length < 5) {
-						prompt.message('评价至少要5个字')
+						fxPrompt.message('评价至少要5个字')
 						temp = false
 						return
 					}
 					if ($('#grade' + id).val() <= 0) {
-						prompt.message('请选择您的满意度')
+						fxPrompt.message('请选择您的满意度')
 						temp = false
 						return
 					}
@@ -252,14 +252,14 @@
 			})
 
 			function submitAjax (params) {
-				prompt.loading('提交中')
+				fxPrompt.loading('提交中')
 				ajax('post', '/home/order/comment/store/'+"{{$id}}", params, false, true)
 				.then(function (res) {
 					if (res) {
-						// prompt.message('评论成功！', 'history')
-						prompt.message('评论成功！', 'http://'+window.location.host+'/home/order/list')
+						// fxPrompt.message('评论成功！', 'history')
+						fxPrompt.message('评论成功！', 'http://'+window.location.host+'/home/order/list')
 					} else {
-						prompt.message('服务器繁忙,请稍后再试！')
+						fxPrompt.message('服务器繁忙,请稍后再试！')
 					}
 				})
 			}

@@ -71,12 +71,12 @@
 					$('.comment_list').append(template);
 					me.resetload();
 					$('.J_show_image').off('tap').on('tap', function () {
-						prompt.image($(this).data('img'))
+						fxPrompt.image($(this).data('img'))
 					})
 				})
 				.catch(function (err) {
 					console.dir(err)
-					prompt.message('请求错误')
+					fxPrompt.message('请求错误')
 				});
 		}
 
@@ -136,7 +136,7 @@
 					}
 					$('.comment_list').html(template);
 					$('.J_show_image').off('tap').on('tap', function () {
-						prompt.image($(this).data('img'))
+						fxPrompt.image($(this).data('img'))
 					})
 				})
 		}
@@ -160,9 +160,9 @@
 					.then(function (resolve) {
 						if (resolve) {
 							$('.J_favo').find('i').removeClass('fa-star-o').addClass('fa-star')
-							prompt.message('收藏成功')
+							fxPrompt.message('收藏成功')
 						} else {
-							prompt.message('收藏失败')
+							fxPrompt.message('收藏失败')
 						}
 					})
 			} else {
@@ -170,9 +170,9 @@
 					.then(function (resolve) {
 						if (resolve) {
 							$('.J_favo').find('i').addClass('fa-star-o').removeClass('fa-star')
-							prompt.message('取消收藏成功')
+							fxPrompt.message('取消收藏成功')
 						} else {
-							prompt.message('取消收藏失败')
+							fxPrompt.message('取消收藏失败')
 						}
 					})
 			}
@@ -194,14 +194,14 @@
             var url = '/home/product/detail/addcart';
     		ajax('post', url, params).then(function (resolve) {
 				if (resolve) {
-					prompt.message('已经加入购物车')
+					fxPrompt.message('已经加入购物车')
 					$('.productspec_container').removeClass('bottom-0')
 					$('.productspec').animate({
 						'opacity': 0},100,function () {
 						$('.productspec').removeClass('top-0')
 					})
 				} else {
-					prompt.message('加入购物车失败')
+					fxPrompt.message('加入购物车失败')
 				}
 			})
     	};
@@ -214,7 +214,7 @@
 				if (resolve) {
 					window.location.href = url_a + resolve;	
 				} else {
-					prompt.message('服务器异常！请稍后再试！')
+					fxPrompt.message('服务器异常！请稍后再试！')
 				}
 			})
     	};
@@ -223,9 +223,9 @@
 		//点击加入购物车
 		$('.J_show_productspec').on('tap', function () {
 			if (state == 0) {
-				prompt.message('该商品已下架')
+				fxPrompt.message('该商品已下架')
 			} else if (stock <= 0) {
-				prompt.message('该商品缺货中')
+				fxPrompt.message('该商品缺货中')
 			} else {
 				poptype = 'cart';
 				cshPop();
@@ -235,9 +235,9 @@
 		//点击立即购买
 		$('.buy_now').on('tap', function () {
 			if (state == 0) {
-				prompt.message('该商品已下架')
+				fxPrompt.message('该商品已下架')
 			} else if (stock <= 0) {
-				prompt.message('该商品缺货中')
+				fxPrompt.message('该商品缺货中')
 			} else {
 				poptype = 'buy';
 				cshPop();
@@ -269,7 +269,7 @@
 						$('.productspec_container').addClass('bottom-0')
 					})
 				} else {
-					prompt.message('服务器繁忙！稍后再试！')
+					fxPrompt.message('服务器繁忙！稍后再试！')
 				}
 			})
     	}
@@ -355,7 +355,7 @@
 
 		// 商品下架后执行的
 		$('.J_xiajia').on('tap', function () {
-			prompt.message('商品已下架')
+			fxPrompt.message('商品已下架')
 		})
 
     	var tab_offset_top = $('.productdetail_container_tabs').offset().top

@@ -12,12 +12,12 @@
             var data = ['','收到商品破损','商品错发、漏发','收到商品与描述不符'];
             $("#submit").click(function(){
                 if ($('#reason').val() == '') {
-                    prompt.message('请选择退货理由')
+                    fxPrompt.message('请选择退货理由')
                     return
                 }
                 if ($('#reason').val() == '1') {
                     if ($.trim($("#desc").val()).length < 5) {
-                        prompt.message('退货理由不能少于5字')
+                        fxPrompt.message('退货理由不能少于5字')
                         return
                     }
                 }
@@ -25,11 +25,11 @@
                 var params = {reason:data[$('#reason').val() - 1],desc:$("#desc").val(),id:"{{$id}}"};
                 ajax('post', url, params).then(function (data) {
                     if (data == 200) {
-                        prompt.message('申请成功', `history`);
-                        // prompt.message('申请成功', `http://${window.location.host}/home/order/{{$id}}`);
+                        fxPrompt.message('申请成功', `history`);
+                        // fxPrompt.message('申请成功', `http://${window.location.host}/home/order/{{$id}}`);
                         //跳转到申请处理页 待补充...
                     } else {
-                        prompt.message('申请失败！请稍后再试！');
+                        fxPrompt.message('申请失败！请稍后再试！');
                     }
                 })
             });

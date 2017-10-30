@@ -82,14 +82,14 @@
 					state: $('#state').val()
 				}
 				if (_valid.validForm(params)) {
-					prompt.loading('保存中')
+					fxPrompt.loading('保存中')
 					ajax('post', '/home/address', params)
 						.then(function (resolve) {
 							if (resolve) {
-								// prompt.message('新增成功', 'history')
-								prompt.message('新增成功', 'http://' + window.location.host + '/home/address')
+								// fxPrompt.message('新增成功', 'history')
+								fxPrompt.message('新增成功', 'http://' + window.location.host + '/home/address')
 							} else {
-								prompt.message('新增失败')
+								fxPrompt.message('新增失败')
 							}
 						})
 				}

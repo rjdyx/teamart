@@ -1,1 +1,1 @@
-require('expose-loader?prompt!./js/prompt.js')
+require('expose-loader?fxPrompt!./js/prompt.js')

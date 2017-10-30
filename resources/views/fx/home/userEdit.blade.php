@@ -40,11 +40,11 @@
 			$('#img').on('change', function () {
 				var file = $(this)[0].files[0]
 				// if (file.size / 1024 > 200) {
-				// 	prompt.message('图片太大')
+				// 	fxPrompt.message('图片太大')
 				// 	return
 				// }
 				if (file.type !== 'image/png' && file.type !== 'image/jpeg') {
-					prompt.message('图片格式只支持png和jpg')
+					fxPrompt.message('图片格式只支持png和jpg')
 					return
 				}
 				var fr = new FileReader()
@@ -103,14 +103,14 @@
 			function submitAjax (params) {
 				var url = $("form").attr('action');//当前编辑id
 				if (_valid.validForm(params)) {
-					prompt.loading('保存中')
+					fxPrompt.loading('保存中')
 					ajax('post', url, params, true, true)
 						.then(function (resolve) {
 							if (resolve) {
-								// prompt.message('保存成功')
-								prompt.message('保存成功', 'http://' + window.location.host + '/home/userinfo')
+								// fxPrompt.message('保存成功')
+								fxPrompt.message('保存成功', 'http://' + window.location.host + '/home/userinfo')
 							} else {
-								prompt.message('保存失败')
+								fxPrompt.message('保存失败')
 							}
 						})
 				} else {
@@ -118,7 +118,7 @@
 					// $('.form_item.error').each(function() {
 					// 	str += $(this).find('label').text() + ','
 					// })
-					prompt.message(str)
+					fxPrompt.message(str)
 				}
 			}
 		})

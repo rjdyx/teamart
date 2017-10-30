@@ -72,7 +72,7 @@
                     }
                 }).catch(function (err) {
                     console.dir(err)
-                    prompt.message('服务器异常！请稍后再试！')
+                    fxPrompt.message('服务器异常！请稍后再试！')
                     // me.resetload()
                     me.unlock();
                 })
@@ -129,13 +129,13 @@
                     var url = "http://"+window.location.host+'/home/activity/roll/get'
                     ajax('get', url, {id: id}).then(function (res) {
                         if (res == 1) {
-                            prompt.message('领取成功')
+                            fxPrompt.message('领取成功')
                             $this.removeClass('roll_get').addClass('roll_take').text('已领取')
                         } else if(res == 2){
-                            prompt.message('该优惠券已被抢空~')
+                            fxPrompt.message('该优惠券已被抢空~')
                             $this.removeClass('roll_get').addClass('roll_over').text('已领完')
                         } else {
-                            prompt.message('领取失败')
+                            fxPrompt.message('领取失败')
                         }
                     })
                 }

@@ -222,10 +222,10 @@
                 url+= addurl;
                 ajax('get', url, params).then(function (data) {
                     if (data == 200) {
-                        prompt.message(pro+'成功');
+                        fxPrompt.message(pro+'成功');
                         searchOrder();
                     } else {
-                        prompt.message(pro+'失败！请稍后再试！');
+                        fxPrompt.message(pro+'失败！请稍后再试！');
                     }
                 })
             }
@@ -233,14 +233,14 @@
             //取消订单方法
             function order_cancell(id){
                 var params = {id:id};
-                prompt.question('是否要取消该订单', function () {
+                fxPrompt.question('是否要取消该订单', function () {
                     orderOperate('cancell', '取消订单', params);
                 })
             }
 
             //申请退货方法
             function order_back(id){
-                prompt.question('是否要申请退货', function () {
+                fxPrompt.question('是否要申请退货', function () {
                     window.location.href = 'http://'+window.location.host + '/home/order/backn/reason/'+id;
                 })
             }
@@ -253,7 +253,7 @@
             //确定收货方法
             function order_take(id){
                 var params = {id:id};
-                prompt.question('是否确认收货', function () {
+                fxPrompt.question('是否确认收货', function () {
                     orderOperate('take', '确认收货', params);
                 })
             }
@@ -266,9 +266,9 @@
                     width: 512,
                     height: 512
                 })
-                prompt.message('二维码生成中')
+                fxPrompt.message('二维码生成中')
                 setTimeout(function () {
-                    prompt.qrcode()
+                    fxPrompt.qrcode()
                 }, 1010)
             }
             

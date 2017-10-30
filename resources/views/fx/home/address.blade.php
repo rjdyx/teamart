@@ -16,11 +16,11 @@
 				ajax('get', '/home/address/default/' + id)
 					.then(function (res) {
 						if (res) {
-							prompt.message('修改成功')
+							fxPrompt.message('修改成功')
 							$this.parents('.address').find('.address_default').removeClass('active')
 							$this.addClass('active')
 						} else {
-							prompt.message('修改失败')
+							fxPrompt.message('修改失败')
 						}
 					})
 			})
@@ -29,14 +29,14 @@
 			$('.J_del').on('tap', function () {
 				var id = $(this).data('id')
 				var $this = $(this)
-				prompt.question('是否删除地址', function () {
+				fxPrompt.question('是否删除地址', function () {
 					ajax('delete', '/home/address/' + id)
 						.then(function (res) {
 							if (res) {
-								prompt.message('删除成功')
+								fxPrompt.message('删除成功')
 								$this.parents('.address_warpper').remove()
 							} else {
-								prompt.message('删除失败')
+								fxPrompt.message('删除失败')
 							}
 						})
 				})

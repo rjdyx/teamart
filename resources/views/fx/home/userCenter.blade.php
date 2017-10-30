@@ -37,22 +37,22 @@
 
 		// 账号退出
 		$(".J_loginout").on('tap', function () {
-			prompt.question('是否退出？', function () {
+			fxPrompt.question('是否退出？', function () {
 				ajax('get', '/layout').then(function (resolve) {
-					prompt.message('退出成功', 'http://' + window.location.host)
+					fxPrompt.message('退出成功', 'http://' + window.location.host)
 				})
 			})
 		})
 
 		// 解除绑定退出
 		$(".J_loginout_wx").on('tap', function () {
-			alert(prompt)
-			prompt.question('是否解除绑定？', function () {
+			alert(fxPrompt)
+			fxPrompt.question('是否解除绑定？', function () {
 				ajax('get', '/bind/weixin/relieve').then(function (res) {
 					if (res) {
-						prompt.message('解除绑定成功', 'http://' + window.location.host)
+						fxPrompt.message('解除绑定成功', 'http://' + window.location.host)
 					} else {
-						prompt.message('解除绑定失败')
+						fxPrompt.message('解除绑定失败')
 					}
 				})
 			})
@@ -60,12 +60,12 @@
 
 		// 显示二维码
 		$('.J_QRcode').on('tap', function () {
-			prompt.qrcode()
+			fxPrompt.qrcode()
 		})
 
 		// 扫描二维码
 		$('.J_getQRcode').on('tap', function () {
-			// prompt.qrcode()
+			// fxPrompt.qrcode()
 		})
 	})
 	</script>
