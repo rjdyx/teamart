@@ -32,7 +32,7 @@
 				if (!_valid.name('name', '用户名', name.value, 'user')) {
 					return false
 				}
-				if (!_valid.mail('email', email.value)) {
+				if (!_valid.email('email', email.value)) {
 					return false
 				}
 				if (!_valid.ness('gender', '性别', gender.value)) {

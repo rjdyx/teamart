@@ -132,7 +132,7 @@
                       <div class="input-group-addon">
                         <i class="fa fa-calendar"></i>
                       </div>
-                      <input type="text" value="{{$data->birth_date}}" class="form-control pull-right" id="datepicker" name="birth_date" oninput="_valid.birth_date('birth_date', '出生日期', this.value)" onblur="_valid.birth_date('birth_date', '出生日期', this.value)">
+                      <input type="text" value="{{$data->birth_date}}" class="form-control pull-right" id="datepicker" name="birth_date" oninput="_valid.birth_date('birth_date', '出生日期', this.value)">
                     </div>
                     <!-- /.input group -->
                   </div>

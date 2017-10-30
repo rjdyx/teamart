@@ -5,7 +5,7 @@
 @section('script')
   @parent
   <script>
-    datepicker.datepicker();
+    datepicker();
     var url = 'http://' + window.location.host;
       //单条删除
       function gdel(id) {

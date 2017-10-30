@@ -139,7 +139,7 @@
                   <label class="col-sm-3 control-label" for="datepicker">出生日期</label>
                   <div class="col-sm-4">
                     <div class="input-group date">
-                      <input type="text" name="birth_date" class="form-control pull-right" id="datepicker" oninput="_valid.birth_date('birth_date', '出生日期', this.value)" onblur="_valid.birth_date('birth_date', '出生日期', this.value)">
+                      <input type="text" name="birth_date" class="form-control pull-right" id="datepicker" oninput="_valid.birth_date('birth_date', '出生日期', this.value)">
                       <div class="input-group-addon">
                         <i class="fa fa-calendar"></i>
                       </div>
