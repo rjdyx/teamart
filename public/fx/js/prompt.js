@@ -1,9 +1,5 @@
 const FastClick = require('fastclick')
 
-function isIOS () {
-	return /ipad|iphone/i.test(window.navigator.userAgent)
-}
-
 exports.test = () => {
 	alert('prompt')
 }
@@ -31,13 +27,6 @@ exports.init = () => {
 }
 
 exports.message = (msg, url) => {
-	if (isIOS) {
-		alert(msg)
-		if (url) {
-			url === 'history' ? history.go(-1) : window.location.href = url
-		}
-		return
-	}
 	$('.prompt').addClass('active').find('.prompt_message_content').html(msg).end()
 		.find('.prompt_message').addClass('atc')
 	setTimeout(() => {
