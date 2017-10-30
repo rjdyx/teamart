@@ -56,7 +56,7 @@
         $('#effect').on('blur input', function () {
           _valid.desc('effect', '商品作用', $(this).val(), 50, true)
         })
-        $('#date').on('blur input', function () {
+        $('#datepicker').on('change', function () {
           _valid.birth_date('date', '生产日期', $(this).val(), true)
         })
         $('#state').on('change', function () {

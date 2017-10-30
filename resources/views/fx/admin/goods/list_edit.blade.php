@@ -49,7 +49,7 @@
         $('#effect').on('blur input', function () {
           _valid.desc('effect', '商品作用', $(this).val(), 50, true)
         })
-        $('#date').on('blur input', function () {
+        $('#datepicker').on('change', function () {
           _valid.birth_date('date', '生产日期', $(this).val(), true)
         })
         $('#state').on('change', function () {
@@ -75,9 +75,6 @@
           var pic = form['pic']
           var spec = specData();
           if (!_valid.ness('category_id', '商品分类', category_id.value)) {
-            return false
-          }
-          if (!_valid.ness('group_id', '商品组', group_id.value)) {
             return false
           }
           if (!_valid.ness('brand_id', '商品品牌', brand_id.value)) {
