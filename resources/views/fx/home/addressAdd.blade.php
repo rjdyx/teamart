@@ -103,25 +103,25 @@
 	@include("layouts.header-info")
 	<div class="container relative addressadd">
 		<form action="#" name="addressform">
-			<div class="form_item chayefont fz-16">
+			<div class="form_item chayefont fz-16" data-err="收货人不能少于2个字">
 				<label for="name">收货人</label>
 				<input type="text" name="name" id="name" class="pull-right block txt-r chayefont" data-required="true" autocomplete="off" placeholder="请输入收货人名称">
 			</div>
-			<div class="form_item chayefont fz-16">
+			<div class="form_item chayefont fz-16" data-err="联系电话格式不对">
 				<label for="phone">联系电话</label>
 				<input type="tel" name="phone" id="phone" class="pull-right block txt-r chayefont" data-required="true" autocomplete="off" placeholder="请输入联系电话">
 			</div>
-			<div class="form_item chayefont fz-16">
+			<div class="form_item chayefont fz-16" data-err="请选择所在地区">
 				<label for="region">所在地区</label>
 		        <span class="pull-right block color-8C8C8C addressadd_selection">选择地区</span>
 		        <input id="address" name="address" data-required="true" type="hidden"/>
 		        <input id="addressValue" name="addressValue" type="hidden"/>
 			</div>
-			<div class="form_item chayefont fz-16">
+			<div class="form_item chayefont fz-16" data-err="邮编格式不正确">
 				<label for="code">邮编</label>
 				<input type="number" name="code" id="code" class="pull-right block txt-r chayefont" data-required="true" placeholder="请输入邮编">
 			</div>
-			<div class="form_item fz-16">
+			<div class="form_item fz-16" data-err="详细地址不少于5字">
 				<textarea class="w-100" name="detail" id="detail" data-required="true" placeholder="请填写详细地址，不少于5个字"></textarea>
 			</div>
 			<div class="form_item fz-16 mt-20 J_defualtAddress">

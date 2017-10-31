@@ -34,12 +34,12 @@
           if (!_valid.ness('gender', '性别', gender.value)) {
             return false
           }
-          if (!_valid.password('password', password.value, false)) {
-            return false
-          }
-          if (!_valid.repassword('repassword', repassword.value, false)) {
-            return false
-          }
+          // if (!_valid.password('password', password.value, false)) {
+          //   return false
+          // }
+          // if (!_valid.repassword('repassword', repassword.value, false)) {
+          //   return false
+          // }
           if (!_valid.phone('phone', phone.value)) {
             return false
           }
@@ -138,7 +138,7 @@
                   </div>
                   <span class="col-sm-4 text-danger form_error" id="birth_date_txt"></span>
                 </div>
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <label for="password" class="col-sm-3 control-label">登录密码</label>
                   <div class="col-sm-4">
                     <input type="password" name="password" class="form-control" id="password" placeholder="不输入密码则不修改" onblur="_valid.password('password', this.value, false)" oninput="_valid.password('password', this.value, false)">
@@ -151,8 +151,7 @@
                     <input type="password" class="form-control" id="repassword" placeholder="若登录密码未输入，则确认密码无效" onblur="_valid.repassword('repassword', this.value, false)" oninput="_valid.repassword('repassword', this.value, false)">
                   </div>
                   <span class="col-sm-4 text-danger form_error" id="repassword_txt"></span>
-                </div>
-
+                </div> -->
                 <div class="form-group">
                 <label class="col-sm-3 control-label">降为普通会员</label>
                 <div class="col-sm-4">
