@@ -24,7 +24,7 @@ Route::get('/bind/agent/{id}', 'Auth\LoginController@bindAgent'); //绑定分销
 
 Route::auth();
 //判断微信端中间件
-Route::group(['middleware'=>['isWeixin']],function(){
+Route::group(['middleware'=>[/*'isWeixin'*/]],function(){
 	Route::get('/','HomeController@index');//首页
 	
 	// Auth
@@ -53,6 +53,7 @@ Route::group(['middleware'=>['isWeixin']],function(){
 			Route::post('/detail/addorder','ProductController@addOrder');//立即购买
 			Route::get('/comment/{product_id}','ProductController@productComment');
 			Route::get('/detail/addcart/{product_id}','ProductController@productAddCartData');
+			Route::get('/{product_id}/stock','ProductController@productStock');// 获取当前产品仓库数量
 		});
 
 		// 帮助中心列表、详情

@@ -179,14 +179,23 @@
 		});
 
     	// 弹窗确定
+    	// 新增后台商品数量判断
     	$('.J_join_cart').on('tap', function () {
             var num = $('.productspec_container_amount input').val();
-            var params = {id:popid, amount:num, spec_id:spec_id};
-    		if (poptype == 'cart') {
-    			storeCart(params);
-    		} else {
-				storeBuy(params);
-    		}
+			ajax('get', `/home/product/{{ $content->id }}/stock`, {stock: num})
+			.then(function (resolve) {
+				if (resolve) {
+					var params = {id:popid, amount:num, spec_id:spec_id};
+					if (poptype == 'cart') {
+						storeCart(params);
+					} else {
+						storeBuy(params);
+					}
+				} else {
+					fxPrompt.message('商品库存不足')
+				}
+			})
+            
     	});
 
     	// 加入购物车
@@ -300,7 +309,7 @@
     	// 减少数量
     	$('.J_minus_amount').on('tap', function () {
     		var amount = parseInt($(this).siblings('input[name="amount"]').val())
-    		var price = parseInt($(this).parents('.productspec_container').find('#price').val())
+    		var price = parseFloat($(this).parents('.productspec_container').find('#price').val())
     		if (amount == 1) return;
     		else {
     			amount = amount - 1

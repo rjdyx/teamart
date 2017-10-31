@@ -270,4 +270,16 @@ class ProductController extends Controller
 		if (!$order->save()) return 0;
 		return $order_id;
 	}
+
+	// 商品库存查询 (add bu suzhihao 2017/10/31)
+	public function productStock (Request $request, $product_id) {
+		$stock = Product::where('id', $product_id)->select('stock')->first();
+		$stock = $stock->stock;
+		$count = $request->stock;
+		if ($stock - $count > 0) {
+			return "true";
+		} else {
+			return "false";
+		}
+	}
 }
