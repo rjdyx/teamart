@@ -64,8 +64,9 @@ class FadeController extends Controller
                 )
                 ->first();
         $products = Product::join('order_product','product.id','=','order_product.product_id')
-                ->join('product_group','product.group_id','=','product_group.id')
-                ->leftjoin('product_img','product_group.id','=','product_img.group_id')
+                // ->join('product_group','product.group_id','=','product_group.id')
+                // ->leftjoin('product_img','product_group.id','=','product_img.group_id')
+                ->leftjoin('product_img','product.id','=','product_img.product_id')
                 ->where('order_product.order_id','=',$id)
                 ->distinct('product.id')
                 ->select('product.*','product_img.img as image')

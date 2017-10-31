@@ -155,9 +155,10 @@
                                                 </li>`
                                     }
                                     if (state == 'pading' && method != 'self') {
-                                        c += `  <li class="pull-left J_opts" type="cancell" oid="${oid}">
-                                                    <a href="javascript:;" class="block mt-10 txt-c chayefont point">取消订单</a>
-                                                </li>
+                                        // <li class="pull-left J_opts" type="cancell" oid="${oid}">
+                                        //     <a href="javascript:;" class="block mt-10 txt-c chayefont point">取消订单</a>
+                                        // </li>
+                                        c += `
                                                 <li class="pull-left J_opts" type="pay" oid="${oid}">
                                                     <a href="javascript:;" class="block mt-10 txt-c chayefont point">付款</a>
                                                 </li>`
@@ -178,9 +179,9 @@
                                                 </li>`
                                     }
                                     if (state == 'backn' && method != 'self') {
-                                        c += `  <li class="pull-left J_opts" type="back" oid="${oid}">
-                                                    <a href="javascript:;" class="block mt-10 txt-c chayefont point">退货处理</a>
-                                                </li>`
+                                        // c += `  <li class="pull-left J_opts" type="back" oid="${oid}">
+                                        //             <a href="javascript:;" class="block mt-10 txt-c chayefont point">退货处理</a>
+                                        //         </li>`
                                     }
                                     if (method == 'self') {
                                         c += `  <li class="pull-left J_opts" type="back" oid="${oid}">

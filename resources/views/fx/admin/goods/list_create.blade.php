@@ -79,7 +79,7 @@
           var state = form['state']
           var grade = form['grade']
           var imgs = form['imgs[]']
-          var pic = form['pic']
+          var pic = form['img']
           var spec = specData();
 
           if (!_valid.ness('category_id', '商品分类', category_id.value)) {
@@ -142,7 +142,7 @@
             }
           }
           if (pic.files.length > 0) {
-            if (!_valid.img('pic', pic.files[0])) {
+            if (!_valid.img('img', pic.files[0])) {
               return false
             }
           }
@@ -368,15 +368,15 @@
                   <label class="col-sm-3 control-label"><i style="color:red;">*</i>商品主图</label>
                   <div class="col-sm-4">
                     <div class="upload_single">
-                        <label for="pic" class="upload pull-left">
+                        <label for="img" class="upload pull-left">
                           <i class="glyphicon glyphicon-plus"></i>
                         </label>
-                        <label class="btn btn-primary pull-left ml-10 invisible" for="pic">修改</label>
+                        <label class="btn btn-primary pull-left ml-10 invisible" for="img">修改</label>
                         <div class="btn btn-danger pull-left ml-10 invisible J_remove">删除</div>
-                        <input type="file" name="pic" id="pic" class="invisible form-control J_img" accept="image/jpeg,image/jpg,image/png">
+                        <input type="file" name="img" id="img" class="invisible form-control J_img" accept="image/jpeg,image/jpg,image/png">
                     </div>
                   </div>
-                  <span class="col-sm-4 text-danger form_error" id="pic_txt"></span>
+                  <span class="col-sm-4 text-danger form_error" id="img_txt"></span>
                 </div>
 
                 <!-- 此处4张图片上传 -->
