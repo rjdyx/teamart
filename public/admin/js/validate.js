@@ -224,16 +224,12 @@ exports.birth_date = (field, fieldtxt, value, isRequired = false) => {
 	if (isRequired) {
 		temp = ness(field, fieldtxt, value)
 	}
-	console.dir(value)
 	if (temp) {
-		console.dir('birth_date验证：' + value)
 		// if (!/^([1-9]{4})+-([0-1][1-9])+-([0-3][0-9])$/.test(value)) {
 		if (!/^((?:19|20)\d\d)-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/.test(value)) {
-			console.dir('日期不通过')
 			$('#' + field + '_txt').text(fieldtxt + '格式为yyyy-mm-dd')
 			valid = false
 		} else {
-			console.dir('日期通过')
 			$('#' + field + '_txt').text('')
 			valid = true
 		}

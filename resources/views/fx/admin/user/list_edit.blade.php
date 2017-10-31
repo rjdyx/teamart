@@ -177,7 +177,7 @@
 									</div>
 									<span class="col-sm-4 text-danger form_error" id="birth_date_txt"></span>
 								</div>
-							<div class="form-group">
+							<!-- <div class="form-group">
 								<label for="password" class="col-sm-3 control-label">登录密码</label>
 								<div class="col-sm-4">
 									<input type="password" name="password" class="form-control" id="password" placeholder="不输入密码则不修改">
@@ -190,7 +190,7 @@
 									<input type="password" class="form-control" id="repassword" placeholder="若登录密码未输入，则确认密码无效">
 								</div>
 								<span class="col-sm-4 text-danger form_error" id="repassword_txt"></span>
-							</div>
+							</div> -->
 							<div class="form-group">
 								<label for="repassword" class="col-sm-3 control-label">升级成为代理商</label>
 								<div class="col-sm-4">
