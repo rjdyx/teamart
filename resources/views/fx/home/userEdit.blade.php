@@ -107,7 +107,6 @@
 					ajax('post', url, params, true, true)
 						.then(function (resolve) {
 							if (resolve) {
-								// fxPrompt.message('保存成功')
 								fxPrompt.message('保存成功', 'http://' + window.location.host + '/home/userinfo')
 							} else {
 								fxPrompt.message('保存失败')
