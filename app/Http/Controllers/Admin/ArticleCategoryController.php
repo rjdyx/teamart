@@ -116,7 +116,9 @@ class ArticleCategoryController extends Controller
 
         //资源、上传图片名称、是否生成缩略图
         $imgs = IQuery::upload($request,'img',true,new ArticleCategory, $id);
-        $model->img = $imgs['pic'];
+        if (isset($img['pic'])) {
+            $model->img = $imgs['pic'];
+        }
 
         if ($model->save()) {
             return Redirect::to('admin/article/category')->with('status', '保存成功');

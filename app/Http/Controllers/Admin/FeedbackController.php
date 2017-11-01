@@ -125,7 +125,7 @@ class FeedbackController extends Controller
         //上传图片
         $pics = 'false';
         if ($request->hasFile('img')) $pics = IQuery::upload($request);
-        if ($pics != 'false') {
+        if (isset($pics['pic'])) {
             $model->img = $pics['pic'];
         }
 
