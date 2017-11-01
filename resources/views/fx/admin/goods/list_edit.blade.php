@@ -71,16 +71,13 @@
           var date = form['date']
           var state = form['state']
           var grade = form['grade']
+          var pic = form['img']
           var imgs = form['imgs[]']
-          var pic = form['pic']
           var spec = specData();
           if (!_valid.ness('category_id', '商品分类', category_id.value)) {
             return false
           }
           if (!_valid.ness('brand_id', '商品品牌', brand_id.value)) {
-            return false
-          }
-          if (!_valid.ness('spec_id', '商品规格', spec_id.value)) {
             return false
           }
           if (!_valid.name('name', '商品名称', name.value, 'product')) {
@@ -90,12 +87,6 @@
             return false
           }
           if (!_valid.desc('spec', '商品规格', spec, 30, true)) {
-            return false
-          }
-          if (!_valid.number('price_raw', '原价', price_raw.value)) {
-            return false
-          }
-          if (!_valid.number('price', '现价', price.value)) {
             return false
           }
           if (!_valid.number('delivery_price', '邮费', delivery_price.value)) {
@@ -122,6 +113,14 @@
           if (!_valid.ness('grade', '商品积分兑换', grade.value)) {
             return false
           }
+          if (pic.files.length > 0) {
+            if (!_valid.img('img', pic.files[0])) {
+              return false
+            }
+          } else {
+            $('#img_txt').text('请上传商品图片')
+            return false
+          }
           if (imgs.length) {
             var arr = []
             for (var i = 0; i < imgs.length; i++) {
@@ -132,18 +131,13 @@
                 arr.push(imgs[i].files[0])
               }
             }
-            if (arr.length == 0) {
-              $('#imgs_txt').text('至少要上传一张商品图片')
+            if (arr.length == 0 && $('.upload_list').find('img').length == 0) {
+              $('#imgs_txt').text('至少要上传一张商品附图')
               return false
             }
           } else {
             if (imgs.files.length == 0) {
-              $('#imgs_txt').text('至少要上传一张商品图片')
-              return false
-            }
-          }
-          if (pic.files.length > 0) {
-            if (!_valid.img('pic', pic.files[0])) {
+              $('#imgs_txt').text('至少要上传一张商品附图')
               return false
             }
           }
@@ -409,19 +403,19 @@
                     <div class="upload_single">
                       @if ($data->img) 
                         <img class="pull-left upload_img" src="{{url('')}}/{{$data->img}}">
-                        <label for="pic" class="upload pull-left hidden">
+                        <label for="img" class="upload pull-left hidden">
                           <i class="glyphicon glyphicon-plus"></i>
                         </label>
-                        <label class="btn btn-primary pull-left ml-10" for="pic">修改</label>
+                        <label class="btn btn-primary pull-left ml-10" for="img">修改</label>
                         <div class="btn btn-danger pull-left ml-10 J_remove">删除</div>
-                        <input type="file" name="pic" id="pic" class="invisible form-control J_img" accept="image/jpeg,image/jpg,image/png">
+                        <input type="file" name="img" id="img" class="invisible form-control J_img" accept="image/jpeg,image/jpg,image/png">
                       @else
-                        <label for="pic" class="upload pull-left">
+                        <label for="img" class="upload pull-left">
                           <i class="glyphicon glyphicon-plus"></i>
                         </label>
-                        <label class="btn btn-primary pull-left ml-10 invisible" for="pic">修改</label>
+                        <label class="btn btn-primary pull-left ml-10 invisible" for="img">修改</label>
                         <div class="btn btn-danger pull-left ml-10 invisible J_remove">删除</div>
-                        <input type="file" name="pic" id="pic" class="invisible form-control J_img" accept="image/jpeg,image/jpg,image/png">
+                        <input type="file" name="img" id="img" class="invisible form-control J_img" accept="image/jpeg,image/jpg,image/png">
                       @endif
                     </div>
                   </div>

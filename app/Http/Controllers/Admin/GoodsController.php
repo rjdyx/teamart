@@ -194,7 +194,7 @@ class GoodsController extends Controller
         if ($id == -1) $model->user_id = Auth::user()->id;
 
         //资源、上传图片名称、是否生成缩略图
-        $res = IQuery::upload($request,'pic',true,new Product,$id,'img');
+        $res = IQuery::upload($request,'img',true,new Product,$id,'img');
         $model->img = $res['pic'];
         $model->thumb = $res['thumb'];
 
