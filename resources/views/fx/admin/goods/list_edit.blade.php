@@ -118,8 +118,10 @@
               return false
             }
           } else {
-            $('#img_txt').text('请上传商品图片')
-            return false
+            if ($('.upload_single').find('img').length == 0) {
+              $('#img_txt').text('请上传商品图片')
+              return false
+            }
           }
           if (imgs.length) {
             var arr = []

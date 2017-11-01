@@ -195,8 +195,10 @@ class GoodsController extends Controller
 
         //资源、上传图片名称、是否生成缩略图
         $res = IQuery::upload($request,'img',true,new Product,$id,'img');
-        $model->img = $res['pic'];
-        $model->thumb = $res['thumb'];
+        if (isset($res['pic'])) {
+            $model->img = $res['pic'];
+            $model->thumb = $res['thumb'];
+        }
 
         if ($model->save()) {
             if ($id != -1) $model->id = $id;
