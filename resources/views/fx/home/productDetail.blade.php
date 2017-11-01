@@ -351,6 +351,8 @@
             spec_id = $(this).attr('pid');
     		var price = $(this).attr('price');
             $("#price").val(price);
+            $(".sum_price").text(parseFloat(price).toFixed(2));
+            $('input[name="amount"]').val(1);
             $(".productspec_container_info_content span").html('&yen'+parseFloat(price).toFixed(2));
     		$(this).addClass('active').siblings().removeClass('active');
     	})

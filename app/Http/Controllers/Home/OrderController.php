@@ -220,13 +220,23 @@ class OrderController extends Controller
 	public function showDelivery($order_id)
 	{
 		$title = "物流信息";
+		// $lists = OrderProduct::where('order_product.order_id','=',$order_id)
+		// 		->join('product','order_product.product_id','=','product.id')
+		// 		->join('order','order_product.order_id','=','order.id')
+		// 		->where('order.user_id','=',Auth::user()->id)
+		// 		->select('product.thumb','product.price as raw_price',
+		// 			'product.name','product.desc','order.delivery_serial',
+		// 			'order_product.amount','order_product.price'
+		// 		)->get();
+		// product表没有price字段，修改获取商品原价的查询
 		$lists = OrderProduct::where('order_product.order_id','=',$order_id)
 				->join('product','order_product.product_id','=','product.id')
 				->join('order','order_product.order_id','=','order.id')
+				->join('spec', 'order_product.spec_id', '=', 'spec.id')
 				->where('order.user_id','=',Auth::user()->id)
-				->select('product.thumb','product.price as raw_price',
-					'product.name','product.desc','order.delivery_serial',
-					'order_product.amount','order_product.price'
+				->select('product.thumb','product.name','product.desc',
+					'order.delivery_serial','order_product.amount','order_product.price',
+					'spec.price as raw_price'
 				)->get();
 
 		$data = Order::where('order.user_id','=',Auth::user()->id)->find($order_id);
@@ -260,9 +270,16 @@ class OrderController extends Controller
 	//获取订单商品
 	public function getOrderProduct($id)
 	{
+		// $data = OrderProduct::join('product','order_product.product_id','=','product.id')
+		// 		->where('order_product.order_id',$id)
+		// 		->select('product.price','product.thumb',
+		// 			'product.name','product.desc','product.id',
+		// 			'order_product.amount','order_product.price as order_price'
+		// 		)->get();
 		$data = OrderProduct::join('product','order_product.product_id','=','product.id')
+				->join('spec','order_product.spec_id', '=', 'spec.id')
 				->where('order_product.order_id',$id)
-				->select('product.price','product.thumb',
+				->select('spec.price','product.thumb',
 					'product.name','product.desc','product.id',
 					'order_product.amount','order_product.price as order_price'
 				)->get();
@@ -384,6 +401,14 @@ class OrderController extends Controller
 				->orderBy('reply.created_at','asc')
 				->get();
 		return $datas;
+	}
+
+	// 商家退货成功时请求接口
+	public function backSuccess ($id) {
+		$data = Order::where('id', $id)
+				->select('*')
+				->first();
+		return $data;
 	}
 
 }

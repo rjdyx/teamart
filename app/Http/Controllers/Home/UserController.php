@@ -182,7 +182,7 @@ class UserController extends Controller
         }
 
         //资源、上传图片名称、是否生成缩略图
-        $imgs = IQuery::upload($request,'img',true);
+        $imgs = IQuery::upload($request,'img',true, new User);
         if ($imgs != 'false') {
             $model->img = $imgs['pic'];
             $model->thumb = $imgs['thumb'];

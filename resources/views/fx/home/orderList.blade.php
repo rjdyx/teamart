@@ -179,9 +179,14 @@
                                                 </li>`
                                     }
                                     if (state == 'backn' && method != 'self') {
-                                        // c += `  <li class="pull-left J_opts" type="back" oid="${oid}">
-                                        //             <a href="javascript:;" class="block mt-10 txt-c chayefont point">退货处理</a>
-                                        //         </li>`
+                                        c += `  <li class="pull-left J_opts" type="backing" oid="${oid}">
+                                                    <a href="javascript:;" class="block mt-10 txt-c chayefont point">退货处理</a>
+                                                </li>`
+                                    }
+                                    if (state == 'backy' && method != 'self') {
+                                        c += `  <li class="pull-left J_opts" type="backy" oid="${oid}">
+                                                    <a href="javascript:;" class="block mt-10 txt-c chayefont point">退货成功</a>
+                                                </li>`
                                     }
                                     if (method == 'self') {
                                         c += `  <li class="pull-left J_opts" type="back" oid="${oid}">
@@ -210,6 +215,8 @@
                 var id = $(this).attr('oid');
                 if (type == 'pay') { order_pay(id); }
                 if (type == 'back') { order_back(id); }
+                if (type == 'backing') { order_backing(id); }
+                if (type == 'backy') { order_backy(id); }
                 if (type == 'take') { order_take(id); }
                 if (type == 'code') { order_code(id); }
                 if (type == 'comment') { order_comment(id); }
@@ -243,6 +250,19 @@
             function order_back(id){
                 fxPrompt.question('是否要申请退货', function () {
                     window.location.href = 'http://'+window.location.host + '/home/order/backn/reason/'+id;
+                })
+            }
+
+            // 退货中处理
+            function order_backing(id){
+                fxPrompt.message('商家正在处理退货中。。。')
+            }
+
+            // 退货成功
+            function order_backy(id){
+                var url = `http://${window.location.host}/home/order/${id}/backSuccess`;
+                ajax('get', url).then(function (res) {
+                    fxPrompt.message(`您在${res.updated_at}成功退货`)
                 })
             }
 

@@ -96,6 +96,7 @@ Route::group(['middleware'=>['isWeixin']],function(){
 			Route::post('/payOrder','OrderPayController@payOrder'); //付款预处理
 	    	Route::post('/pay/{order_id}','OrderController@pay');//付款成功后操作
 	    	Route::get('/backn/reason/{id}','OrderController@backnReason');//退货理由
+	    	Route::get('/{id}/backSuccess','OrderController@backSuccess');//退货成功后调用接口 (add by szh 2017/11/1)
 	    	Route::post('/operate/{type}','OrderController@orderOperate');//订单state改变
 	    	Route::get('/{id}','OrderController@orderDetail');//订单详情
 		});
