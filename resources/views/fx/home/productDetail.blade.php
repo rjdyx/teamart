@@ -73,6 +73,9 @@
 					$('.J_show_image').off('tap').on('tap', function () {
 						fxPrompt.image($(this).data('img'))
 					})
+					$('.J_reply_btn').off('tap').on('tap', function () {
+						// TODO回复
+					})
 				})
 				.catch(function (err) {
 					console.dir(err)
@@ -119,6 +122,13 @@
 							</div>
 						`
 					}
+					// template += `
+					// 	<div class="comment_reply_warpper w-100 p-10 relative">
+					// 		<label for="reply">
+					// 			<input class="pl-10" type="text" id="reply" placeholder="回复。。。" />
+					// 		</label>
+					// 	</div>
+					// 	`
 					template += '</div>'
 				}	
 				template += `</div></li>`

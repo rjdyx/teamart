@@ -43,7 +43,7 @@ class ProductController extends Controller
 
 		if (!empty($type)) {
 			if ($type == 'sell') $orField = 'product.sell_amount';
-			if ($type == 'price') $orField = 'product.price';
+			if ($type == 'price') $orField = 'spec.price';
 		}
 		if (!empty($up)) $order = $up;
 		if (!empty($name)) $whValue = $name;
@@ -60,8 +60,8 @@ class ProductController extends Controller
 
 		if (!empty($brands) && count($brands)) $lists = $lists->whereIn('brand.id',$brands);	
 		if (!empty($category)) $lists = $lists->where('product.category_id','=',$category);	
-		if (!empty($min)) $lists = $lists->where('product.price','>=',$min);	
-		if (!empty($max)) $lists = $lists->where('product.price','<=',$max);	
+		if (!empty($min)) $lists = $lists->where('spec.price','>=',$min);	
+		if (!empty($max)) $lists = $lists->where('spec.price','<=',$max);	
 
 		$lists = $lists->select(
 					'product.id',
