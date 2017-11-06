@@ -164,7 +164,7 @@ class ProductController extends Controller
 
 		foreach ($comments as $k => $comment) {
 			$replys = Reply::join('user as auser','reply.auser_id','=','auser.id')
-					->join('user as buser','reply.auser_id','=','buser.id')
+					->join('user as buser','reply.buser_id','=','buser.id')
 					->where('reply.comment_id',$comment->id)
 					->select('reply.*','auser.name as aname','buser.name as bname')
 					->orderBy('reply.created_at','asc')
