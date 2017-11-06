@@ -18,6 +18,7 @@ use App\OrderProduct;
 use Illuminate\Support\Facades\Auth;
 use Redirect;
 use IQuery;
+use DB;
 
 class OrderController extends Controller
 {
@@ -129,10 +130,14 @@ class OrderController extends Controller
 		        ->get();
 
 		$title = '确认订单';
+
+		// 2017/11/06 新增自提站点数量，用于判断前端选择物流方式
+		$sitecount = Site::select(DB::raw('COUNT(*) as count'))->first();
+
 		$openid = IQuery::GetOpenid();
 		// $openid = 1;
 
-		return view(config('app.theme').'.home.confirm')->with(['title'=>$title,'lists'=>$lists,'count'=>$count,'grade'=>$grade,'cheaps'=>$cheaps,'id'=>$id,'openid'=>$openid]);
+		return view(config('app.theme').'.home.confirm')->with(['title'=>$title,'lists'=>$lists,'count'=>$count,'grade'=>$grade,'cheaps'=>$cheaps,'id'=>$id,'openid'=>$openid, 'sitecount'=>$sitecount->count]);
 	}
 
 	//检测订单状态
