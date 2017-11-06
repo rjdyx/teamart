@@ -283,13 +283,14 @@
             function order_code(id){
                 $("#qrcode").html('')
                 var qrcode = new QRCode(document.getElementById("qrcode"), {
+                    // text: `http://${window.location.host}/home/order/list/${id}`,
                     text: `http://${window.location.host}/home/order/list/${id}`,
                     width: 512,
                     height: 512
                 })
                 fxPrompt.message('二维码生成中')
                 setTimeout(function () {
-                    fxPrompt.qrcode()
+                    fxPrompt.qrcode('到店扫码即可自提')
                 }, 1010)
             }
             
@@ -319,7 +320,6 @@
                 params['page'] = 1;// 重置页数，重新获取loadDownFn的数据
                 var url = 'http://'+window.location.host + '/home/order/list/data';
                 ajax('get', url, params).then(function (data) {
-                    console.log(1)
                     $('.order_container').find('.list_nodata').remove()
                     $('.dropload-down').show()
                     if (params['page'] == 1 && data.length == 0) {

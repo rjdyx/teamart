@@ -59,7 +59,7 @@
 
 		// 显示二维码
 		$('.J_QRcode').on('tap', function () {
-			fxPrompt.qrcode()
+			fxPrompt.qrcode('分销二维码')
 		})
 
 		// 扫描二维码

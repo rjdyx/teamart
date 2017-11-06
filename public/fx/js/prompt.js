@@ -58,7 +58,8 @@ exports.image = (src) => {
 }
 
 // 二维码
-exports.qrcode = () => {
+exports.qrcode = (msg) => {
+	$('.prompt_qrcode_msg').text(msg)
 	$('.prompt').addClass('active').find('.prompt_qrcode').addClass('atc')
 }
 

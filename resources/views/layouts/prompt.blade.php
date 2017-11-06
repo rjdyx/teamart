@@ -18,5 +18,8 @@
 		<i class="fa fa-spinner white"></i>
 		<!-- <img id="p_img" class="w-100 h-100" src="" alt=""> -->
 	</div>
-	<div id="qrcode" class="prompt_qrcode"></div>
+	<div class="prompt_qrcode">
+		<p class="prompt_qrcode_msg"></p>
+		<div id="qrcode" class="prompt_qrcode_img"></div>
+	</div>
 </div>
