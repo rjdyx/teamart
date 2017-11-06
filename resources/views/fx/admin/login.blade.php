@@ -81,7 +81,7 @@
 	    @if ($verify)
 		    <div class="form-group has-feedback clearfix">
 	            <input type="text" name="captcha" class="form-control pull-left w50" id="captcha" placeholder="请输入验证码">
-	            <a onclick="javascript:re_captcha();">
+	            <a href="javascript:;" id="re_captcha">
 	                <img src="" class="verifi-code pull-right J_captcha" alt="验证码" title="刷新图片" width="100" height="40" id="verifi_code_image" border="0">
 	            </a>
 	        </div>
@@ -118,6 +118,10 @@
 	       	    re_captcha();
 	        }
 	        
+	        $('#re_captcha').on('click', function () {
+	        	re_captcha()
+	        })
+
 	        var form = document.forms['loginForm']
 
 			$(form).on('submit', function () {
