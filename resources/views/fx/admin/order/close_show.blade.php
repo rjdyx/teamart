@@ -32,6 +32,7 @@
                   @if ($data->state == 'paid') 已付款 @endif
                   @if ($data->state == 'delivery') 已发货 @endif
                   @if ($data->state == 'take') 已收货 @endif
+                  @if ($data->state == 'close') 已关闭 @endif
                 </label>
               </li>
               <li>

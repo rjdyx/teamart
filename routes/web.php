@@ -98,6 +98,7 @@ Route::group(['middleware'=>['isWeixin']],function(){
 	    	Route::get('/backn/reason/{id}','OrderController@backnReason');//退货理由
 	    	Route::get('/{id}/backSuccess','OrderController@backSuccess');//退货成功后调用接口 (add by szh 2017/11/1)
 	    	Route::get('/cancell','OrderController@cancell');//取消订单 (add by szh 2017/11/08)
+	    	// Route::get('/take','OrderController@taken');//确认收货 (add by szh 2017/11/08)
 	    	Route::post('/operate/{type}','OrderController@orderOperate');//订单state改变
 	    	Route::get('/{id}','OrderController@orderDetail');//订单详情
 		});

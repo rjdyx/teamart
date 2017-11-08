@@ -124,7 +124,7 @@ class LoginController extends Controller
     public function adminLogin(Request $request)
     {
         $this->validateLogin($request);//验证
-        if ($this->role($request)) return $this->failedLoginCome($request);
+        // if ($this->role($request)) return $this->failedLoginCome($request);
 
         //验证码验证
         if ($this->milkcaptchaLogin($request->captcha)) 

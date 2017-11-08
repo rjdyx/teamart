@@ -424,4 +424,12 @@ class OrderController extends Controller
 		return 500;
 	}
 
+	// 确定收货
+	public function taken (Request $request) {
+		$order = Order::where('id', $request->id)->first();
+		$order->state = 'take';
+		if ($order->save()) return 200;
+		return 500;
+	}
+
 }

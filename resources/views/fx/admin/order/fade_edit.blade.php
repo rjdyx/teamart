@@ -12,12 +12,11 @@
     <script>
       $(function () {
         var form = document.forms['brandForm']
-        $(form).on('submit', function () {
-          return submitForm()
-        });
-        function submitForm() {
-          return true;
-        }
+        $('.J_submit').on('click', function () {
+          confirm.question('请注意，确认后退货状态后不可修改', function () {
+            form.submit();
+          })
+        })
       })
     </script>
 @endsection
@@ -41,6 +40,7 @@
                   @if ($data->state == 'paid') 已付款 @endif
                   @if ($data->state == 'delivery') 已发货 @endif
                   @if ($data->state == 'take') 已收货 @endif
+                  @if ($data->state == 'backy') 已退货 @endif
                 </label>
               </li>
               <li>
@@ -93,18 +93,24 @@
                 <div class="form-group">
                   <label for="name" class="col-sm-3 control-label"><i style="color:red;">*</i>处理结果</label>
                   <div class="col-sm-4">
-                      <select class="form-control input-sm" name="state" onchange="requiedx();">
+                      <select class="form-control input-sm" name="state" onchange="requiedx();" @if($data->state == 'backy' || $data->state == 'close') disabled @endif >
                         <option value="backy" @if($data->state=='backy')selected @endif > 退 款 (尊从买家意愿)</option>
                         <option value="close" @if($data->state=='close')selected @endif > 不退款 (和买家达成一致) </option>
                       </select>
                   </div>
                 </div>
                 <div class="form-group">
+                  @if($data->state == 'backy' || $data->state == 'close')
                   <div class="col-sm-offset-3 col-sm-10">
-                    <button type="submit" class="btn btn-success btn-100">确认</button>
+                    <a href="{{ url('admin/order/fade') }}"><button type="button" class="btn btn-success btn-100">返回</button></a>
+                  </div>
+                  @else
+                  <div class="col-sm-offset-3 col-sm-10">
+                    <div class="btn btn-success btn-100 J_submit">确认</div>
                     <button type="reset" class="btn btn-success btn-100">重置</button>
                     <a href="{{ url('admin/order/fade') }}"><button type="button" class="btn btn-success btn-100" id="cancel_addAgent">取消</button></a>
                   </div>
+                  @endif
                 </div>
               </div>
             </form>

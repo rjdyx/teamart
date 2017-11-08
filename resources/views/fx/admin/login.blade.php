@@ -53,7 +53,6 @@
     </script>
 </head>
 <body class="hold-transition login-page" style="height: auto">
-
 	<div class="login-box">
 	  <div class="login-logo">
 	    <a href="javascript:;"><b>分销后台</b>管理</a>
@@ -92,6 +91,11 @@
 	          <button type="submit" class="btn btn-primary btn-block btn-flat">登录</button>
 	        </div>
 	      </div>
+        @if ($errors->has('name'))
+        <p style="text-align: center;">
+          <strong class="text-danger">{{ $errors->first('name') }}</strong>
+        </p>
+        @endif
 	    </form>
 	  </div>
 	</div>

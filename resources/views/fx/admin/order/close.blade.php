@@ -52,6 +52,7 @@
                   @if ($list->state == 'paid') 已付款 @endif
                   @if ($list->state == 'delivery') 已发货 @endif
                   @if ($list->state == 'take') 已收货 @endif
+                  @if ($list->state == 'close') 已关闭 @endif
                 </td>
                 <td>{{$list->memo}}</td>
                 <td>

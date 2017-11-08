@@ -144,7 +144,7 @@
                                         </div>
                                         <div class="order_warpper_opts">
                                             <ul class="pull-right">`
-                                    if (state != 'paid' && state != 'pading' && state != 'cancell') {
+                                    if (state != 'paid' && state != 'pading' && state != 'cancell' && method != 'self') {
                                         c += `  <li class="pull-left J_opts" type="delivery" oid="${oid}">
                                                 <a href="javascript:;" class="block mt-10 txt-c chayefont point">查看物流</a>
                                             </li>`
@@ -189,13 +189,24 @@
                                                 </li>`
                                     }
                                     if (method == 'self') {
-                                        c += `  <li class="pull-left J_opts" type="back" oid="${oid}">
-                                                    <a href="javascript:;" class="block mt-10 txt-c chayefont point">申请退货</a>
-                                                </li>
-                                                <li class="pull-left J_opts" type="code" oid="${oid}">
+                                        if (state == 'backn') {
+                                            c += `  <li class="pull-left J_opts" type="backing" oid="${oid}">
+                                                        <a href="javascript:;" class="block mt-10 txt-c chayefont point">退货处理</a>
+                                                    </li>`
+                                        } else if (state == 'backy') {
+                                            c += `  <li class="pull-left J_opts" type="backy" oid="${oid}">
+                                                        <a href="javascript:;" class="block mt-10 txt-c chayefont point">退货成功</a>
+                                                    </li>`
+                                        } else {
+                                            c += `  <li class="pull-left J_opts" type="back" oid="${oid}">
+                                                        <a href="javascript:;" class="block mt-10 txt-c chayefont point">申请退货</a>
+                                                    </li>`
+                                        }
+                                        c += `  <li class="pull-left J_opts" type="code" oid="${oid}">
                                                     <a href="javascript:;" class="block mt-10 txt-c chayefont  point">生成二维码</a>
                                                 </li>`
                                     }
+                                    
                             c += `          </ul>
                                         </div>
                                     </div>`

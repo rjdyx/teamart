@@ -128,11 +128,23 @@
             $('.J_IntNum').on('blur', function () {
                 $(this).val(parseFloat($(this).val()).toFixed(0))
             })
+
+            $('.J_hide_prompt').on('click', function () {
+                $('.prompt').removeClass('active')
+                    .find('.prompt_image, .prompt_qrcode, .prompt_message, .prompt_question, .prompt_loading').removeClass('atc').end()
+                    .find('.prompt_message_content, .prompt_question_content').html('').end()
+            })
+            // 点击取消时
+            $('.J_prompt_no').on('click', function () {
+                $('.prompt').removeClass('active').find('.prompt_question_content').html('').end()
+                    .find('.prompt_question').removeClass('atc')
+            })
         })
        
     </script>
     @yield('script')
 
     @include("fx.admin.layouts.alert")
+    @include("fx.admin.layouts.confirm")
 </body>
 </html>
