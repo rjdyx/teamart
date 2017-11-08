@@ -20,6 +20,6 @@ env.js
 npm-debug.log
 /public/fx/build
 /env.js
-#/public/admin/build
+/public/admin/build
 /node_modules/node-sass
 /env.js
