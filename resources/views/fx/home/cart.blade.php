@@ -50,7 +50,9 @@
                                     <div class="warpper mb-20 clearfix">
                                         <i class="warpper_select block J_select" data-opid="${v.opid}" data-pid="${v.id}" data-price="${v.price}"></i>
                                         <div class="warpper_content_img h-100 pull-left mr-20">
-                                            <img class="w-100" src="http://${window.location.host}/${v.img}">
+                                            <a class="block h-100 w-100" href="/home/product/detail/${v.id}">
+                                                <img class="w-100" src="http://${window.location.host}/${v.img}">
+                                            </a>
                                         </div>
                                         <div class="warpper_content_info h-100 pull-right">
                                             <h5 class="chayefont mb-10">${v.name}</h5>

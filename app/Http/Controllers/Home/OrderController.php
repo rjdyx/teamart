@@ -416,4 +416,12 @@ class OrderController extends Controller
 		return $data;
 	}
 
+	// 取消订单
+	public function cancell (Request $request) {
+		$order = Order::where('id', $request->id)->first();
+		$order->state = 'cancell';
+		if ($order->save()) return 200;
+		return 500;
+	}
+
 }
