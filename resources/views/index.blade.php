@@ -149,18 +149,20 @@
                         <span class="price">￥ @if(isset($sells[2])) {{sprintf('%.2f', $sells[2]->price)}} @endif</span>
                     </a>
                 </li> -->
-                @foreach($sells as $sell)
-                    @if(isset($sell))
-                    <li class="pull-left p-10">
-                        <a href="{{url('/home/product/detail')}}/{{$sell->id}}">
-                            <img src="{{$sell->thumb}}" alt="">
-                            <h1 class="chayefont">{{$sell->name}}</h1>
-                            <p class="chayefont fz-12">{{$sell->desc}}</p>
-                            <span class="price">&yen;{{sprintf('%.2f', $sell->price)}}</span>
-                        </a>
-                    </li>
-                    @endif
-                @endforeach
+                @if(count($sells) > 0)
+                    @foreach($sells as $sell)
+                        @if(isset($sell))
+                        <li class="pull-left p-10">
+                            <a href="{{url('/home/product/detail')}}/{{$sell->id}}">
+                                <img src="{{$sell->thumb}}" alt="">
+                                <h1 class="chayefont">{{$sell->name}}</h1>
+                                <p class="chayefont fz-12">{{$sell->desc}}</p>
+                                <span class="price">&yen;{{sprintf('%.2f', $sell->price)}}</span>
+                            </a>
+                        </li>
+                        @endif
+                    @endforeach
+                @endif
             </ul>
         </div>
     </div>

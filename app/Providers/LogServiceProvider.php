@@ -53,8 +53,8 @@ use App\Observers\GoodsObserver;
 use App\ProductCategory;
 use App\Observers\ProductCategoryObserver;
 
-use App\ProductGroup;
-use App\Observers\ProductGroupObserver;
+// use App\ProductGroup;
+// use App\Observers\ProductGroupObserver;
 
 use App\ProductImg;
 use App\Observers\ProductImgObserver;
@@ -97,7 +97,7 @@ class LogServiceProvider extends ServiceProvider
             Parter::observe(ParterObserver::class);
             Product::observe(GoodslObserver::class);
             ProductCategory::observe(ProductCategoryObserver::class);
-            ProductGroup::observe(ProductGroupObserver::class);
+            // ProductGroup::observe(ProductGroupObserver::class);
             ProductImg::observe(ProductImgObserver::class);
             Reply::observe(ReplyObserver::class);
             Site::observe(SiteObserver::class);
