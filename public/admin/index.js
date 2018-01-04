@@ -24,7 +24,7 @@ require('./css/index.scss')
 
 require('expose-loader?_valid!./js/validate.js')
 require('expose-loader?datepicker!./js/datepicker.js')
-require('expose-loader?confirm!./js/confirm.js')
+require('expose-loader?customConfirm!./js/confirm.js')
 
 // let init = require('./js/index.js')
 // $(function () {

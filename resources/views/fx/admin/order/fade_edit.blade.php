@@ -13,7 +13,7 @@
       $(function () {
         var form = document.forms['brandForm']
         $('.J_submit').on('click', function () {
-          confirm.question('请注意，确认后退货状态后不可修改', function () {
+          customConfirm.question('请注意，确认后退货状态后不可修改', function () {
             form.submit();
           })
         })

@@ -1,7 +1,7 @@
 @extends('fx.admin.layouts.app')
 
 @section('title')
-代理商
+代理商角色
 @endsection
 
 @section('t1')
