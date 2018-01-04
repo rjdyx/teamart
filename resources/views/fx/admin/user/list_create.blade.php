@@ -122,7 +122,7 @@
 							</div>
 
 							<div class="form-group">
-								<label for="phone" class="col-sm-3 control-label">手机</label>
+								<label for="phone" class="col-sm-3 control-label"><i style="color:red;">*</i>手机</label>
 								<div class="col-sm-4">
 									<input type="text" name="phone" class="form-control" id="phone" placeholder="请输入手机号" onblur="_valid.phone('phone', this.value)" oninput="_valid.phone('phone', this.value)">
 								</div>
@@ -138,7 +138,7 @@
 							</div>
 
 							<div class="form-group">
-								<label class="col-sm-3 control-label" for="datepicker">出生日期</label>
+								<label class="col-sm-3 control-label" for="datepicker"><i style="color:red;">*</i>出生日期</label>
 								<div class="col-sm-4">
 									<div class="input-group">
 										<input type="text" name="birth_date" class="form-control pull-right" id="datepicker">

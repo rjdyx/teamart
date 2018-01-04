@@ -93,7 +93,7 @@
                 <div class="form-group">
                   <label for="name" class="col-sm-3 control-label"><i style="color:red;">*</i>处理结果</label>
                   <div class="col-sm-4">
-                      <select class="form-control input-sm" name="state" onchange="requiedx();" @if($data->state == 'backy' || $data->state == 'close') disabled @endif >
+                      <select class="form-control input-sm" name="state" @if($data->state == 'backy' || $data->state == 'close') disabled @endif >
                         <option value="backy" @if($data->state=='backy')selected @endif > 退 款 (尊从买家意愿)</option>
                         <option value="close" @if($data->state=='close')selected @endif > 不退款 (和买家达成一致) </option>
                       </select>

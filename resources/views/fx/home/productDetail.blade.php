@@ -113,9 +113,9 @@
 				if (v['replys']) {
 					template += '<div class="comment_reply w-100">'
 					for(var j=0;j<v['replys'].length;j++) {
+								// ${v.user_id == uid ? '<a href="javascript:;" class="comment_reply_btn block J_reply_btn">回复</a>' : ''}
 						template += `
 							<div class="comment_reply_warpper w-100 p-10 relative">
-								${v.user_id == uid ? '<a href="javascript:;" class="comment_reply_btn block J_reply_btn">回复</a>' : ''}
 								<p class="fz-12">${v['replys'][j]['aname']} <b>回复</b> ${v['replys'][j]['bname']}：</p>
 								<p class="fz-12">${v['replys'][j]['content']}</p>
 								<p class="fz-12 txt-r">${v['replys'][j]['created_at']}</p>

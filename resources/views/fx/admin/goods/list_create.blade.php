@@ -47,9 +47,9 @@
         $('#stock').on('blur input', function () {
           _valid.number('stock', '库存', $(this).val())
         })
-        $('#low_stock').on('blur input', function () {
-          _valid.number('low_stock', '低库存', $(this).val())
-        })
+        // $('#low_stock').on('blur input', function () {
+        //   _valid.number('low_stock', '低库存', $(this).val())
+        // })
         $('#origin').on('blur input', function () {
           _valid.desc('origin', '商品产地', $(this).val(), 50, true)
         })
@@ -72,7 +72,7 @@
           var desc = form['desc']
           var delivery_price = form['delivery_price']
           var stock = form['stock']
-          var low_stock = form['low_stock']
+          // var low_stock = form['low_stock']
           var origin = form['origin']
           var effect = form['effect']
           var date = form['date']
@@ -103,9 +103,9 @@
           if (!_valid.number('stock', '库存', stock.value)) {
             return false
           }
-          if (!_valid.number('low_stock', '低库存', low_stock.value)) {
-            return false
-          }
+          // if (!_valid.number('low_stock', '低库存', low_stock.value)) {
+          //   return false
+          // }
           if (!_valid.desc('origin', '商品产地', origin.value, 50, true)) {
             return false
           }
@@ -310,13 +310,13 @@
                   </div>
                   <span class="col-sm-4 text-danger form_error" id="stock_txt"></span>
                 </div>
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <label for="low_stock" class="col-sm-3 control-label"><i style="color:red;">*</i>低库存</label>
                   <div class="col-sm-4">
                     <input type="number" name="low_stock" class="form-control J_IntNum" id="low_stock" placeholder="请输入商品低库存">
                   </div>
                   <span class="col-sm-4 text-danger form_error" id="low_stock_txt"></span>
-                </div>
+                </div> -->
                 <div class="form-group">
                   <label for="origin" class="col-sm-3 control-label"><i style="color:red;">*</i>商品产地</label>
                   <div class="col-sm-4">
@@ -347,8 +347,8 @@
                   <label class="col-sm-3 control-label"><i style="color:red;">*</i>商品状态</label>
                   <div class="col-sm-4">
                     <select name="state" class="form-control" id="state">
-                      <option value="1" selected>上架</option>
-                      <option value="0">下架</option>
+                      <option value="1" selected>开启(有货)</option>
+                      <option value="0">关闭(缺货)</option>
                     </select>
                   </div>
                   <span class="col-sm-4 text-danger form_error" id="state_txt"></span>
