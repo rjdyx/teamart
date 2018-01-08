@@ -86,7 +86,7 @@ class PersonalController extends Controller
         if($password != null && $password != '') $user->password = bcrypt($password);
 
         $imgs = IQuery::upload($request,'img',true,new User,$id);
-        if (isset($img['pic'])) {
+        if (isset($imgs['pic'])) {
             $user->img = $imgs['pic'];
             $user->thumb = $imgs['thumb'];
         }
