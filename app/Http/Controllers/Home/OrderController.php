@@ -18,6 +18,7 @@ use App\OrderProduct;
 use Illuminate\Support\Facades\Auth;
 use Redirect;
 use IQuery;
+use DB;
 
 class OrderController extends Controller
 {
@@ -129,10 +130,14 @@ class OrderController extends Controller
 		        ->get();
 
 		$title = '确认订单';
+
+		// 2017/11/06 新增自提站点数量，用于判断前端选择物流方式
+		$sitecount = Site::select(DB::raw('COUNT(*) as count'))->first();
+
 		$openid = IQuery::GetOpenid();
 		// $openid = 1;
 
-		return view(config('app.theme').'.home.confirm')->with(['title'=>$title,'lists'=>$lists,'count'=>$count,'grade'=>$grade,'cheaps'=>$cheaps,'id'=>$id,'openid'=>$openid]);
+		return view(config('app.theme').'.home.confirm')->with(['title'=>$title,'lists'=>$lists,'count'=>$count,'grade'=>$grade,'cheaps'=>$cheaps,'id'=>$id,'openid'=>$openid, 'sitecount'=>$sitecount->count]);
 	}
 
 	//检测订单状态
@@ -220,13 +225,23 @@ class OrderController extends Controller
 	public function showDelivery($order_id)
 	{
 		$title = "物流信息";
+		// $lists = OrderProduct::where('order_product.order_id','=',$order_id)
+		// 		->join('product','order_product.product_id','=','product.id')
+		// 		->join('order','order_product.order_id','=','order.id')
+		// 		->where('order.user_id','=',Auth::user()->id)
+		// 		->select('product.thumb','product.price as raw_price',
+		// 			'product.name','product.desc','order.delivery_serial',
+		// 			'order_product.amount','order_product.price'
+		// 		)->get();
+		// product表没有price字段，修改获取商品原价的查询
 		$lists = OrderProduct::where('order_product.order_id','=',$order_id)
 				->join('product','order_product.product_id','=','product.id')
 				->join('order','order_product.order_id','=','order.id')
+				->join('spec', 'order_product.spec_id', '=', 'spec.id')
 				->where('order.user_id','=',Auth::user()->id)
-				->select('product.thumb','product.price as raw_price',
-					'product.name','product.desc','order.delivery_serial',
-					'order_product.amount','order_product.price'
+				->select('product.thumb','product.name','product.desc',
+					'order.delivery_serial','order_product.amount','order_product.price',
+					'spec.price as raw_price'
 				)->get();
 
 		$data = Order::where('order.user_id','=',Auth::user()->id)->find($order_id);
@@ -260,9 +275,16 @@ class OrderController extends Controller
 	//获取订单商品
 	public function getOrderProduct($id)
 	{
+		// $data = OrderProduct::join('product','order_product.product_id','=','product.id')
+		// 		->where('order_product.order_id',$id)
+		// 		->select('product.price','product.thumb',
+		// 			'product.name','product.desc','product.id',
+		// 			'order_product.amount','order_product.price as order_price'
+		// 		)->get();
 		$data = OrderProduct::join('product','order_product.product_id','=','product.id')
+				->join('spec','order_product.spec_id', '=', 'spec.id')
 				->where('order_product.order_id',$id)
-				->select('product.price','product.thumb',
+				->select('spec.price','product.thumb',
 					'product.name','product.desc','product.id',
 					'order_product.amount','order_product.price as order_price'
 				)->get();
@@ -384,6 +406,30 @@ class OrderController extends Controller
 				->orderBy('reply.created_at','asc')
 				->get();
 		return $datas;
+	}
+
+	// 商家退货成功时请求接口
+	public function backSuccess ($id) {
+		$data = Order::where('id', $id)
+				->select('*')
+				->first();
+		return $data;
+	}
+
+	// 取消订单
+	public function cancell (Request $request) {
+		$order = Order::where('id', $request->id)->first();
+		$order->state = 'cancell';
+		if ($order->save()) return 200;
+		return 500;
+	}
+
+	// 确定收货
+	public function taken (Request $request) {
+		$order = Order::where('id', $request->id)->first();
+		$order->state = 'take';
+		if ($order->save()) return 200;
+		return 500;
 	}
 
 }

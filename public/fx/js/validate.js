@@ -1,4 +1,5 @@
 // import ajax from './ajax.js'
+import fxPrompt from './prompt.js'
 /**
  * 必需字段
  *
@@ -170,6 +171,7 @@ const validate = {
 	name: ($inp, value) => {
 		if ($.trim(value).length < 2) {
 			$inp.parents('.form_item').addClass('error')
+			// errMsg($inp)
 		} else {
 			$inp.parents('.form_item').removeClass('error')
 		}
@@ -178,6 +180,7 @@ const validate = {
 		let reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+\.([a-zA-Z0-9_-])+/
 		if (!reg.test(value)) {
 			$inp.parents('.form_item').addClass('error')
+			// errMsg($inp)
 		} else {
 			$inp.parents('.form_item').removeClass('error')
 		}
@@ -185,6 +188,7 @@ const validate = {
 	phone: ($inp, value) => {
 		if (!/^1[34578]\d{9}$/.test(value)) {
 			$inp.parents('.form_item').addClass('error')
+			// errMsg($inp)
 		} else {
 			$inp.parents('.form_item').removeClass('error')
 		}
@@ -192,6 +196,7 @@ const validate = {
 	detail: ($inp, value) => {
 		if ($.trim(value).length < 5) {
 			$inp.parents('.form_item').addClass('error')
+			// errMsg($inp)
 		} else {
 			$inp.parents('.form_item').removeClass('error')
 		}
@@ -200,6 +205,7 @@ const validate = {
 		if ($.trim(value).length > 0) {
 			if (!/^[1-9][0-9]{5}$/.test(value)) {
 				$inp.parents('.form_item').addClass('error')
+				// errMsg($inp)
 			} else {
 				$inp.parents('.form_item').removeClass('error')
 			}
@@ -208,6 +214,7 @@ const validate = {
 	address: ($inp, value) => {
 		if ($.trim(value).length === 0) {
 			$inp.parents('.form_item').addClass('error')
+			// errMsg($inp)
 		} else {
 			$inp.parents('.form_item').removeClass('error')
 		}
@@ -216,6 +223,7 @@ const validate = {
 		if ($.trim(value).length > 0) {
 			if ($.trim(value).length < 2) {
 				$inp.parents('.form_item').addClass('error')
+				// errMsg($inp)
 			} else {
 				$inp.parents('.form_item').removeClass('error')
 			}
@@ -227,6 +235,7 @@ const validate = {
 		if ($.trim(value).length > 0) {
 			if ($.trim(value).length < 6) {
 				$inp.parents('.form_item').addClass('error')
+				// errMsg($inp)
 			} else {
 				$inp.parents('.form_item').removeClass('error')
 			}
@@ -238,9 +247,11 @@ const validate = {
 		if ($.trim(value).length > 0 || $.trim($('#password').val()).length > 0) {
 			if ($.trim(value).length < 6) {
 				$inp.parents('.form_item').addClass('error')
+				// errMsg($inp)
 			} else {
 				if ($('#password').val() !== value) {
 					$inp.parents('.form_item').addClass('error')
+					// errMsg($inp)
 				} else {
 					$inp.parents('.form_item').removeClass('error')
 				}
@@ -249,6 +260,12 @@ const validate = {
 			$inp.parents('.form_item').removeClass('error')
 		}
 	}
+}
+
+function errMsg ($inp) {
+	// if ($inp.parents('.form_item').data('err')) {
+	// 	fxPrompt.message($inp.parents('.form_item').data('err'))
+	// }
 }
 
 exports.bindEvent = (fields) => {
@@ -282,6 +299,7 @@ exports.validForm = (params) => {
 		}
 	})
 	if ($('.form_item.error').length > 0) {
+		fxPrompt.message('提交信息有错误，请修改后提交')
 		return false
 	} else {
 		return true

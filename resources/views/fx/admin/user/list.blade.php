@@ -50,9 +50,10 @@
                   <td>{{$list->grade}}</td>
                   <td>
                   <div style="color: #dd4b39">
-                  <a href="{{url('admin/user/list')}}/{{$list->id}}/edit" title="编辑">
-                  <i class="fa fa-edit" style="margin-right: 10px;"></i></a>
-                  <i class="fa fa-trash-o" title="删除" onclick="del({{$list->id}});" style="cursor: pointer;"></i>
+                    <a href="{{url('admin/user/list')}}/{{$list->id}}/edit" title="编辑">
+                      <i class="fa fa-edit" style="margin-right: 10px;"></i>
+                    </a>
+                    <i class="fa fa-trash-o" title="删除" onclick="del({{$list->id}});" style="cursor: pointer;"></i>
                   </div>
                  </td>
                 </tr>

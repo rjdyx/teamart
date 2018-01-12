@@ -144,7 +144,7 @@
                                         </div>
                                         <div class="order_warpper_opts">
                                             <ul class="pull-right">`
-                                    if (state != 'paid' && state != 'pading') {
+                                    if (state != 'paid' && state != 'pading' && state != 'cancell' && method != 'self') {
                                         c += `  <li class="pull-left J_opts" type="delivery" oid="${oid}">
                                                 <a href="javascript:;" class="block mt-10 txt-c chayefont point">查看物流</a>
                                             </li>`
@@ -155,7 +155,8 @@
                                                 </li>`
                                     }
                                     if (state == 'pading' && method != 'self') {
-                                        c += `  <li class="pull-left J_opts" type="cancell" oid="${oid}">
+                                        c += `
+                                                <li class="pull-left J_opts" type="cancell" oid="${oid}">
                                                     <a href="javascript:;" class="block mt-10 txt-c chayefont point">取消订单</a>
                                                 </li>
                                                 <li class="pull-left J_opts" type="pay" oid="${oid}">
@@ -178,18 +179,34 @@
                                                 </li>`
                                     }
                                     if (state == 'backn' && method != 'self') {
-                                        c += `  <li class="pull-left J_opts" type="back" oid="${oid}">
+                                        c += `  <li class="pull-left J_opts" type="backing" oid="${oid}">
                                                     <a href="javascript:;" class="block mt-10 txt-c chayefont point">退货处理</a>
                                                 </li>`
                                     }
+                                    if (state == 'backy' && method != 'self') {
+                                        c += `  <li class="pull-left J_opts" type="backy" oid="${oid}">
+                                                    <a href="javascript:;" class="block mt-10 txt-c chayefont point">退货成功</a>
+                                                </li>`
+                                    }
                                     if (method == 'self') {
-                                        c += `  <li class="pull-left J_opts" type="back" oid="${oid}">
-                                                    <a href="javascript:;" class="block mt-10 txt-c chayefont point">申请退货</a>
-                                                </li>
-                                                <li class="pull-left J_opts" type="code" oid="${oid}">
+                                        if (state == 'backn') {
+                                            c += `  <li class="pull-left J_opts" type="backing" oid="${oid}">
+                                                        <a href="javascript:;" class="block mt-10 txt-c chayefont point">退货处理</a>
+                                                    </li>`
+                                        } else if (state == 'backy') {
+                                            c += `  <li class="pull-left J_opts" type="backy" oid="${oid}">
+                                                        <a href="javascript:;" class="block mt-10 txt-c chayefont point">退货成功</a>
+                                                    </li>`
+                                        } else {
+                                            c += `  <li class="pull-left J_opts" type="back" oid="${oid}">
+                                                        <a href="javascript:;" class="block mt-10 txt-c chayefont point">申请退货</a>
+                                                    </li>`
+                                        }
+                                        c += `  <li class="pull-left J_opts" type="code" oid="${oid}">
                                                     <a href="javascript:;" class="block mt-10 txt-c chayefont  point">生成二维码</a>
                                                 </li>`
                                     }
+                                    
                             c += `          </ul>
                                         </div>
                                     </div>`
@@ -209,6 +226,8 @@
                 var id = $(this).attr('oid');
                 if (type == 'pay') { order_pay(id); }
                 if (type == 'back') { order_back(id); }
+                if (type == 'backing') { order_backing(id); }
+                if (type == 'backy') { order_backy(id); }
                 if (type == 'take') { order_take(id); }
                 if (type == 'code') { order_code(id); }
                 if (type == 'comment') { order_comment(id); }
@@ -222,10 +241,10 @@
                 url+= addurl;
                 ajax('get', url, params).then(function (data) {
                     if (data == 200) {
-                        prompt.message(pro+'成功');
+                        fxPrompt.message(pro+'成功');
                         searchOrder();
                     } else {
-                        prompt.message(pro+'失败！请稍后再试！');
+                        fxPrompt.message(pro+'失败！请稍后再试！');
                     }
                 })
             }
@@ -233,15 +252,28 @@
             //取消订单方法
             function order_cancell(id){
                 var params = {id:id};
-                prompt.question('是否要取消该订单', function () {
+                fxPrompt.question('是否要取消该订单', function () {
                     orderOperate('cancell', '取消订单', params);
                 })
             }
 
             //申请退货方法
             function order_back(id){
-                prompt.question('是否要申请退货', function () {
+                fxPrompt.question('是否要申请退货', function () {
                     window.location.href = 'http://'+window.location.host + '/home/order/backn/reason/'+id;
+                })
+            }
+
+            // 退货中处理
+            function order_backing(id){
+                fxPrompt.message('商家正在处理退货中。。。')
+            }
+
+            // 退货成功
+            function order_backy(id){
+                var url = `http://${window.location.host}/home/order/${id}/backSuccess`;
+                ajax('get', url).then(function (res) {
+                    fxPrompt.message(`您在${res.updated_at}成功退货`)
                 })
             }
 
@@ -253,7 +285,7 @@
             //确定收货方法
             function order_take(id){
                 var params = {id:id};
-                prompt.question('是否确认收货', function () {
+                fxPrompt.question('是否确认收货', function () {
                     orderOperate('take', '确认收货', params);
                 })
             }
@@ -262,13 +294,14 @@
             function order_code(id){
                 $("#qrcode").html('')
                 var qrcode = new QRCode(document.getElementById("qrcode"), {
+                    // text: `http://${window.location.host}/home/order/list/${id}`,
                     text: `http://${window.location.host}/home/order/list/${id}`,
                     width: 512,
                     height: 512
                 })
-                prompt.message('二维码生成中')
+                fxPrompt.message('二维码生成中')
                 setTimeout(function () {
-                    prompt.qrcode()
+                    fxPrompt.qrcode('到店扫码即可自提')
                 }, 1010)
             }
             
@@ -298,7 +331,6 @@
                 params['page'] = 1;// 重置页数，重新获取loadDownFn的数据
                 var url = 'http://'+window.location.host + '/home/order/list/data';
                 ajax('get', url, params).then(function (data) {
-                    console.log(1)
                     $('.order_container').find('.list_nodata').remove()
                     $('.dropload-down').show()
                     if (params['page'] == 1 && data.length == 0) {

@@ -91,7 +91,6 @@
             })
         }
         $(function () {
-            console.dir(window.history)
             if ($('.header_category')[0]) {
                 FastClick.attach($('.header_category')[0]);
             }

@@ -225,7 +225,8 @@ exports.birth_date = (field, fieldtxt, value, isRequired = false) => {
 		temp = ness(field, fieldtxt, value)
 	}
 	if (temp) {
-		if (!/^([0-9]{4})+-([0-1][1-9])+-([0-3][0-9])$/.test(value)) {
+		// if (!/^([1-9]{4})+-([0-1][1-9])+-([0-3][0-9])$/.test(value)) {
+		if (!/^((?:19|20)\d\d)-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/.test(value)) {
 			$('#' + field + '_txt').text(fieldtxt + '格式为yyyy-mm-dd')
 			valid = false
 		} else {

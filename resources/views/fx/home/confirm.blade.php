@@ -9,6 +9,7 @@
 	@parent
 
 	<script>
+		var sitecount = {{$sitecount}}
 		var delivery_price = {{$lists->max('delivery_price')}}
 		var grade_price = 0;
 		var counts = 0;//总支付金额
@@ -28,6 +29,10 @@
 			$('.J_choose_type').on('tap', function () {
 				var v = $(this).data('delivery')
 				if (v == 'point') {
+					if (sitecount == 0) {
+						fxPrompt.message('商家暂无自提点')
+						return
+					}
 					method = 'self'
 					$(".price-change").html('&yen; 0.00');
 					delivery_price = 0;
@@ -134,7 +139,7 @@
 				if (res) {
 					return true;
 				} else {
-					prompt.message('该订单已支付！')
+					fxPrompt.message('该订单已支付！')
 				}
 			});
 		}
@@ -157,7 +162,7 @@
 			if (method == 'delivery' && address) {
 				submitOrder();
 			} else {
-				prompt.message("请选择收货地址")
+				fxPrompt.message("请选择收货地址")
 			}
 		});
 
@@ -168,7 +173,7 @@
 				if(res.appId != undefined) {
 					jsApiCall(res)
 				} else {
-					prompt.message(res.data)
+					fxPrompt.message(res.data)
 				}
 			});
 		}
@@ -217,7 +222,7 @@
 			var data = {'price':counts, 'desc':desc, 'method':method}
 			ajax('post', '/home/order/pay/'+id, data).then(function (res) {
 				if(!res) {
-					prompt.message('失败，服务器崩溃，请联系商家！')
+					fxPrompt.message('失败，服务器崩溃，请联系商家！')
 				} else {
 					window.location.href = 'http://' + window.location.host + '/home/order/' + id
 				}

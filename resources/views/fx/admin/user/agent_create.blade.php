@@ -8,6 +8,9 @@
     <script>
       $(function () {
         datepicker();
+        $('#datepicker').on('change', function () {
+          _valid.birth_date('birth_date', '生产日期', $(this).val(), true)
+        })
         var form = document.forms['userForm']
         $(form).on('submit', function () {
           return submitForm()
@@ -122,7 +125,7 @@
                   <span class="col-sm-4 text-danger form_error" id="repassword_txt"></span>
                 </div>
                 <div class="form-group">
-                  <label for="phone" class="col-sm-3 control-label">手机</label>
+                  <label for="phone" class="col-sm-3 control-label"><i style="color:red;">*</i>手机</label>
                   <div class="col-sm-4">
                     <input type="text" name="phone" class="form-control" id="phone" placeholder="请输入手机号" oninput="_valid.phone('phone', this.value)" onblur="_valid.phone('phone', this.value)">
                   </div>
@@ -136,10 +139,10 @@
                   <span class="col-sm-4 text-danger form_error" id="realname_txt"></span>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-3 control-label" for="datepicker">出生日期</label>
+                  <label class="col-sm-3 control-label" for="datepicker"><i style="color:red;">*</i>出生日期</label>
                   <div class="col-sm-4">
                     <div class="input-group date">
-                      <input type="text" name="birth_date" class="form-control pull-right" id="datepicker" oninput="_valid.birth_date('birth_date', '出生日期', this.value)" onblur="_valid.birth_date('birth_date', '出生日期', this.value)">
+                      <input type="text" name="birth_date" class="form-control pull-right" id="datepicker">
                       <div class="input-group-addon">
                         <i class="fa fa-calendar"></i>
                       </div>

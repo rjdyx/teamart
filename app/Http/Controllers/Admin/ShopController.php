@@ -98,7 +98,9 @@ class ShopController extends Controller
 
         //logo
         $img = IQuery::upload($request, 'img', false, new System, $id);
-        $model->logo = $img['pic'];
+        if (isset($img['pic'])) {
+            $model->logo = $img['pic'];
+        }
 
         //轮播图
         if($model->slider ==null || $model->slider=='' ){

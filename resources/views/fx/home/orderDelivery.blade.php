@@ -22,7 +22,7 @@
                 }
                 $(".orderdelivery_lists").html(tmp);
             } else {
-                prompt.message('查询失败！请稍后再试！');
+                fxPrompt.message('查询失败！请稍后再试！');
             }
         })
     </script>

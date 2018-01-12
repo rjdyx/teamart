@@ -50,7 +50,9 @@
                                     <div class="warpper mb-20 clearfix">
                                         <i class="warpper_select block J_select" data-opid="${v.opid}" data-pid="${v.id}" data-price="${v.price}"></i>
                                         <div class="warpper_content_img h-100 pull-left mr-20">
-                                            <img class="w-100" src="http://${window.location.host}/${v.img}">
+                                            <a class="block h-100 w-100" href="/home/product/detail/${v.id}">
+                                                <img class="w-100" src="http://${window.location.host}/${v.img}">
+                                            </a>
                                         </div>
                                         <div class="warpper_content_info h-100 pull-right">
                                             <h5 class="chayefont mb-10">${v.name}</h5>
@@ -103,7 +105,7 @@
                     })
                     .catch(function (err) {
                         console.dir(err)
-                        prompt.message('请求错误')
+                        fxPrompt.message('请求错误')
                         // me.resetload()
                     })
             }
@@ -164,14 +166,14 @@
             // 删除
             $('.J_dels').on('tap', function () {
                 if (dels.length == 0) {
-                    prompt.message('请选择要删除的商品')
+                    fxPrompt.message('请选择要删除的商品')
                     return
                 }
-                prompt.question('是否删除',function () {
+                fxPrompt.question('是否删除',function () {
                     ajax('post', '/home/cart/dels', dels)
                         .then(function (res) {
                             if (res) {
-                                prompt.message('删除成功')
+                                fxPrompt.message('删除成功')
                                 $('.J_select').each(function () {
                                     var $this = $(this)
                                     dels.forEach(function (v) {
@@ -184,7 +186,7 @@
                                 pids = []
                                 $('.bottom_btn').find('.total').text('0.00')
                             } else {
-                                prompt.message('删除失败')
+                                fxPrompt.message('删除失败')
                             }
                         })
                 })
@@ -199,7 +201,7 @@
                     var id = $(this).siblings('.sell').find('.amount').data('opid')
                     updateAmount(id, confirm_params[gid]);
                 } else {
-                    prompt.message('单个商品数量最少为1')
+                    fxPrompt.message('单个商品数量最少为1')
                 }
                 console.log(confirm_params)
             }
@@ -214,7 +216,7 @@
                     var id = $(this).siblings('.sell').find('.amount').data('opid')
                     updateAmount(id, confirm_params[gid]);
                 } else {
-                    prompt.message('商品数量已达到库存上限')
+                    fxPrompt.message('商品数量已达到库存上限')
                 }
                 console.log(confirm_params)
             }
@@ -224,7 +226,7 @@
                 var params = {id:id,amount:amount}
                 ajax('post', '/home/cart/update/amount', params).then(function (res) {
                     if (!res) {
-                        prompt.message('服务器异常！请稍后再试！')
+                        fxPrompt.message('服务器异常！请稍后再试！')
                     }
                     $('.bottom_btn').find('.total').text(totals())
                 })  
@@ -243,7 +245,7 @@
             // 结算
             $('.J_comfirm').on('tap', function () {
                 if (dels.length == 0) {
-                    prompt.message('请选择要结算的商品')
+                    fxPrompt.message('请选择要结算的商品')
                     return
                 }
                 var params = {
@@ -259,7 +261,7 @@
                     if (resolve) {
                         window.location.href = url + resolve;  
                     } else {
-                        prompt.message('服务器异常！请稍后再试！')
+                        fxPrompt.message('服务器异常！请稍后再试！')
                     }
                 })
             })

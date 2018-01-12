@@ -122,7 +122,9 @@ class GroupController extends Controller
         
         //资源、上传图片名称、是否生成缩略图
         $imgs = IQuery::upload($request,'img',false,new Group, $id);
-        $model->desc = $imgs['pic'];
+        if (isset($imgs['pic'])) {
+            $model->desc = $imgs['pic'];
+        }
 
         if ($model->save()) {
             return Redirect::to('admin/activity/group')->with('status', '保存成功');

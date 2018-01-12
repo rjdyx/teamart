@@ -16,6 +16,9 @@
 			// opts.disableFn // 禁用时间时要使用的函数，如果不传入会使用默认函数
 			// opts.dateFormat = opts.dateFormat != undefined ? opts.dateFormat : 'Y-m-d' // 默认格式 'Y-m-d H:i:S'为完整的时分秒格式
 			datepicker()
+			$('#datepicker').on('change', function () {
+	          _valid.birth_date('birth_date', '生产日期', $(this).val(), true)
+	        })
 			var form = document.forms['userForm']
 			$(form).on('submit', function () {
 				return submitForm()
@@ -32,7 +35,7 @@
 				if (!_valid.name('name', '用户名', name.value, 'user')) {
 					return false
 				}
-				if (!_valid.mail('email', email.value)) {
+				if (!_valid.email('email', email.value)) {
 					return false
 				}
 				if (!_valid.ness('gender', '性别', gender.value)) {
@@ -119,7 +122,7 @@
 							</div>
 
 							<div class="form-group">
-								<label for="phone" class="col-sm-3 control-label">手机</label>
+								<label for="phone" class="col-sm-3 control-label"><i style="color:red;">*</i>手机</label>
 								<div class="col-sm-4">
 									<input type="text" name="phone" class="form-control" id="phone" placeholder="请输入手机号" onblur="_valid.phone('phone', this.value)" oninput="_valid.phone('phone', this.value)">
 								</div>
@@ -135,10 +138,10 @@
 							</div>
 
 							<div class="form-group">
-								<label class="col-sm-3 control-label" for="datepicker">出生日期</label>
+								<label class="col-sm-3 control-label" for="datepicker"><i style="color:red;">*</i>出生日期</label>
 								<div class="col-sm-4">
 									<div class="input-group">
-										<input type="text" name="birth_date" class="form-control pull-right" id="datepicker" onblur="_valid.birth_date('birth_date', '出生日期', this.value)" oninput="_valid.birth_date('birth_date', '出生日期', this.value)">
+										<input type="text" name="birth_date" class="form-control pull-right" id="datepicker">
 										<div class="input-group-addon">
 											<i class="fa fa-calendar"></i>
 										</div>

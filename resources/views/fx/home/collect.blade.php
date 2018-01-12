@@ -55,14 +55,14 @@
 			// 删除商品
 			$('.J_dels').on('tap', function () {
 				if (dels.length == 0) {
-                    prompt.message('请选择要删除的商品')
+                    fxPrompt.message('请选择要删除的商品')
                     return
                 } else {
-                	prompt.question('是否删除所选商品', function () {
+                	fxPrompt.question('是否删除所选商品', function () {
 						ajax('post', '/home/collect/dels', dels)
 							.then(function (res) {
 								if (res) {
-									prompt.message('删除成功')
+									fxPrompt.message('删除成功')
 									$('.J_select').each(function () {
 										var $this = $(this)
 										dels.forEach(function (v) {
@@ -74,7 +74,7 @@
 									$('.J_select_all').find('span').removeClass('active')
 									dels = []
 								} else {
-									prompt.message('删除失败')
+									fxPrompt.message('删除失败')
 								}
 							})
 					})
@@ -83,16 +83,16 @@
 			// 加入购物车
 			$('.J_join_cart').on('tap', function () {
 				if (dels.length == 0) {
-                    prompt.message('请选择要加入购物车')
+                    fxPrompt.message('请选择要加入购物车')
                     return
                 } else {
-                	prompt.question('是否加入购物车', function () {
+                	fxPrompt.question('是否加入购物车', function () {
 						ajax('get', '/home/collect/cart', {ids: dels})
 							.then(function (res) {
 								if (res) {
-									prompt.message('添加成功', `//${window.location.host}/home/cart`)
+									fxPrompt.message('添加成功', `//${window.location.host}/home/cart`)
 								} else {
-									prompt.message('添加失败')
+									fxPrompt.message('添加失败')
 								}
 							})
 					})
@@ -179,7 +179,7 @@
                         }
 					})
 					.catch(function (err) {
-						prompt.message('请求错误')
+						fxPrompt.message('请求错误')
 						// me.resetload()
 					})
 			}

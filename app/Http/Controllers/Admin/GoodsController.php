@@ -174,7 +174,7 @@ class GoodsController extends Controller
             'specs'=>'required',
             'delivery_price'=>'required|max:10',
             'stock'=>'required|max:15',
-            'low_stock'=>'required|max:15',
+            // 'low_stock'=>'required|max:15',
             'effect'=>'required|max:255',
             'origin'=>'required|max:255',
             'date'=>'required',
@@ -189,14 +189,16 @@ class GoodsController extends Controller
         }
 
         //接收数据 加入model
-        $model->setRawAttributes($request->only(['name','brand_id','desc','category_id','stock','low_stock','effect','origin','date','grade','state','delivery_price','details']));
+        $model->setRawAttributes($request->only(['name','brand_id','desc','category_id','stock',/*'low_stock',*/'effect','origin','date','grade','state','delivery_price','details']));
 
         if ($id == -1) $model->user_id = Auth::user()->id;
 
         //资源、上传图片名称、是否生成缩略图
-        $res = IQuery::upload($request,'pic',true,new Product,$id,'img');
-        $model->img = $res['pic'];
-        $model->thumb = $res['thumb'];
+        $res = IQuery::upload($request,'img',true,new Product,$id,'img');
+        if (isset($res['pic'])) {
+            $model->img = $res['pic'];
+            $model->thumb = $res['thumb'];
+        }
 
         if ($model->save()) {
             if ($id != -1) $model->id = $id;

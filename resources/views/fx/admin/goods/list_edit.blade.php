@@ -14,8 +14,8 @@
     <script>
       //实例化编辑器
       //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
-      var ue = UE.getEditor('editor');
       $(function () {        
+        var ue = UE.getEditor('editor');
         imagePathFormat='/upload/descs/'; 
         datepicker()
         var form = document.forms['listForm']
@@ -40,16 +40,16 @@
         $('#stock').on('blur input', function () {
           _valid.number('stock', '库存', $(this).val())
         })
-        $('#low_stock').on('blur input', function () {
-          _valid.number('low_stock', '低库存', $(this).val())
-        })
+        // $('#low_stock').on('blur input', function () {
+        //   _valid.number('low_stock', '低库存', $(this).val())
+        // })
         $('#origin').on('blur input', function () {
           _valid.desc('origin', '商品产地', $(this).val(), 50, true)
         })
         $('#effect').on('blur input', function () {
           _valid.desc('effect', '商品作用', $(this).val(), 50, true)
         })
-        $('#date').on('blur input', function () {
+        $('#datepicker').on('change', function () {
           _valid.birth_date('date', '生产日期', $(this).val(), true)
         })
         $('#state').on('change', function () {
@@ -65,25 +65,19 @@
           var desc = form['desc']
           var delivery_price = form['delivery_price']
           var stock = form['stock']
-          var low_stock = form['low_stock']
+          // var low_stock = form['low_stock']
           var origin = form['origin']
           var effect = form['effect']
           var date = form['date']
           var state = form['state']
           var grade = form['grade']
+          var pic = form['img']
           var imgs = form['imgs[]']
-          var pic = form['pic']
           var spec = specData();
           if (!_valid.ness('category_id', '商品分类', category_id.value)) {
             return false
           }
-          if (!_valid.ness('group_id', '商品组', group_id.value)) {
-            return false
-          }
           if (!_valid.ness('brand_id', '商品品牌', brand_id.value)) {
-            return false
-          }
-          if (!_valid.ness('spec_id', '商品规格', spec_id.value)) {
             return false
           }
           if (!_valid.name('name', '商品名称', name.value, 'product')) {
@@ -95,21 +89,15 @@
           if (!_valid.desc('spec', '商品规格', spec, 30, true)) {
             return false
           }
-          if (!_valid.number('price_raw', '原价', price_raw.value)) {
-            return false
-          }
-          if (!_valid.number('price', '现价', price.value)) {
-            return false
-          }
           if (!_valid.number('delivery_price', '邮费', delivery_price.value)) {
             return false
           }
           if (!_valid.number('stock', '库存', stock.value)) {
             return false
           }
-          if (!_valid.number('low_stock', '低库存', low_stock.value)) {
-            return false
-          }
+          // if (!_valid.number('low_stock', '低库存', low_stock.value)) {
+          //   return false
+          // }
           if (!_valid.desc('origin', '商品产地', origin.value, 50, true)) {
             return false
           }
@@ -125,6 +113,16 @@
           if (!_valid.ness('grade', '商品积分兑换', grade.value)) {
             return false
           }
+          if (pic.files.length > 0) {
+            if (!_valid.img('img', pic.files[0])) {
+              return false
+            }
+          } else {
+            if ($('.upload_single').find('img').length == 0) {
+              $('#img_txt').text('请上传商品图片')
+              return false
+            }
+          }
           if (imgs.length) {
             var arr = []
             for (var i = 0; i < imgs.length; i++) {
@@ -135,18 +133,13 @@
                 arr.push(imgs[i].files[0])
               }
             }
-            if (arr.length == 0) {
-              $('#imgs_txt').text('至少要上传一张商品图片')
+            if (arr.length == 0 && $('.upload_list').find('img').length == 0) {
+              $('#imgs_txt').text('至少要上传一张商品附图')
               return false
             }
           } else {
             if (imgs.files.length == 0) {
-              $('#imgs_txt').text('至少要上传一张商品图片')
-              return false
-            }
-          }
-          if (pic.files.length > 0) {
-            if (!_valid.img('pic', pic.files[0])) {
+              $('#imgs_txt').text('至少要上传一张商品附图')
               return false
             }
           }
@@ -353,13 +346,13 @@
                   </div>
                   <span class="col-sm-4 text-danger form_error" id="stock_txt"></span>
                 </div>
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <label for="low_stock" class="col-sm-3 control-label"><i style="color:red;">*</i>低库存</label>
                   <div class="col-sm-4">
                     <input type="text" name="low_stock" class="form-control J_IntNum" id="low_stock" placeholder="请输入商品低库存" value="{{$data->low_stock}}">
                   </div>
                   <span class="col-sm-4 text-danger form_error" id="low_stock_txt"></span>
-                </div>
+                </div> -->
                 <div class="form-group">
                   <label for="origin" class="col-sm-3 control-label"><i style="color:red;">*</i>商品产地</label>
                   <div class="col-sm-4">
@@ -412,19 +405,19 @@
                     <div class="upload_single">
                       @if ($data->img) 
                         <img class="pull-left upload_img" src="{{url('')}}/{{$data->img}}">
-                        <label for="pic" class="upload pull-left hidden">
+                        <label for="img" class="upload pull-left hidden">
                           <i class="glyphicon glyphicon-plus"></i>
                         </label>
-                        <label class="btn btn-primary pull-left ml-10" for="pic">修改</label>
+                        <label class="btn btn-primary pull-left ml-10" for="img">修改</label>
                         <div class="btn btn-danger pull-left ml-10 J_remove">删除</div>
-                        <input type="file" name="pic" id="pic" class="invisible form-control J_img" accept="image/jpeg,image/jpg,image/png">
+                        <input type="file" name="img" id="img" class="invisible form-control J_img" accept="image/jpeg,image/jpg,image/png">
                       @else
-                        <label for="pic" class="upload pull-left">
+                        <label for="img" class="upload pull-left">
                           <i class="glyphicon glyphicon-plus"></i>
                         </label>
-                        <label class="btn btn-primary pull-left ml-10 invisible" for="pic">修改</label>
+                        <label class="btn btn-primary pull-left ml-10 invisible" for="img">修改</label>
                         <div class="btn btn-danger pull-left ml-10 invisible J_remove">删除</div>
-                        <input type="file" name="pic" id="pic" class="invisible form-control J_img" accept="image/jpeg,image/jpg,image/png">
+                        <input type="file" name="img" id="img" class="invisible form-control J_img" accept="image/jpeg,image/jpg,image/png">
                       @endif
                     </div>
                   </div>

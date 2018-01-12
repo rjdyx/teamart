@@ -71,12 +71,15 @@
 					$('.comment_list').append(template);
 					me.resetload();
 					$('.J_show_image').off('tap').on('tap', function () {
-						prompt.image($(this).data('img'))
+						fxPrompt.image($(this).data('img'))
+					})
+					$('.J_reply_btn').off('tap').on('tap', function () {
+						// TODO回复
 					})
 				})
 				.catch(function (err) {
 					console.dir(err)
-					prompt.message('请求错误')
+					fxPrompt.message('请求错误')
 				});
 		}
 
@@ -110,15 +113,22 @@
 				if (v['replys']) {
 					template += '<div class="comment_reply w-100">'
 					for(var j=0;j<v['replys'].length;j++) {
+								// ${v.user_id == uid ? '<a href="javascript:;" class="comment_reply_btn block J_reply_btn">回复</a>' : ''}
 						template += `
 							<div class="comment_reply_warpper w-100 p-10 relative">
-								${v.user_id == uid ? '<a href="javascript:;" class="comment_reply_btn block J_reply_btn">回复</a>' : ''}
 								<p class="fz-12">${v['replys'][j]['aname']} <b>回复</b> ${v['replys'][j]['bname']}：</p>
 								<p class="fz-12">${v['replys'][j]['content']}</p>
 								<p class="fz-12 txt-r">${v['replys'][j]['created_at']}</p>
 							</div>
 						`
 					}
+					// template += `
+					// 	<div class="comment_reply_warpper w-100 p-10 relative">
+					// 		<label for="reply">
+					// 			<input class="pl-10" type="text" id="reply" placeholder="回复。。。" />
+					// 		</label>
+					// 	</div>
+					// 	`
 					template += '</div>'
 				}	
 				template += `</div></li>`
@@ -136,7 +146,7 @@
 					}
 					$('.comment_list').html(template);
 					$('.J_show_image').off('tap').on('tap', function () {
-						prompt.image($(this).data('img'))
+						fxPrompt.image($(this).data('img'))
 					})
 				})
 		}
@@ -160,9 +170,9 @@
 					.then(function (resolve) {
 						if (resolve) {
 							$('.J_favo').find('i').removeClass('fa-star-o').addClass('fa-star')
-							prompt.message('收藏成功')
+							fxPrompt.message('收藏成功')
 						} else {
-							prompt.message('收藏失败')
+							fxPrompt.message('收藏失败')
 						}
 					})
 			} else {
@@ -170,23 +180,32 @@
 					.then(function (resolve) {
 						if (resolve) {
 							$('.J_favo').find('i').addClass('fa-star-o').removeClass('fa-star')
-							prompt.message('取消收藏成功')
+							fxPrompt.message('取消收藏成功')
 						} else {
-							prompt.message('取消收藏失败')
+							fxPrompt.message('取消收藏失败')
 						}
 					})
 			}
 		});
 
     	// 弹窗确定
+    	// 新增后台商品数量判断
     	$('.J_join_cart').on('tap', function () {
             var num = $('.productspec_container_amount input').val();
-            var params = {id:popid, amount:num, spec_id:spec_id};
-    		if (poptype == 'cart') {
-    			storeCart(params);
-    		} else {
-				storeBuy(params);
-    		}
+			ajax('get', `/home/product/{{ $content->id }}/stock`, {stock: num})
+			.then(function (resolve) {
+				if (resolve) {
+					var params = {id:popid, amount:num, spec_id:spec_id};
+					if (poptype == 'cart') {
+						storeCart(params);
+					} else {
+						storeBuy(params);
+					}
+				} else {
+					fxPrompt.message('商品库存不足')
+				}
+			})
+            
     	});
 
     	// 加入购物车
@@ -194,14 +213,14 @@
             var url = '/home/product/detail/addcart';
     		ajax('post', url, params).then(function (resolve) {
 				if (resolve) {
-					prompt.message('已经加入购物车')
+					fxPrompt.message('已经加入购物车')
 					$('.productspec_container').removeClass('bottom-0')
 					$('.productspec').animate({
 						'opacity': 0},100,function () {
 						$('.productspec').removeClass('top-0')
 					})
 				} else {
-					prompt.message('加入购物车失败')
+					fxPrompt.message('加入购物车失败')
 				}
 			})
     	};
@@ -214,7 +233,7 @@
 				if (resolve) {
 					window.location.href = url_a + resolve;	
 				} else {
-					prompt.message('服务器异常！请稍后再试！')
+					fxPrompt.message('服务器异常！请稍后再试！')
 				}
 			})
     	};
@@ -223,9 +242,9 @@
 		//点击加入购物车
 		$('.J_show_productspec').on('tap', function () {
 			if (state == 0) {
-				prompt.message('该商品已下架')
+				fxPrompt.message('该商品已下架')
 			} else if (stock <= 0) {
-				prompt.message('该商品缺货中')
+				fxPrompt.message('该商品缺货中')
 			} else {
 				poptype = 'cart';
 				cshPop();
@@ -235,9 +254,9 @@
 		//点击立即购买
 		$('.buy_now').on('tap', function () {
 			if (state == 0) {
-				prompt.message('该商品已下架')
+				fxPrompt.message('该商品已下架')
 			} else if (stock <= 0) {
-				prompt.message('该商品缺货中')
+				fxPrompt.message('该商品缺货中')
 			} else {
 				poptype = 'buy';
 				cshPop();
@@ -269,7 +288,7 @@
 						$('.productspec_container').addClass('bottom-0')
 					})
 				} else {
-					prompt.message('服务器繁忙！稍后再试！')
+					fxPrompt.message('服务器繁忙！稍后再试！')
 				}
 			})
     	}
@@ -300,7 +319,7 @@
     	// 减少数量
     	$('.J_minus_amount').on('tap', function () {
     		var amount = parseInt($(this).siblings('input[name="amount"]').val())
-    		var price = parseInt($(this).parents('.productspec_container').find('#price').val())
+    		var price = parseFloat($(this).parents('.productspec_container').find('#price').val())
     		if (amount == 1) return;
     		else {
     			amount = amount - 1
@@ -342,6 +361,8 @@
             spec_id = $(this).attr('pid');
     		var price = $(this).attr('price');
             $("#price").val(price);
+            $(".sum_price").text(parseFloat(price).toFixed(2));
+            $('input[name="amount"]').val(1);
             $(".productspec_container_info_content span").html('&yen'+parseFloat(price).toFixed(2));
     		$(this).addClass('active').siblings().removeClass('active');
     	})
@@ -355,7 +376,7 @@
 
 		// 商品下架后执行的
 		$('.J_xiajia').on('tap', function () {
-			prompt.message('商品已下架')
+			fxPrompt.message('商品已下架')
 		})
 
     	var tab_offset_top = $('.productdetail_container_tabs').offset().top

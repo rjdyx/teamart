@@ -17,11 +17,11 @@
 				var id = $this.attr('id')
 				var $box = $('label[for="' + id + '"]').parent()
 				// if (file.size / 1024 > 200) {
-				// 	prompt.message('图片太大')
+				// 	fxPrompt.message('图片太大')
 				// 	return false
 				// }
 				if (file.type !== 'image/png' && file.type !== 'image/jpeg') {
-					prompt.message('图片格式只支持png和jpg')
+					fxPrompt.message('图片格式只支持png和jpg')
 					return false
 				}
 				$box.find('img').remove()
@@ -37,7 +37,7 @@
 					}
 					$box.find('.feedback_imgs_list_img').append(img)
 					$box.find('img').on('tap', function () {
-						prompt.image($(this).attr('src'))
+						fxPrompt.image($(this).attr('src'))
 					})
 					$box.find('label').addClass('hide')
 					$box.find('.feedback_imgs_list_img').removeClass('hide')
@@ -83,19 +83,19 @@
 				var contact = $.trim($('#contact').val())
 				var content = $.trim($('#content').val())
 				if (!contact) {
-					prompt.message('请输入联系方式')
+					fxPrompt.message('请输入联系方式')
 					return
 				}
 				if (!/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+\.([a-zA-Z0-9_-])+/.test(contact) && !/^1[34578]\d{9}$/.test(contact) && !/^[1-9][0-9]{7,}$/.test(contact)) {
-					prompt.message('联系方式可以为qq、邮箱、手机')
+					fxPrompt.message('联系方式可以为qq、邮箱、手机')
 					return
 				}
 				if (contact.length > 30) {
-					prompt.message('联系方式不能多于30字符')
+					fxPrompt.message('联系方式不能多于30字符')
 					return
 				}
 				if (!content || content.length < 5) {
-					prompt.message('反馈内容不少于5字')
+					fxPrompt.message('反馈内容不少于5字')
 					return
 				}
 				var params = {
@@ -133,17 +133,17 @@
 			})
 
 			function submitAjax (params) {
-				prompt.loading('提交中')
+				fxPrompt.loading('提交中')
 				var url = 'http://'+window.location.host+'/home/feedback';
 				ajax('post', url, params, false, true).then(function (res) {
 					if (res) {
-						prompt.message('反馈成功')
+						fxPrompt.message('反馈成功')
 						$('#contact').val('')
 						$('#content').val('')
 						$('.feedback_imgs_list').find('li').remove()
 						addFile()
 					} else {
-						prompt.message('反馈失败')
+						fxPrompt.message('反馈失败')
 					}
 				})
 			}

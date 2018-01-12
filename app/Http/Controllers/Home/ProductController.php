@@ -43,7 +43,7 @@ class ProductController extends Controller
 
 		if (!empty($type)) {
 			if ($type == 'sell') $orField = 'product.sell_amount';
-			if ($type == 'price') $orField = 'product.price';
+			if ($type == 'price') $orField = 'spec.price';
 		}
 		if (!empty($up)) $order = $up;
 		if (!empty($name)) $whValue = $name;
@@ -60,8 +60,8 @@ class ProductController extends Controller
 
 		if (!empty($brands) && count($brands)) $lists = $lists->whereIn('brand.id',$brands);	
 		if (!empty($category)) $lists = $lists->where('product.category_id','=',$category);	
-		if (!empty($min)) $lists = $lists->where('product.price','>=',$min);	
-		if (!empty($max)) $lists = $lists->where('product.price','<=',$max);	
+		if (!empty($min)) $lists = $lists->where('spec.price','>=',$min);	
+		if (!empty($max)) $lists = $lists->where('spec.price','<=',$max);	
 
 		$lists = $lists->select(
 					'product.id',
@@ -164,7 +164,7 @@ class ProductController extends Controller
 
 		foreach ($comments as $k => $comment) {
 			$replys = Reply::join('user as auser','reply.auser_id','=','auser.id')
-					->join('user as buser','reply.auser_id','=','buser.id')
+					->join('user as buser','reply.buser_id','=','buser.id')
 					->where('reply.comment_id',$comment->id)
 					->select('reply.*','auser.name as aname','buser.name as bname')
 					->orderBy('reply.created_at','asc')
@@ -269,5 +269,17 @@ class ProductController extends Controller
 		$order->price = $md->price;
 		if (!$order->save()) return 0;
 		return $order_id;
+	}
+
+	// 商品库存查询 (add bu suzhihao 2017/10/31)
+	public function productStock (Request $request, $product_id) {
+		$stock = Product::where('id', $product_id)->select('stock')->first();
+		$stock = $stock->stock;
+		$count = $request->stock;
+		if ($stock - $count > 0) {
+			return "true";
+		} else {
+			return "false";
+		}
 	}
 }

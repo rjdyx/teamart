@@ -20,9 +20,11 @@ Route::post('/check','UtilsController@check');//字段验证 公共接口组
 Route::get('captcha', 'KitController@captcha'); //生成验证码
 Route::get('/bind/agent/{id}', 'Auth\LoginController@bindAgent'); //绑定分销商
 
+Route::get('/bind/agent/{id}', 'Auth\LoginController@bindAgent'); //绑定分销商
+
+Route::auth();
 //判断微信端中间件
 Route::group(['middleware'=>['isWeixin']],function(){
-	Route::auth();
 	Route::get('/','HomeController@index');//首页
 	
 	// Auth
@@ -51,6 +53,7 @@ Route::group(['middleware'=>['isWeixin']],function(){
 			Route::post('/detail/addorder','ProductController@addOrder');//立即购买
 			Route::get('/comment/{product_id}','ProductController@productComment');
 			Route::get('/detail/addcart/{product_id}','ProductController@productAddCartData');
+			Route::get('/{product_id}/stock','ProductController@productStock');// 获取当前产品仓库数量
 		});
 
 		// 帮助中心列表、详情
@@ -93,6 +96,9 @@ Route::group(['middleware'=>['isWeixin']],function(){
 			Route::post('/payOrder','OrderPayController@payOrder'); //付款预处理
 	    	Route::post('/pay/{order_id}','OrderController@pay');//付款成功后操作
 	    	Route::get('/backn/reason/{id}','OrderController@backnReason');//退货理由
+	    	Route::get('/{id}/backSuccess','OrderController@backSuccess');//退货成功后调用接口 (add by szh 2017/11/1)
+	    	Route::get('/cancell','OrderController@cancell');//取消订单 (add by szh 2017/11/08)
+	    	// Route::get('/take','OrderController@taken');//确认收货 (add by szh 2017/11/08)
 	    	Route::post('/operate/{type}','OrderController@orderOperate');//订单state改变
 	    	Route::get('/{id}','OrderController@orderDetail');//订单详情
 		});

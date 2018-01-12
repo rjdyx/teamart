@@ -118,8 +118,10 @@ class BrandController extends Controller
 
         //资源、上传图片名称、是否生成缩略图
         $imgs = IQuery::upload($request,'img', true, new Brand, $id, 'img');
-        $model->img = $imgs['pic'];
-        $model->thumb = $imgs['thumb'];
+        if (isset($imgs['pic'])) {
+            $model->img = $imgs['pic'];
+            $model->thumb = $imgs['thumb'];
+        }
 
         if ($model->save()) {
             return Redirect::to('admin/goods/brand')->with('status', '保存成功');

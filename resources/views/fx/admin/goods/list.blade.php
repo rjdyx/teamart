@@ -90,7 +90,7 @@
                 <td>{{$list->origin}}</td>
                 <td>{{$list->effect}}</td>
                 <td>@if($list->grade) 是 @else 否 @endif</td>
-                <td>@if($list->state) 上架 @else 已下架 @endif</td>
+                <td>@if($list->state) 开启（有货） @else 关闭（缺货） @endif</td>
                 <td>
                   <div style="color: #dd4b39">
                   <a href="{{url('admin/goods/list')}}/{{$list->id}}/edit">

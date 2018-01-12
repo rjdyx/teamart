@@ -1,8 +1,6 @@
 @extends('fx.admin.layouts.app')
-
-@section('title')
-商品统计
-@endsection
+@section('title')报表统计@endsection
+@section('t1')商品统计@endsection
 
 @section('css')
     <style type="text/css">
@@ -187,12 +185,12 @@
 @endsection
 
 @section('content')
-      <section class="content-header">
+      <!-- <section class="content-header">
         <h1>
           <a href="#" style="color: #000"><i class="fa fa-home fa_skin" style="margin-right:4px"></i>报表统计</a>
           <a href="#"><small class="fa_skin"><i class="fa fa-angle-right" style="margin-right: 4px"></i>商品订单</small></a>
         </h1>
-      </section>
+      </section> -->
       <!-- Main content of addGgent-->
       <section class="content">
         <div class="row">

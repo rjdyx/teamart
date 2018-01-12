@@ -73,7 +73,7 @@
                     me.resetload();
 				})
 				.catch(function (err) {
-					prompt.message('请求错误')
+					fxPrompt.message('请求错误')
 					// me.resetload()
 				})
 		}

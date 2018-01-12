@@ -29,7 +29,7 @@
 		border-radius: 0.1rem;
 		overflow: hidden;
 	}
-	.prompt_message, .prompt_question, .prompt_loading, .prompt_qrcode {
+	.prompt_message, .prompt_question, .prompt_loading {
 		width: 4rem;
 	}
 	.prompt_message {
@@ -77,12 +77,25 @@
 		}
 	}
 	.prompt_qrcode {
-		height: 4rem;
+		width: 4.4rem;
+		height: 6rem;
+		padding: 0.2rem;
 		background-color: #FFF;
 		z-index: 1006;
-		img {
-			width: 100%; // 二维码是生成的
+		.prompt_qrcode_msg {
+			text-align: center;
+			height: 1.2rem;
+			font-size: 14px;
+			line-height: 1.2rem;
 		}
+		.prompt_qrcode_img {
+			height: 4rem;
+			width: 4rem;
+			img {
+				width: 100%; // 二维码是生成的
+			}
+		}
+		
 	}
 	.prompt_image {
 		height: 60%;

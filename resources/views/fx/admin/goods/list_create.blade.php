@@ -47,16 +47,16 @@
         $('#stock').on('blur input', function () {
           _valid.number('stock', '库存', $(this).val())
         })
-        $('#low_stock').on('blur input', function () {
-          _valid.number('low_stock', '低库存', $(this).val())
-        })
+        // $('#low_stock').on('blur input', function () {
+        //   _valid.number('low_stock', '低库存', $(this).val())
+        // })
         $('#origin').on('blur input', function () {
           _valid.desc('origin', '商品产地', $(this).val(), 50, true)
         })
         $('#effect').on('blur input', function () {
           _valid.desc('effect', '商品作用', $(this).val(), 50, true)
         })
-        $('#date').on('blur input', function () {
+        $('#datepicker').on('change', function () {
           _valid.birth_date('date', '生产日期', $(this).val(), true)
         })
         $('#state').on('change', function () {
@@ -72,14 +72,14 @@
           var desc = form['desc']
           var delivery_price = form['delivery_price']
           var stock = form['stock']
-          var low_stock = form['low_stock']
+          // var low_stock = form['low_stock']
           var origin = form['origin']
           var effect = form['effect']
           var date = form['date']
           var state = form['state']
           var grade = form['grade']
           var imgs = form['imgs[]']
-          var pic = form['pic']
+          var pic = form['img']
           var spec = specData();
 
           if (!_valid.ness('category_id', '商品分类', category_id.value)) {
@@ -103,9 +103,9 @@
           if (!_valid.number('stock', '库存', stock.value)) {
             return false
           }
-          if (!_valid.number('low_stock', '低库存', low_stock.value)) {
-            return false
-          }
+          // if (!_valid.number('low_stock', '低库存', low_stock.value)) {
+          //   return false
+          // }
           if (!_valid.desc('origin', '商品产地', origin.value, 50, true)) {
             return false
           }
@@ -142,7 +142,7 @@
             }
           }
           if (pic.files.length > 0) {
-            if (!_valid.img('pic', pic.files[0])) {
+            if (!_valid.img('img', pic.files[0])) {
               return false
             }
           }
@@ -310,13 +310,13 @@
                   </div>
                   <span class="col-sm-4 text-danger form_error" id="stock_txt"></span>
                 </div>
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <label for="low_stock" class="col-sm-3 control-label"><i style="color:red;">*</i>低库存</label>
                   <div class="col-sm-4">
                     <input type="number" name="low_stock" class="form-control J_IntNum" id="low_stock" placeholder="请输入商品低库存">
                   </div>
                   <span class="col-sm-4 text-danger form_error" id="low_stock_txt"></span>
-                </div>
+                </div> -->
                 <div class="form-group">
                   <label for="origin" class="col-sm-3 control-label"><i style="color:red;">*</i>商品产地</label>
                   <div class="col-sm-4">
@@ -347,8 +347,8 @@
                   <label class="col-sm-3 control-label"><i style="color:red;">*</i>商品状态</label>
                   <div class="col-sm-4">
                     <select name="state" class="form-control" id="state">
-                      <option value="1" selected>上架</option>
-                      <option value="0">下架</option>
+                      <option value="1" selected>开启(有货)</option>
+                      <option value="0">关闭(缺货)</option>
                     </select>
                   </div>
                   <span class="col-sm-4 text-danger form_error" id="state_txt"></span>
@@ -368,15 +368,15 @@
                   <label class="col-sm-3 control-label"><i style="color:red;">*</i>商品主图</label>
                   <div class="col-sm-4">
                     <div class="upload_single">
-                        <label for="pic" class="upload pull-left">
+                        <label for="img" class="upload pull-left">
                           <i class="glyphicon glyphicon-plus"></i>
                         </label>
-                        <label class="btn btn-primary pull-left ml-10 invisible" for="pic">修改</label>
+                        <label class="btn btn-primary pull-left ml-10 invisible" for="img">修改</label>
                         <div class="btn btn-danger pull-left ml-10 invisible J_remove">删除</div>
-                        <input type="file" name="pic" id="pic" class="invisible form-control J_img" accept="image/jpeg,image/jpg,image/png">
+                        <input type="file" name="img" id="img" class="invisible form-control J_img" accept="image/jpeg,image/jpg,image/png">
                     </div>
                   </div>
-                  <span class="col-sm-4 text-danger form_error" id="pic_txt"></span>
+                  <span class="col-sm-4 text-danger form_error" id="img_txt"></span>
                 </div>
 
                 <!-- 此处4张图片上传 -->
