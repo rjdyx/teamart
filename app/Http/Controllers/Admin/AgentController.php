@@ -219,7 +219,10 @@ class AgentController extends Controller
         } 
         $orders = $orders->count();//获取订单数量
         $counts = $prices->sum('price');//获取订单总金额
-        $prices = $counts * $parter->scale;//佣金总额
+        if (!isset($parter)) {
+            return back()->with('data', ['false']);
+        }
+        $prices = $counts * $parter->scale;
         return view(config('app.theme').'.admin.user.agent_record_create')->with(['parter'=>$parter,'id'=>$id,'orders'=>$orders,'prices'=>$prices,'remain'=>$remain]);
     }
 

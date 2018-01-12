@@ -6,6 +6,11 @@
   @parent
   <script>
     datepicker();
+    $(function() {
+        <?php if(session('data')) {?>
+            alert('暂无佣金分成');
+        <?php }?>
+    })
     var url = 'http://' + window.location.host;
       //单条删除
       function gdel(id) {
@@ -58,7 +63,8 @@
               </div>
 
                 <div class="box-tools">
-                <a href="{{ url('admin/user/agent/record/solve') }}/{{$id}}"><button type="button" class="btn btn-block btn-success btn-sm" id="addNewAgent">给代理商结账</button></a>
+                <a href="{{ url('admin/user/agent/record/solve') }}/{{$id}}"><button type="button" class="btn btn-block btn-success btn-sm" id="addNewAgent">
+                       给代理商结账</button></a>
                 </div>
             </div>
             <!-- /.box-header -->
