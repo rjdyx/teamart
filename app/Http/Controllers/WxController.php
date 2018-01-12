@@ -14,7 +14,7 @@ use Session;
 
 class WxController extends Controller
 {
-	use AuthenticatesUsers;
+    use AuthenticatesUsers;
 
 
     //微信绑定页面加载
