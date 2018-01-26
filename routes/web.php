@@ -24,7 +24,7 @@ Route::get('/bind/agent/{id}', 'Auth\LoginController@bindAgent'); //绑定分销
 
 Route::auth();
 //判断微信端中间件
-Route::group(['middleware'=>['isWeixin']],function(){
+Route::group(/*['middleware'=>['isWeixin']]*/function(){
 	Route::get('/','HomeController@index');//首页
 	
 	// Auth
