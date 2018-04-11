@@ -1,0 +1,150 @@
+.w50 {
+  width: 50%;
+}
+
+.ml-10 {
+  margin-left: 10px;
+}
+
+.mr-10 {
+  margin-right: 10px;
+}
+
+.mt-10 {
+  margin-top: 10px;
+}
+
+.mb-10 {
+  margin-bottom: 10px;
+}
+
+
+.upload_single {
+  height: 100px;
+  .upload {
+    width: 100px;
+    height: 100px;
+    border: 1px dashed #777;
+    text-align: center;
+    color: #777;
+    line-height: 132px;
+    cursor: pointer;
+    i {
+      font-size: 50px;
+    }
+  }
+  .upload:hover {
+    border: 1px dashed #337ab7;
+    color: #337ab7;
+  }
+  .upload_img {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+.upload_list {
+  .upload_box {
+    height: 100px;
+    width: 180px;
+  }
+  .upload {
+    width: 100px;
+    height: 100px;
+    border: 1px dashed #777;
+    text-align: center;
+    color: #777;
+    line-height: 132px;
+    cursor: pointer;
+    i {
+      font-size: 50px;
+    }
+  }
+  .upload:hover {
+    border: 1px dashed #337ab7;
+    color: #337ab7;
+  }
+  .upload_img {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+.prompt {
+  position: fixed;
+  top: 100%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  width: 100%;
+  height: 100%;
+  // opacity: 0;
+  // z-index: -1;
+  // transition: all .1s ease;
+  .prompt_bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.4);
+    z-index: -1
+  }
+  .prompt_message , .prompt_question {
+    position: absolute;
+    top: 150%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .prompt_message.atc, .prompt_question.atc {
+    top: 50%;
+  }
+  .prompt_message, .prompt_question {
+    background-color: #FFF;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  .prompt_message {
+    padding: 20px;
+  }
+  .prompt_question {
+    width: 360px;
+    height: 220px;
+    padding: 10px;
+    text-align: center;
+    .prompt_question_content {
+      height: 160px;
+      line-height: 160px;
+    }
+    .prompt_question_btns {
+      height: 40px;
+      .prompt_box_btn {
+        display: block;
+        width: 100px;
+        height: 30px;
+        line-height: 30px;
+        margin-top: 5px;
+        color: #fff;
+        background-color: #449d44;
+        border-color: #398439;
+      }
+      .prompt_box_btn:first-child {
+        float: left;
+        margin-left: 50px;
+      }
+      .prompt_box_btn:last-child {
+        float: right;
+        margin-right: 50px;
+      }
+      .prompt_box_btn:hover, .prompt_box_btn:active {
+        background-color: #008d4c
+      }
+    }
+  }
+}
+.prompt.active {
+  // opacity: 1;
+  // z-index: 9999;
+  top: 0;
+}

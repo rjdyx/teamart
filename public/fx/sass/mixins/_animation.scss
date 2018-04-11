@@ -1,0 +1,16 @@
+// 加载中的动画
+@mixin rooo($name){
+  $frame: 10;
+  $percent: 1%;
+  $piece: (100 / $frame) * $percent;
+  @at-root {
+    @keyframes #{$name} {
+      @for $i from 0 through $frame {
+        $current-frame: ($i * $piece);
+        #{$current-frame} {
+          transform: rotate(36deg * $i);
+        }
+      }
+    }
+  }
+}

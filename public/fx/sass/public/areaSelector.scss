@@ -1,0 +1,47 @@
+.areaSelector {
+	-webkit-text-size-adjust: 100%; //关闭自动调整字体
+    -webkit-overflow-scrolling: touch;
+    overflow-scrolling: touch;
+    position: fixed;
+    top: 100%;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 9999;
+    .areaSelector_bg {
+    	background-color: rgba(0,0,0,0.5);
+    }
+    .areaSelector_container {
+    	position: absolute;
+    	bottom: -4rem;
+    	left: 0;
+    	transition: all 0.5s ease;
+    	.areaSelector_opts {
+    		height: 1rem;
+    		line-height: 1rem;
+    		background-color: #f1f2f4;
+    		padding: 0 0.2rem;
+    		a {
+    			color: #0575f2;
+    		}
+    	}
+    	.areaSelector_area {
+    		background-color: #d5d8df;
+			overflow: hidden;
+			height: 3rem;
+    		.area_list {
+				width: 33.3333%;
+				height: 3rem;
+				overflow: auto;
+				li {
+					height: 0.6rem;
+					line-height: 0.6rem;
+					@extend %wrap;
+				}
+				li.active {
+					background-color: #b5b5b5;
+				}
+    		}
+    	}
+    }
+}

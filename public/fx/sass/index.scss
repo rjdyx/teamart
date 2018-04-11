@@ -1,0 +1,15 @@
+// Core variables , minxins , % and function
+@import "variables";
+@import "mixins";
+@import "function";
+@import "percent";
+
+// Reset and dependencies
+@import "public/reset";
+@import "public/base";
+
+@import "public/prompt";
+@import "public/header";
+@import "public/footer";
+@import "public/main";
+@import "public/areaSelector";

@@ -1,0 +1,136 @@
+header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 1001;
+	height: 1rem;
+	box-sizing: border-box;
+	@include  backgroundImages("/fx/images/header_bg.png", cover);
+	.header_left, .header_center, .header_right {
+		height: 0.8rem;
+	}
+	.header_left, .header_right {
+		width: 1rem;
+		i {
+			display: inline-block;
+			margin: 0 auto;
+			width: 0.42rem;
+			height: 0.42rem;
+		}
+	}
+	.header_left {
+		margin-right: -1rem;
+		i {
+			@include  backgroundImages("/fx/images/icon_category.png");
+		}
+	}
+	.header_left.header_back {
+		line-height: 0.8rem;
+	}
+	.header_center {
+		line-height: 0.8rem;
+		.header_search_inp {
+			width: 4.3rem;
+			height: 0.64rem;
+			border: 0;
+			border-radius: 0.3rem;
+			padding-left: 0.6rem;
+			background-color: rgba(255,255,255,0.6);
+		}
+		.header_search {
+			margin-right: -0.5rem;
+		}
+		.header_close {
+			position: absolute;
+			left: 4.7rem;
+			top: 50%;
+			width: 0.5rem;
+			height: 0.5rem;
+			margin-top: -0.25rem;
+			line-height: 0.5rem;
+		}
+	}
+	@media screen and (max-width:321px){
+		.header_left.header_back {
+			font-size: 16px;
+		}
+		.header_center {
+			h2 {
+				font-size: 18px;
+			}
+		}
+	}
+	@media screen and (min-width:321px) and (max-width:400px){
+		.header_left.header_back {
+			font-size: 18px;
+		}
+		.header_center {
+			h2 {
+				font-size: 20px;
+			}
+		}
+	}
+	@media screen and (min-width:400px){
+		.header_left.header_back {
+			font-size: 20px;
+		}
+		.header_center {
+			h2 {
+				font-size: 22px;
+			}
+		}
+	}
+	.header_right {
+		margin-left: -1rem;
+		.header_kefu {
+			width: 0.5rem;
+			height: 0.5rem;
+			@extend %marginLR;
+			i {
+				line-height: 0.42rem;
+			}
+			s {
+				position: absolute;
+				top: -0.1rem;
+				right: -0.15rem;
+				width: 0.3rem;
+				height: 0.3rem;
+				border: 0.02rem solid #BBAD92;
+				font-style: normal;
+				background-color: #F87973;
+				border-radius: 50%;
+			}
+		}
+		
+	}
+	.header_category {
+		position: fixed;
+		top: 0;
+		right: 100%;
+		background-color: rgba(0,0,0,0.5);
+		ul {
+			position: absolute;
+			left: -3.5rem;
+			top: 1rem;
+			width: 3.5rem;
+			height: calc(100% - 1rem);
+			overflow: auto;
+			transition: all .3s ease;
+			background-color: rgba(199, 193, 180, 0.9);
+			li {
+				height: 1rem;
+				border-bottom: 0.02rem solid #d7d7d7;
+				line-height: 0.98rem;
+				a {
+					color: #252525;
+					font-weight: bold;
+					@extend %wrap;
+				}
+				a:active {
+					background-color: #f2f2f2;
+					color: #ff4077;
+				}	
+			}
+		}
+	}
+}
