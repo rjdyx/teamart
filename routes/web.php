@@ -131,6 +131,7 @@ Route::group([/*'middleware'=>['isWeixin']*/],function(){
 			Route::get('/many','ActivityController@many');//团购
 			Route::get('/many/data','ActivityController@manyData');//团购数据接口
 		});
+
 	});
 
 
@@ -139,6 +140,34 @@ Route::group([/*'middleware'=>['isWeixin']*/],function(){
 		// 个人资产
 		Route::get('/userasset','UserController@userAsset');
 		Route::get('/userasset/brokerage/data','UserController@brokerageList');
+
+		/** 2018-09-07 add start***/
+		Route::get('/binduserasset','UserController@binduserasset');
+		//用户消费记录(已经关闭的订单列表)
+        Route::get('/userconsumptionrecord/{id}','UserController@userorder');
+        //管理二级经销商
+        Route::get('/management/dealer','UserController@managementDealer');
+        //添加二级经销商页面
+        Route::get('/secondary/dealer/add','UserController@secondaryDealerAdd');
+        //申请信息编辑
+        Route::get('/secondary/dealer/edit/{id}','UserController@applicationInformationEdit');
+        //申请信息申请接口
+        Route::post('/application/information','UserController@applicationInformationPreservation');
+        //我的二级经销商信息列表
+        Route::get('/dealer/information/list','UserController@dealerInformationList');
+        //申请信息列表
+        Route::get('/application/information/list','UserController@applicationInformationList');
+        //邀请信息列表
+        Route::get('/invite/information/list','UserController@inviteInformationList');
+        //同意申请(邀请)
+        Route::post('/agree/invitation','UserController@agreeInvitation');
+        //拒绝申请(邀请)
+        Route::post('/refuse/invitation','UserController@refuseInvitation');
+        //删除申请
+        Route::post('/delete/invitation','UserController@deleteInvitation');
+        //解除关联
+        Route::post('/disassociate','UserController@disassociate');
+		/** 2018-09-07 add end***/
 	});
 });
  
@@ -163,6 +192,10 @@ Route::group(['namespace'=>'Admin','prefix'=>'admin','middleware'=>['auth','user
 		Route::resource('/agentrole', 'AgentRoleController');
 		Route::post('/list/dels', 'UserController@dels');
 		Route::resource('/list', 'UserController');
+		/* 2018-09-07 gping add start */
+        Route::post('/parterlist','AgentController@parterlist');
+
+		/* 2018-09-07 gping add end */
 	});
 
 	// 商品管理
