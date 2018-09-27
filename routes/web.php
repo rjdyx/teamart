@@ -131,7 +131,29 @@ Route::group([/*'middleware'=>['isWeixin']*/],function(){
 			Route::get('/many','ActivityController@many');//团购
 			Route::get('/many/data','ActivityController@manyData');//团购数据接口
 		});
-
+        /*****  gping add start 2018 09 21  ******/
+		//我的分销商信息管理
+        Route::group(['prefix'=>'user'],function (){
+            //经销商信息列表管理
+            Route::get('/management/dealer','UserController@managementDealer');
+            //申请成为二级经销商页面
+            Route::get('/secondary/dealer/add','UserController@secondaryDealerAdd');
+            //申请信息编辑
+            Route::get('/secondary/dealer/edit/{id}','UserController@applicationInformationEdit');
+            //申请信息申请接口
+            Route::post('/application/information','UserController@applicationInformationPreservation');
+            //申请信息列表
+            Route::get('/application/information/list','UserController@applicationInformationList');
+            //邀请信息列表
+            Route::get('/invite/information/list','UserController@inviteInformationList');
+            //同意申请(邀请)
+            Route::post('/management/agree/invitation','UserController@agreeInvitation');
+            //拒绝申请(邀请)
+            Route::post('/management/refuse/invitation','UserController@refuseInvitation');
+            //删除申请
+            Route::post('/management/delete/invitation','UserController@deleteInvitation');
+        });
+        /*****  gping add  end  2018 09 21  ******/
 	});
 
 
@@ -160,13 +182,15 @@ Route::group([/*'middleware'=>['isWeixin']*/],function(){
         //邀请信息列表
         Route::get('/invite/information/list','UserController@inviteInformationList');
         //同意申请(邀请)
-        Route::post('/agree/invitation','UserController@agreeInvitation');
+        Route::post('/management/agree/invitation','UserController@agreeInvitation');
         //拒绝申请(邀请)
-        Route::post('/refuse/invitation','UserController@refuseInvitation');
+        Route::post('/management/refuse/invitation','UserController@refuseInvitation');
         //删除申请
-        Route::post('/delete/invitation','UserController@deleteInvitation');
+        Route::post('/management/delete/invitation','UserController@deleteInvitation');
         //解除关联
-        Route::post('/disassociate','UserController@disassociate');
+        Route::post('/management/disassociate','UserController@disassociate');
+        //超出判断[是否显示添加二级经销商按钮]
+        Route::get('/maxparternumber/beyond','UserController@maxparternumberBeyond');
 		/** 2018-09-07 add end***/
 	});
 });

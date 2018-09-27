@@ -66,9 +66,10 @@ class AgentController extends Controller
     public function edit($id)
     {
         $data = User::find($id);
+        $parterlist = user::where('parter_id',$data->parter_id)->where('upperparter_id',0)->where('id','!=',$id)->get();
         $selects = Parter::select('id','name','scale')->get();
         return view(config('app.theme').'.admin.user.agent_edit')
-        ->with(['data'=>$data,'selects'=>$selects]);
+        ->with(['data'=>$data,'selects'=>$selects,'parterlist'=>$parterlist]);
     }
 
     //查看
@@ -105,7 +106,6 @@ class AgentController extends Controller
         } 
         return ['orders'=>$orders,'prices'=>$prices];
     }
-
 
     //单条删除
     public function destroy($id)
@@ -159,6 +159,7 @@ class AgentController extends Controller
             'email'=>'required|email|max:50',
             'phone'=>'nullable|max:50',
             'realname'=>'nullable|max:50',
+            'scale'=>'nullable|max:5',
             'gender' => 'required|max:2'
         ]);
 
@@ -181,6 +182,19 @@ class AgentController extends Controller
             }
             $model->type = $request->user;
         }
+        /**********20180907 add start***************/
+        if(intval($request->parterlevel) == 1){
+            //二级代理商
+            $model->upperparter_id = $request->upperparter_id;
+            //最大二级经销商数量
+            $model->maxparternumber = 10;
+        }else{
+            //一级代理商
+            //最大二级经销商数量
+            $model->maxparternumber = $request->maxparternumber;
+        }
+        $model->scale = $request->scale;
+        /********** 20180907 add end ***************/
 
         if ($model->save()) {
             return Redirect::to('admin/user/agent')->with('status', '保存成功');
@@ -208,7 +222,11 @@ class AgentController extends Controller
     {
         $bro = Brokerage::orderBy('created_at','desc')->first();//获取最后一次结账日期
         $remain = 0;
-        $parter = Parter::find($id);//分销商角色信息
+        /* gping 修改 start */
+        $user = User::findOrFail($id);//结账用户信息
+        $parter = Parter::find($user->parter_id);//分销商角色信息
+        /* gping 修改 end  */
+        //$parter = Parter::find($id);//分销商角色信息
         $orders = Order::where('pid',$id)->where('state','close');
         $prices = Order::where('pid',$id)->where('state','close');
         if (!empty($bro)) {
@@ -223,6 +241,13 @@ class AgentController extends Controller
             return back()->with('data', ['false']);
         }
         $prices = $counts * $parter->scale;
+
+        /* 加上下级的提成 gping add 20180912 start */
+        // 如果是一级经销商就得加上所有与本身有关联的二级经销商的销售提成
+        $prices += $this->upperparterscale($id);
+        //加上经销商本身绑定所有普通用户消费的提成
+        $prices += $this->ordinaryCommission($id);
+        /* 加上下级的提成 gping add 20180912  end  */
         return view(config('app.theme').'.admin.user.agent_record_create')->with(['parter'=>$parter,'id'=>$id,'orders'=>$orders,'prices'=>$prices,'remain'=>$remain]);
     }
 
@@ -260,4 +285,78 @@ class AgentController extends Controller
         if (Brokerage::destroy($ids)) return Redirect::back()->with('删除成功');
         return Redirect::back()->withErrors('删除失败');
     }
+
+    /*  gping start */
+    /**
+     * 角色对应的代理商列表
+     */
+    public function parterlist(Request $request){
+        // 代理商角色id
+        $parterid =  $request->parterid;
+        //查询所有代理商角色id等$parterid的一级代理商
+        $list = User::where('parter_id',$parterid)->where('upperparter_id',0);
+        $selfid = $request->selfid;
+        //除掉当前ID
+        if(!empty($selfid)){
+            $list->where('id','!=',$selfid);
+        }
+        return $list->get();
+
+    }
+
+    //计算一级分销商所得的提成
+    public function upperparterscale($id){
+        //查询所有upperparter_id为当前用户的提成
+        $upperparter = User::where('upperparter_id',$id)->get();
+        $upperpartersum = 0;//总提成
+        foreach ($upperparter as $upperitem){
+            //遍历所有其二级经销商
+            $bro = Brokerage::orderBy('created_at','desc')->first();//获取最后一次结账日期
+            $parter = Parter::find($upperitem->parter_id);//分销商角色信息
+            $prices = Order::where('user_id',$upperitem->id)->where('state','close');
+            if (!empty($bro)) {
+                //如果结算过，就按上次结算时间开始计算
+                $date = $bro->created_at;
+                $prices = $prices ->where('updated_at','>=',$date);
+            }
+            $counts = $prices->sum('price');//获取订单总金额
+            //如果不属于经销商
+            if (!isset($parter)) {
+                continue;
+            }
+            //二级用户所有消费总额乘以提成比例
+            $upperpartersum += $counts;
+        }
+        return $upperpartersum * User::find($id)->scale;//返回所有其二级经销商给其的提成
+    }
+
+    //关联普通用户消费为关联经销商提供的提成
+    public function ordinaryCommission($id){
+        //当前用户信息
+        $nowuser = User::findOrFail($id);
+        //查询关联所胡普通用户
+        $users = User::where('pid',$id)->get();
+        $usercommissionsum = 0;
+        //遍历所有用户
+        foreach ($users as $useritem){
+            $bro = Brokerage::orderBy('created_at','desc')->first();//获取最后一次结账日期
+            $parter = Parter::find($useritem->parter_id);//分销商角色信息
+            $prices = Order::where('user_id',$useritem->id)->where('state','close');//查询订单关闭后的总额度
+            if (!empty($bro)) {
+                //如果结算过，就按上次结算时间开始计算
+                $date = $bro->created_at;
+                $prices = $prices ->where('updated_at','>=',$date);
+            }
+            $counts = $prices->sum('price');//获取订单总金额
+            //非普通用户则跳过
+            if(isset($parter)){
+                continue;
+            }
+            $scale = $counts * floatval($nowuser->scale);
+            $usercommissionsum += $scale;
+        }
+        return $usercommissionsum;
+    }
+
+    /*** gping end****/
 }

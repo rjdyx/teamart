@@ -100,7 +100,15 @@
 						<p>所属身份</p>
 						<p>
 						@if(Auth::user())
-							@if (Auth::user()->type == 1) 分销商 @else 普通会员 @endif
+							@if (Auth::user()->type == 1)
+								@if (Auth::user()->upperparter_id == 0)
+									一级经销商
+								@else
+									二级经销商
+								@endif
+							@else
+								普通会员
+							@endif
 						@else
 							无
 						@endif
@@ -135,6 +143,26 @@
 					<p class="chayefont fz-14">我的账号</p>
 				</a>
 			</li>
+			@if (isset(Auth::user()->type) && Auth::user()->upperparter_id == 0 && Auth::user()->type == 1)
+				<li class="pull-left txt-c">
+					<a href="{{url('/home/management/dealer')}}">
+						<div class="txt-c usercenter_nav_icon">
+							<i class="fa fa-user-plus white fz-20"></i>
+						</div>
+						<p class="chayefont fz-14">二级经销商管理</p>
+					</a>
+				</li>
+			@elseif (isset(Auth::user()->type) && Auth::user()->type == 2)
+				<li class="pull-left txt-c">
+					<a href="{{url('/home/user/management/dealer')}}">
+						<div class="txt-c usercenter_nav_icon">
+							<i class="fa fa-user-plus white fz-20"></i>
+						</div>
+						<p class="chayefont fz-14">经销商信息管理</p>
+					</a>
+				</li>
+			@endif
+
 			@if (isset(Auth::user()->type) && Auth::user()->type < 2)
 			<li class="pull-left txt-c">
 				<a href="{{url('/home/userasset')}}">
@@ -142,6 +170,14 @@
 						<i class="fa fa-users white fz-20"></i>
 					</div>
 					<p class="chayefont fz-14">我的分销</p>
+				</a>
+			</li>
+			<li class="pull-left txt-c">
+				<a href="{{url('/home/binduserasset')}}">
+					<div class="txt-c usercenter_nav_icon">
+						<i class="fa fa-user-circle white fz-20"></i>
+					</div>
+					<p class="chayefont fz-14">绑定用户信息</p>
 				</a>
 			</li>
 			@endif

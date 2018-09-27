@@ -46,12 +46,36 @@ class LoginController extends Controller
     //会员扫码绑定分销商
     public function bindAgent($id)
     {
-        $id = base64_decode($id);// id解码
+//        $id = base64_decode($id);// id解码 (原)
+        /* 2018 09 25 update  start */
+        $id = base64_decode($id);//id解码 值是一个字符串  2018-09-25 修改
+        //匹配是否为纯数字
+        if (!preg_match_all('/[0-9]/',$id)){
+            //不是纯数字就说明不是id号，存在危险
+            return view('layouts.userBindMessage')->with(['title'=>'绑定用户错误信息','message'=>'信息出误！']);
+        }
+        /* 2018 09 25 update   end */
+        $id = intval($id);// 类型转换
         //判断登录情况
         if (Auth::user()) {
             if (Auth::user()->type < 1) return redirect('/admin/login');
             if (is_int($id)){
-                $this->bind($id);
+                //$this->bind($id);原版本
+                /* 2018 09 25 add start */
+                //接收被绑定的经销商id
+                $binduserid = $this->bind($id);
+                //如果返回的值不为null,则说明已经绑定了经销商
+                if(!is_null($binduserid)){
+                    $binduser = User::find($binduserid);
+                    if($binduserid === $id){
+                        $message = "您已经绑定了".$binduser->name."经销商！";//提示信息
+                    }else{
+                        $message = "您已经绑定了".$binduser->name."经销商，只能绑定一个经销商。";//提示信息
+                    }
+                    return view('layouts.userBindMessage')->with(['title'=>'绑定用户错误信息','message'=>$message]);
+                }
+
+                /* 2018 09 25 add  end  */
             }
             return redirect('/');
         }
@@ -68,6 +92,16 @@ class LoginController extends Controller
         $puser = User::find($id);
         if (isset($puser->id)) {
             $user = User::find(Auth::user()->id);
+            /** gping add 实现永久绑定 start */
+            if(isset($user->pid) || !empty($user->pid)){
+                //已经绑定的经销商用户信息
+                //$binduser = User::find($user->id);
+                //先跳转到指定错误提示页面，过五秒钟再跳回上一个页面
+                // return view('layouts.userBindMessage')->with(['title'=>'绑定用户错误信息','bindusername'=>$binduser->name]);//如果先有绑定信息了，就直接返回无需再进行绑定
+//                dd($user->pid);
+                return $user->pid;//返回绑定用户信息
+            }
+            /** gping add 实现永久绑定  end  */
             $user->pid = $id;
             $user->save();
         }

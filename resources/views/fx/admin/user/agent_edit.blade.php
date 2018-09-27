@@ -34,6 +34,13 @@
           if (!_valid.ness('gender', '性别', gender.value)) {
             return false
           }
+          /*********************2018 09 14 gping add start*************************/
+          var scale = form['scale'];
+          if(!_valid.ness('scale','提成',scale.value) || !scalechange("#scale")){
+              return false;
+          }
+          /*********************2018 09 14 gping add  end *************************/
+
           // if (!_valid.password('password', password.value, false)) {
           //   return false
           // }
@@ -49,9 +56,76 @@
           if (!_valid.birth_date('birth_date', '出生日期', birth_date.value)) {
             return false
           }
+
           return true
         }
       })
+      /* gping 20180907 add start*/
+      function upserpartercheck() {
+          //获取选择的代理商角色
+          if($("#parter_id").val() == ''){
+              $("#parter_id_txt").text('请选择代理商角色');
+              return false;
+          }
+      }
+      //获取上一级代理商列表
+      function upperparter(){
+          //代理商角色判断
+          upserpartercheck();
+          //获取选择的代理商角色
+          let parterid = $("#parter_id").val();
+          //请求，等到上级代理商列表
+          upperparterobj = $("#upperparter_id");
+          upperparterobj.text("");//清空
+          upperparterobj.append('<option value="0">请选择上一级代理商(默认则为一级代理商)</option>');
+          //带上当前用户id
+          userid = $("#id").val();
+          axios.post('{{url('/admin/user/parterlist')}}',{parterid:parterid,selfid:userid})
+              .then(function(res){
+                  let index = 0;
+                  for(index = 0;index < res.data.length; index++){
+                      if(res.data[index].id == {{$data->upperparter_id}})
+                        upperparterobj.append("<option value="+res.data[index].id+" selected>"+res.data[index].name+"</option>");
+                      else
+                        upperparterobj.append("<option value="+res.data[index].id+">"+res.data[index].name+"</option>");
+                  }
+              });
+      }
+
+      function levelchange(level) {
+          if(level == 1){
+              $("#upperparter_id").attr('disabled',false);
+              $("#maxparternumber").attr('disabled',true);
+              // $("#scale").attr('disabled',false);
+          }else{
+              $("#upperparter_id").attr('disabled',true);
+              $("#maxparternumber").attr('disabled',false);
+              // $("#scale").attr('disabled',true);
+          }
+      }
+
+      function scalechange(myself) {
+          myselfvalue = $(myself).val();
+          if(myselfvalue.length == 0){
+              $("#scale_txt").text('提成不能为空');
+              $("#scale").css('border','1px solid rgb(210,214,222)');
+              return false;
+          }
+          //验证数据
+          let regexp = new RegExp(/^\d+(\.){0,1}(\d+)?$/);
+          if(regexp.test(myselfvalue) ){
+              $("#scale_txt").text('');
+              $("#scale").css('border','1px solid rgb(210,214,222)');
+              return true;
+          }else{
+              $("#scale_txt").text("提成格式不对！");
+              $("#scale").css('border','1px solid red');
+              return false;
+          }
+
+      }
+
+      /*  gping 20180907 add end*/
     </script>
 @endsection
 @section('content')
@@ -101,7 +175,7 @@
                 <div class="form-group">
                   <label class="col-sm-3 control-label"><i style="color:red;">*</i>代理商角色</label>
                   <div class="col-sm-4">
-                    <select class="form-control" name="parter_id" id="parter_id" onchange="ness('parter_id', '代理商角色', this.value)">
+                    <select class="form-control" name="parter_id" id="parter_id" onchange="_valid.ness('parter_id', '代理商角色', this.value);upperparter()">
                       <option value="">请选择代理商角色</option>
                       @foreach($selects as $select)
                       <option value="{{$select->id}}" 
@@ -113,6 +187,86 @@
                   </div>
                   <span class="col-sm-4 text-danger form_error" id="parter_id_txt"></span>
                 </div>
+                <!-- 2018-09-07 gping add start -->
+                @if($data->upperparter_id != 0)
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label"><i style="color:red;">*</i>代理商级别</label>
+                    <div class="col-sm-4">
+                      <label class="col-sm-4 parterlevel_label control-label">
+                        <input type="radio" name="parterlevel" id="levelone" value="0" onchange="levelchange(0)">一级代理商
+                      </label>
+                      <label class="col-sm-4 parterlevel_label control-label">
+                        <input type="radio" name="parterlevel" id="leveltwo" value="1" onchange="levelchange(1);upperparter()" checked="checked">二级代理商
+                      </label>
+                    </div>
+                    <span class="col-sm-4 text-danger form_error" id="parterlevel_txt"></span>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label"><i style="color:red;">*</i>上一级代理商</label>
+                    <div class="col-sm-4">
+                      <select class="form-control" name="upperparter_id" id="upperparter_id">
+                        <option value="0">请选择上一级代理商(默认则为一级代理商)</option>
+                        @foreach($parterlist as $parteritem)
+                          <option value="{{$parteritem->id}}" @if($parteritem->id == $data->upperparter_id) selected @endif>{{$parteritem->name}}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                    <span class="col-sm-4 text-danger form_error" id="upperparter_id_txt"></span>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label"><i style="color:red;">*</i>最大二级经销商个数</label>
+                    <div class="col-sm-4">
+                      <input type="number" id="maxparternumber" name="maxparternumber" class="form-control" value="{{$data->maxparternumber}}" min="1" disabled/>
+                    </div>
+                    <span class="col-sm-4 text-danger form_error" id="maxparternumber_txt"></span>
+                  </div>
+                  <div class="form-group">
+                    <label for="scale" class="col-sm-3 control-label"><i style="color:red;">*</i>提成</label>
+                    <div class="col-sm-4">
+                      <input type="text" name="scale" class="form-control" value="{{$data->scale}}" id="scale" placeholder="请输入提成数据" onblur="scalechange(this)" oninput="scalechange(this)">
+                      {{--oninput="_valid.phone('scale', this.value)" onblur="_valid.phone('phone', this.value)"--}}
+                    </div>
+                    <span class="col-sm-4 text-danger form_error" id="scale_txt"></span>
+                  </div>
+                @else
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label"><i style="color:red;">*</i>代理商级别</label>
+                    <div class="col-sm-4">
+                      <label class="col-sm-4 parterlevel_label control-label">
+                        <input type="radio" name="parterlevel" id="levelone" value="0" onchange="levelchange(0)" checked="checked">一级代理商
+                      </label>
+                      <label class="col-sm-4 parterlevel_label control-label">
+                        <input type="radio" name="parterlevel" id="leveltwo" value="1" onchange="levelchange(1);upperparter()">二级代理商
+                      </label>
+                    </div>
+                    <span class="col-sm-4 text-danger form_error" id="parterlevel_txt"></span>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label"><i style="color:red;">*</i>上一级代理商</label>
+                    <div class="col-sm-4">
+                      <select class="form-control" name="upperparter_id" id="upperparter_id" disabled>
+                        <option value="0">请选择上一级代理商(默认则为一级代理商)</option>
+                      </select>
+                    </div>
+                    <span class="col-sm-4 text-danger form_error" id="upperparter_id_txt"></span>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label"><i style="color:red;">*</i>最大二级经销商个数</label>
+                    <div class="col-sm-4">
+                      <input type="number" id="maxparternumber" name="maxparternumber" class="form-control" value="{{$data->maxparternumber}}" min="1" />
+                    </div>
+                    <span class="col-sm-4 text-danger form_error" id="maxparternumber_txt"></span>
+                  </div>
+                  <div class="form-group">
+                  <label for="scale" class="col-sm-3 control-label"><i style="color:red;">*</i>提成</label>
+                  <div class="col-sm-4">
+                    <input type="text" name="scale" class="form-control" id="scale" value="{{$data->scale}}" placeholder="请输入提成数据" onblur="scalechange(this)" oninput="scalechange(this)">
+                    {{--oninput="_valid.phone('scale', this.value)" onblur="_valid.phone('phone', this.value)"--}}
+                  </div>
+                  <span class="col-sm-4 text-danger form_error" id="scale_txt"></span>
+                </div>
+                @endif
+                <!-- 2018-09-07 gping add end -->
                 <div class="form-group">
                   <label class="col-sm-3 control-label"><i style="color:red;">*</i>性别</label>
                   <div class="col-sm-4">
