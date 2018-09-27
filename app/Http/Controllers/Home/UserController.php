@@ -417,7 +417,7 @@ class UserController extends Controller
         $nowuser = Auth::user();
         //得到申请列表[一个申请项用;号隔开,子项用|号隔开]
         $applicationinfolist = ApplicationRecord::select('application_record.*','user.name as name','user.phone')
-            ->join('User','user.id','application_record.target_users_id')
+            ->join('user','user.id','application_record.target_users_id')
             ->where('application_record.application_user_id',$nowuser->id)
             ->get();//获取邀请列表
         return $applicationinfolist;//返回申请数据
@@ -429,7 +429,7 @@ class UserController extends Controller
         $nowuser = Auth::user();
         //邀请对象是我，所以target_users_id = $nowuser->id
         $inviteinformationlist = ApplicationRecord::select('application_record.*','user.name as name','user.phone')
-            ->join('User','user.id','application_record.application_user_id')
+            ->join('user','user.id','application_record.application_user_id')
             ->where('application_record.target_users_id',$nowuser->id)
             ->get();//获取邀请列表
         return $inviteinformationlist;
@@ -440,7 +440,7 @@ class UserController extends Controller
     public function applicationInformationEdit(Request $request,$id){
 //        $applicationInformationinfo = ApplicationRecord::find($id);
         $applicationInformationinfo = ApplicationRecord::select('application_record.*','user.name as name')
-            ->join('User','user.id','application_record.target_users_id')
+            ->join('user','user.id','application_record.target_users_id')
             ->where('application_record.id',$id)
             ->first();
         $userlist = $this->developableUserList();
