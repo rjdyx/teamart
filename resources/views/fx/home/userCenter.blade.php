@@ -102,9 +102,9 @@
 						@if(Auth::user())
 							@if (Auth::user()->type == 1)
 								@if (Auth::user()->upperparter_id == 0)
-									一级经销商
+									一级代理商
 								@else
-									二级经销商
+									二级代理商
 								@endif
 							@else
 								普通会员
@@ -149,7 +149,7 @@
 						<div class="txt-c usercenter_nav_icon">
 							<i class="fa fa-user-plus white fz-20"></i>
 						</div>
-						<p class="chayefont fz-14">二级经销商管理</p>
+						<p class="chayefont fz-14">二级代理商管理</p>
 					</a>
 				</li>
 			@elseif (isset(Auth::user()->type) && Auth::user()->type == 2)
@@ -158,7 +158,7 @@
 						<div class="txt-c usercenter_nav_icon">
 							<i class="fa fa-user-plus white fz-20"></i>
 						</div>
-						<p class="chayefont fz-14">经销商信息管理</p>
+						<p class="chayefont fz-14">代理商信息管理</p>
 					</a>
 				</li>
 			@endif

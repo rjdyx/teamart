@@ -183,13 +183,13 @@
                   <label class="col-sm-3 control-label"><i style="color:red;">*</i>上一级代理商</label>
                   <div class="col-sm-4">
                     <select class="form-control" name="upperparter_id" id="upperparter_id" onfocus="upserpartercheck()" disabled>
-                      <option value="0">请选择上一级代理商(默认则为一级代理商)</option>
+                      <option value="0">请选择上一级代理商</option>
                     </select>
                   </div>
                   <span class="col-sm-4 text-danger form_error" id="upperparter_id_txt"></span>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-3 control-label"><i style="color:red;">*</i>最大二级经销商个数</label>
+                  <label class="col-sm-3 control-label"><i style="color:red;">*</i>最大二级代理商个数</label>
                   <div class="col-sm-4">
                       <input type="number" id="maxparternumber" name="maxparternumber" class="form-control" value="10" min="1" />
                   </div>

@@ -364,7 +364,7 @@
         </div>
         <div class="userassets_content mt-20 w-100" style="overflow:hidden;">
             <ul id="listmenu">
-                <li class="menu-check" id="userlist">用户列表</li>
+                <li class="menu-check" id="userlist">二级代理商列表</li>
                 <li id="applicationlist">申请列表</li>
                 <li id="invitelist">邀请列表</li>
             </ul>

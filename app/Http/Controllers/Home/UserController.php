@@ -33,7 +33,7 @@ class UserController extends Controller
 			if (Auth::user()->type == 1){
 				$sells = $this->brokerage();//累计金额
                 /* gping add 20180912 start */
-                //如果是一级经销商，则查询下属二级经销商为其提供的提成
+                //如果是一级代理商，则查询下属二级代理商为其提供的提成
                 $sells += $this->upperparterscale(Auth::user()->id);
                 // 计算其绑定用户所有消费为其提供的提成
                 $sells += $this->ordinaryCommission(Auth::user()->id);
@@ -249,7 +249,7 @@ class UserController extends Controller
         $upperparter = User::where('upperparter_id',$id)->get();
         $upperpartersum = 0;//总提成
         foreach ($upperparter as $upperitem){
-            //遍历所有其二级经销商
+            //遍历所有其二级代理商
             $bro = Brokerage::orderBy('created_at','desc')->first();//获取最后一次结账日期
             $parter = Parter::find($upperitem->parter_id);//分销商角色信息
             $prices = Order::where('user_id',$upperitem->id)->where('state','close');
@@ -259,7 +259,7 @@ class UserController extends Controller
                 $prices = $prices ->where('updated_at','>=',$date);
             }
             $counts = $prices->sum('price');//获取订单总金额
-            //如果不属于经销商
+            //如果不属于代理商
             if (!isset($parter)) {
                 continue;
             }
@@ -267,10 +267,10 @@ class UserController extends Controller
 //            $upperpartersum += ($counts * $upperitem->scale);
             $upperpartersum += $counts;
         }
-        return $upperpartersum * Auth::user()->scale;//返回所有其二级经销商给其的提成
+        return $upperpartersum * Auth::user()->scale;//返回所有其二级代理商给其的提成
     }
 
-    //关联普通用户消费为关联经销商提供的提成
+    //关联普通用户消费为关联代理商提供的提成
     public function ordinaryCommission($id){/*初步成功*/
         //当前用户信息
         $nowuser = User::findOrFail($id);
@@ -309,44 +309,44 @@ class UserController extends Controller
     }
 
     /**
-     * 我的经销商管理
-     * (发展二级用户时，用户需要同意才能建立上下级关系，申请成为某用户的二级经销商时，一级经销商需要同意才能建立上下级关系)
+     * 我的代理商管理
+     * (发展二级用户时，用户需要同意才能建立上下级关系，申请成为某用户的二级代理商时，一级代理商需要同意才能建立上下级关系)
      * [需要指定用户同意才能建立关联]
      */
-    //管理我的经销商(只是显示视图,数据采用异步请求)
+    //管理我的代理商(只是显示视图,数据采用异步请求)
     public function managementDealer(){
         if (Auth::user()->type === 1 && (Auth::user()->uppertarteg_id === 0 || empty(Auth::user()->uppertarger_id))) {
             //返回视图
-            //一级经销商
-            return view(config('app.theme') . '.home.managementDealer')->with(['title' => '我的二级经销商']);
+            //一级代理商
+            return view(config('app.theme') . '.home.managementDealer')->with(['title' => '我的二级代理商']);
         }else{
             //普通用户
-            return view(config('app.theme') . '.home.userDealerInformationManagement')->with(['title' => '经销商信息管理']);
+            return view(config('app.theme') . '.home.userDealerInformationManagement')->with(['title' => '代理商信息管理']);
         }
     }
 
-    // 添加我的二级经销商信息视图
+    // 添加我的二级代理商信息视图
     public function secondaryDealerAdd(){
         $userlist = $this->developableUserList();
-        return view(config('app.theme').'.home.SecondaryDealer')->with(['userlist'=>$userlist,'title'=>'二级经销商添加']);
+        return view(config('app.theme').'.home.SecondaryDealer')->with(['userlist'=>$userlist,'title'=>'二级代理商添加']);
     }
 
     //可操作用户信息列表
     private function developableUserList(){
         /**
          * 判断当前用户类型
-         * 如果是普通用户就查询所有一级经销商
-         * 如果是一级经销商就查询所有普通用户信息
-         * 如果是二级经销商就没有数据
+         * 如果是普通用户就查询所有一级代理商
+         * 如果是一级代理商就查询所有普通用户信息
+         * 如果是二级代理商就没有数据
          *
-         * 0管理员，1为经销商，2为普通用户
+         * 0管理员，1为代理商，2为普通用户
          */
         $nowuser = Auth::user();
         if($nowuser->type == 1 && $nowuser->upperparter_id == 0){
-            //一级经销商，查询所有普通用户信息
+            //一级代理商，查询所有普通用户信息
             $userlist = User::whereNull('parter_id')->where('type',2)->get();
         }elseif($nowuser->type == 2){
-            //普通用户，查询一级经销商列表
+            //普通用户，查询一级代理商列表
 //            $userlist = User::where('upperparter_id',0)->where('type',1)->get();
             //查询可申请一级用户列表
             $sql = "select * from fx_user where maxparternumber > (select count(id) from fx_user where upperparter_id in (select id from fx_user where type = 1 and upperparter_id = 0)) and type = 1 and parter_id != '' and upperparter_id = 0;";
@@ -369,7 +369,7 @@ class UserController extends Controller
         //申请对象
         $applicationuserinfo = Auth::user();
 
-        //一级经销商id
+        //一级代理商id
         $id = $applicationuserinfo->type == 1?$applicationuserinfo->id:$inviteuserinfo->id;
         if(!$this->maxparternumber($id)){
             //返回失效信息：邀请用户的名额已满无法进行同意操作
@@ -385,7 +385,7 @@ class UserController extends Controller
         }
         //申请类型
         if($applicationuserinfo->type==1 && $applicationuserinfo->upperparter_id == 0){
-            //一级经销商
+            //一级代理商
             $applicationrecordinfo->type = 1;
         }elseif($applicationuserinfo->type == 2){
             //普通用户
@@ -406,7 +406,7 @@ class UserController extends Controller
         }
     }
 
-    //我的经销商列表
+    //我的代理商列表
     public function dealerInformationList(){
         return User::where('upperparter_id',Auth::user()->id)->get();
     }
@@ -444,7 +444,7 @@ class UserController extends Controller
             ->where('application_record.id',$id)
             ->first();
         $userlist = $this->developableUserList();
-        return view(config('app.theme').'.home.SecondaryDealer')->with(['userlist'=>$userlist,'title'=>'二级经销商添加','applicationInformationinfo'=>$applicationInformationinfo]);
+        return view(config('app.theme').'.home.SecondaryDealer')->with(['userlist'=>$userlist,'title'=>'二级代理商添加','applicationInformationinfo'=>$applicationInformationinfo]);
     }
 
     //同意邀请
@@ -452,7 +452,7 @@ class UserController extends Controller
 //        return $request->id;
         //获取申请信息
         $applicationInfromationinfo = ApplicationRecord::find($request->id);
-        $id = $applicationInfromationinfo->type == 1?$applicationInfromationinfo->application_user_id:$applicationInfromationinfo->target_users_id;//获取一级经销商id
+        $id = $applicationInfromationinfo->type == 1?$applicationInfromationinfo->application_user_id:$applicationInfromationinfo->target_users_id;//获取一级代理商id
         if(!$this->maxparternumber($id)){
             $this->failureOperation($request->id);//进行失效信息操作
             //返回失效信息：邀请用户的名额已满无法进行同意操作
@@ -480,13 +480,13 @@ class UserController extends Controller
             return json_encode(['status'=>401,'message'=>'无法关联指定用户，因为此用户已经被关联']);
         }
         //保存目标用户信息
-        // 上级经销商用户id
+        // 上级代理商用户id
         $targetuserinfo->upperparter_id = $applicationInfromationinfo->type == 0?$applicationInfromationinfo->target_users_id:$applicationInfromationinfo->application_user_id;//类型判断
         //提成信息
         $targetuserinfo->scale = $applicationInfromationinfo->scale;
-        //经销商角色
+        //代理商角色
         $targetuserinfo->parter_id = User::find($applicationInfromationinfo->application_user_id)->parter_id;
-        //用户类型改为经销商
+        //用户类型改为代理商
         $targetuserinfo->type = 1;
         //修改申请记录表中的信息
         $applicationInfromationinfo->status = 1;//修改状态为1(申请通过)[接受申请]
@@ -558,7 +558,7 @@ class UserController extends Controller
         if(Empty($disassociateobj)){
             return json_encode(['message'=>'没有此关联信息!','start'=>200]);
         }
-        //如果解除关联用户的关联一级经销商不是当前用户信息就返回403+非法操作
+        //如果解除关联用户的关联一级代理商不是当前用户信息就返回403+非法操作
         if($disassociateobj->upperparter_id !== Auth::id()){
             //非法解除关联
             return json_encode(['message'=>'非法操作!','start'=>401]);
@@ -578,20 +578,20 @@ class UserController extends Controller
 //        return $request->id;
     }
 
-    //当前一级经销商的二级经销商总数超出判断
+    //当前一级代理商的二级代理商总数超出判断
     private function maxparternumber($id){
         $maxnumber = User::find($id)->maxparternumber;
         $nownumber = User::where('upperparter_id',$id)->count();
         return $maxnumber>$nownumber ? true : false;
     }
-    //当邀请的一级经销商的二级经销商超出最大数时的同意为失效的。[status=null]
+    //当邀请的一级代理商的二级代理商超出最大数时的同意为失效的。[status=null]
     private function failureOperation($id){
         //操作一些失效信息
         $record = ApplicationRecord::find($id);
         $record->status = 3;//为空时便是失效邀请
         return $record->save();
     }
-    //当前一级经销商用户的二级经销商用户量是否满？
+    //当前一级代理商用户的二级代理商用户量是否满？
     public function maxparternumberBeyond(){
         if($this->maxparternumber(Auth::user()->id)){
             return json_encode(['status'=>200,'number'=>1]);
